@@ -31,9 +31,9 @@ export const doc: ComponentDoc = {
   sizes: ['xs', 's', 'm', 'l', 'xl'],
 
   tokens: [
-    { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-rest', kind: 'color', variant: 'primary' },
-    { part: 'button', label: 'fill.secondary', token: '--helix-button-fill-secondary-rest', kind: 'color', variant: 'secondary' },
-    { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-rest', kind: 'color', variant: 'danger' },
+    { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-default', kind: 'color', variant: 'primary' },
+    { part: 'button', label: 'fill.secondary', token: '--helix-button-fill-secondary-default', kind: 'color', variant: 'secondary' },
+    { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-default', kind: 'color', variant: 'danger' },
     { part: 'button', label: 'border.focus', token: '--helix-button-border-focus', kind: 'color' },
     { part: 'button', label: 'button.root', token: '--helix-button-radius', kind: 'radius' },
     { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-2', kind: 'space' },

@@ -144,11 +144,13 @@ Icon slots (`*-icon`, `*-icon-end`) must have their stroke color bound to the co
 ```js
 // use_figma: create icon slot with correct stroke color per variant
 const VARIANT_ICON_COLOR = {
-  primary:   figma.variables.getVariableById('VariableID:...'), // text/inverse (white)
-  secondary: figma.variables.getVariableById('VariableID:...'), // text/default (dark)
-  ghost:     figma.variables.getVariableById('VariableID:...'), // text/default
-  danger:    figma.variables.getVariableById('VariableID:...'), // text/inverse (white)
+  primary:   figma.variables.getVariableById('VariableID:...'), // icon/inverse (white)
+  secondary: figma.variables.getVariableById('VariableID:...'), // icon/neutral
+  ghost:     figma.variables.getVariableById('VariableID:...'), // icon/neutral
+  danger:    figma.variables.getVariableById('VariableID:...'), // icon/inverse (white)
 };
+// Always bind to icon/* variables here — never text/*, even though the resolved
+// color happens to match (see ADR / Icon.json colorRules: icons use their own tokens).
 
 // Icon display size: match code usage (Button uses size={16} in Storybook → 16×16 in Figma)
 const ICON_SLOT_SIZE = 16; // NOT the icon component's native 24×24
@@ -184,8 +186,8 @@ newInst.componentPropertyReferences = { visible: boolPropKey, mainComponent: swa
 ```
 
 **Icon color mapping (Helix DS):**
-- `primary` / `danger` → `text/inverse` (white icons on colored background)
-- `secondary` / `ghost` → `text/default` (dark icons on light background)
+- `primary` / `danger` → `icon/inverse` (white icons on colored background)
+- `secondary` / `ghost` → `icon/neutral` (dark icons on light background)
 
 **When no icons are available (fallback):**
 ```js
@@ -362,8 +364,10 @@ const varByName = {};
 allVars.forEach(v => { varByName[v.name] = v; });
 
 // Find the variable for this layer's role
-// E.g. primary button background → 'color/fill/primary'
-const fillVar = varByName['color/fill/primary'];
+// E.g. primary button background → 'fill/primary/interactive/default' — Color Semantic collection
+// vars use '/' for every grammar segment (role/interactive/modifier/state), not '-', and no
+// 'color/' prefix (vars are fill/*, text/*, icon/*, border/*)
+const fillVar = varByName['fill/primary/interactive/default'];
 
 const oldFill = { type: 'SOLID', color: { r: 0, g: 0, b: 0 } };
 const newFill = figma.variables.setBoundVariableForPaint(oldFill, 'color', fillVar);
@@ -371,9 +375,10 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 ```
 
 **Token policy** from the contract's `tokenPolicy.allowed`:
-- `color.fill` → Figma `Color` collection, variable names starting with `color/fill/`
-- `color.text` → `Color` collection, variables starting with `color/text/`
-- `color.border` → `Color` collection, variables starting with `color/border/`
+- `color.fill` → `Color Semantic` collection, variable names starting with `fill/`
+- `color.text` → `Color Semantic` collection, variables starting with `text/`
+- `color.icon` → `Color Semantic` collection, variables starting with `icon/`
+- `color.border` → `Color Semantic` collection, variables starting with `border/`
 - `spacing` → `Spacing` collection, FLOAT variables
 - Never use `Primitives` collection variables in component fills
 - Collection names have NO system prefix: use `Color`, NOT `Helix / Color`

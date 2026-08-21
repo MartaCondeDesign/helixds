@@ -149,10 +149,10 @@ export const LoginFormPattern: Story = {
           maxWidth: '360px', padding: 'var(--helix-primitive-spacing-8)',
           background: 'var(--helix-color-fill-surface)',
           borderRadius: 'var(--helix-primitive-radius-xl)',
-          border: '1px solid var(--helix-color-border-default)',
+          border: '1px solid var(--helix-color-border-neutral)',
         }}
       >
-        <h2 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-2xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-default)' }}>
+        <h2 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-2xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-neutral)' }}>
           Sign in
         </h2>
 

@@ -37,7 +37,11 @@ export default meta;
 type Story = StoryObj<typeof Chip>;
 
 export const Neutral: Story = { args: { label: 'All' } };
-export const Checked: Story = { args: { label: 'Open', checked: true } };
+export const Checked: Story = { args: {
+  label: 'Open',
+  checked: true,
+  size: "s"
+} };
 export const Info: Story = { args: { variant: 'info', label: 'Info' } };
 export const Success: Story = { args: { variant: 'success', label: 'Approved' } };
 export const Warning: Story = { args: { variant: 'warning', label: 'Pending' } };

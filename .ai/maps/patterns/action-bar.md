@@ -83,7 +83,7 @@ function BatchActions({
         gap:        'var(--helix-primitive-spacing-2)',
       }}
     >
-      <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-secondary)' }}>
+      <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
         {count} selected
       </span>
 

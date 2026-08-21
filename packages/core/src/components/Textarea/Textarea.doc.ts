@@ -23,8 +23,8 @@ export const doc: ComponentDoc = {
   variants: [],
   sizes: ['s', 'm', 'l'],
   tokens: [
-    { part: 'textarea', label: 'Rest fill', token: '--helix-textarea-fill-rest', kind: 'color' },
-    { part: 'textarea', label: 'Rest border', token: '--helix-textarea-border-rest', kind: 'color' },
+    { part: 'textarea', label: 'Default fill', token: '--helix-textarea-fill-default', kind: 'color' },
+    { part: 'textarea', label: 'Default border', token: '--helix-textarea-border-default', kind: 'color' },
     { part: 'textarea', label: 'Focus border', token: '--helix-textarea-border-focus', kind: 'color' },
     { part: 'textarea', label: 'Value text', token: '--helix-textarea-text-value', kind: 'color' },
     { part: 'textarea', label: 'Placeholder text', token: '--helix-textarea-text-placeholder', kind: 'color' },

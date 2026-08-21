@@ -24,7 +24,7 @@ const meta: Meta<typeof RadioGroup> = {
     helixTokens: [
       { part: 'radio', label: 'Radio control', token: '--helix-radio-size', kind: 'space' },
       { part: 'radio', label: 'Radio checked', token: '--helix-radio-fill-checked', kind: 'color' },
-      { part: 'radio', label: 'Radio border', token: '--helix-radio-border-rest', kind: 'color' },
+      { part: 'radio', label: 'Radio border', token: '--helix-radio-border-default', kind: 'color' },
       { part: 'radio', label: 'Radio focus', token: '--helix-radio-border-focus', kind: 'color' },
       { part: 'radio', label: 'Radio dot', token: '--helix-radio-dot', kind: 'color' },
     ],

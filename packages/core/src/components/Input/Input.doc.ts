@@ -23,8 +23,8 @@ export const doc: ComponentDoc = {
   variants: [],
   sizes: ['s', 'm', 'l'],
   tokens: [
-    { part: 'input', label: 'Rest fill', token: '--helix-input-fill-rest', kind: 'color' },
-    { part: 'input', label: 'Rest border', token: '--helix-input-border-rest', kind: 'color' },
+    { part: 'input', label: 'Default fill', token: '--helix-input-fill-default', kind: 'color' },
+    { part: 'input', label: 'Default border', token: '--helix-input-border-default', kind: 'color' },
     { part: 'input', label: 'Focus border', token: '--helix-input-border-focus', kind: 'color' },
     { part: 'input', label: 'Value text', token: '--helix-input-text-value', kind: 'color' },
     { part: 'input', label: 'Placeholder text', token: '--helix-input-text-placeholder', kind: 'color' },

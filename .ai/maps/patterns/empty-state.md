@@ -24,10 +24,10 @@ when: "The view has no data to display — first use, zero results, or filtered 
 
 ```
 ┌─────────────────────────────┐
-│        [Illustration]       │  Optional: Tabler icon at 48px, color-text-secondary
+│        [Illustration]       │  Optional: Tabler icon at 48px, color-icon-neutral-light
 │                             │
-│     No projects yet         │  font-size-xl, font-weight-semibold, text-default
-│  Create your first project  │  font-size-s, text-secondary, max-width 320px
+│     No projects yet         │  font-size-xl, font-weight-semibold, text-neutral
+│  Create your first project  │  font-size-s, text-neutral-light, max-width 320px
 │                             │
 │    [New project]  [Import]  │  Primary + Secondary buttons
 └─────────────────────────────┘
@@ -72,7 +72,7 @@ function EmptyState({
       }}
     >
       {icon && (
-        <span style={{ color: 'var(--helix-color-text-secondary)' }} aria-hidden="true">
+        <span style={{ color: 'var(--helix-color-text-neutral-light)' }} aria-hidden="true">
           {icon}
         </span>
       )}
@@ -81,7 +81,7 @@ function EmptyState({
         <h3 style={{
           fontSize:   'var(--helix-primitive-fontSize-xl)',
           fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-          color:      'var(--helix-color-text-default)',
+          color:      'var(--helix-color-text-neutral)',
           margin:     0,
         }}>
           {title}
@@ -89,7 +89,7 @@ function EmptyState({
         {description && (
           <p style={{
             fontSize:  'var(--helix-primitive-fontSize-s)',
-            color:     'var(--helix-color-text-secondary)',
+            color:     'var(--helix-color-text-neutral-light)',
             maxWidth:  '320px',
             margin:    0,
           }}>
@@ -117,14 +117,14 @@ function EmptyState({
 
 ## Anti-patterns
 
-- ❌ Using a custom `<div className="text-gray-400">` for text — use `--helix-color-text-secondary`
+- ❌ Using a custom `<div className="text-gray-400">` for text — use `--helix-color-text-neutral-light`
 - ❌ Hardcoding the icon color — always use a semantic token
 - ❌ Multiple primary buttons — one primary CTA maximum
 - ❌ Adding a button just because the pattern has one — omit if there's no meaningful action
 
 ## Tokens used
 
-- `--helix-color-text-secondary` — icon and description text
-- `--helix-color-text-default` — title text
+- `--helix-color-text-neutral-light` — icon and description text
+- `--helix-color-text-neutral` — title text
 - `--helix-primitive-spacing-*` — gap and padding
 - `--helix-primitive-fontSize-xl` — title size

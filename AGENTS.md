@@ -51,7 +51,7 @@ Use Helix semantic tokens, never Tailwind primitives directly:
 
 ```css
 /* ✅ correct */
-color: var(--helix-color-text-default);
+color: var(--helix-color-text-neutral);
 background: var(--helix-color-fill-primary);
 
 /* ❌ wrong */

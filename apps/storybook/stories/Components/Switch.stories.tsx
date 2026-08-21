@@ -90,7 +90,7 @@ export const SettingsGroup: Story = {
     return (
       <div style={{
         maxWidth: 480,
-        border: '1px solid var(--helix-color-border-default)',
+        border: '1px solid var(--helix-color-border-neutral)',
         borderRadius: 12, overflow: 'hidden',
       }}>
         {([
@@ -102,11 +102,11 @@ export const SettingsGroup: Story = {
           <div key={key} style={{
             display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16,
             padding: 'var(--helix-primitive-spacing-4)',
-            borderBottom: i < arr.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+            borderBottom: i < arr.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--helix-color-text-default)' }}>{label}</div>
-              <div style={{ fontSize: 13, color: 'var(--helix-color-text-secondary)', marginTop: 2 }}>{desc}</div>
+              <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--helix-color-text-neutral)' }}>{label}</div>
+              <div style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', marginTop: 2 }}>{desc}</div>
             </div>
             <Switch checked={state[key]} onChange={() => toggle(key)} />
           </div>

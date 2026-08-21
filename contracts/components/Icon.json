@@ -96,15 +96,15 @@
   },
 
   "colorRules": {
-    "principle":  "Icons inherit currentColor from their container by default",
+    "principle":  "Icons use their own icon/* semantic tokens, set explicitly — never inherited from a text/* token, even when the resolved color happens to match",
     "inButtons": {
-      "primary":   "text/inverse (white stroke)",
-      "secondary": "text/default (dark stroke)",
-      "ghost":     "text/default (dark stroke)",
-      "danger":    "text/inverse (white stroke)"
+      "primary":   "icon/inverse (white stroke)",
+      "secondary": "icon/neutral-dark (dark stroke)",
+      "ghost":     "icon/neutral-dark (dark stroke)",
+      "danger":    "icon/inverse (white stroke)"
     },
-    "standalone": "Use text/default or text/subtle semantic tokens — never primitives",
-    "forbidden":  "Never hardcode hex values. Never use brand/accent primitives directly."
+    "standalone": "Use icon/neutral-dark, icon/neutral-light, or icon/neutral-lightest — never text/* tokens, never primitives",
+    "forbidden":  "Never hardcode hex values. Never reference a text/* token for icon color. Never use primitive color scales directly."
   },
 
   "anatomy": [
@@ -170,8 +170,8 @@
   },
 
   "tokenPolicy": {
-    "allowed":   ["color.text", "color.icon"],
-    "forbidden": ["primitive.color", "color.fill", "color.border"]
+    "allowed":   ["color.icon"],
+    "forbidden": ["primitive.color", "color.fill", "color.border", "color.text"]
   },
 
   "agentWorkflow": {

@@ -42,7 +42,7 @@
 
   body {
     background: var(--helix-color-fill-page);
-    color:      var(--helix-color-text-default);
+    color:      var(--helix-color-text-neutral);
     font-size:  var(--helix-primitive-fontSize-m);
     line-height: var(--helix-primitive-lineHeight-normal);
     font-family: var(--font-sans, system-ui, sans-serif);
@@ -71,7 +71,7 @@
   /* Storybook Docs preview block only: keep the prose light, darken the live example. */
   :root[data-theme="dark"] .docs-story {
     background: var(--helix-color-fill-page);
-    color:      var(--helix-color-text-default);
+    color:      var(--helix-color-text-neutral);
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -133,31 +133,31 @@
 
   /* Variant: primary */
   [data-helix-part="button"][data-variant="primary"] {
-    background-color: var(--helix-button-fill-primary-rest);
+    background-color: var(--helix-button-fill-primary-default);
     color:            var(--helix-button-text-primary);
-    border-color:     var(--helix-button-fill-primary-rest);
+    border-color:     var(--helix-button-fill-primary-default);
   }
   [data-helix-part="button"][data-variant="primary"]:hover:not(:disabled):not([data-loading]) {
     background-color: var(--helix-button-fill-primary-hover);
     border-color:     var(--helix-button-fill-primary-hover);
   }
   [data-helix-part="button"][data-variant="primary"]:active:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-primary-active);
-    border-color:     var(--helix-button-fill-primary-active);
+    background-color: var(--helix-button-fill-primary-press);
+    border-color:     var(--helix-button-fill-primary-press);
   }
 
   /* Variant: secondary */
   [data-helix-part="button"][data-variant="secondary"] {
-    background-color: var(--helix-button-fill-secondary-rest);
+    background-color: var(--helix-button-fill-secondary-default);
     color:            var(--helix-button-text-secondary);
-    border-color:     var(--helix-button-border-secondary-rest);
+    border-color:     var(--helix-button-border-secondary-default);
   }
   [data-helix-part="button"][data-variant="secondary"]:hover:not(:disabled):not([data-loading]) {
     background-color: var(--helix-button-fill-secondary-hover);
     border-color:     var(--helix-button-border-secondary-hover);
   }
   [data-helix-part="button"][data-variant="secondary"]:active:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-secondary-active);
+    background-color: var(--helix-button-fill-secondary-press);
   }
 
   /* Variant: ghost */
@@ -167,7 +167,7 @@
     border-color:     transparent;
   }
   [data-helix-part="button"][data-variant="ghost"]:hover:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-secondary-rest);
+    background-color: var(--helix-button-fill-secondary-default);
   }
   [data-helix-part="button"][data-variant="ghost"]:active:not(:disabled):not([data-loading]) {
     background-color: var(--helix-button-fill-secondary-hover);
@@ -175,17 +175,17 @@
 
   /* Variant: danger */
   [data-helix-part="button"][data-variant="danger"] {
-    background-color: var(--helix-button-fill-danger-rest);
+    background-color: var(--helix-button-fill-danger-default);
     color:            var(--helix-button-text-danger);
-    border-color:     var(--helix-button-fill-danger-rest);
+    border-color:     var(--helix-button-fill-danger-default);
   }
   [data-helix-part="button"][data-variant="danger"]:hover:not(:disabled):not([data-loading]) {
     background-color: var(--helix-button-fill-danger-hover);
     border-color:     var(--helix-button-fill-danger-hover);
   }
   [data-helix-part="button"][data-variant="danger"]:active:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-danger-active);
-    border-color:     var(--helix-button-fill-danger-active);
+    background-color: var(--helix-button-fill-danger-press);
+    border-color:     var(--helix-button-fill-danger-press);
   }
 
   /* States */
@@ -220,6 +220,23 @@
     align-items: center;
     flex-shrink: 0;
   }
+  /* Icon color per variant — icon tokens only, never inherited from button-text */
+  [data-helix-part="button"][data-variant="primary"] [data-helix-part="button-icon"],
+  [data-helix-part="button"][data-variant="primary"] [data-helix-part="button-icon-end"] {
+    color: var(--helix-button-icon-primary);
+  }
+  [data-helix-part="button"][data-variant="secondary"] [data-helix-part="button-icon"],
+  [data-helix-part="button"][data-variant="secondary"] [data-helix-part="button-icon-end"] {
+    color: var(--helix-button-icon-secondary);
+  }
+  [data-helix-part="button"][data-variant="ghost"] [data-helix-part="button-icon"],
+  [data-helix-part="button"][data-variant="ghost"] [data-helix-part="button-icon-end"] {
+    color: var(--helix-button-icon-ghost);
+  }
+  [data-helix-part="button"][data-variant="danger"] [data-helix-part="button-icon"],
+  [data-helix-part="button"][data-variant="danger"] [data-helix-part="button-icon-end"] {
+    color: var(--helix-button-icon-danger);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -253,8 +270,8 @@
     position:        relative;
     display:         flex;
     align-items:     center;
-    background-color: var(--helix-input-fill-rest);
-    border:          1.5px solid var(--helix-input-border-rest);
+    background-color: var(--helix-input-fill-default);
+    border:          1.5px solid var(--helix-input-border-default);
     border-radius:   var(--helix-input-radius);
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
@@ -315,7 +332,7 @@
   [data-helix-part="input-icon-end"] {
     display:     flex;
     align-items: center;
-    color:       var(--helix-input-text-icon);
+    color:       var(--helix-input-icon-default);
     flex-shrink: 0;
     height:      100%;
   }
@@ -403,6 +420,21 @@
     align-items: center;
     flex-shrink: 0;
   }
+  [data-helix-part="badge"][data-variant="neutral"] [data-helix-part="badge-icon"] {
+    color: var(--helix-badge-icon-neutral);
+  }
+  [data-helix-part="badge"][data-variant="info"] [data-helix-part="badge-icon"] {
+    color: var(--helix-badge-icon-info);
+  }
+  [data-helix-part="badge"][data-variant="success"] [data-helix-part="badge-icon"] {
+    color: var(--helix-badge-icon-success);
+  }
+  [data-helix-part="badge"][data-variant="warning"] [data-helix-part="badge-icon"] {
+    color: var(--helix-badge-icon-warning);
+  }
+  [data-helix-part="badge"][data-variant="danger"] [data-helix-part="badge-icon"] {
+    color: var(--helix-badge-icon-danger);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -420,9 +452,9 @@
     height:         var(--helix-chip-height-m);
     padding:        0 var(--helix-chip-padding-x-m);
     border-radius:   var(--helix-chip-radius);
-    border:         var(--helix-chip-border-width) solid var(--helix-color-border-default);
+    border:         var(--helix-chip-border-width) solid var(--helix-color-border-neutral);
     background:     var(--helix-color-fill-surface);
-    color:          var(--helix-color-text-default);
+    color:          var(--helix-color-text-neutral);
     font-size:      var(--helix-chip-fontSize-m);
     font-weight:    var(--helix-chip-fontWeight);
     line-height:    1;
@@ -472,7 +504,7 @@
   [data-helix-part="chip"][data-disabled] {
     background:    var(--helix-color-fill-disabled);
     color:         var(--helix-color-text-disabled);
-    border-color:  var(--helix-color-border-subtle);
+    border-color:  var(--helix-color-border-neutral-light);
     cursor:        not-allowed;
     opacity:       0.72;
     pointer-events: none;
@@ -480,118 +512,118 @@
 
   [data-helix-part="chip"][data-variant="neutral"] {
     background:   var(--helix-color-fill-surface);
-    color:        var(--helix-color-text-default);
-    border-color: var(--helix-color-border-default);
+    color:        var(--helix-color-text-neutral);
+    border-color: var(--helix-color-border-neutral);
   }
   [data-helix-part="chip"][data-variant="neutral"]:hover:not(:disabled):not([data-disabled]) {
-    background:   var(--helix-color-fill-surface-raised);
-    border-color: var(--helix-color-border-strong);
+    background:   var(--helix-color-fill-surface-dark);
+    border-color: var(--helix-color-border-neutral-dark);
   }
   [data-helix-part="chip"][data-variant="neutral"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-secondary);
+    background: var(--helix-color-fill-secondary-interactive-default);
   }
   [data-helix-part="chip"][data-variant="neutral"][data-checked="true"] {
-    background:   var(--helix-color-fill-secondary);
-    color:        var(--helix-color-text-default);
-    border-color: var(--helix-color-border-strong);
+    background:   var(--helix-color-fill-secondary-interactive-default);
+    color:        var(--helix-color-text-neutral);
+    border-color: var(--helix-color-border-neutral-dark);
   }
   [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-secondary-hover);
+    background: var(--helix-color-fill-secondary-interactive-hover);
   }
   [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-secondary-active);
+    background: var(--helix-color-fill-secondary-interactive-press);
   }
 
   [data-helix-part="chip"][data-variant="info"] {
-    background:   var(--helix-color-fill-info-subtle);
+    background:   var(--helix-color-fill-info-light);
     color:        var(--helix-color-text-info);
     border-color: var(--helix-color-border-info);
   }
   [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-info-subtle) 84%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-info-subtle) 72%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] {
-    background:   var(--helix-color-fill-info);
+    background:   var(--helix-color-fill-info-interactive-default);
     color:        var(--helix-color-text-inverse);
     border-color: var(--helix-color-border-info);
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-info-hover);
+    background: var(--helix-color-fill-info-interactive-hover);
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-info-hover);
+    background: var(--helix-color-fill-info-interactive-hover);
   }
 
   [data-helix-part="chip"][data-variant="success"] {
-    background:   var(--helix-color-fill-success-subtle);
+    background:   var(--helix-color-fill-success-light);
     color:        var(--helix-color-text-success);
     border-color: var(--helix-color-border-success);
   }
   [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-success-subtle) 84%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-success-subtle) 72%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] {
-    background:   var(--helix-color-fill-success);
+    background:   var(--helix-color-fill-success-interactive-default);
     color:        var(--helix-color-text-inverse);
     border-color: var(--helix-color-border-success);
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-success-hover);
+    background: var(--helix-color-fill-success-interactive-hover);
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-success-hover);
+    background: var(--helix-color-fill-success-interactive-hover);
   }
 
   [data-helix-part="chip"][data-variant="warning"] {
-    background:   var(--helix-color-fill-warning-subtle);
+    background:   var(--helix-color-fill-warning-light);
     color:        var(--helix-color-text-warning);
     border-color: var(--helix-color-border-warning);
   }
   [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-warning-subtle) 84%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-warning-subtle) 72%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] {
-    background:   var(--helix-color-fill-warning);
+    background:   var(--helix-color-fill-warning-interactive-default);
     color:        var(--helix-color-text-inverse);
     border-color: var(--helix-color-border-warning);
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-warning-hover);
+    background: var(--helix-color-fill-warning-interactive-hover);
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-warning-hover);
+    background: var(--helix-color-fill-warning-interactive-hover);
   }
 
   [data-helix-part="chip"][data-variant="danger"] {
-    background:   var(--helix-color-fill-danger-subtle);
+    background:   var(--helix-color-fill-danger-interactive-light-default);
     color:        var(--helix-color-text-danger);
     border-color: var(--helix-color-border-danger);
   }
   [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-danger-subtle) 84%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-danger-subtle) 72%, var(--helix-color-fill-page));
+    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] {
-    background:   var(--helix-color-fill-danger);
+    background:   var(--helix-color-fill-danger-interactive-default);
     color:        var(--helix-color-text-inverse);
     border-color: var(--helix-color-border-danger);
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-danger-hover);
+    background: var(--helix-color-fill-danger-interactive-hover);
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-danger-hover);
+    background: var(--helix-color-fill-danger-interactive-hover);
   }
 
   [data-helix-part="chip-icon"],
@@ -599,6 +631,43 @@
     display:     flex;
     align-items: center;
     flex-shrink: 0;
+  }
+  /* Icon color per variant — icon tokens only, never inherited from chip text */
+  [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-neutral);
+  }
+  [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-info);
+  }
+  [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-inverse);
+  }
+  [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-success);
+  }
+  [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-inverse);
+  }
+  [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-warning);
+  }
+  [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-inverse);
+  }
+  [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-danger);
+  }
+  [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon"],
+  [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon-end"] {
+    color: var(--helix-color-icon-inverse);
   }
 
   [data-helix-part="chip-shell"] {
@@ -618,9 +687,9 @@
     width:          20px;
     height:         20px;
     border-radius:  var(--helix-primitive-radius-full);
-    border:         1px solid var(--helix-color-border-subtle);
+    border:         1px solid var(--helix-color-border-neutral-light);
     background:     var(--helix-color-fill-surface);
-    color:          var(--helix-color-text-secondary);
+    color:          var(--helix-color-text-neutral-light);
     cursor:         pointer;
     flex-shrink:    0;
     transition:
@@ -630,9 +699,9 @@
   }
 
   [data-helix-part="chip-dismiss"]:hover:not(:disabled) {
-    background:   var(--helix-color-fill-surface-raised);
-    border-color: var(--helix-color-border-strong);
-    color:        var(--helix-color-text-default);
+    background:   var(--helix-color-fill-surface-dark);
+    border-color: var(--helix-color-border-neutral-dark);
+    color:        var(--helix-color-text-neutral);
   }
 
   [data-helix-part="chip-dismiss"]:focus-visible {
@@ -669,8 +738,8 @@
 
   [data-helix-part="textarea-wrapper"] {
     position:         relative;
-    background-color: var(--helix-textarea-fill-rest);
-    border:           1.5px solid var(--helix-textarea-border-rest);
+    background-color: var(--helix-textarea-fill-default);
+    border:           1.5px solid var(--helix-textarea-border-default);
     border-radius:    var(--helix-textarea-radius);
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
@@ -772,8 +841,8 @@
     appearance:       none;
     -webkit-appearance: none;
     width:            100%;
-    background-color: var(--helix-select-fill-rest);
-    border:           1.5px solid var(--helix-select-border-rest);
+    background-color: var(--helix-select-fill-default);
+    border:           1.5px solid var(--helix-select-border-default);
     border-radius:    var(--helix-select-radius);
     color:            var(--helix-select-text-value);
     font-family:      inherit;
@@ -825,7 +894,7 @@
     right:           var(--helix-primitive-spacing-3);
     top:             50%;
     transform:       translateY(-50%);
-    color:           var(--helix-select-text-icon);
+    color:           var(--helix-select-icon-default);
     pointer-events:  none;
     display:         flex;
     align-items:     center;
@@ -885,8 +954,8 @@
     width:       var(--helix-checkbox-size);
     height:      var(--helix-checkbox-size);
     border-radius: var(--helix-checkbox-radius);
-    border:      1.5px solid var(--helix-checkbox-border-rest);
-    background:  var(--helix-checkbox-fill-rest);
+    border:      1.5px solid var(--helix-checkbox-border-default);
+    background:  var(--helix-checkbox-fill-default);
     display:     flex;
     align-items: center;
     justify-content: center;
@@ -923,7 +992,7 @@
   }
 
   [data-helix-part="checkbox-indicator"] {
-    color:    var(--helix-checkbox-check-color);
+    color:    var(--helix-checkbox-icon-color);
     display:  none;
     align-items: center;
     line-height: 1;
@@ -1020,8 +1089,8 @@
     width:        var(--helix-radio-size);
     height:       var(--helix-radio-size);
     border-radius: 50%;
-    border:       1.5px solid var(--helix-radio-border-rest);
-    background:   var(--helix-radio-fill-rest);
+    border:       1.5px solid var(--helix-radio-border-default);
+    background:   var(--helix-radio-fill-default);
     display:      flex;
     align-items:  center;
     justify-content: center;

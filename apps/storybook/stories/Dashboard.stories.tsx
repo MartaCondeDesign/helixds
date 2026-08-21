@@ -46,7 +46,7 @@ function Sidebar() {
       width: 224,
       flexShrink: 0,
       background: 'var(--helix-color-fill-page)',
-      borderRight: '1px solid var(--helix-color-border-subtle)',
+      borderRight: '1px solid var(--helix-color-border-neutral-light)',
       display: 'flex',
       flexDirection: 'column',
       padding: `var(--helix-primitive-spacing-3) 0`,
@@ -71,7 +71,7 @@ function Sidebar() {
         <span style={{
           fontSize: 'var(--helix-primitive-fontSize-m)',
           fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-          color: 'var(--helix-color-text-default)',
+          color: 'var(--helix-color-text-neutral)',
           letterSpacing: '-0.01em',
         }}>
           Helix DS
@@ -82,7 +82,7 @@ function Sidebar() {
       <div style={{
         fontSize: 'var(--helix-primitive-fontSize-xs)',
         fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-        color: 'var(--helix-color-text-tertiary)',
+        color: 'var(--helix-color-text-neutral-lightest)',
         textTransform: 'uppercase',
         letterSpacing: '0.07em',
         padding: `0 var(--helix-primitive-spacing-3)`,
@@ -104,8 +104,8 @@ function Sidebar() {
               borderRadius: 'var(--helix-primitive-radius-m)',
               border: 'none',
               cursor: 'pointer',
-              background: active ? 'var(--helix-color-fill-primary-subtle)' : 'transparent',
-              color: active ? 'var(--helix-color-text-brand)' : 'var(--helix-color-text-secondary)',
+              background: active ? 'var(--helix-color-fill-primary-light)' : 'transparent',
+              color: active ? 'var(--helix-color-text-primary)' : 'var(--helix-color-text-neutral-light)',
               fontWeight: active ? 'var(--helix-primitive-fontWeight-semibold)' : 'var(--helix-primitive-fontWeight-regular)',
               fontSize: 'var(--helix-primitive-fontSize-s)',
               textAlign: 'left',
@@ -126,7 +126,7 @@ function Sidebar() {
         margin: `var(--helix-primitive-spacing-2)`,
         padding: `var(--helix-primitive-spacing-2)`,
         borderRadius: 'var(--helix-primitive-radius-l)',
-        borderTop: '1px solid var(--helix-color-border-subtle)',
+        borderTop: '1px solid var(--helix-color-border-neutral-light)',
         display: 'flex',
         alignItems: 'center',
         gap: 'var(--helix-primitive-spacing-2)',
@@ -147,16 +147,16 @@ function Sidebar() {
           <div style={{
             fontSize: 'var(--helix-primitive-fontSize-s)',
             fontWeight: 'var(--helix-primitive-fontWeight-medium)',
-            color: 'var(--helix-color-text-default)',
+            color: 'var(--helix-color-text-neutral)',
             overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
           }}>
             Marta Conde
           </div>
-          <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-tertiary)' }}>
+          <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)' }}>
             Admin
           </div>
         </div>
-        <IconDots size={15} color="var(--helix-color-text-tertiary)" />
+        <IconDots size={15} color="var(--helix-color-text-neutral-lightest)" />
       </div>
     </nav>
   );
@@ -170,14 +170,14 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
     <div style={{
       flex: '1 1 160px',
       background: 'var(--helix-color-fill-page)',
-      border: '1px solid var(--helix-color-border-subtle)',
+      border: '1px solid var(--helix-color-border-neutral-light)',
       borderRadius: 'var(--helix-card-radius)',
       padding: `var(--helix-primitive-spacing-4) var(--helix-primitive-spacing-5)`,
     }}>
       <div style={{
         fontSize: 'var(--helix-primitive-fontSize-xs)',
         fontWeight: 'var(--helix-primitive-fontWeight-medium)',
-        color: 'var(--helix-color-text-tertiary)',
+        color: 'var(--helix-color-text-neutral-lightest)',
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
         marginBottom: 'var(--helix-primitive-spacing-2)',
@@ -187,7 +187,7 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
       <div style={{
         fontSize: 'var(--helix-primitive-fontSize-3xl)',
         fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-        color: 'var(--helix-color-text-default)',
+        color: 'var(--helix-color-text-neutral)',
         lineHeight: 1,
         marginBottom: 'var(--helix-primitive-spacing-2)',
         letterSpacing: '-0.02em',
@@ -216,7 +216,7 @@ function TrendChip({ value }: { value: string }) {
       display: 'inline-flex', alignItems: 'center', gap: 4,
       padding: `2px var(--helix-primitive-spacing-2)`,
       borderRadius: 'var(--helix-primitive-radius-full)',
-      background: 'var(--helix-color-fill-success-subtle)',
+      background: 'var(--helix-color-fill-success-light)',
     }}>
       <IconTrendingUp size={11} color="var(--helix-color-text-success)" />
       <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-success)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>
@@ -266,7 +266,7 @@ function DashboardPage() {
           height: 56,
           flexShrink: 0,
           background: 'var(--helix-color-fill-page)',
-          borderBottom: '1px solid var(--helix-color-border-subtle)',
+          borderBottom: '1px solid var(--helix-color-border-neutral-light)',
         }}>
           <div style={{ flex: 1, maxWidth: 320 }}>
             <Input
@@ -287,7 +287,7 @@ function DashboardPage() {
               border: 'none',
               background: 'transparent',
               cursor: 'pointer',
-              color: 'var(--helix-color-text-secondary)',
+              color: 'var(--helix-color-text-neutral-light)',
             }}>
               <IconBell size={17} />
             </button>
@@ -298,7 +298,7 @@ function DashboardPage() {
               border: 'none',
               background: 'transparent',
               cursor: 'pointer',
-              color: 'var(--helix-color-text-secondary)',
+              color: 'var(--helix-color-text-neutral-light)',
             }}>
               <IconHelp size={17} />
             </button>
@@ -337,7 +337,7 @@ function DashboardPage() {
                 margin: 0,
                 fontSize: 'var(--helix-primitive-fontSize-2xl)',
                 fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-                color: 'var(--helix-color-text-default)',
+                color: 'var(--helix-color-text-neutral)',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.1,
               }}>
@@ -346,7 +346,7 @@ function DashboardPage() {
               <p style={{
                 margin: `var(--helix-primitive-spacing-1) 0 0`,
                 fontSize: 'var(--helix-primitive-fontSize-s)',
-                color: 'var(--helix-color-text-secondary)',
+                color: 'var(--helix-color-text-neutral-light)',
               }}>
                 Manage members and their access to the Helix workspace.
               </p>
@@ -379,9 +379,9 @@ function DashboardPage() {
             justifyContent: 'space-between',
             padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`,
             marginBottom: 'var(--helix-spacing-component-m)',
-            background: aiCtx ? 'var(--helix-color-fill-primary-subtle)' : 'var(--helix-color-fill-page)',
+            background: aiCtx ? 'var(--helix-color-fill-primary-light)' : 'var(--helix-color-fill-page)',
             border: '1px solid',
-            borderColor: aiCtx ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-default)',
+            borderColor: aiCtx ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-neutral)',
             borderRadius: 'var(--helix-card-radius)',
             transition: 'background 200ms, border-color 200ms',
           }}>
@@ -393,17 +393,17 @@ function DashboardPage() {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0,
               }}>
-                <IconBolt size={15} color={aiCtx ? 'var(--helix-color-text-inverse)' : 'var(--helix-color-text-tertiary)'} />
+                <IconBolt size={15} color={aiCtx ? 'var(--helix-color-text-inverse)' : 'var(--helix-color-text-neutral-lightest)'} />
               </div>
               <div>
                 <div style={{
                   fontSize: 'var(--helix-primitive-fontSize-s)',
                   fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                  color: 'var(--helix-color-text-default)',
+                  color: 'var(--helix-color-text-neutral)',
                 }}>
                   AI Context export
                 </div>
-                <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-secondary)' }}>
+                <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)' }}>
                   Include team structure in <code style={{ fontFamily: 'monospace', fontSize: 'inherit' }}>llms.txt</code>
                 </div>
               </div>
@@ -414,7 +414,7 @@ function DashboardPage() {
           {/* Table card */}
           <div style={{
             background: 'var(--helix-color-fill-page)',
-            border: '1px solid var(--helix-color-border-subtle)',
+            border: '1px solid var(--helix-color-border-neutral-light)',
             borderRadius: 'var(--helix-card-radius)',
             overflow: 'hidden',
           }}>
@@ -424,7 +424,7 @@ function DashboardPage() {
               alignItems: 'center',
               gap: 'var(--helix-primitive-spacing-2)',
               padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`,
-              borderBottom: '1px solid var(--helix-color-border-subtle)',
+              borderBottom: '1px solid var(--helix-color-border-neutral-light)',
               flexWrap: 'wrap',
             }}>
               <div style={{ width: 200 }}>
@@ -456,11 +456,11 @@ function DashboardPage() {
                         textAlign: 'left',
                         fontSize: 'var(--helix-primitive-fontSize-xs)',
                         fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                        color: 'var(--helix-color-text-tertiary)',
+                        color: 'var(--helix-color-text-neutral-lightest)',
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
                         whiteSpace: 'nowrap',
-                        borderBottom: '1px solid var(--helix-color-border-subtle)',
+                        borderBottom: '1px solid var(--helix-color-border-neutral-light)',
                       }}>
                         {h}
                       </th>
@@ -471,7 +471,7 @@ function DashboardPage() {
                   {filtered.map((m, i) => (
                     <tr
                       key={m.id}
-                      style={{ borderBottom: i < filtered.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none' }}
+                      style={{ borderBottom: i < filtered.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none' }}
                       onMouseEnter={e => (e.currentTarget as HTMLTableRowElement).style.background = 'var(--helix-color-fill-secondary)'}
                       onMouseLeave={e => (e.currentTarget as HTMLTableRowElement).style.background = 'transparent'}
                     >
@@ -481,11 +481,11 @@ function DashboardPage() {
                           <div style={{
                             width: 30, height: 30,
                             borderRadius: 'var(--helix-primitive-radius-full)',
-                            background: 'var(--helix-color-fill-primary-subtle)',
+                            background: 'var(--helix-color-fill-primary-light)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: 'var(--helix-primitive-fontSize-xs)',
                             fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-                            color: 'var(--helix-color-text-brand)',
+                            color: 'var(--helix-color-text-primary)',
                             flexShrink: 0,
                           }}>
                             {m.name.split(' ').map(n => n[0]).join('')}
@@ -494,14 +494,14 @@ function DashboardPage() {
                             <div style={{
                               fontSize: 'var(--helix-primitive-fontSize-s)',
                               fontWeight: 'var(--helix-primitive-fontWeight-medium)',
-                              color: 'var(--helix-color-text-default)',
+                              color: 'var(--helix-color-text-neutral)',
                               whiteSpace: 'nowrap',
                             }}>
                               {m.name}
                             </div>
                             <div style={{
                               fontSize: 'var(--helix-primitive-fontSize-xs)',
-                              color: 'var(--helix-color-text-tertiary)',
+                              color: 'var(--helix-color-text-neutral-lightest)',
                             }}>
                               {m.email}
                             </div>
@@ -509,7 +509,7 @@ function DashboardPage() {
                         </div>
                       </td>
                       {/* Role */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-secondary)', whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', whiteSpace: 'nowrap' }}>
                         {m.role}
                       </td>
                       {/* Status */}
@@ -517,11 +517,11 @@ function DashboardPage() {
                         <Badge variant={STATUS_VARIANT[m.status]}>{m.status}</Badge>
                       </td>
                       {/* Components */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-default)', fontVariantNumeric: 'tabular-nums' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)', fontVariantNumeric: 'tabular-nums' }}>
                         {m.components}
                       </td>
                       {/* Last seen */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-tertiary)', whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)', whiteSpace: 'nowrap' }}>
                         {m.lastSeen}
                       </td>
                       {/* Actions */}

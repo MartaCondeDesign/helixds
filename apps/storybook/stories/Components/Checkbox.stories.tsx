@@ -10,11 +10,11 @@ const meta: Meta<typeof Checkbox> = {
     helixTokens: [
       { part: 'checkbox', label: 'Control size', token: '--helix-checkbox-size', kind: 'space' },
       { part: 'checkbox', label: 'Control radius', token: '--helix-checkbox-radius', kind: 'radius' },
-      { part: 'checkbox', label: 'Rest fill', token: '--helix-checkbox-fill-rest', kind: 'color' },
+      { part: 'checkbox', label: 'Default fill', token: '--helix-checkbox-fill-default', kind: 'color' },
       { part: 'checkbox', label: 'Checked fill', token: '--helix-checkbox-fill-checked', kind: 'color' },
-      { part: 'checkbox', label: 'Rest border', token: '--helix-checkbox-border-rest', kind: 'color' },
+      { part: 'checkbox', label: 'Default border', token: '--helix-checkbox-border-default', kind: 'color' },
       { part: 'checkbox', label: 'Focus border', token: '--helix-checkbox-border-focus', kind: 'color' },
-      { part: 'checkbox', label: 'Checkmark color', token: '--helix-checkbox-check-color', kind: 'color' },
+      { part: 'checkbox', label: 'Checkmark color', token: '--helix-checkbox-icon-color', kind: 'color' },
     ],
     docs: {
       description: {

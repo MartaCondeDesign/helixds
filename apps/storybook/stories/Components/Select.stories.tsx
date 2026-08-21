@@ -53,7 +53,7 @@ export const Controlled: Story = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-3)' }}>
         <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" />
         {value && (
-          <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-secondary)' }}>
+          <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
             Selected: <strong>{value}</strong>
           </p>
         )}

@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { IconFolder } from '@tabler/icons-react';
 
 // ── Shared primitives ──────────────────────────────────────────────────────
 
 const label12: React.CSSProperties = {
   fontSize: 11, fontFamily: 'monospace',
-  color: 'var(--helix-color-text-secondary)',
+  color: 'var(--helix-color-text-neutral-light)',
   textAlign: 'center', wordBreak: 'break-all',
 };
 
@@ -13,7 +14,7 @@ function SectionHead({ title }: { title: string }) {
     <h3 style={{
       margin: '0 0 16px',
       fontSize: 11, fontWeight: 600, letterSpacing: '0.08em',
-      textTransform: 'uppercase', color: 'var(--helix-color-text-tertiary)',
+      textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)',
     }}>
       {title}
     </h3>
@@ -35,7 +36,7 @@ type Story = StoryObj;
 function PaletteRow({ name, prefix, steps }: { name: string; prefix: string; steps: string[] }) {
   return (
     <div style={{ marginBottom: 28 }}>
-      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', marginBottom: 10 }}>
+      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', marginBottom: 10 }}>
         {name}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -44,7 +45,7 @@ function PaletteRow({ name, prefix, steps }: { name: string; prefix: string; ste
             <div style={{
               width: 52, height: 52, borderRadius: 8,
               background: `var(--helix-primitive-color-${prefix}-${step})`,
-              border: '1px solid var(--helix-color-border-subtle)',
+              border: '1px solid var(--helix-color-border-neutral-light)',
             }} />
             <span style={{ ...label12, maxWidth: 52 }}>{step}</span>
           </div>
@@ -80,7 +81,7 @@ function FillSwatch({ token, lbl }: { token: string; lbl: string }) {
       <div style={{
         width: 56, height: 56, borderRadius: 8,
         background: `var(${token})`,
-        border: '1px solid var(--helix-color-border-subtle)',
+        border: '1px solid var(--helix-color-border-neutral-light)',
       }} />
       <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
     </div>
@@ -93,10 +94,26 @@ function TextSwatch({ token, lbl }: { token: string; lbl: string }) {
       <div style={{
         width: 56, height: 56, borderRadius: 8,
         background: 'var(--helix-color-fill-surface)',
-        border: '1px solid var(--helix-color-border-subtle)',
+        border: '1px solid var(--helix-color-border-neutral-light)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
         <span style={{ fontSize: 22, fontWeight: 700, color: `var(${token})` }}>Aa</span>
+      </div>
+      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
+    </div>
+  );
+}
+
+function IconSwatch({ token, lbl }: { token: string; lbl: string }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 8,
+        background: 'var(--helix-color-fill-surface)',
+        border: '1px solid var(--helix-color-border-neutral-light)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <IconFolder size={22} color={`var(${token})`} />
       </div>
       <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
     </div>
@@ -120,19 +137,20 @@ function BorderSwatch({ token, lbl }: { token: string; lbl: string }) {
 function TokenGroup({ label, tokens, type }: {
   label: string;
   tokens: [string, string][];
-  type: 'fill' | 'text' | 'border';
+  type: 'fill' | 'text' | 'border' | 'icon';
 }) {
   const renderSwatch = ([token, lbl]: [string, string]) => {
     if (type === 'fill')   return <FillSwatch   key={token} token={token} lbl={lbl} />;
     if (type === 'text')   return <TextSwatch   key={token} token={token} lbl={lbl} />;
     if (type === 'border') return <BorderSwatch key={token} token={token} lbl={lbl} />;
+    if (type === 'icon')   return <IconSwatch   key={token} token={token} lbl={lbl} />;
   };
   return (
     <div style={{ display: 'flex', gap: 16, marginBottom: 20, alignItems: 'flex-start' }}>
       <div style={{
         width: 110, flexShrink: 0, paddingTop: 4,
         fontSize: 12, fontWeight: 600,
-        color: 'var(--helix-color-text-default)',
+        color: 'var(--helix-color-text-neutral)',
       }}>
         {label}
       </div>
@@ -151,57 +169,57 @@ export const ColorSemantic: Story = {
       <TokenGroup label="Surface" type="fill" tokens={[
         ['--helix-color-fill-page',           'fill-page'],
         ['--helix-color-fill-surface',        'fill-surface'],
-        ['--helix-color-fill-surface-raised', 'fill-surface-raised'],
+        ['--helix-color-fill-surface-dark', 'fill-surface-dark'],
         ['--helix-color-fill-overlay',        'fill-overlay'],
         ['--helix-color-fill-disabled',       'fill-disabled'],
       ]} />
       <TokenGroup label="Secondary" type="fill" tokens={[
-        ['--helix-color-fill-secondary',        'fill-secondary'],
-        ['--helix-color-fill-secondary-hover',  'fill-secondary\nhover'],
-        ['--helix-color-fill-secondary-active', 'fill-secondary\nactive'],
+        ['--helix-color-fill-secondary-interactive-default', 'fill-secondary\ninteractive-default'],
+        ['--helix-color-fill-secondary-interactive-hover',   'fill-secondary\ninteractive-hover'],
+        ['--helix-color-fill-secondary-interactive-press',   'fill-secondary\ninteractive-press'],
       ]} />
       <TokenGroup label="Primary" type="fill" tokens={[
-        ['--helix-color-fill-primary',        'fill-primary'],
-        ['--helix-color-fill-primary-hover',  'fill-primary\nhover'],
-        ['--helix-color-fill-primary-active', 'fill-primary\nactive'],
+        ['--helix-color-fill-primary-interactive-default', 'fill-primary\ninteractive-default'],
+        ['--helix-color-fill-primary-interactive-hover',   'fill-primary\ninteractive-hover'],
+        ['--helix-color-fill-primary-interactive-press',   'fill-primary\ninteractive-press'],
       ]} />
-      <TokenGroup label="Primary subtle" type="fill" tokens={[
-        ['--helix-color-fill-primary-subtle',       'fill-primary\nsubtle'],
-        ['--helix-color-fill-primary-subtle-hover', 'fill-primary\nsubtle-hover'],
+      <TokenGroup label="Primary light" type="fill" tokens={[
+        ['--helix-color-fill-primary-interactive-light-default', 'fill-primary\ninteractive-light-default'],
+        ['--helix-color-fill-primary-interactive-light-hover',   'fill-primary\ninteractive-light-hover'],
       ]} />
       <TokenGroup label="Danger" type="fill" tokens={[
-        ['--helix-color-fill-danger',              'fill-danger'],
-        ['--helix-color-fill-danger-hover',        'fill-danger\nhover'],
-        ['--helix-color-fill-danger-active',       'fill-danger\nactive'],
-        ['--helix-color-fill-danger-subtle',       'fill-danger\nsubtle'],
-        ['--helix-color-fill-danger-subtle-hover', 'fill-danger\nsubtle-hover'],
+        ['--helix-color-fill-danger-interactive-default', 'fill-danger\ninteractive-default'],
+        ['--helix-color-fill-danger-interactive-hover',   'fill-danger\ninteractive-hover'],
+        ['--helix-color-fill-danger-interactive-press',   'fill-danger\ninteractive-press'],
+        ['--helix-color-fill-danger-interactive-light-default', 'fill-danger\ninteractive-light-default'],
+        ['--helix-color-fill-danger-interactive-light-hover',   'fill-danger\ninteractive-light-hover'],
       ]} />
       <TokenGroup label="Success" type="fill" tokens={[
-        ['--helix-color-fill-success',        'fill-success'],
-        ['--helix-color-fill-success-hover',  'fill-success\nhover'],
-        ['--helix-color-fill-success-subtle', 'fill-success\nsubtle'],
+        ['--helix-color-fill-success-interactive-default', 'fill-success\ninteractive-default'],
+        ['--helix-color-fill-success-interactive-hover',   'fill-success\ninteractive-hover'],
+        ['--helix-color-fill-success-light', 'fill-success\nlight'],
       ]} />
       <TokenGroup label="Warning" type="fill" tokens={[
-        ['--helix-color-fill-warning',        'fill-warning'],
-        ['--helix-color-fill-warning-hover',  'fill-warning\nhover'],
-        ['--helix-color-fill-warning-subtle', 'fill-warning\nsubtle'],
+        ['--helix-color-fill-warning-interactive-default', 'fill-warning\ninteractive-default'],
+        ['--helix-color-fill-warning-interactive-hover',   'fill-warning\ninteractive-hover'],
+        ['--helix-color-fill-warning-light', 'fill-warning\nlight'],
       ]} />
       <TokenGroup label="Info" type="fill" tokens={[
-        ['--helix-color-fill-info',        'fill-info'],
-        ['--helix-color-fill-info-hover',  'fill-info\nhover'],
-        ['--helix-color-fill-info-subtle', 'fill-info\nsubtle'],
+        ['--helix-color-fill-info-interactive-default', 'fill-info\ninteractive-default'],
+        ['--helix-color-fill-info-interactive-hover',   'fill-info\ninteractive-hover'],
+        ['--helix-color-fill-info-light', 'fill-info\nlight'],
       ]} />
 
       <SectionHead title="Text" />
       <TokenGroup label="Gray" type="text" tokens={[
-        ['--helix-color-text-default',   'text-default'],
-        ['--helix-color-text-secondary', 'text-secondary'],
-        ['--helix-color-text-tertiary',  'text-tertiary'],
+        ['--helix-color-text-neutral',   'text-neutral'],
+        ['--helix-color-text-neutral-light', 'text-neutral\nlight'],
+        ['--helix-color-text-neutral-lightest',  'text-neutral\nlightest'],
         ['--helix-color-text-disabled',  'text-disabled'],
         ['--helix-color-text-inverse',   'text-inverse'],
       ]} />
       <TokenGroup label="Brand" type="text" tokens={[
-        ['--helix-color-text-brand',      'text-brand'],
+        ['--helix-color-text-primary',      'text-primary'],
         ['--helix-color-text-link',       'text-link'],
         ['--helix-color-text-link-hover', 'text-link\nhover'],
       ]} />
@@ -212,11 +230,29 @@ export const ColorSemantic: Story = {
         ['--helix-color-text-info',    'text-info'],
       ]} />
 
+      <SectionHead title="Icon" />
+      <TokenGroup label="Gray" type="icon" tokens={[
+        ['--helix-color-icon-neutral',   'icon-neutral'],
+        ['--helix-color-icon-neutral-light', 'icon-neutral\nlight'],
+        ['--helix-color-icon-neutral-lightest',  'icon-neutral\nlightest'],
+        ['--helix-color-icon-disabled',  'icon-disabled'],
+        ['--helix-color-icon-inverse',   'icon-inverse'],
+      ]} />
+      <TokenGroup label="Brand" type="icon" tokens={[
+        ['--helix-color-icon-primary', 'icon-primary'],
+      ]} />
+      <TokenGroup label="Status" type="icon" tokens={[
+        ['--helix-color-icon-danger',  'icon-danger'],
+        ['--helix-color-icon-success', 'icon-success'],
+        ['--helix-color-icon-warning', 'icon-warning'],
+        ['--helix-color-icon-info',    'icon-info'],
+      ]} />
+
       <SectionHead title="Border" />
       <TokenGroup label="Gray" type="border" tokens={[
-        ['--helix-color-border-subtle',  'border-subtle'],
-        ['--helix-color-border-default', 'border-default'],
-        ['--helix-color-border-strong',  'border-strong'],
+        ['--helix-color-border-neutral-light',  'border-neutral\nlight'],
+        ['--helix-color-border-neutral', 'border-neutral'],
+        ['--helix-color-border-neutral-dark',  'border-neutral\ndark'],
         ['--helix-color-border-inverse', 'border-inverse'],
       ]} />
       <TokenGroup label="Focus" type="border" tokens={[
@@ -262,7 +298,7 @@ export const Spacing: Story = {
               opacity: key === '0' ? 0.2 : 1,
               transition: 'width 0.2s',
             }} />
-            <span style={{ ...label12, color: 'var(--helix-color-text-tertiary)' }}>{val}</span>
+            <span style={{ ...label12, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</span>
           </div>
         ))}
       </div>
@@ -284,13 +320,13 @@ export const Radius: Story = {
           <div key={key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
             <div style={{
               width: 72, height: 72,
-              background: 'var(--helix-color-fill-primary-subtle)',
+              background: 'var(--helix-color-fill-primary-light)',
               border: '2px solid var(--helix-color-fill-primary)',
               borderRadius: `var(--helix-primitive-radius-${key})`,
             }} />
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', fontFamily: 'monospace' }}>{key}</div>
-              <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)' }}>{val}</div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</div>
+              <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</div>
             </div>
           </div>
         ))}
@@ -319,18 +355,18 @@ export const Typography: Story = {
         {sizes.map(([key, val, name], i) => (
           <div key={key} style={{
             display: 'flex', alignItems: 'baseline', gap: 24, paddingBlock: 14,
-            borderBottom: i < sizes.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+            borderBottom: i < sizes.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
             <div style={{ width: 130, flexShrink: 0 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)' }}>{name}</div>
-              <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)', fontFamily: 'monospace' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)' }}>{name}</div>
+              <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace' }}>
                 fontSize-{key} · {val}
               </div>
             </div>
             <span style={{
               fontSize:   `var(--helix-primitive-fontSize-${key})`,
               fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-              color:      'var(--helix-color-text-default)',
+              color:      'var(--helix-color-text-neutral)',
               lineHeight: 'var(--helix-primitive-lineHeight-tight)',
             }}>
               The quick brown fox
@@ -343,7 +379,7 @@ export const Typography: Story = {
             {[['regular','400'],['medium','500'],['semibold','600'],['bold','700']].map(([key, val]) => (
               <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <span style={{
-                  fontSize: 18, color: 'var(--helix-color-text-default)',
+                  fontSize: 18, color: 'var(--helix-color-text-neutral)',
                   fontWeight: `var(--helix-primitive-fontWeight-${key})` as React.CSSProperties['fontWeight'],
                 }}>
                   Helix DS
@@ -366,15 +402,15 @@ export const Typography: Story = {
                 <div style={{
                   width: 140, padding: '8px 10px', borderRadius: 4,
                   background: 'var(--helix-color-fill-surface)',
-                  border: '1px solid var(--helix-color-border-subtle)',
+                  border: '1px solid var(--helix-color-border-neutral-light)',
                   fontSize: 13,
                   lineHeight: `var(--helix-primitive-lineHeight-${key})`,
-                  color: 'var(--helix-color-text-default)',
+                  color: 'var(--helix-color-text-neutral)',
                 }}>
                   Helix DS<br />Type scale<br />Line height
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', fontFamily: 'monospace' }}>{key}</span>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</span>
                   <span style={{ ...label12, textAlign: 'left' }}>{val}{role ? ` · ${role}` : ''}</span>
                 </div>
               </div>
@@ -391,12 +427,12 @@ export const Typography: Story = {
               <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
                   <span style={{ ...label12, width: 36, textAlign: 'right', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{key}</span>
-                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--helix-color-text-secondary)' }}>{token}</span>
+                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral-light)' }}>{token}</span>
                 </div>
-                <div style={{ fontFamily: `var(${token})`, fontSize: 22, color: 'var(--helix-color-text-default)', lineHeight: 1.3, paddingLeft: 46 }}>
+                <div style={{ fontFamily: `var(${token})`, fontSize: 22, color: 'var(--helix-color-text-neutral)', lineHeight: 1.3, paddingLeft: 46 }}>
                   The quick brown fox jumps over the lazy dog
                 </div>
-                <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)', fontFamily: 'monospace', paddingLeft: 46 }}>{stack}</div>
+                <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace', paddingLeft: 46 }}>{stack}</div>
               </div>
             ))}
           </div>
@@ -422,7 +458,7 @@ export const Shadows: Story = {
               boxShadow: `var(--helix-primitive-shadow-${s})`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
-              <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-default)' }}>shadow-{s}</span>
+              <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
             </div>
           </div>
         ))}

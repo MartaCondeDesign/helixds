@@ -133,34 +133,34 @@ function IconBrowser() {
             autoFocus
             style={{
               width: '100%', boxSizing: 'border-box', padding: '8px 12px 8px 36px',
-              fontSize: 14, border: '1px solid var(--helix-color-border-default)',
+              fontSize: 14, border: '1px solid var(--helix-color-border-neutral)',
               borderRadius: 8, background: 'var(--helix-color-fill-surface)',
-              color: 'var(--helix-color-text-default)', outline: 'none',
+              color: 'var(--helix-color-text-neutral)', outline: 'none',
             }}
             onFocus={e => (e.target.style.borderColor = 'var(--helix-color-border-focus)')}
-            onBlur={e  => (e.target.style.borderColor = 'var(--helix-color-border-default)')}
+            onBlur={e  => (e.target.style.borderColor = 'var(--helix-color-border-neutral)')}
           />
           <IconSearch size={16} style={{
             position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)',
-            color: 'var(--helix-color-text-tertiary)', pointerEvents: 'none',
+            color: 'var(--helix-color-text-neutral-lightest)', pointerEvents: 'none',
           }} />
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <label style={{ fontSize: 13, color: 'var(--helix-color-text-secondary)' }}>Size</label>
+          <label style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>Size</label>
           <input type="range" min={16} max={40} step={4} value={size}
             onChange={e => setSize(Number(e.target.value))} style={{ width: 80 }} />
-          <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-tertiary)', width: 28 }}>
+          <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral-lightest)', width: 28 }}>
             {size}
           </span>
         </div>
 
-        <span style={{ fontSize: 13, color: 'var(--helix-color-text-tertiary)' }}>
+        <span style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-lightest)' }}>
           {filtered.length} / {ICONS.length}
         </span>
       </div>
 
-      <p style={{ margin: '0 0 16px', fontSize: 13, color: 'var(--helix-color-text-secondary)' }}>
+      <p style={{ margin: '0 0 16px', fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
         Curated set from <strong>@tabler/icons-react v3</strong> — 5 000+ icons total at{' '}
         <strong>tabler.io/icons</strong>. Click any icon to copy its import name.
       </p>
@@ -174,15 +174,15 @@ function IconBrowser() {
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               gap: 8, padding: '12px 8px', border: '1px solid transparent', borderRadius: 8,
-              background: copied === name ? 'var(--helix-color-fill-success-subtle)' : 'transparent',
-              color: copied === name ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-default)',
+              background: copied === name ? 'var(--helix-color-fill-success-light)' : 'transparent',
+              color: copied === name ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-neutral)',
               cursor: 'pointer', transition: 'background 120ms, border-color 120ms',
             }}
             onMouseEnter={e => {
               if (copied !== name) {
                 const btn = e.currentTarget as HTMLButtonElement;
                 btn.style.background = 'var(--helix-color-fill-secondary)';
-                btn.style.borderColor = 'var(--helix-color-border-default)';
+                btn.style.borderColor = 'var(--helix-color-border-neutral)';
               }
             }}
             onMouseLeave={e => {

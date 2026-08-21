@@ -64,13 +64,13 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
         alignItems:     'center',
         gap:            'var(--helix-primitive-spacing-3)',
         padding:        'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
-        borderBottom:   '1px solid var(--helix-color-border-subtle)',
+        borderBottom:   '1px solid var(--helix-color-border-neutral-light)',
       }}
     >
       <span style={{
         flex:      1,
         fontSize:  'var(--helix-primitive-fontSize-s)',
-        color:     'var(--helix-color-text-default)',
+        color:     'var(--helix-color-text-neutral)',
         fontWeight: 'var(--helix-primitive-fontWeight-medium)',
       }}>
         {label}
@@ -81,7 +81,7 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
       {meta && (
         <span style={{
           fontSize: 'var(--helix-primitive-fontSize-xs)',
-          color:    'var(--helix-color-text-tertiary)',
+          color:    'var(--helix-color-text-neutral-lightest)',
           minWidth: '60px',
           textAlign: 'right',
         }}>

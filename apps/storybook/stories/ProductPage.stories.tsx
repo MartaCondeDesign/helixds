@@ -86,16 +86,16 @@ function WorkspacePage() {
         }}>
           <div style={{
             width: 56, height: 56, borderRadius: '50%',
-            background: 'var(--helix-color-fill-success-subtle)',
+            background: 'var(--helix-color-fill-success-light)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             color: 'var(--helix-color-text-success)',
           }}>
             <IconCheck size={28} />
           </div>
-          <h1 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-2xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-default)' }}>
+          <h1 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-2xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-neutral)' }}>
             Workspace created!
           </h1>
-          <p style={{ margin: 0, color: 'var(--helix-color-text-secondary)' }}>
+          <p style={{ margin: 0, color: 'var(--helix-color-text-neutral-light)' }}>
             Welcome to <strong>{form.workspace}</strong>. You're all set to start building.
           </p>
           <Button variant="primary" iconEnd={<IconArrowRight size={16} />} onPress={() => setSubmitted(false)}>
@@ -188,14 +188,14 @@ function WorkspacePage() {
             <h2 style={{
               fontSize: 'var(--helix-primitive-fontSize-2xl)',
               fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-              color: 'var(--helix-color-text-default)',
+              color: 'var(--helix-color-text-neutral)',
               margin: '0 0 4px',
             }}>
               Create your workspace
             </h2>
-            <p style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-secondary)' }}>
+            <p style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
               Already have an account?{' '}
-              <a href="#" style={{ color: 'var(--helix-color-text-brand)', textDecoration: 'none', fontWeight: 500 }}>
+              <a href="#" style={{ color: 'var(--helix-color-text-primary)', textDecoration: 'none', fontWeight: 500 }}>
                 Sign in
               </a>
             </p>
@@ -208,7 +208,7 @@ function WorkspacePage() {
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-tertiary)',
+                color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase',
                 letterSpacing: '0.08em',
               }}>
@@ -245,14 +245,14 @@ function WorkspacePage() {
             </div>
 
             {/* Divider */}
-            <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-subtle)', margin: 0 }} />
+            <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-neutral-light)', margin: 0 }} />
 
             {/* Section: workspace */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-tertiary)',
+                color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase', letterSpacing: '0.08em',
               }}>
                 Workspace
@@ -301,14 +301,14 @@ function WorkspacePage() {
             </div>
 
             {/* Divider */}
-            <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-subtle)', margin: 0 }} />
+            <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-neutral-light)', margin: 0 }} />
 
             {/* Section: preferences */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-tertiary)',
+                color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase', letterSpacing: '0.08em',
               }}>
                 Preferences
@@ -340,11 +340,11 @@ function WorkspacePage() {
               {loading ? 'Creating workspace…' : 'Create workspace'}
             </Button>
 
-            <p style={{ margin: 0, textAlign: 'center', fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-tertiary)' }}>
+            <p style={{ margin: 0, textAlign: 'center', fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)' }}>
               By creating a workspace you agree to our{' '}
-              <a href="#" style={{ color: 'var(--helix-color-text-secondary)' }}>Terms</a>
+              <a href="#" style={{ color: 'var(--helix-color-text-neutral-light)' }}>Terms</a>
               {' '}and{' '}
-              <a href="#" style={{ color: 'var(--helix-color-text-secondary)' }}>Privacy Policy</a>.
+              <a href="#" style={{ color: 'var(--helix-color-text-neutral-light)' }}>Privacy Policy</a>.
             </p>
           </form>
         </div>

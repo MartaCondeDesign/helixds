@@ -72,13 +72,13 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-4)', alignItems: 'center' }}>
       <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-secondary)', marginBottom: '8px' }}>
+        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
           size=&quot;xs&quot;
         </p>
         <Badge size="xs" variant="success" label="Active" />
       </div>
       <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-secondary)', marginBottom: '8px' }}>
+        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
           size=&quot;s&quot; (default)
         </p>
         <Badge size="s" variant="success" label="Active" />
@@ -107,7 +107,7 @@ export const StatusRowPattern: Story = {
 
     return (
       <div style={{
-        border:       '1px solid var(--helix-color-border-default)',
+        border:       '1px solid var(--helix-color-border-neutral)',
         borderRadius: 'var(--helix-primitive-radius-l)',
         overflow:     'hidden',
         maxWidth:     '480px',
@@ -120,14 +120,14 @@ export const StatusRowPattern: Story = {
               alignItems:   'center',
               gap:          'var(--helix-primitive-spacing-3)',
               padding:      'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
-              borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+              borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >
-            <span style={{ flex: 1, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-default)', fontWeight: 'var(--helix-primitive-fontWeight-medium)' }}>
+            <span style={{ flex: 1, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)', fontWeight: 'var(--helix-primitive-fontWeight-medium)' }}>
               {row.label}
             </span>
             <Badge variant={row.status} label={config[row.status].label} />
-            <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-tertiary)', minWidth: '52px', textAlign: 'right' }}>
+            <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)', minWidth: '52px', textAlign: 'right' }}>
               {row.meta}
             </span>
           </div>

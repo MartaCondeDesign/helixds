@@ -58,10 +58,10 @@ export const EmptyState: Story = {
       textAlign:      'center',
       background:     'var(--helix-color-fill-surface)',
       borderRadius:   'var(--helix-primitive-radius-xl)',
-      border:         '1px dashed var(--helix-color-border-default)',
+      border:         '1px dashed var(--helix-color-border-neutral)',
       maxWidth:       '420px',
     }}>
-      <span style={{ color: 'var(--helix-color-text-secondary)' }} aria-hidden="true">
+      <span style={{ color: 'var(--helix-color-text-neutral-light)' }} aria-hidden="true">
         <IconFolderOpen size={48} />
       </span>
 
@@ -69,14 +69,14 @@ export const EmptyState: Story = {
         <h3 style={{
           fontSize:   'var(--helix-primitive-fontSize-xl)',
           fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-          color:      'var(--helix-color-text-default)',
+          color:      'var(--helix-color-text-neutral)',
           margin: 0,
         }}>
           No projects yet
         </h3>
         <p style={{
           fontSize:  'var(--helix-primitive-fontSize-s)',
-          color:     'var(--helix-color-text-secondary)',
+          color:     'var(--helix-color-text-neutral-light)',
           maxWidth:  '280px',
           margin:    0,
           lineHeight: 'var(--helix-primitive-lineHeight-relaxed)',
@@ -110,13 +110,13 @@ export const ActionBarPageHeader: Story = {
       alignItems:     'center',
       padding:        'var(--helix-primitive-spacing-4) var(--helix-primitive-spacing-6)',
       background:     'var(--helix-color-fill-page)',
-      borderBottom:   '1px solid var(--helix-color-border-default)',
+      borderBottom:   '1px solid var(--helix-color-border-neutral)',
     }}>
       <div>
-        <h1 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-default)' }}>
+        <h1 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-neutral)' }}>
           Projects
         </h1>
-        <p style={{ margin: '2px 0 0', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-secondary)' }}>
+        <p style={{ margin: '2px 0 0', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
           24 projects · 3 shared with you
         </p>
       </div>
@@ -142,11 +142,11 @@ export const ActionBarBatchSelection: Story = {
         alignItems:  'center',
         gap:         'var(--helix-primitive-spacing-3)',
         padding:     'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
-        background:  'var(--helix-color-fill-primary-subtle)',
+        background:  'var(--helix-color-fill-primary-light)',
         border:      '1px solid var(--helix-color-border-focus)',
         borderRadius:'var(--helix-primitive-radius-m)',
       }}>
-        <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-medium)', color: 'var(--helix-color-text-brand)' }}>
+        <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-medium)', color: 'var(--helix-color-text-primary)' }}>
           {selected} selected
         </span>
         <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-1)' }}>
@@ -190,7 +190,7 @@ export const StatusRows: Story = {
 
     return (
       <div style={{
-        border:       '1px solid var(--helix-color-border-default)',
+        border:       '1px solid var(--helix-color-border-neutral)',
         borderRadius: 'var(--helix-primitive-radius-l)',
         overflow:     'hidden',
         maxWidth:     '500px',
@@ -203,13 +203,13 @@ export const StatusRows: Story = {
               alignItems:   'center',
               gap:          'var(--helix-primitive-spacing-3)',
               padding:      'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
-              borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+              borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >
             <span style={{
               flex:       1,
               fontSize:   'var(--helix-primitive-fontSize-s)',
-              color:      'var(--helix-color-text-default)',
+              color:      'var(--helix-color-text-neutral)',
               fontWeight: 'var(--helix-primitive-fontWeight-medium)',
             }}>
               {row.label}
@@ -217,7 +217,7 @@ export const StatusRows: Story = {
             <Badge variant={row.variant} icon={icons[row.variant]} label={row.status} />
             <span style={{
               fontSize:  'var(--helix-primitive-fontSize-xs)',
-              color:     'var(--helix-color-text-tertiary)',
+              color:     'var(--helix-color-text-neutral-lightest)',
               minWidth:  '64px',
               textAlign: 'right',
             }}>

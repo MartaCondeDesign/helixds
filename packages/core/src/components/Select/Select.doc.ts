@@ -23,8 +23,8 @@ export const doc: ComponentDoc = {
   variants: [],
   sizes: ['s', 'm', 'l'],
   tokens: [
-    { part: 'select', label: 'Rest fill', token: '--helix-select-fill-rest', kind: 'color' },
-    { part: 'select', label: 'Rest border', token: '--helix-select-border-rest', kind: 'color' },
+    { part: 'select', label: 'Default fill', token: '--helix-select-fill-default', kind: 'color' },
+    { part: 'select', label: 'Default border', token: '--helix-select-border-default', kind: 'color' },
     { part: 'select', label: 'Focus border', token: '--helix-select-border-focus', kind: 'color' },
     { part: 'select', label: 'Value text', token: '--helix-select-text-value', kind: 'color' },
     { part: 'select', label: 'Placeholder text', token: '--helix-select-text-placeholder', kind: 'color' },

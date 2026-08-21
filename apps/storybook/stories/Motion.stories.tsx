@@ -29,7 +29,7 @@ export const Duration: Story = {
 
     return (
       <div>
-        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-secondary)' }}>
+        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-neutral-light)' }}>
           Click each card to toggle it on/off. Each uses a different duration token.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
@@ -42,9 +42,9 @@ export const Duration: Story = {
                 style={{
                   width: 140, height: 110,
                   borderRadius: 10, border: '2px solid',
-                  borderColor: on ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-default)',
+                  borderColor: on ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-neutral)',
                   background: on ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-fill-surface)',
-                  color: on ? 'white' : 'var(--helix-color-text-default)',
+                  color: on ? 'white' : 'var(--helix-color-text-neutral)',
                   cursor: 'pointer',
                   display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8,
                   transition: `background ${d.token} var(--helix-primitive-easing-base),
@@ -88,7 +88,7 @@ export const Easing: Story = {
 
     return (
       <div>
-        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-secondary)' }}>
+        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-neutral-light)' }}>
           Press Play to animate all three at the same time. Same duration (<code>slower</code>), different easing.
         </p>
         <button
@@ -104,14 +104,14 @@ export const Easing: Story = {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {EASINGS.map(e => (
             <div key={e.name}>
-              <div style={{ fontSize: 12, fontWeight: 600, fontFamily: 'monospace', color: 'var(--helix-color-text-default)', marginBottom: 6 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral)', marginBottom: 6 }}>
                 easing-{e.name}
-                <span style={{ fontWeight: 400, color: 'var(--helix-color-text-tertiary)', marginLeft: 8 }}>{e.curve}</span>
+                <span style={{ fontWeight: 400, color: 'var(--helix-color-text-neutral-lightest)', marginLeft: 8 }}>{e.curve}</span>
               </div>
               <div style={{
                 height: 40, borderRadius: 8, position: 'relative', overflow: 'hidden',
                 background: 'var(--helix-color-fill-surface)',
-                border: '1px solid var(--helix-color-border-subtle)',
+                border: '1px solid var(--helix-color-border-neutral-light)',
               }}>
                 <div
                   key={tick}
@@ -143,34 +143,34 @@ export const AllMotionTokens: Story = {
   render: () => (
     <div>
       <div style={{ marginBottom: 24 }}>
-        <h3 style={{ margin: '0 0 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--helix-color-text-tertiary)' }}>
+        <h3 style={{ margin: '0 0 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)' }}>
           Duration
         </h3>
         {DURATIONS.map((d, i) => (
           <div key={d.name} style={{
             display: 'flex', gap: 24, alignItems: 'center', paddingBlock: 10,
-            borderBottom: i < DURATIONS.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+            borderBottom: i < DURATIONS.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
-            <code style={{ fontSize: 12, color: 'var(--helix-color-text-brand)', width: 280, flexShrink: 0 }}>
+            <code style={{ fontSize: 12, color: 'var(--helix-color-text-primary)', width: 280, flexShrink: 0 }}>
               {d.token}
             </code>
-            <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-secondary)' }}>{d.ms}</span>
+            <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral-light)' }}>{d.ms}</span>
           </div>
         ))}
       </div>
       <div>
-        <h3 style={{ margin: '0 0 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--helix-color-text-tertiary)' }}>
+        <h3 style={{ margin: '0 0 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)' }}>
           Easing
         </h3>
         {EASINGS.map((e, i) => (
           <div key={e.name} style={{
             display: 'flex', gap: 24, alignItems: 'center', paddingBlock: 10,
-            borderBottom: i < EASINGS.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+            borderBottom: i < EASINGS.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
-            <code style={{ fontSize: 12, color: 'var(--helix-color-text-brand)', width: 280, flexShrink: 0 }}>
+            <code style={{ fontSize: 12, color: 'var(--helix-color-text-primary)', width: 280, flexShrink: 0 }}>
               {`var(--helix-primitive-easing-${e.name})`}
             </code>
-            <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-secondary)' }}>{e.curve}</span>
+            <span style={{ fontSize: 13, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral-light)' }}>{e.curve}</span>
           </div>
         ))}
       </div>

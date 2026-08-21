@@ -46,6 +46,18 @@ depends on this skill having run first) or icon import (see `icons-to-figma`).
 
 **Dot in spacing names → hyphen:** `spacing/0.5` is invalid in Figma → use `spacing/0-5`.
 
+**In the `Color Semantic` collection, every grammar segment joins with `/`, not `-`.** A semantic
+token's key in `tokens.json` is a flat hyphenated string — `fill.primary-interactive-light-hover`
+— per the `{role}[-interactive][-modifier][-state]` grammar in `packages/tokens/CLAUDE.md`. In
+Figma, translate each of those segments into its own `/`-delimited path level instead, so Figma
+groups them as nested folders in the variable picker: `fill/primary/interactive/light/hover`, not
+`fill/primary-interactive-light-hover`. This is **Figma-only** — `tokens.json` keys and the
+generated `--helix-*` CSS custom properties keep `-` throughout (CSS doesn't allow `/` in an
+identifier), so the CSS var name for that same token stays
+`--helix-color-fill-primary-interactive-light-hover`. Do not apply this to the numeric decimal
+hyphen in primitive spacing names (`spacing/0-5` stays as one segment, not `spacing/0/5` — that `-`
+encodes a decimal point, not a grammar segment).
+
 ---
 
 ## Overview of what to create
@@ -206,59 +218,74 @@ const SCOPES = ['ALL_FILLS', 'STROKE_COLOR', 'EFFECT_COLOR'];
 
 // [lightPrimitive, darkPrimitive]
 // NOTE: Color collection vars use fill/*, text/*, border/* — no 'color/' prefix
+// Keys use '/' for every grammar segment (role/interactive/modifier/state), not '-' —
+// see "Naming rules" above. tokens.json itself still uses flat hyphenated keys; only the
+// Figma variable name translates each segment into its own path level.
 const semanticColors = {
   // fill — surface
   'fill/page':               ['color/gray/0',   'color/gray/900'],
   'fill/surface':            ['color/gray/50',  'color/gray/800'],
-  'fill/surface-raised':     ['color/gray/100', 'color/gray/700'],
+  'fill/surface/dark':       ['color/gray/100', 'color/gray/700'],
   'fill/overlay':            ['color/gray/900', 'color/gray/900'],
   'fill/disabled':           ['color/gray/100', 'color/gray/800'],
-  // fill — secondary
-  'fill/secondary':          ['color/gray/100', 'color/gray/800'],
-  'fill/secondary-hover':    ['color/gray/200', 'color/gray/700'],
-  'fill/secondary-active':   ['color/gray/300', 'color/gray/600'],
-  // fill — primary
-  'fill/primary':            ['color/blue/600', 'color/blue/600'],
-  'fill/primary-hover':      ['color/blue/700', 'color/blue/700'],
-  'fill/primary-active':     ['color/blue/800', 'color/blue/800'],
-  'fill/primary-subtle':     ['color/blue/50',  'color/blue/900'],
-  'fill/primary-subtle-hover': ['color/blue/100','color/blue/800'],
-  // fill — status
-  'fill/danger':             ['color/red/600',  'color/red/600'],
-  'fill/danger-hover':       ['color/red/700',  'color/red/700'],
-  'fill/danger-active':      ['color/red/800',  'color/red/800'],
-  'fill/danger-subtle':      ['color/red/50',   'color/red/900'],
-  'fill/danger-subtle-hover':['color/red/100',  'color/red/800'],
-  'fill/success':            ['color/green/600', 'color/green/600'],
-  'fill/success-hover':      ['color/green/700', 'color/green/700'],
-  'fill/success-subtle':     ['color/green/50',  'color/green/900'],
-  'fill/warning':            ['color/orange/600', 'color/orange/600'],
-  'fill/warning-hover':      ['color/orange/700', 'color/orange/700'],
-  'fill/warning-subtle':     ['color/orange/50',  'color/orange/900'],
-  'fill/info':               ['color/turquoise/600',    'color/turquoise/600'],
-  'fill/info-hover':         ['color/turquoise/700',    'color/turquoise/700'],
-  'fill/info-subtle':        ['color/turquoise/50',     'color/turquoise/900'],
+  // fill — secondary (interactive: has hover + press states)
+  'fill/secondary/interactive/default': ['color/gray/100', 'color/gray/800'],
+  'fill/secondary/interactive/hover':   ['color/gray/200', 'color/gray/700'],
+  'fill/secondary/interactive/press':   ['color/gray/300', 'color/gray/600'],
+  // fill — primary (interactive)
+  'fill/primary/interactive/default':      ['color/blue/600', 'color/blue/600'],
+  'fill/primary/interactive/hover':        ['color/blue/700', 'color/blue/700'],
+  'fill/primary/interactive/press':        ['color/blue/800', 'color/blue/800'],
+  'fill/primary/interactive/light/default': ['color/blue/50',  'color/blue/900'],
+  'fill/primary/interactive/light/hover':  ['color/blue/100','color/blue/800'],
+  // fill — status (interactive)
+  'fill/danger/interactive/default':      ['color/red/600',  'color/red/600'],
+  'fill/danger/interactive/hover':        ['color/red/700',  'color/red/700'],
+  'fill/danger/interactive/press':        ['color/red/800',  'color/red/800'],
+  'fill/danger/interactive/light/default': ['color/red/50',   'color/red/900'],
+  'fill/danger/interactive/light/hover':  ['color/red/100',  'color/red/800'],
+  'fill/success/interactive/default':     ['color/green/600', 'color/green/600'],
+  'fill/success/interactive/hover':       ['color/green/700', 'color/green/700'],
+  'fill/success/light':      ['color/green/50',  'color/green/900'],
+  'fill/warning/interactive/default':     ['color/orange/600', 'color/orange/600'],
+  'fill/warning/interactive/hover':       ['color/orange/700', 'color/orange/700'],
+  'fill/warning/light':      ['color/orange/50',  'color/orange/900'],
+  'fill/info/interactive/default':        ['color/turquoise/600',    'color/turquoise/600'],
+  'fill/info/interactive/hover':          ['color/turquoise/700',    'color/turquoise/700'],
+  'fill/info/light':         ['color/turquoise/50',     'color/turquoise/900'],
   // text
-  'text/default':            ['color/gray/900', 'color/gray/100'],
-  'text/secondary':          ['color/gray/600', 'color/gray/400'],
-  'text/tertiary':           ['color/gray/500', 'color/gray/500'],
+  'text/neutral':            ['color/gray/900', 'color/gray/100'],
+  'text/neutral/light':      ['color/gray/600', 'color/gray/400'],
+  'text/neutral/lightest':   ['color/gray/500', 'color/gray/500'],
   'text/disabled':           ['color/gray/400', 'color/gray/600'],
   'text/inverse':            ['color/gray/0',   'color/gray/900'],
-  'text/brand':              ['color/blue/600','color/blue/400'],
+  'text/primary':            ['color/blue/600','color/blue/400'],
   'text/link':               ['color/blue/600','color/blue/400'],
-  'text/link-hover':         ['color/blue/700','color/blue/300'],
+  'text/link/hover':         ['color/blue/700','color/blue/300'],
   'text/danger':             ['color/red/600', 'color/red/400'],
   'text/success':            ['color/green/700','color/green/500'],
   'text/warning':            ['color/orange/700','color/orange/500'],
   'text/info':               ['color/turquoise/700',   'color/turquoise/500'],
+  // icon — mirrors text role-for-role, bound independently (see packages/tokens/CLAUDE.md)
+  'icon/neutral':            ['color/gray/900', 'color/gray/100'],
+  'icon/neutral/light':      ['color/gray/600', 'color/gray/400'],
+  'icon/neutral/lightest':   ['color/gray/500', 'color/gray/500'],
+  'icon/disabled':           ['color/gray/400', 'color/gray/600'],
+  'icon/inverse':            ['color/gray/0',   'color/gray/900'],
+  'icon/primary':            ['color/blue/600','color/blue/400'],
+  'icon/danger':             ['color/red/600', 'color/red/400'],
+  'icon/success':            ['color/green/700','color/green/500'],
+  'icon/warning':            ['color/orange/700','color/orange/500'],
+  'icon/info':               ['color/turquoise/700',   'color/turquoise/500'],
   // border
-  'border/default':          ['color/gray/200', 'color/gray/700'],
-  'border/strong':           ['color/gray/400', 'color/gray/600'],
-  'border/subtle':           ['color/gray/100', 'color/gray/800'],
+  'border/neutral':          ['color/gray/200', 'color/gray/700'],
+  'border/neutral/dark':     ['color/gray/400', 'color/gray/600'],
+  'border/neutral/light':    ['color/gray/100', 'color/gray/800'],
   'border/focus':            ['color/blue/500','color/blue/500'],
   'border/danger':           ['color/red/500', 'color/red/500'],
   'border/success':          ['color/green/500','color/green/500'],
   'border/warning':          ['color/orange/400','color/orange/400'],
+  'border/info':             ['color/turquoise/200', 'color/turquoise/200'],
   'border/inverse':          ['color/gray/700', 'color/gray/400'],
 };
 
@@ -490,6 +517,54 @@ return result;
 
 ---
 
+### Entry C — single token addition (per `pnpm token:add` run)
+
+When `scripts/token-cli.ts` has already added ONE token to `src/tokens.json` (naming-checked and
+built locally), don't re-run Phases 1–9 — push just that one variable. Only `semantic.*` and
+`component.*` tokens live in Figma variables; a `primitive.*` addition needs Phase 1's collection
+first (rare — most new work is a semantic alias onto existing primitives).
+
+1. Get the new token's path and value out of `packages/tokens/dist/helix.css` (already built) —
+   e.g. `semantic.color.icon.neutral-darkest` → CSS var `--helix-color-icon-neutral-darkest` →
+   Figma variable name `icon/neutral/darkest` in the `Color Semantic` collection. Figma name = the
+   token's own hyphenated key (`neutral-darkest`) with **every** `-` turned into `/` (each grammar
+   segment — role/interactive/modifier/state — becomes its own path level; see "Naming rules" above)
+   — same mapping the `semanticColors` table in Phase 2 uses.
+2. Resolve which **primitive** it aliases (light mode) and its dark-mode counterpart, the same way
+   every row in the Phase 2 `semanticColors` table does — read the token's `$value` alias in
+   `tokens.json` for light, and the matching key in `src/build.ts`'s `darkOverrides` map for dark.
+3. Run one `use_figma` call:
+
+```js
+await figma.setCurrentPageAsync(figma.root.children[0]); // variables aren't page-scoped, any page works
+const semColl = figma.variables.getLocalVariableCollections().find(c => c.name === 'Color Semantic');
+const lightModeId = semColl.modes.find(m => m.name === 'light').modeId;
+const darkModeId  = semColl.modes.find(m => m.name === 'dark').modeId;
+const varMap = {};
+figma.variables.getLocalVariables().forEach(v => { varMap[v.name] = v; });
+
+const name = 'icon/neutral/darkest';           // ← the new/renamed variable
+const lightPrimitive = 'color/gray/900';       // ← what it resolves to in light mode
+const darkPrimitive  = 'color/gray/100';       // ← what it resolves to in dark mode
+
+const existing = figma.variables.getLocalVariables()
+  .find(v => v.name === name && v.variableCollectionId === semColl.id);
+const v = existing || figma.variables.createVariable(name, semColl, 'COLOR');
+v.scopes = ['ALL_FILLS', 'STROKE_COLOR', 'EFFECT_COLOR'];
+if (varMap[lightPrimitive]) v.setValueForMode(lightModeId, figma.variables.createVariableAlias(varMap[lightPrimitive]));
+if (varMap[darkPrimitive])  v.setValueForMode(darkModeId,  figma.variables.createVariableAlias(varMap[darkPrimitive]));
+
+return { createdOrUpdated: name };
+```
+
+4. **Renaming an existing token** (not adding): find the variable by its OLD name, set `.name` to
+   the new one — do NOT create a second variable, or every component instance bound to the old
+   variable silently keeps pointing at an orphaned one.
+5. Re-run Phase 9 (QA) to confirm the `Color Semantic` count moved by exactly the number of tokens
+   you added (0 for a pure rename).
+
+---
+
 ## Output
 
 Five Figma variable collections (`Primitives`, `Color`, `Spacing`, `Radius`, `Typography`), plus
@@ -501,7 +576,10 @@ prefix — ready for `components-to-figma` to bind against.
 Run Phase 9 and confirm the counts match:
 
 - [ ] `Primitives`: 61 vars, modes=[default] (10 blue + 11 gray + 10 each green/orange/red/turquoise)
-- [ ] `Color`: 47 vars, modes=[light, dark] (`fill/*`, `text/*`, `border/*` — no `color/` prefix)
+- [ ] `Color Semantic`: 58 vars, modes=[light, dark] (`fill/*` 27, `text/*` 12, `icon/*` 10, `border/*` 9 — no `color/` prefix)
+- [ ] No `Color Semantic` variable name contains a `-` — every grammar segment (role/interactive/
+      modifier/state) is its own `/`-delimited path level (`fill/primary/interactive/light/hover`,
+      not `fill/primary-interactive-light-hover`)
 - [ ] `Spacing`: 20 vars, modes=[default]
 - [ ] `Radius`: 9 vars, modes=[default]
 - [ ] `Typography`: 19 vars, modes=[default] (17 FLOAT + 2 STRING fontFamily)

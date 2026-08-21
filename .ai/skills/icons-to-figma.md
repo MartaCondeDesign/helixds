@@ -179,17 +179,12 @@ function addIcon(name, d, idx) {
   vec.y = oy;
   vec.constraints = { horizontal: 'SCALE', vertical: 'SCALE' };
 
-  // REQUIRED: outline stroke IN-PLACE so the icon scales correctly at any size.
-  // Figma strokes are absolute px — a 1.5px stroke at 24px stays 1.5px when resized to 16px.
-  // strokeGeometry is the fill geometry of the stroke, in vec's LOCAL coordinate space.
-  // Replace vectorPaths on the SAME node — no new node, no resize, no position offset needed.
-  // Creating a new node + resize shrinks the icon because vec.width excludes stroke half-width.
-  const geom = vec.strokeGeometry;
-  if (geom && geom.length > 0) {
-    vec.vectorPaths = geom.map(p => ({ windingRule: p.windingRule, data: p.data }));
-    vec.fills = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 1 }];
-    vec.strokes = [];
-  }
+  // DO NOT convert the stroke to filled geometry (outlineStroke / strokeGeometry-in-place).
+  // That breaks the icons. Leave the vector as a real stroke: strokeWeight = 1.5, fills empty.
+  // createNodeFromSvg already parsed stroke="black" stroke-width="1.5" from the SVG above into
+  // vec.strokes / vec.strokeWeight — nothing more to set here. Color gets bound to a variable
+  // later (Step 3 here for a flat currentColor-equivalent, or per-variant in components-to-figma's
+  // icon slot rule, which also binds to vec.strokes — keep both skills consistent on this point).
 
   return comp.id;
 }
@@ -199,7 +194,7 @@ function addIcon(name, d, idx) {
 
 **Why NOT force-resize the vector**: Tabler icon vectors have non-square natural bounding boxes (e.g., `IconMinus` is ~14×1.5px). Forcing `vec.resize(20, 20)` distorts them. Let the vector keep its natural dimensions.
 
-**Why `strokeGeometry` in-place**: `outlineStroke()` does not work in the Plugin API. `strokeGeometry` returns the stroke expansion as `VectorPath[]` in the node's **local coordinate space**. The correct approach is to replace `vec.vectorPaths` with the strokeGeometry data ON THE SAME NODE — no new node, no `resize()`, no position offset. Creating a new VectorNode and calling `filled.resize(vec.width, vec.height)` shrinks the icon by ~1px per side because `vec.width` excludes the stroke half-width (0.75px). In-place replacement avoids all coordinate issues: the geometry stays in the same local space at the correct position. Required for **correct scaling**: Figma stroke widths are absolute px — a 1.5px stroke on a 24px icon stays 1.5px when resized to 16px. With strokeGeometry the line weight IS fill geometry and scales proportionally.
+**Why NOT `strokeGeometry`-in-place (don't convert the stroke to filled geometry)**: an earlier version of this skill replaced `vec.vectorPaths` with the `strokeGeometry` expansion (turning the stroke into filled vector geometry) to get the line weight to scale proportionally with the icon. **That approach breaks the icons** — import with a real stroke instead: leave `vec.strokes` as parsed from the SVG (`stroke="black" stroke-width="1.5"`), don't touch `vec.fills`/`vec.vectorPaths`. The tradeoff is that a plain resize doesn't scale `strokeWeight` proportionally (1.5px stays 1.5px at any instance size) — accept that; it's not worth broken icons to avoid it.
 
 ### Idempotency
 
@@ -207,6 +202,43 @@ Before creating, clear the Icons page:
 ```js
 for (const child of [...iconsPage.children]) child.remove();
 ```
+
+---
+
+### Bind every master icon's stroke to `icon/neutral`
+
+Every icon component created on the Icons page must carry the `icon/neutral` variable as its
+default stroke color — never leave it as the hardcoded `stroke="black"` the SVG import parses in.
+`icon/neutral` is the base tone of the `icon.*` semantic family (see `packages/tokens/CLAUDE.md` →
+"Semantic naming vocabulary"): the default color an icon renders in before any component-specific
+override (Button's per-variant `icon/inverse` vs `icon/neutral`, set later in `components-to-figma`)
+replaces it.
+
+Run this once, after all `addIcon()` calls, in the same or a following `use_figma` call:
+
+```js
+// Look up icon/neutral in the Color Semantic collection
+const semColl = figma.variables.getLocalVariableCollections().find(c => c.name === 'Color Semantic');
+const iconNeutralVar = figma.variables.getLocalVariables()
+  .find(v => v.name === 'icon/neutral' && v.variableCollectionId === semColl.id);
+if (!iconNeutralVar) throw new Error('icon/neutral variable not found — run tokens-to-figma first');
+
+// Bind every icon component's vector stroke to it
+const iconVectors = iconsPage.findAll(n => n.type === 'VECTOR' && n.name === 'vector');
+for (const vec of iconVectors) {
+  const base = { type: 'SOLID', color: { r: 0, g: 0, b: 0 } };
+  const bound = figma.variables.setBoundVariableForPaint(base, 'color', iconNeutralVar);
+  vec.strokes = [bound]; // MUST reassign — setBoundVariableForPaint returns a NEW paint
+}
+
+return { boundCount: iconVectors.length };
+```
+
+This is the master/default binding only — when an icon is instanced into a component (Button,
+Badge, ...), `components-to-figma` overrides the instance's own stroke per variant (`icon/inverse`
+on filled backgrounds, `icon/neutral` on light ones) using the same `setBoundVariableForPaint`
+pattern. Binding the master here just means an icon dropped anywhere with no override already shows
+the correct default instead of flat black.
 
 ---
 
@@ -283,8 +315,10 @@ An "Icons" page in the Figma file containing one COMPONENT per Tabler icon (161 
 - [ ] Each icon is a COMPONENT (not a frame or group)
 - [ ] Naming: bare name with no prefix — `Plus`, not `tabler/Plus`, not `IconPlus`
 - [ ] All components are 24×24
-- [ ] stroke-width = 1.5 used during SVG creation (input to strokeGeometry calculation)
-- [ ] All vectors converted via `strokeGeometry` — filled VECTOR node, strokes array is empty
+- [ ] stroke-width = 1.5 on every vector's `strokeWeight` (real stroke, not converted to fill)
+- [ ] `vec.strokes` is non-empty and `vec.fills` is empty on every vector — NOT the reverse
+- [ ] Every vector's stroke is bound to the `icon/neutral` variable (Color Semantic collection) —
+      not a flat unbound black (`boundVariables.strokes` set, run tokens-to-figma first if missing)
 - [ ] No deformed icons (vectors keep natural bounding box, no forced resize)
 - [ ] No row frames — flat grid directly on page
 - [ ] Total count = 161 (matches `ICONS` array in `Icons.stories.tsx`)
