@@ -1,0 +1,74 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "Checkbox",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "Lets users select one or more independent options from a set, or confirm a single binary choice.",
+
+  "neverUseFor": [
+    "Multiple mutually exclusive choices — use RadioGroup instead",
+    "A single on/off setting applied immediately — use Switch instead",
+    "Triggering an action — use Button instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      { "name": "disabled", "description": "The checkbox is non-interactive.", "aria": "disabled (native HTML attribute)" },
+      { "name": "invalid", "description": "The checkbox value fails validation.", "aria": "aria-invalid='true'" },
+      { "name": "required", "description": "The checkbox must be checked before form submission.", "aria": "aria-required='true'" },
+      { "name": "indeterminate", "description": "Mixed state — neither fully checked nor unchecked (e.g. a 'select all' controlling a partial selection).", "aria": "indeterminate is a native DOM property, not an HTML attribute — set imperatively via ref" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "checkbox-root", "element": "div", "description": "Layout wrapper for the control, label, and messages." },
+    { "part": "checkbox-label", "element": "label", "description": "Wraps the native input, visual control, and text." },
+    { "part": "checkbox-input", "element": "input", "description": "The native checkbox input. Visually styled via sibling selector, not hidden." },
+    { "part": "checkbox-control", "element": "span", "description": "Visual box — reflects checked/indeterminate state via CSS.", "optional": false },
+    { "part": "checkbox-indicator", "element": "slot", "description": "Check or minus icon inside the control." },
+    { "part": "checkbox-text", "element": "span", "description": "Visible label text." },
+    { "part": "checkbox-description", "element": "span", "description": "Helper text below the control.", "optional": true },
+    { "part": "checkbox-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label text." },
+    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the control." },
+    { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
+    { "name": "checked", "type": "boolean | undefined", "description": "Controlled checked state." },
+    { "name": "defaultChecked", "type": "boolean | undefined", "description": "Uncontrolled initial checked state." },
+    { "name": "onChange", "type": "((checked: boolean) => void) | undefined", "description": "Checked-state change handler." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Non-interactive state." },
+    { "name": "required", "type": "boolean", "default": false, "description": "Marks the field as required." },
+    { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
+    { "name": "indeterminate", "type": "boolean", "default": false, "description": "Renders the mixed/indeterminate visual state." },
+    { "name": "id", "type": "string | undefined", "description": "Optional id override." },
+    { "name": "name", "type": "string | undefined", "description": "Native form field name." },
+    { "name": "value", "type": "string | undefined", "description": "Native form field value." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 16 },
+      "unit": "px",
+      "note": "No size prop exists — Checkbox has one fixed control size (--helix-checkbox-size, 16px). Unlike Input/Select/Textarea, it does not follow the ADR-004 field scale."
+    },
+    "width": {
+      "default": "hug"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "checkbox (native input)",
+    "keyboardNav": ["Space — toggles checked state", "Tab — moves focus"],
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

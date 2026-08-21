@@ -1,0 +1,73 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Badge",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "Communicates status, category labels, or counts in a compact, high-contrast capsule.",
+
+  "neverUseFor": [
+    "Decoration or visual interest with no semantic meaning",
+    "Long text — badges truncate at 24 characters",
+    "Navigation items — use NavItem or Tab instead"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "badge",       "element": "span",  "description": "Root element. Always inline." },
+    { "part": "badge-icon",  "element": "slot",  "description": "Leading icon. Tabler icon at 12px.", "optional": true },
+    { "part": "badge-label", "element": "span",  "description": "Text label." }
+  ],
+
+  "props": [
+    {
+      "name": "variant",
+      "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
+      "default": "neutral",
+      "description": "Semantic color variant."
+    },
+    {
+      "name": "size",
+      "type": "'xs' | 's'",
+      "default": "s",
+      "description": "Horizontal density preset. Badge is a documented exception to the global scale."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactElement | undefined",
+      "description": "Leading Tabler icon at 12px."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Text content of the badge."
+    }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "xs": 20, "s": 24 },
+      "unit": "px",
+      "note": "Badge uses a local density model; this does not redefine the global scale."
+    },
+    "width": {
+      "default": "hug"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "spacing", "radius", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "status (add role='status' when content is dynamic)",
+    "wcag": ["1.4.1 Use of Color (don't rely on color alone)", "1.4.3 Contrast (AA)"]
+  }
+}

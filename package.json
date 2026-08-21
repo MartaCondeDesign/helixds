@@ -1,0 +1,33 @@
+{
+  "name": "helix-ds",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Helix Design System — AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "sb": "pnpm --dir apps/storybook dev",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "verify:contract": "tsx scripts/verify-contract.ts",
+    "verify:props": "tsx scripts/prop-map-check.ts",
+    "report:paints": "tsx scripts/report-paints.ts",
+    "lint:ai": "tsx scripts/lint-ai.ts",
+    "contract": "tsx scripts/contract-cli.ts",
+    "eval:run": "tsx scripts/eval-run.ts",
+    "eval:generate": "tsx scripts/eval-generate.ts",
+    "eval:report": "tsx scripts/eval-report.ts",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "husky": "^9.1.7",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0"
+  }
+}

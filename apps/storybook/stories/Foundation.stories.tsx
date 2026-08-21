@@ -1,0 +1,437 @@
+import type { Meta, StoryObj } from '@storybook/react';
+
+// ── Shared primitives ──────────────────────────────────────────────────────
+
+const label12: React.CSSProperties = {
+  fontSize: 11, fontFamily: 'monospace',
+  color: 'var(--helix-color-text-secondary)',
+  textAlign: 'center', wordBreak: 'break-all',
+};
+
+function SectionHead({ title }: { title: string }) {
+  return (
+    <h3 style={{
+      margin: '0 0 16px',
+      fontSize: 11, fontWeight: 600, letterSpacing: '0.08em',
+      textTransform: 'uppercase', color: 'var(--helix-color-text-tertiary)',
+    }}>
+      {title}
+    </h3>
+  );
+}
+
+// ── META ───────────────────────────────────────────────────────────────────
+
+const meta: Meta = {
+  title: 'Foundation',
+  parameters: { layout: 'padded' },
+};
+
+export default meta;
+type Story = StoryObj;
+
+// ── 1. Color Primitives ────────────────────────────────────────────────────
+
+function PaletteRow({ name, prefix, steps }: { name: string; prefix: string; steps: string[] }) {
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', marginBottom: 10 }}>
+        {name}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {steps.map(step => (
+          <div key={step} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+            <div style={{
+              width: 52, height: 52, borderRadius: 8,
+              background: `var(--helix-primitive-color-${prefix}-${step})`,
+              border: '1px solid var(--helix-color-border-subtle)',
+            }} />
+            <span style={{ ...label12, maxWidth: 52 }}>{step}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const SCALE_10 = ['50','100','200','300','400','500','600','700','800','900'];
+
+export const ColorPrimitives: Story = {
+  render: () => (
+    <div>
+      <PaletteRow name="blue"      prefix="blue"      steps={SCALE_10} />
+      <PaletteRow name="gray"      prefix="gray"      steps={['0','50','100','200','300','400','500','600','700','900']} />
+      <PaletteRow name="green"     prefix="green"     steps={SCALE_10} />
+      <PaletteRow name="orange"    prefix="orange"    steps={SCALE_10} />
+      <PaletteRow name="red"       prefix="red"       steps={SCALE_10} />
+      <PaletteRow name="turquoise" prefix="turquoise" steps={SCALE_10} />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Raw color scales — 10 steps per family (50→900). Gray includes step 0 (white) and skips 800 in the display. Always use `--helix-color-*` in components, never these primitives directly.' } },
+  },
+};
+
+// ── 2. Color Semantic ─────────────────────────────────────────────────────
+
+function FillSwatch({ token, lbl }: { token: string; lbl: string }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 8,
+        background: `var(${token})`,
+        border: '1px solid var(--helix-color-border-subtle)',
+      }} />
+      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
+    </div>
+  );
+}
+
+function TextSwatch({ token, lbl }: { token: string; lbl: string }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 8,
+        background: 'var(--helix-color-fill-surface)',
+        border: '1px solid var(--helix-color-border-subtle)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <span style={{ fontSize: 22, fontWeight: 700, color: `var(${token})` }}>Aa</span>
+      </div>
+      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
+    </div>
+  );
+}
+
+function BorderSwatch({ token, lbl }: { token: string; lbl: string }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 8,
+        background: 'var(--helix-color-fill-surface)',
+        border: `2px solid var(${token})`,
+      }} />
+      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
+    </div>
+  );
+}
+
+// Token row: label on left, swatches on right
+function TokenGroup({ label, tokens, type }: {
+  label: string;
+  tokens: [string, string][];
+  type: 'fill' | 'text' | 'border';
+}) {
+  const renderSwatch = ([token, lbl]: [string, string]) => {
+    if (type === 'fill')   return <FillSwatch   key={token} token={token} lbl={lbl} />;
+    if (type === 'text')   return <TextSwatch   key={token} token={token} lbl={lbl} />;
+    if (type === 'border') return <BorderSwatch key={token} token={token} lbl={lbl} />;
+  };
+  return (
+    <div style={{ display: 'flex', gap: 16, marginBottom: 20, alignItems: 'flex-start' }}>
+      <div style={{
+        width: 110, flexShrink: 0, paddingTop: 4,
+        fontSize: 12, fontWeight: 600,
+        color: 'var(--helix-color-text-default)',
+      }}>
+        {label}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+        {tokens.map(renderSwatch)}
+      </div>
+    </div>
+  );
+}
+
+export const ColorSemantic: Story = {
+  render: () => (
+    <div style={{ maxWidth: 900 }}>
+
+      <SectionHead title="Fill" />
+      <TokenGroup label="Surface" type="fill" tokens={[
+        ['--helix-color-fill-page',           'fill-page'],
+        ['--helix-color-fill-surface',        'fill-surface'],
+        ['--helix-color-fill-surface-raised', 'fill-surface-raised'],
+        ['--helix-color-fill-overlay',        'fill-overlay'],
+        ['--helix-color-fill-disabled',       'fill-disabled'],
+      ]} />
+      <TokenGroup label="Secondary" type="fill" tokens={[
+        ['--helix-color-fill-secondary',        'fill-secondary'],
+        ['--helix-color-fill-secondary-hover',  'fill-secondary\nhover'],
+        ['--helix-color-fill-secondary-active', 'fill-secondary\nactive'],
+      ]} />
+      <TokenGroup label="Primary" type="fill" tokens={[
+        ['--helix-color-fill-primary',        'fill-primary'],
+        ['--helix-color-fill-primary-hover',  'fill-primary\nhover'],
+        ['--helix-color-fill-primary-active', 'fill-primary\nactive'],
+      ]} />
+      <TokenGroup label="Primary subtle" type="fill" tokens={[
+        ['--helix-color-fill-primary-subtle',       'fill-primary\nsubtle'],
+        ['--helix-color-fill-primary-subtle-hover', 'fill-primary\nsubtle-hover'],
+      ]} />
+      <TokenGroup label="Danger" type="fill" tokens={[
+        ['--helix-color-fill-danger',              'fill-danger'],
+        ['--helix-color-fill-danger-hover',        'fill-danger\nhover'],
+        ['--helix-color-fill-danger-active',       'fill-danger\nactive'],
+        ['--helix-color-fill-danger-subtle',       'fill-danger\nsubtle'],
+        ['--helix-color-fill-danger-subtle-hover', 'fill-danger\nsubtle-hover'],
+      ]} />
+      <TokenGroup label="Success" type="fill" tokens={[
+        ['--helix-color-fill-success',        'fill-success'],
+        ['--helix-color-fill-success-hover',  'fill-success\nhover'],
+        ['--helix-color-fill-success-subtle', 'fill-success\nsubtle'],
+      ]} />
+      <TokenGroup label="Warning" type="fill" tokens={[
+        ['--helix-color-fill-warning',        'fill-warning'],
+        ['--helix-color-fill-warning-hover',  'fill-warning\nhover'],
+        ['--helix-color-fill-warning-subtle', 'fill-warning\nsubtle'],
+      ]} />
+      <TokenGroup label="Info" type="fill" tokens={[
+        ['--helix-color-fill-info',        'fill-info'],
+        ['--helix-color-fill-info-hover',  'fill-info\nhover'],
+        ['--helix-color-fill-info-subtle', 'fill-info\nsubtle'],
+      ]} />
+
+      <SectionHead title="Text" />
+      <TokenGroup label="Gray" type="text" tokens={[
+        ['--helix-color-text-default',   'text-default'],
+        ['--helix-color-text-secondary', 'text-secondary'],
+        ['--helix-color-text-tertiary',  'text-tertiary'],
+        ['--helix-color-text-disabled',  'text-disabled'],
+        ['--helix-color-text-inverse',   'text-inverse'],
+      ]} />
+      <TokenGroup label="Brand" type="text" tokens={[
+        ['--helix-color-text-brand',      'text-brand'],
+        ['--helix-color-text-link',       'text-link'],
+        ['--helix-color-text-link-hover', 'text-link\nhover'],
+      ]} />
+      <TokenGroup label="Status" type="text" tokens={[
+        ['--helix-color-text-danger',  'text-danger'],
+        ['--helix-color-text-success', 'text-success'],
+        ['--helix-color-text-warning', 'text-warning'],
+        ['--helix-color-text-info',    'text-info'],
+      ]} />
+
+      <SectionHead title="Border" />
+      <TokenGroup label="Gray" type="border" tokens={[
+        ['--helix-color-border-subtle',  'border-subtle'],
+        ['--helix-color-border-default', 'border-default'],
+        ['--helix-color-border-strong',  'border-strong'],
+        ['--helix-color-border-inverse', 'border-inverse'],
+      ]} />
+      <TokenGroup label="Focus" type="border" tokens={[
+        ['--helix-color-border-focus', 'border-focus'],
+      ]} />
+      <TokenGroup label="Status" type="border" tokens={[
+        ['--helix-color-border-danger',  'border-danger'],
+        ['--helix-color-border-success', 'border-success'],
+        ['--helix-color-border-warning', 'border-warning'],
+      ]} />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: 'Semantic tokens — the only ones to use in custom UI. Component tokens (`--helix-button-*`, `--helix-input-*`…) are internal implementation; never use them outside their component.',
+      },
+    },
+  },
+};
+
+// ── 3. Spacing ────────────────────────────────────────────────────────────
+
+export const Spacing: Story = {
+  render: () => {
+    const steps: [string, string][] = [
+      ['0', '0px'], ['0-5', '2px'], ['1', '4px'], ['1-5', '6px'],
+      ['2', '8px'], ['2-5', '10px'], ['3', '12px'], ['3-5', '14px'],
+      ['4', '16px'], ['5', '20px'], ['6', '24px'], ['7', '28px'],
+      ['8', '32px'], ['10', '40px'], ['12', '48px'], ['14', '56px'],
+      ['16', '64px'], ['20', '80px'], ['24', '96px'], ['32', '128px'],
+    ];
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {steps.map(([key, val]) => (
+          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{key}</span>
+            <div style={{
+              height: 20, borderRadius: 3,
+              background: 'var(--helix-color-fill-primary)',
+              width: `var(--helix-primitive-spacing-${key})`,
+              minWidth: key === '0' ? 1 : undefined,
+              opacity: key === '0' ? 0.2 : 1,
+              transition: 'width 0.2s',
+            }} />
+            <span style={{ ...label12, color: 'var(--helix-color-text-tertiary)' }}>{val}</span>
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// ── 4. Radius ─────────────────────────────────────────────────────────────
+
+export const Radius: Story = {
+  render: () => {
+    const steps: [string, string][] = [
+      ['none', '0px'], ['xs', '2px'], ['s', '4px'], ['m', '6px'],
+      ['l', '8px'], ['xl', '12px'], ['2xl', '16px'], ['3xl', '24px'], ['full', '9999px'],
+    ];
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+        {steps.map(([key, val]) => (
+          <div key={key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{
+              width: 72, height: 72,
+              background: 'var(--helix-color-fill-primary-subtle)',
+              border: '2px solid var(--helix-color-fill-primary)',
+              borderRadius: `var(--helix-primitive-radius-${key})`,
+            }} />
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', fontFamily: 'monospace' }}>{key}</div>
+              <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)' }}>{val}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// ── 5. Typography ─────────────────────────────────────────────────────────
+
+export const Typography: Story = {
+  render: () => {
+    const sizes: [string, string, string][] = [
+      ['5xl', '48px', 'Display'],
+      ['4xl', '36px', 'H1'],
+      ['3xl', '30px', 'H2'],
+      ['2xl', '24px', 'H3'],
+      ['xl',  '20px', 'H4'],
+      ['l',   '17px', 'Body Large'],
+      ['m',   '15px', 'Body'],
+      ['s',   '13px', 'Small'],
+      ['xs',  '11px', 'Caption'],
+    ];
+    return (
+      <div>
+        {sizes.map(([key, val, name], i) => (
+          <div key={key} style={{
+            display: 'flex', alignItems: 'baseline', gap: 24, paddingBlock: 14,
+            borderBottom: i < sizes.length - 1 ? '1px solid var(--helix-color-border-subtle)' : 'none',
+          }}>
+            <div style={{ width: 130, flexShrink: 0 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)' }}>{name}</div>
+              <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)', fontFamily: 'monospace' }}>
+                fontSize-{key} · {val}
+              </div>
+            </div>
+            <span style={{
+              fontSize:   `var(--helix-primitive-fontSize-${key})`,
+              fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
+              color:      'var(--helix-color-text-default)',
+              lineHeight: 'var(--helix-primitive-lineHeight-tight)',
+            }}>
+              The quick brown fox
+            </span>
+          </div>
+        ))}
+        <div style={{ marginTop: 32 }}>
+          <SectionHead title="Font weights" />
+          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+            {[['regular','400'],['medium','500'],['semibold','600'],['bold','700']].map(([key, val]) => (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <span style={{
+                  fontSize: 18, color: 'var(--helix-color-text-default)',
+                  fontWeight: `var(--helix-primitive-fontWeight-${key})` as React.CSSProperties['fontWeight'],
+                }}>
+                  Helix DS
+                </span>
+                <span style={{ ...label12 }}>{key} · {val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ marginTop: 32 }}>
+          <SectionHead title="Line heights" />
+          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+            {([
+              ['tight',   '1.2',  'Headings'],
+              ['snug',    '1.35', ''],
+              ['normal',  '1.5',  'Body'],
+              ['relaxed', '1.65', ''],
+            ] as [string, string, string][]).map(([key, val, role]) => (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{
+                  width: 140, padding: '8px 10px', borderRadius: 4,
+                  background: 'var(--helix-color-fill-surface)',
+                  border: '1px solid var(--helix-color-border-subtle)',
+                  fontSize: 13,
+                  lineHeight: `var(--helix-primitive-lineHeight-${key})`,
+                  color: 'var(--helix-color-text-default)',
+                }}>
+                  Helix DS<br />Type scale<br />Line height
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-default)', fontFamily: 'monospace' }}>{key}</span>
+                  <span style={{ ...label12, textAlign: 'left' }}>{val}{role ? ` · ${role}` : ''}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ marginTop: 40 }}>
+          <SectionHead title="Font families" />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            {([
+              ['sans', '--helix-primitive-fontFamily-sans', 'Inter, ui-sans-serif, system-ui, sans-serif'],
+              ['mono', '--helix-primitive-fontFamily-mono', 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'],
+            ] as [string, string, string][]).map(([key, token, stack]) => (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
+                  <span style={{ ...label12, width: 36, textAlign: 'right', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{key}</span>
+                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--helix-color-text-secondary)' }}>{token}</span>
+                </div>
+                <div style={{ fontFamily: `var(${token})`, fontSize: 22, color: 'var(--helix-color-text-default)', lineHeight: 1.3, paddingLeft: 46 }}>
+                  The quick brown fox jumps over the lazy dog
+                </div>
+                <div style={{ fontSize: 11, color: 'var(--helix-color-text-tertiary)', fontFamily: 'monospace', paddingLeft: 46 }}>{stack}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  },
+};
+
+// ── 6. Shadows ─────────────────────────────────────────────────────────────
+
+export const Shadows: Story = {
+  render: () => {
+    const steps = ['none', 'xs', 's', 'm', 'l', 'xl'];
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40 }}>
+        {steps.map(s => (
+          <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <div style={{
+              width: 100, height: 72,
+              background: 'var(--helix-color-fill-page)',
+              borderRadius: 8,
+              boxShadow: `var(--helix-primitive-shadow-${s})`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-default)' }}>shadow-{s}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+  decorators: [Story => (
+    <div style={{ background: 'var(--helix-color-fill-surface)', padding: 48, borderRadius: 12 }}>
+      <Story />
+    </div>
+  )],
+};

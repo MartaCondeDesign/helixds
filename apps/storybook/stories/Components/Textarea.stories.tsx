@@ -1,0 +1,69 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
+import { Textarea, TextareaDoc } from '@helix-ds/core';
+import { createComponentDocsParameters } from '../_shared/component-docs';
+
+const meta: Meta<typeof Textarea> = {
+  title:     'Components/Textarea',
+  component:  Textarea,
+  tags:      ['autodocs'],
+  parameters: createComponentDocsParameters(TextareaDoc),
+  args: { label: 'Description', placeholder: 'Write something…' },
+  argTypes: {
+     size:      { control: 'select', options: ['s', 'm', 'l'] },
+    resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
+    rows:      { control: { type: 'number', min: 2, max: 10 } },
+    maxLength: { control: 'number' },
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof Textarea>;
+
+export const Default: Story = {};
+
+export const WithDescription: Story = {
+  args: { description: 'Shown below the input. Max 500 characters recommended.' },
+};
+
+export const WithCharacterCount: Story = {
+  args: { maxLength: 280, showCount: true },
+  render: (args) => {
+    const [value, setValue] = useState('');
+    return <Textarea {...args} value={value} onChange={e => setValue(e.target.value)} />;
+  },
+  parameters: {
+    docs: { description: { story: 'Pass `maxLength` + `showCount` to render a live counter.' } },
+  },
+};
+
+export const Invalid: Story = {
+  args: {
+    invalid:      true,
+    errorMessage: 'This field is required.',
+    value:        '',
+  },
+};
+
+export const Disabled: Story = {
+  args: { disabled: true, value: 'This content is read-only and cannot be edited.' },
+};
+
+export const NoResize: Story = {
+  args: { resize: 'none', rows: 5 },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+      <Textarea label="Small"  size="s" placeholder="size=s"           onChange={() => {}} />
+      <Textarea label="Medium" size="m" placeholder="size=m (default)" onChange={() => {}} />
+      <Textarea label="Large"  size="l" placeholder="size=l"           onChange={() => {}} />
+    </div>
+  ),
+};
+
+export const FullWidth: Story = {
+  args: { fullWidth: true, rows: 4 },
+  decorators: [Story => <div style={{ maxWidth: 480 }}><Story /></div>],
+};

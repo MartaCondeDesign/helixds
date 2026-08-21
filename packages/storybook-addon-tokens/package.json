@@ -1,0 +1,25 @@
+{
+  "name": "@helix-ds/storybook-addon-tokens",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Helix Storybook addon that shows component token lists in the manager UI",
+  "type": "module",
+  "main": "./manager.js",
+  "module": "./manager.js",
+  "exports": {
+    ".": "./manager.js",
+    "./manager": "./manager.js",
+    "./package.json": "./package.json"
+  },
+  "files": ["manager.js", "CONTRACT.md", "README.md"],
+  "dependencies": {
+    "@helix-ds/tokens": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "storybook": "^8.6.18"
+  },
+  "storybook": {
+    "displayName": "Helix Tokens"
+  }
+}

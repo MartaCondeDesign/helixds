@@ -1,0 +1,66 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "Switch",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "Lets users toggle a single setting on or off, with the change taking effect immediately.",
+
+  "neverUseFor": [
+    "A choice that requires explicit confirmation before taking effect — use Checkbox + Button instead",
+    "Multiple mutually exclusive choices — use RadioGroup instead",
+    "Navigation between two views — use Tabs instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      { "name": "disabled", "description": "The switch is non-interactive.", "aria": "disabled (native HTML attribute on the underlying button)" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "switch-root", "element": "div", "description": "Layout wrapper for the row and description." },
+    { "part": "switch-row", "element": "div", "description": "Horizontal layout for the track and label." },
+    { "part": "switch-track", "element": "button", "description": "The interactive element — role='switch', carries aria-checked." },
+    { "part": "switch-thumb", "element": "span", "description": "The moving indicator inside the track.", "optional": false },
+    { "part": "switch-label", "element": "label", "description": "Visible label text, linked via htmlFor." },
+    { "part": "switch-description", "element": "span", "description": "Helper text below the row.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label text." },
+    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the row." },
+    { "name": "checked", "type": "boolean | undefined", "description": "Controlled checked state." },
+    { "name": "defaultChecked", "type": "boolean | undefined", "description": "Uncontrolled initial checked state." },
+    { "name": "onChange", "type": "((checked: boolean) => void) | undefined", "description": "Checked-state change handler." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Non-interactive state." },
+    { "name": "size", "type": "'s' | 'm'", "default": "m", "description": "Physical size of the track and thumb." },
+    { "name": "id", "type": "string | undefined", "description": "Optional id override." },
+    { "name": "name", "type": "string | undefined", "description": "Form field name — submitted via a visually hidden native checkbox kept in sync for form integration." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "s": 16, "m": 20 },
+      "unit": "px",
+      "note": "Track height. Thumb is 12px (s) / 16px (m) — see --helix-switch-thumb-size-*."
+    },
+    "width": {
+      "default": "fixed",
+      "note": "Track width is fixed per size (28px s / 36px m), not consumer-configurable. See --helix-switch-width-*."
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "switch",
+    "keyboardNav": ["Space — toggles checked state", "Tab — moves focus"],
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

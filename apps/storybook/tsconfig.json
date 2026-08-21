@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "paths": {
+      "@helix-ds/core":         ["../../packages/core/src/index.ts"],
+      "@helix-ds/tokens":       ["../../packages/tokens/src/index.ts"],
+      "@helix-ds/tokens/*":     ["../../packages/tokens/dist/*"],
+      "@helix-ds/core/*":       ["../../packages/core/src/*"]
+    }
+  },
+  "include": [
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "stories/**/*.ts",
+    "stories/**/*.tsx",
+    "../../packages/core/src/**/*.stories.tsx"
+  ],
+  "exclude": ["node_modules"]
+}

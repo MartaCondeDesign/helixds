@@ -1,0 +1,189 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Icon",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "Communicates meaning, action, or status through a recognizable visual symbol. Always supplemental to text — never the sole conveyor of information without a tooltip or label.",
+
+  "neverUseFor": [
+    "Decorative illustration — use an Illustration component instead",
+    "Brand logomarks — use Image or dedicated Logo component",
+    "Animated icons — Tabler outline icons are static; wrap in a motion component if animation is needed"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+
+  "iconStyle": {
+    "family":      "Tabler Icons — outline variant",
+    "source":      "@tabler/icons-react (default exports: IconPlus, IconArrowRight, etc.)",
+    "tablerOfficialStroke": {
+      "width":     2,
+      "note":      "Tabler default. Goes on the root <svg> ONLY — never on <path> children. Configurable via CSS."
+    },
+    "helixStrokeOverride": {
+      "width":     1.5,
+      "note":      "Helix DS design decision. Always pass stroke={1.5} at usage site: <IconPlus size={16} stroke={1.5} />. Never hardcode — use the prop."
+    },
+    "stroke": {
+      "linecap":   "round",
+      "linejoin":  "round",
+      "color":     "currentColor — never hardcode hex"
+    },
+    "fill":        "none",
+    "viewBox":     "0 0 24 24",
+    "grid":        24
+  },
+
+  "customIconRules": {
+    "source": "Verified from tabler/tabler-icons /.build/validate-icons.mjs and /.build/optimize.mjs",
+    "mustFollow": [
+      "24×24 viewBox and grid — no exceptions",
+      "Only <path> elements inside SVG — no <circle>, <rect>, <ellipse>, <line>, <polygon>, <polyline>, <g>. Convert everything to path.",
+      "stroke-width goes on root <svg> only — never on child <path> elements",
+      "stroke-linecap=round, stroke-linejoin=round on root <svg>",
+      "fill=none on outline icons — stroke only, never filled areas",
+      "stroke=currentColor on root <svg> — never hardcode a color",
+      "No closing Z on outline icon paths (Tabler removes it via optimizer)",
+      "Optical weight must match Tabler icons at 24px with stroke-width=2",
+      "Minimum path detail: legible at 16×16px (smallest Helix usage size)",
+      "Naming in Figma: PascalCase, no prefix — 'HeartCustom' (matching Tabler's bare-name convention)",
+      "Naming in code: Icon prefix — 'IconHeartCustom'",
+      "Naming in filesystem: lowercase hyphenated — 'heart-custom.svg'",
+      "SVG file metadata comment: tags, category (one of the 41 official), version, unicode",
+      "Every outline icon may optionally have a matching filled variant in icons/filled/"
+    ],
+    "mustNot": [
+      "Use stroke-width on <path> elements — only on root <svg>",
+      "Use <circle>, <rect>, <ellipse>, <line>, <polygon>, <polyline>, or <g> — convert to path",
+      "Add fills or gradients to outline icons",
+      "Use sharp corners (linecap: butt, linejoin: miter) — always round",
+      "Hardcode stroke color — always currentColor",
+      "Include Z/z close-path on outline icon paths",
+      "Use text elements inside SVG",
+      "Include title or desc SVG elements — accessibility is the usage site's responsibility",
+      "Use more than 3 path elements — simpler is better; complex icons suggest wrong category"
+    ],
+    "officialCategories": [
+      "Animals","Arrows","Badges","Brand","Buildings","Charts","Communication","Computers",
+      "Currencies","Database","Design","Development","Devices","Document","E-commerce",
+      "Electrical","Extensions","Food","Games","Gender","Gestures","Health","Laundry",
+      "Letters","Logic","Map","Math","Media","Mood","Nature","Numbers","Photography",
+      "Shapes","Sport","Symbols","System","Text","Vehicles","Version control","Weather","Zodiac"
+    ],
+    "referenceIcons": [
+      "IconPlus — simplest form: 2 paths (vertical + horizontal line)",
+      "IconArrowRight — directional with clean angles",
+      "IconAlertCircle — 3 paths: circle arc + exclamation body + dot (h.01 trick with round linecap)",
+      "IconSearch — 2 paths: circle arc + handle line"
+    ]
+  },
+
+  "sizes": {
+    "system": "fixed values — never scale with CSS font-size",
+    "values": {
+      "12": "xs contexts — dense UI, inline badges",
+      "16": "default — button slots, form elements, inline text",
+      "20": "medium emphasis — card headers, section labels",
+      "24": "large — native icon size, icon-only buttons, empty states",
+      "32": "xlarge — feature icons, onboarding illustrations"
+    },
+    "defaultInButton": 16,
+    "note": "Icon components always render at the size passed via the size prop. The Figma component is 24×24 (native grid); resize the instance at usage site."
+  },
+
+  "colorRules": {
+    "principle":  "Icons inherit currentColor from their container by default",
+    "inButtons": {
+      "primary":   "text/inverse (white stroke)",
+      "secondary": "text/default (dark stroke)",
+      "ghost":     "text/default (dark stroke)",
+      "danger":    "text/inverse (white stroke)"
+    },
+    "standalone": "Use text/default or text/subtle semantic tokens — never primitives",
+    "forbidden":  "Never hardcode hex values. Never use brand/accent primitives directly."
+  },
+
+  "anatomy": [
+    {
+      "part":        "icon-root",
+      "element":     "svg",
+      "description": "SVG element with viewBox='0 0 24 24'. Never add a wrapper div."
+    },
+    {
+      "part":        "icon-vector",
+      "element":     "path (or g > path for compound icons)",
+      "description": "The drawn artwork. stroke=currentColor, fill=none, stroke-width=1.5."
+    }
+  ],
+
+  "props": [
+    {
+      "name": "size",
+      "type": "12 | 16 | 20 | 24 | 32",
+      "default": 16,
+      "description": "Rendered icon size in pixels."
+    },
+    {
+      "name": "stroke",
+      "type": "number",
+      "default": 1.5,
+      "description": "Stroke width applied to the icon path."
+    },
+    {
+      "name": "color",
+      "type": "string | undefined",
+      "default": "currentColor",
+      "description": "Icon stroke color. Prefer inherited currentColor."
+    },
+    {
+      "name": "label",
+      "type": "string | undefined",
+      "description": "Accessible label for icon-only usage."
+    },
+    {
+      "name": "decorative",
+      "type": "boolean",
+      "default": true,
+      "description": "Marks the icon as decorative when a visible label already exists."
+    }
+  ],
+
+  "figma": {
+    "page":        "Icons",
+    "layout":      "Flat grid — COMPONENT nodes directly on page, no row frames",
+    "cell":        40,
+    "componentSize": 24,
+    "naming":      "Bare PascalCase — 'Plus', not 'IconPlus', not 'tabler/Plus'",
+    "vector":      "Named 'vector', constraints: SCALE/SCALE",
+    "skill":       ".ai/skills/icons-to-figma.md"
+  },
+
+  "a11y": {
+    "role":        "img (when meaningful) or presentation (when decorative)",
+    "aria":        "aria-hidden='true' when accompanied by a visible label. aria-label='Description' when icon-only.",
+    "wcag":        ["1.1.1 Non-text Content", "1.4.3 Contrast (AA)"],
+    "note":        "The icon component itself renders aria-hidden. Accessibility is the responsibility of the usage site."
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.text", "color.icon"],
+    "forbidden": ["primitive.color", "color.fill", "color.border"]
+  },
+
+  "agentWorkflow": {
+    "importFromTabler": ".ai/skills/icons-to-figma.md",
+    "createCustomIcon": [
+      "1. Study 2–3 reference icons from customIconRules.referenceIcons",
+      "2. Sketch paths on 24×24 grid, stroke-width=1.5, rounded caps",
+      "3. Export SVG — extract the path d= attribute",
+      "4. Add to Icons.stories.tsx ICONS array",
+      "5. Create .mjs file in packages/core/node_modules/@tabler/icons-react/dist/esm/icons/ (if custom)",
+      "6. Run icons-to-figma skill Step 2–4 for the new icon",
+      "7. Verify: renders clearly at 16×16, stroke weight matches IconPlus at same size"
+    ]
+  }
+}

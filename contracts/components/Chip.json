@@ -1,0 +1,134 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Chip",
+  "version": "1.0.0",
+  "status":  "beta",
+
+  "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
+
+  "neverUseFor": [
+    "Primary page actions — use Button instead",
+    "Long text labels — chips are compact by design",
+    "Destructive confirmation flows — use a Button pair instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      {
+        "name": "checked",
+        "description": "The chip is currently checked or active in its group.",
+        "aria": "aria-pressed='true'"
+      },
+      {
+        "name": "disabled",
+        "description": "The chip is not interactive.",
+        "aria": "disabled (native HTML attribute)"
+      }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "chip-shell", "element": "span", "description": "Layout wrapper for the chip and optional dismiss button.", "optional": false },
+    { "part": "chip",       "element": "button", "description": "Root interactive element.", "optional": false },
+    { "part": "chip-icon",  "element": "slot",    "description": "Leading icon slot.", "optional": true },
+    { "part": "chip-label", "element": "span",    "description": "Visible chip label." },
+    { "part": "chip-icon-end", "element": "slot", "description": "Trailing icon slot.", "optional": true }
+  ],
+
+  "props": [
+    {
+      "name": "variant",
+      "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
+      "default": "neutral",
+      "description": "Semantic color variant."
+    },
+    {
+      "name": "size",
+      "type": "'s' | 'm'",
+      "default": "m",
+      "description": "Horizontal density preset. Chip is a documented exception to the global scale."
+    },
+    {
+      "name": "checked",
+      "type": "boolean",
+      "default": false,
+      "description": "Marks the chip as checked."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "Disables interaction."
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible chip label."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactElement | undefined",
+      "default": null,
+      "description": "Leading icon element."
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactElement | undefined",
+      "default": null,
+      "description": "Trailing icon element."
+    },
+    {
+      "name": "onPress",
+      "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
+      "description": "Primary press handler."
+    },
+    {
+      "name": "dismissible",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a close button for removing the chip."
+    },
+    {
+      "name": "onDismiss",
+      "type": "(() => void) | undefined",
+      "description": "Dismiss handler fired from the close button."
+    }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "s": 28, "m": 32 },
+      "unit": "px",
+      "note": "Chip uses a local density model; this does not redefine the global scale."
+    },
+    "width": {
+      "default": "hug",
+      "modes": {
+        "hug": "Width shrinks to fit label and icons.",
+        "fixed": "Explicit width set by the consumer."
+      }
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": [
+      "color.fill",
+      "color.text",
+      "color.border",
+      "spacing",
+      "radius",
+      "fontSize",
+      "fontWeight"
+    ],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "button",
+    "keyboardNav": ["Enter — activates", "Space — activates"],
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

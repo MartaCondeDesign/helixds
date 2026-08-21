@@ -1,0 +1,69 @@
+/** Machine-readable component documentation for the Helix Input. */
+
+export interface ComponentDoc {
+  name: string;
+  purpose: string;
+  contract: string;
+  a11y: string[];
+  variants: { name: string; description: string }[];
+  sizes: string[];
+  tokens: { part: string; token: string; kind?: 'color' | 'space' | 'radius' | 'style'; meta?: string }[];
+  features: string[];
+  examples: { label: string; code: string }[];
+}
+
+export const doc: ComponentDoc = {
+  name: 'Input',
+  purpose: 'Allows users to enter a single line of free-form text.',
+  contract: 'contracts/components/Input.json',
+  a11y: [
+    'The `label` prop is required. Use `hideLabel` only when a visible label would be redundant.',
+    'Pair `invalid` with `errorMessage` so screen readers get a clear validation message.',
+  ],
+  variants: [],
+  sizes: ['s', 'm', 'l'],
+  tokens: [
+    { part: 'input', label: 'Rest fill', token: '--helix-input-fill-rest', kind: 'color' },
+    { part: 'input', label: 'Rest border', token: '--helix-input-border-rest', kind: 'color' },
+    { part: 'input', label: 'Focus border', token: '--helix-input-border-focus', kind: 'color' },
+    { part: 'input', label: 'Value text', token: '--helix-input-text-value', kind: 'color' },
+    { part: 'input', label: 'Placeholder text', token: '--helix-input-text-placeholder', kind: 'color' },
+    { part: 'input', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
+    { part: 'input', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
+    { part: 'input', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
+    { part: 'input', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
+    { part: 'input', label: 'field.height', token: '--helix-input-height-s', kind: 'space' },
+    { part: 'input', label: 'field.height', token: '--helix-input-height-m', kind: 'space' },
+    { part: 'input', label: 'field.height', token: '--helix-input-height-l', kind: 'space' },
+    { part: 'input', label: 'gap.label.field', token: '--helix-input-gap-label', kind: 'space' },
+    { part: 'input', label: 'gap.description.field', token: '--helix-input-gap-description', kind: 'space' },
+    { part: 'input', label: 'input.root', token: '--helix-input-radius', kind: 'radius' },
+    { part: 'input', label: 'display', value: 'flex' },
+    { part: 'input', label: 'flex-direction', value: 'column' },
+    { part: 'input', label: 'width', value: 'fit-content' },
+    { part: 'input', label: 'position', value: 'relative' },
+    { part: 'input', label: 'align-items', value: 'center' },
+    { part: 'input', label: 'background', value: 'transparent' },
+    { part: 'input', label: 'border', value: 'none' },
+    { part: 'input', label: 'outline', value: 'none' },
+    { part: 'input', label: 'font-family', value: 'inherit' },
+    { part: 'input', label: 'min-width', value: '0' },
+    { part: 'input', label: 'flex', value: '1' },
+    { part: 'input', label: 'cursor.disabled', value: 'not-allowed' },
+    { part: 'input', label: 'display.icon', value: 'flex' },
+    { part: 'input', label: 'height.icon', value: '100%' },
+  ],
+  features: [
+    'label / hideLabel — accessible label support',
+    'size — shared field scale: s=32px, m=36px, l=40px',
+    'invalid / errorMessage — validation state and helper copy',
+    'icon / iconEnd — leading and trailing adornments',
+    'loading — async validation state',
+    'fullWidth — expands to container width',
+  ],
+  examples: [
+    { label: 'Default', code: `<Input label="Email" placeholder="you@example.com" />` },
+    { label: 'With helper text', code: `<Input label="Username" description="Used for your public profile" />` },
+    { label: 'Invalid', code: `<Input label="Email" invalid errorMessage="Enter a valid email address" />` },
+  ],
+};

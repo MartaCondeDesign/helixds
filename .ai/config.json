@@ -1,0 +1,58 @@
+{
+  "$comment": "Structured validation data for CI and agent tools. Not narrative.",
+  "git": {
+    "branchPatterns": {
+      "feature":   "^feat/",
+      "fix":       "^fix/",
+      "docs":      "^docs/",
+      "chore":     "^chore/",
+      "component": "^component/"
+    },
+    "commitTypes": ["feat", "fix", "docs", "chore", "refactor", "test", "ci"]
+  },
+  "contracts": {
+    "schemaPath":      "contracts/component.schema.json",
+    "bindingSchema":   "contracts/react-binding.schema.json",
+    "componentsDir":   "contracts/components",
+    "requiredFields":  ["name", "purpose", "states", "anatomy", "props", "tokenPolicy"]
+  },
+  "propMap": {
+    "path":              ".ai/maps/prop-map.md",
+    "invalidPropsGlob":  "packages/**/*.tsx",
+    "reportOnly":        false
+  },
+  "tokens": {
+    "sourceFormat":   "dtcg",
+    "sourcePath":     "packages/tokens/src/tokens.json",
+    "outputCss":      "packages/tokens/dist/helix.css",
+    "outputTs":       "packages/tokens/dist/index.ts",
+    "prefix":         "--helix-",
+    "allowedCategories": [
+      "color.fill",
+      "color.text",
+      "color.border",
+      "spacing",
+      "radius",
+      "shadow",
+      "fontSize",
+      "fontWeight",
+      "lineHeight",
+      "letterSpacing"
+    ]
+  },
+  "ai": {
+    "contextFiles": [
+      ".ai/maps/prop-map.md",
+      ".ai/memory/agnostic-lessons.md",
+      "contracts/component.schema.json",
+      "ds.config.json"
+    ],
+    "lintChecks": [
+      "symlinks-valid",
+      "config-schema-valid",
+      "skills-have-sport-sections",
+      "agents-have-frontmatter",
+      "memory-files-not-empty"
+    ]
+  }
+}

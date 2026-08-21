@@ -1,0 +1,139 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Button",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
+
+  "neverUseFor": [
+    "Pure navigation between pages — use a plain <a>, styled separately",
+    "Toggle state that persists — use a Toggle or Checkbox instead",
+    "Submitting a form implicitly — always set type='submit' explicitly"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      {
+        "name": "loading",
+        "description": "The action triggered by the button is in progress. The button is non-interactive and shows a spinner.",
+        "aria": "aria-busy='true'"
+      },
+      {
+        "name": "disabled",
+        "description": "The button is not interactive. Communicates the option exists but is currently unavailable.",
+        "aria": "disabled (native HTML attribute)"
+      }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "button",       "element": "button",  "description": "Root interactive element. Always a native <button>." },
+    { "part": "button-icon",  "element": "slot",    "description": "Leading icon slot. Accepts a Tabler icon component.", "optional": true },
+    { "part": "button-label", "element": "span",    "description": "Text label. Hidden when icon-only." },
+    { "part": "button-icon-end", "element": "slot", "description": "Trailing icon slot.", "optional": true },
+    { "part": "button-spinner", "element": "svg",   "description": "Loading spinner. Rendered only when loading=true.", "optional": true }
+  ],
+
+  "props": [
+    {
+      "name": "variant",
+      "type": "'primary' | 'secondary' | 'ghost' | 'danger'",
+      "default": "primary",
+      "description": "Visual style of the button. primary = filled brand; secondary = outlined; ghost = no border; danger = filled red."
+    },
+    {
+      "name": "size",
+      "type": "'xs' | 's' | 'm' | 'l' | 'xl'",
+      "default": "m",
+      "description": "Physical size of the button. Affects padding, font size, and icon size."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": false,
+      "description": "When true, shows a spinner and disables interaction."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "When true, the button is non-interactive."
+    },
+    {
+      "name": "icon",
+      "type": "React.ReactElement | undefined",
+      "default": null,
+      "description": "Leading icon — pass a Tabler icon component. Always set size={16} stroke={1.5}. aria-hidden is set automatically.",
+      "usage": "<IconPlus size={16} stroke={1.5} />"
+    },
+    {
+      "name": "iconEnd",
+      "type": "React.ReactElement | undefined",
+      "default": null,
+      "description": "Trailing icon. Always set size={16} stroke={1.5}.",
+      "usage": "<IconArrowRight size={16} stroke={1.5} />"
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": false,
+      "description": "When true, the button expands to 100% of its container width."
+    },
+    {
+      "name": "onPress",
+      "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
+      "description": "Click/press handler."
+    }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "xs": 24, "s": 32, "m": 36, "l": 40, "xl": 48 },
+      "unit": "px",
+      "note": "Set by size token —  never override manually."
+    },
+    "width": {
+      "default": "hug",
+      "modes": {
+        "hug":   "Width shrinks to content + horizontal padding. Default behavior.",
+        "fill":  "Width expands to 100% of container. Activated by fullWidth=true.",
+        "fixed": "Explicit value set by the consumer. No system token — document per usage."
+      },
+      "minWidth": null,
+      "maxWidth": null,
+      "note": "No min/max-width tokens defined in CSS. Consumers are responsible for constraining width in layouts."
+    },
+    "figma": {
+      "layoutMode": "HORIZONTAL",
+      "layoutSizingHorizontal": "HUG (default) | FILL (when fullWidth variant exists)",
+      "layoutSizingVertical": "FIXED",
+      "primaryAxisAlignItems": "CENTER",
+      "counterAxisAlignItems": "CENTER",
+      "gap": "4px (between icon and label)"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": [
+      "color.fill",
+      "color.text",
+      "color.border",
+      "spacing",
+      "radius",
+      "fontSize",
+      "fontWeight"
+    ],
+    "forbidden": [
+      "primitive.color"
+    ]
+  },
+
+  "a11y": {
+    "role": "button (implicit from <button> element)",
+    "keyboardNav": ["Enter — activates", "Space — activates"],
+    "wcag": ["1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

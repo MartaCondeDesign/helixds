@@ -1,0 +1,144 @@
+{
+  "$schema":     "http://json-schema.org/draft-07/schema#",
+  "$id":         "https://helix-ds.design/contracts/component.schema.json",
+  "title":       "Helix Component Contract",
+  "description": "Framework-agnostic contract describing what a Helix component IS. Not how it's implemented.",
+  "type":        "object",
+  "required":    ["name", "version", "purpose", "states", "anatomy", "props", "tokenPolicy"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "PascalCase component name"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "beta", "stable", "deprecated"]
+    },
+    "purpose": {
+      "type": "string",
+      "description": "One sentence: what this component is for. Written from the user's perspective."
+    },
+    "neverUseFor": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Anti-patterns: what this component must never be used for."
+    },
+    "states": {
+      "type": "object",
+      "properties": {
+        "intrinsic": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "States the browser manages (hover, focus, active). Never build as props."
+        },
+        "authored": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "description"],
+            "properties": {
+              "name":        { "type": "string" },
+              "description": { "type": "string" },
+              "aria":        { "type": "string", "description": "ARIA attribute set when this state is active" }
+            }
+          },
+          "description": "States managed by the component as props (loading, disabled, invalid)."
+        }
+      }
+    },
+    "anatomy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["part", "element", "description"],
+        "properties": {
+          "part":        { "type": "string", "description": "data-helix-part value" },
+          "element":     { "type": "string", "description": "HTML element or 'slot'" },
+          "description": { "type": "string" },
+          "optional":    { "type": "boolean", "default": false }
+        }
+      }
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "description"],
+        "properties": {
+          "name":        { "type": "string", "description": "Canonical prop name from prop-map.md" },
+          "type":        { "type": "string", "description": "TypeScript type as string" },
+          "default":     { "type": ["string", "boolean", "number", "null"] },
+          "required":    { "type": "boolean", "default": false },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "tokenPolicy": {
+      "type": "object",
+      "description": "Which token categories this component uses. CI checks compliance.",
+      "properties": {
+        "allowed": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Token prefixes allowed in this component's CSS (e.g. 'color.fill', 'spacing')"
+        },
+        "forbidden": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Token prefixes explicitly forbidden (e.g. 'primitive.color.brand' — use semantic alias instead)"
+        }
+      }
+    },
+    "a11y": {
+      "type": "object",
+      "properties": {
+        "role":         { "type": "string" },
+        "keyboardNav":  { "type": "array", "items": { "type": "string" } },
+        "wcag":         { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "sizing": {
+      "type": "object",
+      "description": "Physical size mapping. See ADR-004 for the shared control/field scale and documented exceptions.",
+      "properties": {
+        "height": {
+          "type": "object",
+          "properties": {
+            "mode":   { "type": "string", "enum": ["fixed", "rows-driven"] },
+            "values": { "type": "object", "description": "size key -> px number" },
+            "unit":   { "type": "string" },
+            "note":   { "type": "string" }
+          }
+        },
+        "width": {
+          "type": "object",
+          "properties": {
+            "default":  { "type": "string", "enum": ["hug", "fill", "fixed"] },
+            "modes":    { "type": "object" },
+            "minWidth": { "type": ["number", "null"] },
+            "maxWidth": { "type": ["number", "null"] },
+            "note":     { "type": "string" }
+          }
+        },
+        "figma": {
+          "type": "object",
+          "description": "Figma auto-layout sizing metadata for this component."
+        }
+      }
+    },
+    "figma": {
+      "type": "object",
+      "description": "Figma metadata — output reference, never input to the contract.",
+      "properties": {
+        "fileId":      { "type": "string" },
+        "componentId": { "type": "string" },
+        "lastSync":    { "type": "string", "format": "date" }
+      }
+    }
+  }
+}

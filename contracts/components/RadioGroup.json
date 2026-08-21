@@ -1,0 +1,76 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "RadioGroup",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "Lets users choose exactly one option from a small, visible set of mutually exclusive choices.",
+
+  "neverUseFor": [
+    "A single independent on/off choice — use Checkbox or Switch instead",
+    "Large option sets or anything needing search — use Select instead",
+    "Multiple simultaneous selections — use a Checkbox group instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      { "name": "invalid", "description": "The selected value fails validation.", "aria": "aria-invalid='true' on each radio input" },
+      { "name": "disabled", "description": "The whole group, or an individual option, is non-interactive.", "aria": "disabled (native HTML attribute)" },
+      { "name": "required", "description": "A value must be selected before form submission.", "aria": "aria-required='true' on the fieldset" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "radio-group", "element": "fieldset", "description": "Root element — groups the legend and options for assistive tech." },
+    { "part": "radio-legend", "element": "legend", "description": "Accessible group label." },
+    { "part": "radio-options", "element": "div", "description": "Layout wrapper for the option list." },
+    { "part": "radio-item", "element": "label", "description": "Wraps one option's input, visual control, and content." },
+    { "part": "radio-input", "element": "input", "description": "The native radio input for one option." },
+    { "part": "radio-control", "element": "span", "description": "Visual circle — reflects checked state via CSS." },
+    { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when the option is checked.", "optional": true },
+    { "part": "radio-item-content", "element": "span", "description": "Wraps one option's label and description." },
+    { "part": "radio-item-label", "element": "span", "description": "Visible label for one option." },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text for one option.", "optional": true },
+    { "part": "radio-description", "element": "span", "description": "Helper text for the whole group.", "optional": true },
+    { "part": "radio-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Accessible group label, rendered as the fieldset's legend." },
+    { "name": "options", "type": "RadioOption[]", "required": true, "description": "The list of choices. Each option: { value, label, description?, disabled? }." },
+    { "name": "value", "type": "string | undefined", "description": "Controlled selected value." },
+    { "name": "defaultValue", "type": "string | undefined", "description": "Uncontrolled initial value." },
+    { "name": "onChange", "type": "((value: string) => void) | undefined", "description": "Selection change handler." },
+    { "name": "orientation", "type": "'vertical' | 'horizontal'", "default": "vertical", "description": "Layout direction of the option list." },
+    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the group." },
+    { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
+    { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Disables every option in the group." },
+    { "name": "required", "type": "boolean", "default": false, "description": "Marks the group as required." },
+    { "name": "name", "type": "string | undefined", "description": "Native radio group name shared by every input. Auto-generated if omitted." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 16 },
+      "unit": "px",
+      "note": "No size prop exists — each radio control is one fixed size (16px), matching Checkbox. Does not follow the ADR-004 field scale."
+    },
+    "width": {
+      "default": "hug"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "radiogroup (native fieldset/legend + radio inputs)",
+    "keyboardNav": ["Arrow keys — move selection between options (native radio group behavior)", "Space — selects the focused option", "Tab — moves focus into and out of the group"],
+    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

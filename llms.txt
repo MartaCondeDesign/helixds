@@ -1,0 +1,78 @@
+# Helix Design System — LLM Index
+
+> Helix DS · v0.1.0 · Built on shadcn/ui + Tailwind CSS v4 + Tabler Icons
+
+## Quick reference
+
+- Scope: @helix-ds
+- Token prefix: --helix-
+- Data prefix: data-helix-
+- Prop vocabulary: .ai/maps/prop-map.md
+
+## Packages
+
+- @helix-ds/tokens  — Design tokens (CSS vars + TS constants)
+- @helix-ds/core    — UI components (Button, Input, Badge, Card, Dialog, Select)
+- @helix-ds/icons   — Tabler Icons wrapper with size/color tokens
+
+## Components (stable)
+
+- Button    — Actions, CTAs. Variants: primary secondary ghost danger. Sizes: xs s m l xl.
+- Input     — Text fields, search. States: default error disabled. Supports icon, iconEnd.
+- Badge     — Status, counts. Variants: neutral success warning danger info.
+
+## Components (beta)
+
+- Card      — Content grouping. Has header, body, footer slots.
+- Dialog    — Modal overlay with trigger, title, description, footer.
+- Select    — Dropdown with option groups, search, multi-select.
+
+## Token categories
+
+- color.fill.*    — Background fills (primary, secondary, danger, success, warning, info, neutral)
+- color.text.*    — Text colors (default, secondary, disabled, inverse, danger, success)
+- color.border.*  — Border colors (default, focus, danger, strong)
+- spacing.*       — 4px-based scale (1→20)
+- radius.*        — none xs s m l xl full
+- shadow.*        — none xs s m l xl
+- fontSize.*      — xs s m l xl 2xl 3xl 4xl
+- fontWeight.*    — regular medium semibold bold
+
+## Contracts (machine-readable component specs)
+
+- contracts/components/Button.json
+- contracts/components/Input.json
+- contracts/components/Badge.json
+- contracts/components/Card.json
+- contracts/components/Dialog.json
+
+## Documentation
+
+- docs/ADR/ADR-001-shadcn-foundation.md   — Why shadcn/ui as the primitive layer
+- docs/ADR/ADR-002-token-strategy.md      — Token architecture (DTCG, semantic aliases)
+- docs/ADR/ADR-003-ai-infrastructure.md   — AI context structure (.ai/ directory pattern)
+
+## Design patterns (machine-readable)
+
+- .ai/maps/patterns/empty-state.md      — Empty list/table with icon + title + actions
+- .ai/maps/patterns/form-field-group.md — Full form with validation state management
+- .ai/maps/patterns/action-bar.md       — Page header CTAs + batch selection actions
+- .ai/maps/patterns/status-row.md       — Badge variant → semantic meaning mapping
+- .ai/maps/patterns/search-filter.md    — Search Input + filter chip Buttons (not Badge)
+
+## Storybook
+
+- apps/storybook/  — Storybook 8 (React + Vite)
+- stories live co-located: packages/core/src/components/**/*.stories.tsx
+- pattern stories:  apps/storybook/stories/Patterns.stories.tsx
+- dev server: pnpm --filter @helix-ds/storybook dev  (port 6006)
+
+## AI context
+
+- CLAUDE.md             — Short agent contract (root)
+- AGENTS.md             — Consumer-facing agent guide
+- .ai/skills/           — Task-specific skills (SPORT format)
+- .ai/agents/           — Specialized agent definitions
+- .ai/memory/           — Accumulated lessons from sessions
+- .ai/maps/prop-map.md  — Canonical prop vocabulary
+- contributor-ai/       — Context for DS contributors

@@ -1,0 +1,297 @@
+/**
+ * Helix DS token build pipeline
+ * DTCG JSON (3 layers) → CSS custom properties + TypeScript constants
+ *
+ * Layer naming → CSS var:
+ *   primitive.color.brand.600   → --helix-primitive-color-brand-600
+ *   semantic.color.fill.primary → --helix-color-fill-primary
+ *   component.button.fill.primary-rest → --helix-button-fill-primary-rest
+ *
+ * Run: pnpm --filter @helix-ds/tokens build
+ */
+import fs from 'fs';
+import path from 'path';
+
+const tokens = JSON.parse(
+  fs.readFileSync(new URL('./tokens.json', import.meta.url), 'utf-8'),
+) as Record<string, unknown>;
+
+const dist = path.resolve(import.meta.dirname, '../dist');
+fs.mkdirSync(dist, { recursive: true });
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+type TokenNode = { $value: string | number; $type: string; $description?: string };
+type Tree = Record<string, unknown>;
+type CSSVar = { name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string };
+
+// ─── Resolve DTCG references ({a.b.c} → value) ───────────────────────────────
+
+function resolveRef(value: string, root: Tree): string {
+  if (typeof value !== 'string' || !value.startsWith('{')) return value;
+  const refPath = value.slice(1, -1).split('.');
+  let node: unknown = root;
+  for (const key of refPath) {
+    if (typeof node !== 'object' || node === null) {
+      throw new Error(`Cannot resolve token: ${value} — failed at key '${key}'`);
+    }
+    node = (node as Record<string, unknown>)[key];
+  }
+  if (typeof node === 'object' && node !== null && '$value' in node) {
+    const t = node as TokenNode;
+    return resolveRef(String(t.$value), root);
+  }
+  throw new Error(`Token reference ${value} did not resolve to a leaf token`);
+}
+
+// ─── Flatten tree to CSS vars ─────────────────────────────────────────────────
+
+function flatten(obj: Tree, root: Tree, prefix: string[], layer: CSSVar['layer']): CSSVar[] {
+  return Object.entries(obj).flatMap(([key, val]) => {
+    if (key.startsWith('$')) return [];
+    const node = val as Tree;
+    if ('$value' in node) {
+      const token = node as unknown as TokenNode;
+      const rawValue = typeof token.$value === 'string'
+        ? resolveRef(token.$value, root)
+        : String(token.$value);
+
+      // CSS name strategy per layer:
+      // primitive.*  → --helix-primitive-{path}
+      // semantic.*   → --helix-{path} (strip 'semantic.' prefix)
+      // component.*  → --helix-{path} (strip 'component.' prefix)
+      let nameParts: string[];
+      if (layer === 'primitive') {
+        nameParts = ['primitive', ...prefix, key];
+      } else {
+        nameParts = [...prefix, key]; // prefix already strips layer name in the caller
+      }
+
+      const name = '--helix-' + nameParts.join('-').replace(/\./g, '-');
+      return [{ name, value: rawValue, layer, description: token.$description }];
+    }
+    return flatten(node, root, [...prefix, key], layer);
+  });
+}
+
+// ─── Extract by layer ─────────────────────────────────────────────────────────
+
+const primitiveVars = flatten(tokens['primitive'] as Tree, tokens, [], 'primitive');
+const semanticVars  = flatten(tokens['semantic']  as Tree, tokens, [], 'semantic');
+const componentVars = flatten(tokens['component'] as Tree, tokens, [], 'component');
+
+const allVars = [...primitiveVars, ...semanticVars, ...componentVars];
+
+// ─── Dark mode semantic overrides (light → dark mapping) ─────────────────────
+
+const darkOverrides: Record<string, string> = {
+  '--helix-color-fill-page':             '#0f172a',
+  '--helix-color-fill-surface':          '#1e293b',
+  '--helix-color-fill-surface-raised':   '#334155',
+  '--helix-color-fill-secondary':        '#1e293b',
+  '--helix-color-fill-secondary-hover':  '#334155',
+  '--helix-color-fill-secondary-active': '#475569',
+  '--helix-color-fill-disabled':         '#1e293b',
+  '--helix-color-text-default':          '#f1f5f9',
+  '--helix-color-text-secondary':        '#94a3b8',
+  '--helix-color-text-tertiary':         '#64748b',
+  '--helix-color-text-disabled':         '#475569',
+  '--helix-color-text-inverse':          '#0f172a',
+  '--helix-color-text-brand':            '#60a5fa',
+  '--helix-color-text-link':             '#60a5fa',
+  '--helix-color-text-link-hover':       '#93c5fd',
+  '--helix-color-border-default':        '#334155',
+  '--helix-color-border-strong':         '#475569',
+  '--helix-color-border-subtle':         '#1e293b',
+  '--helix-color-border-inverse':        '#94a3b8',
+  '--helix-input-fill-rest':             '#1e293b',
+  '--helix-input-fill-disabled':         '#0f172a',
+  '--helix-input-text-value':            '#f1f5f9',
+  '--helix-input-text-placeholder':      '#64748b',
+  '--helix-input-text-disabled':         '#475569',
+  '--helix-input-text-label':            '#f1f5f9',
+  '--helix-input-text-description':      '#94a3b8',
+  '--helix-input-text-icon':             '#94a3b8',
+  '--helix-input-border-rest':           '#334155',
+  '--helix-input-border-hover':          '#475569',
+  '--helix-card-fill':                   '#1e293b',
+  '--helix-card-border':                 '#334155',
+  '--helix-dialog-fill':                 '#1e293b',
+  '--helix-button-fill-secondary-rest':  '#1e293b',
+  '--helix-button-fill-secondary-hover': '#334155',
+  '--helix-button-text-secondary':       '#f1f5f9',
+  '--helix-button-text-ghost':           '#f1f5f9',
+  '--helix-select-fill-rest':            '#1e293b',
+  '--helix-select-fill-disabled':        '#0f172a',
+  '--helix-select-text-value':           '#f1f5f9',
+  '--helix-select-text-placeholder':     '#64748b',
+  '--helix-select-text-disabled':        '#475569',
+  '--helix-select-text-label':           '#f1f5f9',
+  '--helix-select-text-description':     '#94a3b8',
+  '--helix-select-text-error':           '#fca5a5',
+  '--helix-select-text-icon':            '#94a3b8',
+  '--helix-select-border-rest':          '#334155',
+  '--helix-select-border-hover':         '#475569',
+  '--helix-select-border-focus':         '#60a5fa',
+  '--helix-select-border-invalid':       '#f87171',
+  '--helix-select-border-disabled':      '#334155',
+  '--helix-textarea-fill-rest':          '#1e293b',
+  '--helix-textarea-fill-disabled':      '#0f172a',
+  '--helix-textarea-text-value':         '#f1f5f9',
+  '--helix-textarea-text-placeholder':   '#64748b',
+  '--helix-textarea-text-disabled':      '#475569',
+  '--helix-textarea-text-label':         '#f1f5f9',
+  '--helix-textarea-text-description':   '#94a3b8',
+  '--helix-textarea-text-error':         '#fca5a5',
+  '--helix-textarea-border-rest':        '#334155',
+  '--helix-textarea-border-hover':       '#475569',
+  '--helix-textarea-border-focus':       '#60a5fa',
+  '--helix-textarea-border-invalid':     '#f87171',
+  '--helix-textarea-border-disabled':    '#334155',
+  '--helix-checkbox-fill-rest':          '#0f172a',
+  '--helix-checkbox-fill-disabled':      '#0f172a',
+  '--helix-checkbox-fill-checked':       '#2563eb',
+  '--helix-checkbox-fill-checked-hover':  '#1d4ed8',
+  '--helix-checkbox-border-rest':        '#334155',
+  '--helix-checkbox-border-hover':       '#475569',
+  '--helix-checkbox-border-checked':     '#2563eb',
+  '--helix-checkbox-border-focus':       '#60a5fa',
+  '--helix-checkbox-border-disabled':    '#334155',
+  '--helix-checkbox-border-invalid':     '#f87171',
+  '--helix-checkbox-check-color':        '#f1f5f9',
+  '--helix-checkbox-text-label':         '#f1f5f9',
+  '--helix-checkbox-text-description':   '#94a3b8',
+  '--helix-checkbox-text-error':         '#fca5a5',
+  '--helix-radio-fill-rest':             '#0f172a',
+  '--helix-radio-fill-disabled':         '#0f172a',
+  '--helix-radio-fill-checked':          '#2563eb',
+  '--helix-radio-fill-checked-hover':     '#1d4ed8',
+  '--helix-radio-border-rest':           '#334155',
+  '--helix-radio-border-hover':          '#475569',
+  '--helix-radio-border-checked':        '#2563eb',
+  '--helix-radio-border-focus':          '#60a5fa',
+  '--helix-radio-border-disabled':       '#334155',
+  '--helix-radio-border-invalid':        '#f87171',
+  '--helix-radio-dot':                   '#f1f5f9',
+  '--helix-radio-text-label':            '#f1f5f9',
+  '--helix-radio-text-description':      '#94a3b8',
+  '--helix-radio-text-error':            '#fca5a5',
+  '--helix-switch-track-fill-off':       '#1e293b',
+  '--helix-switch-track-fill-on':        '#2563eb',
+  '--helix-switch-track-fill-on-hover':  '#1d4ed8',
+  '--helix-switch-track-fill-disabled':  '#0f172a',
+  '--helix-switch-border-focus':         '#60a5fa',
+  '--helix-switch-thumb-fill':           '#f1f5f9',
+  '--helix-switch-text-label':           '#f1f5f9',
+  '--helix-switch-text-description':     '#94a3b8',
+};
+
+// ─── Write CSS ────────────────────────────────────────────────────────────────
+
+const sections = {
+  primitive: primitiveVars.map(v => `  ${v.name}: ${v.value};`).join('\n'),
+  semantic:  semanticVars.map(v => `  ${v.name}: ${v.value};${v.description ? ` /* ${v.description} */` : ''}`).join('\n'),
+  component: componentVars.map(v => `  ${v.name}: ${v.value};`).join('\n'),
+  dark2:     Object.entries(darkOverrides).map(([k, v]) => `  ${k}: ${v};`).join('\n'),
+  dark4:     Object.entries(darkOverrides).map(([k, v]) => `    ${k}: ${v};`).join('\n'),
+};
+
+const css = `/* ============================================================
+   Helix DS — Generated design tokens
+   Source: packages/tokens/src/tokens.json
+   DO NOT EDIT — run pnpm --filter @helix-ds/tokens build
+   ============================================================ */
+
+/* ── Primitive tokens (raw scale) ───────────────────────────── */
+:root {
+${sections.primitive}
+}
+
+/* ── Semantic tokens (role aliases) ─────────────────────────── */
+:root {
+${sections.semantic}
+}
+
+/* ── Component tokens (component-specific) ──────────────────── */
+:root {
+${sections.component}
+}
+
+/* ── Dark mode overrides ─────────────────────────────────────── */
+/* Explicit toggle wins first */
+:root[data-theme="dark"] {
+${sections.dark2}
+}
+
+/* OS preference (only when no explicit light override) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+${sections.dark4}
+  }
+}
+`;
+
+fs.writeFileSync(path.join(dist, 'helix.css'), css);
+
+// ─── Write TypeScript constants ───────────────────────────────────────────────
+
+function buildTs(obj: Tree, root: Tree, indent = 1): string[] {
+  const pad = '  '.repeat(indent);
+  const lines: string[] = [];
+  for (const [key, val] of Object.entries(obj)) {
+    if (key.startsWith('$')) continue;
+    const node = val as Tree;
+    const safeKey = /[^a-zA-Z0-9_$]/.test(key) ? `'${key}'` : key;
+    if ('$value' in node) {
+      const token = node as unknown as TokenNode;
+      const value = typeof token.$value === 'string'
+        ? resolveRef(token.$value, root)
+        : String(token.$value);
+      lines.push(`${pad}${safeKey}: '${value}',`);
+    } else {
+      lines.push(`${pad}${safeKey}: {`);
+      lines.push(...buildTs(node, root, indent + 1));
+      lines.push(`${pad}},`);
+    }
+  }
+  return lines;
+}
+
+const ts = [
+  '// Helix DS — generated token constants',
+  '// DO NOT EDIT — run pnpm --filter @helix-ds/tokens build',
+  '',
+  '/** Raw token values, typed as const. Use CSS vars at runtime instead. */',
+  'export const tokens = {',
+  '  primitive: {',
+  ...buildTs(tokens['primitive'] as Tree, tokens, 2),
+  '  },',
+  '  semantic: {',
+  ...buildTs(tokens['semantic'] as Tree, tokens, 2),
+  '  },',
+  '  component: {',
+  ...buildTs(tokens['component'] as Tree, tokens, 2),
+  '  },',
+  '} as const;',
+  '',
+  'export type Tokens = typeof tokens;',
+  '',
+  '/** CSS variable names for all tokens (for use with getComputedStyle) */',
+  'export const cssVars = {',
+  ...allVars.map(v => {
+    const key = v.name.replace('--helix-', '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    return `  '${key}': '${v.name}',`;
+  }),
+  '} as const;',
+].join('\n');
+
+fs.writeFileSync(path.join(dist, 'index.ts'), ts);
+
+// ─── Summary ──────────────────────────────────────────────────────────────────
+
+console.log('✅ Helix tokens built');
+console.log(`   Primitive: ${primitiveVars.length} vars`);
+console.log(`   Semantic:  ${semanticVars.length} vars`);
+console.log(`   Component: ${componentVars.length} vars`);
+console.log(`   Total:     ${allVars.length} CSS custom properties`);
+console.log(`   Dark mode: ${Object.keys(darkOverrides).length} overrides`);

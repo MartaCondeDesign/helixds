@@ -1,0 +1,33 @@
+{
+  "$schema": "./contracts/ds-config.schema.json",
+  "name": "Helix",
+  "version": "0.1.0",
+  "scope": "@helix-ds",
+  "tokenPrefix": "--helix-",
+  "dataPrefix": "data-helix-",
+  "classPrefix": "hx-",
+  "foundation": {
+    "base": "shadcn/ui",
+    "icons": "@tabler/icons-react",
+    "styling": "tailwindcss@4"
+  },
+  "packages": {
+    "tokens": "packages/tokens",
+    "core":   "packages/core",
+    "icons":  "packages/icons"
+  },
+  "ai": {
+    "contextRoot":   ".ai",
+    "contractsRoot": "contracts",
+    "propMap":       ".ai/maps/prop-map.md",
+    "skills":        ".ai/skills",
+    "agents":        ".ai/agents",
+    "memory":        ".ai/memory"
+  },
+  "ci": {
+    "verifyContract":  "pnpm verify:contract",
+    "checkPropMap":    "pnpm verify:props",
+    "reportPaints":    "pnpm report:paints",
+    "lintAi":          "pnpm lint:ai"
+  }
+}
