@@ -39,7 +39,7 @@ role, which is exactly what the naming overhaul (below) was fixing.
    alignment).
 2. Run `pnpm --filter @helix-ds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
 3. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
-4. **Update Figma** — add or rename the matching variable in the live file's `Color Semantic` (or
+4. **Update Figma** — add or rename the matching variable in the live file's `Theme` (or
    other relevant) collection via `use_figma`. See `.ai/skills/tokens-to-figma.md` → "Entry C —
    single token addition" for the reusable script pattern. Renaming an existing variable: change
    `.name` in place, never create a second variable — that orphans every instance already bound to it.
@@ -68,7 +68,7 @@ for the old name across the whole repo and fix every hit by hand, in this order:
    key. Skipping this silently breaks dark mode for that token — it keeps resolving to its old light-mode
    value baked into the wrong key.
 4. `packages/core/src/globals.css` — every `var(--helix-{old-name})` reference.
-5. Figma "Color Semantic" (and other) variable collections — rename the matching variable by hand via
+5. Figma "Theme" (and other) variable collections — rename the matching variable by hand via
    `use_figma` (see `.ai/skills/tokens-to-figma.md`). Nothing syncs code → Figma automatically.
 6. `apps/storybook/stories/**/*.tsx` — `helixTokens` documentation arrays and any inline
    `style={{ color: 'var(--helix-*)' }}` usage. These are the most numerous and easiest to miss.
@@ -81,6 +81,110 @@ for the old name across the whole repo and fix every hit by hand, in this order:
 - Token name in CSS = `--helix-` + path joined with `-`, with `primitive.` and `semantic.` removed
 - `semantic.color.fill.primary` → `--helix-color-fill-primary`
 - `primitive.spacing.4` → `--helix-spacing-4`
+
+### Token layers — what lives where
+
+The 3 top-level keys in `tokens.json` (`primitive`, `semantic`, `component`) each hold a fixed set of
+categories. This is the layer-first index; "Structure per token category" below covers the same ground
+category-first, with the exact key grammar for each.
+
+- **`primitive`** — raw, component-agnostic scales. Nothing here means anything on its own; everything is
+  a value to be aliased.
+  - `color` — hue ramps (`blue`, `gray`, `green`, `orange`, `red`, `turquoise`), steps `0`/`50`-`900`
+  - `spacing` — percentage scale, `100` = `16px` anchor
+  - `size` — percentage scale, same anchor, kept separate from `spacing` (see below)
+  - `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, `fontFamily` — typography scales
+  - `breakpoint` — `mobile`/`tablet`/`desktop` (0/768/1024px) — media-query thresholds, not applied CSS
+    properties themselves
+  - `shadow`, `zIndex`, `duration`, `easing` — everything else with no per-role meaning
+- **`semantic`** — role-based meaning, still component-agnostic. Answers "what is this *for*", not "which
+  component uses it".
+  - `color` — `fill`/`text`/`icon`/`border` roles (the "theme" — what the Figma `Theme` collection mirrors)
+  - `radius` — `none`/`xs`/`s`/`m`/`l`/`xl`/`2xl`/`3xl`/`full` (radius has **no** primitive layer — the
+    semantic names ARE the scale, nothing to alias underneath)
+  - `size.control` — the ADR-004 control/field height ladder (`xs`-`xl`)
+  - `spacing` — `xs`/`s`/`m`/`l`/`xl` t-shirt scale, plus the older `component-*`/`layout-*` context scale
+  - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung (87.5% of desktop,
+    see ADR — feeds the `@media (max-width: 767px)` block `build.ts` emits). This is the one place
+    `semantic.*` DOES carry typography — it's a breakpoint override, not a role, so it doesn't contradict
+    "typography stays primitive-only" below; there's still no `semantic.typography.*` role layer.
+  - `shadow` — `xs`-`xl`/`focus`, aliasing `primitive.shadow.*` 1:1
+  - Beyond the mobile fontSize override above, there is no broader `semantic.typography` — typography
+    stays primitive-only in code otherwise (Figma Text Styles are the de facto semantic layer for type;
+    see `tokens-to-figma.md`).
+- **`component`** — one key per component (`button`, `input`, `badge`, `chip`, `card`, `dialog`, `textarea`,
+  `select`, `checkbox`, `radio`, `switch`). Each aliases `semantic.*` where a role fits, or `primitive.*`
+  directly when there's no semantic concept to route through (radius is the one exception that always goes
+  through `semantic.radius` now, since that's the only layer it has).
+
+**CSS pipeline caveat:** `build.ts` *inlines* resolved alias values rather than emitting `var()` chains —
+`--helix-button-fontSize-m` gets the literal `13px`, not `var(--helix-primitive-fontSize-s)`. This means the
+`primitive.breakpoint`-driven responsive override only reaches `--helix-primitive-fontSize-*` directly; it
+does not cascade into semantic/component fontSize vars yet. Making it cascade everywhere would mean
+switching the whole pipeline from inlining to `var()` chaining — a bigger, separate change, not something
+the breakpoint feature did as a side effect.
+
+**Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
+`Primitives` (every `primitive.*` category), `Theme` (`semantic.color.*`, light/dark modes), `Semantic`
+(`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*`), `Responsive` (mobile/tablet/
+desktop `fontSize` modes) — not one collection per `tokens.json` category. See `.ai/skills/
+tokens-to-figma.md` → "Collection layout" for the full mapping and naming rules.
+
+### Structure per token category
+
+Not every category uses all 3 layers, and only color has a full combinatorial grammar (see below) — the
+others are flatter, single-axis scales.
+
+All categories DO have `component.*` tokens (`button.padding`, `button.radius`, `badge.fontSize`...) — the
+difference is whether `component` reaches primitive *through* semantic, or aliases primitive *directly*,
+skipping semantic:
+
+**Color** — `primitive → semantic → component`, component always goes through semantic, full grammar:
+- `primitive.color.{scale}.{50-900}` — e.g. `blue.600`
+- `semantic.color.{surface}.{role}[-interactive][-modifier][-state]` — `surface` = `fill`/`text`/`icon`/`border`,
+  e.g. `fill.primary-interactive-hover`
+- `component.{name}.{surface}.{variant}[-state]` — e.g. `button.fill.primary-hover` → aliases the `semantic.*` token above
+
+**Spacing** — percentage-keyed primitive scale, `100` = `16px` (`1rem`) anchor; component tokens still alias
+`primitive` directly (the semantic layer is real now but not yet wired into any component):
+- `primitive.spacing.{pct}` — e.g. `spacing.100` = 16px, `spacing.150` = 24px, `spacing.50` = 8px
+- `semantic.spacing.{xs,s,m,l,xl}` — t-shirt scale (8/12/16/24/32px), aliases `primitive.spacing.{50,75,100,150,200}`.
+  The older `component-*`/`layout-*` context keys still exist alongside it — neither is referenced by any
+  `component.*` token yet (check before assuming either is live)
+- `component.{name}.padding`/`gap`/etc. → aliases `primitive.spacing.*` directly, e.g. `button.padding.x-m` →
+  `{primitive.spacing.100}`, `input.gap.label` → `{primitive.spacing.25}`
+
+**Border-radius** — semantic-only, no primitive layer at all (there's no smaller unit to derive a radius
+scale from — the named steps themselves are the source of truth):
+- `semantic.radius.{size}` — `none`/`xs`/`s`/`m`/`l`/`xl`/`2xl`/`3xl`/`full`
+- `component.{name}.radius` → `{semantic.radius.*}`, e.g. `button.radius` → `{semantic.radius.m}`,
+  `badge.radius` → `{semantic.radius.full}`
+
+**Typography** — no semantic layer and no composite "typography" token; 4 independent primitive scales, each
+`component` token aliases one of them directly:
+- `primitive.fontSize.{size}` — `xs`...`5xl`
+- `primitive.fontWeight.{name}` — `regular`/`medium`/`semibold`/`bold`
+- `primitive.lineHeight.{name}` — `tight`/`snug`/`normal`/`relaxed`
+- `primitive.letterSpacing.{name}` — `tight`/`normal`/`wide`/`wider`
+- `component.{name}.fontSize`/`fontWeight`/etc. → aliases the matching primitive scale, e.g.
+  `button.fontSize.m` → `{primitive.fontSize.s}`, `badge.fontWeight` → `{primitive.fontWeight.semibold}`
+
+**Component height is the one dimension category that DOES have a semantic layer** — unlike
+spacing(-for-components)/typography above, and unlike radius (which skips primitive entirely instead). Two
+tiers, per [ADR-004](../../docs/ADR/ADR-004-size-standard.md):
+- `primitive.size.{50,75,100,125,150,175,200,225,250,300,350}` — percentage scale, same `100` = `16px`
+  anchor as `primitive.spacing`, kept as its own scale rather than reusing spacing's keys because "a
+  control's own dimension" and "the gap around it" are different concerns.
+- `semantic.size.control.{xs,s,m,l,xl}` → aliases `primitive.size.{100,150,200,250,300}` = 16/24/32/40/48px.
+  This is ADR-004's "Control scale" (`Button`) and, via its `s`/`m`/`l` subset, its "Field scale"
+  (`Input`/`Select`). `m` lands exactly on `primitive.size.200`, the scale's own anchor rung — see ADR-004
+  "Choosing `m`".
+- `component.button.height.*` aliases the full `semantic.size.control.*` ladder; `input.height.*`/
+  `select.height.*` alias its `s`/`m`/`l` subset.
+- `badge.height-*` and `chip.height-*` skip the semantic layer and alias `primitive.size.*` directly —
+  they're ADR-004's documented per-component exceptions (a local density model, not the shared control
+  ladder), which is why they don't go through `semantic.size.control` — but they're still real token
+  references, never an unreferenced px literal.
 
 ### Semantic naming vocabulary (decided 2026-08-21)
 

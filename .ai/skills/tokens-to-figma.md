@@ -9,9 +9,9 @@ applyTo: []
 ## Scope
 
 Transferring `packages/tokens/src/tokens.json` into native Figma assets: variable collections
-(color, spacing, radius, typography, font-family), Text Styles (bound to typography variables),
-and Effect Styles (shadows). Does not cover: component creation (see `components-to-figma`, which
-depends on this skill having run first) or icon import (see `icons-to-figma`).
+(color, spacing, radius, size, typography, font-family, breakpoints), Text Styles (bound to typography
+variables), and Effect Styles (shadows). Does not cover: component creation (see `components-to-figma`,
+which depends on this skill having run first) or icon import (see `icons-to-figma`).
 
 ## Source files to read FIRST (mandatory)
 
@@ -19,9 +19,32 @@ depends on this skill having run first) or icon import (see `icons-to-figma`).
 |------|-------------------|
 | `packages/tokens/src/tokens.json` | Source of truth — DTCG, 3 layers |
 | `packages/tokens/dist/helix.css` | Exact CSS var names + dark mode overrides |
-| `packages/tokens/CLAUDE.md` | Naming rules |
+| `packages/tokens/CLAUDE.md` | Naming rules, "Token layers" overview |
 
 **CSS var naming rule:** strip `primitive.` and `semantic.`, replace `.` with `-`, prepend `--helix-`.
+
+---
+
+## Collection layout (4 collections total)
+
+Everything lives in exactly 4 variable collections, one per role — **not** one per `tokens.json` category.
+Multiple token categories that share a role live in the SAME collection:
+
+| Collection | Holds | Modes |
+|------------|-------|-------|
+| `Primitives` | `primitive.color.*`, `primitive.spacing.*`, `primitive.size.*`, `primitive.fontSize/fontWeight/lineHeight/fontFamily.*`, `primitive.breakpoint.*` | `default` |
+| `Theme` | `semantic.color.*` (`fill`/`text`/`icon`/`border`) | `light`, `dark` |
+| `Semantic` | `semantic.radius.*`, `semantic.size.control.*`, `semantic.spacing.*` | `default` |
+| `Responsive` | Per-breakpoint typography overrides (`fontSize` scaled per breakpoint) | `mobile`, `tablet`, `desktop` |
+
+**Why this shape:** primitives are raw, component-agnostic scales — one bucket regardless of what kind of
+value. `Theme` is the one collection designers actually switch modes on (light/dark), so it stays alone.
+`Semantic` is everything else with role-based meaning but no light/dark split. `Responsive` is the only
+collection where the *mode* itself represents something other than a color theme.
+
+Within `Primitives` and `Semantic`, variable names still carry a category prefix (`color/`, `spacing/`,
+`size/`, `fontSize/`, `radius/`) so the picker stays organized despite sharing one collection —
+see "Naming rules" below.
 
 ---
 
@@ -32,7 +55,7 @@ depends on this skill having run first) or icon import (see `icons-to-figma`).
 | Wrong ❌ | Correct ✅ |
 |---------|----------|
 | `Helix / Primitives` | `Primitives` |
-| `Helix / Color` | `Color` |
+| `Helix / Theme` | `Theme` |
 | `Helix / Caption / Regular` | `Caption / Regular` |
 | `shadow / xs` | `shadow / xs` |
 
@@ -44,33 +67,41 @@ depends on this skill having run first) or icon import (see `icons-to-figma`).
 | `primitive.color.gray.*` | `color/gray/*` |
 | `primitive.color.green.*` | `color/green/*` |
 
-**Dot in spacing names → hyphen:** `spacing/0.5` is invalid in Figma → use `spacing/0-5`.
+**Dot in spacing/size names → hyphen:** `spacing/0.5` and `spacing/12.5` are invalid in Figma → use
+`spacing/0-5`, `spacing/12-5`.
 
-**In the `Color Semantic` collection, every grammar segment joins with `/`, not `-`.** A semantic
-token's key in `tokens.json` is a flat hyphenated string — `fill.primary-interactive-light-hover`
-— per the `{role}[-interactive][-modifier][-state]` grammar in `packages/tokens/CLAUDE.md`. In
-Figma, translate each of those segments into its own `/`-delimited path level instead, so Figma
-groups them as nested folders in the variable picker: `fill/primary/interactive/light/hover`, not
-`fill/primary-interactive-light-hover`. This is **Figma-only** — `tokens.json` keys and the
-generated `--helix-*` CSS custom properties keep `-` throughout (CSS doesn't allow `/` in an
-identifier), so the CSS var name for that same token stays
-`--helix-color-fill-primary-interactive-light-hover`. Do not apply this to the numeric decimal
-hyphen in primitive spacing names (`spacing/0-5` stays as one segment, not `spacing/0/5` — that `-`
-encodes a decimal point, not a grammar segment).
+**In `Theme`, every grammar segment joins with `/`, not `-`.** A semantic color token's key in
+`tokens.json` is a flat hyphenated string — `fill.primary-interactive-light-hover` — per the
+`{role}[-interactive][-modifier][-state]` grammar in `packages/tokens/CLAUDE.md`. In Figma, translate each
+of those segments into its own `/`-delimited path level instead, so Figma groups them as nested folders in
+the variable picker: `fill/primary/interactive/light/hover`, not `fill/primary-interactive-light-hover`.
+This is **Figma-only** — `tokens.json` keys and the generated `--helix-*` CSS custom properties keep `-`
+throughout (CSS doesn't allow `/` in an identifier), so the CSS var name for that same token stays
+`--helix-color-fill-primary-interactive-light-hover`. Do not apply this to the numeric decimal hyphen in
+spacing/size primitive names (`spacing/12-5` stays as one segment, not `spacing/12/5` — that `-` encodes a
+decimal point, not a grammar segment).
+
+**`Semantic` collection names get a category prefix** since it holds 3 unrelated scales in one place:
+`radius/*`, `size/*`, `spacing/*`. Without the prefix, `radius/m` and `spacing/m` would both want
+to be plain `m` and collide.
 
 ---
 
 ## Overview of what to create
 
-| Figma asset | Source | Collection name |
-|------------|--------|-----------------|
-| Color primitives | `primitive.color.*` | `Color Primitives` ← matches Storybook story name |
-| Semantic color | `semantic.color.*` | `Color Semantic` ← matches Storybook story name, 2 modes: light / dark |
-| Spacing | `primitive.spacing.*` | `Spacing` |
-| Radius | `primitive.radius.*` | `Radius` |
-| Typography | `primitive.fontSize/fontWeight/lineHeight/fontFamily.*` | `Typography` |
-| Text Styles | Semantic text matrix | Named `{role} / {weight}` |
-| Effect Styles | `primitive.shadow.*` | Named `shadow / {scale}` |
+| Figma asset | Source | Collection | Variable name pattern |
+|------------|--------|------------|------------------------|
+| Color primitives | `primitive.color.*` | `Primitives` | `color/{family}/{step}` |
+| Spacing primitives | `primitive.spacing.*` (percentage scale, `100` = 16px anchor) | `Primitives` | `spacing/{pct}` |
+| Size primitives | `primitive.size.*` (same anchor as spacing) | `Primitives` | `size/{pct}` |
+| Typography primitives | `primitive.fontSize/fontWeight/lineHeight/fontFamily.*` | `Primitives` | `fontSize/*`, `fontWeight/*`, `lineHeight/*`, `fontFamily/*` |
+| Semantic color | `semantic.color.*` | `Theme` | `fill/*`, `text/*`, `icon/*`, `border/*` — 2 modes: light / dark |
+| Semantic radius | `semantic.radius.*` (no primitive layer exists for radius) | `Semantic` | `radius/{size}` |
+| Semantic size | `semantic.size.control.{xs,s,m,l,xl}` | `Semantic` | `size/{size}` |
+| Semantic spacing | `semantic.spacing.{xs,s,m,l,xl}` | `Semantic` | `spacing/{size}` |
+| Responsive typography | per-breakpoint `fontSize` | `Responsive` | `fontSize/*` — 3 modes: mobile / tablet / desktop |
+| Text Styles | Semantic text matrix | — (Text Styles, not variables) | Named `{role} / {weight}` |
+| Effect Styles | `primitive.shadow.*` | — (Effect Styles, not variables) | Named `shadow / {scale}` |
 
 ---
 
@@ -95,21 +126,21 @@ function getOrCreateCollection(name) {
     .find(c => c.name === name);
   return existing || figma.variables.createVariableCollection(name);
 }
-// COLLECTION NAME RULE: names must match Storybook story names exactly.
-// primitive colors → 'Color Primitives', semantic colors → 'Color Semantic'
+// COLLECTION NAME RULE: exactly 4 collections total — 'Primitives', 'Theme', 'Semantic', 'Responsive'.
+// Never create a 5th (e.g. a separate 'Spacing' or 'Radius' collection) — see "Collection layout" above.
 ```
 
 ---
 
 ## Process
 
-### Phase 1 — Primitive color variables (`Primitives`)
+### Phase 1 — Primitive color variables (→ `Primitives`)
 
 Scopes empty → hidden in design tool pickers.
 10 steps per family (50→900). Gray also includes step 0 (white) and 800 (used in dark mode).
 
 ```js
-const primColl = getOrCreateCollection('Color Primitives');
+const primColl = getOrCreateCollection('Primitives');
 primColl.renameMode(primColl.modes[0].modeId, 'default');
 const modeId = primColl.modes[0].modeId;
 
@@ -196,19 +227,19 @@ return { created: Object.keys(primitiveColors).length };
 
 ---
 
-### Phase 2 — Semantic color variables (`Color`) with light / dark modes
+### Phase 2 — Semantic color variables (→ `Theme`) with light / dark modes
 
 ```js
-const semColl = getOrCreateCollection('Color Semantic');
+const themeColl = getOrCreateCollection('Theme');
 let lightModeId, darkModeId;
-if (semColl.modes.length === 1) {
-  semColl.renameMode(semColl.modes[0].modeId, 'light');
-  const newMode = semColl.addMode('dark');
-  lightModeId = semColl.modes[0].modeId;
+if (themeColl.modes.length === 1) {
+  themeColl.renameMode(themeColl.modes[0].modeId, 'light');
+  const newMode = themeColl.addMode('dark');
+  lightModeId = themeColl.modes[0].modeId;
   darkModeId = newMode;
 } else {
-  lightModeId = semColl.modes.find(m => m.name === 'light')?.modeId || semColl.modes[0].modeId;
-  darkModeId  = semColl.modes.find(m => m.name === 'dark')?.modeId  || semColl.modes[1].modeId;
+  lightModeId = themeColl.modes.find(m => m.name === 'light')?.modeId || themeColl.modes[0].modeId;
+  darkModeId  = themeColl.modes.find(m => m.name === 'dark')?.modeId  || themeColl.modes[1].modeId;
 }
 
 const varMap = buildVarMap();
@@ -216,8 +247,7 @@ const varMap = buildVarMap();
 // Correct scope enum values (Figma Plugin API)
 const SCOPES = ['ALL_FILLS', 'STROKE_COLOR', 'EFFECT_COLOR'];
 
-// [lightPrimitive, darkPrimitive]
-// NOTE: Color collection vars use fill/*, text/*, border/* — no 'color/' prefix
+// [lightPrimitive, darkPrimitive] — both refer to Primitives collection variable names
 // Keys use '/' for every grammar segment (role/interactive/modifier/state), not '-' —
 // see "Naming rules" above. tokens.json itself still uses flat hyphenated keys; only the
 // Figma variable name translates each segment into its own path level.
@@ -291,8 +321,8 @@ const semanticColors = {
 
 for (const [semName, [lightPrim, darkPrim]] of Object.entries(semanticColors)) {
   const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === semName && v.variableCollectionId === semColl.id);
-  const v = existing || figma.variables.createVariable(semName, semColl, 'COLOR');
+    .find(v => v.name === semName && v.variableCollectionId === themeColl.id);
+  const v = existing || figma.variables.createVariable(semName, themeColl, 'COLOR');
   v.scopes = SCOPES;
   const lightVar = varMap[lightPrim];
   const darkVar  = varMap[darkPrim];
@@ -305,27 +335,28 @@ return { created: Object.keys(semanticColors).length };
 
 ---
 
-### Phase 3 — Spacing variables (`Spacing`)
+### Phase 3 — Spacing primitive variables (→ `Primitives`)
 
-**Note:** dots are invalid in Figma variable names. Use hyphens: `spacing/0-5`, `spacing/1-5`, etc.
+Source: `primitive.spacing.*` — a **percentage scale**, not raw step numbers. `spacing/100` is the anchor
+(`16px` = `1rem`); every other rung is a percentage of it. Dots are invalid in Figma variable names — use
+hyphens: `spacing/12-5`, `spacing/37-5`, etc.
 
 ```js
-const spacingColl = getOrCreateCollection('Spacing');
-spacingColl.renameMode(spacingColl.modes[0].modeId, 'default');
-const sModeId = spacingColl.modes[0].modeId;
+const primColl = getOrCreateCollection('Primitives');
+const sModeId = primColl.modes.find(m => m.name === 'default').modeId;
 
 const spacingTokens = {
-  'spacing/0':   0,  'spacing/0-5': 2,  'spacing/1': 4,   'spacing/1-5': 6,
-  'spacing/2': 8,    'spacing/2-5': 10, 'spacing/3': 12,  'spacing/3-5': 14,
-  'spacing/4': 16,   'spacing/5': 20,   'spacing/6': 24,  'spacing/7': 28,
-  'spacing/8': 32,   'spacing/10': 40,  'spacing/12': 48, 'spacing/14': 56,
-  'spacing/16': 64,  'spacing/20': 80,  'spacing/24': 96, 'spacing/32': 128,
+  'spacing/0': 0,     'spacing/12-5': 2,  'spacing/25': 4,   'spacing/37-5': 6,
+  'spacing/50': 8,    'spacing/62-5': 10, 'spacing/75': 12,  'spacing/87-5': 14,
+  'spacing/100': 16,  'spacing/125': 20,  'spacing/150': 24, 'spacing/175': 28,
+  'spacing/200': 32,  'spacing/250': 40,  'spacing/300': 48, 'spacing/350': 56,
+  'spacing/400': 64,  'spacing/500': 80,  'spacing/600': 96, 'spacing/800': 128,
 };
 
 for (const [name, px] of Object.entries(spacingTokens)) {
   const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === name && v.variableCollectionId === spacingColl.id);
-  const v = existing || figma.variables.createVariable(name, spacingColl, 'FLOAT');
+    .find(v => v.name === name && v.variableCollectionId === primColl.id);
+  const v = existing || figma.variables.createVariable(name, primColl, 'FLOAT');
   v.scopes = ['WIDTH_HEIGHT', 'GAP'];
   v.setValueForMode(sModeId, px);
 }
@@ -335,12 +366,46 @@ return { created: Object.keys(spacingTokens).length };
 
 ---
 
-### Phase 4 — Radius variables (`Radius`)
+### Phase 3b — Semantic spacing variables (→ `Semantic`)
+
+Source: `semantic.spacing.{xs,s,m,l,xl}` — a t-shirt scale aliasing the `Primitives` spacing values above.
+No `component.*` token points at this yet (see `packages/tokens/CLAUDE.md`), but it belongs in Figma
+regardless so designers have the same vocabulary as the token file. Prefixed `spacing/*` since `Semantic`
+also holds `radius/*` and `size/*` — a bare `m` would be ambiguous between the three.
 
 ```js
-const radiusColl = getOrCreateCollection('Radius');
-radiusColl.renameMode(radiusColl.modes[0].modeId, 'default');
-const rModeId = radiusColl.modes[0].modeId;
+const semColl = getOrCreateCollection('Semantic');
+const semModeId = semColl.modes.find(m => m.name === 'default')?.modeId || semColl.modes[0].modeId;
+
+const primColl = getOrCreateCollection('Primitives');
+const spacingPrimMap = {};
+figma.variables.getLocalVariables()
+  .filter(v => v.variableCollectionId === primColl.id)
+  .forEach(v => { spacingPrimMap[v.name] = v; });
+
+const spacingSemantic = { 'spacing/xs': 'spacing/50', 'spacing/s': 'spacing/75', 'spacing/m': 'spacing/100', 'spacing/l': 'spacing/150', 'spacing/xl': 'spacing/200' };
+
+for (const [name, primName] of Object.entries(spacingSemantic)) {
+  const existing = figma.variables.getLocalVariables()
+    .find(v => v.name === name && v.variableCollectionId === semColl.id);
+  const v = existing || figma.variables.createVariable(name, semColl, 'FLOAT');
+  v.scopes = ['WIDTH_HEIGHT', 'GAP'];
+  v.setValueForMode(semModeId, figma.variables.createVariableAlias(spacingPrimMap[primName]));
+}
+
+return { created: Object.keys(spacingSemantic).length };
+```
+
+---
+
+### Phase 4 — Semantic radius variables (→ `Semantic`)
+
+**No primitive layer for radius** — `semantic.radius.*` is the only tier, there's no smaller unit to derive
+a radius scale from. Values are direct, not aliases.
+
+```js
+const semColl = getOrCreateCollection('Semantic');
+const semModeId = semColl.modes.find(m => m.name === 'default')?.modeId || semColl.modes[0].modeId;
 
 const radiusTokens = {
   'radius/none': 0, 'radius/xs': 2, 'radius/s': 4, 'radius/m': 6, 'radius/l': 8,
@@ -349,10 +414,10 @@ const radiusTokens = {
 
 for (const [name, px] of Object.entries(radiusTokens)) {
   const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === name && v.variableCollectionId === radiusColl.id);
-  const v = existing || figma.variables.createVariable(name, radiusColl, 'FLOAT');
+    .find(v => v.name === name && v.variableCollectionId === semColl.id);
+  const v = existing || figma.variables.createVariable(name, semColl, 'FLOAT');
   v.scopes = ['CORNER_RADIUS'];
-  v.setValueForMode(rModeId, px);
+  v.setValueForMode(semModeId, px);
 }
 
 return { created: Object.keys(radiusTokens).length };
@@ -360,14 +425,75 @@ return { created: Object.keys(radiusTokens).length };
 
 ---
 
-### Phase 5 — Typography variables (`Typography`)
+### Phase 4b — Size primitive variables (→ `Primitives`)
 
-Includes fontSize, fontWeight, lineHeight (FLOAT) AND fontFamily (STRING) — all in one collection.
+Source: `primitive.size.*` — a **percentage scale**, same `100` = `16px` anchor as spacing, kept as its own
+prefix (`size/*` vs `spacing/*`) because "a control's own dimension" and "the gap around it" are different
+concerns even where the numbers coincide.
 
 ```js
-const typoColl = getOrCreateCollection('Typography');
-typoColl.renameMode(typoColl.modes[0].modeId, 'default');
-const tModeId = typoColl.modes[0].modeId;
+const primColl = getOrCreateCollection('Primitives');
+const modeId = primColl.modes.find(m => m.name === 'default').modeId;
+
+const sizingTokens = {
+  'size/50': 8,   'size/75': 12,  'size/100': 16, 'size/125': 20, 'size/150': 24, 'size/175': 28,
+  'size/200': 32, 'size/225': 36, 'size/250': 40, 'size/300': 48, 'size/350': 56,
+};
+
+for (const [name, px] of Object.entries(sizingTokens)) {
+  const existing = figma.variables.getLocalVariables()
+    .find(v => v.name === name && v.variableCollectionId === primColl.id);
+  const v = existing || figma.variables.createVariable(name, primColl, 'FLOAT');
+  v.scopes = ['WIDTH_HEIGHT'];
+  v.setValueForMode(modeId, px);
+}
+
+return { created: Object.keys(sizingTokens).length };
+```
+
+---
+
+### Phase 4c — Semantic size variables (→ `Semantic`)
+
+Source: `semantic.size.control.{xs,s,m,l,xl}` — ADR-004's control/field ladder, aliasing the `Primitives`
+size values above. Figma name uses the `tokens.json` category (`size`), not the sub-key (`control`) — stays
+parallel with `radius/*` and `spacing/*`, the other two scales sharing this collection; there's only one
+sub-scale under `semantic.size` today, so `size/*` alone isn't ambiguous. **Components must bind height
+here, never straight to a `Primitives` size value** — matches how component colors bind to `Theme`, never
+to a `Primitives` color directly.
+
+```js
+const semColl = getOrCreateCollection('Semantic');
+const semModeId = semColl.modes.find(m => m.name === 'default')?.modeId || semColl.modes[0].modeId;
+
+const primColl = getOrCreateCollection('Primitives');
+const sizingPrimMap = {};
+figma.variables.getLocalVariables()
+  .filter(v => v.variableCollectionId === primColl.id)
+  .forEach(v => { sizingPrimMap[v.name] = v; });
+
+const controlSemantic = { 'size/xs': 'size/100', 'size/s': 'size/150', 'size/m': 'size/200', 'size/l': 'size/250', 'size/xl': 'size/300' };
+
+for (const [name, primName] of Object.entries(controlSemantic)) {
+  const existing = figma.variables.getLocalVariables()
+    .find(v => v.name === name && v.variableCollectionId === semColl.id);
+  const v = existing || figma.variables.createVariable(name, semColl, 'FLOAT');
+  v.scopes = ['WIDTH_HEIGHT'];
+  v.setValueForMode(semModeId, figma.variables.createVariableAlias(sizingPrimMap[primName]));
+}
+
+return { created: Object.keys(controlSemantic).length };
+```
+
+---
+
+### Phase 5 — Typography primitive variables (→ `Primitives`)
+
+Includes fontSize, fontWeight, lineHeight (FLOAT) AND fontFamily (STRING).
+
+```js
+const primColl = getOrCreateCollection('Primitives');
+const modeId = primColl.modes.find(m => m.name === 'default').modeId;
 
 // FLOAT vars
 const typographyTokens = [
@@ -392,10 +518,10 @@ const typographyTokens = [
 
 for (const [name, val, scopes] of typographyTokens) {
   const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === name && v.variableCollectionId === typoColl.id);
-  const v = existing || figma.variables.createVariable(name, typoColl, 'FLOAT');
+    .find(v => v.name === name && v.variableCollectionId === primColl.id);
+  const v = existing || figma.variables.createVariable(name, primColl, 'FLOAT');
   v.scopes = scopes;
-  v.setValueForMode(tModeId, val);
+  v.setValueForMode(modeId, val);
 }
 
 // STRING vars (fontFamily) — same collection
@@ -405,10 +531,10 @@ const fontFamilies = {
 };
 for (const [name, value] of Object.entries(fontFamilies)) {
   const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === name && v.variableCollectionId === typoColl.id);
-  const v = existing || figma.variables.createVariable(name, typoColl, 'STRING');
+    .find(v => v.name === name && v.variableCollectionId === primColl.id);
+  const v = existing || figma.variables.createVariable(name, primColl, 'STRING');
   v.scopes = ['FONT_FAMILY'];
-  v.setValueForMode(tModeId, value);
+  v.setValueForMode(modeId, value);
 }
 
 return { floatVars: typographyTokens.length, stringVars: Object.keys(fontFamilies).length };
@@ -467,6 +593,56 @@ return { textStyles: figma.getLocalTextStyles().length };
 
 ---
 
+### Phase 7 — Responsive typography (→ `Responsive`)
+
+Source: `primitive.breakpoint.{mobile,tablet,desktop}` (0/768/1024px) + `primitive.fontSize.*` (desktop/
+tablet — unchanged) + `semantic.fontSize.mobile.*` (87.5% of desktop, ADR-backed). Only `fontSize` scales
+by breakpoint; `lineHeight`/`letterSpacing` don't change. `tablet` and `desktop` modes hold identical values
+since typography doesn't differ between them — only `mobile` actually diverges. This is the Figma-side
+mirror of the `@media (max-width: 767px)` block `build.ts` emits from the same source tokens. **Caveat:**
+the CSS override only reaches `--helix-primitive-fontSize-*` — component-level fontSize vars (e.g.
+`--helix-button-fontSize-m`) inline their resolved value at build time rather than referencing the
+primitive via `var()`, so they don't pick up the responsive override yet. That's a known limitation of the
+current build pipeline (inlining, not var-chaining), not something this Figma collection can fix on its
+own — Figma variable bindings on text nodes are a separate, correctly-cascading mechanism (bind a text
+node's `fontSize` to this collection's variable and Figma's own mode-switching handles it).
+
+```js
+const respColl = getOrCreateCollection('Responsive');
+let mobileModeId, tabletModeId, desktopModeId;
+if (respColl.modes.length === 1) {
+  respColl.renameMode(respColl.modes[0].modeId, 'mobile');
+  mobileModeId = respColl.modes[0].modeId;
+  tabletModeId = respColl.addMode('tablet');
+  desktopModeId = respColl.addMode('desktop');
+} else {
+  mobileModeId  = respColl.modes.find(m => m.name === 'mobile')?.modeId  || respColl.modes[0].modeId;
+  tabletModeId  = respColl.modes.find(m => m.name === 'tablet')?.modeId  || respColl.modes[1].modeId;
+  desktopModeId = respColl.modes.find(m => m.name === 'desktop')?.modeId || respColl.modes[2].modeId;
+}
+
+// desktop values = primitive.fontSize.* (unchanged); tablet shares the same values as desktop
+const desktopFontSize = { xs: 11, s: 13, m: 15, l: 17, xl: 20, '2xl': 24, '3xl': 30, '4xl': 36, '5xl': 48 };
+const mobileFontSize  = { xs: 10, s: 11, m: 13, l: 15, xl: 18, '2xl': 21, '3xl': 26, '4xl': 32, '5xl': 42 };
+
+const created = [];
+for (const key of Object.keys(desktopFontSize)) {
+  const name = `fontSize/${key}`;
+  const existing = figma.variables.getLocalVariables()
+    .find(v => v.name === name && v.variableCollectionId === respColl.id);
+  const v = existing || figma.variables.createVariable(name, respColl, 'FLOAT');
+  v.scopes = ['FONT_SIZE'];
+  v.setValueForMode(mobileModeId, mobileFontSize[key]);
+  v.setValueForMode(tabletModeId, desktopFontSize[key]);
+  v.setValueForMode(desktopModeId, desktopFontSize[key]);
+  created.push(name);
+}
+
+return { created, modes: respColl.modes.map(m => m.name) };
+```
+
+---
+
 ### Phase 8 — Effect Styles (Shadows)
 
 Named `shadow / {scale}` — no system prefix.
@@ -521,12 +697,13 @@ return result;
 
 When `scripts/token-cli.ts` has already added ONE token to `src/tokens.json` (naming-checked and
 built locally), don't re-run Phases 1–9 — push just that one variable. Only `semantic.*` and
-`component.*` tokens live in Figma variables; a `primitive.*` addition needs Phase 1's collection
-first (rare — most new work is a semantic alias onto existing primitives).
+`component.*` tokens live in Figma variables as a rule of thumb; a `primitive.*` addition needs the
+`Primitives` collection to already exist first (rare — most new work is a semantic alias onto existing
+primitives).
 
 1. Get the new token's path and value out of `packages/tokens/dist/helix.css` (already built) —
    e.g. `semantic.color.icon.neutral-darkest` → CSS var `--helix-color-icon-neutral-darkest` →
-   Figma variable name `icon/neutral/darkest` in the `Color Semantic` collection. Figma name = the
+   Figma variable name `icon/neutral/darkest` in the `Theme` collection. Figma name = the
    token's own hyphenated key (`neutral-darkest`) with **every** `-` turned into `/` (each grammar
    segment — role/interactive/modifier/state — becomes its own path level; see "Naming rules" above)
    — same mapping the `semanticColors` table in Phase 2 uses.
@@ -537,9 +714,9 @@ first (rare — most new work is a semantic alias onto existing primitives).
 
 ```js
 await figma.setCurrentPageAsync(figma.root.children[0]); // variables aren't page-scoped, any page works
-const semColl = figma.variables.getLocalVariableCollections().find(c => c.name === 'Color Semantic');
-const lightModeId = semColl.modes.find(m => m.name === 'light').modeId;
-const darkModeId  = semColl.modes.find(m => m.name === 'dark').modeId;
+const themeColl = figma.variables.getLocalVariableCollections().find(c => c.name === 'Theme');
+const lightModeId = themeColl.modes.find(m => m.name === 'light').modeId;
+const darkModeId  = themeColl.modes.find(m => m.name === 'dark').modeId;
 const varMap = {};
 figma.variables.getLocalVariables().forEach(v => { varMap[v.name] = v; });
 
@@ -548,8 +725,8 @@ const lightPrimitive = 'color/gray/900';       // ← what it resolves to in lig
 const darkPrimitive  = 'color/gray/100';       // ← what it resolves to in dark mode
 
 const existing = figma.variables.getLocalVariables()
-  .find(v => v.name === name && v.variableCollectionId === semColl.id);
-const v = existing || figma.variables.createVariable(name, semColl, 'COLOR');
+  .find(v => v.name === name && v.variableCollectionId === themeColl.id);
+const v = existing || figma.variables.createVariable(name, themeColl, 'COLOR');
 v.scopes = ['ALL_FILLS', 'STROKE_COLOR', 'EFFECT_COLOR'];
 if (varMap[lightPrimitive]) v.setValueForMode(lightModeId, figma.variables.createVariableAlias(varMap[lightPrimitive]));
 if (varMap[darkPrimitive])  v.setValueForMode(darkModeId,  figma.variables.createVariableAlias(varMap[darkPrimitive]));
@@ -560,33 +737,35 @@ return { createdOrUpdated: name };
 4. **Renaming an existing token** (not adding): find the variable by its OLD name, set `.name` to
    the new one — do NOT create a second variable, or every component instance bound to the old
    variable silently keeps pointing at an orphaned one.
-5. Re-run Phase 9 (QA) to confirm the `Color Semantic` count moved by exactly the number of tokens
+5. Re-run Phase 9 (QA) to confirm the `Theme` count moved by exactly the number of tokens
    you added (0 for a pure rename).
 
 ---
 
 ## Output
 
-Five Figma variable collections (`Primitives`, `Color`, `Spacing`, `Radius`, `Typography`), plus
-Text Styles and Effect Styles, all named to match `packages/tokens/src/tokens.json` with no system
-prefix — ready for `components-to-figma` to bind against.
+4 Figma variable collections (`Primitives`, `Theme`, `Semantic`, `Responsive`), plus Text Styles and
+Effect Styles, all named to match `packages/tokens/src/tokens.json` with no system prefix — ready for
+`components-to-figma` to bind against.
 
 ## Regression checklist
 
 Run Phase 9 and confirm the counts match:
 
-- [ ] `Primitives`: 61 vars, modes=[default] (10 blue + 11 gray + 10 each green/orange/red/turquoise)
-- [ ] `Color Semantic`: 58 vars, modes=[light, dark] (`fill/*` 27, `text/*` 12, `icon/*` 10, `border/*` 9 — no `color/` prefix)
-- [ ] No `Color Semantic` variable name contains a `-` — every grammar segment (role/interactive/
+- [ ] `Primitives`: 111 vars, modes=[default] — 61 color (10 blue + 11 gray + 10 each
+      green/orange/red/turquoise) + 20 spacing + 11 size + 19 typography
+- [ ] `Theme`: 58 vars, modes=[light, dark] (`fill/*` 27, `text/*` 12, `icon/*` 10, `border/*` 9 — no
+      `color/` prefix)
+- [ ] No `Theme` variable name contains a `-` — every grammar segment (role/interactive/
       modifier/state) is its own `/`-delimited path level (`fill/primary/interactive/light/hover`,
       not `fill/primary-interactive-light-hover`)
-- [ ] `Spacing`: 20 vars, modes=[default]
-- [ ] `Radius`: 9 vars, modes=[default]
-- [ ] `Typography`: 19 vars, modes=[default] (17 FLOAT + 2 STRING fontFamily)
-- [ ] `textStyles`: 15
-- [ ] `effectStyles`: 6
+- [ ] `Semantic`: 19 vars, modes=[default] — 9 `radius/*` + 5 `size/*` + 5 `spacing/*`
+- [ ] `Responsive`: 9 vars, modes=[mobile, tablet, desktop] (`fontSize/xs`...`fontSize/5xl`) — `tablet` and
+      `desktop` mode values are identical to each other, only `mobile` differs
 - [ ] No collection or style name has a system prefix (`Helix / ...`)
-- [ ] Dot-containing token names were converted to hyphens (e.g. `spacing/0-5`, not `spacing/0.5`)
+- [ ] Dot-containing token names were converted to hyphens (e.g. `spacing/12-5`, not `spacing/12.5`)
+- [ ] Exactly 4 variable collections total (`Primitives`, `Theme`, `Semantic`, `Responsive`) — never a 5th
+      ad-hoc collection for a single category
 
 ---
 
@@ -596,8 +775,10 @@ Run Phase 9 and confirm the counts match:
 |-------|-------|-----|
 | `FONT_WEIGHT` is not a valid scope | Wrong enum | Use `'FONT_WEIGHT'` exactly; check Plugin API types |
 | `COLOR_FILLS` invalid | Wrong scope enum | Use `'ALL_FILLS'`, `'STROKE_COLOR'`, `'EFFECT_COLOR'` |
-| Invalid variable name with `.` | Dot not allowed | Replace `.` with `-` in Figma names: `spacing/0-5` |
+| Invalid variable name with `.` | Dot not allowed | Replace `.` with `-` in Figma names: `spacing/12-5` |
 | Font style `SemiBold` not found | Missing space | Inter uses `'Semi Bold'` (two words) |
 | `setBoundVariableForPaint` ignored | Return value dropped | Capture return and reassign: `node.fills = [newPaint]` |
-| Alias loop | Primitives not created first | Always run Phase 1 before Phase 2 |
+| Alias loop | `Primitives` not created first | Always run Phase 1/3/4b/5 (whichever primitive category) before the matching semantic phase |
 | Mode limit | Free plan allows 1 mode | Requires Figma Professional or higher |
+| `setBoundVariable` on a TEXT property silently no-ops | Font not loaded on that node first | Load every distinct font on the text node via `getStyledTextSegments(['fontName'])` + `loadFontAsync` before `setBoundVariable` |
+| `boundVariables.fontSize` (or other TEXT fields) is an array, not a single alias | TEXT nodes represent bound properties per styled segment | Read `boundVariables.fontSize[0].id`, not `boundVariables.fontSize.id` |

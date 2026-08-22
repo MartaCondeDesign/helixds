@@ -243,13 +243,23 @@ Before setting auto-layout, check the CSS and contract:
 
 ### Button sizing reference (as-built)
 
+**Bind to variables — never assign plain numbers, and bind to the SEMANTIC variable, not the primitive
+one.** Height and padding are tokens (`component.button.height.*` → `semantic.size.control.*` →
+`primitive.size.*`, `component.button.padding.x-*` → `primitive.spacing.*`); the Figma component's height
+must be *bound* to a `Semantic` collection variable (`control/*`) — mirrors the code path: height goes
+through a semantic layer, so Figma must too. Binding straight to a `Primitives` variable skips a real layer,
+the same way binding a button's fill straight to a color primitive instead of `Theme` would. Padding has no
+semantic layer in code, so it binds straight to `Primitives` (`spacing/*`) — that one's correct as a direct
+primitive bind. (Collection names per the current reorg: `Primitives`/`Theme`/`Semantic` — see
+`tokens-to-figma.md`.)
+
 ```js
-// Heights per size — from --helix-button-height-* tokens
-const HEIGHT = { xs: 24, s: 32, m: 36, l: 40, xl: 48 };
-// Padding X per size — from --helix-button-padding-x-* tokens
-const PADDING_X = { xs: 8, s: 12, m: 16, l: 20, xl: 24 };
-// Gap between icon and label
-const GAP = 8; // px — between anatomy slots
+// Figma variable names per size — from the Semantic / Primitives collections (tokens-to-figma.md).
+const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl: 'size/xl' }; // Semantic
+const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
+
+const varMap = {};
+figma.variables.getLocalVariables().forEach(v => { varMap[v.name] = v; });
 
 // Apply per component after creating it
 comp.layoutMode             = 'HORIZONTAL';
@@ -257,13 +267,17 @@ comp.layoutSizingHorizontal = 'HUG';    // content-hug — default
 comp.layoutSizingVertical   = 'FIXED';  // fixed by size token
 comp.primaryAxisAlignItems  = 'CENTER';
 comp.counterAxisAlignItems  = 'CENTER';
-comp.paddingLeft            = PADDING_X[size];
-comp.paddingRight           = PADDING_X[size];
-comp.paddingTop             = 0;
-comp.paddingBottom          = 0;
-comp.itemSpacing            = GAP;
-comp.resize(comp.width, HEIGHT[size]); // fix height after layout changes
+comp.paddingTop              = 0;   // not token-backed in code either — literal 0 is correct here
+comp.paddingBottom           = 0;
+comp.itemSpacing             = 8;   // icon↔label gap — no token exists for this yet in tokens.json
+comp.setBoundVariable('height',       varMap[HEIGHT_VAR[size]]);
+comp.setBoundVariable('paddingLeft',  varMap[PADDING_X_VAR[size]]);
+comp.setBoundVariable('paddingRight', varMap[PADDING_X_VAR[size]]);
 ```
+
+`paddingTop`/`paddingBottom` (always `0`) and the icon↔label `itemSpacing` (`8`) stay plain literals — they
+aren't backed by a token in `tokens.json` today either, so there's nothing to bind to yet. That's a
+pre-existing gap, not something this pattern papers over; add the token first if you want those bound too.
 
 ### Min/max-width
 
@@ -280,9 +294,11 @@ Button has no min/max-width in CSS — leave as `null` per contract.
 - [ ] Every variant has `layoutMode = 'HORIZONTAL'`
 - [ ] Every variant has `layoutSizingHorizontal = 'HUG'` (not FIXED)
 - [ ] Every variant has `layoutSizingVertical = 'FIXED'`
-- [ ] Padding values match CSS token values per size
-- [ ] Gap matches itemSpacing between anatomy parts
-- [ ] Height matches size token (xs=24, s=32, m=36, l=40, xl=48 for Button)
+- [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Primitives` variable (not a plain number
+      that happens to match — check `boundVariables.paddingLeft` on the node)
+- [ ] Gap matches itemSpacing between anatomy parts (still a plain literal — no token backs it yet)
+- [ ] `height` is *bound* to the matching `Semantic` variable (xs=16, s=24, m=32, l=40, xl=48 for
+      Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered pixel value
 
 ### Phase 3 — Create COMPONENT_SET
 
@@ -364,7 +380,7 @@ const varByName = {};
 allVars.forEach(v => { varByName[v.name] = v; });
 
 // Find the variable for this layer's role
-// E.g. primary button background → 'fill/primary/interactive/default' — Color Semantic collection
+// E.g. primary button background → 'fill/primary/interactive/default' — Theme collection
 // vars use '/' for every grammar segment (role/interactive/modifier/state), not '-', and no
 // 'color/' prefix (vars are fill/*, text/*, icon/*, border/*)
 const fillVar = varByName['fill/primary/interactive/default'];
@@ -375,10 +391,10 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 ```
 
 **Token policy** from the contract's `tokenPolicy.allowed`:
-- `color.fill` → `Color Semantic` collection, variable names starting with `fill/`
-- `color.text` → `Color Semantic` collection, variables starting with `text/`
-- `color.icon` → `Color Semantic` collection, variables starting with `icon/`
-- `color.border` → `Color Semantic` collection, variables starting with `border/`
+- `color.fill` → `Theme` collection, variable names starting with `fill/`
+- `color.text` → `Theme` collection, variables starting with `text/`
+- `color.icon` → `Theme` collection, variables starting with `icon/`
+- `color.border` → `Theme` collection, variables starting with `border/`
 - `spacing` → `Spacing` collection, FLOAT variables
 - Never use `Primitives` collection variables in component fills
 - Collection names have NO system prefix: use `Color`, NOT `Helix / Color`

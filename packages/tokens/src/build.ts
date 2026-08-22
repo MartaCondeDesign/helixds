@@ -194,6 +194,36 @@ const darkOverrides: Record<string, string> = {
   '--helix-switch-text-description':     '#94a3b8',
 };
 
+// ─── Responsive typography (mobile fontSize override) ─────────────────────────
+//
+// primitive.fontSize.* is the desktop/tablet size (unchanged, no media query needed since
+// primitive.breakpoint.tablet === primitive.breakpoint.desktop for typography). Below the
+// tablet breakpoint, override with semantic.fontSize.mobile.* (87.5% of desktop, see ADR).
+//
+// CAVEAT: this overrides --helix-primitive-fontSize-* only. semantic/component fontSize vars
+// (e.g. --helix-button-fontSize-m) currently INLINE their resolved value at build time rather
+// than referencing var(--helix-primitive-fontSize-*), so this override does not cascade to
+// them yet — it only affects consumers that reference the primitive var directly. Making it
+// cascade everywhere requires switching alias resolution from inlining to var() chaining,
+// a larger pipeline change tracked separately.
+
+const tabletBreakpointPx = Number(
+  resolveRef('{primitive.breakpoint.tablet}', tokens).replace('px', ''),
+);
+const mobileMaxWidthPx = tabletBreakpointPx - 1;
+
+const mobileFontSizeVars = flatten(
+  (tokens['semantic'] as Tree)['fontSize'] as Tree,
+  tokens,
+  ['fontSize'],
+  'semantic',
+).filter(v => v.name.startsWith('--helix-fontSize-mobile-'));
+
+const mobileFontSizeOverrides = mobileFontSizeVars.map(v => {
+  const primitiveName = v.name.replace('--helix-fontSize-mobile-', '--helix-primitive-fontSize-');
+  return { name: primitiveName, value: v.value };
+});
+
 // ─── Write CSS ────────────────────────────────────────────────────────────────
 
 const sections = {
@@ -202,6 +232,7 @@ const sections = {
   component: componentVars.map(v => `  ${v.name}: ${v.value};`).join('\n'),
   dark2:     Object.entries(darkOverrides).map(([k, v]) => `  ${k}: ${v};`).join('\n'),
   dark4:     Object.entries(darkOverrides).map(([k, v]) => `    ${k}: ${v};`).join('\n'),
+  mobileFontSize: mobileFontSizeOverrides.map(v => `    ${v.name}: ${v.value};`).join('\n'),
 };
 
 const css = `/* ============================================================
@@ -235,6 +266,15 @@ ${sections.dark2}
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
 ${sections.dark4}
+  }
+}
+
+/* ── Responsive typography — mobile fontSize override ────────── */
+/* Below primitive.breakpoint.tablet (${tabletBreakpointPx}px); tablet+desktop share the base size above,
+   so one query covers both. See semantic.fontSize.mobile.* for the source values. */
+@media (max-width: ${mobileMaxWidthPx}px) {
+  :root {
+${sections.mobileFontSize}
   }
 }
 `;
