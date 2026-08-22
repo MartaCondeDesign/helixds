@@ -276,30 +276,50 @@ export const ColorSemantic: Story = {
 
 // ── 3. Spacing ────────────────────────────────────────────────────────────
 
+function SpacingBar({ varName, tokenKey, val, dim }: { varName: string; tokenKey: string; val: string; dim?: string }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{tokenKey}</span>
+      <div style={{
+        height: 20, borderRadius: 3,
+        background: 'var(--helix-color-fill-primary)',
+        width: `var(${varName})`,
+        minWidth: dim === '0px' ? 1 : undefined,
+        opacity: dim === '0px' ? 0.2 : 1,
+        transition: 'width 0.2s',
+      }} />
+      <span style={{ ...label12, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</span>
+    </div>
+  );
+}
+
 export const Spacing: Story = {
   render: () => {
-    const steps: [string, string][] = [
+    const primitiveSteps: [string, string][] = [
       ['0', '0px'], ['25', '4px'], ['50', '8px'], ['75', '12px'],
       ['100', '16px'], ['125', '20px'], ['150', '24px'], ['175', '28px'],
       ['200', '32px'], ['250', '40px'], ['300', '48px'], ['350', '56px'],
       ['400', '64px'], ['500', '80px'], ['600', '96px'], ['800', '128px'],
     ];
+    const semanticSteps: [string, string][] = [
+      ['xs', '8px'], ['s', '12px'], ['m', '16px'], ['l', '24px'], ['xl', '32px'],
+    ];
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {steps.map(([key, val]) => (
-          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{key}</span>
-            <div style={{
-              height: 20, borderRadius: 3,
-              background: 'var(--helix-color-fill-primary)',
-              width: `var(--helix-primitive-spacing-${key})`,
-              minWidth: key === '0' ? 1 : undefined,
-              opacity: key === '0' ? 0.2 : 1,
-              transition: 'width 0.2s',
-            }} />
-            <span style={{ ...label12, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</span>
+      <div>
+        <SectionHead title="Primitive" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {primitiveSteps.map(([key, val]) => (
+            <SpacingBar key={key} tokenKey={key} varName={`--helix-primitive-spacing-${key}`} val={val} dim={val} />
+          ))}
+        </div>
+        <div style={{ marginTop: 32 }}>
+          <SectionHead title="Semantic (t-shirt scale)" />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {semanticSteps.map(([key, val]) => (
+              <SpacingBar key={key} tokenKey={key} varName={`--helix-spacing-${key}`} val={val} />
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     );
   },
@@ -322,6 +342,35 @@ export const Radius: Story = {
               background: 'var(--helix-color-fill-primary-light)',
               border: '2px solid var(--helix-color-fill-primary)',
               borderRadius: `var(--helix-radius-${key})`,
+            }} />
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</div>
+              <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+// ── 4b. Sizing (semantic.size.control — ADR-004 control/field ladder) ──────
+
+export const Sizing: Story = {
+  render: () => {
+    const steps: [string, string][] = [
+      ['xs', '16px'], ['s', '24px'], ['m', '32px'], ['l', '40px'], ['xl', '48px'],
+    ];
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'flex-end' }}>
+        {steps.map(([key, val]) => (
+          <div key={key} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+            <div style={{
+              width: 72,
+              height: `var(--helix-size-control-${key})`,
+              background: 'var(--helix-color-fill-primary-light)',
+              border: '2px solid var(--helix-color-fill-primary)',
+              borderRadius: 'var(--helix-radius-s)',
             }} />
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</div>
@@ -390,7 +439,7 @@ export const Typography: Story = {
           </div>
         </div>
         <div style={{ marginTop: 32 }}>
-          <SectionHead title="Line heights" />
+          <SectionHead title="Line heights — primitive (ratio)" />
           <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
             {([
               ['tight',   '1.2',  'Headings'],
@@ -413,6 +462,26 @@ export const Typography: Story = {
                   <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</span>
                   <span style={{ ...label12, textAlign: 'left' }}>{val}{role ? ` · ${role}` : ''}</span>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ marginTop: 32 }}>
+          <SectionHead title="Line heights — semantic (paired with fontSize)" />
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+            {(['xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']).map(key => (
+              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{
+                  width: 120, padding: '8px 10px', borderRadius: 4,
+                  background: 'var(--helix-color-fill-surface)',
+                  border: '1px solid var(--helix-color-border-neutral-light)',
+                  fontSize: 13,
+                  lineHeight: `var(--helix-lineHeight-${key})`,
+                  color: 'var(--helix-color-text-neutral)',
+                }}>
+                  Helix DS<br />lineHeight-{key}
+                </div>
+                <span style={{ ...label12, textAlign: 'left' }}>fontSize-{key}</span>
               </div>
             ))}
           </div>
@@ -444,27 +513,37 @@ export const Typography: Story = {
 
 // ── 6. Shadows ─────────────────────────────────────────────────────────────
 
-export const Shadows: Story = {
-  render: () => {
-    const steps = ['none', 'xs', 's', 'm', 'l', 'xl'];
-    return (
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40 }}>
-        {steps.map(s => (
-          <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-            <div style={{
-              width: 100, height: 72,
-              background: 'var(--helix-color-fill-page)',
-              borderRadius: 8,
-              boxShadow: `var(--helix-primitive-shadow-${s})`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
-            </div>
+function ShadowRow({ varName, steps }: { varName: (step: string) => string; steps: string[] }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40 }}>
+      {steps.map(s => (
+        <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+          <div style={{
+            width: 100, height: 72,
+            background: 'var(--helix-color-fill-page)',
+            borderRadius: 8,
+            boxShadow: `var(${varName(s)})`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
           </div>
-        ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export const Shadows: Story = {
+  render: () => (
+    <div>
+      <SectionHead title="Primitive" />
+      <ShadowRow varName={s => `--helix-primitive-shadow-${s}`} steps={['none', 'xs', 's', 'm', 'l', 'xl']} />
+      <div style={{ marginTop: 32 }}>
+        <SectionHead title="Semantic" />
+        <ShadowRow varName={s => `--helix-shadow-${s}`} steps={['xs', 's', 'm', 'l', 'xl', 'focus']} />
       </div>
-    );
-  },
+    </div>
+  ),
   decorators: [Story => (
     <div style={{ background: 'var(--helix-color-fill-surface)', padding: 48, borderRadius: 12 }}>
       <Story />
