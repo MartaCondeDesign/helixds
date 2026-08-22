@@ -65,12 +65,15 @@ must be created as the resolved `fontSize × ratio` in **px**, as a literal — 
 ratio and a concrete fontSize meet. `Semantic.lineHeight/{key}` then **aliases** that Primitives value
 (never a literal itself — see the Typography binding rule above). If the new rung is `l` or larger, also
 add `fontSize.mobile.{key}` (87.5% of the new value, literal — this IS a real `tokens.json` token) in
-`Semantic`, then `Responsive.fontSize/{key}` + `Responsive.lineHeight/{key}` (3 modes each —
-`desktop`/`tablet` alias `Primitives`; `fontSize`'s `mobile` mode aliases `Semantic.fontSize.mobile.{key}`,
-but `lineHeight`'s `mobile` mode is a **literal** computed inline as `fontSize.mobile.{key} × ratio` —
-`tokens.json` has no `semantic.lineHeight.mobile.*` token, so don't create a matching Figma variable for
-one; that would mirror a token that doesn't exist in code) — see `.ai/skills/tokens-to-figma.md` → Phase
-5/7 for the exact script.
+`Semantic`, and in Figma-only Primitives also add `Primitives.lineHeight/mobile/{key}` (that mobile
+fontSize × ratio, literal — the mobile-breakpoint counterpart of step 4 above, same "one point the ratio
+and a concrete fontSize meet" role, just one breakpoint later), then `Semantic.lineHeight/mobile/{key}` (an
+**alias** to that Primitives value — never a literal, same discipline as the desktop pairing). Then
+`Responsive.fontSize/{key}` + `Responsive.lineHeight/{key}` (3 modes each — `desktop`/`tablet` alias
+`Primitives`; `mobile` aliases the two `Semantic.*.mobile.{key}` values just created). Every mode of both
+properties ends up a real alias — nothing in `Semantic` or `Responsive` is ever a bare literal; the only
+literals live in `Primitives`, one per breakpoint — see `.ai/skills/tokens-to-figma.md` → Phase 5/7 for the
+exact script.
 
 ## Renaming or removing a token — mostly manual, check every one of these
 
@@ -155,16 +158,18 @@ the breakpoint feature did as a side effect.
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category), `Theme` (`semantic.color.*`, light/dark modes), `Semantic`
 (`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*` + `semantic.fontSize.mobile.*` +
-`semantic.lineHeight.*`), `Responsive` (desktop/tablet/mobile modes, in that creation order, for `fontSize`
-and `lineHeight`). `Semantic`/`Responsive` values here are ALIASes wherever a real `tokens.json` token
-exists to alias to — `lineHeight` included, for its `desktop`/`tablet`-equivalent values. The literals are
-`Primitives.lineHeight/{key}` (resolved px, Figma-only — grounded in two real primitives) and
-`Semantic.fontSize.mobile.{key}` (the mobile-scaled source of truth for `fontSize`, a real token) — see the
-Typography binding rule below for why those hold the literal. **`Responsive.lineHeight`'s `mobile` mode is
-also a literal**, computed inline, because `tokens.json` has no `semantic.lineHeight.mobile.*` token to
-alias to — do not create a `Semantic.lineHeight/mobile/{key}` Figma variable just to keep the alias chain
-unbroken; that mirrors a token that doesn't exist in code, which is worse than a documented literal. Not
-one collection per `tokens.json` category —
+`semantic.lineHeight.*` + `semantic.lineHeight.mobile.*`), `Responsive` (desktop/tablet/mobile modes, in
+that creation order, for `fontSize` and `lineHeight`). **Every `Semantic`/`Responsive` value is an ALIAS,
+no exceptions — `lineHeight` included, mobile-scoped keys included.** The only literals in the whole chain
+live in `Primitives`, one per breakpoint: `Primitives.lineHeight/{key}` (desktop, resolved px, Figma-only)
+and `Primitives.lineHeight/mobile/{key}` (mobile, resolved px, Figma-only, `l`-`6xl` — same role, one
+breakpoint later), plus `Semantic.fontSize.mobile.{key}` (the mobile-scaled source of truth for `fontSize`,
+a real `tokens.json` token). `Semantic.lineHeight/mobile/{key}` **aliases** `Primitives.lineHeight/mobile/{key}`
+— it does not hold a literal itself, and it is not "invented" in the sense of mirroring a nonexistent
+JSON token: it exists because the fontSize/lineHeight pairing rule (below) applies to every fontSize-shaped
+key, mobile-scoped ones included, and Figma's per-mode alias requirement means the resolved-px origin has
+to live in `Primitives`, not skip straight from a computation to `Semantic`. Not one collection per
+`tokens.json` category —
 but also, deliberately, **no `Component` collection**: `component.*` tokens live only in code. A Figma
 component like Button binds each property directly to whichever of the 4 collections above its matching
 `component.*` token resolves to in code (walk the alias chain by hand), never through an intermediate
@@ -189,17 +194,16 @@ token pair, not just reusing existing ones:
    mode 0, the default) so that a Text Style bound to `Responsive` shows the correct desktop/reference size
    without needing to pin anything.
 2. **No percent/ratio unit for bound variables** — a `lineHeight` bound to a Figma Variable is always read
-   as **pixels**, never a percent or ratio. This is resolved once, upstream: `Primitives.lineHeight/{key}`
-   (Figma-only, keyed exactly like `fontSize` — NOT a set of named-ratio variables) stores the resolved
-   `fontSize × ratio` as a literal. Everything downstream keeps alias discipline where a real token exists
-   to alias to — `Semantic.lineHeight/{key}` aliases it; `Responsive.lineHeight`'s `desktop`/`tablet` modes
-   alias the same `Primitives` value. Its `mobile` mode is computed as a literal directly inside
-   `Responsive` (`semantic.fontSize.mobile.{key} × ratio`) rather than aliasing a
-   `Semantic.lineHeight.mobile.{key}` — that variable doesn't exist, on purpose: `tokens.json` never needed
-   a `semantic.lineHeight.mobile.*` token (the CSS ratio auto-scales), so a Figma variable that mirrors one
-   would be naming something that isn't real in code. Aliasing straight to a raw ratio would reproduce a
-   "150px line-height on a 12px font" bug — that's why the resolved-px step has to happen somewhere, just
-   not below `Primitives`.
+   as **pixels**, never a percent or ratio. This is resolved once per breakpoint, upstream, never lower:
+   `Primitives.lineHeight/{key}` (desktop) and `Primitives.lineHeight/mobile/{key}` (mobile, `l`-`6xl`) —
+   both Figma-only, keyed exactly like `fontSize`, NOT a set of named-ratio variables — store the resolved
+   `fontSize × ratio` as a literal. Everything below `Primitives` keeps full alias discipline, no
+   exceptions: `Semantic.lineHeight/{key}` aliases `Primitives.lineHeight/{key}`;
+   `Semantic.lineHeight/mobile/{key}` aliases `Primitives.lineHeight/mobile/{key}`;
+   `Responsive.lineHeight`'s `desktop`/`tablet` modes alias `Primitives.lineHeight/{key}`, its `mobile` mode
+   aliases `Semantic.lineHeight/mobile/{key}`. Aliasing straight to a raw ratio would reproduce a "150px
+   line-height on a 12px font" bug — that's why the resolved-px step has to happen somewhere, and it always
+   happens in `Primitives`, never skipped straight into `Semantic` or `Responsive` as an orphaned literal.
    `tokens.json`/CSS keeps `semantic.lineHeight.*` as a unitless ratio (so `line-height: 1.5` scales with
    `font-size` in the browser, including a user's zoom or a WCAG 1.4.12 text-spacing override — switching
    code to px would make CSS *less* accessible, not more consistent with Figma); the Figma-only
