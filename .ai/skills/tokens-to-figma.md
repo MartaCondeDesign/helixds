@@ -37,7 +37,7 @@ see "Naming rules" below and `components-to-figma.md` for how to resolve which o
 |------------|-------|-------|
 | `Primitives` | `primitive.color.*`, `primitive.spacing.*`, `primitive.size.*`, `primitive.fontSize/fontWeight/lineHeight/fontFamily.*`, `primitive.breakpoint.*` | `default` |
 | `Theme` | `semantic.color.*` (`fill`/`text`/`icon`/`border`) | `light`, `dark` |
-| `Semantic` | `semantic.radius.*`, `semantic.size.control.*`, `semantic.spacing.*`, `semantic.fontSize.mobile.*` (`primitive.fontSize >= 18px` only), `semantic.lineHeight.*` (full `xs`-`6xl` range — Text Styles need every size, see Phase 6; stores **resolved px** = `fontSize × ratio`, not the raw ratio — see the lineHeight px note in Phase 6) | `default` |
+| `Semantic` | `semantic.radius.*`, `semantic.size.*`, `semantic.spacing.*`, `semantic.fontSize.mobile.*` (`primitive.fontSize >= 18px` only), `semantic.lineHeight.*` (full `xs`-`6xl` range — Text Styles need every size, see Phase 6; stores **resolved px** = `fontSize × ratio`, not the raw ratio — see the lineHeight px note in Phase 6) | `default` |
 | `Responsive` | Per-breakpoint `fontSize` for `primitive.fontSize >= 18px` only — smaller text doesn't get a mobile override. `lineHeight/*` variables also live here (so a Text Style/node bound to `Responsive.fontSize` can bind its paired `lineHeight` from the same collection) but hold the **same value in all 3 modes** — the ratio never changes by breakpoint, only `fontSize` does, so there's no separate mobile-scaled `lineHeight` number | `desktop`, `tablet`, `mobile` (in creation order — `desktop` = mode 0, see the Typography rule below) |
 
 **Why this shape:** primitives are raw, component-agnostic scales — one bucket regardless of what kind of
@@ -182,7 +182,7 @@ exactly, and do not invent a second wording in the Figma file.
 | Typography primitives | `primitive.fontSize/fontWeight/fontFamily.*` + Figma-only resolved-px `lineHeight/{key}` per fontSize key (`fontSize × ratio`, not a set of ratio-named vars, no mobile variant — the ratio never changes by breakpoint — see Phase 5) | `Primitives` | `fontSize/*`, `fontWeight/*`, `lineHeight/*`, `fontFamily/*` |
 | Semantic color | `semantic.color.*` | `Theme` | `fill/*`, `text/*`, `icon/*`, `border/*` — 2 modes: light / dark |
 | Semantic radius | `semantic.radius.*` (no primitive layer exists for radius) | `Semantic` | `radius/{size}` |
-| Semantic size | `semantic.size.control.{xs,s,m,l,xl}` | `Semantic` | `size/{size}` |
+| Semantic size | `semantic.size.{xs,s,m,l,xl}` | `Semantic` | `size/{size}` |
 | Semantic spacing | `semantic.spacing.{xs,s,m,l,xl}` | `Semantic` | `spacing/{size}` |
 | Semantic mobile fontSize | `semantic.fontSize.mobile.*` | `Semantic` | `fontSize/mobile/*` |
 | Semantic lineHeight | `semantic.lineHeight.*` (paired per fontSize rung) — Figma value is an ALIAS to `Primitives.lineHeight/{key}` (resolved px, not the JSON's unitless ratio). One single, pure t-shirt-scale listing, `xs`-`6xl`, no mobile variant (see Phase 5/7) | `Semantic` | `lineHeight/{size}` |
@@ -542,10 +542,9 @@ return { created: Object.keys(sizingTokens).length };
 
 ### Phase 4c — Semantic size variables (→ `Semantic`)
 
-Source: `semantic.size.control.{xs,s,m,l,xl}` — ADR-004's control/field ladder, aliasing the `Primitives`
-size values above. Figma name uses the `tokens.json` category (`size`), not the sub-key (`control`) — stays
-parallel with `radius/*` and `spacing/*`, the other two scales sharing this collection; there's only one
-sub-scale under `semantic.size` today, so `size/*` alone isn't ambiguous. **Components must bind height
+Source: `semantic.size.{xs,s,m,l,xl}` — ADR-004's control/field ladder, aliasing the `Primitives`
+size values above. Figma name uses the `tokens.json` category (`size`) directly — stays
+parallel with `radius/*` and `spacing/*`, the other two scales sharing this collection. **Components must bind height
 here, never straight to a `Primitives` size value** — matches how component colors bind to `Theme`, never
 to a `Primitives` color directly.
 

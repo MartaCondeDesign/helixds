@@ -18,18 +18,18 @@ reused by future components without redefining a ladder each time:
   (same role as `primitive.spacing`, kept as its own scale because "a control's own dimension" and "the gap
   around it" are different concerns even where the numbers happen to coincide). Keys are percentages of the
   `100` rung, which anchors to `16px` (`1rem`) — the same anchor `primitive.spacing` uses.
-- `semantic.size.control.{xs,s,m,l,xl}` — aliases `primitive.size.{100,150,200,250,300}` respectively. This
+- `semantic.size.{xs,s,m,l,xl}` — aliases `primitive.size.{100,150,200,250,300}` respectively. This
   is what the tables below actually mean by "Control scale".
 
 ### Control scale
 
 | Size | Token | Primitive | Height |
 |------|-------|-----------|--------|
-| `xs` | `semantic.size.control.xs` | `primitive.size.100` | `16px` |
-| `s`  | `semantic.size.control.s`  | `primitive.size.150` | `24px` |
-| `m`  | `semantic.size.control.m`  | `primitive.size.200` | `32px` |
-| `l`  | `semantic.size.control.l`  | `primitive.size.250` | `40px` |
-| `xl` | `semantic.size.control.xl` | `primitive.size.300` | `48px` |
+| `xs` | `semantic.size.xs` | `primitive.size.100` | `16px` |
+| `s`  | `semantic.size.s`  | `primitive.size.150` | `24px` |
+| `m`  | `semantic.size.m`  | `primitive.size.200` | `32px` |
+| `l`  | `semantic.size.l`  | `primitive.size.250` | `40px` |
+| `xl` | `semantic.size.xl` | `primitive.size.300` | `48px` |
 
 A clean `+8px` progression — `m` lands exactly on `primitive.size.200`, the scale's own anchor point (see
 "Choosing `m`" below).
@@ -40,9 +40,9 @@ Use this scale for button-like components: `Button`.
 
 | Size | Token | Primitive | Height |
 |------|-------|-----------|--------|
-| `s` | `semantic.size.control.s` | `primitive.size.150` | `24px` |
-| `m` | `semantic.size.control.m` | `primitive.size.200` | `32px` |
-| `l` | `semantic.size.control.l` | `primitive.size.250` | `40px` |
+| `s` | `semantic.size.s` | `primitive.size.150` | `24px` |
+| `m` | `semantic.size.m` | `primitive.size.200` | `32px` |
+| `l` | `semantic.size.l` | `primitive.size.250` | `40px` |
 
 Use this scale for form fields such as `Input`, `Select`, and `Textarea`. Same tokens as the Control
 scale's `s`/`m`/`l` — one shared source, two components' worth of exposed rungs.
@@ -58,7 +58,7 @@ Default rule:
 - exceptions must state their local mapping in the contract and component docs
 
 `Badge` and `Chip` use a local density model instead of the control ladder — but their values still come
-from the shared `primitive.size.*` scale, just not through `semantic.size.control`:
+from the shared `primitive.size.*` scale, just not through `semantic.size`:
 
 | Component | `size` meaning | Local height mapping |
 |-----------|----------------|----------------------|

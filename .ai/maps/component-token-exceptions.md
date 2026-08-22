@@ -62,9 +62,9 @@ nothing to route through — aliasing `primitive.*` directly is correct, not a g
 
 ## Primitive-direct (ADR-004 density exception — Badge/Chip height)
 
-Badge and Chip use a local density model instead of the shared `semantic.size.control` ladder, per
+Badge and Chip use a local density model instead of the shared `semantic.size` ladder, per
 [ADR-004](../../docs/ADR/ADR-004-size-standard.md) → "Compact/status components". Their height values
-correctly alias `primitive.size.*` directly — going through `semantic.size.control` would put them on the
+correctly alias `primitive.size.*` directly — going through `semantic.size` would put them on the
 shared control ladder, which is the one thing ADR-004 says not to do here.
 
 | Component | Token | Aliases | Why |

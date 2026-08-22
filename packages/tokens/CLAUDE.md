@@ -63,7 +63,7 @@ role, which is exactly what the naming overhaul (below) was fixing.
 6. **Update Storybook — mandatory, no exceptions, for every layer, not just color.**
    `apps/storybook/stories/Foundation.stories.tsx` is the living reference for the whole token set, one
    story per category: `ColorPrimitives`, `ColorSemantic`, `Spacing` (primitive + semantic sections),
-   `Radius`, `Sizing` (`semantic.size.control.*`), `Typography` (primitive + semantic line-height
+   `Radius`, `Sizing` (`semantic.size.*`), `Typography` (primitive + semantic line-height
    sections), `Shadows` (primitive + semantic sections). **A token addition, rename, or removal in
    `tokens.json` is not done until its matching story reflects it** — check every story that touches the
    category you changed, not just the first one that comes to mind.
@@ -191,7 +191,7 @@ the breakpoint feature did as a side effect.
 
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category, plus the Figma-only resolved-px `lineHeight/{key}` — see below),
-`Theme` (`semantic.color.*`, light/dark modes), `Semantic` (`semantic.radius.*` + `semantic.size.control.*`
+`Theme` (`semantic.color.*`, light/dark modes), `Semantic` (`semantic.radius.*` + `semantic.size.*`
 + `semantic.spacing.*` + `semantic.fontSize.mobile.*` + `semantic.lineHeight.*` — **one single, pure
 t-shirt-scale `lineHeight` listing, `xs` through `6xl`, no mobile variant**), `Responsive` (desktop/tablet/
 mobile modes, in that creation order, for `fontSize` and `lineHeight`). **Every `Semantic`/`Responsive`
@@ -295,15 +295,15 @@ tiers, per [ADR-004](../../docs/ADR/ADR-004-size-standard.md):
 - `primitive.size.{50,75,100,125,150,175,200,225,250,300,350}` — percentage scale, same `100` = `16px`
   anchor as `primitive.spacing`, kept as its own scale rather than reusing spacing's keys because "a
   control's own dimension" and "the gap around it" are different concerns.
-- `semantic.size.control.{xs,s,m,l,xl}` → aliases `primitive.size.{100,150,200,250,300}` = 16/24/32/40/48px.
+- `semantic.size.{xs,s,m,l,xl}` → aliases `primitive.size.{100,150,200,250,300}` = 16/24/32/40/48px.
   This is ADR-004's "Control scale" (`Button`) and, via its `s`/`m`/`l` subset, its "Field scale"
   (`Input`/`Select`). `m` lands exactly on `primitive.size.200`, the scale's own anchor rung — see ADR-004
   "Choosing `m`".
-- `component.button.height.*` aliases the full `semantic.size.control.*` ladder; `input.height.*`/
+- `component.button.height.*` aliases the full `semantic.size.*` ladder; `input.height.*`/
   `select.height.*` alias its `s`/`m`/`l` subset.
 - `badge.height-*` and `chip.height-*` skip the semantic layer and alias `primitive.size.*` directly —
   they're ADR-004's documented per-component exceptions (a local density model, not the shared control
-  ladder), which is why they don't go through `semantic.size.control` — but they're still real token
+  ladder), which is why they don't go through `semantic.size` — but they're still real token
   references, never an unreferenced px literal.
 
 ### Semantic naming vocabulary (decided 2026-08-21)

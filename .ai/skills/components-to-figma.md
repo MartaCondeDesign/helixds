@@ -246,7 +246,7 @@ Before setting auto-layout, check the CSS and contract:
 **Bind to variables — never assign plain numbers. There is no `Component` collection in Figma** —
 `component.*` tokens live only in code. Bind each property directly to whichever of
 `Theme`/`Semantic`/`Primitives`/`Responsive` the matching `component.*` token resolves to: walk the alias
-chain in `tokens.json` yourself (`component.button.height.*` → `semantic.size.control.*` — bind to
+chain in `tokens.json` yourself (`component.button.height.*` → `semantic.size.*` — bind to
 `Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`; fontSize AND its
 paired lineHeight follow the 18px threshold from `tokens-to-figma.md` — bind both to `Responsive` when the
 resolved `primitive.fontSize >= 18px`, `Primitives` otherwise. **Bind `lineHeight` every time you bind
