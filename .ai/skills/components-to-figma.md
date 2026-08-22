@@ -243,20 +243,19 @@ Before setting auto-layout, check the CSS and contract:
 
 ### Button sizing reference (as-built)
 
-**Bind to variables — never assign plain numbers, and bind to the SEMANTIC variable, not the primitive
-one.** Height and padding are tokens (`component.button.height.*` → `semantic.size.control.*` →
-`primitive.size.*`, `component.button.padding.x-*` → `primitive.spacing.*`); the Figma component's height
-must be *bound* to a `Semantic` collection variable (`control/*`) — mirrors the code path: height goes
-through a semantic layer, so Figma must too. Binding straight to a `Primitives` variable skips a real layer,
-the same way binding a button's fill straight to a color primitive instead of `Theme` would. Padding has no
-semantic layer in code, so it binds straight to `Primitives` (`spacing/*`) — that one's correct as a direct
-primitive bind. (Collection names per the current reorg: `Primitives`/`Theme`/`Semantic` — see
-`tokens-to-figma.md`.)
+**Bind to variables — never assign plain numbers, and bind to the `Component` collection, not
+`Theme`/`Semantic`/`Primitives` directly.** Every `component.*` token has a matching Figma variable in
+`Component` (see `tokens-to-figma.md` → Phase 10) — `button/height/*`, `button/padding/x/*`, etc. Bind to
+those, not to the layer they alias underneath. This mirrors the code path exactly: `component.button.height.*`
+→ `semantic.size.control.*` → `primitive.size.*` is 3 hops in code, and the Figma binding should land on the
+`Component` variable (the outermost/nearest hop), the same way a button's fill binds to `Theme`, never to a
+raw color primitive. If `Component` doesn't have a variable for something yet (rare — Phase 10 covers all
+182 as of this writing), fall back to the next layer down and flag the gap rather than silently skip it.
 
 ```js
-// Figma variable names per size — from the Semantic / Primitives collections (tokens-to-figma.md).
-const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl: 'size/xl' }; // Semantic
-const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
+// Figma variable names per size — from the Component collection (tokens-to-figma.md Phase 10).
+const HEIGHT_VAR    = { xs: 'button/height/xs', s: 'button/height/s', m: 'button/height/m', l: 'button/height/l', xl: 'button/height/xl' };
+const PADDING_X_VAR  = { xs: 'button/padding/x/xs', s: 'button/padding/x/s', m: 'button/padding/x/m', l: 'button/padding/x/l', xl: 'button/padding/x/xl' };
 
 const varMap = {};
 figma.variables.getLocalVariables().forEach(v => { varMap[v.name] = v; });
@@ -294,11 +293,16 @@ Button has no min/max-width in CSS — leave as `null` per contract.
 - [ ] Every variant has `layoutMode = 'HORIZONTAL'`
 - [ ] Every variant has `layoutSizingHorizontal = 'HUG'` (not FIXED)
 - [ ] Every variant has `layoutSizingVertical = 'FIXED'`
-- [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Primitives` variable (not a plain number
-      that happens to match — check `boundVariables.paddingLeft` on the node)
+- [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Component` variable (`button/padding/x/*`,
+      not a plain number that happens to match — check `boundVariables.paddingLeft` on the node)
 - [ ] Gap matches itemSpacing between anatomy parts (still a plain literal — no token backs it yet)
-- [ ] `height` is *bound* to the matching `Semantic` variable (xs=16, s=24, m=32, l=40, xl=48 for
-      Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered pixel value
+- [ ] `height` is *bound* to the matching `Component` variable (`button/height/*`; xs=16, s=24, m=32, l=40,
+      xl=48 for Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered
+      pixel value
+- [ ] `fills` on the component and on the label TEXT node are *bound* to `Component` (`button/fill/*`,
+      `button/text/*`), not to `Theme` directly
+- [ ] Label `fontSize` is *bound* to `Component` (`button/fontSize/*`), which itself aliases `Responsive`
+      — never bound straight to `Primitives.fontSize/*`
 
 ### Phase 3 — Create COMPONENT_SET
 

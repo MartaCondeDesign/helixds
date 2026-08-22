@@ -38,7 +38,7 @@ export const Danger: Story   = { args: { variant: 'danger',  label: 'Failed' } }
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
       <Badge variant="neutral" label="Draft" />
       <Badge variant="info"    label="Scheduled" />
       <Badge variant="success" label="Active" />
@@ -55,7 +55,7 @@ export const AllVariants: Story = {
 
 export const WithIcons: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
       <Badge variant="success" icon={<IconCheck size={10} />}         label="Verified" />
       <Badge variant="warning" icon={<IconAlertTriangle size={10} />} label="Review" />
       <Badge variant="danger"  icon={<IconX size={10} />}             label="Rejected" />
@@ -70,7 +70,7 @@ export const WithIcons: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-4)', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
       <div>
         <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
           size=&quot;xs&quot;
@@ -108,7 +108,7 @@ export const StatusRowPattern: Story = {
     return (
       <div style={{
         border:       '1px solid var(--helix-color-border-neutral)',
-        borderRadius: 'var(--helix-primitive-radius-l)',
+        borderRadius: 'var(--helix-radius-l)',
         overflow:     'hidden',
         maxWidth:     '480px',
       }}>
@@ -118,8 +118,8 @@ export const StatusRowPattern: Story = {
             style={{
               display:      'flex',
               alignItems:   'center',
-              gap:          'var(--helix-primitive-spacing-3)',
-              padding:      'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
+              gap:          'var(--helix-primitive-spacing-75)',
+              padding:      'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
               borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >

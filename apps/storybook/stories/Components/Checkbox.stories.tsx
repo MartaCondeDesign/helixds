@@ -64,7 +64,7 @@ export const Indeterminate: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
       <Checkbox label="Disabled unchecked" disabled />
       <Checkbox label="Disabled checked"   disabled checked />
     </div>
@@ -87,14 +87,14 @@ export const Group: Story = {
     }
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-2-5)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-62-5)' }}>
         <Checkbox
           label="Select all"
           checked={allChecked}
           indeterminate={someChecked}
           onChange={toggleAll}
         />
-        <div style={{ paddingLeft: 'var(--helix-primitive-spacing-5)', display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-2)' }}>
+        <div style={{ paddingLeft: 'var(--helix-primitive-spacing-125)', display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
           {options.map(opt => (
             <Checkbox key={opt} label={opt} checked={selected.includes(opt)} onChange={() => toggle(opt)} />
           ))}

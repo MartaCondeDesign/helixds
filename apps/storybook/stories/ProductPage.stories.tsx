@@ -78,11 +78,11 @@ function WorkspacePage() {
         minHeight: '100vh',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: 'var(--helix-color-fill-page)',
-        padding: 'var(--helix-primitive-spacing-6)',
+        padding: 'var(--helix-primitive-spacing-150)',
       }}>
         <div style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          gap: 'var(--helix-primitive-spacing-4)', textAlign: 'center', maxWidth: 400,
+          gap: 'var(--helix-primitive-spacing-100)', textAlign: 'center', maxWidth: 400,
         }}>
           <div style={{
             width: 56, height: 56, borderRadius: '50%',
@@ -201,10 +201,10 @@ function WorkspacePage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-5)' }}>
+          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)' }}>
 
             {/* Section: personal */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
@@ -248,7 +248,7 @@ function WorkspacePage() {
             <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-neutral-light)', margin: 0 }} />
 
             {/* Section: workspace */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
@@ -304,7 +304,7 @@ function WorkspacePage() {
             <hr style={{ border: 'none', borderTop: '1px solid var(--helix-color-border-neutral-light)', margin: 0 }} />
 
             {/* Section: preferences */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
                 margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',

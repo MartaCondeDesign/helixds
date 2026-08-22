@@ -53,11 +53,11 @@ export const EmptyState: Story = {
       display:        'flex',
       flexDirection:  'column',
       alignItems:     'center',
-      gap:            'var(--helix-primitive-spacing-4)',
-      padding:        'var(--helix-primitive-spacing-12)',
+      gap:            'var(--helix-primitive-spacing-100)',
+      padding:        'var(--helix-primitive-spacing-300)',
       textAlign:      'center',
       background:     'var(--helix-color-fill-surface)',
-      borderRadius:   'var(--helix-primitive-radius-xl)',
+      borderRadius:   'var(--helix-radius-xl)',
       border:         '1px dashed var(--helix-color-border-neutral)',
       maxWidth:       '420px',
     }}>
@@ -65,7 +65,7 @@ export const EmptyState: Story = {
         <IconFolderOpen size={48} />
       </span>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-2)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
         <h3 style={{
           fontSize:   'var(--helix-primitive-fontSize-xl)',
           fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
@@ -85,7 +85,7 @@ export const EmptyState: Story = {
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)' }}>
         <Button variant="secondary" icon={<IconUpload size={16} />}>Import</Button>
         <Button variant="primary"   icon={<IconPlus size={16} />}>New project</Button>
       </div>
@@ -108,7 +108,7 @@ export const ActionBarPageHeader: Story = {
       display:        'flex',
       justifyContent: 'space-between',
       alignItems:     'center',
-      padding:        'var(--helix-primitive-spacing-4) var(--helix-primitive-spacing-6)',
+      padding:        'var(--helix-primitive-spacing-100) var(--helix-primitive-spacing-150)',
       background:     'var(--helix-color-fill-page)',
       borderBottom:   '1px solid var(--helix-color-border-neutral)',
     }}>
@@ -120,7 +120,7 @@ export const ActionBarPageHeader: Story = {
           24 projects · 3 shared with you
         </p>
       </div>
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-2)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)' }}>
         <Button variant="secondary" icon={<IconUpload size={16} />}>Import</Button>
         <Button variant="primary"   icon={<IconPlus size={16} />}>New project</Button>
       </div>
@@ -140,20 +140,20 @@ export const ActionBarBatchSelection: Story = {
       <div style={{
         display:     'flex',
         alignItems:  'center',
-        gap:         'var(--helix-primitive-spacing-3)',
-        padding:     'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
+        gap:         'var(--helix-primitive-spacing-75)',
+        padding:     'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
         background:  'var(--helix-color-fill-primary-light)',
         border:      '1px solid var(--helix-color-border-focus)',
-        borderRadius:'var(--helix-primitive-radius-m)',
+        borderRadius:'var(--helix-radius-m)',
       }}>
         <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-medium)', color: 'var(--helix-color-text-primary)' }}>
           {selected} selected
         </span>
-        <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-1)' }}>
+        <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-25)' }}>
           <Button variant="ghost" size="s">Archive</Button>
           <Button variant="ghost" size="s">Move to…</Button>
         </div>
-        <div style={{ marginLeft: 'var(--helix-primitive-spacing-4)' }}>
+        <div style={{ marginLeft: 'var(--helix-primitive-spacing-100)' }}>
           <Button variant="danger" size="s" icon={<IconTrash size={14} />}>Delete</Button>
         </div>
       </div>
@@ -191,7 +191,7 @@ export const StatusRows: Story = {
     return (
       <div style={{
         border:       '1px solid var(--helix-color-border-neutral)',
-        borderRadius: 'var(--helix-primitive-radius-l)',
+        borderRadius: 'var(--helix-radius-l)',
         overflow:     'hidden',
         maxWidth:     '500px',
       }}>
@@ -201,8 +201,8 @@ export const StatusRows: Story = {
             style={{
               display:      'flex',
               alignItems:   'center',
-              gap:          'var(--helix-primitive-spacing-3)',
-              padding:      'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
+              gap:          'var(--helix-primitive-spacing-75)',
+              padding:      'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
               borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >
@@ -252,8 +252,8 @@ export const SearchAndFilter: Story = {
     }
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-3)', maxWidth: '600px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-2)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)', maxWidth: '600px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
           <Input
             label="Search"
             hideLabel
@@ -280,7 +280,7 @@ export const SearchAndFilter: Story = {
         {activeFilters.length > 0 && (
           <div
             aria-label="Active filters"
-            style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-2)', flexWrap: 'wrap' }}
+            style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap' }}
           >
             {activeFilters.map(f => (
               <Button

@@ -279,11 +279,10 @@ export const ColorSemantic: Story = {
 export const Spacing: Story = {
   render: () => {
     const steps: [string, string][] = [
-      ['0', '0px'], ['0-5', '2px'], ['1', '4px'], ['1-5', '6px'],
-      ['2', '8px'], ['2-5', '10px'], ['3', '12px'], ['3-5', '14px'],
-      ['4', '16px'], ['5', '20px'], ['6', '24px'], ['7', '28px'],
-      ['8', '32px'], ['10', '40px'], ['12', '48px'], ['14', '56px'],
-      ['16', '64px'], ['20', '80px'], ['24', '96px'], ['32', '128px'],
+      ['0', '0px'], ['25', '4px'], ['50', '8px'], ['75', '12px'],
+      ['100', '16px'], ['125', '20px'], ['150', '24px'], ['175', '28px'],
+      ['200', '32px'], ['250', '40px'], ['300', '48px'], ['350', '56px'],
+      ['400', '64px'], ['500', '80px'], ['600', '96px'], ['800', '128px'],
     ];
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -322,7 +321,7 @@ export const Radius: Story = {
               width: 72, height: 72,
               background: 'var(--helix-color-fill-primary-light)',
               border: '2px solid var(--helix-color-fill-primary)',
-              borderRadius: `var(--helix-primitive-radius-${key})`,
+              borderRadius: `var(--helix-radius-${key})`,
             }} />
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</div>

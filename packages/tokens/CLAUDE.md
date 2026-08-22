@@ -124,11 +124,22 @@ does not cascade into semantic/component fontSize vars yet. Making it cascade ev
 switching the whole pipeline from inlining to `var()` chaining — a bigger, separate change, not something
 the breakpoint feature did as a side effect.
 
-**Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
+**Figma collection layout:** the live Figma file groups all of the above into exactly 5 collections —
 `Primitives` (every `primitive.*` category), `Theme` (`semantic.color.*`, light/dark modes), `Semantic`
-(`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*`), `Responsive` (mobile/tablet/
-desktop `fontSize` modes) — not one collection per `tokens.json` category. See `.ai/skills/
-tokens-to-figma.md` → "Collection layout" for the full mapping and naming rules.
+(`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*` + `semantic.fontSize.mobile.*` +
+`semantic.lineHeight.*`), `Responsive` (mobile/tablet/desktop modes for `fontSize` and `lineHeight`,
+aliasing `Primitives`/`Semantic` — never a raw literal), and `Component` (every `component.*` leaf, one
+Figma variable each, named `{component}/{path}`, aliasing whichever of the other 4 collections it resolves
+to in code — a Figma component like Button binds to `Component.button/*`, never straight into
+`Theme`/`Semantic`/`Primitives`). Not one collection per `tokens.json` category.
+
+**Typography binding rule (Figma):** `fontSize` and `lineHeight` bindings — on a `Component` variable or
+directly on a text node — must reference `Responsive`, never `Primitives`/`Semantic` directly, since
+`Responsive` is the breakpoint-aware source for both. `fontFamily`/`fontWeight` don't vary by breakpoint,
+so they keep referencing `Primitives` directly.
+
+See `.ai/skills/tokens-to-figma.md` → "Collection layout" and "Phase 10" for the full mapping, naming
+rules, and the alias-resolution algorithm.
 
 ### Structure per token category
 

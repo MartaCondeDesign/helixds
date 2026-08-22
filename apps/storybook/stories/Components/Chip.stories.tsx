@@ -49,7 +49,7 @@ export const Danger: Story = { args: { variant: 'danger', label: 'Blocked' } };
 
 export const WithIcons: Story = {
   render: ({ size }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
       <Chip size={size} label="Filter" icon={<IconFilter size={14} stroke={1.5} />} />
       <Chip size={size} label="Ready" variant="success" icon={<IconCheck size={14} stroke={1.5} />} />
       <Chip size={size} label="Soon" variant="warning" icon={<IconClock size={14} stroke={1.5} />} />
@@ -60,7 +60,7 @@ export const WithIcons: Story = {
 
 export const Dismissible: Story = {
   render: ({ size }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
       <Chip size={size} label="Recent" dismissible onDismiss={() => {}} />
       <Chip size={size} label="Saved" checked dismissible onDismiss={() => {}} variant="info" />
       <Chip size={size} label="Archived" dismissible onDismiss={() => {}} variant="warning" />
@@ -70,7 +70,7 @@ export const Dismissible: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
       <Chip size="s" label="Small" />
       <Chip size="m" label="Medium" />
       <Chip size="s" checked label="Small checked" />

@@ -45,7 +45,7 @@ export const doc: ComponentDoc = {
     { part: 'badge', label: 'border.warning', token: '--helix-badge-border-warning', kind: 'color', variant: 'warning' },
     { part: 'badge', label: 'border.danger', token: '--helix-badge-border-danger', kind: 'color', variant: 'danger' },
     { part: 'badge', label: 'badge.root', token: '--helix-badge-radius', kind: 'radius' },
-    { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-1', kind: 'space' },
+    { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-25', kind: 'space' },
     { part: 'badge', label: 'label', token: '--helix-badge-fontSize', kind: 'typography', meta: 'Caption / label' },
     { part: 'badge', label: 'weight', token: '--helix-badge-fontWeight', kind: 'typography', meta: 'Semibold' },
     { part: 'badge', label: 'display', value: 'inline-flex' },

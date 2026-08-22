@@ -60,7 +60,7 @@ export const WithDescription: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-3)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
       <Switch label="Disabled off" disabled />
       <Switch label="Disabled on"  disabled checked />
     </div>
@@ -69,7 +69,7 @@ export const Disabled: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
       <Switch size="s" label="Small"             defaultChecked />
       <Switch size="m" label="Medium (default)"  defaultChecked />
     </div>
@@ -101,7 +101,7 @@ export const SettingsGroup: Story = {
         ] as [keyof typeof state, string, string][]).map(([key, label, desc], i, arr) => (
           <div key={key} style={{
             display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16,
-            padding: 'var(--helix-primitive-spacing-4)',
+            padding: 'var(--helix-primitive-spacing-100)',
             borderBottom: i < arr.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
             <div>

@@ -49,19 +49,19 @@ function Sidebar() {
       borderRight: '1px solid var(--helix-color-border-neutral-light)',
       display: 'flex',
       flexDirection: 'column',
-      padding: `var(--helix-primitive-spacing-3) 0`,
+      padding: `var(--helix-primitive-spacing-75) 0`,
     }}>
       {/* Logo */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 'var(--helix-primitive-spacing-2)',
-        padding: `var(--helix-primitive-spacing-2) var(--helix-primitive-spacing-3)`,
-        marginBottom: 'var(--helix-primitive-spacing-3)',
+        gap: 'var(--helix-primitive-spacing-50)',
+        padding: `var(--helix-primitive-spacing-50) var(--helix-primitive-spacing-75)`,
+        marginBottom: 'var(--helix-primitive-spacing-75)',
       }}>
         <div style={{
           width: 28, height: 28,
-          borderRadius: 'var(--helix-primitive-radius-m)',
+          borderRadius: 'var(--helix-radius-m)',
           background: 'var(--helix-color-fill-primary)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
@@ -85,23 +85,23 @@ function Sidebar() {
         color: 'var(--helix-color-text-neutral-lightest)',
         textTransform: 'uppercase',
         letterSpacing: '0.07em',
-        padding: `0 var(--helix-primitive-spacing-3)`,
-        marginBottom: 'var(--helix-primitive-spacing-1)',
+        padding: `0 var(--helix-primitive-spacing-75)`,
+        marginBottom: 'var(--helix-primitive-spacing-25)',
       }}>
         Workspace
       </div>
 
       {/* Nav items */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, padding: `0 var(--helix-primitive-spacing-2)` }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, padding: `0 var(--helix-primitive-spacing-50)` }}>
         {NAV_ITEMS.map(({ icon: Icon, label, active }) => (
           <button
             key={label}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--helix-primitive-spacing-2)',
-              padding: `var(--helix-primitive-spacing-1-5) var(--helix-primitive-spacing-2)`,
-              borderRadius: 'var(--helix-primitive-radius-m)',
+              gap: 'var(--helix-primitive-spacing-50)',
+              padding: `var(--helix-primitive-spacing-37-5) var(--helix-primitive-spacing-50)`,
+              borderRadius: 'var(--helix-radius-m)',
               border: 'none',
               cursor: 'pointer',
               background: active ? 'var(--helix-color-fill-primary-light)' : 'transparent',
@@ -123,17 +123,17 @@ function Sidebar() {
 
       {/* User row */}
       <div style={{
-        margin: `var(--helix-primitive-spacing-2)`,
-        padding: `var(--helix-primitive-spacing-2)`,
-        borderRadius: 'var(--helix-primitive-radius-l)',
+        margin: `var(--helix-primitive-spacing-50)`,
+        padding: `var(--helix-primitive-spacing-50)`,
+        borderRadius: 'var(--helix-radius-l)',
         borderTop: '1px solid var(--helix-color-border-neutral-light)',
         display: 'flex',
         alignItems: 'center',
-        gap: 'var(--helix-primitive-spacing-2)',
+        gap: 'var(--helix-primitive-spacing-50)',
       }}>
         <div style={{
           width: 28, height: 28,
-          borderRadius: 'var(--helix-primitive-radius-full)',
+          borderRadius: 'var(--helix-radius-full)',
           background: 'var(--helix-color-fill-primary)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 'var(--helix-primitive-fontSize-xs)',
@@ -172,7 +172,7 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
       background: 'var(--helix-color-fill-page)',
       border: '1px solid var(--helix-color-border-neutral-light)',
       borderRadius: 'var(--helix-card-radius)',
-      padding: `var(--helix-primitive-spacing-4) var(--helix-primitive-spacing-5)`,
+      padding: `var(--helix-primitive-spacing-100) var(--helix-primitive-spacing-125)`,
     }}>
       <div style={{
         fontSize: 'var(--helix-primitive-fontSize-xs)',
@@ -180,7 +180,7 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
         color: 'var(--helix-color-text-neutral-lightest)',
         textTransform: 'uppercase',
         letterSpacing: '0.05em',
-        marginBottom: 'var(--helix-primitive-spacing-2)',
+        marginBottom: 'var(--helix-primitive-spacing-50)',
       }}>
         {label}
       </div>
@@ -189,13 +189,13 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
         fontWeight: 'var(--helix-primitive-fontWeight-bold)',
         color: 'var(--helix-color-text-neutral)',
         lineHeight: 1,
-        marginBottom: 'var(--helix-primitive-spacing-2)',
+        marginBottom: 'var(--helix-primitive-spacing-50)',
         letterSpacing: '-0.02em',
         fontVariantNumeric: 'tabular-nums',
       }}>
         {value}
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-1)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)' }}>
         <Icon size={13} color={up ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'} />
         <span style={{
           fontSize: 'var(--helix-primitive-fontSize-xs)',
@@ -214,8 +214,8 @@ function TrendChip({ value }: { value: string }) {
   return (
     <div style={{
       display: 'inline-flex', alignItems: 'center', gap: 4,
-      padding: `2px var(--helix-primitive-spacing-2)`,
-      borderRadius: 'var(--helix-primitive-radius-full)',
+      padding: `2px var(--helix-primitive-spacing-50)`,
+      borderRadius: 'var(--helix-radius-full)',
       background: 'var(--helix-color-fill-success-light)',
     }}>
       <IconTrendingUp size={11} color="var(--helix-color-text-success)" />
@@ -261,8 +261,8 @@ function DashboardPage() {
         <header style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 'var(--helix-primitive-spacing-3)',
-          padding: `0 var(--helix-primitive-spacing-6)`,
+          gap: 'var(--helix-primitive-spacing-75)',
+          padding: `0 var(--helix-primitive-spacing-150)`,
           height: 56,
           flexShrink: 0,
           background: 'var(--helix-color-fill-page)',
@@ -279,11 +279,11 @@ function DashboardPage() {
               onChange={e => setSearch(e.target.value)}
             />
           </div>
-          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-1)' }}>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)' }}>
             <button style={{
               width: 32, height: 32,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 'var(--helix-primitive-radius-m)',
+              borderRadius: 'var(--helix-radius-m)',
               border: 'none',
               background: 'transparent',
               cursor: 'pointer',
@@ -294,7 +294,7 @@ function DashboardPage() {
             <button style={{
               width: 32, height: 32,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 'var(--helix-primitive-radius-m)',
+              borderRadius: 'var(--helix-radius-m)',
               border: 'none',
               background: 'transparent',
               cursor: 'pointer',
@@ -304,13 +304,13 @@ function DashboardPage() {
             </button>
             <div style={{
               width: 28, height: 28,
-              borderRadius: 'var(--helix-primitive-radius-full)',
+              borderRadius: 'var(--helix-radius-full)',
               background: 'var(--helix-color-fill-primary)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 'var(--helix-primitive-fontSize-xs)',
               fontWeight: 'var(--helix-primitive-fontWeight-bold)',
               color: 'var(--helix-color-text-inverse)',
-              marginLeft: 'var(--helix-primitive-spacing-1)',
+              marginLeft: 'var(--helix-primitive-spacing-25)',
               cursor: 'pointer',
             }}>
               MC
@@ -344,14 +344,14 @@ function DashboardPage() {
                 Team
               </h1>
               <p style={{
-                margin: `var(--helix-primitive-spacing-1) 0 0`,
+                margin: `var(--helix-primitive-spacing-25) 0 0`,
                 fontSize: 'var(--helix-primitive-fontSize-s)',
                 color: 'var(--helix-color-text-neutral-light)',
               }}>
                 Manage members and their access to the Helix workspace.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-2)', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', alignItems: 'center' }}>
               <TrendChip value="+2 this month" />
               <Button variant="primary" size="s" icon={<IconPlus size={14} />}>
                 Invite member
@@ -377,7 +377,7 @@ function DashboardPage() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`,
+            padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`,
             marginBottom: 'var(--helix-spacing-component-m)',
             background: aiCtx ? 'var(--helix-color-fill-primary-light)' : 'var(--helix-color-fill-page)',
             border: '1px solid',
@@ -385,10 +385,10 @@ function DashboardPage() {
             borderRadius: 'var(--helix-card-radius)',
             transition: 'background 200ms, border-color 200ms',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-3)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
               <div style={{
                 width: 32, height: 32,
-                borderRadius: 'var(--helix-primitive-radius-l)',
+                borderRadius: 'var(--helix-radius-l)',
                 background: aiCtx ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-fill-secondary)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0,
@@ -422,8 +422,8 @@ function DashboardPage() {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--helix-primitive-spacing-2)',
-              padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`,
+              gap: 'var(--helix-primitive-spacing-50)',
+              padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`,
               borderBottom: '1px solid var(--helix-color-border-neutral-light)',
               flexWrap: 'wrap',
             }}>
@@ -438,7 +438,7 @@ function DashboardPage() {
                   size="s"
                 />
               </div>
-              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-2)' }}>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
                 <Badge variant="neutral">{filtered.length} members</Badge>
                 <Button variant="secondary" size="s" icon={<IconFilter size={13} />}>Filter</Button>
                 <Button variant="ghost"     size="s" icon={<IconDownload size={13} />}>Export</Button>
@@ -452,7 +452,7 @@ function DashboardPage() {
                   <tr>
                     {['Member', 'Role', 'Status', 'Components', 'Last seen', ''].map(h => (
                       <th key={h} style={{
-                        padding: `var(--helix-primitive-spacing-2-5) var(--helix-primitive-spacing-4)`,
+                        padding: `var(--helix-primitive-spacing-62-5) var(--helix-primitive-spacing-100)`,
                         textAlign: 'left',
                         fontSize: 'var(--helix-primitive-fontSize-xs)',
                         fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
@@ -476,11 +476,11 @@ function DashboardPage() {
                       onMouseLeave={e => (e.currentTarget as HTMLTableRowElement).style.background = 'transparent'}
                     >
                       {/* Member */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)` }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-2-5)' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)` }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-62-5)' }}>
                           <div style={{
                             width: 30, height: 30,
-                            borderRadius: 'var(--helix-primitive-radius-full)',
+                            borderRadius: 'var(--helix-radius-full)',
                             background: 'var(--helix-color-fill-primary-light)',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             fontSize: 'var(--helix-primitive-fontSize-xs)',
@@ -509,23 +509,23 @@ function DashboardPage() {
                         </div>
                       </td>
                       {/* Role */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', whiteSpace: 'nowrap' }}>
                         {m.role}
                       </td>
                       {/* Status */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)` }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)` }}>
                         <Badge variant={STATUS_VARIANT[m.status]}>{m.status}</Badge>
                       </td>
                       {/* Components */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)', fontVariantNumeric: 'tabular-nums' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)', fontVariantNumeric: 'tabular-nums' }}>
                         {m.components}
                       </td>
                       {/* Last seen */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)`, fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)', whiteSpace: 'nowrap' }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`, fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)', whiteSpace: 'nowrap' }}>
                         {m.lastSeen}
                       </td>
                       {/* Actions */}
-                      <td style={{ padding: `var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)` }}>
+                      <td style={{ padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)` }}>
                         <Button variant="ghost" size="s">···</Button>
                       </td>
                     </tr>

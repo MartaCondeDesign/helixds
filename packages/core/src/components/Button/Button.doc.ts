@@ -36,7 +36,7 @@ export const doc: ComponentDoc = {
     { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-default', kind: 'color', variant: 'danger' },
     { part: 'button', label: 'border.focus', token: '--helix-button-border-focus', kind: 'color' },
     { part: 'button', label: 'button.root', token: '--helix-button-radius', kind: 'radius' },
-    { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-2', kind: 'space' },
+    { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-50', kind: 'space' },
     { part: 'button', label: 'label.xs', token: '--helix-button-fontSize-xs', kind: 'typography', meta: 'Caption / label' },
     { part: 'button', label: 'label.s', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Body small' },
     { part: 'button', label: 'label.m', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Body small' },

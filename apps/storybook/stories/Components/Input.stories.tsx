@@ -113,7 +113,7 @@ export const Disabled: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-5)', maxWidth: '360px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
       <Input label="Small"  size="s" placeholder="size=s" icon={<IconSearch size={14} />} onChange={() => {}} />
       <Input label="Medium" size="m" placeholder="size=m (default)" icon={<IconSearch size={16} />} onChange={() => {}} />
       <Input label="Large"  size="l" placeholder="size=l" icon={<IconSearch size={18} />} onChange={() => {}} />
@@ -145,10 +145,10 @@ export const LoginFormPattern: Story = {
         onSubmit={handleSubmit}
         noValidate
         style={{
-          display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-5)',
-          maxWidth: '360px', padding: 'var(--helix-primitive-spacing-8)',
+          display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)',
+          maxWidth: '360px', padding: 'var(--helix-primitive-spacing-200)',
           background: 'var(--helix-color-fill-surface)',
-          borderRadius: 'var(--helix-primitive-radius-xl)',
+          borderRadius: 'var(--helix-radius-xl)',
           border: '1px solid var(--helix-color-border-neutral)',
         }}
       >

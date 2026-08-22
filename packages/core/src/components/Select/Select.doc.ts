@@ -28,7 +28,7 @@ export const doc: ComponentDoc = {
     { part: 'select', label: 'Focus border', token: '--helix-select-border-focus', kind: 'color' },
     { part: 'select', label: 'Value text', token: '--helix-select-text-value', kind: 'color' },
     { part: 'select', label: 'Placeholder text', token: '--helix-select-text-placeholder', kind: 'color' },
-    { part: 'select', label: 'gap.label.field', token: '--helix-primitive-spacing-1', kind: 'space' },
+    { part: 'select', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space' },
     { part: 'select', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
     { part: 'select', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
     { part: 'select', label: 'value.s', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small' },

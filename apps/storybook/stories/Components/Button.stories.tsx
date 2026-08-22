@@ -86,7 +86,7 @@ export const Danger: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-3)', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap' }}>
       <Button size="xs">Extra small</Button>
       <Button size="s">Small</Button>
       <Button size="m">Medium</Button>
@@ -137,9 +137,9 @@ export const AllVariants: Story = {
   render: () => {
     const variants = ['primary', 'secondary', 'ghost', 'danger'] as const;
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-5)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)' }}>
         {variants.map(variant => (
-          <div key={variant} style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div key={variant} style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
             <Button variant={variant}>{variant}</Button>
             <Button variant={variant} icon={<IconPlus size={16} stroke={1.5} />}>{variant} + icon</Button>
             <Button variant={variant} loading>Loading</Button>
@@ -160,7 +160,7 @@ export const DangerWithConfirmation: Story = {
   render: () => {
     const [confirming, setConfirming] = useState(false);
     return (
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)' }}>
         {confirming ? (
           <>
             <Button variant="secondary" onPress={() => setConfirming(false)}>Cancel</Button>

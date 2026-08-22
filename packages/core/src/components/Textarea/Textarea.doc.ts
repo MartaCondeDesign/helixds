@@ -32,7 +32,7 @@ export const doc: ComponentDoc = {
     { part: 'textarea', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
     { part: 'textarea', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
-    { part: 'textarea', label: 'gap.label.field', token: '--helix-primitive-spacing-1', kind: 'space' },
+    { part: 'textarea', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space' },
     { part: 'textarea', label: 'textarea.root', token: '--helix-textarea-radius', kind: 'radius' },
     { part: 'textarea', label: 'display', value: 'flex' },
     { part: 'textarea', label: 'flex-direction', value: 'column' },

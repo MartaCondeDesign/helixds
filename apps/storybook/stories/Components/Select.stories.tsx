@@ -50,7 +50,7 @@ export const Controlled: Story = {
   render: () => {
     const [value, setValue] = useState('');
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-3)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
         <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" />
         {value && (
           <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
@@ -83,7 +83,7 @@ export const Disabled: Story = {
 
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-4)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
       <Select label="Small"  size="s" options={ROLES} placeholder="size=s"           onChange={() => {}} />
       <Select label="Medium" size="m" options={ROLES} placeholder="size=m (default)" onChange={() => {}} />
       <Select label="Large"  size="l" options={ROLES} placeholder="size=l"           onChange={() => {}} />
