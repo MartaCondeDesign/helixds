@@ -6,14 +6,19 @@ import { fileURLToPath } from 'url';
 const config: StorybookConfig = {
   stories: [
     '../stories/**/*.stories.@(ts|tsx)',
-    '../stories/**/*.mdx',
   ],
 
   addons: [
     '@storybook/addon-essentials',   // Docs, Controls, Actions, Backgrounds, Viewport
     '@storybook/addon-a11y',         // Accessibility checks on every story
     '@storybook/addon-themes',       // Light / Dark theme switcher
-    '@helix-ds/storybook-addon-tokens/manager',
+    // Bare package name — NOT '/manager', NOT '/preview'. Storybook's addon resolver
+    // special-cases any entry ending in "/manager" as manager-only (short-circuits before
+    // ever checking for a "/preview" sibling); an entry ending in "/preview" that doesn't
+    // itself match that short-circuit falls through to being probed as a preset instead
+    // and silently contributes nothing. The bare name is the only form that makes the
+    // resolver auto-discover BOTH the "./manager" and "./preview" exports below.
+    '@helix-ds/storybook-addon-tokens',
   ],
 
   framework: {

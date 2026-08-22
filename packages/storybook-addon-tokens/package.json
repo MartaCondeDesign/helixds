@@ -9,15 +9,18 @@
   "exports": {
     ".": "./manager.js",
     "./manager": "./manager.js",
+    "./preview": "./preview.js",
     "./package.json": "./package.json"
   },
-  "files": ["manager.js", "CONTRACT.md", "README.md"],
+  "files": ["manager.js", "register.js", "preview.js", "constants.js", "CONTRACT.md", "README.md"],
   "dependencies": {
     "@helix-ds/tokens": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=19.0.0",
-    "storybook": "^8.6.18"
+    "storybook": "^8.6.18",
+    "@storybook/manager-api": "^8.6.18",
+    "@storybook/preview-api": "^8.6.18"
   },
   "storybook": {
     "displayName": "Helix Tokens"

@@ -1,6 +1,6 @@
 # Helix Storybook Tokens Addon
 
-This addon reads `parameters.helixTokens` from the active story and renders the Tokens panel.
+This addon reads `parameters.helixTokens` from the active story and renders the Tokens tab.
 
 When adding a new component, use this shared contract:
 
@@ -18,6 +18,7 @@ When adding a new component, use this shared contract:
 
 Guidelines:
 
+- The tab itself only appears for stories that define `parameters.helixTokens`.
 - `color` tokens can be filtered by the active story `args.variant` when present.
 - `typography` tokens show the text-style label in the Token column.
 - `space` tokens do not show a preview.
