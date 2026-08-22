@@ -32,13 +32,16 @@ export const MyStory: Story = {
   the title. Reuse existing `parameters.docs.description.story` text where one already exists rather than
   writing a second, different description — and remove the now-redundant `parameters.docs.description`
   entry once the visible header carries the same text, so there's one source of truth, not two.
-- **Typography/spacing is fixed, do not improvise it** — `StoryHeader` renders the title/description at
-  exactly the same size and spacing Storybook's own auto-generated "Docs" page uses for a component's
-  `Title`/`Subtitle` (32px/700/36px line-height title, 20px/400/28px line-height description — read
-  directly from the installed `@storybook/blocks` package source, not guessed). This makes a component's
-  autodocs page and any hand-built story's Canvas view look like the same design system, not two different
-  ones. If you need a visually different header for a specific story, that's a sign the content doesn't
-  belong in `StoryHeader` — don't fork its styling inline.
+- **Typography/spacing is fixed, do not improvise it** — `StoryHeader` matches the *actual rendered*
+  Component "Docs" page (confirmed against the live Badge docs page): title `32px` / **regular (400),
+  not bold** / margin-bottom `16px`; description `16px` / `400` / margin-bottom `24px`. Note this is
+  **not** the same as `@storybook/blocks`' theoretical default `Title`/`Subtitle` spec (which is
+  `700`/`20px` in the package source in isolation) — something in the cascade (Helix's own CSS, loaded
+  into the same docs iframe) changes what actually renders, so match the live page, not the package
+  source, if the two ever disagree again. This makes a component's autodocs page and any hand-built
+  story's Canvas view look like the same design system, not two different ones. If you need a visually
+  different header for a specific story, that's a sign the content doesn't belong in `StoryHeader` —
+  don't fork its styling inline.
 
 **Why this exists:** before this rule, `Foundation.stories.tsx`'s sections had no visible header at all —
 just token content, with any explanation buried in `parameters.docs.description.story` (only visible in
