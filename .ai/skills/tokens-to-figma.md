@@ -159,6 +159,15 @@ segment.
 `radius/*`, `size/*`, `spacing/*`. Without the prefix, `radius/m` and `spacing/m` would both want
 to be plain `m` and collide.
 
+**Variable/style `.description` — set it for `Theme`/`Semantic` variables and Effect Styles, never for
+`Primitives`.** This mirrors `tokens.json`'s rule (`packages/tokens/CLAUDE.md` → "Adding a token"): every
+`semantic.*` token ships with a `$description` explaining what it's *for*; `primitive.*` and `component.*`
+never get one. When creating or editing a `Theme`/`Semantic` variable (or a shadow Effect Style), copy the
+`tokens.json` `$description` string verbatim into the Figma object's own `.description` property
+(`variable.description = '...'`, `effectStyle.description = '...'`) — don't leave the explanation only in
+code. `Primitives` variables should never have a `.description` set; if you find one, clear it
+(`variable.description = ''`) rather than leaving it, to match the code-side rule exactly.
+
 ---
 
 ## Overview of what to create

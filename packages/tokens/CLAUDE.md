@@ -37,19 +37,34 @@ role, which is exactly what the naming overhaul (below) was fixing.
    a manual edit: it runs this same naming check and refuses to write on a violation, then inserts
    the token via a surgical text edit (never a full re-serialize — that destroys the file's hand
    alignment).
-2. Run `pnpm --filter @helix-ds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
-3. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
-4. **Update Figma** — add or rename the matching variable in the live file's `Theme` (or
-   other relevant) collection via `use_figma`. See `.ai/skills/tokens-to-figma.md` → "Entry C —
+2. **`$description` — required for every `semantic.*` token, forbidden on `primitive.*` and
+   `component.*`.** A new `semantic.*` token must ship with a one-line `$description` explaining what
+   it's *for* (usage/intent — "Primary button background, hover state" — not a restatement of the
+   value). `primitive.*` and `component.*` tokens never get one: primitives are raw, role-agnostic
+   scale values with nothing to explain, and `component.*` tokens' purpose is already stated by their
+   own dot-path (`component.button.fill.primary` doesn't need a description saying "Button's primary
+   fill"). If you're renaming or editing an existing `semantic.*` token and it has no `$description`,
+   add one as part of that change — don't leave it missing. When editing via a manual text edit (not
+   `token:add`), insert it as the last field on the same single line as `$value`/`$type`
+   (`{ "$value": "...", "$type": "...", "$description": "..." }`) — this file uses compact single-line
+   token objects throughout; never reformat one into multi-line just to add a field, and never run the
+   whole file through a JSON pretty-printer to make an edit — that rewrites every token's formatting and
+   produces a multi-thousand-line diff for a one-line change.
+3. Run `pnpm --filter @helix-ds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
+4. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
+5. **Update Figma** — add or rename the matching variable in the live file's `Theme` (or
+   other relevant) collection via `use_figma`, **and set the Figma variable's own `.description` to the
+   same text as `$description`** (Figma Variables have a native `description` property — set it
+   directly, don't just leave the info in `tokens.json`). See `.ai/skills/tokens-to-figma.md` → "Entry C —
    single token addition" for the reusable script pattern. Renaming an existing variable: change
    `.name` in place, never create a second variable — that orphans every instance already bound to it.
-5. **Update Storybook** — `apps/storybook/stories/Foundation.stories.tsx` is the living reference for
+6. **Update Storybook** — `apps/storybook/stories/Foundation.stories.tsx` is the living reference for
    every semantic token (`ColorSemantic` story, grouped by `Fill` / `Text` / `Icon` / `Border`). Add
    the new token to its `TokenGroup` list (or update the label on a rename) so designers/engineers
    browsing Storybook see the same vocabulary as the code and Figma.
-6. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
+7. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
-7. **If the token is `component.*`: check it against `.ai/maps/component-token-exceptions.md`.** If its
+8. **If the token is `component.*`: check it against `.ai/maps/component-token-exceptions.md`.** If its
    `$value` aliases `semantic.*`, no action needed. If it aliases `primitive.*` directly, or is a raw
    literal with no alias at all, add a row to that file under the matching section (or a new section if
    it's a genuinely new kind of exception) — same rule for editing an existing component token: re-check
