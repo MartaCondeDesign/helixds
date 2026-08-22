@@ -345,7 +345,7 @@ export const Typography: Story = {
       ['3xl', '40px', 'H2'],
       ['2xl', '32px', 'H3'],
       ['xl',  '24px', 'H4'],
-      ['l',   '20px', 'Body Large'],
+      ['l',   '18px', 'Body Large'],
       ['m',   '14px', 'Body'],
       ['s',   '12px', 'Small'],
       ['xs',  '11px', 'Caption'],

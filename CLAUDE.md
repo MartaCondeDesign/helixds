@@ -55,6 +55,9 @@ pnpm lint:ai                validate .ai/ directory structure
 
 - `.ai/maps/prop-map.md`               — canonical prop vocabulary + anti-synonyms
 - `.ai/maps/patterns/`                 — design patterns (read the relevant .md before building that UI)
+- `.ai/maps/component-token-exceptions.md` — every `component.*` token that skips `semantic.*` (primitive-direct
+  or raw literal) + why. Update it whenever you add or edit a component token — see the file's own
+  "Maintenance rule".
 - `contracts/component.schema.json`    — JSON schema for component contracts
 - `docs/ADR/`                          — architecture decisions (read the ADR governing what you're touching)
 - `docs/ADR/ADR-004-size-standard.md`   — canonical size scale for interactive controls and fields

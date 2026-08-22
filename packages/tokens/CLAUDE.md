@@ -49,6 +49,11 @@ role, which is exactly what the naming overhaul (below) was fixing.
    browsing Storybook see the same vocabulary as the code and Figma.
 6. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
+7. **If the token is `component.*`: check it against `.ai/maps/component-token-exceptions.md`.** If its
+   `$value` aliases `semantic.*`, no action needed. If it aliases `primitive.*` directly, or is a raw
+   literal with no alias at all, add a row to that file under the matching section (or a new section if
+   it's a genuinely new kind of exception) — same rule for editing an existing component token: re-check
+   whether the edit adds it to, or removes it from, that table.
 
 **Adding or renaming a `primitive.fontSize.{key}` specifically:** always add/rename the matching
 `semantic.lineHeight.{key}` in the same change (same key name, e.g. a new `fontSize.7xl` needs a
@@ -111,15 +116,16 @@ category-first, with the exact key grammar for each.
     semantic names ARE the scale, nothing to alias underneath)
   - `size.control` — the ADR-004 control/field height ladder (`xs`-`xl`)
   - `spacing` — `xs`/`s`/`m`/`l`/`xl` t-shirt scale, plus the older `component-*`/`layout-*` context scale
-  - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung, full `xs`-`6xl` range,
-    same key set as `lineHeight` below (87.5% of desktop, see ADR — feeds the
-    `@media (max-width: 767px)` block `build.ts` emits).
-  - `lineHeight` — one entry per `primitive.fontSize.*` key, **same key name, every rung, no exceptions**:
+  - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung that's
+    **`>= 18px`** (currently `l` through `6xl`; `xs`/`s`/`m` don't get a mobile override — 87.5% of
+    desktop, see ADR, feeds the `@media (max-width: 767px)` block `build.ts` emits).
+  - `lineHeight` — one entry per `primitive.fontSize.*` key, **full range, same key name, every rung, no
+    exceptions** (unlike `fontSize.mobile` above, `lineHeight` is NOT threshold-limited — Text Styles need
+    a lineHeight for every size, including the ones below 18px):
     `semantic.lineHeight.xs` pairs with `fontSize.xs`, `semantic.lineHeight.l` with `fontSize.l`, etc.
     **Rule: adding a new `primitive.fontSize.{key}` rung requires adding a matching
-    `semantic.lineHeight.{key}` AND `semantic.fontSize.mobile.{key}` in the same change** — a fontSize
-    rung missing either is an incomplete addition, not a valid one. `fontSize.mobile` and `lineHeight`
-    always carry the identical key set to each other and to `primitive.fontSize` itself.
+    `semantic.lineHeight.{key}` in the same change, always; add `semantic.fontSize.mobile.{key}` too only
+    if the new rung's value is `>= 18px`.**
   - `shadow` — `xs`-`xl`/`focus`, aliasing `primitive.shadow.*` 1:1
   - Beyond `fontSize.mobile` and `lineHeight` above, there is no broader `semantic.typography` — no
     `fontWeight`/`fontFamily`/`letterSpacing` role layer exists; those stay primitive-only (Figma Text
@@ -145,10 +151,16 @@ Figma variable each, named `{component}/{path}`, aliasing whichever of the other
 to in code — a Figma component like Button binds to `Component.button/*`, never straight into
 `Theme`/`Semantic`/`Primitives`). Not one collection per `tokens.json` category.
 
-**Typography binding rule (Figma):** `fontSize` and `lineHeight` bindings — on a `Component` variable or
-directly on a text node — must reference `Responsive`, never `Primitives`/`Semantic` directly, since
-`Responsive` is the breakpoint-aware source for both, for every size (`Responsive` covers the full
-`xs`-`6xl` range, same as `primitive.fontSize` itself — no size falls back to `Primitives`).
+**Typography binding rule (Figma):** `fontSize` bindings — on a `Component` variable or directly on a text
+node — reference `Responsive` when the resolved `primitive.fontSize` is `>= 18px` (`l` and up), and
+`Primitives` directly below that (`xs`/`s`/`m`) — `Responsive` has no entry for those. **Figma Text Styles
+are the one exception: they always bind `fontSize` to `Primitives`, regardless of size** — a `TextStyle`
+can't pin a mode on a multi-mode collection like `Responsive`, so binding one to it makes Figma silently
+use whichever mode is first (`mobile`), showing the wrong value. `lineHeight` follows the same
+Responsive/Primitives split on `Component` variables and live nodes, but **on a Text Style it's never bound
+at all** — Figma interprets a bound `lineHeight` variable as raw pixels, not the unitless ratio
+`semantic.lineHeight.*` stores, so Text Styles set `lineHeight` as a literal percent
+(`ratio * 100`) instead. See `.ai/skills/tokens-to-figma.md` → Phase 6 and Phase 7 for the full detail.
 `fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they always reference `Primitives`
 directly.
 
