@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -25,18 +25,33 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'input-wrapper', label: 'Default fill', token: '--helix-input-fill-default', kind: 'color' },
     { part: 'input-wrapper', label: 'Default border', token: '--helix-input-border-default', kind: 'color' },
+    { part: 'input-wrapper', label: 'Default border', token: '--helix-input-border-hover', kind: 'color', state: 'hover' },
     { part: 'input-wrapper', label: 'Focus border', token: '--helix-input-border-focus', kind: 'color' },
+    { part: 'input-wrapper', label: 'Disabled fill', token: '--helix-input-fill-disabled', kind: 'color', state: 'disabled' },
+    { part: 'input-wrapper', label: 'Disabled border', token: '--helix-input-border-disabled', kind: 'color', state: 'disabled' },
     { part: 'input-field', label: 'Value text', token: '--helix-input-text-value', kind: 'color' },
     { part: 'input-field', label: 'Placeholder text', token: '--helix-input-text-placeholder', kind: 'color' },
+    { part: 'input-field', label: 'Disabled text', token: '--helix-input-text-disabled', kind: 'color', state: 'disabled' },
     { part: 'input-label', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
     { part: 'input-label', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
+    { part: 'input-field', label: 'value', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall', size: 's' },
+    { part: 'input-field', label: 'value', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small', size: 'm' },
+    { part: 'input-field', label: 'value', token: '--helix-primitive-fontSize-m', kind: 'typography', meta: 'Body base', size: 'l' },
     { part: 'input-description', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'input-error', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
-    { part: 'input-field', label: 'field.height', token: '--helix-input-height-s', kind: 'space' },
-    { part: 'input-field', label: 'field.height', token: '--helix-input-height-m', kind: 'space' },
-    { part: 'input-field', label: 'field.height', token: '--helix-input-height-l', kind: 'space' },
+    { part: 'input-field', label: 'field.height', token: '--helix-input-height-s', kind: 'space', size: 's' },
+    { part: 'input-field', label: 'field.height', token: '--helix-input-height-m', kind: 'space', size: 'm' },
+    { part: 'input-field', label: 'field.height', token: '--helix-input-height-l', kind: 'space', size: 'l' },
     { part: 'input-root', label: 'gap.label.field', token: '--helix-input-gap-label', kind: 'space' },
     { part: 'input-root', label: 'gap.description.field', token: '--helix-input-gap-description', kind: 'space' },
+    { part: 'input-field', label: 'padding.top', value: '0', kind: 'space' },
+    { part: 'input-field', label: 'padding.bottom', value: '0', kind: 'space' },
+    { part: 'input-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', size: 's' },
+    { part: 'input-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space', size: 's' },
+    { part: 'input-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', size: 'm' },
+    { part: 'input-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space', size: 'm' },
+    { part: 'input-field', label: 'padding.start', token: '--helix-primitive-spacing-100', kind: 'space', size: 'l' },
+    { part: 'input-field', label: 'padding.end', token: '--helix-primitive-spacing-100', kind: 'space', size: 'l' },
     { part: 'input-wrapper', label: 'input.root', token: '--helix-input-radius', kind: 'radius' },
     { part: 'input-root', label: 'display', value: 'flex' },
     { part: 'input-root', label: 'flex-direction', value: 'column' },

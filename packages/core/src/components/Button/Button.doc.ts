@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y:     string[];
   variants: { name: string; description: string }[];
   sizes:    string[];
-  tokens:   { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; meta?: string }[];
+  tokens:   { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -32,16 +32,38 @@ export const doc: ComponentDoc = {
 
   tokens: [
     { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-default', kind: 'color', variant: 'primary' },
+    { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-hover', kind: 'color', variant: 'primary', state: 'hover' },
+    { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-press', kind: 'color', variant: 'primary', state: 'press' },
     { part: 'button', label: 'fill.secondary', token: '--helix-button-fill-secondary-default', kind: 'color', variant: 'secondary' },
+    { part: 'button', label: 'fill.secondary', token: '--helix-button-fill-secondary-hover', kind: 'color', variant: 'secondary', state: 'hover' },
+    { part: 'button', label: 'fill.secondary', token: '--helix-button-fill-secondary-press', kind: 'color', variant: 'secondary', state: 'press' },
+    { part: 'button', label: 'border.secondary', token: '--helix-button-border-secondary-default', kind: 'color', variant: 'secondary' },
+    { part: 'button', label: 'border.secondary', token: '--helix-button-border-secondary-hover', kind: 'color', variant: 'secondary', state: 'hover' },
+    { part: 'button', label: 'fill.ghost', token: '--helix-button-fill-secondary-default', kind: 'color', variant: 'ghost', state: 'hover' },
+    { part: 'button', label: 'fill.ghost', token: '--helix-button-fill-secondary-hover', kind: 'color', variant: 'ghost', state: 'press' },
     { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-default', kind: 'color', variant: 'danger' },
+    { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-hover', kind: 'color', variant: 'danger', state: 'hover' },
+    { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-press', kind: 'color', variant: 'danger', state: 'press' },
     { part: 'button', label: 'border.focus', token: '--helix-button-border-focus', kind: 'color' },
     { part: 'button', label: 'button.root', token: '--helix-button-radius', kind: 'radius' },
     { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-50', kind: 'space' },
-    { part: 'button', label: 'label.xs', token: '--helix-button-fontSize-xs', kind: 'typography', meta: 'Caption / label' },
-    { part: 'button', label: 'label.s', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Body small' },
-    { part: 'button', label: 'label.m', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Body small' },
-    { part: 'button', label: 'label.l', token: '--helix-button-fontSize-l', kind: 'typography', meta: 'Body base' },
-    { part: 'button', label: 'label.xl', token: '--helix-button-fontSize-xl', kind: 'typography', meta: 'Body large' },
+    { part: 'button', label: 'padding.top', value: '0', kind: 'space' },
+    { part: 'button', label: 'padding.bottom', value: '0', kind: 'space' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xs', kind: 'space', size: 'xs' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xs', kind: 'space', size: 'xs' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-s', kind: 'space', size: 's' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-s', kind: 'space', size: 's' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-m', kind: 'space', size: 'm' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-m', kind: 'space', size: 'm' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-l', kind: 'space', size: 'l' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-l', kind: 'space', size: 'l' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xl', kind: 'space', size: 'xl' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xl', kind: 'space', size: 'xl' },
+    { part: 'button', label: 'label', token: '--helix-button-fontSize-xs', kind: 'typography', meta: 'Caption / label', size: 'xs' },
+    { part: 'button', label: 'label', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Body small', size: 's' },
+    { part: 'button', label: 'label', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Body small', size: 'm' },
+    { part: 'button', label: 'label', token: '--helix-button-fontSize-l', kind: 'typography', meta: 'Body base', size: 'l' },
+    { part: 'button', label: 'label', token: '--helix-button-fontSize-xl', kind: 'typography', meta: 'Body large', size: 'xl' },
     { part: 'button', label: 'display', value: 'inline-flex' },
     { part: 'button', label: 'align-items', value: 'center' },
     { part: 'button', label: 'justify-content', value: 'center' },

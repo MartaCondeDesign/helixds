@@ -180,8 +180,9 @@ function applyHighlight(payload) {
   }
 
   if (category === 'spacing' || category === 'sizing') {
+    // No outline here — an outline reads as a border-color highlight, which is a
+    // different token's job. The dimension line alone is the spacing/sizing signal.
     const el = targets[0];
-    addClass(el, OUTLINE_CLASS);
     const px = resolvePx(token, value);
     if (px) drawDimensionLine(el, px, getAxis(payload));
     return;

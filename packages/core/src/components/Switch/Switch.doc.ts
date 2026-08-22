@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -26,8 +26,8 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'switch-track', label: 'Off fill', token: '--helix-switch-track-fill-off', kind: 'color' },
     { part: 'switch-track', label: 'On fill', token: '--helix-switch-track-fill-on', kind: 'color' },
-    { part: 'switch-track', label: 'On hover fill', token: '--helix-switch-track-fill-on-hover', kind: 'color' },
-    { part: 'switch-track', label: 'Disabled fill', token: '--helix-switch-track-fill-disabled', kind: 'color' },
+    { part: 'switch-track', label: 'On fill', token: '--helix-switch-track-fill-on-hover', kind: 'color', state: 'hover', meta: 'Hover while on — off state has no dedicated hover token' },
+    { part: 'switch-track', label: 'Disabled fill', token: '--helix-switch-track-fill-disabled', kind: 'color', state: 'disabled' },
     { part: 'switch-thumb', label: 'Thumb fill', token: '--helix-switch-thumb-fill', kind: 'color' },
     { part: 'switch-track', label: 'Focus outline', token: '--helix-switch-border-focus', kind: 'color' },
     { part: 'switch-label', label: 'Label text', token: '--helix-switch-text-label', kind: 'color' },

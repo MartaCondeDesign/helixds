@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -32,16 +32,50 @@ export const doc: ComponentDoc = {
   sizes: ['s', 'm'],
 
   tokens: [
-    { part: 'chip', label: 'fill.surface', token: '--helix-color-fill-surface', kind: 'color', variant: 'neutral' },
-    { part: 'chip', label: 'fill.secondary', token: '--helix-color-fill-secondary', kind: 'color', variant: 'neutral' },
-    { part: 'chip', label: 'fill.info', token: '--helix-color-fill-info', kind: 'color', variant: 'info' },
-    { part: 'chip', label: 'fill.success', token: '--helix-color-fill-success', kind: 'color', variant: 'success' },
-    { part: 'chip', label: 'fill.warning', token: '--helix-color-fill-warning', kind: 'color', variant: 'warning' },
-    { part: 'chip', label: 'fill.danger', token: '--helix-color-fill-danger', kind: 'color', variant: 'danger' },
+    // Unchecked-state fills, per variant. `checked` layers a second, independent set of
+    // tokens on top (not modeled here — see contracts/components/Chip.json) — this is the
+    // resting/toggle-off appearance, which is what every story below actually shows by default.
+    { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-surface', kind: 'color', variant: 'neutral' },
+    { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-surface-dark', kind: 'color', variant: 'neutral', state: 'hover' },
+    { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-secondary-interactive-default', kind: 'color', variant: 'neutral', state: 'press' },
+    { part: 'chip', label: 'border.neutral', token: '--helix-color-border-neutral', kind: 'color', variant: 'neutral' },
+    { part: 'chip', label: 'text.neutral', token: '--helix-color-text-neutral', kind: 'color', variant: 'neutral' },
+    { part: 'chip', label: 'fill.info', token: '--helix-color-fill-info-light', kind: 'color', variant: 'info' },
+    { part: 'chip', label: 'fill.info', value: 'color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page))', kind: 'color', variant: 'info', state: 'hover', meta: 'No discrete token — computed color-mix() over fill.info' },
+    { part: 'chip', label: 'fill.info', value: 'color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page))', kind: 'color', variant: 'info', state: 'press', meta: 'No discrete token — computed color-mix() over fill.info' },
+    { part: 'chip', label: 'border.info', token: '--helix-color-border-info', kind: 'color', variant: 'info' },
+    { part: 'chip', label: 'text.info', token: '--helix-color-text-info', kind: 'color', variant: 'info' },
+    { part: 'chip', label: 'fill.success', token: '--helix-color-fill-success-light', kind: 'color', variant: 'success' },
+    { part: 'chip', label: 'fill.success', value: 'color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page))', kind: 'color', variant: 'success', state: 'hover', meta: 'No discrete token — computed color-mix() over fill.success' },
+    { part: 'chip', label: 'fill.success', value: 'color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page))', kind: 'color', variant: 'success', state: 'press', meta: 'No discrete token — computed color-mix() over fill.success' },
+    { part: 'chip', label: 'border.success', token: '--helix-color-border-success', kind: 'color', variant: 'success' },
+    { part: 'chip', label: 'text.success', token: '--helix-color-text-success', kind: 'color', variant: 'success' },
+    { part: 'chip', label: 'fill.warning', token: '--helix-color-fill-warning-light', kind: 'color', variant: 'warning' },
+    { part: 'chip', label: 'fill.warning', value: 'color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page))', kind: 'color', variant: 'warning', state: 'hover', meta: 'No discrete token — computed color-mix() over fill.warning' },
+    { part: 'chip', label: 'fill.warning', value: 'color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page))', kind: 'color', variant: 'warning', state: 'press', meta: 'No discrete token — computed color-mix() over fill.warning' },
+    { part: 'chip', label: 'border.warning', token: '--helix-color-border-warning', kind: 'color', variant: 'warning' },
+    { part: 'chip', label: 'text.warning', token: '--helix-color-text-warning', kind: 'color', variant: 'warning' },
+    { part: 'chip', label: 'fill.danger', token: '--helix-color-fill-danger-interactive-light-default', kind: 'color', variant: 'danger' },
+    { part: 'chip', label: 'fill.danger', value: 'color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page))', kind: 'color', variant: 'danger', state: 'hover', meta: 'No discrete token — computed color-mix() over fill.danger' },
+    { part: 'chip', label: 'fill.danger', value: 'color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page))', kind: 'color', variant: 'danger', state: 'press', meta: 'No discrete token — computed color-mix() over fill.danger' },
+    { part: 'chip', label: 'border.danger', token: '--helix-color-border-danger', kind: 'color', variant: 'danger' },
+    { part: 'chip', label: 'text.danger', token: '--helix-color-text-danger', kind: 'color', variant: 'danger' },
+    { part: 'chip', label: 'fill.disabled', token: '--helix-color-fill-disabled', kind: 'color', state: 'disabled' },
+    { part: 'chip', label: 'text.disabled', token: '--helix-color-text-disabled', kind: 'color', state: 'disabled' },
+    { part: 'chip', label: 'border.disabled', token: '--helix-color-border-neutral-light', kind: 'color', state: 'disabled' },
     { part: 'chip', label: 'chip.root', token: '--helix-chip-radius', kind: 'radius' },
-    { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-m', kind: 'space' },
-    { part: 'chip', label: 'label.s', token: '--helix-chip-fontSize-s', kind: 'typography', meta: 'Body small' },
-    { part: 'chip', label: 'label.m', token: '--helix-chip-fontSize-m', kind: 'typography', meta: 'Body small' },
+    { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-s', kind: 'space', size: 's' },
+    { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-m', kind: 'space', size: 'm' },
+    { part: 'chip', label: 'chip.height', token: '--helix-chip-height-s', kind: 'space', size: 's' },
+    { part: 'chip', label: 'chip.height', token: '--helix-chip-height-m', kind: 'space', size: 'm' },
+    { part: 'chip', label: 'padding.top', value: '0', kind: 'space' },
+    { part: 'chip', label: 'padding.bottom', value: '0', kind: 'space' },
+    { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-s', kind: 'space', size: 's' },
+    { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-s', kind: 'space', size: 's' },
+    { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-m', kind: 'space', size: 'm' },
+    { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-m', kind: 'space', size: 'm' },
+    { part: 'chip', label: 'label', token: '--helix-chip-fontSize-s', kind: 'typography', meta: 'Body small', size: 's' },
+    { part: 'chip', label: 'label', token: '--helix-chip-fontSize-m', kind: 'typography', meta: 'Body small', size: 'm' },
     { part: 'chip', label: 'weight', token: '--helix-chip-fontWeight', kind: 'typography', meta: 'Medium' },
     { part: 'chip', label: 'display', value: 'inline-flex' },
     { part: 'chip', label: 'align-items', value: 'center' },

@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -48,14 +48,22 @@ export const doc: ComponentDoc = {
     { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-25', kind: 'space' },
     { part: 'badge', label: 'label', token: '--helix-badge-fontSize', kind: 'typography', meta: 'Caption / label' },
     { part: 'badge', label: 'weight', token: '--helix-badge-fontWeight', kind: 'typography', meta: 'Semibold' },
+    { part: 'badge', label: 'badge.height', token: '--helix-badge-height-xs', kind: 'space', size: 'xs' },
+    { part: 'badge', label: 'badge.height', token: '--helix-badge-height-s', kind: 'space', size: 's' },
+    { part: 'badge', label: 'padding.top', value: '2px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.bottom', value: '2px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.start', value: '6px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.end', value: '6px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.top', value: '3px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.bottom', value: '3px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.start', value: '10px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.end', value: '10px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
     { part: 'badge', label: 'display', value: 'inline-flex' },
     { part: 'badge', label: 'align-items', value: 'center' },
     { part: 'badge', label: 'box-sizing', value: 'border-box' },
     { part: 'badge', label: 'white-space', value: 'nowrap' },
     { part: 'badge', label: 'line-height', value: '1' },
     { part: 'badge', label: 'border', value: '1px solid transparent' },
-    { part: 'badge', label: 'padding.xs', value: '2px 6px' },
-    { part: 'badge', label: 'padding.s', value: '3px 10px' },
     { part: 'badge', label: 'display.icon', value: 'flex' },
   ],
   features: [

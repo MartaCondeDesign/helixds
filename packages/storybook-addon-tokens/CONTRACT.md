@@ -12,6 +12,8 @@ Each token item must follow this shape:
   value?: string;
   kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'other';
   variant?: string;
+  size?: string;
+  state?: 'hover' | 'press' | 'disabled' | 'focus';
   meta?: string;
 }
 ```
@@ -38,6 +40,33 @@ Rules:
 - `variant` → when the current story has `args.variant`, EVERY category (not just
   color) only shows tokens whose own `variant` matches — a `space`/`radius`/etc. item
   with no `variant` field always shows regardless of the selected variant.
+- `size` → same mechanism as `variant`, but against `args.size`. A row tagged with a
+  size (e.g. a `fontSize`/`height`/`padding` rung that genuinely differs per size) only
+  shows for the currently selected size; a row with no `size` field is size-agnostic and
+  always shows (e.g. `gap.icon.text`, which doesn't change across sizes). This is what
+  keeps `Typography` from listing every rung the component has ever had — only the one
+  rung actually rendered on screen right now.
+- `state` → `'disabled'` is opt-in: a row tagged `state: 'disabled'` only shows once the
+  story's own `args.disabled` is actually `true` — showing a disabled-state color by
+  default would misrepresent what's currently on screen. `'hover'`/`'press'` are the
+  opposite: NEVER gated behind a control (these components don't expose a "state" arg for
+  pointer states), always shown whenever the component is interactive, tagged only so the
+  Element/meta column can say *which* state a given row represents. **Only tag `state` on
+  a row when the resolved CSS var driving that visual state actually exists and is
+  consumed by the component's CSS** — do not document a `disabled`/`hover` token that the
+  component's stylesheet never references (e.g. `--helix-checkbox-fill-disabled` exists as
+  a token but Checkbox's disabled look is opacity-only, not a fill swap — don't add a row
+  for it; a documented-but-unused token would show a live-highlight color that never
+  actually appears on screen).
+- **Every `spacing`/`sizing` relationship the component actually has must get a row** —
+  not just the first gap that comes to mind. Audit the component's CSS for: `padding-top`,
+  `padding-bottom`, `padding-start`/`padding-left`, `padding-end`/`padding-right` (as four
+  separate rows — asymmetric padding, e.g. Select's wider trailing edge for its chevron, is
+  real and worth seeing as two different values, not one shared "padding" row), and every
+  `gap` between two visually distinct children in either axis: icon↔text, label↔field,
+  control↔content, element↔element, whatever the component actually lays out. A `0`/literal
+  side (no token backing it) still gets a row with `value: '0'` — the point is completeness
+  of "what spacing exists here", not just "which spacings have a token."
 - **`part` must match the component's own `data-helix-part` value exactly** — the live
   highlight (below) does a literal `[data-helix-part="<part>"]` lookup, so a `part` that
   doesn't exist in the DOM (e.g. a leftover bare `'input'` when the real attribute is
@@ -64,8 +93,8 @@ change; `preview.js` finds the target element(s) via `[data-helix-part="<part>"]
 | `typography` | `refineTypographyTarget` narrows to the `-label`/`-description`/`-error`/`-placeholder`/`-value`/`-counter` descendant matching the row's `label`/`meta` text, then overrides its `color` (not the font itself) to lilac | The row's `part` is usually the component root, not the specific text node — narrowing avoids recoloring the whole component (icons included, via `currentColor`) |
 | `radius` | A `3px solid lilac` outline, `outline-offset: -3px` (`.helix-token-highlight-radius`) | An inset outline traces the rounded corners themselves, unlike a generic offset outline |
 | `shadows` | `box-shadow` is overridden inline to a lilac elevation shadow | Shows the shadow's shape/spread in the highlight color, not just an unrelated outline |
-| `spacing` | A generic lilac outline on the element **plus** a "dimension line" overlay whose length equals the token's own resolved **px value** — never the component's own width/height | It's measuring a gap/inset, not the component — a line as long as the component would misrepresent an 8px gap as "however wide the button is" |
-| `sizing` | Same outline + dimension line, but the line spans the component's own **rendered height** (`getBoundingClientRect().height`) | Sizing tokens (control/field height, a control's own box size) *are* the component's dimension — the line should visibly span it, not an unrelated px count |
+| `spacing` | A "dimension line" overlay whose length equals the token's own resolved **px value** — never the component's own width/height, and **no outline** on the component itself | It's measuring a gap/inset, not the component — a line as long as the component would misrepresent an 8px gap as "however wide the button is"; an outline here would read as a `border` color highlight, which is a different token's job |
+| `sizing` | Same dimension line, but it spans the component's own **rendered height** (`getBoundingClientRect().height`) — also no outline | Sizing tokens (control/field height, a control's own box size) *are* the component's dimension — the line should visibly span it, not an unrelated px count |
 
 Dimension lines prefer drawing **outside** the component (right for `sizing`'s vertical
 line, bottom for `spacing`'s horizontal line) and only fall back to hugging the

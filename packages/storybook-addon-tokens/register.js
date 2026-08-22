@@ -74,10 +74,26 @@ function rowKeyFor(item) {
   return `${item.part}:${item.token ?? item.value ?? item.label}`;
 }
 
+// A row only shows when it matches what's actually on screen right now:
+// - `variant`/`size` narrow to the currently selected story args (when the row itself
+//   is tagged with one — untagged rows are variant/size-agnostic and always pass).
+// - `state: 'disabled'` rows are opt-in: they only show once the story's own `disabled`
+//   arg is actually turned on, unlike `hover`/`press` rows (untagged as `state`), which
+//   are pointer states of an always-interactive component and so always show.
+function matchesStoryState(item, args) {
+  if (args?.variant && item.variant && item.variant !== args.variant) return false;
+  if (args?.size && item.size && item.size !== args.size) return false;
+  if (item.state === 'disabled' && args?.disabled !== true) return false;
+  return true;
+}
+
 function TokensPanel({ active }) {
   const api = useStorybookApi();
   const currentStory = api.getCurrentStoryData?.();
-  const currentVariant = currentStory?.args?.variant;
+  // `args` only holds values the story/user actually set; a prop's component-level
+  // default (e.g. Button's `size = 'm'`) lives in `initialArgs` instead. Merge both so
+  // filtering narrows to the real default even before anyone touches a control.
+  const currentArgs = { ...currentStory?.initialArgs, ...currentStory?.args };
   const tokens = currentStory?.parameters?.helixTokens ?? [];
   const [category, setCategory] = React.useState('color');
   const [hoveredRow, setHoveredRow] = React.useState(null);
@@ -100,9 +116,9 @@ function TokensPanel({ active }) {
   }
 
   const categories = React.useMemo(() => {
-    const present = CATEGORY_ORDER.filter(kind => tokens.some(item => getCategory(item) === kind && (!currentVariant || !item.variant || item.variant === currentVariant)));
+    const present = CATEGORY_ORDER.filter(kind => tokens.some(item => getCategory(item) === kind && matchesStoryState(item, currentArgs)));
     return present;
-  }, [tokens, currentVariant]);
+  }, [tokens, currentArgs]);
 
   React.useEffect(() => {
     if (!categories.length) return;
@@ -112,13 +128,8 @@ function TokensPanel({ active }) {
   }, [category, categories]);
 
   const filtered = React.useMemo(
-    () => tokens.filter(item => {
-      const kind = getCategory(item);
-      if (kind !== category) return false;
-      if (currentVariant && item.variant && item.variant !== currentVariant) return false;
-      return true;
-    }),
-    [tokens, category, currentVariant],
+    () => tokens.filter(item => getCategory(item) === category && matchesStoryState(item, currentArgs)),
+    [tokens, category, currentArgs],
   );
 
   const uniqueFiltered = React.useMemo(() => {

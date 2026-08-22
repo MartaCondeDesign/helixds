@@ -858,7 +858,7 @@
   [data-helix-part="select-trigger"][data-size="s"] {
     height:    var(--helix-select-height-s);
     font-size: var(--helix-primitive-fontSize-xs);
-    padding:   0 var(--helix-primitive-spacing-200) 0 var(--helix-primitive-spacing-62-5);
+    padding:   0 var(--helix-primitive-spacing-200) 0 var(--helix-primitive-spacing-50);
   }
   [data-helix-part="select-trigger"][data-size="m"] {
     height:    var(--helix-select-height-m);

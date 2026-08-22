@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -26,7 +26,9 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'checkbox-control', label: 'Default fill', token: '--helix-checkbox-fill-default', kind: 'color' },
     { part: 'checkbox-control', label: 'Checked fill', token: '--helix-checkbox-fill-checked', kind: 'color' },
+    { part: 'checkbox-control', label: 'Checked fill', token: '--helix-checkbox-fill-checked-hover', kind: 'color', state: 'hover', meta: 'Hover while checked' },
     { part: 'checkbox-control', label: 'Default border', token: '--helix-checkbox-border-default', kind: 'color' },
+    { part: 'checkbox-control', label: 'Default border', token: '--helix-checkbox-border-hover', kind: 'color', state: 'hover', meta: 'Hover while unchecked' },
     { part: 'checkbox-control', label: 'Checked border', token: '--helix-checkbox-border-checked', kind: 'color' },
     { part: 'checkbox-control', label: 'Focus border', token: '--helix-checkbox-border-focus', kind: 'color' },
     { part: 'checkbox-control', label: 'Invalid border', token: '--helix-checkbox-border-invalid', kind: 'color' },
@@ -35,6 +37,7 @@ export const doc: ComponentDoc = {
     { part: 'checkbox-description', label: 'Description text', token: '--helix-checkbox-text-description', kind: 'color' },
     { part: 'checkbox-error', label: 'Error text', token: '--helix-checkbox-text-error', kind: 'color' },
     { part: 'checkbox-control', label: 'control.size', token: '--helix-checkbox-size', kind: 'space' },
+    { part: 'checkbox-label', label: 'gap.control.text', token: '--helix-primitive-spacing-50', kind: 'space' },
     { part: 'checkbox-description', label: 'gap.control.description', token: '--helix-primitive-spacing-50', kind: 'space' },
     { part: 'checkbox-control', label: 'checkbox.control', token: '--helix-checkbox-radius', kind: 'radius' },
     { part: 'checkbox-root', label: 'display', value: 'block' },

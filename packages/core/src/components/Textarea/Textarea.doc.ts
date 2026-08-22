@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -25,14 +25,26 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'textarea-wrapper', label: 'Default fill', token: '--helix-textarea-fill-default', kind: 'color' },
     { part: 'textarea-wrapper', label: 'Default border', token: '--helix-textarea-border-default', kind: 'color' },
+    { part: 'textarea-wrapper', label: 'Default border', token: '--helix-textarea-border-hover', kind: 'color', state: 'hover' },
     { part: 'textarea-wrapper', label: 'Focus border', token: '--helix-textarea-border-focus', kind: 'color' },
+    { part: 'textarea-wrapper', label: 'Disabled fill', token: '--helix-textarea-fill-disabled', kind: 'color', state: 'disabled' },
+    { part: 'textarea-wrapper', label: 'Disabled border', token: '--helix-textarea-border-disabled', kind: 'color', state: 'disabled' },
+    { part: 'textarea-field', label: 'Disabled text', token: '--helix-textarea-text-disabled', kind: 'color', state: 'disabled' },
     { part: 'textarea-field', label: 'Value text', token: '--helix-textarea-text-value', kind: 'color' },
     { part: 'textarea-field', label: 'Placeholder text', token: '--helix-textarea-text-placeholder', kind: 'color' },
+    { part: 'textarea-counter', label: 'Counter text', token: '--helix-textarea-text-counter', kind: 'color' },
     { part: 'textarea-label', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
     { part: 'textarea-label', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
+    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall', size: 's' },
+    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small', size: 'm' },
+    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-m', kind: 'typography', meta: 'Body base', size: 'l' },
     { part: 'textarea-description', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea-error', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space' },
+    { part: 'textarea-field', label: 'padding.top', token: '--helix-primitive-spacing-75', kind: 'space' },
+    { part: 'textarea-field', label: 'padding.bottom', token: '--helix-primitive-spacing-75', kind: 'space' },
+    { part: 'textarea-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space' },
+    { part: 'textarea-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space' },
     { part: 'textarea-wrapper', label: 'textarea.root', token: '--helix-textarea-radius', kind: 'radius' },
     { part: 'textarea-root', label: 'display', value: 'flex' },
     { part: 'textarea-root', label: 'flex-direction', value: 'column' },

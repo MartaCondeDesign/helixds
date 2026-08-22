@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -29,7 +29,9 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'radio-control', label: 'Default fill', token: '--helix-radio-fill-default', kind: 'color' },
     { part: 'radio-control', label: 'Checked fill', token: '--helix-radio-fill-checked', kind: 'color' },
+    { part: 'radio-control', label: 'Checked fill', token: '--helix-radio-fill-checked-hover', kind: 'color', state: 'hover', meta: 'Hover while checked' },
     { part: 'radio-control', label: 'Default border', token: '--helix-radio-border-default', kind: 'color' },
+    { part: 'radio-control', label: 'Default border', token: '--helix-radio-border-hover', kind: 'color', state: 'hover', meta: 'Hover while unchecked' },
     { part: 'radio-control', label: 'Checked border', token: '--helix-radio-border-checked', kind: 'color' },
     { part: 'radio-control', label: 'Focus border', token: '--helix-radio-border-focus', kind: 'color' },
     { part: 'radio-control', label: 'Invalid border', token: '--helix-radio-border-invalid', kind: 'color' },
