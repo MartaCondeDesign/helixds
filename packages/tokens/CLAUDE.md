@@ -58,10 +58,26 @@ role, which is exactly what the naming overhaul (below) was fixing.
    directly, don't just leave the info in `tokens.json`). See `.ai/skills/tokens-to-figma.md` → "Entry C —
    single token addition" for the reusable script pattern. Renaming an existing variable: change
    `.name` in place, never create a second variable — that orphans every instance already bound to it.
-6. **Update Storybook** — `apps/storybook/stories/Foundation.stories.tsx` is the living reference for
-   every semantic token (`ColorSemantic` story, grouped by `Fill` / `Text` / `Icon` / `Border`). Add
-   the new token to its `TokenGroup` list (or update the label on a rename) so designers/engineers
-   browsing Storybook see the same vocabulary as the code and Figma.
+6. **Update Storybook — mandatory, no exceptions, for every layer, not just color.**
+   `apps/storybook/stories/Foundation.stories.tsx` is the living reference for the whole token set, one
+   story per category: `ColorPrimitives`, `ColorSemantic`, `Spacing` (primitive + semantic sections),
+   `Radius`, `Sizing` (`semantic.size.control.*`), `Typography` (primitive + semantic line-height
+   sections), `Shadows` (primitive + semantic sections). **A token addition, rename, or removal in
+   `tokens.json` is not done until its matching story reflects it** — check every story that touches the
+   category you changed, not just the first one that comes to mind.
+   - **Prefer deriving the story's token list from the generated build output
+     (`packages/tokens/dist/index.ts`'s `tokens` export) over a hardcoded array of keys**, wherever a
+     section can reasonably do so (e.g. `Object.keys(tokens.semantic.spacing)` instead of
+     `['xs','s','m','l','xl']`). A hardcoded array requires a human to remember to edit this file on every
+     token change; deriving from `tokens` makes the story pick up a new/renamed/removed key automatically
+     on the next build, with no story edit needed at all — that's what "must reflect token changes" should
+     mean in practice, not just "someone remembered to update it." Where a section still uses a hardcoded
+     array (most of `Foundation.stories.tsx` does, as of this writing — converting it is a separate,
+     larger refactor, not implied by adding one token), updating that array by hand remains mandatory
+     until the section is migrated to derive from `tokens`.
+   - This applies to `ColorSemantic`'s existing `TokenGroup` lists as it always did (add the new token, or
+     update the label on a rename) — extend the same expectation to whichever other story covers the
+     category you touched.
 7. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
 8. **If the token is `component.*`: check it against `.ai/maps/component-token-exceptions.md`.** If its
