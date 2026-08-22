@@ -243,24 +243,37 @@ Before setting auto-layout, check the CSS and contract:
 
 ### Button sizing reference (as-built)
 
-**Bind to variables — never assign plain numbers, and bind to the `Component` collection, not
-`Theme`/`Semantic`/`Primitives` directly.** Every `component.*` token has a matching Figma variable in
-`Component` (see `tokens-to-figma.md` → Phase 10) — `button/height/*`, `button/padding/x/*`, etc. Bind to
-those, not to the layer they alias underneath. This mirrors the code path exactly: `component.button.height.*`
-→ `semantic.size.control.*` → `primitive.size.*` is 3 hops in code, and the Figma binding should land on the
-`Component` variable (the outermost/nearest hop), the same way a button's fill binds to `Theme`, never to a
-raw color primitive. If `Component` doesn't have a variable for something yet (rare — Phase 10 covers all
-182 as of this writing), fall back to the next layer down and flag the gap rather than silently skip it.
+**Bind to variables — never assign plain numbers. There is no `Component` collection in Figma** —
+`component.*` tokens live only in code. Bind each property directly to whichever of
+`Theme`/`Semantic`/`Primitives`/`Responsive` the matching `component.*` token resolves to: walk the alias
+chain in `tokens.json` yourself (`component.button.height.*` → `semantic.size.control.*` — bind to
+`Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`; fontSize follows
+the 18px threshold from `tokens-to-figma.md` — bind to `Responsive` when the resolved
+`primitive.fontSize >= 18px`, `Primitives` otherwise).
 
 ```js
-// Figma variable names per size — from the Component collection (tokens-to-figma.md Phase 10).
-const HEIGHT_VAR    = { xs: 'button/height/xs', s: 'button/height/s', m: 'button/height/m', l: 'button/height/l', xl: 'button/height/xl' };
-const PADDING_X_VAR  = { xs: 'button/padding/x/xs', s: 'button/padding/x/s', m: 'button/padding/x/m', l: 'button/padding/x/l', xl: 'button/padding/x/xl' };
+// Figma variable names per size — resolved one hop from tokens.json's component.button.* aliases.
+const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl: 'size/xl' }; // Semantic
+const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
+// component.button.fontSize.* -> primitive.fontSize.{xs,s,s,m,l} = 11/12/12/14/18px — only button size
+// `xl` (resolves to 18px) crosses the 18px threshold, so it's the one sourced from Responsive, not Primitives.
+const FONTSIZE_PRIM_VAR = { xs: 'fontSize/xs', s: 'fontSize/s', m: 'fontSize/s', l: 'fontSize/m' };
+const FONTSIZE_RESP_VAR = { xl: 'fontSize/l' };
+// fill/text — variant-keyed, not size-keyed. No entry for 'ghost' in fill (matches code: no
+// component.button.fill.ghost token exists — ghost stays unbound/transparent).
+const FILL_VAR = { primary: 'fill/primary/interactive/default', secondary: 'fill/secondary/interactive/default', danger: 'fill/danger/interactive/default' };
+const TEXT_VAR = { primary: 'text/inverse', secondary: 'text/neutral', ghost: 'text/neutral', danger: 'text/inverse' };
 
-const varMap = {};
-figma.variables.getLocalVariables().forEach(v => { varMap[v.name] = v; });
+const primByName = {}, semByName = {}, themeByName = {}, respByName = {};
+figma.variables.getLocalVariables().forEach(v => {
+  const cName = figma.variables.getVariableCollectionById(v.variableCollectionId)?.name;
+  if (cName === 'Primitives') primByName[v.name] = v;
+  if (cName === 'Semantic') semByName[v.name] = v;
+  if (cName === 'Theme') themeByName[v.name] = v;
+  if (cName === 'Responsive') respByName[v.name] = v;
+});
 
-// Apply per component after creating it
+// Apply per component after creating it (variant, size both come from the component's name)
 comp.layoutMode             = 'HORIZONTAL';
 comp.layoutSizingHorizontal = 'HUG';    // content-hug — default
 comp.layoutSizingVertical   = 'FIXED';  // fixed by size token
@@ -269,9 +282,18 @@ comp.counterAxisAlignItems  = 'CENTER';
 comp.paddingTop              = 0;   // not token-backed in code either — literal 0 is correct here
 comp.paddingBottom           = 0;
 comp.itemSpacing             = 8;   // icon↔label gap — no token exists for this yet in tokens.json
-comp.setBoundVariable('height',       varMap[HEIGHT_VAR[size]]);
-comp.setBoundVariable('paddingLeft',  varMap[PADDING_X_VAR[size]]);
-comp.setBoundVariable('paddingRight', varMap[PADDING_X_VAR[size]]);
+comp.setBoundVariable('height',       semByName[HEIGHT_VAR[size]]);
+comp.setBoundVariable('paddingLeft',  primByName[PADDING_X_VAR[size]]);
+comp.setBoundVariable('paddingRight', primByName[PADDING_X_VAR[size]]);
+
+const fillVar = themeByName[FILL_VAR[variant]]; // undefined for 'ghost' — leave unbound, matches code
+if (fillVar) comp.fills = [figma.variables.setBoundVariableForPaint(comp.fills[0], 'color', fillVar)];
+
+const label = comp.findOne(n => n.type === 'TEXT' && n.name === 'button-label');
+const textVar = themeByName[TEXT_VAR[variant]];
+if (textVar) label.fills = [figma.variables.setBoundVariableForPaint(label.fills[0], 'color', textVar)];
+const fsVar = FONTSIZE_RESP_VAR[size] ? respByName[FONTSIZE_RESP_VAR[size]] : primByName[FONTSIZE_PRIM_VAR[size]];
+label.setBoundVariable('fontSize', fsVar); // font must be loaded on the label first — see figma-use skill
 ```
 
 `paddingTop`/`paddingBottom` (always `0`) and the icon↔label `itemSpacing` (`8`) stay plain literals — they
@@ -293,16 +315,15 @@ Button has no min/max-width in CSS — leave as `null` per contract.
 - [ ] Every variant has `layoutMode = 'HORIZONTAL'`
 - [ ] Every variant has `layoutSizingHorizontal = 'HUG'` (not FIXED)
 - [ ] Every variant has `layoutSizingVertical = 'FIXED'`
-- [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Component` variable (`button/padding/x/*`,
-      not a plain number that happens to match — check `boundVariables.paddingLeft` on the node)
+- [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Primitives` variable (`spacing/*`, not a
+      plain number that happens to match — check `boundVariables.paddingLeft` on the node)
 - [ ] Gap matches itemSpacing between anatomy parts (still a plain literal — no token backs it yet)
-- [ ] `height` is *bound* to the matching `Component` variable (`button/height/*`; xs=16, s=24, m=32, l=40,
-      xl=48 for Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered
-      pixel value
-- [ ] `fills` on the component and on the label TEXT node are *bound* to `Component` (`button/fill/*`,
-      `button/text/*`), not to `Theme` directly
-- [ ] Label `fontSize` is *bound* to `Component` (`button/fontSize/*`), which itself aliases `Responsive`
-      — never bound straight to `Primitives.fontSize/*`
+- [ ] `height` is *bound* to the matching `Semantic` variable (`size/*`; xs=16, s=24, m=32, l=40, xl=48 for
+      Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered pixel value
+- [ ] `fills` on the component and on the label TEXT node are *bound* to `Theme` (`fill/*`, `text/*`)
+      directly — there is no `Component` collection to bind to instead
+- [ ] Label `fontSize` is *bound* to `Responsive` when the resolved size is `>= 18px`, `Primitives`
+      otherwise (for Button, only size `xl` crosses the threshold) — never left as a plain number
 
 ### Phase 3 — Create COMPONENT_SET
 

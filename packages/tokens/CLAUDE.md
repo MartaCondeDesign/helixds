@@ -142,26 +142,28 @@ does not cascade into semantic/component fontSize vars yet. Making it cascade ev
 switching the whole pipeline from inlining to `var()` chaining — a bigger, separate change, not something
 the breakpoint feature did as a side effect.
 
-**Figma collection layout:** the live Figma file groups all of the above into exactly 5 collections —
+**Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category), `Theme` (`semantic.color.*`, light/dark modes), `Semantic`
 (`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*` + `semantic.fontSize.mobile.*` +
 `semantic.lineHeight.*`), `Responsive` (mobile/tablet/desktop modes for `fontSize` and `lineHeight`,
-aliasing `Primitives`/`Semantic` — never a raw literal), and `Component` (every `component.*` leaf, one
-Figma variable each, named `{component}/{path}`, aliasing whichever of the other 4 collections it resolves
-to in code — a Figma component like Button binds to `Component.button/*`, never straight into
-`Theme`/`Semantic`/`Primitives`). Not one collection per `tokens.json` category.
+aliasing `Primitives`/`Semantic` — never a raw literal). Not one collection per `tokens.json` category —
+but also, deliberately, **no `Component` collection**: `component.*` tokens live only in code. A Figma
+component like Button binds each property directly to whichever of the 4 collections above its matching
+`component.*` token resolves to in code (walk the alias chain by hand), never through an intermediate
+per-component Figma variable. See `.ai/skills/tokens-to-figma.md` → the note above Phase 9 for why that
+was tried and reverted.
 
-**Typography binding rule (Figma):** `fontSize` bindings — on a `Component` variable or directly on a text
-node — reference `Responsive` when the resolved `primitive.fontSize` is `>= 18px` (`l` and up), and
-`Primitives` directly below that (`xs`/`s`/`m`) — `Responsive` has no entry for those. **Figma Text Styles
-are the one exception: they always bind `fontSize` to `Primitives`, regardless of size** — a `TextStyle`
-can't pin a mode on a multi-mode collection like `Responsive`, so binding one to it makes Figma silently
-use whichever mode is first (`mobile`), showing the wrong value. `lineHeight` follows the same
-Responsive/Primitives split on `Component` variables and live nodes, but **on a Text Style it's never bound
-at all** — Figma interprets a bound `lineHeight` variable as raw pixels, not the unitless ratio
-`semantic.lineHeight.*` stores, so Text Styles set `lineHeight` as a literal percent
-(`ratio * 100`) instead. See `.ai/skills/tokens-to-figma.md` → Phase 6 and Phase 7 for the full detail.
-`fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they always reference `Primitives`
+**Typography binding rule (Figma):** `fontSize` bindings — on a live node or Figma component — reference
+`Responsive` when the resolved `primitive.fontSize` is `>= 18px` (`l` and up), and `Primitives` directly
+below that (`xs`/`s`/`m`) — `Responsive` has no entry for those. **Figma Text Styles are the one exception:
+they always bind `fontSize` to `Primitives`, regardless of size** — a `TextStyle` can't pin a mode on a
+multi-mode collection like `Responsive`, so binding one to it makes Figma silently use whichever mode is
+first (`mobile`), showing the wrong value. `lineHeight` follows the same Responsive/Primitives split on
+live nodes, but **on a Text Style it's never bound at all** — Figma interprets a bound `lineHeight`
+variable as raw pixels, not the unitless ratio `semantic.lineHeight.*` stores, so Text Styles set
+`lineHeight` as a literal percent (`ratio * 100`) instead. See `.ai/skills/tokens-to-figma.md` → Phase 6
+and Phase 7 for the full detail. `fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they
+always reference `Primitives`
 directly.
 
 See `.ai/skills/tokens-to-figma.md` → "Collection layout" and "Phase 10" for the full mapping, naming

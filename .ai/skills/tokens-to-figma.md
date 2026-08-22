@@ -25,10 +25,13 @@ which depends on this skill having run first) or icon import (see `icons-to-figm
 
 ---
 
-## Collection layout (5 collections total)
+## Collection layout (4 collections total)
 
-Everything lives in exactly 5 variable collections, one per role — **not** one per `tokens.json` category.
-Multiple token categories that share a role live in the SAME collection:
+Everything lives in exactly 4 variable collections, one per role — **not** one per `tokens.json` category,
+and **there is no `Component` collection** — `component.*` tokens live only in code
+(`packages/tokens/src/tokens.json`), never mirrored into Figma. A Figma component (Button, Badge, ...)
+binds directly to whichever of these 4 collections its underlying `component.*` token aliases in code —
+see "Naming rules" below and `components-to-figma.md` for how to resolve which one that is.
 
 | Collection | Holds | Modes |
 |------------|-------|-------|
@@ -36,24 +39,21 @@ Multiple token categories that share a role live in the SAME collection:
 | `Theme` | `semantic.color.*` (`fill`/`text`/`icon`/`border`) | `light`, `dark` |
 | `Semantic` | `semantic.radius.*`, `semantic.size.control.*`, `semantic.spacing.*`, `semantic.fontSize.mobile.*` (`primitive.fontSize >= 18px` only), `semantic.lineHeight.*` (full `xs`-`6xl` range — Text Styles need every size, see Phase 6) | `default` |
 | `Responsive` | Per-breakpoint typography for `primitive.fontSize >= 18px` only (`fontSize` and `lineHeight`) — smaller text doesn't get a mobile override | `mobile`, `tablet`, `desktop` |
-| `Component` | Every `component.*` token, one variable per leaf, aliasing `Theme`/`Semantic`/`Primitives`/`Responsive` (never a literal unless the source token itself has no alias — see Phase 10) | `default` |
 
 **Why this shape:** primitives are raw, component-agnostic scales — one bucket regardless of what kind of
 value. `Theme` is the one collection designers actually switch modes on (light/dark), so it stays alone.
 `Semantic` is everything else with role-based meaning but no light/dark split. `Responsive` is the only
-collection where the *mode* itself represents something other than a color theme. `Component` mirrors
-`tokens.json`'s `component.*` layer 1:1 — one variable per leaf token, named `{component}/{path}` — so a
-Figma component (Button, Badge, ...) binds to `Component.button/*` instead of reaching past it into
-`Theme`/`Semantic`/`Primitives` directly, matching the code's own layering.
+collection where the *mode* itself represents something other than a color theme.
 
-**Typography rule:** any `fontSize` or `lineHeight` binding — in `Component` or on a Figma node directly —
-must reference `Responsive` (never `Primitives` or `Semantic` directly), since `Responsive` is the
-breakpoint-aware source of truth for both. `fontFamily` and `fontWeight` don't vary by breakpoint, so they
-still reference `Primitives` directly.
+**Typography rule:** a `fontSize`/`lineHeight` binding on a live Figma node must reference `Responsive`
+when the resolved `primitive.fontSize` is `>= 18px`, and `Primitives` directly below that — see Phase 7.
+Figma Text Styles are the one exception, always binding to `Primitives` regardless of size — see Phase 6.
+`fontFamily` and `fontWeight` don't vary by breakpoint at any size, so they always reference `Primitives`
+directly.
 
-Within `Primitives`, `Semantic`, and `Component`, variable names still carry a category prefix (`color/`,
-`spacing/`, `size/`, `fontSize/`, `radius/`, or the component name) so the picker stays organized despite
-sharing one collection — see "Naming rules" below.
+Within `Primitives` and `Semantic`, variable names still carry a category prefix (`color/`, `spacing/`,
+`size/`, `fontSize/`, `radius/`) so the picker stays organized despite sharing one collection — see
+"Naming rules" below.
 
 ---
 
@@ -122,7 +122,6 @@ to be plain `m` and collide.
 | Semantic mobile fontSize | `semantic.fontSize.mobile.*` | `Semantic` | `fontSize/mobile/*` |
 | Semantic lineHeight | `semantic.lineHeight.*` (paired per fontSize rung) | `Semantic` | `lineHeight/{size}` |
 | Responsive typography | per-breakpoint `fontSize` + `lineHeight` | `Responsive` | `fontSize/*`, `lineHeight/*` — 3 modes: mobile / tablet / desktop |
-| Component tokens | every `component.*` leaf (182 tokens, 11 components) | `Component` | `{component}/{path}` |
 | Text Styles | Semantic text matrix | — (Text Styles, not variables) | Named `{role} / {weight}` |
 | Effect Styles | `primitive.shadow.*` | — (Effect Styles, not variables) | Named `shadow / {scale}` |
 
@@ -674,11 +673,11 @@ handles it).
 `mobile` mode to the former and all 3 modes' `lineHeight/*` to the latter (`fontSize`'s `tablet`/`desktop`
 modes alias `Primitives.fontSize.*` directly).
 
-**`Component` fontSize bindings follow the same 18px threshold:** a component fontSize that resolves to
-`primitive.fontSize >= 18px` (`l` and up) binds to `Responsive`; below that (`xs`/`s`/`m`) binds to
-`Primitives` directly, since `Responsive` has nothing for those rungs. This applies to `Component` variables
-and other live-node bindings — Text Styles are the one exception that always uses `Primitives` regardless
-of size, per Phase 6's mode-ambiguity note.
+**Live node fontSize bindings follow the same 18px threshold:** a Figma component's text layer whose
+`component.*.fontSize` token resolves to `primitive.fontSize >= 18px` (`l` and up) binds directly to
+`Responsive`; below that (`xs`/`s`/`m`) binds to `Primitives` directly, since `Responsive` has nothing for
+those rungs. Text Styles are the one exception that always uses `Primitives` regardless of size, per
+Phase 6's mode-ambiguity note.
 
 ```js
 const semColl = getOrCreateCollection('Semantic');
@@ -781,71 +780,17 @@ return { effectStyles: figma.getLocalEffectStyles().length };
 
 ---
 
-### Phase 10 — Component collection (→ `Component`)
+### No Phase 10 — `component.*` tokens do NOT get a Figma collection (deliberate)
 
-Source: every leaf under `component.*` in `tokens.json` (182 tokens across 11 components as of this
-writing). One Figma variable per leaf, named `{component}/{path}` (dots and hyphens in the leaf's own key
-both become `/`, e.g. `button.fill.primary-default` → `button/fill/primary/default`,
-`badge.height-xs` → `badge/height/xs`).
-
-**Every leaf is an ALIAS to its resolved source, never a literal copy — with 3 exceptions:**
-1. The token's own `$value` in `tokens.json` is already a raw literal (not an alias) — e.g.
-   `chip.border-width: "1px"`, `switch.width.s: "28px"`. Create these as literals (`FLOAT` with the
-   number, `px` stripped).
-2. The token type is `shadow` or `duration` — Figma has no matching Variable `resolvedType` for either
-   (only `COLOR`/`FLOAT`/`STRING`/`BOOLEAN` exist), so these can't be true aliases yet. Create as `STRING`
-   holding the resolved CSS value (e.g. `"120ms"`, `"0 0 0 3px rgba(37,99,235,0.25)"`). Effect Styles
-   (Phase 8) remain the real, usable representation for shadow — this STRING is just so the token isn't
-   silently absent from `Component`.
-3. A raw `color` literal with alpha (e.g. `dialog.overlay: "rgba(15,23,42,0.6)"`) — parse into
-   `{r,g,b,a}` (Figma COLOR variables DO support alpha, unlike paint fills).
-
-**Resolving the alias target** — walk the token's `$value` reference one hop and map by layer:
-- `semantic.color.{surface}.{role-segments}` → `Theme`, name = `{surface}/{role-segments-with-/}`
-- `semantic.radius.{x}` → `Semantic`, name = `radius/{x}`
-- `semantic.size.control.{x}` → `Semantic`, name = `size/{x}`
-- `semantic.spacing.{x}` → `Semantic`, name = `spacing/{x}`
-- `primitive.spacing.{x}` → `Primitives`, name = `spacing/{x}`
-- `primitive.size.{x}` → `Primitives`, name = `size/{x}`
-- `primitive.fontWeight.{x}` / `primitive.fontFamily.{x}` → `Primitives`, name = `fontWeight/{x}` /
-  `fontFamily/{x}`
-- `primitive.fontSize.{x}` → **`Responsive`**, name = `fontSize/{x}` — NOT `Primitives`, per the
-  typography rule above, even though the code-level alias chain technically points at
-  `primitive.fontSize.*`. Same for any future `lineHeight`-typed component token → `Responsive`.
-
-```js
-// Generic per-item creator — call once per {name, figType, coll, target} or {name, figType, value} entry.
-// figType: 'ALIAS' | 'COLOR_LITERAL' | 'FLOAT' | 'STRING'
-function createComponentVar(compColl, modeId, collsByName, item) {
-  if (item.figType === 'ALIAS') {
-    const target = collsByName[item.coll][item.target];
-    if (!target) throw new Error(`Missing alias target: ${item.coll}/${item.target} for ${item.name}`);
-    const existing = figma.variables.getLocalVariables().find(v => v.name === item.name && v.variableCollectionId === compColl.id);
-    const v = existing || figma.variables.createVariable(item.name, compColl, target.resolvedType);
-    v.setValueForMode(modeId, figma.variables.createVariableAlias(target));
-    return v;
-  }
-  if (item.figType === 'COLOR_LITERAL') {
-    const m = item.value.match(/rgba?\((\d+),(\d+),(\d+)(?:,([\d.]+))?\)/);
-    const existing = figma.variables.getLocalVariables().find(v => v.name === item.name && v.variableCollectionId === compColl.id);
-    const v = existing || figma.variables.createVariable(item.name, compColl, 'COLOR');
-    v.setValueForMode(modeId, { r: +m[1]/255, g: +m[2]/255, b: +m[3]/255, a: m[4] ? +m[4] : 1 });
-    return v;
-  }
-  const existing = figma.variables.getLocalVariables().find(v => v.name === item.name && v.variableCollectionId === compColl.id);
-  const v = existing || figma.variables.createVariable(item.name, compColl, item.figType);
-  v.setValueForMode(modeId, item.value);
-  return v;
-}
-```
-
-Generate the `{name, figType, coll, target}` list by walking `tokens.json`'s `component` tree in a script
-(not by hand — 182 entries) and batch-create per component (or a few components per call) rather than all
-182 in one call. After creating a component's Figma nodes (`components-to-figma.md`), rebind them to
-`Component.{name}/*` instead of reaching into `Theme`/`Semantic`/`Primitives` directly — see that skill's
-"Bind to variables" rule, which now means bind to `Component` first, and only fall through to a lower layer
-when no `Component` variable exists for that value (e.g. `Button`'s icon↔label gap, which isn't a token at
-all yet in either `tokens.json` or `Component`).
+A version of this file previously had a `Component` collection mirroring `tokens.json`'s `component.*`
+layer 1:1 (one Figma variable per leaf, e.g. `button/fill/primary/default`). **That was removed —
+`component.*` tokens live only in code, never in Figma.** When building a component in Figma
+(`components-to-figma.md`), bind each node directly to whichever of `Theme`/`Semantic`/`Primitives`/
+`Responsive` the matching `component.*` token aliases in `tokens.json` — resolve the alias chain yourself
+(same lookup Phase 2's "Entry C" and the naming rules above already teach) rather than creating an
+intermediate Figma variable for it. If you're tempted to recreate a `Component` collection because
+resolving the chain by hand feels repetitive: don't — that repetition was the explicit reason it was
+removed, not an oversight to fix.
 
 ---
 
@@ -918,10 +863,10 @@ return { createdOrUpdated: name };
 
 ## Output
 
-5 Figma variable collections (`Primitives`, `Theme`, `Semantic`, `Responsive`, `Component`), plus Text
-Styles and Effect Styles, all named to match `packages/tokens/src/tokens.json` with no system prefix —
-`components-to-figma` binds new component nodes to `Component` first, falling through to a lower layer
-only when no `Component` variable exists for that value yet.
+4 Figma variable collections (`Primitives`, `Theme`, `Semantic`, `Responsive`), plus Text Styles and
+Effect Styles, all named to match `packages/tokens/src/tokens.json` with no system prefix —
+`components-to-figma` binds new component nodes to whichever of these 4 the matching `component.*` token
+resolves to (no `Component` collection — see the note above Phase 9).
 
 ## Regression checklist
 
@@ -942,16 +887,12 @@ Run Phase 9 and confirm the counts match:
       `lineHeight/l`...`lineHeight/6xl` — NOT `xs`/`s`/`m`) — `tablet` and `desktop` mode values are
       identical to each other for every var, only `mobile` differs (and only for `fontSize` — `lineHeight`
       is the same in all 3 modes since the ratio doesn't change, only which fontSize it's paired with)
-- [ ] `Component`: 182 vars, modes=[default] — one per `component.*` leaf in `tokens.json`, named
-      `{component}/{path}`; every value is an ALIAS except the 3 documented exceptions in Phase 10
-      (raw literal source, shadow/duration as STRING, alpha color parsed to `{r,g,b,a}`)
-- [ ] No `Component` variable holds a bare literal number/color that duplicates a value already available
-      as an alias target — that's the exact anti-pattern this collection exists to close
 - [ ] No collection or style name has a system prefix (`Helix / ...`)
 - [ ] `Primitives` spacing/size vars are all whole-number percentages — no `.` in any name (currently true
       by construction; re-check if a fractional rung is ever added back)
-- [ ] Exactly 5 variable collections total (`Primitives`, `Theme`, `Semantic`, `Responsive`, `Component`) —
-      never a 6th ad-hoc collection for a single category
+- [ ] Exactly 4 variable collections total (`Primitives`, `Theme`, `Semantic`, `Responsive`) — never a 5th
+      ad-hoc collection, and specifically never a `Component` collection (removed by deliberate decision —
+      see the note above Phase 9)
 
 ---
 
