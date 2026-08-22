@@ -14,9 +14,16 @@ Each token item must follow this shape:
   variant?: string;
   size?: string;
   state?: 'hover' | 'press' | 'disabled' | 'focus';
+  axis?: 'horizontal' | 'vertical';
   meta?: string;
 }
 ```
+
+`axis` only matters for `kind: 'space'` rows in the `spacing` category (see the live-highlight table
+below) — it records which direction the gap actually runs in the component's real layout (a
+`flex-direction: column` gap is `'vertical'`, a row gap is `'horizontal'`), so the dimension line draws
+the correct way instead of assuming horizontal. `sizing` rows never need it — sizing is always the
+component's own vertical extent, hard-coded, not configurable per row.
 
 Tabs appear above the table, always in this order, and only when the current story has
 at least one token of that kind: **Color, Typography, Spacing, Radius, Sizing, Shadows**.
@@ -27,6 +34,9 @@ otherwise (e.g. `field.height`, `control.size`).
 Table columns are **Element, Token** always, plus **Preview** — but the Preview column
 only exists on the **Color** tab (a swatch). No other tab gets a Preview column at all;
 `meta` (e.g. `Body small`) renders as a small caption line under the Token cell instead.
+When `state` is set, the Element cell also appends a small uppercase badge (`HOVER`/`PRESS`/
+`DISABLED`) after the label — several rows legitimately share one label (a fill's default/
+hover/press are all "fill.primary"), and without the badge they read as duplicate rows.
 
 Rules:
 
@@ -66,7 +76,13 @@ Rules:
   `gap` between two visually distinct children in either axis: icon↔text, label↔field,
   control↔content, element↔element, whatever the component actually lays out. A `0`/literal
   side (no token backing it) still gets a row with `value: '0'` — the point is completeness
-  of "what spacing exists here", not just "which spacings have a token."
+  of "what spacing exists here", not just "which spacings have a token." **Every `gap` row
+  needs its `axis` set too** — check the actual `flex-direction` of the parent that owns the
+  gap (`padding-top`/`padding-bottom` are always `'vertical'`, `padding-start`/`padding-end`
+  are always `'horizontal'`; a `gap` row's axis follows whatever direction that specific
+  flex container runs in, which is *not* always the same for every gap in one component —
+  Input's `input-root` is `column` (gap.label.field → vertical) while its icon slot sits
+  inline with the field (horizontal), so don't assume one axis for the whole component).
 - **`part` must match the component's own `data-helix-part` value exactly** — the live
   highlight (below) does a literal `[data-helix-part="<part>"]` lookup, so a `part` that
   doesn't exist in the DOM (e.g. a leftover bare `'input'` when the real attribute is
@@ -91,10 +107,10 @@ change; `preview.js` finds the target element(s) via `[data-helix-part="<part>"]
 |---|---|---|
 | `color` | The token's own CSS custom property is overridden inline to lilac (`el.style.setProperty(item.token, LILAC)`) | Shows exactly which pixels that specific token drives — not just "this element has some color token" |
 | `typography` | `refineTypographyTarget` narrows to the `-label`/`-description`/`-error`/`-placeholder`/`-value`/`-counter` descendant matching the row's `label`/`meta` text, then overrides its `color` (not the font itself) to lilac | The row's `part` is usually the component root, not the specific text node — narrowing avoids recoloring the whole component (icons included, via `currentColor`) |
-| `radius` | A `3px solid lilac` outline, `outline-offset: -3px` (`.helix-token-highlight-radius`) | An inset outline traces the rounded corners themselves, unlike a generic offset outline |
+| `radius` | A `3px solid lilac` outline, **flush** to the edge — `outline-offset: 0` (`.helix-token-highlight-radius`) | Traces the rendered corner curve itself. An inset offset (an earlier version used `-3px`) reads as "there is padding/space here", which is a different token's job — radius is only ever about the corners |
 | `shadows` | `box-shadow` is overridden inline to a lilac elevation shadow | Shows the shadow's shape/spread in the highlight color, not just an unrelated outline |
-| `spacing` | A "dimension line" overlay whose length equals the token's own resolved **px value** — never the component's own width/height, and **no outline** on the component itself | It's measuring a gap/inset, not the component — a line as long as the component would misrepresent an 8px gap as "however wide the button is"; an outline here would read as a `border` color highlight, which is a different token's job |
-| `sizing` | Same dimension line, but it spans the component's own **rendered height** (`getBoundingClientRect().height`) — also no outline | Sizing tokens (control/field height, a control's own box size) *are* the component's dimension — the line should visibly span it, not an unrelated px count |
+| `spacing` | A "dimension line" overlay, drawn on the row's own `axis` (`'horizontal'`/`'vertical'`, falls back to horizontal if unset), whose length equals the token's own resolved **px value** — never the component's own width/height, and **no outline** on the component itself. The pill label spells out the axis too (`"8px · H"`) | It's measuring a gap/inset, not the component — a line as long as the component would misrepresent an 8px gap as "however wide the button is"; an outline here would read as a `border` color highlight, which is a different token's job; and a spacing gap is genuinely NOT always horizontal (a `flex-direction: column` gap is vertical) |
+| `sizing` | Same dimension line, but **always vertical** — it spans the component's own **rendered height** (`getBoundingClientRect().height`), ignoring any `axis` field — also no outline | Sizing is always the component's own total vertical extent, by definition, never conditional on layout direction — the line should visibly span it, not an unrelated px count |
 
 Dimension lines prefer drawing **outside** the component (right for `sizing`'s vertical
 line, bottom for `spacing`'s horizontal line) and only fall back to hugging the
