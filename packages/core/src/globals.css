@@ -1133,7 +1133,7 @@
   [data-helix-part="radio-item-content"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-primitive-spacing-12-5);
+    gap:            var(--helix-primitive-spacing-25);
   }
   [data-helix-part="radio-item-label"] {
     font-size:   var(--helix-primitive-fontSize-s);

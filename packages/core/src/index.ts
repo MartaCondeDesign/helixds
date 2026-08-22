@@ -17,6 +17,9 @@ export { doc as InputDoc }    from './components/Input/Input.doc';
 export { doc as BadgeDoc }    from './components/Badge/Badge.doc';
 export { doc as TextareaDoc } from './components/Textarea/Textarea.doc';
 export { doc as SelectDoc }   from './components/Select/Select.doc';
+export { doc as CheckboxDoc }   from './components/Checkbox/Checkbox.doc';
+export { doc as RadioGroupDoc } from './components/RadioGroup/RadioGroup.doc';
+export { doc as SwitchDoc }     from './components/Switch/Switch.doc';
 
 // Types
 export type { ButtonProps, ButtonVariant, ButtonSize }               from './components/Button';

@@ -1,29 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Switch } from '@helix-ds/core';
+import { Switch, SwitchDoc } from '@helix-ds/core';
+import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Switch> = {
   title:     'Components/Switch',
   component:  Switch,
   tags:      ['autodocs'],
-  parameters: {
-    helixTokens: [
-      { part: 'switch', label: 'Switch width (s)', token: '--helix-switch-width-s', kind: 'space' },
-      { part: 'switch', label: 'Switch width (m)', token: '--helix-switch-width-m', kind: 'space' },
-      { part: 'switch', label: 'Switch height (s)', token: '--helix-switch-height-s', kind: 'space' },
-      { part: 'switch', label: 'Switch height (m)', token: '--helix-switch-height-m', kind: 'space' },
-      { part: 'switch', label: 'Thumb size (s)', token: '--helix-switch-thumb-size-s', kind: 'space' },
-      { part: 'switch', label: 'Thumb size (m)', token: '--helix-switch-thumb-size-m', kind: 'space' },
-      { part: 'switch', label: 'On fill', token: '--helix-switch-track-fill-on', kind: 'color' },
-      { part: 'switch', label: 'Off fill', token: '--helix-switch-track-fill-off', kind: 'color' },
-      { part: 'switch', label: 'Focus border', token: '--helix-switch-border-focus', kind: 'color' },
-    ],
-    docs: {
-      description: {
-        component: 'Toggle control for binary on/off settings. Uses `<button role="switch">` for maximum accessibility. Includes a hidden native checkbox for form integration.',
-      },
-    },
-  },
+  parameters: createComponentDocsParameters(SwitchDoc),
   args: { label: 'Enable notifications' },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },

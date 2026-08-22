@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { RadioGroup } from '@helix-ds/core';
+import { RadioGroup, RadioGroupDoc } from '@helix-ds/core';
+import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const PLAN_OPTIONS = [
   { value: 'free',       label: 'Free',       description: 'Up to 3 editors, unlimited viewers' },
@@ -20,20 +21,7 @@ const meta: Meta<typeof RadioGroup> = {
   title:     'Components/RadioGroup',
   component:  RadioGroup,
   tags:      ['autodocs'],
-  parameters: {
-    helixTokens: [
-      { part: 'radio', label: 'Radio control', token: '--helix-radio-size', kind: 'space' },
-      { part: 'radio', label: 'Radio checked', token: '--helix-radio-fill-checked', kind: 'color' },
-      { part: 'radio', label: 'Radio border', token: '--helix-radio-border-default', kind: 'color' },
-      { part: 'radio', label: 'Radio focus', token: '--helix-radio-border-focus', kind: 'color' },
-      { part: 'radio', label: 'Radio dot', token: '--helix-radio-dot', kind: 'color' },
-    ],
-    docs: {
-      description: {
-        component: 'Single-selection group rendered as a `<fieldset>`. Supports vertical and horizontal orientations, with optional per-option descriptions.',
-      },
-    },
-  },
+  parameters: createComponentDocsParameters(RadioGroupDoc),
   args: { label: 'Plan', options: PLAN_OPTIONS },
   argTypes: {
     orientation: { control: 'select', options: ['vertical', 'horizontal'] },

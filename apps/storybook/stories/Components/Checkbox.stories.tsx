@@ -1,27 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Checkbox } from '@helix-ds/core';
+import { Checkbox, CheckboxDoc } from '@helix-ds/core';
+import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Checkbox> = {
   title:     'Components/Checkbox',
   component:  Checkbox,
   tags:      ['autodocs'],
-  parameters: {
-    helixTokens: [
-      { part: 'checkbox', label: 'Control size', token: '--helix-checkbox-size', kind: 'space' },
-      { part: 'checkbox', label: 'Control radius', token: '--helix-checkbox-radius', kind: 'radius' },
-      { part: 'checkbox', label: 'Default fill', token: '--helix-checkbox-fill-default', kind: 'color' },
-      { part: 'checkbox', label: 'Checked fill', token: '--helix-checkbox-fill-checked', kind: 'color' },
-      { part: 'checkbox', label: 'Default border', token: '--helix-checkbox-border-default', kind: 'color' },
-      { part: 'checkbox', label: 'Focus border', token: '--helix-checkbox-border-focus', kind: 'color' },
-      { part: 'checkbox', label: 'Checkmark color', token: '--helix-checkbox-icon-color', kind: 'color' },
-    ],
-    docs: {
-      description: {
-        component: 'Boolean selection control. Supports checked, unchecked, and indeterminate states. Uses a visually hidden native input for full a11y.',
-      },
-    },
-  },
+  parameters: createComponentDocsParameters(CheckboxDoc),
   args: { label: 'Accept terms of service' },
 };
 
