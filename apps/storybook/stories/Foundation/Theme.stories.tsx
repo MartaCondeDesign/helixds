@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconFolder } from '@tabler/icons-react';
-import { SectionHead } from './_shared';
+import { SectionHead, StoryHeader } from './_shared';
 // Imported directly from source (not dist/index.ts, which only holds resolved values) so this table
 // reflects $value (the primitive it aliases) and $description automatically on every token change —
 // no hardcoded list to keep in sync by hand. resolveJsonModule is enabled in tsconfig.json.
@@ -23,6 +23,13 @@ const semanticColor = tokensJson.semantic.color as unknown as {
 
 function primitiveRef(value: string): string {
   return value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
+}
+
+// Resolves a "primitive.color.blue.600"-style path against tokensJson to its raw hex $value.
+function resolveHex(ref: string): string {
+  const node = ref.split('.').reduce<unknown>((acc, key) => (acc as Record<string, unknown> | undefined)?.[key], tokensJson);
+  const leaf = node as { $value?: string } | undefined;
+  return leaf?.$value ?? ref;
 }
 
 // ── Light/dark toggle wrapper ────────────────────────────────────────────
@@ -97,36 +104,51 @@ const thStyle: React.CSSProperties = {
   textAlign: 'left', padding: '8px 12px', fontSize: 11, fontWeight: 600,
   letterSpacing: '0.04em', textTransform: 'uppercase',
   color: 'var(--helix-color-text-neutral-lightest)',
+  borderBottom: '1px solid var(--helix-color-border-neutral)',
+  borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
-const tdStyle: React.CSSProperties = { padding: '8px 12px', verticalAlign: 'middle' };
+const tdStyle: React.CSSProperties = {
+  padding: '8px 12px', verticalAlign: 'middle',
+  borderRight: '1px solid var(--helix-color-border-neutral-light)',
+};
 
 function ColorTable({ kind, tokens }: { kind: 'fill' | 'text' | 'icon' | 'border'; tokens: ColorGroup }) {
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 36 }}>
+    <table style={{
+      width: '100%', borderCollapse: 'collapse', marginBottom: 36,
+      border: '1px solid var(--helix-color-border-neutral)', borderRadius: 8, overflow: 'hidden',
+    }}>
       <thead>
-        <tr style={{ borderBottom: '2px solid var(--helix-color-border-neutral)' }}>
+        <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
           <th style={thStyle}>Color</th>
           <th style={thStyle}>Primitive</th>
-          <th style={thStyle}>Description</th>
+          <th style={thStyle}>Hex</th>
+          <th style={{ ...thStyle, borderRight: 'none' }}>Description</th>
         </tr>
       </thead>
       <tbody>
-        {Object.entries(tokens).map(([key, tok]) => (
-          <tr key={key} style={{ borderBottom: '1px solid var(--helix-color-border-neutral-light)' }}>
-            <td style={tdStyle}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <SwatchPreview kind={kind} varName={`--helix-color-${kind}-${key}`} />
-                <code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>{kind}-{key}</code>
-              </div>
-            </td>
-            <td style={tdStyle}>
-              <code style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{primitiveRef(tok.$value)}</code>
-            </td>
-            <td style={tdStyle}>
-              <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{tok.$description ?? '—'}</span>
-            </td>
-          </tr>
-        ))}
+        {Object.entries(tokens).map(([key, tok]) => {
+          const hex = resolveHex(primitiveRef(tok.$value));
+          return (
+            <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+              <td style={tdStyle}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <SwatchPreview kind={kind} varName={`--helix-color-${kind}-${key}`} />
+                  <code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>{kind}-{key}</code>
+                </div>
+              </td>
+              <td style={tdStyle}>
+                <code style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{primitiveRef(tok.$value)}</code>
+              </td>
+              <td style={tdStyle}>
+                <code style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)' }}>{hex}</code>
+              </td>
+              <td style={{ ...tdStyle, borderRight: 'none' }}>
+                <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{tok.$description ?? '—'}</span>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
@@ -134,8 +156,13 @@ function ColorTable({ kind, tokens }: { kind: 'fill' | 'text' | 'icon' | 'border
 
 export const Color: Story = {
   render: () => (
+    <div style={{ maxWidth: 760 }}>
+      <StoryHeader
+        title="Theme — Color"
+        description="Every semantic color token, the primitive it aliases, its resolved hex, and its usage description — all read live from tokens.json. Toggle light/dark below."
+      />
     <ThemeToggle>
-      <div style={{ maxWidth: 760 }}>
+      <div>
         <SectionHead title="Fill" />
         <ColorTable kind="fill" tokens={semanticColor.fill} />
         <SectionHead title="Text" />
@@ -146,6 +173,7 @@ export const Color: Story = {
         <ColorTable kind="border" tokens={semanticColor.border} />
       </div>
     </ThemeToggle>
+    </div>
   ),
   parameters: {
     docs: {

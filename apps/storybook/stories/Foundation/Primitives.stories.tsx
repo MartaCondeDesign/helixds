@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { label12, SectionHead, SpacingBar } from './_shared';
+import { label12, SectionHead, SpacingBar, StoryHeader } from './_shared';
 
 const meta: Meta = {
   title: 'Foundation/Primitives',
@@ -39,6 +39,10 @@ const SCALE_10 = ['50','100','200','300','400','500','600','700','800','900'];
 export const Color: Story = {
   render: () => (
     <div>
+      <StoryHeader
+        title="Primitives — Color"
+        description="Raw color scales — 10 steps per family (50→900). Gray includes step 0 (white) and skips 800 in the display. Always use --helix-color-* (Semantic) in components, never these primitives directly."
+      />
       <PaletteRow name="blue"      prefix="blue"      steps={SCALE_10} />
       <PaletteRow name="gray"      prefix="gray"      steps={['0','50','100','200','300','400','500','600','700','900']} />
       <PaletteRow name="green"     prefix="green"     steps={SCALE_10} />
@@ -47,9 +51,6 @@ export const Color: Story = {
       <PaletteRow name="turquoise" prefix="turquoise" steps={SCALE_10} />
     </div>
   ),
-  parameters: {
-    docs: { description: { story: 'Raw color scales — 10 steps per family (50→900). Gray includes step 0 (white) and skips 800 in the display. Always use `--helix-color-*` (Semantic) in components, never these primitives directly.' } },
-  },
 };
 
 // ── Spacing ──────────────────────────────────────────────────────────────
@@ -63,15 +64,18 @@ export const Spacing: Story = {
       ['400', '64px'], ['500', '80px'], ['600', '96px'], ['800', '128px'],
     ];
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {steps.map(([key, val]) => (
-          <SpacingBar key={key} tokenKey={key} varName={`--helix-primitive-spacing-${key}`} val={val} dim={val} />
-        ))}
+      <div>
+        <StoryHeader
+          title="Primitives — Spacing"
+          description="Percentage scale, 100 = 16px anchor. Never used directly in components — see Foundation/Semantic → Spacing for the t-shirt scale that actually gets consumed."
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {steps.map(([key, val]) => (
+            <SpacingBar key={key} tokenKey={key} varName={`--helix-primitive-spacing-${key}`} val={val} dim={val} />
+          ))}
+        </div>
       </div>
     );
-  },
-  parameters: {
-    docs: { description: { story: 'Percentage scale, `100` = 16px anchor. Never used directly in components — see Foundation/Semantic → Spacing for the t-shirt scale that actually gets consumed.' } },
   },
 };
 
@@ -79,16 +83,19 @@ export const Spacing: Story = {
 
 export const Radius: Story = {
   render: () => (
-    <div style={{
-      padding: 20, borderRadius: 8,
-      background: 'var(--helix-color-fill-surface)',
-      border: '1px solid var(--helix-color-border-neutral-light)',
-      color: 'var(--helix-color-text-neutral-light)',
-      fontSize: 13, maxWidth: 480,
-    }}>
-      Radius has <strong>no primitive layer</strong> — there is nothing to alias underneath. The semantic
-      names (<code>none</code>, <code>xs</code>…<code>full</code>) ARE the scale. See Foundation/Semantic →
-      Radius for the actual token set.
+    <div>
+      <StoryHeader title="Primitives — Radius" description="Radius has no primitive layer to show here — see Foundation/Semantic → Radius for the actual token set." />
+      <div style={{
+        padding: 20, borderRadius: 8,
+        background: 'var(--helix-color-fill-surface)',
+        border: '1px solid var(--helix-color-border-neutral-light)',
+        color: 'var(--helix-color-text-neutral-light)',
+        fontSize: 13, maxWidth: 480,
+      }}>
+        Radius has <strong>no primitive layer</strong> — there is nothing to alias underneath. The semantic
+        names (<code>none</code>, <code>xs</code>…<code>full</code>) ARE the scale. See Foundation/Semantic →
+        Radius for the actual token set.
+      </div>
     </div>
   ),
 };
@@ -111,6 +118,7 @@ export const Typography: Story = {
     ];
     return (
       <div>
+        <StoryHeader title="Primitives — Typography" description="Font size, weight, line-height ratios, and font family — the raw building blocks. Never used directly in components; see Foundation/Semantic → Line height and Foundation/Text Styles for what's actually consumed." />
         <SectionHead title="Font size" />
         {sizes.map(([key, val, name], i) => (
           <div key={key} style={{
@@ -212,28 +220,26 @@ export const Shadows: Story = {
   render: () => {
     const steps = ['none', 'xs', 's', 'm', 'l', 'xl'];
     return (
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40 }}>
-        {steps.map(s => (
-          <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-            <div style={{
-              width: 100, height: 72,
-              background: 'var(--helix-color-fill-page)',
-              borderRadius: 8,
-              boxShadow: `var(--helix-primitive-shadow-${s})`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
+      <div>
+        <StoryHeader title="Primitives — Shadows" description="Raw elevation shadows. Never used directly in components — see Foundation/Semantic → Shadows for the scale that actually gets consumed." />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, background: 'var(--helix-color-fill-surface)', padding: 48, borderRadius: 12 }}>
+          {steps.map(s => (
+            <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+              <div style={{
+                width: 100, height: 72,
+                background: 'var(--helix-color-fill-page)',
+                borderRadius: 8,
+                boxShadow: `var(--helix-primitive-shadow-${s})`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     );
   },
-  decorators: [Story => (
-    <div style={{ background: 'var(--helix-color-fill-surface)', padding: 48, borderRadius: 12 }}>
-      <Story />
-    </div>
-  )],
 };
 
 // ── Motion ───────────────────────────────────────────────────────────────
@@ -261,9 +267,10 @@ export const MotionDuration: Story = {
     }
     return (
       <div>
-        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-neutral-light)' }}>
-          Click each card to toggle it on/off. Each uses a different duration token.
-        </p>
+        <StoryHeader
+          title="Primitives — Motion (duration)"
+          description="Click cards to toggle. Each card uses its own duration token — notice how fast instant is vs slower. Never used directly in components — see Foundation/Semantic → Motion for the tokens components actually bind to."
+        />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
           {DURATIONS.map(d => {
             const on = active === d.name;
@@ -294,9 +301,6 @@ export const MotionDuration: Story = {
       </div>
     );
   },
-  parameters: {
-    docs: { description: { story: 'Click cards to toggle. Each card uses its own duration token — notice how fast `instant` is vs `slower`. Never used directly in components — see Foundation/Semantic → Motion for the tokens components actually bind to.' } },
-  },
 };
 
 export const MotionEasing: Story = {
@@ -311,9 +315,10 @@ export const MotionEasing: Story = {
     }
     return (
       <div>
-        <p style={{ margin: '0 0 20px', fontSize: 14, color: 'var(--helix-color-text-neutral-light)' }}>
-          Press Play to animate all three at the same time. Same duration (<code>slower</code>), different easing.
-        </p>
+        <StoryHeader
+          title="Primitives — Motion (easing)"
+          description="Press Play to animate all three at the same time. Same duration (slower), different easing. base = ease-in-out (most common). in = accelerates, feels snappy. out = decelerates, feels natural for elements entering the view."
+        />
         <button
           onClick={play}
           style={{
@@ -354,8 +359,5 @@ export const MotionEasing: Story = {
         </div>
       </div>
     );
-  },
-  parameters: {
-    docs: { description: { story: 'All three curves at the same duration. `base` = ease-in-out (most common). `in` = accelerates, feels snappy. `out` = decelerates, feels natural for elements entering the view.' } },
   },
 };

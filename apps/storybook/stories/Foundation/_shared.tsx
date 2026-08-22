@@ -1,6 +1,11 @@
 // Shared render helpers for the Foundation/* story files. Not a *.stories.tsx file itself —
 // Storybook's glob (../stories/**/*.stories.@(ts|tsx)) won't pick this up as a story.
 
+// StoryHeader is app-wide (every story, not just Foundation), so it lives in stories/_shared/ — see
+// apps/storybook/CLAUDE.md. Re-exported here so the existing Foundation/*.stories.tsx imports (all of
+// which import from './_shared') don't need touching.
+export { StoryHeader } from '../_shared/StoryHeader';
+
 export const label12: React.CSSProperties = {
   fontSize: 11, fontFamily: 'monospace',
   color: 'var(--helix-color-text-neutral-light)',

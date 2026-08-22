@@ -50,6 +50,7 @@ pnpm lint:ai                validate .ai/ directory structure
 - `packages/tokens/CLAUDE.md`  — token pipeline, DTCG format, build steps
 - `packages/core/CLAUDE.md`    — component anatomy, variant system, data-attributes
 - `packages/icons/CLAUDE.md`   — icon wrapper patterns, size/color tokens
+- `apps/storybook/CLAUDE.md`   — every story's title+description header rule, token-driven story pattern, Foundation structure
 
 ## Context files (read when task requires it)
 

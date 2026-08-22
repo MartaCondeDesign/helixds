@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SectionHead, type TokenLeaf } from './_shared';
+import { SectionHead, StoryHeader, type TokenLeaf } from './_shared';
 // Imported directly from source so the description line below reflects $description automatically.
 // Note: primitive.fontSize.* has no $description by design (primitives never do — see
 // packages/tokens/CLAUDE.md "Adding a token"); semantic.lineHeight.* is the one that carries usage intent.
@@ -72,6 +72,10 @@ export const All: Story = {
     const groups = ['Display', 'Heading', 'Body', 'Other'];
     return (
       <div style={{ maxWidth: 700 }}>
+        <StoryHeader
+          title="Text Styles"
+          description="Named {role} / {size} / {weight} combinations mirroring the Figma Text Styles. fontFamily/fontWeight always bind to Primitives; fontSize/lineHeight bind to Responsive when ≥18px, Primitives below."
+        />
         {groups.map(g => (
           <div key={g} style={{ marginBottom: 32 }}>
             <SectionHead title={g} />
