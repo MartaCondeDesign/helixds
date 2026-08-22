@@ -8,7 +8,7 @@ const meta: Meta<typeof Textarea> = {
   component:  Textarea,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TextareaDoc),
-  args: { label: 'Description', placeholder: 'Write something…' },
+  args: { label: 'Description', placeholder: 'Write something…', size: 'm' },
   argTypes: {
      size:      { control: 'select', options: ['s', 'm', 'l'] },
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },

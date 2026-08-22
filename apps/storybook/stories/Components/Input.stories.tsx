@@ -18,6 +18,7 @@ const meta: Meta<typeof Input> = {
   parameters: createComponentDocsParameters(InputDoc),
   args: {
     label:    'Label',
+    size:     'm',
     onChange: fn(),
   },
   argTypes: {

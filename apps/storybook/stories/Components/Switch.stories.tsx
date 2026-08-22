@@ -8,7 +8,7 @@ const meta: Meta<typeof Switch> = {
   component:  Switch,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SwitchDoc),
-  args: { label: 'Enable notifications' },
+  args: { label: 'Enable notifications', size: 'm' },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },
   },

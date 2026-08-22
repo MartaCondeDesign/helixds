@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -45,19 +45,19 @@ export const doc: ComponentDoc = {
     { part: 'badge', label: 'border.warning', token: '--helix-badge-border-warning', kind: 'color', variant: 'warning' },
     { part: 'badge', label: 'border.danger', token: '--helix-badge-border-danger', kind: 'color', variant: 'danger' },
     { part: 'badge', label: 'badge.root', token: '--helix-badge-radius', kind: 'radius' },
-    { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-25', kind: 'space' },
+    { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'horizontal' },
     { part: 'badge', label: 'label', token: '--helix-badge-fontSize', kind: 'typography', meta: 'Caption / label' },
     { part: 'badge', label: 'weight', token: '--helix-badge-fontWeight', kind: 'typography', meta: 'Semibold' },
     { part: 'badge', label: 'badge.height', token: '--helix-badge-height-xs', kind: 'space', size: 'xs' },
     { part: 'badge', label: 'badge.height', token: '--helix-badge-height-s', kind: 'space', size: 's' },
-    { part: 'badge', label: 'padding.top', value: '2px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.bottom', value: '2px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.start', value: '6px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.end', value: '6px', kind: 'space', size: 'xs', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.top', value: '3px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.bottom', value: '3px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.start', value: '10px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
-    { part: 'badge', label: 'padding.end', value: '10px', kind: 'space', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.top', value: '2px', kind: 'space', axis: 'vertical', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.bottom', value: '2px', kind: 'space', axis: 'vertical', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.start', value: '6px', kind: 'space', axis: 'horizontal', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.end', value: '6px', kind: 'space', axis: 'horizontal', size: 'xs', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.top', value: '3px', kind: 'space', axis: 'vertical', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.bottom', value: '3px', kind: 'space', axis: 'vertical', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.start', value: '10px', kind: 'space', axis: 'horizontal', size: 's', meta: 'No token — literal per-size density value' },
+    { part: 'badge', label: 'padding.end', value: '10px', kind: 'space', axis: 'horizontal', size: 's', meta: 'No token — literal per-size density value' },
     { part: 'badge', label: 'display', value: 'inline-flex' },
     { part: 'badge', label: 'align-items', value: 'center' },
     { part: 'badge', label: 'box-sizing', value: 'border-box' },

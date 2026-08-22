@@ -35,7 +35,7 @@ const meta: Meta<typeof Select> = {
   component:  Select,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SelectDoc),
-  args: { label: 'Role', options: ROLES, placeholder: 'Choose a role…' },
+  args: { label: 'Role', options: ROLES, placeholder: 'Choose a role…', size: 'm' },
   argTypes: {
      size: { control: 'select', options: ['s', 'm', 'l'] },
   },

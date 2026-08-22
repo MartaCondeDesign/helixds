@@ -14,6 +14,7 @@ const meta: Meta<typeof Badge> = {
   component:  Badge,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(BadgeDoc),
+  args: { variant: 'neutral', size: 's' },
   argTypes: {
     variant: {
       control: 'select',

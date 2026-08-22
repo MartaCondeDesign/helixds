@@ -19,6 +19,8 @@ const meta: Meta<typeof Button> = {
   parameters: createComponentDocsParameters(ButtonDoc),
   args: {
     children: 'Button',
+    variant:  'primary',
+    size:     'm',
     onPress:  fn(),
   },
   argTypes: {

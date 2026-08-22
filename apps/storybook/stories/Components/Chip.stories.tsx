@@ -16,6 +16,8 @@ const meta: Meta<typeof Chip> = {
   parameters: createComponentDocsParameters(ChipDoc),
   args: {
     label: 'Chip',
+    variant: 'neutral',
+    size: 'm',
     onPress: () => {},
   },
   argTypes: {

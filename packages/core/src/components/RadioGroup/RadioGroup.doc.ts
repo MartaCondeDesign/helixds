@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -46,10 +46,10 @@ export const doc: ComponentDoc = {
     { part: 'radio-item-label', label: 'item.label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
     { part: 'radio-item-description', label: 'item.description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'radio-control', label: 'control.size', token: '--helix-radio-size', kind: 'space' },
-    { part: 'radio-options', label: 'gap.options', token: '--helix-primitive-spacing-75', kind: 'space' },
-    { part: 'radio-item', label: 'gap.control.content', token: '--helix-primitive-spacing-50', kind: 'space' },
-    { part: 'radio-item-content', label: 'gap.label.description', token: '--helix-primitive-spacing-25', kind: 'space' },
-    { part: 'radio-legend', label: 'gap.legend.options', token: '--helix-primitive-spacing-25', kind: 'space' },
+    { part: 'radio-options', label: 'gap.options', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'vertical' },
+    { part: 'radio-item', label: 'gap.control.content', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },
+    { part: 'radio-item-content', label: 'gap.label.description', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
+    { part: 'radio-legend', label: 'gap.legend.options', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
     { part: 'radio-control', label: 'radio.control', value: '9999px', kind: 'radius', meta: 'Always a full circle — no semantic.radius token, radios are round by definition' },
     { part: 'radio-group', label: 'display', value: 'block' },
     { part: 'radio-options', label: 'display', value: 'flex' },

@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y:     string[];
   variants: { name: string; description: string }[];
   sizes:    string[];
-  tokens:   { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens:   { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -46,19 +46,19 @@ export const doc: ComponentDoc = {
     { part: 'button', label: 'fill.danger', token: '--helix-button-fill-danger-press', kind: 'color', variant: 'danger', state: 'press' },
     { part: 'button', label: 'border.focus', token: '--helix-button-border-focus', kind: 'color' },
     { part: 'button', label: 'button.root', token: '--helix-button-radius', kind: 'radius' },
-    { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-50', kind: 'space' },
-    { part: 'button', label: 'padding.top', value: '0', kind: 'space' },
-    { part: 'button', label: 'padding.bottom', value: '0', kind: 'space' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xs', kind: 'space', size: 'xs' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xs', kind: 'space', size: 'xs' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-s', kind: 'space', size: 's' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-s', kind: 'space', size: 's' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-m', kind: 'space', size: 'm' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-m', kind: 'space', size: 'm' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-l', kind: 'space', size: 'l' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-l', kind: 'space', size: 'l' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xl', kind: 'space', size: 'xl' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xl', kind: 'space', size: 'xl' },
+    { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },
+    { part: 'button', label: 'padding.top', value: '0', kind: 'space', axis: 'vertical' },
+    { part: 'button', label: 'padding.bottom', value: '0', kind: 'space', axis: 'vertical' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
+    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xl', kind: 'space', axis: 'horizontal', size: 'xl' },
+    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xl', kind: 'space', axis: 'horizontal', size: 'xl' },
     { part: 'button', label: 'label', token: '--helix-button-fontSize-xs', kind: 'typography', meta: 'Caption / label', size: 'xs' },
     { part: 'button', label: 'label', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Body small', size: 's' },
     { part: 'button', label: 'label', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Body small', size: 'm' },

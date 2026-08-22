@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -32,7 +32,7 @@ export const doc: ComponentDoc = {
     { part: 'select-trigger', label: 'Disabled text', token: '--helix-select-text-disabled', kind: 'color', state: 'disabled' },
     { part: 'select-trigger', label: 'Value text', token: '--helix-select-text-value', kind: 'color' },
     { part: 'select-trigger', label: 'Placeholder text', token: '--helix-select-text-placeholder', kind: 'color' },
-    { part: 'select-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space' },
+    { part: 'select-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
     { part: 'select-label', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
     { part: 'select-label', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
     { part: 'select-trigger', label: 'value', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall', size: 's' },
@@ -40,14 +40,14 @@ export const doc: ComponentDoc = {
     { part: 'select-trigger', label: 'value', token: '--helix-primitive-fontSize-m', kind: 'typography', meta: 'Body base', size: 'l' },
     { part: 'select-description', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'select-error', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
-    { part: 'select-trigger', label: 'padding.top', value: '0', kind: 'space' },
-    { part: 'select-trigger', label: 'padding.bottom', value: '0', kind: 'space' },
-    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-50', kind: 'space', size: 's', meta: 'Smaller than end — no chevron on the left' },
-    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-200', kind: 'space', size: 's', meta: 'Larger than start — reserves room for the chevron' },
-    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', size: 'm', meta: 'Smaller than end — no chevron on the left' },
-    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-250', kind: 'space', size: 'm', meta: 'Larger than start — reserves room for the chevron' },
-    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-100', kind: 'space', size: 'l', meta: 'Smaller than end — no chevron on the left' },
-    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-250', kind: 'space', size: 'l', meta: 'Larger than start — reserves room for the chevron' },
+    { part: 'select-trigger', label: 'padding.top', value: '0', kind: 'space', axis: 'vertical' },
+    { part: 'select-trigger', label: 'padding.bottom', value: '0', kind: 'space', axis: 'vertical' },
+    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal', size: 's', meta: 'Smaller than end — no chevron on the left' },
+    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-200', kind: 'space', axis: 'horizontal', size: 's', meta: 'Larger than start — reserves room for the chevron' },
+    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal', size: 'm', meta: 'Smaller than end — no chevron on the left' },
+    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-250', kind: 'space', axis: 'horizontal', size: 'm', meta: 'Larger than start — reserves room for the chevron' },
+    { part: 'select-trigger', label: 'padding.start', token: '--helix-primitive-spacing-100', kind: 'space', axis: 'horizontal', size: 'l', meta: 'Smaller than end — no chevron on the left' },
+    { part: 'select-trigger', label: 'padding.end', token: '--helix-primitive-spacing-250', kind: 'space', axis: 'horizontal', size: 'l', meta: 'Larger than start — reserves room for the chevron' },
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-s', kind: 'space', size: 's' },
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-m', kind: 'space', size: 'm' },
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-l', kind: 'space', size: 'l' },

@@ -5,7 +5,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'shadow' | 'radius' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'shadow' | 'radius' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }

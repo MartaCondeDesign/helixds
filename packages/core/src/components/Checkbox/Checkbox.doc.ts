@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -37,8 +37,8 @@ export const doc: ComponentDoc = {
     { part: 'checkbox-description', label: 'Description text', token: '--helix-checkbox-text-description', kind: 'color' },
     { part: 'checkbox-error', label: 'Error text', token: '--helix-checkbox-text-error', kind: 'color' },
     { part: 'checkbox-control', label: 'control.size', token: '--helix-checkbox-size', kind: 'space' },
-    { part: 'checkbox-label', label: 'gap.control.text', token: '--helix-primitive-spacing-50', kind: 'space' },
-    { part: 'checkbox-description', label: 'gap.control.description', token: '--helix-primitive-spacing-50', kind: 'space' },
+    { part: 'checkbox-label', label: 'gap.control.text', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },
+    { part: 'checkbox-description', label: 'gap.control.description', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },
     { part: 'checkbox-control', label: 'checkbox.control', token: '--helix-checkbox-radius', kind: 'radius' },
     { part: 'checkbox-root', label: 'display', value: 'block' },
     { part: 'checkbox-label', label: 'display', value: 'flex' },

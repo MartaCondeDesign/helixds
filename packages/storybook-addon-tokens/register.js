@@ -110,7 +110,7 @@ function TokensPanel({ active }) {
     channel.emit(
       HELIX_HIGHLIGHT_EVENT,
       item
-        ? { part: item.part, variant: item.variant, category: getCategory(item), token: item.token, value: item.value, label: item.label, meta: item.meta }
+        ? { part: item.part, variant: item.variant, category: getCategory(item), token: item.token, value: item.value, label: item.label, meta: item.meta, axis: item.axis }
         : null,
     );
   }
@@ -213,7 +213,29 @@ function TokensPanel({ active }) {
                     onMouseLeave: () => highlightComponent(null),
                     style: { background: isHovered ? PANEL_ACCENT_SOFT : 'transparent' },
                   },
-                  React.createElement('td', { style: TD_STYLE }, item.label || item.part),
+                  React.createElement(
+                    'td',
+                    { style: TD_STYLE },
+                    item.label || item.part,
+                    // Several rows can legitimately share one Element label (default/hover/press
+                    // of the same fill) — without this they read as duplicate rows. The state
+                    // badge is what actually tells them apart at a glance.
+                    item.state
+                      ? React.createElement('span', {
+                          style: {
+                            marginLeft: 6,
+                            fontSize: 10,
+                            fontWeight: 600,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.03em',
+                            color: 'var(--helix-color-text-neutral-lightest)',
+                            border: '1px solid var(--helix-color-border-neutral)',
+                            borderRadius: 4,
+                            padding: '1px 5px',
+                          },
+                        }, item.state)
+                      : null,
+                  ),
                   React.createElement(
                     'td',
                     { style: { ...TD_STYLE, borderRight: showPreviewColumn ? TD_STYLE.borderRight : 'none', overflow: 'hidden' } },

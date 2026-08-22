@@ -21,8 +21,11 @@ function ensureStyle() {
       transition: outline-color 120ms ease;
     }
     .${RADIUS_CLASS} {
+      /* Flush to the edge (no offset) so this traces the rendered corner curve itself —
+         an inset offset reads as "there is padding/space here", which is a different
+         token's job. Radius is only ever about the corners, never about spacing. */
       outline: 3px solid ${HELIX_HIGHLIGHT_COLOR} !important;
-      outline-offset: -3px !important;
+      outline-offset: 0 !important;
       transition: outline-color 120ms ease;
     }
   `;
@@ -98,6 +101,11 @@ function drawDimensionLine(el, px, axis) {
     padding:2px 6px; font:600 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     color:#fff; background:${HELIX_HIGHLIGHT_COLOR}; border-radius:4px; white-space:nowrap;
   `;
+  // Spells out the axis on the pill itself ("8px · H" / "32px · V") — the line's own
+  // orientation already shows it visually, but the letter makes it unambiguous at a
+  // glance which axis a given spacing/sizing value was actually measured on.
+  const axisLetter = axis === 'vertical' ? 'V' : 'H';
+  const text = `${px} · ${axisLetter}`;
 
   if (axis === 'vertical') {
     // Prefer the outside-right edge; fall back to outside-left, then to hugging the
@@ -114,7 +122,7 @@ function drawDimensionLine(el, px, axis) {
       <div style="${line(`left:${left}px; top:${top}px; width:2px; height:${height}px;`)}"></div>
       <div style="${line(`left:${left - 4}px; top:${top}px; width:10px; height:2px;`)}"></div>
       <div style="${line(`left:${left - 4}px; top:${top + height - 2}px; width:10px; height:2px;`)}"></div>
-      <div style="${label(left + (inside ? -18 : 18), top + height / 2 - 9)}">${px}</div>
+      <div style="${label(left + (inside ? -18 : 18), top + height / 2 - 9)}">${text}</div>
     `;
   } else {
     // Prefer outside-bottom; fall back to outside-top, then hugging the element's own
@@ -132,7 +140,7 @@ function drawDimensionLine(el, px, axis) {
       <div style="${line(`left:${left}px; top:${top}px; width:${width}px; height:2px;`)}"></div>
       <div style="${line(`left:${left}px; top:${top - 4}px; width:2px; height:10px;`)}"></div>
       <div style="${line(`left:${left + width - 2}px; top:${top - 4}px; width:2px; height:10px;`)}"></div>
-      <div style="${label(left + width / 2, top + (inside ? -18 : 8))}">${px}</div>
+      <div style="${label(left + width / 2, top + (inside ? -18 : 8))}">${text}</div>
     `;
   }
 
@@ -140,8 +148,12 @@ function drawDimensionLine(el, px, axis) {
 }
 
 function getAxis(item) {
-  const text = `${item.part ?? ''}`.toLowerCase();
-  return item.category === 'sizing' || text.includes('height') ? 'vertical' : 'horizontal';
+  // Sizing is always the component's own total vertical extent — never conditional.
+  if (item.category === 'sizing') return 'vertical';
+  // Spacing is a gap BETWEEN elements, and can run either way — trust the row's own
+  // `axis` (set from the real flex-direction/layout in its .doc.ts) over any guess.
+  if (item.axis === 'vertical' || item.axis === 'horizontal') return item.axis;
+  return 'horizontal';
 }
 
 function applyHighlight(payload) {

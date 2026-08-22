@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -40,8 +40,8 @@ export const doc: ComponentDoc = {
     { part: 'switch-track', label: 'track.height.m', token: '--helix-switch-height-m', kind: 'space' },
     { part: 'switch-thumb', label: 'thumb.size.s', token: '--helix-switch-thumb-size-s', kind: 'space' },
     { part: 'switch-thumb', label: 'thumb.size.m', token: '--helix-switch-thumb-size-m', kind: 'space' },
-    { part: 'switch-row', label: 'gap.track.label', token: '--helix-primitive-spacing-75', kind: 'space' },
-    { part: 'switch-root', label: 'gap.row.description', token: '--helix-primitive-spacing-25', kind: 'space' },
+    { part: 'switch-row', label: 'gap.track.label', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal' },
+    { part: 'switch-root', label: 'gap.row.description', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
     { part: 'switch-track', label: 'switch.track', token: '--helix-radius-full', kind: 'radius' },
     { part: 'switch-thumb', label: 'switch.thumb', value: '50%', kind: 'radius', meta: 'Always a full circle, independent of the track radius token' },
     { part: 'switch-root', label: 'display', value: 'flex' },

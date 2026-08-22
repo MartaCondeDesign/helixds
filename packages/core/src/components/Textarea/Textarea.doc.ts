@@ -7,7 +7,7 @@ export interface ComponentDoc {
   a11y: string[];
   variants: { name: string; description: string }[];
   sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; meta?: string }[];
+  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
   features: string[];
   examples: { label: string; code: string }[];
 }
@@ -40,11 +40,11 @@ export const doc: ComponentDoc = {
     { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-m', kind: 'typography', meta: 'Body base', size: 'l' },
     { part: 'textarea-description', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea-error', label: 'error', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
-    { part: 'textarea-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space' },
-    { part: 'textarea-field', label: 'padding.top', token: '--helix-primitive-spacing-75', kind: 'space' },
-    { part: 'textarea-field', label: 'padding.bottom', token: '--helix-primitive-spacing-75', kind: 'space' },
-    { part: 'textarea-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space' },
-    { part: 'textarea-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space' },
+    { part: 'textarea-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
+    { part: 'textarea-field', label: 'padding.top', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'vertical' },
+    { part: 'textarea-field', label: 'padding.bottom', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'vertical' },
+    { part: 'textarea-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal' },
+    { part: 'textarea-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal' },
     { part: 'textarea-wrapper', label: 'textarea.root', token: '--helix-textarea-radius', kind: 'radius' },
     { part: 'textarea-root', label: 'display', value: 'flex' },
     { part: 'textarea-root', label: 'flex-direction', value: 'column' },
