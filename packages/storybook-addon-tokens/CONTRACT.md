@@ -83,6 +83,14 @@ Rules:
   flex container runs in, which is *not* always the same for every gap in one component —
   Input's `input-root` is `column` (gap.label.field → vertical) while its icon slot sits
   inline with the field (horizontal), so don't assume one axis for the whole component).
+- **Icon/adornment slots are the easiest spacing to forget — check them explicitly, every
+  time.** A leading/trailing icon almost always carries its own padding independent of the
+  field's own padding: an outer edge (wrapper-to-icon) AND an inner "gap.icon.text" (icon-
+  to-typed-text) — two separate rows, not one. `input-icon`/`input-icon-end` in Input and
+  `select-chevron` in Select are exactly this shape (grep the component's CSS for the icon's
+  own `data-helix-part` selector — `padding-left`/`padding-right`/`right` on that specific
+  part, not on the field/trigger). Missing these was the actual gap found and fixed here —
+  don't assume "I covered the field's padding" also covers the icon.
 - **`part` must match the component's own `data-helix-part` value exactly** — the live
   highlight (below) does a literal `[data-helix-part="<part>"]` lookup, so a `part` that
   doesn't exist in the DOM (e.g. a leftover bare `'input'` when the real attribute is

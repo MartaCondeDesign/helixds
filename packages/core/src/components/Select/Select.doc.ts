@@ -51,6 +51,7 @@ export const doc: ComponentDoc = {
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-s', kind: 'space', size: 's' },
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-m', kind: 'space', size: 'm' },
     { part: 'select-trigger', label: 'field.height', token: '--helix-select-height-l', kind: 'space', size: 'l' },
+    { part: 'select-chevron', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal', meta: 'Chevron to trigger edge' },
     { part: 'select-trigger', label: 'select.root', token: '--helix-select-radius', kind: 'radius' },
     { part: 'select-root', label: 'display', value: 'flex' },
     { part: 'select-root', label: 'flex-direction', value: 'column' },
