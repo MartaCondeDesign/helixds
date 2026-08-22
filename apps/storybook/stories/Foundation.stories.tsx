@@ -339,14 +339,15 @@ export const Radius: Story = {
 export const Typography: Story = {
   render: () => {
     const sizes: [string, string, string][] = [
-      ['5xl', '48px', 'Display'],
-      ['4xl', '36px', 'H1'],
-      ['3xl', '30px', 'H2'],
-      ['2xl', '24px', 'H3'],
-      ['xl',  '20px', 'H4'],
-      ['l',   '17px', 'Body Large'],
-      ['m',   '15px', 'Body'],
-      ['s',   '13px', 'Small'],
+      ['6xl', '64px', 'Display+'],
+      ['5xl', '56px', 'Display'],
+      ['4xl', '48px', 'H1'],
+      ['3xl', '40px', 'H2'],
+      ['2xl', '32px', 'H3'],
+      ['xl',  '24px', 'H4'],
+      ['l',   '20px', 'Body Large'],
+      ['m',   '14px', 'Body'],
+      ['s',   '12px', 'Small'],
       ['xs',  '11px', 'Caption'],
     ];
     return (

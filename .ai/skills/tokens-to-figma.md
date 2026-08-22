@@ -34,8 +34,8 @@ Multiple token categories that share a role live in the SAME collection:
 |------------|-------|-------|
 | `Primitives` | `primitive.color.*`, `primitive.spacing.*`, `primitive.size.*`, `primitive.fontSize/fontWeight/lineHeight/fontFamily.*`, `primitive.breakpoint.*` | `default` |
 | `Theme` | `semantic.color.*` (`fill`/`text`/`icon`/`border`) | `light`, `dark` |
-| `Semantic` | `semantic.radius.*`, `semantic.size.control.*`, `semantic.spacing.*`, `semantic.fontSize.mobile.*`, `semantic.lineHeight.*` | `default` |
-| `Responsive` | Per-breakpoint typography (`fontSize` and `lineHeight`, both paired per fontSize rung) | `mobile`, `tablet`, `desktop` |
+| `Semantic` | `semantic.radius.*`, `semantic.size.control.*`, `semantic.spacing.*`, `semantic.fontSize.mobile.*`, `semantic.lineHeight.*` — both cover the full `xs`-`6xl` range, same key set | `default` |
+| `Responsive` | Per-breakpoint typography, full `xs`-`6xl` range (`fontSize` and `lineHeight`) | `mobile`, `tablet`, `desktop` |
 | `Component` | Every `component.*` token, one variable per leaf, aliasing `Theme`/`Semantic`/`Primitives`/`Responsive` (never a literal unless the source token itself has no alias — see Phase 10) | `default` |
 
 **Why this shape:** primitives are raw, component-agnostic scales — one bucket regardless of what kind of
@@ -81,6 +81,13 @@ sharing one collection — see "Naming rules" below.
 percentages like `12.5`/`37.5`, since nothing referenced them; `size` never had any). If a future addition
 ever needs a fractional percentage, the naming rule is: dots are invalid in Figma variable names, use a
 hyphen instead (`spacing/0.5` → `spacing/0-5`) — not currently needed for anything live.
+
+**Always create t-shirt-scale variables smallest → largest**, in that order, in every `createVariable`
+loop (`xs`, `s`, `m`, `l`, `xl`, `2xl`, `3xl`...). Figma's variable panel lists a collection's variables in
+creation order, not alphabetically or numerically — creating them out of order leaves the picker jumbled
+for anyone browsing it by hand. This applies to every t-shirt-scaled category: `fontSize`, `lineHeight`,
+`radius`, `size` (both `Primitives` and `Semantic`), `spacing`'s t-shirt alias. Verified compliant as of
+this writing — keep it that way on every future addition.
 
 **In `Theme`, every grammar segment joins with `/`, not `-`.** A semantic color token's key in
 `tokens.json` is a flat hyphenated string — `fill.primary-interactive-light-hover` — per the
@@ -514,14 +521,15 @@ const modeId = primColl.modes.find(m => m.name === 'default').modeId;
 // FLOAT vars
 const typographyTokens = [
   ['fontSize/xs',  11,  ['FONT_SIZE']],
-  ['fontSize/s',   13,  ['FONT_SIZE']],
-  ['fontSize/m',   15,  ['FONT_SIZE']],
-  ['fontSize/l',   17,  ['FONT_SIZE']],
-  ['fontSize/xl',  20,  ['FONT_SIZE']],
-  ['fontSize/2xl', 24,  ['FONT_SIZE']],
-  ['fontSize/3xl', 30,  ['FONT_SIZE']],
-  ['fontSize/4xl', 36,  ['FONT_SIZE']],
-  ['fontSize/5xl', 48,  ['FONT_SIZE']],
+  ['fontSize/s',   12,  ['FONT_SIZE']],
+  ['fontSize/m',   14,  ['FONT_SIZE']],
+  ['fontSize/l',   20,  ['FONT_SIZE']],
+  ['fontSize/xl',  24,  ['FONT_SIZE']],
+  ['fontSize/2xl', 32,  ['FONT_SIZE']],
+  ['fontSize/3xl', 40,  ['FONT_SIZE']],
+  ['fontSize/4xl', 48,  ['FONT_SIZE']],
+  ['fontSize/5xl', 56,  ['FONT_SIZE']],
+  ['fontSize/6xl', 64,  ['FONT_SIZE']],
   ['fontWeight/regular',  400, ['FONT_WEIGHT']],
   ['fontWeight/medium',   500, ['FONT_WEIGHT']],
   ['fontWeight/semibold', 600, ['FONT_WEIGHT']],
@@ -573,19 +581,20 @@ async function createTextStyles() {
   const textStyleDefs = [
     ['Caption / Regular',       'Inter', 'Regular',   11, 150,  0],
     ['Caption / Semibold',      'Inter', 'Semi Bold', 11, 150, 10],
-    ['Body / s / Regular',      'Inter', 'Regular',   13, 150,  0],
-    ['Body / s / Medium',       'Inter', 'Medium',    13, 150,  0],
-    ['Body / m / Regular',      'Inter', 'Regular',   15, 150,  0],
-    ['Body / m / Medium',       'Inter', 'Medium',    15, 150,  0],
-    ['Body / l / Regular',      'Inter', 'Regular',   17, 165,  0],
-    ['Body / l / Medium',       'Inter', 'Medium',    17, 165,  0],
-    ['Heading / xl / Semibold', 'Inter', 'Semi Bold', 20, 135,  0],
-    ['Heading / 2xl / Semibold','Inter', 'Semi Bold', 24, 135,  0],
-    ['Heading / 3xl / Semibold','Inter', 'Semi Bold', 30, 120, -3],
-    ['Heading / 4xl / Bold',    'Inter', 'Bold',      36, 120, -3],
-    ['Display / 5xl / Bold',    'Inter', 'Bold',      48, 120, -3],
+    ['Body / s / Regular',      'Inter', 'Regular',   12, 150,  0],
+    ['Body / s / Medium',       'Inter', 'Medium',    12, 150,  0],
+    ['Body / m / Regular',      'Inter', 'Regular',   14, 150,  0],
+    ['Body / m / Medium',       'Inter', 'Medium',    14, 150,  0],
+    ['Body / l / Regular',      'Inter', 'Regular',   20, 165,  0],
+    ['Body / l / Medium',       'Inter', 'Medium',    20, 165,  0],
+    ['Heading / xl / Semibold', 'Inter', 'Semi Bold', 24, 135,  0],
+    ['Heading / 2xl / Semibold','Inter', 'Semi Bold', 32, 135,  0],
+    ['Heading / 3xl / Semibold','Inter', 'Semi Bold', 40, 120, -3],
+    ['Heading / 4xl / Bold',    'Inter', 'Bold',      48, 120, -3],
+    ['Display / 5xl / Bold',    'Inter', 'Bold',      56, 120, -3],
+    ['Display / 6xl / Bold',    'Inter', 'Bold',      64, 120, -3],
     ['Label / Uppercase',       'Inter', 'Semi Bold', 11, 150, 10],
-    ['Code / Regular',          'Inter', 'Regular',   13, 150,  0],
+    ['Code / Regular',          'Inter', 'Regular',   12, 150,  0],
   ];
 
   const existing = {};
@@ -612,40 +621,59 @@ return { textStyles: figma.getLocalTextStyles().length };
 ### Phase 7 — Responsive typography (→ `Responsive`)
 
 Source: `primitive.breakpoint.{mobile,tablet,desktop}` (0/768/1024px) + `primitive.fontSize.*` (desktop/
-tablet — unchanged) + `semantic.fontSize.mobile.*` (87.5% of desktop, ADR-backed). Only `fontSize` scales
-by breakpoint; `lineHeight`/`letterSpacing` don't change. `tablet` and `desktop` modes hold identical values
-since typography doesn't differ between them — only `mobile` actually diverges. This is the Figma-side
-mirror of the `@media (max-width: 767px)` block `build.ts` emits from the same source tokens. **Caveat:**
-the CSS override only reaches `--helix-primitive-fontSize-*` — component-level fontSize vars (e.g.
-`--helix-button-fontSize-m`) inline their resolved value at build time rather than referencing the
-primitive via `var()`, so they don't pick up the responsive override yet. That's a known limitation of the
-current build pipeline (inlining, not var-chaining), not something this Figma collection can fix on its
-own — Figma variable bindings on text nodes are a separate, correctly-cascading mechanism (bind a text
-node's `fontSize` to this collection's variable and Figma's own mode-switching handles it).
+tablet — unchanged) + `semantic.fontSize.mobile.*` (87.5% of desktop, ADR-backed) + `semantic.lineHeight.*`
+(paired per fontSize rung, same in every mode — lineHeight is a ratio, it doesn't itself scale by
+breakpoint, only which fontSize it's paired with matters). `tablet` and `desktop` modes hold identical
+values for every var — only `mobile` diverges, and only for `fontSize`.
+
+**Scope is the full `xs` through `6xl` range — same key set as `semantic.lineHeight`, no exceptions.**
+Every `primitive.fontSize.*` rung gets a mobile override and a `Responsive` entry, including the small body
+sizes (`xs`/`s`/`m`) — not just the large headings. Keeping the two key sets identical is the rule (see
+`packages/tokens/CLAUDE.md` → "Token layers" → `semantic.lineHeight`): a fontSize rung with no matching
+`fontSize.mobile`/`Responsive` entry is an incomplete addition.
+
+This is the Figma-side mirror of the `@media (max-width: 767px)` block `build.ts` emits from the same
+source tokens. **Caveat:** the CSS override only reaches `--helix-primitive-fontSize-*` — component-level
+fontSize vars (e.g. `--helix-button-fontSize-m`) inline their resolved value at build time rather than
+referencing the primitive via `var()`, so they don't pick up the responsive override yet. That's a known
+limitation of the current build pipeline (inlining, not var-chaining), not something this Figma collection
+can fix on its own — Figma variable bindings on text nodes are a separate, correctly-cascading mechanism
+(bind a text node's `fontSize`/`lineHeight` to this collection's variables and Figma's own mode-switching
+handles it).
 
 **Every value here must be an ALIAS, never a literal** — same rule as everywhere else in this file.
-`semantic.fontSize.mobile.*` doesn't exist as its own Figma variable anywhere else, so Phase 7 creates it
-first (in `Semantic`, prefixed `fontSize/mobile/*` to avoid colliding with `radius/*`/`size/*`/`spacing/*`),
-THEN aliases `Responsive`'s `mobile` mode to it and `tablet`/`desktop` modes to `Primitives.fontSize/*`.
+`semantic.fontSize.mobile.*` and `semantic.lineHeight.*` live in `Semantic`; Phase 7 aliases `Responsive`'s
+`mobile` mode to the former and all 3 modes' `lineHeight/*` to the latter (`fontSize`'s `tablet`/`desktop`
+modes alias `Primitives.fontSize.*` directly).
+
+**Every `Component` fontSize binds to `Responsive`, never to `Primitives` directly** — since `Responsive`
+now covers every rung, there's no fallback case left (unlike the earlier, narrower version of this
+collection).
 
 ```js
-// Step 1 — semantic.fontSize.mobile.* as real variables in `Semantic`
 const semColl = getOrCreateCollection('Semantic');
 const semModeId = semColl.modes.find(m => m.name === 'default')?.modeId || semColl.modes[0].modeId;
 const primColl = getOrCreateCollection('Primitives');
 const primByName = {};
 figma.variables.getLocalVariables().filter(v => v.variableCollectionId === primColl.id).forEach(v => { primByName[v.name] = v; });
 
-const mobileFontSize = { xs: 10, s: 11, m: 13, l: 15, xl: 18, '2xl': 21, '3xl': 26, '4xl': 32, '5xl': 42 };
-const semByName = {};
+// Step 1 — semantic.fontSize.mobile.* (full xs-6xl range) as real variables in `Semantic`
+const mobileFontSize = { xs: 10, s: 11, m: 12, l: 18, xl: 21, '2xl': 28, '3xl': 35, '4xl': 42, '5xl': 49, '6xl': 56 };
+const semFontSizeMobile = {};
 for (const [key, px] of Object.entries(mobileFontSize)) {
   const name = `fontSize/mobile/${key}`;
   const existing = figma.variables.getLocalVariables().find(v => v.name === name && v.variableCollectionId === semColl.id);
   const v = existing || figma.variables.createVariable(name, semColl, 'FLOAT');
   v.scopes = ['FONT_SIZE'];
   v.setValueForMode(semModeId, px); // literal here is correct — this IS the source of truth for mobile fontSize
-  semByName[key] = v;
+  semFontSizeMobile[key] = v;
 }
+
+// semantic.lineHeight.* already exists (Phase 3b-adjacent addition) — just read it
+const semLineHeight = {};
+figma.variables.getLocalVariables()
+  .filter(v => v.variableCollectionId === semColl.id && v.name.startsWith('lineHeight/'))
+  .forEach(v => { semLineHeight[v.name.replace('lineHeight/', '')] = v; });
 
 // Step 2 — Responsive collection + modes
 const respColl = getOrCreateCollection('Responsive');
@@ -661,21 +689,29 @@ if (respColl.modes.length === 1) {
   desktopModeId = respColl.modes.find(m => m.name === 'desktop')?.modeId || respColl.modes[2].modeId;
 }
 
-// Step 3 — create Responsive.fontSize/* and alias every mode (never a raw number)
+// Step 3 — create Responsive.fontSize/* and Responsive.lineHeight/*, full xs-6xl range
+const keys = ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'];
 const created = [];
-for (const key of Object.keys(mobileFontSize)) {
-  const name = `fontSize/${key}`;
-  const existing = figma.variables.getLocalVariables()
-    .find(v => v.name === name && v.variableCollectionId === respColl.id);
-  const v = existing || figma.variables.createVariable(name, respColl, 'FLOAT');
-  v.scopes = ['FONT_SIZE'];
-  v.setValueForMode(mobileModeId, figma.variables.createVariableAlias(semByName[key]));
+for (const key of keys) {
+  const fsName = `fontSize/${key}`;
+  const existingFs = figma.variables.getLocalVariables().find(v => v.name === fsName && v.variableCollectionId === respColl.id);
+  const fsVar = existingFs || figma.variables.createVariable(fsName, respColl, 'FLOAT');
+  fsVar.scopes = ['FONT_SIZE'];
+  fsVar.setValueForMode(mobileModeId, figma.variables.createVariableAlias(semFontSizeMobile[key]));
   const primTarget = primByName[`fontSize/${key}`];
-  if (primTarget) {
-    v.setValueForMode(tabletModeId, figma.variables.createVariableAlias(primTarget));
-    v.setValueForMode(desktopModeId, figma.variables.createVariableAlias(primTarget));
-  }
-  created.push(name);
+  fsVar.setValueForMode(tabletModeId, figma.variables.createVariableAlias(primTarget));
+  fsVar.setValueForMode(desktopModeId, figma.variables.createVariableAlias(primTarget));
+
+  const lhName = `lineHeight/${key}`;
+  const existingLh = figma.variables.getLocalVariables().find(v => v.name === lhName && v.variableCollectionId === respColl.id);
+  const lhVar = existingLh || figma.variables.createVariable(lhName, respColl, 'FLOAT');
+  lhVar.scopes = ['LINE_HEIGHT'];
+  const lhTarget = semLineHeight[key];
+  lhVar.setValueForMode(mobileModeId, figma.variables.createVariableAlias(lhTarget));
+  lhVar.setValueForMode(tabletModeId, figma.variables.createVariableAlias(lhTarget));
+  lhVar.setValueForMode(desktopModeId, figma.variables.createVariableAlias(lhTarget));
+
+  created.push(fsName, lhName);
 }
 
 return { created, modes: respColl.modes.map(m => m.name) };
@@ -861,20 +897,21 @@ only when no `Component` variable exists for that value yet.
 
 Run Phase 9 and confirm the counts match:
 
-- [ ] `Primitives`: 107 vars, modes=[default] — 61 color (10 blue + 11 gray + 10 each
+- [ ] `Primitives`: 108 vars, modes=[default] — 61 color (10 blue + 11 gray + 10 each
       green/orange/red/turquoise) + 16 spacing (round percentages only, no fractional rungs) + 11 size +
-      19 typography
+      20 typography (fontSize now has 10 rungs: `xs`...`6xl`)
 - [ ] `Theme`: 58 vars, modes=[light, dark] (`fill/*` 27, `text/*` 12, `icon/*` 10, `border/*` 9 — no
       `color/` prefix)
 - [ ] No `Theme` variable name contains a `-` — every grammar segment (role/interactive/
       modifier/state) is its own `/`-delimited path level (`fill/primary/interactive/light/hover`,
       not `fill/primary-interactive-light-hover`)
-- [ ] `Semantic`: 37 vars, modes=[default] — 9 `radius/*` + 5 `size/*` + 5 `spacing/*` + 9
-      `fontSize/mobile/*` + 9 `lineHeight/*`
-- [ ] `Responsive`: 18 vars, modes=[mobile, tablet, desktop] (`fontSize/xs`...`fontSize/5xl` +
-      `lineHeight/xs`...`lineHeight/5xl`) — `tablet` and `desktop` mode values are identical to each other
-      for every var, only `mobile` differs (and only for `fontSize` — `lineHeight` is the same in all 3
-      modes since the ratio doesn't change, only which fontSize it's paired with)
+- [ ] `Semantic`: 39 vars, modes=[default] — 9 `radius/*` + 5 `size/*` + 5 `spacing/*` + 10
+      `fontSize/mobile/*` + 10 `lineHeight/*` — both cover the full `xs`-`6xl` range, same key set (see
+      `packages/tokens/CLAUDE.md` → the fontSize/lineHeight pairing rule)
+- [ ] `Responsive`: 20 vars, modes=[mobile, tablet, desktop] (`fontSize/xs`...`fontSize/6xl` +
+      `lineHeight/xs`...`lineHeight/6xl`, full range) — `tablet` and `desktop` mode values are identical to
+      each other for every var, only `mobile` differs (and only for `fontSize` — `lineHeight` is the same
+      in all 3 modes since the ratio doesn't change, only which fontSize it's paired with)
 - [ ] `Component`: 182 vars, modes=[default] — one per `component.*` leaf in `tokens.json`, named
       `{component}/{path}`; every value is an ALIAS except the 3 documented exceptions in Phase 10
       (raw literal source, shadow/duration as STRING, alpha color parsed to `{r,g,b,a}`)

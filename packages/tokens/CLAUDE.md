@@ -50,6 +50,13 @@ role, which is exactly what the naming overhaul (below) was fixing.
 6. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
 
+**Adding or renaming a `primitive.fontSize.{key}` specifically:** always add/rename the matching
+`semantic.lineHeight.{key}` in the same change (same key name, e.g. a new `fontSize.7xl` needs a
+`lineHeight.7xl`) — see "Token layers" → `semantic.lineHeight` below for why. A fontSize rung with no
+paired lineHeight is an incomplete addition. If the new rung is `l` or larger, also add its
+`fontSize.mobile.{key}` (87.5% of the new value) and its `Responsive` collection entries — see
+`.ai/skills/tokens-to-figma.md` → Phase 7.
+
 ## Renaming or removing a token — mostly manual, check every one of these
 
 `pnpm verify:tokens` (`scripts/verify-token-naming.ts`) checks new/renamed **keys** in `tokens.json`
@@ -104,21 +111,26 @@ category-first, with the exact key grammar for each.
     semantic names ARE the scale, nothing to alias underneath)
   - `size.control` — the ADR-004 control/field height ladder (`xs`-`xl`)
   - `spacing` — `xs`/`s`/`m`/`l`/`xl` t-shirt scale, plus the older `component-*`/`layout-*` context scale
-  - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung (87.5% of desktop,
-    see ADR — feeds the `@media (max-width: 767px)` block `build.ts` emits). This is the one place
-    `semantic.*` DOES carry typography — it's a breakpoint override, not a role, so it doesn't contradict
-    "typography stays primitive-only" below; there's still no `semantic.typography.*` role layer.
+  - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung, full `xs`-`6xl` range,
+    same key set as `lineHeight` below (87.5% of desktop, see ADR — feeds the
+    `@media (max-width: 767px)` block `build.ts` emits).
+  - `lineHeight` — one entry per `primitive.fontSize.*` key, **same key name, every rung, no exceptions**:
+    `semantic.lineHeight.xs` pairs with `fontSize.xs`, `semantic.lineHeight.l` with `fontSize.l`, etc.
+    **Rule: adding a new `primitive.fontSize.{key}` rung requires adding a matching
+    `semantic.lineHeight.{key}` AND `semantic.fontSize.mobile.{key}` in the same change** — a fontSize
+    rung missing either is an incomplete addition, not a valid one. `fontSize.mobile` and `lineHeight`
+    always carry the identical key set to each other and to `primitive.fontSize` itself.
   - `shadow` — `xs`-`xl`/`focus`, aliasing `primitive.shadow.*` 1:1
-  - Beyond the mobile fontSize override above, there is no broader `semantic.typography` — typography
-    stays primitive-only in code otherwise (Figma Text Styles are the de facto semantic layer for type;
-    see `tokens-to-figma.md`).
+  - Beyond `fontSize.mobile` and `lineHeight` above, there is no broader `semantic.typography` — no
+    `fontWeight`/`fontFamily`/`letterSpacing` role layer exists; those stay primitive-only (Figma Text
+    Styles are the de facto semantic layer combining all of typography together; see `tokens-to-figma.md`).
 - **`component`** — one key per component (`button`, `input`, `badge`, `chip`, `card`, `dialog`, `textarea`,
   `select`, `checkbox`, `radio`, `switch`). Each aliases `semantic.*` where a role fits, or `primitive.*`
   directly when there's no semantic concept to route through (radius is the one exception that always goes
   through `semantic.radius` now, since that's the only layer it has).
 
 **CSS pipeline caveat:** `build.ts` *inlines* resolved alias values rather than emitting `var()` chains —
-`--helix-button-fontSize-m` gets the literal `13px`, not `var(--helix-primitive-fontSize-s)`. This means the
+`--helix-button-fontSize-m` gets the literal `12px`, not `var(--helix-primitive-fontSize-s)`. This means the
 `primitive.breakpoint`-driven responsive override only reaches `--helix-primitive-fontSize-*` directly; it
 does not cascade into semantic/component fontSize vars yet. Making it cascade everywhere would mean
 switching the whole pipeline from inlining to `var()` chaining — a bigger, separate change, not something
@@ -135,8 +147,10 @@ to in code — a Figma component like Button binds to `Component.button/*`, neve
 
 **Typography binding rule (Figma):** `fontSize` and `lineHeight` bindings — on a `Component` variable or
 directly on a text node — must reference `Responsive`, never `Primitives`/`Semantic` directly, since
-`Responsive` is the breakpoint-aware source for both. `fontFamily`/`fontWeight` don't vary by breakpoint,
-so they keep referencing `Primitives` directly.
+`Responsive` is the breakpoint-aware source for both, for every size (`Responsive` covers the full
+`xs`-`6xl` range, same as `primitive.fontSize` itself — no size falls back to `Primitives`).
+`fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they always reference `Primitives`
+directly.
 
 See `.ai/skills/tokens-to-figma.md` → "Collection layout" and "Phase 10" for the full mapping, naming
 rules, and the alias-resolution algorithm.
@@ -173,7 +187,7 @@ scale from — the named steps themselves are the source of truth):
 
 **Typography** — no semantic layer and no composite "typography" token; 4 independent primitive scales, each
 `component` token aliases one of them directly:
-- `primitive.fontSize.{size}` — `xs`...`5xl`
+- `primitive.fontSize.{size}` — `xs`...`6xl`
 - `primitive.fontWeight.{name}` — `regular`/`medium`/`semibold`/`bold`
 - `primitive.lineHeight.{name}` — `tight`/`snug`/`normal`/`relaxed`
 - `primitive.letterSpacing.{name}` — `tight`/`normal`/`wide`/`wider`
