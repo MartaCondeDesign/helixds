@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconFolder } from '@tabler/icons-react';
-import { SectionHead, label12 } from './_shared';
+import { SectionHead } from './_shared';
+// Imported directly from source (not dist/index.ts, which only holds resolved values) so this table
+// reflects $value (the primitive it aliases) and $description automatically on every token change —
+// no hardcoded list to keep in sync by hand. resolveJsonModule is enabled in tsconfig.json.
+import tokensJson from '../../../../packages/tokens/src/tokens.json';
 
 const meta: Meta = {
   title: 'Foundation/Theme',
@@ -10,6 +14,16 @@ const meta: Meta = {
 
 export default meta;
 type Story = StoryObj;
+
+type ColorToken = { $value: string; $type: string; $description?: string };
+type ColorGroup = Record<string, ColorToken>;
+const semanticColor = tokensJson.semantic.color as unknown as {
+  fill: ColorGroup; text: ColorGroup; icon: ColorGroup; border: ColorGroup;
+};
+
+function primitiveRef(value: string): string {
+  return value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
+}
 
 // ── Light/dark toggle wrapper ────────────────────────────────────────────
 // Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (packages/tokens/src/build.ts)
@@ -49,202 +63,94 @@ function ThemeToggle({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── Swatches (same visual language as before, one component per property kind) ──
+// ── Swatch preview (small, per row) ──────────────────────────────────────
 
-function FillSwatch({ token, lbl }: { token: string; lbl: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-      <div style={{
-        width: 56, height: 56, borderRadius: 8,
-        background: `var(${token})`,
-        border: '1px solid var(--helix-color-border-neutral-light)',
-      }} />
-      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
-    </div>
-  );
-}
-
-function TextSwatch({ token, lbl }: { token: string; lbl: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-      <div style={{
-        width: 56, height: 56, borderRadius: 8,
-        background: 'var(--helix-color-fill-surface)',
-        border: '1px solid var(--helix-color-border-neutral-light)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <span style={{ fontSize: 22, fontWeight: 700, color: `var(${token})` }}>Aa</span>
-      </div>
-      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
-    </div>
-  );
-}
-
-function IconSwatch({ token, lbl }: { token: string; lbl: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-      <div style={{
-        width: 56, height: 56, borderRadius: 8,
-        background: 'var(--helix-color-fill-surface)',
-        border: '1px solid var(--helix-color-border-neutral-light)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <IconFolder size={22} color={`var(${token})`} />
-      </div>
-      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
-    </div>
-  );
-}
-
-function BorderSwatch({ token, lbl }: { token: string; lbl: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
-      <div style={{
-        width: 56, height: 56, borderRadius: 8,
-        background: 'var(--helix-color-fill-surface)',
-        border: `2px solid var(${token})`,
-      }} />
-      <span style={{ ...label12, maxWidth: 80, textAlign: 'left' }}>{lbl}</span>
-    </div>
-  );
-}
-
-function TokenGroup({ label, tokens, type }: {
-  label: string;
-  tokens: [string, string][];
-  type: 'fill' | 'text' | 'border' | 'icon';
-}) {
-  const renderSwatch = ([token, lbl]: [string, string]) => {
-    if (type === 'fill')   return <FillSwatch   key={token} token={token} lbl={lbl} />;
-    if (type === 'text')   return <TextSwatch   key={token} token={token} lbl={lbl} />;
-    if (type === 'border') return <BorderSwatch key={token} token={token} lbl={lbl} />;
-    if (type === 'icon')   return <IconSwatch   key={token} token={token} lbl={lbl} />;
+function SwatchPreview({ kind, varName }: { kind: 'fill' | 'text' | 'icon' | 'border'; varName: string }) {
+  const box: React.CSSProperties = {
+    width: 32, height: 32, borderRadius: 6, flexShrink: 0,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   };
+  if (kind === 'fill') {
+    return <div style={{ ...box, background: `var(${varName})`, border: '1px solid var(--helix-color-border-neutral-light)' }} />;
+  }
+  if (kind === 'border') {
+    return <div style={{ ...box, background: 'var(--helix-color-fill-surface)', border: `2px solid var(${varName})` }} />;
+  }
+  if (kind === 'icon') {
+    return (
+      <div style={{ ...box, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)' }}>
+        <IconFolder size={16} color={`var(${varName})`} />
+      </div>
+    );
+  }
+  // text
   return (
-    <div style={{ display: 'flex', gap: 16, marginBottom: 20, alignItems: 'flex-start' }}>
-      <div style={{
-        width: 110, flexShrink: 0, paddingTop: 4,
-        fontSize: 12, fontWeight: 600,
-        color: 'var(--helix-color-text-neutral)',
-      }}>
-        {label}
-      </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-        {tokens.map(renderSwatch)}
-      </div>
+    <div style={{ ...box, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)' }}>
+      <span style={{ fontSize: 14, fontWeight: 700, color: `var(${varName})` }}>Aa</span>
     </div>
+  );
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────
+
+const thStyle: React.CSSProperties = {
+  textAlign: 'left', padding: '8px 12px', fontSize: 11, fontWeight: 600,
+  letterSpacing: '0.04em', textTransform: 'uppercase',
+  color: 'var(--helix-color-text-neutral-lightest)',
+};
+const tdStyle: React.CSSProperties = { padding: '8px 12px', verticalAlign: 'middle' };
+
+function ColorTable({ kind, tokens }: { kind: 'fill' | 'text' | 'icon' | 'border'; tokens: ColorGroup }) {
+  return (
+    <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 36 }}>
+      <thead>
+        <tr style={{ borderBottom: '2px solid var(--helix-color-border-neutral)' }}>
+          <th style={thStyle}>Color</th>
+          <th style={thStyle}>Primitive</th>
+          <th style={thStyle}>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(tokens).map(([key, tok]) => (
+          <tr key={key} style={{ borderBottom: '1px solid var(--helix-color-border-neutral-light)' }}>
+            <td style={tdStyle}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <SwatchPreview kind={kind} varName={`--helix-color-${kind}-${key}`} />
+                <code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>{kind}-{key}</code>
+              </div>
+            </td>
+            <td style={tdStyle}>
+              <code style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{primitiveRef(tok.$value)}</code>
+            </td>
+            <td style={tdStyle}>
+              <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{tok.$description ?? '—'}</span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
 export const Color: Story = {
   render: () => (
     <ThemeToggle>
-      <div style={{ maxWidth: 900 }}>
+      <div style={{ maxWidth: 760 }}>
         <SectionHead title="Fill" />
-        <TokenGroup label="Surface" type="fill" tokens={[
-          ['--helix-color-fill-page',           'fill-page'],
-          ['--helix-color-fill-surface',        'fill-surface'],
-          ['--helix-color-fill-surface-dark', 'fill-surface-dark'],
-          ['--helix-color-fill-overlay',        'fill-overlay'],
-          ['--helix-color-fill-disabled',       'fill-disabled'],
-        ]} />
-        <TokenGroup label="Secondary" type="fill" tokens={[
-          ['--helix-color-fill-secondary-interactive-default', 'fill-secondary\ninteractive-default'],
-          ['--helix-color-fill-secondary-interactive-hover',   'fill-secondary\ninteractive-hover'],
-          ['--helix-color-fill-secondary-interactive-press',   'fill-secondary\ninteractive-press'],
-        ]} />
-        <TokenGroup label="Primary" type="fill" tokens={[
-          ['--helix-color-fill-primary-interactive-default', 'fill-primary\ninteractive-default'],
-          ['--helix-color-fill-primary-interactive-hover',   'fill-primary\ninteractive-hover'],
-          ['--helix-color-fill-primary-interactive-press',   'fill-primary\ninteractive-press'],
-        ]} />
-        <TokenGroup label="Primary light" type="fill" tokens={[
-          ['--helix-color-fill-primary-interactive-light-default', 'fill-primary\ninteractive-light-default'],
-          ['--helix-color-fill-primary-interactive-light-hover',   'fill-primary\ninteractive-light-hover'],
-        ]} />
-        <TokenGroup label="Danger" type="fill" tokens={[
-          ['--helix-color-fill-danger-interactive-default', 'fill-danger\ninteractive-default'],
-          ['--helix-color-fill-danger-interactive-hover',   'fill-danger\ninteractive-hover'],
-          ['--helix-color-fill-danger-interactive-press',   'fill-danger\ninteractive-press'],
-          ['--helix-color-fill-danger-interactive-light-default', 'fill-danger\ninteractive-light-default'],
-          ['--helix-color-fill-danger-interactive-light-hover',   'fill-danger\ninteractive-light-hover'],
-        ]} />
-        <TokenGroup label="Success" type="fill" tokens={[
-          ['--helix-color-fill-success-interactive-default', 'fill-success\ninteractive-default'],
-          ['--helix-color-fill-success-interactive-hover',   'fill-success\ninteractive-hover'],
-          ['--helix-color-fill-success-light', 'fill-success\nlight'],
-        ]} />
-        <TokenGroup label="Warning" type="fill" tokens={[
-          ['--helix-color-fill-warning-interactive-default', 'fill-warning\ninteractive-default'],
-          ['--helix-color-fill-warning-interactive-hover',   'fill-warning\ninteractive-hover'],
-          ['--helix-color-fill-warning-light', 'fill-warning\nlight'],
-        ]} />
-        <TokenGroup label="Info" type="fill" tokens={[
-          ['--helix-color-fill-info-interactive-default', 'fill-info\ninteractive-default'],
-          ['--helix-color-fill-info-interactive-hover',   'fill-info\ninteractive-hover'],
-          ['--helix-color-fill-info-light', 'fill-info\nlight'],
-        ]} />
-
+        <ColorTable kind="fill" tokens={semanticColor.fill} />
         <SectionHead title="Text" />
-        <TokenGroup label="Gray" type="text" tokens={[
-          ['--helix-color-text-neutral',   'text-neutral'],
-          ['--helix-color-text-neutral-light', 'text-neutral\nlight'],
-          ['--helix-color-text-neutral-lightest',  'text-neutral\nlightest'],
-          ['--helix-color-text-disabled',  'text-disabled'],
-          ['--helix-color-text-inverse',   'text-inverse'],
-        ]} />
-        <TokenGroup label="Brand" type="text" tokens={[
-          ['--helix-color-text-primary',      'text-primary'],
-          ['--helix-color-text-link',       'text-link'],
-          ['--helix-color-text-link-hover', 'text-link\nhover'],
-        ]} />
-        <TokenGroup label="Status" type="text" tokens={[
-          ['--helix-color-text-danger',  'text-danger'],
-          ['--helix-color-text-success', 'text-success'],
-          ['--helix-color-text-warning', 'text-warning'],
-          ['--helix-color-text-info',    'text-info'],
-        ]} />
-
+        <ColorTable kind="text" tokens={semanticColor.text} />
         <SectionHead title="Icon" />
-        <TokenGroup label="Gray" type="icon" tokens={[
-          ['--helix-color-icon-neutral',   'icon-neutral'],
-          ['--helix-color-icon-neutral-light', 'icon-neutral\nlight'],
-          ['--helix-color-icon-neutral-lightest',  'icon-neutral\nlightest'],
-          ['--helix-color-icon-disabled',  'icon-disabled'],
-          ['--helix-color-icon-inverse',   'icon-inverse'],
-        ]} />
-        <TokenGroup label="Brand" type="icon" tokens={[
-          ['--helix-color-icon-primary', 'icon-primary'],
-        ]} />
-        <TokenGroup label="Status" type="icon" tokens={[
-          ['--helix-color-icon-danger',  'icon-danger'],
-          ['--helix-color-icon-success', 'icon-success'],
-          ['--helix-color-icon-warning', 'icon-warning'],
-          ['--helix-color-icon-info',    'icon-info'],
-        ]} />
-
+        <ColorTable kind="icon" tokens={semanticColor.icon} />
         <SectionHead title="Border" />
-        <TokenGroup label="Gray" type="border" tokens={[
-          ['--helix-color-border-neutral-light',  'border-neutral\nlight'],
-          ['--helix-color-border-neutral', 'border-neutral'],
-          ['--helix-color-border-neutral-dark',  'border-neutral\ndark'],
-          ['--helix-color-border-inverse', 'border-inverse'],
-        ]} />
-        <TokenGroup label="Focus" type="border" tokens={[
-          ['--helix-color-border-focus', 'border-focus'],
-        ]} />
-        <TokenGroup label="Status" type="border" tokens={[
-          ['--helix-color-border-danger',  'border-danger'],
-          ['--helix-color-border-success', 'border-success'],
-          ['--helix-color-border-warning', 'border-warning'],
-        ]} />
+        <ColorTable kind="border" tokens={semanticColor.border} />
       </div>
     </ThemeToggle>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'The Theme collection — light/dark modes of every semantic color token. Toggle above to see both. Component tokens (`--helix-button-*`, `--helix-input-*`…) are internal implementation; never use them outside their component.',
+        story: 'The Theme collection — every semantic color token, the primitive it aliases, and its usage description (both read live from `tokens.json`, so this table updates automatically on any token change). Toggle light/dark above. Component tokens (`--helix-button-*`, `--helix-input-*`…) are internal implementation; never use them outside their component.',
       },
     },
   },

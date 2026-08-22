@@ -19,7 +19,7 @@ export function SectionHead({ title }: { title: string }) {
   );
 }
 
-export function SpacingBar({ varName, tokenKey, val, dim }: { varName: string; tokenKey: string; val: string; dim?: string }) {
+export function SpacingBar({ varName, tokenKey, val, dim, desc }: { varName: string; tokenKey: string; val: string; dim?: string; desc?: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
       <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{tokenKey}</span>
@@ -31,7 +31,16 @@ export function SpacingBar({ varName, tokenKey, val, dim }: { varName: string; t
         opacity: dim === '0px' ? 0.2 : 1,
         transition: 'width 0.2s',
       }} />
-      <span style={{ ...label12, color: 'var(--helix-color-text-neutral-lightest)' }}>{val}</span>
+      <span style={{ ...label12, width: 40, textAlign: 'left' }}>{val}</span>
+      {desc && <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{desc}</span>}
     </div>
   );
+}
+
+// Type shape of a single DTCG token leaf ({ $value, $type, $description? }).
+export type TokenLeaf = { $value: string; $type: string; $description?: string };
+
+export function DescCaption({ text }: { text?: string }) {
+  if (!text) return null;
+  return <span style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{text}</span>;
 }

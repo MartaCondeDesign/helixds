@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SectionHead } from './_shared';
+import { SectionHead, type TokenLeaf } from './_shared';
+// Imported directly from source so the description line below reflects $description automatically.
+// Note: primitive.fontSize.* has no $description by design (primitives never do — see
+// packages/tokens/CLAUDE.md "Adding a token"); semantic.lineHeight.* is the one that carries usage intent.
+import tokensJson from '../../../../packages/tokens/src/tokens.json';
+
+const semanticLineHeight = tokensJson.semantic.lineHeight as unknown as Record<string, TokenLeaf>;
 
 const meta: Meta = {
   title: 'Foundation/Text Styles',
@@ -37,10 +43,13 @@ function TextStyleRow({ name, weight, sizeKey, sample }: { name: string; weight:
       display: 'flex', alignItems: 'baseline', gap: 24, paddingBlock: 14,
       borderBottom: '1px solid var(--helix-color-border-neutral-light)',
     }}>
-      <div style={{ width: 180, flexShrink: 0 }}>
+      <div style={{ width: 220, flexShrink: 0 }}>
         <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{name}</div>
         <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace' }}>
           fontSize/{sizeKey} · lineHeight/{sizeKey} · fontWeight/{weight}
+        </div>
+        <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)', marginTop: 2 }}>
+          {semanticLineHeight[sizeKey]?.$description}
         </div>
       </div>
       <span style={{
