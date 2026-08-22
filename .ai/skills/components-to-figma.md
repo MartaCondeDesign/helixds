@@ -247,9 +247,14 @@ Before setting auto-layout, check the CSS and contract:
 `component.*` tokens live only in code. Bind each property directly to whichever of
 `Theme`/`Semantic`/`Primitives`/`Responsive` the matching `component.*` token resolves to: walk the alias
 chain in `tokens.json` yourself (`component.button.height.*` → `semantic.size.control.*` — bind to
-`Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`; fontSize follows
-the 18px threshold from `tokens-to-figma.md` — bind to `Responsive` when the resolved
-`primitive.fontSize >= 18px`, `Primitives` otherwise).
+`Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`; fontSize AND its
+paired lineHeight follow the 18px threshold from `tokens-to-figma.md` — bind both to `Responsive` when the
+resolved `primitive.fontSize >= 18px`, `Primitives` otherwise. **Bind `lineHeight` every time you bind
+`fontSize` on a text node — an earlier version of this skill only bound `fontSize`, and every Button label
+across all 40 size/variant/state combinations ended up with `lineHeight` completely unbound as a result.
+There is no QA step that catches an unbound property by rendering alone — the pixel value can look
+identical to the bound one, since Figma's font-size default line-height is close to the token value. Always
+check `boundVariables.lineHeight` on the node explicitly, never just eyeball the render.**
 
 ```js
 // Figma variable names per size — resolved one hop from tokens.json's component.button.* aliases.
@@ -257,6 +262,11 @@ const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl
 const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
 // component.button.fontSize.* -> primitive.fontSize.{xs,s,s,m,l} = 11/12/12/14/18px — only button size
 // `xl` (resolves to 18px) crosses the 18px threshold, so it's the one sourced from Responsive, not Primitives.
+// NOTE the reuse: button size `m` resolves to fontSize/s, and button size `l` resolves to fontSize/m — this
+// is a deliberate, documented choice in component.button.fontSize.* (Button's own scale is denser than the
+// generic one), not a bug. lineHeight MUST pair with the underlying fontSize key it actually resolves to
+// (see below) — button size `m`'s lineHeight is lineHeight/s, NOT lineHeight/m, because its fontSize is
+// fontSize/s. Never derive the lineHeight key from the button's own size label.
 const FONTSIZE_PRIM_VAR = { xs: 'fontSize/xs', s: 'fontSize/s', m: 'fontSize/s', l: 'fontSize/m' };
 const FONTSIZE_RESP_VAR = { xl: 'fontSize/l' };
 // fill/text — variant-keyed, not size-keyed. No entry for 'ghost' in fill (matches code: no
@@ -292,8 +302,18 @@ if (fillVar) comp.fills = [figma.variables.setBoundVariableForPaint(comp.fills[0
 const label = comp.findOne(n => n.type === 'TEXT' && n.name === 'button-label');
 const textVar = themeByName[TEXT_VAR[variant]];
 if (textVar) label.fills = [figma.variables.setBoundVariableForPaint(label.fills[0], 'color', textVar)];
-const fsVar = FONTSIZE_RESP_VAR[size] ? respByName[FONTSIZE_RESP_VAR[size]] : primByName[FONTSIZE_PRIM_VAR[size]];
+const isResponsive = !!FONTSIZE_RESP_VAR[size];
+const fsVar = isResponsive ? respByName[FONTSIZE_RESP_VAR[size]] : primByName[FONTSIZE_PRIM_VAR[size]];
 label.setBoundVariable('fontSize', fsVar); // font must be loaded on the label first — see figma-use skill
+
+// lineHeight MUST be bound alongside fontSize, every time — derive its key from the fontSize variable's
+// OWN resolved name (fsVar.name), not from `size`, since component.button.fontSize.* reuses primitive keys
+// across button sizes (see the FONTSIZE_PRIM_VAR note above) and the lineHeight pairing follows the
+// fontSize key, not the button size label. Same collection as fsVar — Responsive if fontSize crossed the
+// 18px threshold, Primitives otherwise.
+const fsKey = fsVar.name.replace('fontSize/', '');
+const lhVar = isResponsive ? respByName[`lineHeight/${fsKey}`] : primByName[`lineHeight/${fsKey}`];
+label.setBoundVariable('lineHeight', lhVar);
 ```
 
 `paddingTop`/`paddingBottom` (always `0`) and the icon↔label `itemSpacing` (`8`) stay plain literals — they
@@ -324,6 +344,13 @@ Button has no min/max-width in CSS — leave as `null` per contract.
       directly — there is no `Component` collection to bind to instead
 - [ ] Label `fontSize` is *bound* to `Responsive` when the resolved size is `>= 18px`, `Primitives`
       otherwise (for Button, only size `xl` crosses the threshold) — never left as a plain number
+- [ ] Label `lineHeight` is *bound* too, to the SAME collection as `fontSize` and to the key `fontSize`'s
+      own variable resolved to (not the button's size label — `m` resolves to `fontSize/s`, so its
+      lineHeight is `lineHeight/s`, not `lineHeight/m`) — check `boundVariables.lineHeight` on the node
+      explicitly. **This is the single most missed step in this whole phase** — the rendered pixel value
+      looks fine either way (Figma's font-size default line-height is close to the token value), so a
+      completely unbound `lineHeight` on every label across every size/variant/state was shipped and went
+      unnoticed until checked via the API, not the render
 
 ### Phase 3 — Create COMPONENT_SET
 
