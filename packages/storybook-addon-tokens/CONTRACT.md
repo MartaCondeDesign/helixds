@@ -19,11 +19,12 @@ Each token item must follow this shape:
 }
 ```
 
-`axis` only matters for `kind: 'space'` rows in the `spacing` category (see the live-highlight table
-below) — it records which direction the gap actually runs in the component's real layout (a
-`flex-direction: column` gap is `'vertical'`, a row gap is `'horizontal'`), so the dimension line draws
-the correct way instead of assuming horizontal. `sizing` rows never need it — sizing is always the
-component's own vertical extent, hard-coded, not configurable per row.
+For `spacing` rows, `axis` records which direction the gap actually runs in the component's real layout
+(a `flex-direction: column` gap is `'vertical'`, a row gap is `'horizontal'`), so the dimension line draws
+the correct way instead of assuming horizontal — set it on every `spacing` row. `sizing` rows almost never
+need it (sizing defaults to `'vertical'` — the component's own height, which is what "sizing" means in
+nearly every case) — only set `axis: 'horizontal'` on a `sizing` row when the token is genuinely a *width*
+measurement (e.g. Switch's track width), never for height/box-size tokens.
 
 Tabs appear above the table, always in this order, and only when the current story has
 at least one token of that kind: **Color, Typography, Spacing, Radius, Sizing, Shadows**.
@@ -99,6 +100,16 @@ Rules:
   `input-field` carries value text + height, `input-label` carries the label color), point
   each row at the *specific* part that CSS actually applies that property to — not a
   single root part for everything, even if the component also happens to have one.
+- **Two rows are allowed to share the exact same `part` + `token`/`value`** — e.g.
+  Textarea's `padding.top`/`padding.bottom`/`padding.start`/`padding.end` are all
+  genuinely the same `--helix-primitive-spacing-75` (uniform padding on every side). Only
+  `label` (plus `state`/`size`/`variant` when set) actually tells those rows apart, so
+  `rowKeyFor` in `register.js` builds its key from the full tuple
+  (`part, label, token ?? value, state, size, variant`) — never from `part` + `token`/`value`
+  alone. Regressing that key back to a shorter tuple silently merges every row with the
+  same token onto one `hoveredRow` string, so hovering any one of them re-highlights all
+  of them at once (confirmed with Textarea's padding rows) — check `rowKeyFor` first if a
+  hover ever seems to light up more than the one row the cursor is actually over.
 
 ## Hover → live-component highlight
 
@@ -118,11 +129,39 @@ change; `preview.js` finds the target element(s) via `[data-helix-part="<part>"]
 | `radius` | A `3px solid lilac` outline, **flush** to the edge — `outline-offset: 0` (`.helix-token-highlight-radius`) | Traces the rendered corner curve itself. An inset offset (an earlier version used `-3px`) reads as "there is padding/space here", which is a different token's job — radius is only ever about the corners |
 | `shadows` | `box-shadow` is overridden inline to a lilac elevation shadow | Shows the shadow's shape/spread in the highlight color, not just an unrelated outline |
 | `spacing` | A "dimension line" overlay, drawn on the row's own `axis` (`'horizontal'`/`'vertical'`, falls back to horizontal if unset), whose length equals the token's own resolved **px value** — never the component's own width/height, and **no outline** on the component itself. The pill label spells out the axis too (`"8px · H"`) | It's measuring a gap/inset, not the component — a line as long as the component would misrepresent an 8px gap as "however wide the button is"; an outline here would read as a `border` color highlight, which is a different token's job; and a spacing gap is genuinely NOT always horizontal (a `flex-direction: column` gap is vertical) |
-| `sizing` | Same dimension line, but **always vertical** — it spans the component's own **rendered height** (`getBoundingClientRect().height`), ignoring any `axis` field — also no outline | Sizing is always the component's own total vertical extent, by definition, never conditional on layout direction — the line should visibly span it, not an unrelated px count |
+| `sizing` | Same dimension line, defaulting to **vertical**, spanning the component's own **rendered height** (`getBoundingClientRect().height`) — also no outline. The one exception: a row explicitly tagged `axis: 'horizontal'` (a genuinely width-typed sizing token, e.g. Switch's track width) spans the component's **rendered width** instead | Sizing is the component's own total extent — height in the overwhelming majority of cases, so that's the default, but a handful of tokens really do measure width instead, and forcing those into a vertical line would show the wrong dimension entirely; the exception is opt-in per row, never guessed from the label |
 
 Dimension lines prefer drawing **outside** the component (right for `sizing`'s vertical
 line, bottom for `spacing`'s horizontal line) and only fall back to hugging the
-component's own edge from the inside when the viewport leaves no room outside.
+component's own edge from the inside when the viewport leaves no room outside — this
+outside/inside choice applies to `padding.*` rows (the container's own edge) and to
+`sizing`.
+
+**A `gap.*` row is positioned differently: precisely in the actual gap between the two
+children it measures**, not relative to the container's outer corner (`findGapChildren` /
+`tightContentRect` in `preview.js`). Two things make this harder than it sounds, both
+confirmed as real regressions along the way — check both if a gap indicator ever looks
+"floating" or disconnected from the real content again:
+1. **A flex child stretches to fill its parent's CROSS axis by default**
+   (`align-items: stretch`), regardless of the child's own `display`. A row nested inside a
+   `flex-direction: column` parent (e.g. Switch's track+label row, itself a child of the
+   column-flex `switch-root`) gets stretched to the parent's full WIDTH even though it's
+   `inline-flex` — its own `getBoundingClientRect()` reports that fake, stretched extent,
+   not where its content actually ends. `tightContentRect` corrects for this — but **only
+   on the CROSS axis** (width for a vertical gap, height for a horizontal one); the
+   measured axis itself is accurate on the plain rect and must be left alone. Correcting
+   both axes is wrong the other way: recursing into a `switch-track` button's single child
+   (the small thumb circle) to "tighten" its box would shrink the *track* — which is not
+   stretched and whose own outer box is the real visual pill shape — down to just the thumb.
+2. **A leaf with direct text (no element children, e.g. a `<span>` description) can't be
+   tightened via a children union** — there's nothing to recurse into. `tightContentRect`
+   falls back to `Range.selectNodeContents(el).getBoundingClientRect()` for those, which
+   measures the actually-rendered text instead of the (possibly also stretched) span's own
+   box.
+
+When `findGapChildren` can't find exactly two laid-out children on the container (e.g. an
+icon-only slot, or a padding row, or `isSizing`), it returns `null` and `drawDimensionLine`
+falls back to the generic container-relative line described in the table above.
 
 This depends on every component rendering `data-helix-part="<part>"` (matching the
 `part` used in its `.doc.ts` `tokens[]`, per the naming rule above) on the DOM node the

@@ -70,8 +70,16 @@ function getCategory(item) {
   return kind;
 }
 
+// Must be unique per row, not just per token — two rows can legitimately share the exact
+// same part+token (e.g. Textarea's padding.top/bottom/start/end are all the literal same
+// --helix-primitive-spacing-75, since the field has uniform padding on every side). Using
+// only part+token here previously collided those rows onto one key, so hovering any one of
+// them lit up all four at once (React `key` reuse + a single `hoveredRow` string matching
+// every row with that colliding key). `label` (plus state/size/variant, when set) is what
+// actually distinguishes them — always include it, never fall back to it only when token
+// is absent.
 function rowKeyFor(item) {
-  return `${item.part}:${item.token ?? item.value ?? item.label}`;
+  return [item.part, item.label, item.token ?? item.value ?? '', item.state ?? '', item.size ?? '', item.variant ?? ''].join('|');
 }
 
 // A row only shows when it matches what's actually on screen right now:
