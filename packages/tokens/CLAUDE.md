@@ -58,9 +58,14 @@ role, which is exactly what the naming overhaul (below) was fixing.
 **Adding or renaming a `primitive.fontSize.{key}` specifically:** always add/rename the matching
 `semantic.lineHeight.{key}` in the same change (same key name, e.g. a new `fontSize.7xl` needs a
 `lineHeight.7xl`) — see "Token layers" → `semantic.lineHeight` below for why. A fontSize rung with no
-paired lineHeight is an incomplete addition. If the new rung is `l` or larger, also add its
-`fontSize.mobile.{key}` (87.5% of the new value) and its `Responsive` collection entries — see
-`.ai/skills/tokens-to-figma.md` → Phase 7.
+paired lineHeight is an incomplete addition. In `tokens.json` this pairing is a unitless ratio
+(`tight`/`snug`/`normal`/`relaxed`). **In Figma it is not the same value** — `Semantic.lineHeight/{key}`
+must be created as the resolved `fontSize × ratio` in **px** (a literal, never an alias to
+`Primitives.lineHeight/{tight,snug,normal,relaxed}`), because Figma has no percent/ratio unit for a bound
+variable — see the Typography binding rule above. If the new rung is `l` or larger, also add its
+`fontSize.mobile.{key}` (87.5% of the new value) and its `Responsive.fontSize/{key}` +
+`Responsive.lineHeight/{key}` entries (3 modes each, `lineHeight` computed per-mode from that mode's
+fontSize × ratio, same px rule) — see `.ai/skills/tokens-to-figma.md` → Phase 7 for the exact script.
 
 ## Renaming or removing a token — mostly manual, check every one of these
 
@@ -145,27 +150,45 @@ the breakpoint feature did as a side effect.
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category), `Theme` (`semantic.color.*`, light/dark modes), `Semantic`
 (`semantic.radius.*` + `semantic.size.control.*` + `semantic.spacing.*` + `semantic.fontSize.mobile.*` +
-`semantic.lineHeight.*`), `Responsive` (mobile/tablet/desktop modes for `fontSize` and `lineHeight`,
-aliasing `Primitives`/`Semantic` — never a raw literal). Not one collection per `tokens.json` category —
+`semantic.lineHeight.*`), `Responsive` (desktop/tablet/mobile modes, in that creation order, for `fontSize`
+and `lineHeight`). `fontSize` aliases `Primitives`/`Semantic`, never a raw literal; `lineHeight` is the
+deliberate exception — see the Typography binding rule below for why. Not one collection per `tokens.json`
+category —
 but also, deliberately, **no `Component` collection**: `component.*` tokens live only in code. A Figma
 component like Button binds each property directly to whichever of the 4 collections above its matching
 `component.*` token resolves to in code (walk the alias chain by hand), never through an intermediate
 per-component Figma variable. See `.ai/skills/tokens-to-figma.md` → the note above Phase 9 for why that
 was tried and reverted.
 
-**Typography binding rule (Figma):** `fontSize` bindings — on a live node or Figma component — reference
-`Responsive` when the resolved `primitive.fontSize` is `>= 18px` (`l` and up), and `Primitives` directly
-below that (`xs`/`s`/`m`) — `Responsive` has no entry for those. **Figma Text Styles are the one exception:
-they always bind `fontSize` to `Primitives`, regardless of size** — a `TextStyle` can't pin a mode on a
-multi-mode collection like `Responsive`, so binding one to it makes Figma silently use whichever mode is
-first (`mobile`), showing the wrong value. `lineHeight` follows the same Responsive/Primitives split on
-live nodes, but **on a Text Style it's never bound at all** — Figma interprets a bound `lineHeight`
-variable as raw pixels, not the unitless ratio `semantic.lineHeight.*` stores, so Text Styles set
-`lineHeight` as a literal percent (`ratio * 100`) instead. `fontFamily`/`fontWeight` don't vary by
-breakpoint at any size, so they always reference `Primitives` directly — and unlike `lineHeight`, both ARE
-bound as real variables on Text Styles (`fontFamily` needs `Primitives.fontFamily/*` to hold a single real
-font name like `'Inter'`, not `tokens.json`'s CSS fallback stack — another Figma-side representation
-difference). See `.ai/skills/tokens-to-figma.md` → Phase 5 and Phase 6 for the full detail.
+**Typography binding rule (Figma, both directions — code→Figma and Figma→code) — the 18px threshold:**
+
+> **Rule: `fontSize` AND `lineHeight` bindings — on a live node, a Figma component, OR a Text Style, no
+> exception by node type — reference `Responsive` when the resolved `primitive.fontSize` is `>= 18px`
+> (`l` and up), and `Primitives`/`Semantic` directly below that (`xs`/`s`/`m`), because `Responsive` has no
+> entry for those rungs.** Applies identically to both properties — there's no case where `fontSize` uses
+> `Responsive` but its paired `lineHeight` doesn't, or vice versa. This governs new tokens too: adding a
+> `primitive.fontSize.{key} >= 18px` means its `semantic.lineHeight.{key}` also gets a `Responsive` entry,
+> not just a `Semantic` one — see "Adding a token" above.
+
+Two platform constraints make this actually work in Figma, both of which apply when creating a **new**
+token pair, not just reusing existing ones:
+
+1. **Mode ambiguity** — a `TextStyle` can't pin which mode of a multi-mode collection it reads, it always
+   resolves to mode 0. `Responsive`'s modes are created/ordered `desktop`/`tablet`/`mobile` (`desktop` =
+   mode 0, the default) so that a Text Style bound to `Responsive` shows the correct desktop/reference size
+   without needing to pin anything.
+2. **No percent/ratio unit for bound variables** — a `lineHeight` bound to a Figma Variable is always read
+   as **pixels**, never a percent or ratio. So `Semantic.lineHeight/*` and `Responsive.lineHeight/*` store
+   the **resolved px** (`fontSize × ratio`, computed per key and — for `Responsive` — per breakpoint mode),
+   never a raw ratio alias to `primitive.lineHeight.{tight,snug,normal,relaxed}` — aliasing to the ratio
+   would reproduce a "150px line-height on a 12px font" bug. `tokens.json`/CSS keeps
+   `semantic.lineHeight.*` as a unitless ratio (so `line-height: 1.5` scales with `font-size` in the
+   browser); the Figma variable diverges from that JSON value on purpose, same precedent as
+   `Primitives.fontFamily/*` diverging from the CSS fallback stack.
+
+`fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they always reference `Primitives`
+directly, with no threshold to apply. See `.ai/skills/tokens-to-figma.md` → Phase 5, Phase 6, and Phase 7
+for the full detail and the exact script pattern to follow when adding a new rung.
 
 See `.ai/skills/tokens-to-figma.md` → "Collection layout" for the full mapping, naming
 rules, and the alias-resolution algorithm.
