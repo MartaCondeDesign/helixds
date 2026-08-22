@@ -183,3 +183,37 @@ export const Shadows: Story = {
     </div>
   )],
 };
+
+// ── Motion ───────────────────────────────────────────────────────────────
+
+export const Motion: Story = {
+  render: () => (
+    <div>
+      <SectionHead title="Duration" />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 32 }}>
+        {(['instant', 'fast', 'base', 'slow', 'slower']).map(key => (
+          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <span style={{ ...label12, width: 60, flexShrink: 0, textAlign: 'right' }}>{key}</span>
+            <code style={{ fontSize: 12, color: 'var(--helix-color-text-primary)' }}>
+              {`var(--helix-duration-${key})`}
+            </code>
+          </div>
+        ))}
+      </div>
+      <SectionHead title="Easing" />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        {(['base', 'in', 'out']).map(key => (
+          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <span style={{ ...label12, width: 60, flexShrink: 0, textAlign: 'right' }}>{key}</span>
+            <code style={{ fontSize: 12, color: 'var(--helix-color-text-primary)' }}>
+              {`var(--helix-easing-${key})`}
+            </code>
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'The tokens components actually bind to — see Foundation/Primitives → Motion for the interactive duration/easing demos.' } },
+  },
+};
