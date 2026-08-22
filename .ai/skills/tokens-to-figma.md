@@ -547,10 +547,15 @@ for (const [name, val, scopes] of typographyTokens) {
   v.setValueForMode(modeId, val);
 }
 
-// STRING vars (fontFamily) — same collection
+// STRING vars (fontFamily) — same collection. Figma-side values are the single, real, loadable font
+// name — NOT tokens.json's CSS fallback stack ("Inter, ui-sans-serif, system-ui, sans-serif"). A
+// TextStyle.setBoundVariable('fontFamily', v) call tries to load whatever string `v` holds as one font
+// name; the CSS fallback list isn't a real font and fails to load (and partially corrupts fontName.family
+// before throwing — fix with a manual `ts.fontName = {family, style}` reset if this happens). This is a
+// deliberate representation difference from the JSON/CSS value, same precedent as lineHeight below.
 const fontFamilies = {
-  'fontFamily/sans': 'Inter, ui-sans-serif, system-ui, sans-serif',
-  'fontFamily/mono': 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+  'fontFamily/sans': 'Inter',
+  'fontFamily/mono': 'SFMono-Regular',
 };
 for (const [name, value] of Object.entries(fontFamilies)) {
   const existing = figma.variables.getLocalVariables()
@@ -569,21 +574,31 @@ return { floatVars: typographyTokens.length, stringVars: Object.keys(fontFamilie
 
 Named `{role} / {weight}` — no system prefix. Inter font. Color NOT part of the style.
 
-**fontSize is bound to `Primitives.fontSize/{key}` for every style, never `Responsive`, regardless of the
-18px threshold that applies elsewhere (see Phase 7).** A `TextStyle` has no way to pin which mode of a
-multi-mode collection it reads — bind its `fontSize` to a `Responsive` variable and Figma silently uses
-whichever mode is first in that collection's mode list (`mobile`, in this file), not the desktop/reference
-size a Text Style is supposed to show. Binding straight to `Primitives` sidesteps the ambiguity entirely
-since `Primitives` only has one mode. This is a Text-Style-specific carve-out, not a reversal of the
-"fontSize should come from the closest/most-specific layer" principle — it's what applying that principle
-correctly looks like once you hit a mode-bound collection with no way to select a mode.
+**Bind `fontSize`, `fontFamily`, and `fontWeight` to `Primitives` — leave `lineHeight` as a literal
+PERCENT value.** All 4 typography properties should trace back to a token; 3 of the 4 can actually be
+bound as Figma Variables, one can't, for a real platform reason each:
 
-**lineHeight stays a literal PERCENT value — do NOT bind it to a variable.** `semantic.lineHeight.*`
-variables store a unitless ratio (`1.5`, `1.65`, etc., mirroring `primitive.lineHeight.*`). Binding a
-`TextStyle`'s `lineHeight` to that variable makes Figma read the raw number as **pixels**, not a ratio or
-percent — `ts.setBoundVariable('lineHeight', v)` where `v` resolves to `150` produces `150px` of line
-height on a 12px-14px body font, which is wildly wrong. Compute the percent from the ratio yourself
-(`ratio * 100`) and set it as a literal (`{unit: 'PERCENT', value: ratio * 100}`) instead.
+- **`fontSize`** → `Primitives.fontSize/{key}` for every style, never `Responsive`, regardless of the 18px
+  threshold that applies elsewhere (see Phase 7). A `TextStyle` has no way to pin which mode of a
+  multi-mode collection it reads — bind its `fontSize` to a `Responsive` variable and Figma silently uses
+  whichever mode is first in that collection's mode list (`mobile`, in this file), not the desktop/reference
+  size a Text Style is supposed to show. Binding straight to `Primitives` sidesteps the ambiguity entirely
+  since `Primitives` only has one mode.
+- **`fontFamily`** → `Primitives.fontFamily/sans`. This variable's Figma-side value is `'Inter'` — a single,
+  real, loadable font name — NOT `tokens.json`'s CSS fallback stack (`"Inter, ui-sans-serif, system-ui,
+  sans-serif"`). Binding to a variable holding the full CSS string throws `unloaded font "Inter,
+  ui-sans-serif..."` and can partially corrupt `fontName.family` before it throws — if that happens, reset
+  with a plain `ts.fontName = {family, style}` first. See Phase 5's note on why the Figma value diverges
+  from the JSON value here.
+- **`fontWeight`** → `Primitives.fontWeight/{regular,medium,semibold,bold}`, matched to the style's
+  `fontName.style` (`'Regular'`→`fontWeight/regular`, `'Semi Bold'`→`fontWeight/semibold`, etc.). Works
+  as a normal bind — no gotcha here.
+- **`lineHeight`** → stays a literal PERCENT value, never bound. `semantic.lineHeight.*` stores a unitless
+  ratio (`1.5`, `1.65`, etc., mirroring `primitive.lineHeight.*`). Binding a `TextStyle`'s `lineHeight` to
+  that variable makes Figma read the raw number as **pixels**, not a ratio or percent —
+  `ts.setBoundVariable('lineHeight', v)` where `v` resolves to `150` produces `150px` of line height on a
+  12px-14px body font, which is wildly wrong. Compute the percent yourself (`ratio * 100`) and set it as a
+  literal (`{unit: 'PERCENT', value: ratio * 100}`) instead.
 
 ```js
 async function createTextStyles() {
@@ -595,6 +610,7 @@ async function createTextStyles() {
   const primColl = figma.variables.getLocalVariableCollections().find(c => c.name === 'Primitives');
   const primByName = {};
   figma.variables.getLocalVariables().filter(v => v.variableCollectionId === primColl.id).forEach(v => { primByName[v.name] = v; });
+  const weightVarByStyle = { 'Regular': 'fontWeight/regular', 'Medium': 'fontWeight/medium', 'Semi Bold': 'fontWeight/semibold', 'Bold': 'fontWeight/bold' };
 
   // [name, family, style, fontSizeKey, lineHeightPercent]
   const textStyleDefs = [
@@ -622,8 +638,10 @@ async function createTextStyles() {
   for (const [name, family, style, fsKey, lineHPct] of textStyleDefs) {
     const ts = existing[name] || figma.createTextStyle();
     ts.name = name;
-    ts.fontName = { family, style };
-    ts.setBoundVariable('fontSize', primByName[`fontSize/${fsKey}`]); // Primitives, never Responsive — see note above
+    ts.fontName = { family, style }; // set BEFORE binding fontFamily/fontWeight — those calls need a loaded font on the style already
+    ts.setBoundVariable('fontSize', primByName[`fontSize/${fsKey}`]);
+    ts.setBoundVariable('fontFamily', primByName['fontFamily/sans']);
+    ts.setBoundVariable('fontWeight', primByName[weightVarByStyle[style]]);
     ts.lineHeight = { unit: 'PERCENT', value: lineHPct }; // literal, never bound — see note above
     // letterSpacing: set per-style if the design calls for it, e.g. -3% on large headings; 0 otherwise
   }
@@ -635,11 +653,11 @@ return { textStyles: figma.getLocalTextStyles().length };
 
 **Inter font style note:** use `'Semi Bold'` (with space), NOT `'SemiBold'`. Verify with `await figma.listAvailableFontsAsync()` if in doubt.
 
-**Naming collisions from a previous run with different spacing:** if `existing[name]` lookup silently
-fails to match (e.g. an earlier script created `'Body/s/Regular'` with no spaces, this one looks for
-`'Body / s / Regular'`), you get a duplicate style instead of an update. After running this phase, always
-list `figma.getLocalTextStyles().map(s => s.name)` and check for near-duplicates before moving on — don't
-just trust the count.
+**Naming instability warning:** during this file's history, `existing[name]` lookups have twice silently
+failed on a subset of styles and collapsed their name to `'Body/m/Regular'` (no spaces) instead of
+`'Body / m / Regular'`, even when no script explicitly renamed them — cause not fully diagnosed, possibly
+a Figma-side save/sync quirk. After every run of this phase, list
+`figma.getLocalTextStyles().map(s => s.name)` and check for missing spaces, not just the count.
 
 ---
 
@@ -911,3 +929,4 @@ Run Phase 9 and confirm the counts match:
 | `boundVariables.fontSize` (or other TEXT fields) is an array, not a single alias | TEXT nodes represent bound properties per styled segment | Read `boundVariables.fontSize[0].id`, not `boundVariables.fontSize.id` |
 | A `TextStyle`'s bound `fontSize` shows the wrong value (e.g. the mobile-scaled number on a style meant to show the desktop size) | Bound to a variable from a multi-mode collection (`Responsive`) — `TextStyle` has no way to pick a mode, so Figma silently uses the collection's first mode | Bind Text Style `fontSize` to a single-mode collection (`Primitives`) instead — see Phase 6 |
 | A `TextStyle`'s bound `lineHeight` renders absurdly large (e.g. `150px` on a 12px font) | `setBoundVariable('lineHeight', v)` interprets the variable's raw number as **pixels**, not percent or a ratio | Don't bind `lineHeight` on a `TextStyle` — compute `ratio * 100` and set `ts.lineHeight = {unit:'PERCENT', value}` as a literal instead — see Phase 6 |
+| `setBoundVariable('fontFamily', v)` throws `unloaded font "Inter, ui-sans-serif, system-ui..."` (and may leave `fontName.family` corrupted) | The bound variable held the CSS fallback stack from `tokens.json`, not a single real font name Figma can load | `Primitives.fontFamily/*` must store just `'Inter'` (etc.) for Figma purposes, diverging from the JSON's CSS value — see Phase 5. If corrupted, reset with `ts.fontName = {family, style}` |

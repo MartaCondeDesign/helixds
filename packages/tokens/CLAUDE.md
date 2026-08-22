@@ -161,12 +161,13 @@ multi-mode collection like `Responsive`, so binding one to it makes Figma silent
 first (`mobile`), showing the wrong value. `lineHeight` follows the same Responsive/Primitives split on
 live nodes, but **on a Text Style it's never bound at all** — Figma interprets a bound `lineHeight`
 variable as raw pixels, not the unitless ratio `semantic.lineHeight.*` stores, so Text Styles set
-`lineHeight` as a literal percent (`ratio * 100`) instead. See `.ai/skills/tokens-to-figma.md` → Phase 6
-and Phase 7 for the full detail. `fontFamily`/`fontWeight` don't vary by breakpoint at any size, so they
-always reference `Primitives`
-directly.
+`lineHeight` as a literal percent (`ratio * 100`) instead. `fontFamily`/`fontWeight` don't vary by
+breakpoint at any size, so they always reference `Primitives` directly — and unlike `lineHeight`, both ARE
+bound as real variables on Text Styles (`fontFamily` needs `Primitives.fontFamily/*` to hold a single real
+font name like `'Inter'`, not `tokens.json`'s CSS fallback stack — another Figma-side representation
+difference). See `.ai/skills/tokens-to-figma.md` → Phase 5 and Phase 6 for the full detail.
 
-See `.ai/skills/tokens-to-figma.md` → "Collection layout" and "Phase 10" for the full mapping, naming
+See `.ai/skills/tokens-to-figma.md` → "Collection layout" for the full mapping, naming
 rules, and the alias-resolution algorithm.
 
 ### Structure per token category
