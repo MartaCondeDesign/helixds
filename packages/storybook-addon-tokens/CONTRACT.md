@@ -2,6 +2,13 @@
 
 The Storybook addon reads `parameters.helixTokens` from the active story and renders a custom tab.
 
+Helix's own `data-helix-part`/`data-variant` DOM convention and lilac highlight color are
+just this addon's *defaults* — a project using this addon outside Helix can override both
+via `parameters.helixTokensConfig` in its own `.storybook/preview.ts`, with no fork
+required. See `README.md` → "Using this addon outside Helix" for the config shape; this
+file documents Helix's own usage of the contract (the default config), not the override
+mechanism itself.
+
 Each token item must follow this shape:
 
 ```ts

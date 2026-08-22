@@ -1,7 +1,7 @@
 import React from 'react';
 import { AddonPanel } from 'storybook/internal/components';
 import { addons, types, useStorybookApi } from '@storybook/manager-api';
-import { HELIX_HIGHLIGHT_EVENT } from './constants.js';
+import { HELIX_HIGHLIGHT_EVENT, resolveConfig } from './constants.js';
 
 const ADDON_ID = 'helix-ds/storybook-addon-tokens';
 const PANEL_ID = 'helix-ds/storybook-addon-tokens/panel';
@@ -20,14 +20,14 @@ const CATEGORY_LABELS = {
 // Panel-local UI accent — deliberately NOT the lilac used to highlight the live
 // component in the canvas. The panel's own tabs/row-hover stay on the ordinary
 // focus color so lilac reads as one unambiguous signal: "this is on the component".
-const PANEL_ACCENT = 'var(--helix-color-border-focus)';
-const PANEL_ACCENT_SOFT = 'color-mix(in srgb, var(--helix-color-border-focus) 14%, transparent)';
+const PANEL_ACCENT = 'var(--helix-color-border-focus, #3b82f6)';
+const PANEL_ACCENT_SOFT = 'color-mix(in srgb, var(--helix-color-border-focus, #3b82f6) 14%, transparent)';
 
 const TABLE_STYLE = {
   width: '100%',
   borderCollapse: 'collapse',
   marginTop: 16,
-  border: '1px solid var(--helix-color-border-neutral)',
+  border: '1px solid var(--helix-color-border-neutral, #e2e8f0)',
   borderRadius: 12,
   overflow: 'hidden',
   tableLayout: 'fixed',
@@ -40,16 +40,16 @@ const TH_STYLE = {
   fontWeight: 600,
   letterSpacing: '0.04em',
   textTransform: 'uppercase',
-  color: 'var(--helix-color-text-neutral-lightest)',
-  borderBottom: '1px solid var(--helix-color-border-neutral)',
-  borderRight: '1px solid var(--helix-color-border-neutral-light)',
+  color: 'var(--helix-color-text-neutral-lightest, #64748b)',
+  borderBottom: '1px solid var(--helix-color-border-neutral, #e2e8f0)',
+  borderRight: '1px solid var(--helix-color-border-neutral-light, #f1f5f9)',
 };
 
 const TD_STYLE = {
   padding: '10px 12px',
   verticalAlign: 'top',
-  borderRight: '1px solid var(--helix-color-border-neutral-light)',
-  borderBottom: '1px solid var(--helix-color-border-neutral-light)',
+  borderRight: '1px solid var(--helix-color-border-neutral-light, #f1f5f9)',
+  borderBottom: '1px solid var(--helix-color-border-neutral-light, #f1f5f9)',
 };
 
 function normalizeKind(kind) {
@@ -103,6 +103,10 @@ function TokensPanel({ active }) {
   // filtering narrows to the real default even before anyone touches a control.
   const currentArgs = { ...currentStory?.initialArgs, ...currentStory?.args };
   const tokens = currentStory?.parameters?.helixTokens ?? [];
+  // Lets a consuming project outside Helix point this addon at its own DOM/highlight
+  // convention via `parameters.helixTokensConfig`, without forking the addon — see
+  // constants.js. Defaults reproduce Helix's own current behavior exactly.
+  const config = resolveConfig(currentStory?.parameters);
   const [category, setCategory] = React.useState('color');
   const [hoveredRow, setHoveredRow] = React.useState(null);
   const channel = React.useMemo(() => addons.getChannel(), []);
@@ -118,7 +122,7 @@ function TokensPanel({ active }) {
     channel.emit(
       HELIX_HIGHLIGHT_EVENT,
       item
-        ? { part: item.part, variant: item.variant, category: getCategory(item), token: item.token, value: item.value, label: item.label, meta: item.meta, axis: item.axis }
+        ? { part: item.part, variant: item.variant, category: getCategory(item), token: item.token, value: item.value, label: item.label, meta: item.meta, axis: item.axis, config }
         : null,
     );
   }
@@ -177,12 +181,12 @@ function TokensPanel({ active }) {
               type: 'button',
               onClick: () => setCategory(item),
               style: {
-                border: `1px solid ${category === item ? PANEL_ACCENT : 'var(--helix-color-border-neutral)'}`,
+                border: `1px solid ${category === item ? PANEL_ACCENT : 'var(--helix-color-border-neutral, #e2e8f0)'}`,
                 borderRadius: 999,
                 padding: '4px 9px',
                 fontSize: 11,
-                background: category === item ? PANEL_ACCENT_SOFT : 'var(--helix-color-fill-surface)',
-                color: category === item ? PANEL_ACCENT : 'var(--helix-color-text-neutral)',
+                background: category === item ? PANEL_ACCENT_SOFT : 'var(--helix-color-fill-surface, #f8fafc)',
+                color: category === item ? PANEL_ACCENT : 'var(--helix-color-text-neutral, #0f172a)',
                 cursor: 'pointer',
                 font: 'inherit',
               },
@@ -202,7 +206,7 @@ function TokensPanel({ active }) {
                 'tr',
                 null,
                 React.createElement('th', { style: { ...TH_STYLE, width: showPreviewColumn ? '32%' : '38%' } }, 'Element'),
-                React.createElement('th', { style: { ...TH_STYLE, width: showPreviewColumn ? '48%' : undefined, borderRight: showPreviewColumn ? '1px solid var(--helix-color-border-neutral-light)' : 'none' } }, 'Token'),
+                React.createElement('th', { style: { ...TH_STYLE, width: showPreviewColumn ? '48%' : undefined, borderRight: showPreviewColumn ? '1px solid var(--helix-color-border-neutral-light, #f1f5f9)' : 'none' } }, 'Token'),
                 showPreviewColumn ? React.createElement('th', { style: { ...TH_STYLE, borderRight: 'none' } }, 'Preview') : null,
               ),
             ),
@@ -236,8 +240,8 @@ function TokensPanel({ active }) {
                             fontWeight: 600,
                             textTransform: 'uppercase',
                             letterSpacing: '0.03em',
-                            color: 'var(--helix-color-text-neutral-lightest)',
-                            border: '1px solid var(--helix-color-border-neutral)',
+                            color: 'var(--helix-color-text-neutral-lightest, #64748b)',
+                            border: '1px solid var(--helix-color-border-neutral, #e2e8f0)',
                             borderRadius: 4,
                             padding: '1px 5px',
                           },
@@ -248,12 +252,12 @@ function TokensPanel({ active }) {
                     'td',
                     { style: { ...TD_STYLE, borderRight: showPreviewColumn ? TD_STYLE.borderRight : 'none', overflow: 'hidden' } },
                     React.createElement('code', { style: { fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'block' } }, tokenText),
-                    item.meta ? React.createElement('span', { style: { display: 'block', marginTop: 2, fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' } }, item.meta) : null,
+                    item.meta ? React.createElement('span', { style: { display: 'block', marginTop: 2, fontSize: 11, color: 'var(--helix-color-text-neutral-lightest, #64748b)' } }, item.meta) : null,
                   ),
                   showPreviewColumn
                     ? React.createElement(
                         'td',
-                        { style: { padding: '10px 12px', verticalAlign: 'middle', borderBottom: '1px solid var(--helix-color-border-neutral-light)' } },
+                        { style: { padding: '10px 12px', verticalAlign: 'middle', borderBottom: '1px solid var(--helix-color-border-neutral-light, #f1f5f9)' } },
                         React.createElement('span', {
                           title: item.token ? `var(${item.token})` : item.value ?? '',
                           style: {
@@ -261,7 +265,7 @@ function TokensPanel({ active }) {
                             width: 28,
                             height: 28,
                             borderRadius: 8,
-                            border: '1px solid var(--helix-color-border-neutral)',
+                            border: '1px solid var(--helix-color-border-neutral, #e2e8f0)',
                             backgroundColor: item.token ? `var(${item.token})` : item.value ?? '',
                           },
                         }),
@@ -271,7 +275,7 @@ function TokensPanel({ active }) {
               }),
             ),
           )
-        : React.createElement('p', { style: { margin: '16px 0 0', color: 'var(--helix-color-text-neutral-light)' } }, 'No tokens defined for this category.'),
+        : React.createElement('p', { style: { margin: '16px 0 0', color: 'var(--helix-color-text-neutral-light, #475569)' } }, 'No tokens defined for this category.'),
     ),
   );
 }

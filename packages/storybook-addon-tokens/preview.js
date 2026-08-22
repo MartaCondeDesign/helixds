@@ -1,5 +1,5 @@
 import { addons } from '@storybook/preview-api';
-import { HELIX_HIGHLIGHT_EVENT, HELIX_HIGHLIGHT_COLOR, HELIX_HIGHLIGHT_COLOR_SOFT } from './constants.js';
+import { HELIX_HIGHLIGHT_EVENT, HELIX_HIGHLIGHT_COLOR, DEFAULT_CONFIG } from './constants.js';
 
 const OUTLINE_CLASS = 'helix-token-highlight';
 const RADIUS_CLASS = 'helix-token-highlight-radius';
@@ -41,22 +41,22 @@ function clearAll() {
   if (overlay) overlay.remove();
 }
 
-function findTargets(part, variant) {
+function findTargets(part, variant, config) {
   const root = document.getElementById('storybook-root') || document.body;
-  const scoped = variant ? root.querySelectorAll(`[data-helix-part="${part}"][data-variant="${variant}"]`) : [];
-  const list = scoped.length ? scoped : root.querySelectorAll(`[data-helix-part="${part}"]`);
+  const scoped = variant ? root.querySelectorAll(`[${config.dataAttribute}="${part}"][${config.variantAttribute}="${variant}"]`) : [];
+  const list = scoped.length ? scoped : root.querySelectorAll(`[${config.dataAttribute}="${part}"]`);
   return Array.from(list);
 }
 
 // Typography rows point at a component's root part (e.g. "button"), but the text actually
 // lives on a more specific descendant ("button-label"). Narrow to it via the same -label/
 // -description/-error/... suffix convention every component's DOM already follows.
-function refineTypographyTarget(root, item) {
+function refineTypographyTarget(root, item, config) {
   const text = `${item.label ?? ''} ${item.meta ?? ''}`.toLowerCase();
   const suffixes = ['label', 'description', 'error', 'placeholder', 'value', 'counter'];
   for (const suffix of suffixes) {
     if (text.includes(suffix)) {
-      const el = root.querySelector(`[data-helix-part$="-${suffix}"]`);
+      const el = root.querySelector(`[${config.dataAttribute}$="-${suffix}"]`);
       if (el) return el;
     }
   }
@@ -73,9 +73,19 @@ function overrideInlineStyle(el, property, value, important) {
   });
 }
 
-function addClass(el, className) {
+// The injected .helix-token-highlight/-radius classes (ensureStyle, below) are static CSS
+// authored once at module load using the DEFAULT highlight color — they can't read a
+// per-hover `config.highlightColor` override directly. When a payload configures a
+// different color, this nudges it in via an inline !important outline-color instead of
+// forking the stylesheet per call.
+function addClass(el, className, color) {
   el.classList.add(className);
-  cleanupFns.push(() => el.classList.remove(className));
+  const customColor = color && color !== HELIX_HIGHLIGHT_COLOR;
+  if (customColor) el.style.setProperty('outline-color', color, 'important');
+  cleanupFns.push(() => {
+    el.classList.remove(className);
+    if (customColor) el.style.removeProperty('outline-color');
+  });
 }
 
 function resolvePx(token, value) {
@@ -150,7 +160,7 @@ function findGapChildren(container, axis) {
   return rects;
 }
 
-function drawDimensionLine(el, px, axis, category, isGap) {
+function drawDimensionLine(el, px, axis, category, isGap, color) {
   const rect = el.getBoundingClientRect();
   const overlay = document.createElement('div');
   overlay.id = OVERLAY_ID;
@@ -159,11 +169,11 @@ function drawDimensionLine(el, px, axis, category, isGap) {
   overlay.style.zIndex = '2147483647';
   overlay.style.pointerEvents = 'none';
 
-  const line = (style) => `position:fixed; background:${HELIX_HIGHLIGHT_COLOR}; ${style}`;
+  const line = (style) => `position:fixed; background:${color}; ${style}`;
   const label = (left, top) => `
     position:fixed; left:${left}px; top:${top}px; transform:translateX(-50%);
     padding:2px 6px; font:600 11px/1.4 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-    color:#fff; background:${HELIX_HIGHLIGHT_COLOR}; border-radius:4px; white-space:nowrap;
+    color:#fff; background:${color}; border-radius:4px; white-space:nowrap;
   `;
   // Spells out the axis on the pill itself ("8px · H" / "32px · V") — the line's own
   // orientation already shows it visually, but the letter makes it unambiguous at a
@@ -281,33 +291,36 @@ function applyHighlight(payload) {
   clearAll();
   const { part, variant, category, token, value, label } = payload;
   if (!part) return;
-  const targets = findTargets(part, variant);
+  // Merge over DEFAULT_CONFIG (not just the payload) so a partial `helixTokensConfig`
+  // override (e.g. only `highlightColor` set) still gets the default dataAttribute/etc.
+  const config = { ...DEFAULT_CONFIG, ...(payload.config ?? {}) };
+  const targets = findTargets(part, variant, config);
   if (!targets.length) return;
 
   if (category === 'color') {
     targets.forEach(el => {
-      if (token) overrideInlineStyle(el, token, HELIX_HIGHLIGHT_COLOR, false);
-      else addClass(el, OUTLINE_CLASS);
+      if (token) overrideInlineStyle(el, token, config.highlightColor, false);
+      else addClass(el, OUTLINE_CLASS, config.highlightColor);
     });
     return;
   }
 
   if (category === 'typography') {
     targets.forEach(el => {
-      const target = refineTypographyTarget(el, payload);
-      overrideInlineStyle(target, 'color', HELIX_HIGHLIGHT_COLOR, true);
+      const target = refineTypographyTarget(el, payload, config);
+      overrideInlineStyle(target, 'color', config.highlightColor, true);
     });
     return;
   }
 
   if (category === 'radius') {
-    targets.forEach(el => addClass(el, RADIUS_CLASS));
+    targets.forEach(el => addClass(el, RADIUS_CLASS, config.highlightColor));
     return;
   }
 
   if (category === 'shadows') {
     targets.forEach(el => {
-      overrideInlineStyle(el, 'box-shadow', `0 8px 24px ${HELIX_HIGHLIGHT_COLOR_SOFT}, 0 2px 8px rgba(139, 92, 246, 0.55)`, true);
+      overrideInlineStyle(el, 'box-shadow', `0 8px 24px ${config.highlightColorSoft}, 0 2px 8px ${config.highlightColor}8c`, true);
     });
     return;
   }
@@ -318,7 +331,7 @@ function applyHighlight(payload) {
     const el = targets[0];
     const px = resolvePx(token, value);
     const isGap = typeof label === 'string' && label.startsWith('gap.');
-    if (px) drawDimensionLine(el, px, getAxis(payload), category, isGap);
+    if (px) drawDimensionLine(el, px, getAxis(payload), category, isGap, config.highlightColor);
     return;
   }
 }
