@@ -167,6 +167,8 @@ never get one. When creating or editing a `Theme`/`Semantic` variable (or a shad
 (`variable.description = '...'`, `effectStyle.description = '...'`) — don't leave the explanation only in
 code. `Primitives` variables should never have a `.description` set; if you find one, clear it
 (`variable.description = ''`) rather than leaving it, to match the code-side rule exactly.
+`tokens.json` remains the SSOT for the wording itself: if the text changes there, update Figma to match
+exactly, and do not invent a second wording in the Figma file.
 
 ---
 

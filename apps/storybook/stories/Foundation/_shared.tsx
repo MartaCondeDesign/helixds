@@ -24,18 +24,46 @@ export function SectionHead({ title }: { title: string }) {
   );
 }
 
+export function TableGroup({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div style={{ marginTop: 24 }}>
+      <h3 style={{
+        margin: '0 0 16px',
+        fontSize: 11,
+        fontWeight: 600,
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        color: 'var(--helix-color-text-neutral-lightest)',
+      }}>
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
+
 export function SpacingBar({ varName, tokenKey, val, dim, desc }: { varName: string; tokenKey: string; val: string; dim?: string; desc?: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
       <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{tokenKey}</span>
       <div style={{
-        height: 20, borderRadius: 3,
-        background: 'var(--helix-color-fill-primary)',
-        width: `var(${varName})`,
+        display: 'inline-block',
+        width: val,
         minWidth: dim === '0px' ? 1 : undefined,
-        opacity: dim === '0px' ? 0.2 : 1,
-        transition: 'width 0.2s',
-      }} />
+        height: 12,
+        borderRadius: 999,
+        background: 'var(--helix-color-fill-surface)',
+      }}>
+        <div style={{
+          width: '100%',
+          height: '100%',
+          borderRadius: 999,
+          background: 'var(--helix-color-fill-neutral)',
+          border: '1px solid var(--helix-color-border-neutral-dark)',
+          opacity: dim === '0px' ? 0.2 : 1,
+          transition: 'width 0.2s',
+        }} />
+      </div>
       <span style={{ ...label12, width: 40, textAlign: 'left' }}>{val}</span>
       {desc && <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{desc}</span>}
     </div>

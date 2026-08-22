@@ -50,6 +50,8 @@ role, which is exactly what the naming overhaul (below) was fixing.
    token objects throughout; never reformat one into multi-line just to add a field, and never run the
    whole file through a JSON pretty-printer to make an edit — that rewrites every token's formatting and
    produces a multi-thousand-line diff for a one-line change.
+   The same `$description` text is the SSOT for Figma variable `.description` and Storybook token copy:
+   do not author a second explanation elsewhere.
 3. Run `pnpm --filter @helix-ds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
 4. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
 5. **Update Figma** — add or rename the matching variable in the live file's `Theme` (or

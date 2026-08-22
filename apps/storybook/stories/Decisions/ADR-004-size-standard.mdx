@@ -1,0 +1,81 @@
+import { Meta } from '@storybook/blocks';
+import { StoryHeader } from '../_shared/StoryHeader';
+
+<Meta title="Decisions/ADR-004 — Size Standard" />
+
+<StoryHeader
+  title="ADR-004 — Size Standard"
+  description="A shared token-based size scale so that 'm' means the same physical height across all Helix components."
+/>
+
+**Date:** 2026-08-19  
+**Status:** Accepted  
+**Deciders:** Helix DS team
+
+---
+
+## Context
+
+Component sizes drift if every new component invents its own `s`, `m`, and `l` meaning.
+We want `m` to mean the same physical size wherever a component exposes that size.
+
+## Decision
+
+Helix uses a shared size standard expressed as **tokens**, not as a table of raw px tied to prop
+names. The tokens exist independently of any single component and can be reused without redefining
+a ladder each time:
+
+- `primitive.size.{50,75,100,125,150,175,200,225,250,300,350}` — generic scale, agnostic of any
+  component (`100` anchors to `16px`, the same anchor as `primitive.spacing`)
+- `semantic.size.control.{xs,s,m,l,xl}` — aliases `primitive.size.{100,150,200,250,300}`
+
+### Control scale (Button and button-like components)
+
+| Size | Token | Height |
+|------|-------|--------|
+| `xs` | `semantic.size.control.xs` | 16px |
+| `s`  | `semantic.size.control.s`  | 24px |
+| `m`  | `semantic.size.control.m`  | 32px |
+| `l`  | `semantic.size.control.l`  | 40px |
+| `xl` | `semantic.size.control.xl` | 48px |
+
+### Field scale (Input, Select, Textarea)
+
+| Size | Token | Height |
+|------|-------|--------|
+| `s` | `semantic.size.control.s` | 24px |
+| `m` | `semantic.size.control.m` | 32px |
+| `l` | `semantic.size.control.l` | 40px |
+
+Same tokens as Control — one shared source, fewer exposed rungs.
+
+### Documented exceptions (Badge, Chip)
+
+`Badge` and `Chip` use a local density model — their values still come from `primitive.size.*`,
+just not through `semantic.size.control`:
+
+| Component | `size` meaning | Local height |
+|-----------|----------------|--------------|
+| `Badge`   | padding density | `xs` = 20px (`primitive.size.125`), `s` = 24px (`primitive.size.150`) |
+| `Chip`    | padding density | `s` = 28px (`primitive.size.175`), `m` = 32px (`primitive.size.200`) |
+
+**Rules:**
+- Use the global scale by default.
+- `m` is the reference size — every component exposing 2+ sizes must include an `m` rung.
+- Exceptions must be explicit in the contract and must still alias `primitive.size.*` — a raw px literal with nothing behind it is not a valid exception.
+
+## Consequences
+
+**Positive**
+- `Button` stays visually aligned to its own scale; `Input`/`Select`/`Textarea` share tokens.
+- Compact components (`Badge`, `Chip`) stay compact without polluting the control scale, and still use real, traceable tokens.
+- New components always get an unambiguous `m` without re-litigating the scale.
+
+**Negative**
+- Exceptions (`Badge`, `Chip`) require explicit documentation in both the contract and this ADR to stay legible over time.
+
+## Contracts affected
+
+`contracts/components/Button.json`, `contracts/components/Input.json`,
+`contracts/components/Select.json`, `contracts/components/Badge.json`,
+`contracts/components/Chip.json`, and any future component that exposes a `size` prop.

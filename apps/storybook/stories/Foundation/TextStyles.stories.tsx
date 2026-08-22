@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SectionHead, StoryHeader, type TokenLeaf } from './_shared';
+import { StoryHeader, TableGroup, type TokenLeaf } from './_shared';
 // Imported directly from source so the description line below reflects $description automatically.
 // Note: primitive.fontSize.* has no $description by design (primitives never do — see
 // packages/tokens/CLAUDE.md "Adding a token"); semantic.lineHeight.* is the one that carries usage intent.
@@ -71,18 +71,63 @@ export const All: Story = {
   render: () => {
     const groups = ['Display', 'Heading', 'Body', 'Other'];
     return (
-      <div style={{ maxWidth: 700 }}>
+      <div style={{ maxWidth: 1020 }}>
         <StoryHeader
           title="Text Styles"
-          description="Named {role} / {size} / {weight} combinations mirroring the Figma Text Styles. fontFamily/fontWeight always bind to Primitives; fontSize/lineHeight bind to Responsive when ≥18px, Primitives below."
+          description="Named {role} / {size} / {weight} combinations mirroring the Figma Text Styles. fontFamily/fontWeight/fontSize/lineHeight bind to Primitives."
         />
-        {groups.map(g => (
-          <div key={g} style={{ marginBottom: 32 }}>
-            <SectionHead title={g} />
-            {STYLES.filter(([group]) => group === g).map(([, name, weight, sizeKey, sample]) => (
-              <TextStyleRow key={name} name={name} weight={weight} sizeKey={sizeKey} sample={sample} />
-            ))}
-          </div>
+        {groups.map((group) => (
+          <TableGroup key={group} title={group}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              marginTop: 0,
+              border: '1px solid var(--helix-color-border-neutral)',
+              borderRadius: 12,
+              overflow: 'hidden',
+            }}>
+              <thead>
+                <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Style</th>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Tokens</th>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Sample</th>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)' }}>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {STYLES.filter(([styleGroup]) => styleGroup === group).map(([styleGroup, name, weight, sizeKey, sample]) => (
+                  <tr key={name} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{name}</div>
+                    </td>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                      <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace', lineHeight: 1.6 }}>
+                        fontSize/{sizeKey}<br />
+                        lineHeight/{sizeKey}<br />
+                        fontWeight/{weight}
+                      </div>
+                    </td>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                      <span style={{
+                        fontFamily: 'var(--helix-primitive-fontFamily-sans)',
+                        fontSize: `var(--helix-primitive-fontSize-${sizeKey})`,
+                        fontWeight: `var(--helix-primitive-fontWeight-${weight})` as React.CSSProperties['fontWeight'],
+                        lineHeight: `var(--helix-lineHeight-${sizeKey})`,
+                        color: 'var(--helix-color-text-neutral)',
+                      }}>
+                        {sample}
+                      </span>
+                    </td>
+                    <td style={{ padding: '12px', verticalAlign: 'top' }}>
+                      <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)' }}>
+                        {semanticLineHeight[sizeKey]?.$description}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableGroup>
         ))}
       </div>
     );
@@ -90,7 +135,7 @@ export const All: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Named `{role} / {size} / {weight}` combinations — the same 16 styles defined as Figma Text Styles (fontFamily/fontWeight always bind to Primitives; fontSize/lineHeight bind to Responsive when ≥18px, Primitives below — see .ai/skills/tokens-to-figma.md → Phase 6). On the web, `--helix-primitive-fontSize-*` already carries the mobile override via the generated `@media (max-width: 767px)` block, so there\'s no separate "Responsive" CSS variable to switch — resize the viewport to see `l`-`6xl` styles respond.',
+        story: 'Named `{role} / {size} / {weight}` combinations — the same 16 styles defined as Figma Text Styles (fontFamily/fontWeight/fontSize/lineHeight bind to Primitives — see .ai/skills/tokens-to-figma.md → Phase 6).',
       },
     },
   },

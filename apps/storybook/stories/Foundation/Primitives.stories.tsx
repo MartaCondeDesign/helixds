@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { label12, SectionHead, SpacingBar, StoryHeader } from './_shared';
+import { label12, StoryHeader, TableGroup } from './_shared';
 
 const meta: Meta = {
   title: 'Foundation/Primitives',
@@ -40,7 +39,7 @@ export const Color: Story = {
   render: () => (
     <div>
       <StoryHeader
-        title="Primitives — Color"
+        title="Color"
         description="Raw color scales — 10 steps per family (50→900). Gray includes step 0 (white) and skips 800 in the display. Always use --helix-color-* (Semantic) in components, never these primitives directly."
       />
       <PaletteRow name="blue"      prefix="blue"      steps={SCALE_10} />
@@ -53,310 +52,77 @@ export const Color: Story = {
   ),
 };
 
-// ── Spacing ──────────────────────────────────────────────────────────────
-
-export const Spacing: Story = {
-  render: () => {
-    const steps: [string, string][] = [
-      ['0', '0px'], ['25', '4px'], ['50', '8px'], ['75', '12px'],
-      ['100', '16px'], ['125', '20px'], ['150', '24px'], ['175', '28px'],
-      ['200', '32px'], ['250', '40px'], ['300', '48px'], ['350', '56px'],
-      ['400', '64px'], ['500', '80px'], ['600', '96px'], ['800', '128px'],
-    ];
-    return (
-      <div>
-        <StoryHeader
-          title="Primitives — Spacing"
-          description="Percentage scale, 100 = 16px anchor. Never used directly in components — see Foundation/Semantic → Spacing for the t-shirt scale that actually gets consumed."
-        />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {steps.map(([key, val]) => (
-            <SpacingBar key={key} tokenKey={key} varName={`--helix-primitive-spacing-${key}`} val={val} dim={val} />
-          ))}
-        </div>
-      </div>
-    );
-  },
-};
-
-// ── Radius ───────────────────────────────────────────────────────────────
-
-export const Radius: Story = {
-  render: () => (
-    <div>
-      <StoryHeader title="Primitives — Radius" description="Radius has no primitive layer to show here — see Foundation/Semantic → Radius for the actual token set." />
-      <div style={{
-        padding: 20, borderRadius: 8,
-        background: 'var(--helix-color-fill-surface)',
-        border: '1px solid var(--helix-color-border-neutral-light)',
-        color: 'var(--helix-color-text-neutral-light)',
-        fontSize: 13, maxWidth: 480,
-      }}>
-        Radius has <strong>no primitive layer</strong> — there is nothing to alias underneath. The semantic
-        names (<code>none</code>, <code>xs</code>…<code>full</code>) ARE the scale. See Foundation/Semantic →
-        Radius for the actual token set.
-      </div>
-    </div>
-  ),
-};
-
 // ── Typography ───────────────────────────────────────────────────────────
 
 export const Typography: Story = {
   render: () => {
-    const sizes: [string, string, string][] = [
-      ['6xl', '64px', 'Display+'],
-      ['5xl', '56px', 'Display'],
-      ['4xl', '48px', 'H1'],
-      ['3xl', '40px', 'H2'],
-      ['2xl', '32px', 'H3'],
-      ['xl',  '24px', 'H4'],
-      ['l',   '18px', 'Body Large'],
-      ['m',   '14px', 'Body'],
-      ['s',   '12px', 'Small'],
-      ['xs',  '11px', 'Caption'],
+    const tables = [
+      {
+        title: 'Font size',
+        rows: [
+          { token: 'fontSize-6xl', value: '64px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-6xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-5xl', value: '56px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-5xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-4xl', value: '48px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-4xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-3xl', value: '40px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-3xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-2xl', value: '32px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-2xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-xl', value: '24px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-xl)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-l', value: '18px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-l)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-m', value: '14px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-m)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-s', value: '12px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+          { token: 'fontSize-xs', value: '11px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
+        ],
+      },
+      {
+        title: 'Font weights',
+        rows: [
+          { token: 'fontWeight-regular', value: '400', preview: <span style={{ fontSize: 18, fontWeight: 'var(--helix-primitive-fontWeight-regular)' }}>Helix DS</span> },
+          { token: 'fontWeight-medium', value: '500', preview: <span style={{ fontSize: 18, fontWeight: 'var(--helix-primitive-fontWeight-medium)' }}>Helix DS</span> },
+          { token: 'fontWeight-semibold', value: '600', preview: <span style={{ fontSize: 18, fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>Helix DS</span> },
+          { token: 'fontWeight-bold', value: '700', preview: <span style={{ fontSize: 18, fontWeight: 'var(--helix-primitive-fontWeight-bold)' }}>Helix DS</span> },
+        ],
+      },
+      {
+        title: 'Line height ratios',
+        rows: [
+          { token: 'lineHeight-tight', value: '1.2', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-tight)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-snug', value: '1.35', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-snug)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-normal', value: '1.5', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-normal)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-relaxed', value: '1.65', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-relaxed)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+        ],
+      },
+      {
+        title: 'Font families',
+        rows: [
+          { token: 'fontFamily-sans', value: 'Inter stack', preview: <div style={{ fontFamily: 'var(--helix-primitive-fontFamily-sans)', fontSize: 22, color: 'var(--helix-color-text-neutral)', lineHeight: 1.3 }}>The quick brown fox jumps over the lazy dog</div> },
+          { token: 'fontFamily-mono', value: 'Monospace stack', preview: <div style={{ fontFamily: 'var(--helix-primitive-fontFamily-mono)', fontSize: 22, color: 'var(--helix-color-text-neutral)', lineHeight: 1.3 }}>The quick brown fox jumps over the lazy dog</div> },
+        ],
+      },
     ];
     return (
       <div>
-        <StoryHeader title="Primitives — Typography" description="Font size, weight, line-height ratios, and font family — the raw building blocks. Never used directly in components; see Foundation/Semantic → Line height and Foundation/Text Styles for what's actually consumed." />
-        <SectionHead title="Font size" />
-        {sizes.map(([key, val, name], i) => (
-          <div key={key} style={{
-            display: 'flex', alignItems: 'baseline', gap: 24, paddingBlock: 14,
-            borderBottom: i < sizes.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
-          }}>
-            <div style={{ width: 130, flexShrink: 0 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)' }}>{name}</div>
-              <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace' }}>
-                fontSize-{key} · {val}
-              </div>
-            </div>
-            <span style={{
-              fontSize:   `var(--helix-primitive-fontSize-${key})`,
-              fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-              color:      'var(--helix-color-text-neutral)',
-              lineHeight: 'var(--helix-primitive-lineHeight-tight)',
-            }}>
-              The quick brown fox
-            </span>
-          </div>
+        <StoryHeader title="Typography" description="Font size, weight, line-height ratios, and font family — the raw building blocks." />
+        {tables.map((table) => (
+          <TableGroup key={table.title} title={table.title}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid var(--helix-color-border-neutral)', borderRadius: 12, overflow: 'hidden' }}>
+              <thead>
+                <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Token</th>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Value</th>
+                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Preview</th>
+                </tr>
+              </thead>
+              <tbody>
+                {table.rows.map((row) => (
+                  <tr key={row.token} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}><code style={{ fontSize: 12 }}>{row.token}</code></td>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.value}</td>
+                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.preview}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableGroup>
         ))}
-        <div style={{ marginTop: 32 }}>
-          <SectionHead title="Font weights" />
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
-            {[['regular','400'],['medium','500'],['semibold','600'],['bold','700']].map(([key, val]) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <span style={{
-                  fontSize: 18, color: 'var(--helix-color-text-neutral)',
-                  fontWeight: `var(--helix-primitive-fontWeight-${key})` as React.CSSProperties['fontWeight'],
-                }}>
-                  Helix DS
-                </span>
-                <span style={{ ...label12 }}>{key} · {val}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div style={{ marginTop: 32 }}>
-          <SectionHead title="Line height ratios" />
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
-            {([
-              ['tight',   '1.2',  'Headings'],
-              ['snug',    '1.35', ''],
-              ['normal',  '1.5',  'Body'],
-              ['relaxed', '1.65', ''],
-            ] as [string, string, string][]).map(([key, val, role]) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div style={{
-                  width: 140, padding: '8px 10px', borderRadius: 4,
-                  background: 'var(--helix-color-fill-surface)',
-                  border: '1px solid var(--helix-color-border-neutral-light)',
-                  fontSize: 13,
-                  lineHeight: `var(--helix-primitive-lineHeight-${key})`,
-                  color: 'var(--helix-color-text-neutral)',
-                }}>
-                  Helix DS<br />Type scale<br />Line height
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{key}</span>
-                  <span style={{ ...label12, textAlign: 'left' }}>{val}{role ? ` · ${role}` : ''}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-lightest)', marginTop: 12, maxWidth: 480 }}>
-            These 4 ratios are never used directly — see Foundation/Semantic → Line height for the actual
-            per-fontSize-key scale (<code>xs</code>…<code>6xl</code>) that components consume.
-          </p>
-        </div>
-        <div style={{ marginTop: 40 }}>
-          <SectionHead title="Font families" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            {([
-              ['sans', '--helix-primitive-fontFamily-sans', 'Inter, ui-sans-serif, system-ui, sans-serif'],
-              ['mono', '--helix-primitive-fontFamily-mono', 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace'],
-            ] as [string, string, string][]).map(([key, token, stack]) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
-                  <span style={{ ...label12, width: 36, textAlign: 'right', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{key}</span>
-                  <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral-light)' }}>{token}</span>
-                </div>
-                <div style={{ fontFamily: `var(${token})`, fontSize: 22, color: 'var(--helix-color-text-neutral)', lineHeight: 1.3, paddingLeft: 46 }}>
-                  The quick brown fox jumps over the lazy dog
-                </div>
-                <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace', paddingLeft: 46 }}>{stack}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// ── Shadows ──────────────────────────────────────────────────────────────
-
-export const Shadows: Story = {
-  render: () => {
-    const steps = ['none', 'xs', 's', 'm', 'l', 'xl'];
-    return (
-      <div>
-        <StoryHeader title="Primitives — Shadows" description="Raw elevation shadows. Never used directly in components — see Foundation/Semantic → Shadows for the scale that actually gets consumed." />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, background: 'var(--helix-color-fill-surface)', padding: 48, borderRadius: 12 }}>
-          {steps.map(s => (
-            <div key={s} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-              <div style={{
-                width: 100, height: 72,
-                background: 'var(--helix-color-fill-page)',
-                borderRadius: 8,
-                boxShadow: `var(--helix-primitive-shadow-${s})`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ ...label12, fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow-{s}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  },
-};
-
-// ── Motion ───────────────────────────────────────────────────────────────
-
-const DURATIONS: { name: string; ms: string; token: string }[] = [
-  { name: 'instant', ms: '0ms',   token: 'var(--helix-primitive-duration-instant)' },
-  { name: 'fast',    ms: '80ms',  token: 'var(--helix-primitive-duration-fast)' },
-  { name: 'base',    ms: '120ms', token: 'var(--helix-primitive-duration-base)' },
-  { name: 'slow',    ms: '200ms', token: 'var(--helix-primitive-duration-slow)' },
-  { name: 'slower',  ms: '300ms', token: 'var(--helix-primitive-duration-slower)' },
-];
-
-const EASINGS: { name: string; curve: string }[] = [
-  { name: 'base', curve: 'cubic-bezier(0.4, 0, 0.2, 1)' },
-  { name: 'in',   curve: 'cubic-bezier(0.4, 0, 1, 1)' },
-  { name: 'out',  curve: 'cubic-bezier(0, 0, 0.2, 1)' },
-];
-
-export const MotionDuration: Story = {
-  name: 'Motion — duration',
-  render: () => {
-    const [active, setActive] = useState<string | null>(null);
-    function toggle(name: string) {
-      setActive(prev => prev === name ? null : name);
-    }
-    return (
-      <div>
-        <StoryHeader
-          title="Primitives — Motion (duration)"
-          description="Click cards to toggle. Each card uses its own duration token — notice how fast instant is vs slower. Never used directly in components — see Foundation/Semantic → Motion for the tokens components actually bind to."
-        />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
-          {DURATIONS.map(d => {
-            const on = active === d.name;
-            return (
-              <button
-                key={d.name}
-                onClick={() => toggle(d.name)}
-                style={{
-                  width: 140, height: 110,
-                  borderRadius: 10, border: '2px solid',
-                  borderColor: on ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-neutral)',
-                  background: on ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-fill-surface)',
-                  color: on ? 'white' : 'var(--helix-color-text-neutral)',
-                  cursor: 'pointer',
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8,
-                  transition: `background ${d.token} var(--helix-primitive-easing-base),
-                               border-color ${d.token} var(--helix-primitive-easing-base),
-                               color ${d.token} var(--helix-primitive-easing-base)`,
-                }}
-              >
-                <span style={{ fontSize: 13, fontWeight: 600, fontFamily: 'monospace' }}>{d.name}</span>
-                <span style={{ fontSize: 12, opacity: 0.8 }}>{d.ms}</span>
-                <span style={{ fontSize: 11, opacity: 0.6 }}>{on ? 'on' : 'off'}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    );
-  },
-};
-
-export const MotionEasing: Story = {
-  name: 'Motion — easing',
-  render: () => {
-    const [running, setRunning] = useState(false);
-    const [tick,    setTick]    = useState(0);
-    function play() {
-      setTick(t => t + 1);
-      setRunning(true);
-      setTimeout(() => setRunning(false), 320);
-    }
-    return (
-      <div>
-        <StoryHeader
-          title="Primitives — Motion (easing)"
-          description="Press Play to animate all three at the same time. Same duration (slower), different easing. base = ease-in-out (most common). in = accelerates, feels snappy. out = decelerates, feels natural for elements entering the view."
-        />
-        <button
-          onClick={play}
-          style={{
-            marginBottom: 24, padding: '8px 20px', borderRadius: 8,
-            background: 'var(--helix-color-fill-primary)', color: 'white',
-            border: 'none', fontSize: 14, fontWeight: 600, cursor: 'pointer',
-          }}
-        >
-          ▶ Play
-        </button>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {EASINGS.map(e => (
-            <div key={e.name}>
-              <div style={{ fontSize: 12, fontWeight: 600, fontFamily: 'monospace', color: 'var(--helix-color-text-neutral)', marginBottom: 6 }}>
-                easing-{e.name}
-                <span style={{ fontWeight: 400, color: 'var(--helix-color-text-neutral-lightest)', marginLeft: 8 }}>{e.curve}</span>
-              </div>
-              <div style={{
-                height: 40, borderRadius: 8, position: 'relative', overflow: 'hidden',
-                background: 'var(--helix-color-fill-surface)',
-                border: '1px solid var(--helix-color-border-neutral-light)',
-              }}>
-                <div
-                  key={tick}
-                  style={{
-                    position: 'absolute',
-                    top: 4, width: 32, height: 32, borderRadius: 6,
-                    background: 'var(--helix-color-fill-primary)',
-                    left: running ? 'calc(100% - 36px)' : 4,
-                    transition: running
-                      ? `left var(--helix-primitive-duration-slower) var(--helix-primitive-easing-${e.name})`
-                      : 'none',
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     );
   },

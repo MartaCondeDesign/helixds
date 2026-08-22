@@ -1,0 +1,65 @@
+import { Meta } from '@storybook/blocks';
+import { StoryHeader } from '../_shared/StoryHeader';
+
+<Meta title="Decisions/ADR-003 — AI Infrastructure" />
+
+<StoryHeader
+  title="ADR-003 — AI Infrastructure"
+  description=".ai/ is the single source of truth for all AI agent context — skills, memory, maps, and config."
+/>
+
+**Date:** 2026-08-18  
+**Status:** Accepted  
+**Deciders:** Helix DS team
+
+---
+
+## Context
+
+Multiple AI tools need context about Helix DS (Claude Code, Gemini CLI, GitHub Copilot, Cursor).
+Without a single source of truth, each tool gets its own context file and they drift.
+
+## Decision
+
+**`.ai/` is the canonical source** for shared, tool-agnostic AI context. Whole-directory symlinks
+are used where the target tool has no local, machine-specific state to protect:
+
+- `.cursor/` → symlink to `.ai/` (Cursor has no other local state in that path)
+- `.claude/` stays a **real directory** — Claude Code keeps local files there
+  (`settings.local.json`, `launch.json`) that are per-machine and must not be overwritten
+
+Content types in `.ai/`:
+
+| Path | Purpose |
+|------|---------|
+| `CLAUDE.md` / `AGENTS.md` | Rules — always loaded; invariants the agent must respect |
+| `.ai/skills/*.md` | On-demand procedures in SPORT format |
+| `.ai/agents/*.agent.md` | Specialized agent definitions with frontmatter |
+| `.ai/memory/*.md` | Lessons accumulated from real sessions |
+| `.ai/maps/` | Canonical vocabularies (`prop-map.md`) |
+| `.ai/config.json` | Structured validation data, not narrative |
+
+**Two-audience principle:**
+- `.ai/` and `contributor-ai/` serve contributors (people building Helix itself)
+- `AGENTS.md` at root serves consumers (teams using `@helix-ds/*` in their own apps)
+
+**Multi-LLM installation:** a `setup:ai` script is intended to copy/link skills into
+`.claude/skills/`, `.gemini/skills/`, and `.github/copilot-instructions.md`.
+**Status: not yet implemented** — keep `.claude/skills/` in sync with `.ai/skills/` by hand until it ships.
+
+## Consequences
+
+**Positive**
+- Editing `.ai/skills/ds-component-creator.md` propagates to Cursor automatically (symlink).
+- `pnpm lint:ai` catches drift in `.ai/` structure in CI.
+
+**Negative**
+- `.claude/skills/` can silently drift from `.ai/skills/` until `setup:ai` is built.
+- On Windows, the `.cursor` symlink requires developer mode or Admin rights.
+
+**Open items**
+- Build the `setup:ai` script this ADR assumes exists.
+
+## Contracts affected
+
+None — this decision governs the repository's AI tooling infrastructure, not component contracts.

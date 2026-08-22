@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconFolder } from '@tabler/icons-react';
+import { Switch } from '@helix-ds/core';
 import { SectionHead, StoryHeader } from './_shared';
 // Imported directly from source (not dist/index.ts, which only holds resolved values) so this table
 // reflects $value (the primitive it aliases) and $description automatically on every token change —
@@ -25,46 +26,34 @@ function primitiveRef(value: string): string {
   return value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
 }
 
-// Resolves a "primitive.color.blue.600"-style path against tokensJson to its raw hex $value.
-function resolveHex(ref: string): string {
-  const node = ref.split('.').reduce<unknown>((acc, key) => (acc as Record<string, unknown> | undefined)?.[key], tokensJson);
-  const leaf = node as { $value?: string } | undefined;
-  return leaf?.$value ?? ref;
-}
-
 // ── Light/dark toggle wrapper ────────────────────────────────────────────
 // Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (packages/tokens/src/build.ts)
 // — setting the attribute on document.documentElement is what actually flips every --helix-color-* var.
 
-function ThemeToggle({ children }: { children: React.ReactNode }) {
+function ThemeToggle({ children }: { children: (theme: 'light' | 'dark', hexes: Record<string, string>) => React.ReactNode }) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [hexes, setHexes] = useState<Record<string, string>>({});
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    const next: Record<string, string> = {};
+    for (const [kind, group] of Object.entries(semanticColor)) {
+      for (const key of Object.keys(group)) {
+        const varName = `--helix-color-${kind}-${key}`;
+        next[`${kind}-${key}`] = getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || varName;
+      }
+    }
+    setHexes(next);
     return () => { document.documentElement.removeAttribute('data-theme'); };
   }, [theme]);
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
-        {(['light', 'dark'] as const).map(t => (
-          <button
-            key={t}
-            onClick={() => setTheme(t)}
-            style={{
-              padding: '6px 14px', borderRadius: 'var(--helix-radius-s)',
-              border: `1px solid var(--helix-color-border-${theme === t ? 'focus' : 'neutral'})`,
-              background: theme === t ? 'var(--helix-color-fill-primary-interactive-light-default)' : 'var(--helix-color-fill-surface)',
-              color: 'var(--helix-color-text-neutral)',
-              fontSize: 12, fontWeight: 600, cursor: 'pointer',
-            }}
-          >
-            {t}
-          </button>
-        ))}
+      <div style={{ marginBottom: 24 }}>
+        <Switch label="Dark mode" checked={theme === 'dark'} onChange={checked => setTheme(checked ? 'dark' : 'light')} />
       </div>
-      <div style={{ background: 'var(--helix-color-fill-page)', padding: 24, borderRadius: 12 }}>
-        {children}
+      <div style={{ background: 'var(--helix-color-fill-page)', borderRadius: 12 }}>
+        {children(theme, hexes)}
       </div>
     </div>
   );
@@ -112,10 +101,10 @@ const tdStyle: React.CSSProperties = {
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
 
-function ColorTable({ kind, tokens }: { kind: 'fill' | 'text' | 'icon' | 'border'; tokens: ColorGroup }) {
+function ColorTable({ kind, tokens, hexes }: { kind: 'fill' | 'text' | 'icon' | 'border'; tokens: ColorGroup; hexes: Record<string, string> }) {
   return (
     <table style={{
-      width: '100%', borderCollapse: 'collapse', marginBottom: 36,
+      width: '100%', borderCollapse: 'collapse', marginTop: 24, marginBottom: 36,
       border: '1px solid var(--helix-color-border-neutral)', borderRadius: 8, overflow: 'hidden',
     }}>
       <thead>
@@ -128,7 +117,7 @@ function ColorTable({ kind, tokens }: { kind: 'fill' | 'text' | 'icon' | 'border
       </thead>
       <tbody>
         {Object.entries(tokens).map(([key, tok]) => {
-          const hex = resolveHex(primitiveRef(tok.$value));
+          const hex = hexes[`${kind}-${key}`] ?? `--helix-color-${kind}-${key}`;
           return (
             <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}>
@@ -158,21 +147,21 @@ export const Color: Story = {
   render: () => (
     <div style={{ maxWidth: 760 }}>
       <StoryHeader
-        title="Theme — Color"
+        title="Color"
         description="Every semantic color token, the primitive it aliases, its resolved hex, and its usage description — all read live from tokens.json. Toggle light/dark below."
       />
-    <ThemeToggle>
-      <div>
-        <SectionHead title="Fill" />
-        <ColorTable kind="fill" tokens={semanticColor.fill} />
-        <SectionHead title="Text" />
-        <ColorTable kind="text" tokens={semanticColor.text} />
-        <SectionHead title="Icon" />
-        <ColorTable kind="icon" tokens={semanticColor.icon} />
-        <SectionHead title="Border" />
-        <ColorTable kind="border" tokens={semanticColor.border} />
-      </div>
-    </ThemeToggle>
+      <ThemeToggle>{(_, hexes) => (
+        <div>
+          <SectionHead title="Fill" />
+          <ColorTable kind="fill" tokens={semanticColor.fill} hexes={hexes} />
+          <SectionHead title="Text" />
+          <ColorTable kind="text" tokens={semanticColor.text} hexes={hexes} />
+          <SectionHead title="Icon" />
+          <ColorTable kind="icon" tokens={semanticColor.icon} hexes={hexes} />
+          <SectionHead title="Border" />
+          <ColorTable kind="border" tokens={semanticColor.border} hexes={hexes} />
+        </div>
+      )}</ThemeToggle>
     </div>
   ),
   parameters: {

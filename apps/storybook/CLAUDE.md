@@ -24,21 +24,34 @@ export const MyStory: Story = {
 
 - **Import `StoryHeader` from `apps/storybook/stories/_shared/StoryHeader.tsx`** — it's app-wide, not
   Foundation-specific, even though Foundation was the first place it was used.
-- **Title format**: `"{Group} — {Specific}"` for Foundation stories (e.g. `"Primitives — Spacing"`,
-  `"Semantic — Radius"`) so the header itself communicates which layer you're looking at, mirroring the
-  4-collection structure in Figma. For Component/Pattern stories, use the component or pattern name
-  directly (e.g. `"Button"`, `"Empty State"`).
+- **Title format: just the specific name, never repeat the group** — `"Color"`, `"Spacing"`, `"Radius"`,
+  not `"Primitives — Color"` or `"Semantic — Radius"`. The group (`Primitives`/`Semantic`/`Theme`/...) is
+  already shown by Storybook's own sidebar nesting (from `meta.title: 'Foundation/Primitives'`) and the
+  page breadcrumb — repeating it in the header is redundant, not clarifying. Same rule for Component/Pattern
+  stories: just the component or pattern name (e.g. `"Button"`, `"Empty State"`), never `"Components —
+  Button"`.
 - **Description**: one or two sentences — what the story shows and why it matters, not a restatement of
   the title. Reuse existing `parameters.docs.description.story` text where one already exists rather than
   writing a second, different description — and remove the now-redundant `parameters.docs.description`
   entry once the visible header carries the same text, so there's one source of truth, not two.
-- **Typography/spacing is fixed, do not improvise it** — `StoryHeader` matches the *actual rendered*
-  Component "Docs" page (confirmed against the live Badge docs page): title `32px` / **regular (400),
-  not bold** / margin-bottom `16px`; description `16px` / `400` / margin-bottom `24px`. Note this is
-  **not** the same as `@storybook/blocks`' theoretical default `Title`/`Subtitle` spec (which is
-  `700`/`20px` in the package source in isolation) — something in the cascade (Helix's own CSS, loaded
-  into the same docs iframe) changes what actually renders, so match the live page, not the package
-  source, if the two ever disagree again. This makes a component's autodocs page and any hand-built
+- **Typography/spacing/font-family is fixed, do not improvise it** — `StoryHeader` matches the
+  *actual rendered* Component "Docs" page, verified with computed styles pulled live from a running
+  Storybook instance (`localhost:6006`, Badge's docs page, `.sbdocs-title` `h1` and its following `p`)
+  via a Playwright inspection script, not read off the `@storybook/blocks` package source or recalled
+  from memory:
+  - Title (`h1`): `32px` / **`700` (bold)** / line-height `36px` / margin-bottom `16px`
+  - Description (`p` — a plain paragraph right after the `h1` on a real docs page, **not** an `h2`;
+    the visible `h2` there is the unrelated "Stories" section heading further down): `14px` / `400` /
+    line-height `24px` / margin-top `16px` / margin-bottom `16px`
+  - Font family: Storybook's own theme stack, `"Nunito Sans", -apple-system, ".SFNSText-Regular",
+    "San Francisco", "system-ui", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif` — the
+    docs chrome uses this regardless of Helix's own font tokens, since `StoryHeader` is mimicking that
+    chrome's look, not the component library's typography.
+
+  Earlier passes at this spec (both a source-only reverse-engineering pass, and a verbal
+  re-description) landed on different, wrong numbers each time — trust a live computed-style
+  measurement over either. If this ever drifts again, re-measure the live page rather than
+  re-deriving from source or memory. This makes a component's autodocs page and any hand-built
   story's Canvas view look like the same design system, not two different ones. If you need a visually
   different header for a specific story, that's a sign the content doesn't belong in `StoryHeader` —
   don't fork its styling inline.
@@ -64,7 +77,8 @@ when you need either of those, from `dist/index.ts` only when you need a plain r
 flat list of token categories:
 
 - `Primitives.stories.tsx` — raw, role-agnostic scales. Never what components actually bind to.
-- `Semantic.stories.tsx` — the tokens components actually consume. Shows `$description` for every token.
+- `Semantic.stories.tsx` — the tokens components actually consume. Shows `$description` for every token,
+  read directly from `packages/tokens/src/tokens.json` so the visible copy stays in sync with the source.
 - `Theme.stories.tsx` — semantic color only, with a working light/dark toggle
   (`document.documentElement.setAttribute('data-theme', ...)`, matching the `:root[data-theme="dark"]`
   selector `packages/tokens/src/build.ts` actually emits).
@@ -72,6 +86,15 @@ flat list of token categories:
   Styles.
 - `_shared.tsx` — helpers local to Foundation (`SectionHead`, `SpacingBar`, `DescCaption`, `TokenLeaf`).
   Not a `*.stories.tsx` file, so Storybook's glob doesn't pick it up as its own story.
+
+`packages/tokens/src/tokens.json` is the SSOT for semantic-token descriptions: if a `$description`
+changes there, Storybook should reflect it automatically by reading the same JSON, not by adding a
+second hardcoded explanation in the story file.
+
+## Component token tabs stay in Components only
+
+The `helixTokens` docs panel is for `Components/*` stories only. Do not add `helixTokens` to Foundation,
+Patterns, Pages, or other non-component stories, or the token tab will appear where it does not belong.
 
 A token category that exists in both `primitive.*` and `semantic.*` (color, spacing, shadow, motion) gets
 a section in both files. A category with no primitive layer (radius) or no semantic layer at time of

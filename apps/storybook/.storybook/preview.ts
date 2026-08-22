@@ -11,7 +11,7 @@ const preview: Preview = {
     // Sidebar order: Foundation → Icons → Components → Patterns → Pages
     options: {
       storySort: {
-        order: ['Foundation', 'Icons', 'Components', 'Patterns', 'Pages', '*'],
+        order: ['Getting Started', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages', '*'],
         method: 'alphabetical',
       },
     },

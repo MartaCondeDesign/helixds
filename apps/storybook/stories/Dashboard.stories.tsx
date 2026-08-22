@@ -94,30 +94,21 @@ function Sidebar() {
       {/* Nav items */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, padding: `0 var(--helix-primitive-spacing-50)` }}>
         {NAV_ITEMS.map(({ icon: Icon, label, active }) => (
-          <button
+          <Button
             key={label}
+            variant={active ? 'primary' : 'ghost'}
+            size="s"
+            icon={<Icon size={16} />}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--helix-primitive-spacing-50)',
-              padding: `var(--helix-primitive-spacing-37-5) var(--helix-primitive-spacing-50)`,
-              borderRadius: 'var(--helix-radius-m)',
-              border: 'none',
-              cursor: 'pointer',
-              background: active ? 'var(--helix-color-fill-primary-light)' : 'transparent',
-              color: active ? 'var(--helix-color-text-primary)' : 'var(--helix-color-text-neutral-light)',
-              fontWeight: active ? 'var(--helix-primitive-fontWeight-semibold)' : 'var(--helix-primitive-fontWeight-regular)',
-              fontSize: 'var(--helix-primitive-fontSize-s)',
+              justifyContent: 'flex-start',
               textAlign: 'left',
               width: '100%',
-              transition: 'background 100ms',
+              paddingInline: 'var(--helix-primitive-spacing-50)',
             }}
-            onMouseEnter={e => { if (!active) (e.currentTarget as HTMLButtonElement).style.background = 'var(--helix-color-fill-secondary)'; }}
-            onMouseLeave={e => { if (!active) (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}
+            aria-current={active ? 'page' : undefined}
           >
-            <Icon size={16} />
             {label}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -156,7 +147,7 @@ function Sidebar() {
             Admin
           </div>
         </div>
-        <IconDots size={15} color="var(--helix-color-text-neutral-lightest)" />
+        <Button variant="ghost" size="s" icon={<IconDots size={15} />} style={{ marginLeft: 'auto' }} />
       </div>
     </nav>
   );
@@ -204,24 +195,6 @@ function KpiCard({ label, value, delta, up }: { label: string; value: string; de
           {delta} vs last month
         </span>
       </div>
-    </div>
-  );
-}
-
-// ── Trend chip ─────────────────────────────────────────────────────────────
-
-function TrendChip({ value }: { value: string }) {
-  return (
-    <div style={{
-      display: 'inline-flex', alignItems: 'center', gap: 4,
-      padding: `2px var(--helix-primitive-spacing-50)`,
-      borderRadius: 'var(--helix-radius-full)',
-      background: 'var(--helix-color-fill-success-light)',
-    }}>
-      <IconTrendingUp size={11} color="var(--helix-color-text-success)" />
-      <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-success)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>
-        {value}
-      </span>
     </div>
   );
 }
@@ -280,41 +253,11 @@ function DashboardPage() {
             />
           </div>
           <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)' }}>
-            <button style={{
-              width: 32, height: 32,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 'var(--helix-radius-m)',
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: 'var(--helix-color-text-neutral-light)',
-            }}>
-              <IconBell size={17} />
-            </button>
-            <button style={{
-              width: 32, height: 32,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 'var(--helix-radius-m)',
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
-              color: 'var(--helix-color-text-neutral-light)',
-            }}>
-              <IconHelp size={17} />
-            </button>
-            <div style={{
-              width: 28, height: 28,
-              borderRadius: 'var(--helix-radius-full)',
-              background: 'var(--helix-color-fill-primary)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 'var(--helix-primitive-fontSize-xs)',
-              fontWeight: 'var(--helix-primitive-fontWeight-bold)',
-              color: 'var(--helix-color-text-inverse)',
-              marginLeft: 'var(--helix-primitive-spacing-25)',
-              cursor: 'pointer',
-            }}>
+            <Button variant="ghost" size="s" icon={<IconBell size={17} />} aria-label="Notifications" />
+            <Button variant="ghost" size="s" icon={<IconHelp size={17} />} aria-label="Help" />
+            <Button variant="primary" size="s" style={{ marginLeft: 'var(--helix-primitive-spacing-25)' }}>
               MC
-            </div>
+            </Button>
           </div>
         </header>
 
@@ -322,7 +265,7 @@ function DashboardPage() {
         <main style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'var(--helix-spacing-layout-s)',
+          padding: 'var(--helix-spacing-l)',
         }}>
 
           {/* Page header */}
@@ -330,7 +273,7 @@ function DashboardPage() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            marginBottom: 'var(--helix-spacing-component-xl)',
+            marginBottom: 'var(--helix-spacing-l)',
           }}>
             <div>
               <h1 style={{
@@ -352,7 +295,7 @@ function DashboardPage() {
               </p>
             </div>
             <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', alignItems: 'center' }}>
-              <TrendChip value="+2 this month" />
+              <Badge variant="success" icon={<IconTrendingUp size={11} />} label="+2 this month" />
               <Button variant="primary" size="s" icon={<IconPlus size={14} />}>
                 Invite member
               </Button>
@@ -362,9 +305,9 @@ function DashboardPage() {
           {/* KPIs */}
           <div style={{
             display: 'flex',
-            gap: 'var(--helix-spacing-component-m)',
+            gap: 'var(--helix-spacing-s)',
             flexWrap: 'wrap',
-            marginBottom: 'var(--helix-spacing-component-xl)',
+            marginBottom: 'var(--helix-spacing-l)',
           }}>
             <KpiCard label="Members"        value="6"    delta="+2"    up />
             <KpiCard label="Active"         value="4"    delta="+1"    up />
@@ -378,7 +321,7 @@ function DashboardPage() {
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: `var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)`,
-            marginBottom: 'var(--helix-spacing-component-m)',
+            marginBottom: 'var(--helix-spacing-s)',
             background: aiCtx ? 'var(--helix-color-fill-primary-light)' : 'var(--helix-color-fill-page)',
             border: '1px solid',
             borderColor: aiCtx ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-border-neutral)',
