@@ -184,11 +184,42 @@ function proposeNewName(componentKey: string, tokenPath: string): string {
   return toKebab(`${componentKey}.${tokenPath}`);
 }
 
+// ── split a token path into its property name and t-shirt size variant ─────────
+
+const SIZE_KEYS = new Set(['xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl']);
+
+/**
+ * Splits e.g. `height.s` -> { token: 'height', variant: 's' }, or `padding.x-l` (Button's
+ * fused axis+size key) -> { token: 'padding-x', variant: 'l' } — same shape Chip's
+ * `padding-x.m` already has, so both display identically here even before the underlying
+ * JSON is unified. Anything whose trailing segment ISN'T a recognized size key (a sub-part
+ * name like `title.fontWeight`, or a named gap like `gap.label`) is left untouched — those
+ * aren't size variants, splitting them would misrepresent what the value means.
+ */
+function splitVariant(tokenPath: string): { token: string; variant: string } {
+  const segments = tokenPath.split('.');
+  const last = segments[segments.length - 1];
+
+  if (SIZE_KEYS.has(last)) {
+    return { token: segments.slice(0, -1).join('.'), variant: last };
+  }
+
+  const fused = last.match(/^([a-z0-9]+)-(xs|s|m|l|xl|2xl|3xl|4xl|5xl|6xl)$/i);
+  if (fused) {
+    const [, axisPrefix, size] = fused;
+    const prefix = segments.slice(0, -1).join('.');
+    return { token: prefix ? `${prefix}-${axisPrefix}` : axisPrefix, variant: size };
+  }
+
+  return { token: tokenPath, variant: '--' };
+}
+
 // ── classify every component.* leaf into one row ────────────────────────────────
 
 type Row = {
   component: string;
   token: string;
+  variant: string;
   current: string;
   proposedToken: string;
   proposedValue: string;
@@ -253,7 +284,8 @@ for (const leaf of componentLeaves) {
       }
     }
 
-    rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposedToken, proposedValue });
+    const { token: displayToken, variant } = splitVariant(tokenPath);
+    rows[category].push({ component: componentName, token: displayToken, variant, current: resolved, proposedToken, proposedValue });
     continue;
   }
 
@@ -275,31 +307,42 @@ for (const leaf of componentLeaves) {
     }
   }
 
-  rows[category].push({ component: componentName, token: tokenPath, current: literal, proposedToken, proposedValue });
+  const { token: displayToken, variant } = splitVariant(tokenPath);
+  rows[category].push({ component: componentName, token: displayToken, variant, current: literal, proposedToken, proposedValue });
 }
 
+const SIZE_ORDER = [...SIZE_KEYS];
+
 for (const category of CATEGORY_ORDER) {
-  rows[category].sort((a, b) => (a.component + a.token).localeCompare(b.component + b.token));
+  rows[category].sort((a, b) => {
+    const byComponentToken = (a.component + a.token).localeCompare(b.component + b.token);
+    if (byComponentToken !== 0) return byComponentToken;
+    const ai = SIZE_ORDER.indexOf(a.variant);
+    const bi = SIZE_ORDER.indexOf(b.variant);
+    if (ai !== -1 && bi !== -1) return ai - bi; // logical xs/s/m/l/xl order, not alphabetical
+    return a.variant.localeCompare(b.variant);
+  });
 }
 
 // ── render as a fixed-width ASCII box table ─────────────────────────────────────
 
-const HEADERS = ['Component', 'Token', 'Current Value', 'Proposed Token', 'Proposed Value'] as const;
+const HEADERS = ['Component', 'Token', 'Variant Size', 'Current Value', 'Proposed Token', 'Proposed Value'] as const;
 
 const allRows = CATEGORY_ORDER.flatMap(c => rows[c]);
 const widths = [
   Math.max(HEADERS[0].length, ...allRows.map(r => r.component.length)),
   Math.max(HEADERS[1].length, ...allRows.map(r => r.token.length)),
-  Math.max(HEADERS[2].length, ...allRows.map(r => r.current.length)),
-  Math.max(HEADERS[3].length, ...allRows.map(r => r.proposedToken.length)),
-  Math.max(HEADERS[4].length, ...allRows.map(r => r.proposedValue.length)),
+  Math.max(HEADERS[2].length, ...allRows.map(r => r.variant.length)),
+  Math.max(HEADERS[3].length, ...allRows.map(r => r.current.length)),
+  Math.max(HEADERS[4].length, ...allRows.map(r => r.proposedToken.length)),
+  Math.max(HEADERS[5].length, ...allRows.map(r => r.proposedValue.length)),
 ];
 
 function hline(ch = '-'): string {
   return '+' + widths.map(w => ch.repeat(w + 2)).join('+') + '+';
 }
 
-function rowLine(cells: readonly [string, string, string, string, string]): string {
+function rowLine(cells: readonly [string, string, string, string, string, string]): string {
   return '| ' + cells.map((c, i) => c.padEnd(widths[i])).join(' | ') + ' |';
 }
 
@@ -320,7 +363,7 @@ for (const category of CATEGORY_ORDER) {
   if (rows[category].length === 0) continue;
   lines.push(categoryDivider(category));
   for (const r of rows[category]) {
-    lines.push(rowLine([r.component, r.token, r.current, r.proposedToken, r.proposedValue]));
+    lines.push(rowLine([r.component, r.token, r.variant, r.current, r.proposedToken, r.proposedValue]));
   }
   lines.push(hline());
 }

@@ -10,6 +10,14 @@ at all (typography), the component is a documented ADR-004 density exception (Ba
 past the shared scale's top rung (TopBar). Others are real gaps — a matching token exists and simply isn't
 wired up yet.
 
+**"Token" / "Variant Size" columns:** the t-shirt size variant (`xs`/`s`/`m`/`l`/`xl`...) is split out into
+its own column instead of staying glued to the property name — `Token: height`, `Variant Size: s` instead of
+`height.s` or `height-s` in one string. This also normalizes Button's `padding.x-l` (axis and size fused
+into one key, an inconsistency with the rest of the system) into the same shape as everywhere else:
+`Token: padding-x`, `Variant Size: l` — same display Chip's `padding-x.m` already had. A row with `--` in
+this column has no size variant at all (it's a single value, or the trailing segment is a sub-part name
+like `title`/`label`/`description`, not a size).
+
 **"Proposed Token" / "Proposed Value" columns:**
 
 - A real token name (e.g. `spacing-component-l`) + its value: this token already exists with the exact
@@ -58,72 +66,72 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 
 <!-- AUTO:ASCII_TABLE -->
 ```
-+------------+----------------------+--------------------+--------------------------+----------------+
-| Component  | Token                | Current Value      | Proposed Token           | Proposed Value |
-+============+======================+====================+==========================+================+
-+-------------------------------------------- TYPOGRAPHY --------------------------------------------+
-| Avatar     | fontWeight           | 600                | SS                       | --             |
-| Badge      | fontSize             | 11px               | SS                       | --             |
-| Badge      | fontWeight           | 600                | SS                       | --             |
-| Button     | fontSize.l           | 14px               | SS                       | --             |
-| Button     | fontSize.m           | 12px               | SS                       | --             |
-| Button     | fontSize.s           | 12px               | SS                       | --             |
-| Button     | fontSize.xl          | 18px               | SS                       | --             |
-| Button     | fontSize.xs          | 11px               | SS                       | --             |
-| Chip       | fontSize.m           | 13px               | chip-font-size-m (new)   | 13px           |
-| Chip       | fontSize.s           | 13px               | chip-font-size-s (new)   | 13px           |
-| Chip       | fontWeight           | 500                | SS                       | --             |
-| NavItem    | fontSize             | 12px               | SS                       | --             |
-| NavItem    | fontWeight           | 500                | SS                       | --             |
-| PageHeader | description.fontSize | 12px               | SS                       | --             |
-| PageHeader | title.fontSize.1     | 32px               | SS                       | --             |
-| PageHeader | title.fontSize.2     | 24px               | SS                       | --             |
-| PageHeader | title.fontWeight     | 700                | SS                       | --             |
-| StatCard   | delta.fontSize       | 11px               | SS                       | --             |
-| StatCard   | label.fontSize       | 11px               | SS                       | --             |
-| StatCard   | label.fontWeight     | 500                | SS                       | --             |
-| StatCard   | value.fontSize       | 40px               | SS                       | --             |
-| StatCard   | value.fontWeight     | 700                | SS                       | --             |
-| Table      | cell.fontSize        | 12px               | SS                       | --             |
-| Table      | header.fontSize      | 11px               | SS                       | --             |
-| Table      | header.fontWeight    | 600                | SS                       | --             |
-+------------+----------------------+--------------------+--------------------------+----------------+
-+---------------------------------------------- COLOR -----------------------------------------------+
-| Dialog     | overlay              | rgba(15,23,42,0.6) | NM                       | --             |
-+------------+----------------------+--------------------+--------------------------+----------------+
-+---------------------------------------------- BORDER ----------------------------------------------+
-| Chip       | border-width         | 1px                | chip-border-width (new)  | 1px            |
-+------------+----------------------+--------------------+--------------------------+----------------+
-+---------------------------------------------- MOTION ----------------------------------------------+
-| Button     | transition           | 120ms              | duration-base            | 120ms          |
-+------------+----------------------+--------------------+--------------------------+----------------+
-+--------------------------------------------- SPACING ----------------------------------------------+
-| Button     | padding.x-l          | 20px               | button-padding-x-l (new) | 20px           |
-| Button     | padding.x-m          | 16px               | spacing-component-l      | 16px           |
-| Button     | padding.x-s          | 12px               | spacing-component-m      | 12px           |
-| Button     | padding.x-xl         | 24px               | spacing-component-xl     | 24px           |
-| Button     | padding.x-xs         | 8px                | spacing-component-s      | 8px            |
-| Card       | padding              | 24px               | spacing-component-xl     | 24px           |
-| Chip       | gap.m                | 6px                | chip-gap-m (new)         | 6px            |
-| Chip       | gap.s                | 6px                | chip-gap-s (new)         | 6px            |
-| Chip       | padding-x.m          | 16px               | spacing-100              | 16px           |
-| Chip       | padding-x.s          | 12px               | spacing-75               | 12px           |
-| Dialog     | padding              | 24px               | spacing-component-xl     | 24px           |
-| Input      | gap.description      | 4px                | spacing-component-xs     | 4px            |
-| Input      | gap.label            | 4px                | spacing-component-xs     | 4px            |
-+------------+----------------------+--------------------+--------------------------+----------------+
-+----------------------------------------------- SIZE -----------------------------------------------+
-| Badge      | height.s             | 24px               | ADR                      | --             |
-| Badge      | height.xs            | 20px               | ADR                      | --             |
-| Checkbox   | size                 | 16px               | size-100                 | 16px           |
-| Chip       | height.m             | 32px               | ADR                      | --             |
-| Chip       | height.s             | 28px               | ADR                      | --             |
-| Radio      | size                 | 16px               | size-100                 | 16px           |
-| Switch     | height.m             | 20px               | size-125                 | 20px           |
-| Switch     | height.s             | 16px               | size-100                 | 16px           |
-| Switch     | thumb-size.m         | 16px               | size-100                 | 16px           |
-| Switch     | thumb-size.s         | 12px               | size-75                  | 12px           |
-| TopBar     | height               | 56px               | size-350 (FE)            | 56px           |
-+------------+----------------------+--------------------+--------------------------+----------------+
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
+| Component  | Token                | Variant Size | Current Value      | Proposed Token           | Proposed Value |
++============+======================+==============+====================+==========================+================+
++--------------------------------------------------- TYPOGRAPHY ----------------------------------------------------+
+| Avatar     | fontWeight           | --           | 600                | SS                       | --             |
+| Badge      | fontSize             | --           | 11px               | SS                       | --             |
+| Badge      | fontWeight           | --           | 600                | SS                       | --             |
+| Button     | fontSize             | xs           | 11px               | SS                       | --             |
+| Button     | fontSize             | s            | 12px               | SS                       | --             |
+| Button     | fontSize             | m            | 12px               | SS                       | --             |
+| Button     | fontSize             | l            | 14px               | SS                       | --             |
+| Button     | fontSize             | xl           | 18px               | SS                       | --             |
+| Chip       | fontSize             | s            | 13px               | chip-font-size-s (new)   | 13px           |
+| Chip       | fontSize             | m            | 13px               | chip-font-size-m (new)   | 13px           |
+| Chip       | fontWeight           | --           | 500                | SS                       | --             |
+| NavItem    | fontSize             | --           | 12px               | SS                       | --             |
+| NavItem    | fontWeight           | --           | 500                | SS                       | --             |
+| PageHeader | description.fontSize | --           | 12px               | SS                       | --             |
+| PageHeader | title.fontSize.1     | --           | 32px               | SS                       | --             |
+| PageHeader | title.fontSize.2     | --           | 24px               | SS                       | --             |
+| PageHeader | title.fontWeight     | --           | 700                | SS                       | --             |
+| StatCard   | delta.fontSize       | --           | 11px               | SS                       | --             |
+| StatCard   | label.fontSize       | --           | 11px               | SS                       | --             |
+| StatCard   | label.fontWeight     | --           | 500                | SS                       | --             |
+| StatCard   | value.fontSize       | --           | 40px               | SS                       | --             |
+| StatCard   | value.fontWeight     | --           | 700                | SS                       | --             |
+| Table      | cell.fontSize        | --           | 12px               | SS                       | --             |
+| Table      | header.fontSize      | --           | 11px               | SS                       | --             |
+| Table      | header.fontWeight    | --           | 600                | SS                       | --             |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
++------------------------------------------------------ COLOR ------------------------------------------------------+
+| Dialog     | overlay              | --           | rgba(15,23,42,0.6) | NM                       | --             |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
++----------------------------------------------------- BORDER ------------------------------------------------------+
+| Chip       | border-width         | --           | 1px                | chip-border-width (new)  | 1px            |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
++----------------------------------------------------- MOTION ------------------------------------------------------+
+| Button     | transition           | --           | 120ms              | duration-base            | 120ms          |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
++----------------------------------------------------- SPACING -----------------------------------------------------+
+| Button     | padding-x            | xs           | 8px                | spacing-component-s      | 8px            |
+| Button     | padding-x            | s            | 12px               | spacing-component-m      | 12px           |
+| Button     | padding-x            | m            | 16px               | spacing-component-l      | 16px           |
+| Button     | padding-x            | l            | 20px               | button-padding-x-l (new) | 20px           |
+| Button     | padding-x            | xl           | 24px               | spacing-component-xl     | 24px           |
+| Card       | padding              | --           | 24px               | spacing-component-xl     | 24px           |
+| Chip       | gap                  | s            | 6px                | chip-gap-s (new)         | 6px            |
+| Chip       | gap                  | m            | 6px                | chip-gap-m (new)         | 6px            |
+| Chip       | padding-x            | s            | 12px               | spacing-75               | 12px           |
+| Chip       | padding-x            | m            | 16px               | spacing-100              | 16px           |
+| Dialog     | padding              | --           | 24px               | spacing-component-xl     | 24px           |
+| Input      | gap.description      | --           | 4px                | spacing-component-xs     | 4px            |
+| Input      | gap.label            | --           | 4px                | spacing-component-xs     | 4px            |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
++------------------------------------------------------ SIZE -------------------------------------------------------+
+| Badge      | height               | xs           | 20px               | ADR                      | --             |
+| Badge      | height               | s            | 24px               | ADR                      | --             |
+| Checkbox   | size                 | --           | 16px               | size-100                 | 16px           |
+| Chip       | height               | s            | 28px               | ADR                      | --             |
+| Chip       | height               | m            | 32px               | ADR                      | --             |
+| Radio      | size                 | --           | 16px               | size-100                 | 16px           |
+| Switch     | height               | s            | 16px               | size-100                 | 16px           |
+| Switch     | height               | m            | 20px               | size-125                 | 20px           |
+| Switch     | thumb-size           | s            | 12px               | size-75                  | 12px           |
+| Switch     | thumb-size           | m            | 16px               | size-100                 | 16px           |
+| TopBar     | height               | --           | 56px               | size-350 (FE)            | 56px           |
++------------+----------------------+--------------+--------------------+--------------------------+----------------+
 ```
 <!-- /AUTO -->
