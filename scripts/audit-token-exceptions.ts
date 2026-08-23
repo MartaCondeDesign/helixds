@@ -33,6 +33,12 @@ const NO_FLAT_SEMANTIC_LAYER = new Set(['fontSize', 'fontWeight']);
 
 type KnownTag = 'ADR' | 'FE' | 'NM';
 
+const REASON_TEXT: Record<KnownTag, string> = {
+  ADR: 'ADR-004 exception',
+  FE: 'past top rung',
+  NM: 'reviewed one-off',
+};
+
 // Human judgment calls — the only hand-maintained data in this script. Add an entry
 // here when you consciously decide a token is a legitimate exception that the
 // mechanical rules below would otherwise mis-tag.
@@ -46,6 +52,12 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag; showAlias?: boolean }> =
   // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped
   // entirely below, per CLAUDE.md's token policy that width is deliberately not tokenized.
 };
+
+// The 3 possible outcomes, flagged with an emoji prefixed onto the "Current Value" cell:
+//  ✅ reviewed and correct as-is — no token change needed
+//  🚩 an existing token already has this exact value — should be reused
+//  🆕 no existing token matches — a new one is proposed
+type Flag = '✅' | '🚩' | '🆕';
 
 // ── tokens.json helpers ─────────────────────────────────────────────────────────
 
@@ -220,6 +232,7 @@ type Row = {
   component: string;
   token: string;
   variant: string;
+  flag: Flag;
   current: string;
   proposedToken: string;
   proposedValue: string;
@@ -260,55 +273,64 @@ for (const leaf of componentLeaves) {
     const primitiveCategory = target.split('.')[1];
     const resolved = resolveValue(leaf.path);
 
+    let flag: Flag;
     let proposedToken: string;
     let proposedValue: string;
     if (known) {
+      flag = '✅';
       if (known.showAlias) {
-        proposedToken = `${toShortTokenName(target)} (${known.tag})`;
+        proposedToken = `${toShortTokenName(target)} (${REASON_TEXT[known.tag]})`;
         proposedValue = resolved;
       } else {
-        proposedToken = known.tag;
+        proposedToken = REASON_TEXT[known.tag];
         proposedValue = '--';
       }
     } else if (NO_FLAT_SEMANTIC_LAYER.has(primitiveCategory) || !(primitiveCategory in tokens.semantic)) {
-      proposedToken = 'SS';
+      flag = '✅';
+      proposedToken = 'no semantic layer';
       proposedValue = '--';
     } else {
       const match = findMatchingValue(`semantic.${primitiveCategory}`, resolved);
       if (match) {
+        flag = '🚩';
         proposedToken = toShortTokenName(match);
         proposedValue = resolved;
       } else {
-        proposedToken = `${proposeNewName(componentKey, tokenPath)} (new)`;
+        flag = '🆕';
+        proposedToken = proposeNewName(componentKey, tokenPath);
         proposedValue = resolved;
       }
     }
 
     const { token: displayToken, variant } = splitVariant(tokenPath);
-    rows[category].push({ component: componentName, token: displayToken, variant, current: resolved, proposedToken, proposedValue });
+    rows[category].push({ component: componentName, token: displayToken, variant, flag, current: resolved, proposedToken, proposedValue });
     continue;
   }
 
   // raw literal — no alias at all
   const literal = String(leaf.value);
+  let flag: Flag;
   let proposedToken: string;
   let proposedValue: string;
   if (known) {
-    proposedToken = known.tag;
+    flag = '✅';
+    proposedToken = REASON_TEXT[known.tag];
     proposedValue = '--';
   } else {
     const match = findMatchingPrimitive(tokenPath, literal);
     if (match) {
+      flag = '🚩';
       proposedToken = toShortTokenName(match);
       proposedValue = literal;
     } else {
-      proposedToken = `${proposeNewName(componentKey, tokenPath)} (new)`;
+      flag = '🆕';
+      proposedToken = proposeNewName(componentKey, tokenPath);
       proposedValue = literal;
     }
   }
 
   const { token: displayToken, variant } = splitVariant(tokenPath);
-  rows[category].push({ component: componentName, token: displayToken, variant, current: literal, proposedToken, proposedValue });
+  rows[category].push({ component: componentName, token: displayToken, variant, flag, current: literal, proposedToken, proposedValue });
 }
 
 const SIZE_ORDER = [...SIZE_KEYS];
@@ -326,14 +348,31 @@ for (const category of CATEGORY_ORDER) {
 
 // ── render as a fixed-width ASCII box table ─────────────────────────────────────
 
+// The 3 flag emoji (✅🚩🆕) render as 2 terminal columns wide in a monospace font, but
+// JS string .length doesn't agree (surrogate-pair code points, or a variation selector) —
+// using .length for column math here would throw the whole table's alignment off by one
+// wherever a flag appears. displayWidth/padEndVisual measure and pad by rendered width instead.
+function displayWidth(s: string): number {
+  let width = 0;
+  for (const ch of s) {
+    width += /[\u{2600}-\u{27BF}\u{1F000}-\u{1FFFF}]/u.test(ch) ? 2 : 1;
+  }
+  return width;
+}
+
+function padEndVisual(s: string, targetWidth: number): string {
+  return s + ' '.repeat(Math.max(0, targetWidth - displayWidth(s)));
+}
+
 const HEADERS = ['Component', 'Token', 'Variant Size', 'Current Value', 'Proposed Token', 'Proposed Value'] as const;
 
 const allRows = CATEGORY_ORDER.flatMap(c => rows[c]);
+const currentValueCell = (r: Row) => `${r.flag} ${r.current}`;
 const widths = [
   Math.max(HEADERS[0].length, ...allRows.map(r => r.component.length)),
   Math.max(HEADERS[1].length, ...allRows.map(r => r.token.length)),
   Math.max(HEADERS[2].length, ...allRows.map(r => r.variant.length)),
-  Math.max(HEADERS[3].length, ...allRows.map(r => r.current.length)),
+  Math.max(HEADERS[3].length, ...allRows.map(r => displayWidth(currentValueCell(r)))),
   Math.max(HEADERS[4].length, ...allRows.map(r => r.proposedToken.length)),
   Math.max(HEADERS[5].length, ...allRows.map(r => r.proposedValue.length)),
 ];
@@ -343,7 +382,7 @@ function hline(ch = '-'): string {
 }
 
 function rowLine(cells: readonly [string, string, string, string, string, string]): string {
-  return '| ' + cells.map((c, i) => c.padEnd(widths[i])).join(' | ') + ' |';
+  return '| ' + cells.map((c, i) => padEndVisual(c, widths[i])).join(' | ') + ' |';
 }
 
 function categoryDivider(name: string): string {
@@ -363,7 +402,7 @@ for (const category of CATEGORY_ORDER) {
   if (rows[category].length === 0) continue;
   lines.push(categoryDivider(category));
   for (const r of rows[category]) {
-    lines.push(rowLine([r.component, r.token, r.variant, r.current, r.proposedToken, r.proposedValue]));
+    lines.push(rowLine([r.component, r.token, r.variant, currentValueCell(r), r.proposedToken, r.proposedValue]));
   }
   lines.push(hline());
 }
