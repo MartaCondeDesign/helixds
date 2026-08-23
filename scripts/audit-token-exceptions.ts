@@ -42,8 +42,9 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag; showAlias?: boolean }> =
   'chip.height-s': { tag: 'ADR' },
   'chip.height-m': { tag: 'ADR' },
   'topBar.height': { tag: 'FE', showAlias: true }, // beyond semantic.size's top rung — the alias itself is the proposal
-  'sideNav.width': { tag: 'NM' }, // standalone chrome dimension, no scale to belong to
   'dialog.overlay': { tag: 'NM' }, // one-off backdrop color, no reusable semantic role
+  // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped
+  // entirely below, per CLAUDE.md's token policy that width is deliberately not tokenized.
 };
 
 // ── tokens.json helpers ─────────────────────────────────────────────────────────
@@ -135,11 +136,12 @@ function pascalCase(componentKey: string): string {
 
 const CATEGORY_ORDER = [
   'TYPOGRAPHY',
-  'SIZE',
-  'SPACING',
-  'MOTION',
-  'BORDER',
   'COLOR',
+  'RADIUS',
+  'BORDER',
+  'MOTION',
+  'SPACING',
+  'SIZE',
   'SHADOW',
   'OTHER',
 ] as const;
@@ -147,13 +149,29 @@ type Category = (typeof CATEGORY_ORDER)[number];
 
 function categorize(tokenPath: string): Category {
   if (/fontSize|fontWeight|lineHeight/i.test(tokenPath)) return 'TYPOGRAPHY';
-  if (/padding|gap|margin/i.test(tokenPath)) return 'SPACING';
+  if (/radius/i.test(tokenPath)) return 'RADIUS';
   if (/border-width/i.test(tokenPath)) return 'BORDER';
+  if (/padding|gap|margin/i.test(tokenPath)) return 'SPACING';
   if (/height|width|thumb-size|(^|\.)size$/i.test(tokenPath)) return 'SIZE';
   if (/transition|duration/i.test(tokenPath)) return 'MOTION';
   if (/shadow/i.test(tokenPath)) return 'SHADOW';
   if (/color|overlay|fill|text|icon/i.test(tokenPath)) return 'COLOR';
   return 'OTHER';
+}
+
+/**
+ * Renders a full dotted token path as a short kebab-case name for the "Proposed Token"
+ * column — e.g. `semantic.color.text.neutral` -> `color-text-neutral`,
+ * `primitive.fontSize.xs` -> `font-size-xs`. Drops the `semantic.`/`primitive.` prefix
+ * since the doc's prose already explains that distinction; the short name reads faster
+ * in a dense table.
+ */
+function toShortTokenName(fullPath: string): string {
+  return fullPath
+    .replace(/^(semantic|primitive)\./, '')
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .toLowerCase()
+    .replace(/\./g, '-');
 }
 
 // ── classify every component.* leaf into one row ────────────────────────────────
@@ -162,11 +180,12 @@ type Row = { component: string; token: string; current: string; proposed: string
 
 const rows: Record<Category, Row[]> = {
   TYPOGRAPHY: [],
-  SIZE: [],
-  SPACING: [],
-  MOTION: [],
-  BORDER: [],
   COLOR: [],
+  RADIUS: [],
+  BORDER: [],
+  MOTION: [],
+  SPACING: [],
+  SIZE: [],
   SHADOW: [],
   OTHER: [],
 };
@@ -181,6 +200,11 @@ for (const leaf of componentLeaves) {
   const known = KNOWN_EXCEPTIONS[exceptionKey];
   const category = categorize(tokenPath);
 
+  // Per CLAUDE.md's token policy, min-/max-width is deliberately never tokenized — it's
+  // decided by the consumer/component/pattern in use, not a gap to fix. Height (and
+  // height-shaped `size` props like Checkbox/Radio) stay in this audit; width doesn't.
+  if (category === 'SIZE' && /width/i.test(tokenPath)) continue;
+
   if (isAlias(leaf.value)) {
     const target = leaf.value.slice(1, -1);
     if (target.startsWith('semantic.')) continue; // clean — fully semantic-aliased
@@ -191,12 +215,12 @@ for (const leaf of componentLeaves) {
 
     let proposed: string;
     if (known) {
-      proposed = known.showAlias ? `${target} (${resolved}) ${known.tag}` : `-- ${known.tag}`;
+      proposed = known.showAlias ? `${toShortTokenName(target)} (${resolved}) ${known.tag}` : `-- ${known.tag}`;
     } else if (NO_FLAT_SEMANTIC_LAYER.has(primitiveCategory) || !(primitiveCategory in tokens.semantic)) {
       proposed = '-- SS';
     } else {
       const match = findMatchingValue(`semantic.${primitiveCategory}`, resolved);
-      proposed = match ? `${match} (${resolved})` : '-- NM';
+      proposed = match ? `${toShortTokenName(match)} (${resolved})` : '-- NM';
     }
 
     rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposed });
@@ -210,7 +234,7 @@ for (const leaf of componentLeaves) {
     proposed = `-- ${known.tag}`;
   } else {
     const match = findMatchingPrimitive(tokenPath, literal);
-    proposed = match ? `${match} (${literal})` : '-- NM';
+    proposed = match ? `${toShortTokenName(match)} (${literal})` : '-- NM';
   }
 
   rows[category].push({ component: componentName, token: tokenPath, current: literal, proposed });
