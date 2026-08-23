@@ -37,10 +37,10 @@ type KnownTag = 'ADR' | 'FE' | 'NM';
 // here when you consciously decide a token is a legitimate exception that the
 // mechanical rules below would otherwise mis-tag.
 const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag; showAlias?: boolean }> = {
-  'badge.height-xs': { tag: 'ADR' },
-  'badge.height-s': { tag: 'ADR' },
-  'chip.height-s': { tag: 'ADR' },
-  'chip.height-m': { tag: 'ADR' },
+  'badge.height.xs': { tag: 'ADR' },
+  'badge.height.s': { tag: 'ADR' },
+  'chip.height.s': { tag: 'ADR' },
+  'chip.height.m': { tag: 'ADR' },
   'topBar.height': { tag: 'FE', showAlias: true }, // beyond semantic.size's top rung — the alias itself is the proposal
   'dialog.overlay': { tag: 'NM' }, // one-off backdrop color, no reusable semantic role
   // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped

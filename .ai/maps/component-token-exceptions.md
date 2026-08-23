@@ -108,11 +108,11 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Input      | gap.label            | 4px                | spacing-component-xs (4px)  |
 +------------+----------------------+--------------------+-----------------------------+
 +---------------------------------------- SIZE ----------------------------------------+
-| Badge      | height-s             | 24px               | -- ADR                      |
-| Badge      | height-xs            | 20px               | -- ADR                      |
+| Badge      | height.s             | 24px               | -- ADR                      |
+| Badge      | height.xs            | 20px               | -- ADR                      |
 | Checkbox   | size                 | 16px               | size-100 (16px)             |
-| Chip       | height-m             | 32px               | -- ADR                      |
-| Chip       | height-s             | 28px               | -- ADR                      |
+| Chip       | height.m             | 32px               | -- ADR                      |
+| Chip       | height.s             | 28px               | -- ADR                      |
 | Radio      | size                 | 16px               | size-100 (16px)             |
 | Switch     | height.m             | 20px               | size-125 (20px)             |
 | Switch     | height.s             | 16px               | size-100 (16px)             |

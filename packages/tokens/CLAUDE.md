@@ -301,10 +301,22 @@ tiers, per [ADR-004](../../docs/ADR/ADR-004-size-standard.md):
   "Choosing `m`".
 - `component.button.height.*` aliases the full `semantic.size.*` ladder; `input.height.*`/
   `select.height.*` alias its `s`/`m`/`l` subset.
-- `badge.height-*` and `chip.height-*` skip the semantic layer and alias `primitive.size.*` directly —
+- `badge.height.*` and `chip.height.*` skip the semantic layer and alias `primitive.size.*` directly —
   they're ADR-004's documented per-component exceptions (a local density model, not the shared control
   ladder), which is why they don't go through `semantic.size` — but they're still real token
   references, never an unreferenced px literal.
+
+**Size-variant tokens (`xs`/`s`/`m`/`l`/`xl`) are always a nested object, never a flat hyphenated key.**
+`component.{name}.height` is `{ "s": {...}, "m": {...} }`, not `"height-s"`/`"height-m"` as sibling keys —
+this matches `button.height.*`, `input.height.*`, `avatar.height.*`, `select.height.*`, and
+`switch.height.*`/`width.*`/`thumb-size.*`. `badge.height.*` and `chip.height.*` used the flat-hyphenated
+form until 2026-08-23; they were migrated to match everyone else once the inconsistency surfaced (Chip
+itself already used the nested form for `padding-x`/`gap`/`fontSize` — only its own `height` was the odd
+one out). The generated CSS var name is identical either way (`build.ts`'s `flatten()` joins every path
+segment with `-` regardless of nesting depth), so this is purely an authoring-consistency rule, not
+something that affects `dist/helix.css` output — but a flat hyphenated key that happens to end in a size
+suffix (e.g. a hypothetical `badge.border-width-thick`) is a different, legitimate case and not what this
+rule targets; it only applies where the varying part IS the size scale itself.
 
 ### Semantic naming vocabulary (decided 2026-08-21)
 
