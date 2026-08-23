@@ -8,11 +8,11 @@
  *    (this is the one place a judgment call — "this is an intentional ADR-004 density
  *    exception", "this is a one-off color" — gets recorded; everything else below is
  *    inferred purely from the data)
- *  - aliases `primitive.*` directly, category has no flat semantic layer -> `-- SC`
+ *  - aliases `primitive.*` directly, category has no flat semantic layer -> `-- SS`
  *  - aliases `primitive.*` directly, a same-category semantic token exists with the
- *    same resolved value -> that semantic token is proposed; no exact rung -> `-- SM`
+ *    same resolved value -> that semantic token is proposed; no exact rung -> `-- NM`
  *  - raw literal (no alias at all) -> proposes a same-value primitive if one exists,
- *    otherwise `-- SM`
+ *    otherwise `-- NM`
  *
  * Run: pnpm docs:token-exceptions
  * Wired into .husky/pre-commit so the doc can never drift from tokens.json.
@@ -31,7 +31,7 @@ const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
 //  - fontWeight: no semantic.fontWeight at all
 const NO_FLAT_SEMANTIC_LAYER = new Set(['fontSize', 'fontWeight']);
 
-type KnownTag = 'ADR' | 'FE' | 'SM';
+type KnownTag = 'ADR' | 'FE' | 'NM';
 
 // Human judgment calls — the only hand-maintained data in this script. Add an entry
 // here when you consciously decide a token is a legitimate exception that the
@@ -42,8 +42,8 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag; showAlias?: boolean }> =
   'chip.height-s': { tag: 'ADR' },
   'chip.height-m': { tag: 'ADR' },
   'topBar.height': { tag: 'FE', showAlias: true }, // beyond semantic.size's top rung — the alias itself is the proposal
-  'sideNav.width': { tag: 'SM' }, // standalone chrome dimension, no scale to belong to
-  'dialog.overlay': { tag: 'SM' }, // one-off backdrop color, no reusable semantic role
+  'sideNav.width': { tag: 'NM' }, // standalone chrome dimension, no scale to belong to
+  'dialog.overlay': { tag: 'NM' }, // one-off backdrop color, no reusable semantic role
 };
 
 // ── tokens.json helpers ─────────────────────────────────────────────────────────
@@ -193,10 +193,10 @@ for (const leaf of componentLeaves) {
     if (known) {
       proposed = known.showAlias ? `${target} (${resolved}) ${known.tag}` : `-- ${known.tag}`;
     } else if (NO_FLAT_SEMANTIC_LAYER.has(primitiveCategory) || !(primitiveCategory in tokens.semantic)) {
-      proposed = '-- SC';
+      proposed = '-- SS';
     } else {
       const match = findMatchingValue(`semantic.${primitiveCategory}`, resolved);
-      proposed = match ? `${match} (${resolved})` : '-- SM';
+      proposed = match ? `${match} (${resolved})` : '-- NM';
     }
 
     rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposed });
@@ -210,7 +210,7 @@ for (const leaf of componentLeaves) {
     proposed = `-- ${known.tag}`;
   } else {
     const match = findMatchingPrimitive(tokenPath, literal);
-    proposed = match ? `${match} (${literal})` : '-- SM';
+    proposed = match ? `${match} (${literal})` : '-- NM';
   }
 
   rows[category].push({ component: componentName, token: tokenPath, current: literal, proposed });

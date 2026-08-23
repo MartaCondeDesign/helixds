@@ -10,14 +10,14 @@ at all (typography), the component is a documented ADR-004 density exception (Ba
 past the shared scale's top rung (TopBar). Others are real gaps — a matching token exists and simply isn't
 wired up yet.
 
-**Codes used in the "Token propuesto" column:**
+**Codes used in the "Proposed Token" column:**
 
 | Code | Meaning |
 |------|---------|
-| `SC`  | No semantic layer exists at all for this category — correct as-is, not a gap |
+| `SS`  | No semantic layer exists at all for this category — correct as-is, not a gap |
 | `ADR` | Documented ADR-004 density exception (Badge/Chip height) — correct as-is |
 | `FE`  | Past the shared scale's top rung — already resolved one step further up `primitive.*` |
-| `SM`  | No match — no primitive or semantic token shares this exact value |
+| `NM`  | No match — no primitive or semantic token shares this exact value |
 
 Rows with a real token name in that column (not a code) are the actionable ones: the same resolved value
 already exists as a token, so re-aliasing is low-risk — same visual result, cleaner alias chain.
@@ -39,7 +39,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 - Runs automatically on every commit via `.husky/pre-commit` (after `verify:tokens`) — so the moment a new
   component's tokens land in `tokens.json`, this file reflects them in the same commit, no one has to
   remember to update it by hand.
-- When the auto-classifier tags a token in a way you disagree with (e.g. it lands as `SM` but you've decided
+- When the auto-classifier tags a token in a way you disagree with (e.g. it lands as `NM` but you've decided
   it's actually a deliberate exception like Badge/Chip height), add one line to `KNOWN_EXCEPTIONS` in
   `scripts/audit-token-exceptions.ts` and rerun — the doc follows.
 
@@ -51,31 +51,31 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Component  | Token                | Current Value      | Proposed Token                       |
 +============+======================+====================+======================================+
 +----------------------------------------- TYPOGRAPHY ------------------------------------------+
-| Avatar     | fontWeight           | 600                | -- SC                                |
-| Badge      | fontSize             | 11px               | -- SC                                |
-| Badge      | fontWeight           | 600                | -- SC                                |
-| Button     | fontSize.l           | 14px               | -- SC                                |
-| Button     | fontSize.m           | 12px               | -- SC                                |
-| Button     | fontSize.s           | 12px               | -- SC                                |
-| Button     | fontSize.xl          | 18px               | -- SC                                |
-| Button     | fontSize.xs          | 11px               | -- SC                                |
-| Chip       | fontSize.m           | 13px               | -- SM                                |
-| Chip       | fontSize.s           | 13px               | -- SM                                |
-| Chip       | fontWeight           | 500                | -- SC                                |
-| NavItem    | fontSize             | 12px               | -- SC                                |
-| NavItem    | fontWeight           | 500                | -- SC                                |
-| PageHeader | description.fontSize | 12px               | -- SC                                |
-| PageHeader | title.fontSize.1     | 32px               | -- SC                                |
-| PageHeader | title.fontSize.2     | 24px               | -- SC                                |
-| PageHeader | title.fontWeight     | 700                | -- SC                                |
-| StatCard   | delta.fontSize       | 11px               | -- SC                                |
-| StatCard   | label.fontSize       | 11px               | -- SC                                |
-| StatCard   | label.fontWeight     | 500                | -- SC                                |
-| StatCard   | value.fontSize       | 40px               | -- SC                                |
-| StatCard   | value.fontWeight     | 700                | -- SC                                |
-| Table      | cell.fontSize        | 12px               | -- SC                                |
-| Table      | header.fontSize      | 11px               | -- SC                                |
-| Table      | header.fontWeight    | 600                | -- SC                                |
+| Avatar     | fontWeight           | 600                | -- SS                                |
+| Badge      | fontSize             | 11px               | -- SS                                |
+| Badge      | fontWeight           | 600                | -- SS                                |
+| Button     | fontSize.l           | 14px               | -- SS                                |
+| Button     | fontSize.m           | 12px               | -- SS                                |
+| Button     | fontSize.s           | 12px               | -- SS                                |
+| Button     | fontSize.xl          | 18px               | -- SS                                |
+| Button     | fontSize.xs          | 11px               | -- SS                                |
+| Chip       | fontSize.m           | 13px               | -- NM                                |
+| Chip       | fontSize.s           | 13px               | -- NM                                |
+| Chip       | fontWeight           | 500                | -- SS                                |
+| NavItem    | fontSize             | 12px               | -- SS                                |
+| NavItem    | fontWeight           | 500                | -- SS                                |
+| PageHeader | description.fontSize | 12px               | -- SS                                |
+| PageHeader | title.fontSize.1     | 32px               | -- SS                                |
+| PageHeader | title.fontSize.2     | 24px               | -- SS                                |
+| PageHeader | title.fontWeight     | 700                | -- SS                                |
+| StatCard   | delta.fontSize       | 11px               | -- SS                                |
+| StatCard   | label.fontSize       | 11px               | -- SS                                |
+| StatCard   | label.fontWeight     | 500                | -- SS                                |
+| StatCard   | value.fontSize       | 40px               | -- SS                                |
+| StatCard   | value.fontWeight     | 700                | -- SS                                |
+| Table      | cell.fontSize        | 12px               | -- SS                                |
+| Table      | header.fontSize      | 11px               | -- SS                                |
+| Table      | header.fontWeight    | 600                | -- SS                                |
 +------------+----------------------+--------------------+--------------------------------------+
 +-------------------------------------------- SIZE ---------------------------------------------+
 | Badge      | height-s             | 24px               | -- ADR                               |
@@ -84,7 +84,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Chip       | height-m             | 32px               | -- ADR                               |
 | Chip       | height-s             | 28px               | -- ADR                               |
 | Radio      | size                 | 16px               | primitive.size.100 (16px)            |
-| SideNav    | width                | 224px              | -- SM                                |
+| SideNav    | width                | 224px              | -- NM                                |
 | Switch     | height.m             | 20px               | primitive.size.125 (20px)            |
 | Switch     | height.s             | 16px               | primitive.size.100 (16px)            |
 | Switch     | thumb-size.m         | 16px               | primitive.size.100 (16px)            |
@@ -94,14 +94,14 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | TopBar     | height               | 56px               | primitive.size.350 (56px) FE         |
 +------------+----------------------+--------------------+--------------------------------------+
 +------------------------------------------- SPACING -------------------------------------------+
-| Button     | padding.x-l          | 20px               | -- SM                                |
+| Button     | padding.x-l          | 20px               | -- NM                                |
 | Button     | padding.x-m          | 16px               | semantic.spacing.component-l (16px)  |
 | Button     | padding.x-s          | 12px               | semantic.spacing.component-m (12px)  |
 | Button     | padding.x-xl         | 24px               | semantic.spacing.component-xl (24px) |
 | Button     | padding.x-xs         | 8px                | semantic.spacing.component-s (8px)   |
 | Card       | padding              | 24px               | semantic.spacing.component-xl (24px) |
-| Chip       | gap.m                | 6px                | -- SM                                |
-| Chip       | gap.s                | 6px                | -- SM                                |
+| Chip       | gap.m                | 6px                | -- NM                                |
+| Chip       | gap.s                | 6px                | -- NM                                |
 | Chip       | padding-x.m          | 16px               | primitive.spacing.100 (16px)         |
 | Chip       | padding-x.s          | 12px               | primitive.spacing.75 (12px)          |
 | Dialog     | padding              | 24px               | semantic.spacing.component-xl (24px) |
@@ -112,10 +112,10 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Button     | transition           | 120ms              | semantic.duration.base (120ms)       |
 +------------+----------------------+--------------------+--------------------------------------+
 +------------------------------------------- BORDER --------------------------------------------+
-| Chip       | border-width         | 1px                | -- SM                                |
+| Chip       | border-width         | 1px                | -- NM                                |
 +------------+----------------------+--------------------+--------------------------------------+
 +-------------------------------------------- COLOR --------------------------------------------+
-| Dialog     | overlay              | rgba(15,23,42,0.6) | -- SM                                |
+| Dialog     | overlay              | rgba(15,23,42,0.6) | -- NM                                |
 +------------+----------------------+--------------------+--------------------------------------+
 ```
 <!-- /AUTO -->
