@@ -25,6 +25,7 @@ const meta: Meta<typeof Badge> = {
       options: ['xs', 's'],
     },
     label: { control: 'text' },
+    icon:  { control: false },
   },
 };
 
@@ -57,11 +58,11 @@ export const AllVariants: Story = {
 export const WithIcons: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="success" icon={<IconCheck size={10} />}         label="Verified" />
-      <Badge variant="warning" icon={<IconAlertTriangle size={10} />} label="Review" />
-      <Badge variant="danger"  icon={<IconX size={10} />}             label="Rejected" />
-      <Badge variant="info"    icon={<IconClock size={10} />}         label="Queued" />
-      <Badge variant="neutral" icon={<IconInfoCircle size={10} />}    label="Unknown" />
+      <Badge variant="success" icon={IconCheck}         label="Verified" />
+      <Badge variant="warning" icon={IconAlertTriangle} label="Review" />
+      <Badge variant="danger"  icon={IconX}             label="Rejected" />
+      <Badge variant="info"    icon={IconClock}         label="Queued" />
+      <Badge variant="neutral" icon={IconInfoCircle}    label="Unknown" />
     </div>
   ),
   parameters: {

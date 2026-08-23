@@ -36,6 +36,7 @@
     { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
     { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
     { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Non-interactive state." },
     { "name": "required", "type": "boolean", "default": false, "description": "Marks field as required." },
     { "name": "fullWidth", "type": "boolean", "default": false, "description": "Expands to container width." },
     { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the label visually but keeps it accessible." },
@@ -43,15 +44,16 @@
     { "name": "rows", "type": "number | undefined", "description": "Controls the visible row count." },
     { "name": "maxLength", "type": "number | undefined", "description": "Maximum number of characters allowed." },
     { "name": "resize", "type": "'none' | 'vertical' | 'horizontal' | 'both'", "default": "vertical", "description": "Native resize behavior." },
-    { "name": "showCount", "type": "boolean", "default": false, "description": "Shows a live character counter when maxLength is set." }
+    { "name": "showCount", "type": "boolean", "default": false, "description": "Shows a live character counter when maxLength is set." },
+    { "name": "onChange", "type": "React.ChangeEventHandler<HTMLTextAreaElement> | undefined", "description": "Value change handler. Also drives the live character counter." }
   ],
 
   "sizing": {
     "height": {
       "mode": "rows-driven",
-      "values": { "s": 32, "m": 36, "l": 40 },
+      "values": { "min": 32 },
       "unit": "px",
-      "note": "These values define the shared field density for the shell and typography. The visible height is additionally controlled by rows."
+      "note": "component.textarea.height aliases semantic.size.m (32px) and is applied as min-height on textarea-field — a floor, not a per-size ladder like Input/Select. `size` itself only changes font-size (s: --helix-primitive-fontSize-xs, m: base/default, l: --helix-primitive-fontSize-m); the visible height above the floor is controlled by the native `rows` attribute and `resize`."
     },
     "width": {
       "default": "hug",

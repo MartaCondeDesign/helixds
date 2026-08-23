@@ -1,16 +1,5 @@
 /** Machine-readable component documentation for the Helix Textarea. */
-
-export interface ComponentDoc {
-  name: string;
-  purpose: string;
-  contract: string;
-  a11y: string[];
-  variants: { name: string; description: string }[];
-  sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
-  features: string[];
-  examples: { label: string; code: string }[];
-}
+import type { ComponentDoc } from '../../lib/component-doc';
 
 export const doc: ComponentDoc = {
   name: 'Textarea',
@@ -46,6 +35,7 @@ export const doc: ComponentDoc = {
     { part: 'textarea-field', label: 'padding.start', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal' },
     { part: 'textarea-field', label: 'padding.end', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'horizontal' },
     { part: 'textarea-wrapper', label: 'textarea.root', token: '--helix-textarea-radius', kind: 'radius' },
+    { part: 'textarea-field', label: 'min-height', token: '--helix-textarea-height', kind: 'space', meta: 'Floor height (32px, semantic.size.m) — not a per-size ladder; visible height above it is rows-driven' },
     { part: 'textarea-root', label: 'display', value: 'flex' },
     { part: 'textarea-root', label: 'flex-direction', value: 'column' },
     { part: 'textarea-root', label: 'width', value: 'fit-content' },
@@ -61,7 +51,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'label / hideLabel — accessible label support',
-    'size — shared field scale: s=32px, m=36px, l=40px',
+    'size — changes font-size only (s/m/l); min-height is a single 32px floor (--helix-textarea-height), not a per-size ladder',
     'rows — controls visible height',
     'showCount + maxLength — live character counter',
     'resize — native resize behavior',

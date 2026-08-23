@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { cn } from '../../lib/utils';
+import { Icon } from '../Icon';
 import type { InputProps } from './Input.types';
 
 let idCounter = 0;
+
+const ICON_SIZE_BY_FIELD_SIZE = { s: 14, m: 16, l: 18 } as const;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -51,8 +54,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           data-loading={loading ? 'true' : undefined}
         >
           {icon && (
-            <span data-helix-part="input-icon" aria-hidden="true">
-              {icon}
+            <span data-helix-part="input-icon">
+              <Icon icon={icon} size={ICON_SIZE_BY_FIELD_SIZE[size]} stroke={1.5} />
             </span>
           )}
 
@@ -63,6 +66,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-size={size}
             disabled={disabled || loading}
             aria-invalid={invalid ? 'true' : undefined}
+            aria-required={props.required ? 'true' : undefined}
             aria-busy={loading ? 'true' : undefined}
             aria-describedby={describedBy}
             {...props}
@@ -70,7 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           {iconEnd && (
             <span data-helix-part="input-icon-end">
-              {iconEnd}
+              <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} stroke={1.5} />
             </span>
           )}
         </div>

@@ -32,7 +32,7 @@ const meta: Meta<typeof Button> = {
     size: {
       control: 'select',
       options: ['xs', 's', 'm', 'l', 'xl'],
-      description: 'Physical size: xs → 24px height, s → 32px, m → 36px, l → 40px, xl → 48px.',
+      description: 'Physical size: xs → 16px height, s → 24px, m → 32px, l → 40px, xl → 48px.',
     },
     loading: {
       control: 'boolean',
@@ -48,21 +48,21 @@ const meta: Meta<typeof Button> = {
       options: ['none', 'IconPlus', 'IconSearch', 'IconDownload'],
       mapping: {
         none:         undefined,
-        IconPlus:     <IconPlus size={16} stroke={1.5} />,
-        IconSearch:   <IconSearch size={16} stroke={1.5} />,
-        IconDownload: <IconDownload size={16} stroke={1.5} />,
+        IconPlus:     IconPlus,
+        IconSearch:   IconSearch,
+        IconDownload: IconDownload,
       },
-      description: 'Leading icon slot. Select an icon or "none".',
+      description: 'Leading icon — pass the icon component by reference. Select an icon or "none".',
     },
     iconEnd: {
       control: 'select',
       options: ['none', 'IconArrowRight', 'IconSend'],
       mapping: {
         none:          undefined,
-        IconArrowRight: <IconArrowRight size={16} stroke={1.5} />,
-        IconSend:       <IconSend size={16} stroke={1.5} />,
+        IconArrowRight: IconArrowRight,
+        IconSend:       IconSend,
       },
-      description: 'Trailing icon slot. Select an icon or "none".',
+      description: 'Trailing icon — same reference convention as icon. Select an icon or "none".',
     },
   },
 };
@@ -102,11 +102,11 @@ export const Sizes: Story = {
 };
 
 export const WithLeadingIcon: Story = {
-  args: { icon: <IconPlus size={16} stroke={1.5} />, children: 'New item' },
+  args: { icon: IconPlus, children: 'New item' },
 };
 
 export const WithTrailingIcon: Story = {
-  args: { iconEnd: <IconArrowRight size={16} stroke={1.5} />, children: 'Continue' },
+  args: { iconEnd: IconArrowRight, children: 'Continue' },
 };
 
 export const Loading: Story = {
@@ -143,7 +143,7 @@ export const AllVariants: Story = {
         {variants.map(variant => (
           <div key={variant} style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
             <Button variant={variant}>{variant}</Button>
-            <Button variant={variant} icon={<IconPlus size={16} stroke={1.5} />}>{variant} + icon</Button>
+            <Button variant={variant} icon={IconPlus}>{variant} + icon</Button>
             <Button variant={variant} loading>Loading</Button>
             <Button variant={variant} disabled>Disabled</Button>
           </div>
@@ -166,7 +166,7 @@ export const DangerWithConfirmation: Story = {
         {confirming ? (
           <>
             <Button variant="secondary" onPress={() => setConfirming(false)}>Cancel</Button>
-            <Button variant="danger" icon={<IconTrash size={16} stroke={1.5} />} onPress={() => setConfirming(false)}>
+            <Button variant="danger" icon={IconTrash} onPress={() => setConfirming(false)}>
               Yes, delete
             </Button>
           </>

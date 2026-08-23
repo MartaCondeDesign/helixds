@@ -1,0 +1,41 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "AppShell",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. Never write `display: flex; min-height: 100vh` by hand again.",
+
+  "neverUseFor": [
+    "A single content section inside an already-shelled page — AppShell is used once, at the page root",
+    "Auth/marketing pages with no persistent nav — a page with no SideNav should just render its content directly, not force an empty shell"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "app-shell-root",    "element": "div",  "description": "Root — full-viewport-height flex row." },
+    { "part": "app-shell-content", "element": "div",  "description": "Flex column beside the sidenav — wraps the topbar and main." },
+    { "part": "app-shell-main",    "element": "main", "description": "Scrollable main content region." }
+  ],
+
+  "props": [
+    { "name": "sidenav",  "type": "React.ReactNode | undefined", "description": "A SideNav instance, rendered to the left." },
+    { "name": "topbar",   "type": "React.ReactNode | undefined", "description": "A TopBar instance, rendered above the main content." },
+    { "name": "children", "type": "React.ReactNode", "required": true, "description": "The page's main content." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "main (implicit from <main> on app-shell-main — exactly one per page)",
+    "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"]
+  }
+}

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '../../lib/utils';
+import { Icon } from '../Icon';
 import type { BadgeProps } from './Badge.types';
 
 const Badge = ({ variant = 'neutral', size = 's', label, icon, className }: BadgeProps) => {
@@ -11,8 +12,8 @@ const Badge = ({ variant = 'neutral', size = 's', label, icon, className }: Badg
         className={cn(className)}
       >
       {icon && (
-        <span data-helix-part="badge-icon" aria-hidden="true">
-          {icon}
+        <span data-helix-part="badge-icon">
+          <Icon icon={icon} size={12} stroke={1.5} />
         </span>
       )}
       <span data-helix-part="badge-label">{label}</span>

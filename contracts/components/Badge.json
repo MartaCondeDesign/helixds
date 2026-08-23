@@ -38,8 +38,8 @@
     },
     {
       "name": "icon",
-      "type": "React.ReactElement | undefined",
-      "description": "Leading Tabler icon at 12px."
+      "type": "TablerIcon | undefined",
+      "description": "Leading icon, passed by reference (e.g. IconClock). Rendered via the Icon component at a fixed 12px."
     },
     {
       "name": "label",
@@ -62,7 +62,7 @@
   },
 
   "tokenPolicy": {
-    "allowed": ["color.fill", "color.text", "spacing", "radius", "fontSize", "fontWeight"],
+    "allowed": ["color.fill", "color.text", "color.border", "color.icon", "spacing", "radius", "fontSize", "fontWeight"],
     "forbidden": ["primitive.color"]
   },
 

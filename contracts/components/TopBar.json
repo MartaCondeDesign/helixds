@@ -1,0 +1,50 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "TopBar",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "The fixed-height chrome bar at the top of a page — search, quick actions, and the current user, always in the same place.",
+
+  "neverUseFor": [
+    "The page title — use PageHeader inside the main content area instead",
+    "Primary navigation — use SideNav; TopBar hosts secondary/global actions, not the nav itself",
+    "Scrollable content — TopBar is fixed chrome, never part of the scrolling main area"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "topbar-root",  "element": "header", "description": "Root — always a native <header>, fixed height." },
+    { "part": "topbar-start", "element": "div",    "description": "Leading slot — typically a search Input.", "optional": true },
+    { "part": "topbar-end",   "element": "div",    "description": "Trailing slot — typically icon Buttons and an Avatar.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "start", "type": "React.ReactNode | undefined", "description": "Leading slot content." },
+    { "name": "end",   "type": "React.ReactNode | undefined", "description": "Trailing slot content." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 56 },
+      "unit": "px",
+      "note": "Past ADR-004's Control scale top rung (xl=48px) — aliases the next primitive rung up (primitive.size.350), documented in component-token-exceptions.md."
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.border", "spacing"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "banner (implicit from <header>, when it's a direct child of <body> in the real page — not automatic inside Storybook's iframe)",
+    "wcag": ["1.3.1 Info and Relationships"]
+  }
+}

@@ -92,7 +92,7 @@ export const SettingsGroup: Story = {
               <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--helix-color-text-neutral)' }}>{label}</div>
               <div style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', marginTop: 2 }}>{desc}</div>
             </div>
-            <Switch checked={state[key]} onChange={() => toggle(key)} />
+            <Switch label={label} hideLabel checked={state[key]} onChange={() => toggle(key)} />
           </div>
         ))}
       </div>

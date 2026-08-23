@@ -49,8 +49,8 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 | `label`     | `title`, `name`, `text`          | Visible or accessible label                       |
 | `description`| `subtitle`, `hint`, `helper`   | Supporting text under label                       |
 | `placeholder`| `hintText`, `ghostText`        | Empty-state hint text                             |
-| `icon`      | `leftIcon`, `startIcon`, `leadingIcon`  | Leading icon (slot, not string)         |
-| `iconEnd`   | `rightIcon`, `endIcon`, `trailingIcon`  | Trailing icon (slot, not string)        |
+| `icon`      | `leftIcon`, `startIcon`, `leadingIcon`  | Leading icon — a Tabler icon component passed by reference (e.g. `IconPlus`), not a pre-instantiated element or string |
+| `iconEnd`   | `rightIcon`, `endIcon`, `trailingIcon`  | Trailing icon — same reference convention as `icon`  |
 | `children`  | `content`, `body`, `slot`        | React children slot                               |
 
 ## Width + alignment

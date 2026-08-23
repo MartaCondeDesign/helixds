@@ -776,6 +776,8 @@
     line-height: var(--helix-primitive-lineHeight-normal);
     padding:     var(--helix-primitive-spacing-75);
     min-width:   0;
+    min-height:  var(--helix-textarea-height);
+    box-sizing:  border-box;
     resize:      vertical;
   }
   [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-primitive-fontSize-xs); }
@@ -1258,5 +1260,329 @@
   }
   [data-helix-part="switch-root"][data-size="m"] [data-helix-part="switch-description"] {
     padding-left: calc(var(--helix-switch-width-m) + var(--helix-primitive-spacing-75));
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     CARD
+     Contract: contracts/components/Card.json
+     Tokens:   --helix-card-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="card-root"] {
+    background-color: var(--helix-card-fill);
+    border:           1px solid var(--helix-card-border);
+    border-radius:    var(--helix-card-radius);
+    box-shadow:       var(--helix-card-shadow);
+    overflow:         hidden;
+  }
+
+  [data-helix-part="card-header"] {
+    padding:      var(--helix-card-padding);
+    border-bottom: 1px solid var(--helix-card-border);
+  }
+
+  [data-helix-part="card-body"] {
+    padding: var(--helix-card-padding);
+  }
+  [data-helix-part="card-root"][data-padding="none"] [data-helix-part="card-body"] {
+    padding: 0;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     AVATAR
+     Contract: contracts/components/Avatar.json
+     Tokens:   --helix-avatar-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="avatar-root"] {
+    display:        inline-flex;
+    align-items:    center;
+    justify-content: center;
+    flex-shrink:    0;
+    border-radius:  var(--helix-radius-full);
+    overflow:       hidden;
+  }
+  [data-helix-part="avatar-root"][data-size="s"] { width: var(--helix-avatar-height-s); height: var(--helix-avatar-height-s); }
+  [data-helix-part="avatar-root"][data-size="m"] { width: var(--helix-avatar-height-m); height: var(--helix-avatar-height-m); }
+  [data-helix-part="avatar-root"][data-size="l"] { width: var(--helix-avatar-height-l); height: var(--helix-avatar-height-l); }
+
+  [data-helix-part="avatar-root"][data-variant="light"] { background-color: var(--helix-avatar-fill-light); }
+  [data-helix-part="avatar-root"][data-variant="solid"] { background-color: var(--helix-avatar-fill-solid); }
+
+  [data-helix-part="avatar-image"] {
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+  }
+
+  [data-helix-part="avatar-initials"] {
+    font-weight:  var(--helix-avatar-fontWeight);
+    line-height:  1;
+    user-select:  none;
+  }
+  [data-helix-part="avatar-root"][data-size="s"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-xs); }
+  [data-helix-part="avatar-root"][data-size="m"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-s); }
+  [data-helix-part="avatar-root"][data-size="l"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-m); }
+  [data-helix-part="avatar-root"][data-variant="light"] [data-helix-part="avatar-initials"] { color: var(--helix-avatar-text-light); }
+  [data-helix-part="avatar-root"][data-variant="solid"] [data-helix-part="avatar-initials"] { color: var(--helix-avatar-text-solid); }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     PAGE HEADER
+     Contract: contracts/components/PageHeader.json
+     Tokens:   --helix-pageHeader-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="page-header-root"] {
+    display:         flex;
+    align-items:      flex-start;
+    justify-content:  space-between;
+    gap:              var(--helix-primitive-spacing-100);
+  }
+
+  [data-helix-part="page-header-title"] {
+    margin:        0;
+    font-weight:   var(--helix-pageHeader-title-fontWeight);
+    color:         var(--helix-pageHeader-title-color);
+    line-height:   var(--helix-primitive-lineHeight-tight);
+    letter-spacing: -0.02em;
+  }
+  [data-helix-part="page-header-title"][data-level="1"] { font-size: var(--helix-pageHeader-title-fontSize-1); }
+  [data-helix-part="page-header-title"][data-level="2"] { font-size: var(--helix-pageHeader-title-fontSize-2); }
+
+  [data-helix-part="page-header-description"] {
+    margin:      var(--helix-primitive-spacing-25) 0 0;
+    font-size:   var(--helix-pageHeader-description-fontSize);
+    color:       var(--helix-pageHeader-description-color);
+  }
+
+  [data-helix-part="page-header-actions"] {
+    display:      flex;
+    align-items:  center;
+    gap:          var(--helix-primitive-spacing-50);
+    flex-shrink:  0;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     STAT CARD
+     Contract: contracts/components/StatCard.json
+     Tokens:   --helix-statCard-*
+     Note: StatCard composes Card for its fill/border/radius/shadow — see the
+     CARD section above for those tokens.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="stat-card-label"] {
+    font-size:      var(--helix-statCard-label-fontSize);
+    font-weight:    var(--helix-statCard-label-fontWeight);
+    color:          var(--helix-statCard-label-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom:  var(--helix-primitive-spacing-50);
+  }
+
+  [data-helix-part="stat-card-value"] {
+    font-size:      var(--helix-statCard-value-fontSize);
+    font-weight:    var(--helix-statCard-value-fontWeight);
+    color:          var(--helix-statCard-value-color);
+    line-height:    1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    margin-bottom:  var(--helix-primitive-spacing-50);
+  }
+
+  [data-helix-part="stat-card-delta"] {
+    display:      flex;
+    align-items:  center;
+    gap:          var(--helix-primitive-spacing-25);
+    font-size:    var(--helix-statCard-delta-fontSize);
+  }
+  [data-helix-part="stat-card-delta"][data-trend="up"]   { color: var(--helix-statCard-delta-textUp); }
+  [data-helix-part="stat-card-delta"][data-trend="down"] { color: var(--helix-statCard-delta-textDown); }
+  [data-helix-part="stat-card-delta"]:not([data-trend])  { color: var(--helix-color-text-neutral-light); }
+
+  [data-helix-part="stat-card-delta"][data-trend="up"]   [data-helix-part="stat-card-delta-icon"] { color: var(--helix-statCard-delta-iconUp); }
+  [data-helix-part="stat-card-delta"][data-trend="down"] [data-helix-part="stat-card-delta-icon"] { color: var(--helix-statCard-delta-iconDown); }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     TABLE
+     Contract: contracts/components/Table.json
+     Tokens:   --helix-table-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="table"] {
+    width:           100%;
+    border-collapse: collapse;
+  }
+
+  [data-helix-part="table-header-cell"] {
+    padding:        var(--helix-primitive-spacing-50) var(--helix-primitive-spacing-100);
+    text-align:     left;
+    font-size:      var(--helix-table-header-fontSize);
+    font-weight:    var(--helix-table-header-fontWeight);
+    color:          var(--helix-table-header-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space:    nowrap;
+    border-bottom:  1px solid var(--helix-table-header-border);
+  }
+
+  [data-helix-part="table-row"] {
+    border-bottom: 1px solid var(--helix-table-row-border);
+    transition:    background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="table-body"] [data-helix-part="table-row"]:last-child {
+    border-bottom: none;
+  }
+  [data-helix-part="table-body"] [data-helix-part="table-row"]:hover {
+    background-color: var(--helix-table-row-hoverFill);
+  }
+
+  [data-helix-part="table-cell"] {
+    padding:    var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100);
+    font-size:  var(--helix-table-cell-fontSize);
+    color:      var(--helix-table-cell-color);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     NAV ITEM
+     Contract: contracts/components/NavItem.json
+     Tokens:   --helix-navItem-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="nav-item"] {
+    display:         flex;
+    align-items:     center;
+    gap:             var(--helix-primitive-spacing-50);
+    padding:         var(--helix-primitive-spacing-50) var(--helix-primitive-spacing-75);
+    border-radius:   var(--helix-navItem-radius);
+    text-decoration: none;
+    cursor:          pointer;
+    transition:      background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="nav-item"]:hover:not([data-current]) {
+    background-color: var(--helix-navItem-fill-hover);
+  }
+  [data-helix-part="nav-item"][data-current] {
+    background-color: var(--helix-navItem-fill-current);
+  }
+
+  [data-helix-part="nav-item-icon"] {
+    display:      flex;
+    align-items:  center;
+    flex-shrink:  0;
+    color:        var(--helix-navItem-icon-default);
+  }
+  [data-helix-part="nav-item"][data-current] [data-helix-part="nav-item-icon"] {
+    color: var(--helix-navItem-icon-current);
+  }
+
+  [data-helix-part="nav-item-label"] {
+    font-size:   var(--helix-navItem-fontSize);
+    font-weight: var(--helix-navItem-fontWeight);
+    color:       var(--helix-navItem-text-default);
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+  }
+  [data-helix-part="nav-item"][data-current] [data-helix-part="nav-item-label"] {
+    color: var(--helix-navItem-text-current);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     TOP BAR
+     Contract: contracts/components/TopBar.json
+     Tokens:   --helix-topBar-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="topbar-root"] {
+    display:        flex;
+    align-items:    center;
+    gap:            var(--helix-primitive-spacing-75);
+    height:         var(--helix-topBar-height);
+    flex-shrink:    0;
+    padding:        0 var(--helix-primitive-spacing-150);
+    background-color: var(--helix-topBar-fill);
+    border-bottom:  1px solid var(--helix-topBar-border);
+  }
+
+  [data-helix-part="topbar-start"] {
+    flex:      1;
+    max-width: 320px;
+  }
+
+  [data-helix-part="topbar-end"] {
+    display:      flex;
+    align-items:  center;
+    gap:          var(--helix-primitive-spacing-25);
+    margin-left:  auto;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     SIDE NAV
+     Contract: contracts/components/SideNav.json
+     Tokens:   --helix-sideNav-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="side-nav-root"] {
+    display:          flex;
+    flex-direction:   column;
+    width:            var(--helix-sideNav-width);
+    flex-shrink:      0;
+    background-color: var(--helix-sideNav-fill);
+    border-right:     1px solid var(--helix-sideNav-border);
+    padding:          var(--helix-primitive-spacing-75) 0;
+  }
+
+  [data-helix-part="side-nav-brand"] {
+    padding:       var(--helix-primitive-spacing-50) var(--helix-primitive-spacing-75);
+    margin-bottom: var(--helix-primitive-spacing-75);
+  }
+
+  [data-helix-part="side-nav-items"] {
+    flex:           1;
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--helix-primitive-spacing-25);
+    padding:        0 var(--helix-primitive-spacing-50);
+    overflow-y:     auto;
+  }
+
+  [data-helix-part="side-nav-footer"] {
+    padding:      var(--helix-primitive-spacing-50);
+    margin:       var(--helix-primitive-spacing-50);
+    border-top:   1px solid var(--helix-sideNav-border);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     APP SHELL
+     Contract: contracts/components/AppShell.json
+     Tokens:   --helix-color-fill-page (no new component.* tokens needed)
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="app-shell-root"] {
+    display:          flex;
+    min-height:       100vh;
+    background-color: var(--helix-color-fill-page);
+  }
+
+  [data-helix-part="app-shell-content"] {
+    flex:           1;
+    display:        flex;
+    flex-direction: column;
+    min-width:      0;
+  }
+
+  [data-helix-part="app-shell-main"] {
+    flex:      1;
+    overflow-y: auto;
+    padding:    var(--helix-spacing-l);
   }
 }

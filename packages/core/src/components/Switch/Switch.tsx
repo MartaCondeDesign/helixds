@@ -4,6 +4,7 @@ let idCounter = 0;
 
 export function Switch({
   label,
+  hideLabel = false,
   description,
   checked,
   defaultChecked,
@@ -53,7 +54,11 @@ export function Switch({
           <span data-helix-part="switch-thumb" aria-hidden="true" />
         </button>
 
-        <label data-helix-part="switch-label" htmlFor={id}>
+        <label
+          data-helix-part="switch-label"
+          htmlFor={id}
+          style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' } : undefined}
+        >
           {label}
         </label>
       </div>

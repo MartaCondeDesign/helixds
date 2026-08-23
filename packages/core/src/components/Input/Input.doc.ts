@@ -1,16 +1,6 @@
 /** Machine-readable component documentation for the Helix Input. */
 
-export interface ComponentDoc {
-  name: string;
-  purpose: string;
-  contract: string;
-  a11y: string[];
-  variants: { name: string; description: string }[];
-  sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
-  features: string[];
-  examples: { label: string; code: string }[];
-}
+import type { ComponentDoc } from '../../lib/component-doc';
 
 export const doc: ComponentDoc = {
   name: 'Input',

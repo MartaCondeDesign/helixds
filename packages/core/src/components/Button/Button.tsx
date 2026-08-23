@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cn } from '../../lib/utils';
+import { Icon } from '../Icon';
 import type { ButtonProps } from './Button.types';
 
 const Spinner = () => (
@@ -32,17 +33,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children,
       onPress,
-      onClick,
       ...props
     },
     ref,
   ) => {
     const isDisabled = disabled || loading;
-
-    const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-      onPress?.(e);
-      onClick?.(e);
-    };
 
     return (
       <button
@@ -55,14 +50,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isDisabled}
         aria-busy={loading ? 'true' : undefined}
         className={cn(className)}
-        onClick={handleClick}
+        onClick={onPress}
         {...props}
       >
         {loading ? (
           <Spinner />
         ) : icon ? (
-          <span data-helix-part="button-icon" aria-hidden="true">
-            {icon}
+          <span data-helix-part="button-icon">
+            <Icon icon={icon} size={16} stroke={1.5} />
           </span>
         ) : null}
 
@@ -71,8 +66,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
 
         {!loading && iconEnd && (
-          <span data-helix-part="button-icon-end" aria-hidden="true">
-            {iconEnd}
+          <span data-helix-part="button-icon-end">
+            <Icon icon={iconEnd} size={16} stroke={1.5} />
           </span>
         )}
       </button>

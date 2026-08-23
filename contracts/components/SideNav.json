@@ -1,0 +1,50 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "SideNav",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "The persistent vertical navigation rail of an app shell — brand mark, primary nav entries, and a footer slot for the current user.",
+
+  "neverUseFor": [
+    "In-page tabbed navigation — use Tabs",
+    "Breadcrumbs — SideNav is persistent app-level nav, breadcrumbs are per-page wayfinding",
+    "Anything other than NavItem as its direct nav entries — don't put a Button or a plain <a> among the items"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "side-nav-root",   "element": "nav", "description": "Root — always a native <nav>, fixed width." },
+    { "part": "side-nav-brand",  "element": "div", "description": "Logo/product-name slot at the top.", "optional": true },
+    { "part": "side-nav-items",  "element": "div", "description": "Wraps the NavItem list (children)." },
+    { "part": "side-nav-footer", "element": "div", "description": "Slot at the bottom — typically the current user row.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "brand",    "type": "React.ReactNode | undefined", "description": "Logo/product-name content, rendered at the top." },
+    { "name": "children", "type": "React.ReactNode", "required": true, "description": "The nav entries — a list of NavItem." },
+    { "name": "footer",   "type": "React.ReactNode | undefined", "description": "Content pinned to the bottom — typically the current user." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "width": {
+      "default": "fixed",
+      "note": "224px, a standalone chrome dimension — no matching primitive/spacing/size rung, documented in component-token-exceptions.md."
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.border", "spacing"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "navigation (implicit from <nav>)",
+    "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"]
+  }
+}

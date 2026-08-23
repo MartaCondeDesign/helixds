@@ -24,6 +24,11 @@
         "name": "disabled",
         "description": "The chip is not interactive.",
         "aria": "disabled (native HTML attribute)"
+      },
+      {
+        "name": "dismissible",
+        "description": "Renders an additional close button (chip-dismiss) beside the chip, active only when both dismissible=true and onDismiss is provided.",
+        "aria": "aria-label='Dismiss {label}' on the chip-dismiss button"
       }
     ]
   },
@@ -33,7 +38,8 @@
     { "part": "chip",       "element": "button", "description": "Root interactive element.", "optional": false },
     { "part": "chip-icon",  "element": "slot",    "description": "Leading icon slot.", "optional": true },
     { "part": "chip-label", "element": "span",    "description": "Visible chip label." },
-    { "part": "chip-icon-end", "element": "slot", "description": "Trailing icon slot.", "optional": true }
+    { "part": "chip-icon-end", "element": "slot", "description": "Trailing icon slot.", "optional": true },
+    { "part": "chip-dismiss", "element": "button", "description": "Close button that fires onDismiss. Rendered only when dismissible=true and onDismiss is provided.", "optional": true }
   ],
 
   "props": [
@@ -69,15 +75,15 @@
     },
     {
       "name": "icon",
-      "type": "React.ReactElement | undefined",
+      "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Leading icon element."
+      "description": "Leading icon, passed by reference. Rendered via the Icon component at a fixed 14px."
     },
     {
       "name": "iconEnd",
-      "type": "React.ReactElement | undefined",
+      "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Trailing icon element."
+      "description": "Trailing icon. Same fixed 14px as icon."
     },
     {
       "name": "onPress",

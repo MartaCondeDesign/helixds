@@ -1,4 +1,5 @@
 import { IconChevronDown } from '@tabler/icons-react';
+import { Icon } from '../Icon';
 import type { SelectProps, SelectOption, SelectOptionGroup } from './Select.types';
 
 let idCounter = 0;
@@ -89,8 +90,8 @@ export function Select({
           )}
         </select>
 
-        <span data-helix-part="select-chevron" aria-hidden="true">
-          <IconChevronDown size={14} />
+        <span data-helix-part="select-chevron">
+          <Icon icon={IconChevronDown} size={14} />
         </span>
       </div>
 

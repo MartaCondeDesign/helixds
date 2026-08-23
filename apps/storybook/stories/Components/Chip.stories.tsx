@@ -32,6 +32,8 @@ const meta: Meta<typeof Chip> = {
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
     dismissible: { control: 'boolean' },
+    icon: { control: false },
+    iconEnd: { control: false },
   },
 };
 
@@ -52,10 +54,10 @@ export const Danger: Story = { args: { variant: 'danger', label: 'Blocked' } };
 export const WithIcons: Story = {
   render: ({ size }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Chip size={size} label="Filter" icon={<IconFilter size={14} stroke={1.5} />} />
-      <Chip size={size} label="Ready" variant="success" icon={<IconCheck size={14} stroke={1.5} />} />
-      <Chip size={size} label="Soon" variant="warning" icon={<IconClock size={14} stroke={1.5} />} />
-      <Chip size={size} label="Rejected" variant="danger" icon={<IconX size={14} stroke={1.5} />} />
+      <Chip size={size} label="Filter" icon={IconFilter} />
+      <Chip size={size} label="Ready" variant="success" icon={IconCheck} />
+      <Chip size={size} label="Soon" variant="warning" icon={IconClock} />
+      <Chip size={size} label="Rejected" variant="danger" icon={IconX} />
     </div>
   ),
 };
@@ -76,7 +78,7 @@ export const Sizes: Story = {
       <Chip size="s" label="Small" />
       <Chip size="m" label="Medium" />
       <Chip size="s" checked label="Small checked" />
-      <Chip size="m" checked label="Medium checked" variant="info" icon={<IconAlertTriangle size={14} stroke={1.5} />} />
+      <Chip size="m" checked label="Medium checked" variant="info" icon={IconAlertTriangle} />
     </div>
   ),
 };

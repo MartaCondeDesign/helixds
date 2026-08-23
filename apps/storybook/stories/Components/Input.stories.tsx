@@ -53,7 +53,7 @@ export const WithLeadingIcon: Story = {
   args: {
     label:       'Email',
     type:        'email',
-    icon:        <IconMail size={16} />,
+    icon:        IconMail,
     placeholder: 'you@example.com',
   },
 };
@@ -62,7 +62,7 @@ export const WithTrailingIcon: Story = {
   args: {
     label:   'Password',
     type:    'password',
-    iconEnd: <IconEye size={16} />,
+    iconEnd: IconEye,
   },
 };
 
@@ -70,7 +70,7 @@ export const SearchInput: Story = {
   args: {
     label:       'Search',
     hideLabel:   true,
-    icon:        <IconSearch size={16} />,
+    icon:        IconSearch,
     placeholder: 'Search projects…',
     type:        'search',
     fullWidth:   true,
@@ -88,7 +88,7 @@ export const Invalid: Story = {
   args: {
     label:        'Email',
     type:         'email',
-    icon:         <IconMail size={16} />,
+    icon:         IconMail,
     invalid:      true,
     errorMessage: 'Enter a valid email address',
     defaultValue: 'not-an-email',
@@ -99,7 +99,7 @@ export const Required: Story = {
   args: {
     label:    'Full name',
     required: true,
-    icon:     <IconUser size={16} />,
+    icon:     IconUser,
   },
 };
 
@@ -115,9 +115,9 @@ export const Disabled: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
-      <Input label="Small"  size="s" placeholder="size=s" icon={<IconSearch size={14} />} onChange={() => {}} />
-      <Input label="Medium" size="m" placeholder="size=m (default)" icon={<IconSearch size={16} />} onChange={() => {}} />
-      <Input label="Large"  size="l" placeholder="size=l" icon={<IconSearch size={18} />} onChange={() => {}} />
+      <Input label="Small"  size="s" placeholder="size=s" icon={IconSearch} onChange={() => {}} />
+      <Input label="Medium" size="m" placeholder="size=m (default)" icon={IconSearch} onChange={() => {}} />
+      <Input label="Large"  size="l" placeholder="size=l" icon={IconSearch} onChange={() => {}} />
     </div>
   ),
 };
@@ -161,14 +161,14 @@ export const LoginFormPattern: Story = {
 
         <Input
           label="Email" type="email" required autoComplete="email"
-          icon={<IconMail size={16} />}
+          icon={IconMail}
           value={email} onChange={e => setEmail(e.target.value)}
           invalid={emailInvalid} errorMessage="Enter a valid email address" fullWidth
         />
 
         <Input
           label="Password" type="password" required autoComplete="current-password"
-          icon={<IconLock size={16} />} description="Min. 8 characters"
+          icon={IconLock} description="Min. 8 characters"
           value={password} onChange={e => setPassword(e.target.value)} fullWidth
         />
 

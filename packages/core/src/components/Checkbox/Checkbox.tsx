@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { IconCheck, IconMinus } from '@tabler/icons-react';
+import { Icon } from '../Icon';
 import type { CheckboxProps } from './Checkbox.types';
 
 let idCounter = 0;
@@ -50,6 +51,7 @@ export function Checkbox({
           defaultChecked={defaultChecked}
           disabled={disabled}
           required={required}
+          aria-required={required || undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={describedby}
           data-helix-part="checkbox-input"
@@ -60,8 +62,8 @@ export function Checkbox({
         <span data-helix-part="checkbox-control" aria-hidden="true">
           <span data-helix-part="checkbox-indicator">
             {indeterminate
-              ? <IconMinus size={10} strokeWidth={3} />
-              : <IconCheck size={10} strokeWidth={3} />
+              ? <Icon icon={IconMinus} size={12} stroke={3} />
+              : <Icon icon={IconCheck} size={12} stroke={3} />
             }
           </span>
         </span>

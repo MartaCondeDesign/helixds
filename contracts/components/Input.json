@@ -25,6 +25,7 @@
   "anatomy": [
     { "part": "input-root",        "element": "div",   "description": "Layout wrapper — provides relative positioning for icon slots." },
     { "part": "input-label",       "element": "label", "description": "Accessible label. Always rendered — visible or sr-only.", "optional": true },
+    { "part": "input-wrapper",     "element": "div",   "description": "Wraps the leading icon, native field, and trailing icon; carries invalid/disabled/loading data attributes." },
     { "part": "input-icon",        "element": "slot",  "description": "Leading icon.", "optional": true },
     { "part": "input-field",       "element": "input", "description": "The native <input> element." },
     { "part": "input-icon-end",    "element": "slot",  "description": "Trailing icon or action.", "optional": true },
@@ -34,13 +35,14 @@
 
   "props": [
     { "name": "label",       "type": "string",    "required": true,  "description": "Visible or screen-reader-only label. Required for a11y." },
+    { "name": "hideLabel",   "type": "boolean",   "default": false,  "description": "Hides the label visually while keeping it announced by screen readers." },
     { "name": "size",        "type": "'s' | 'm' | 'l'", "default": "m", "description": "Visual size." },
     { "name": "invalid",     "type": "boolean",   "default": false,  "description": "Shows error state and errorMessage." },
     { "name": "disabled",    "type": "boolean",   "default": false,  "description": "Non-interactive state." },
     { "name": "required",    "type": "boolean",   "default": false,  "description": "Marks field as required." },
     { "name": "loading",     "type": "boolean",   "default": false,  "description": "Async validation in progress." },
-    { "name": "icon",        "type": "React.ReactElement | undefined", "description": "Leading icon." },
-    { "name": "iconEnd",     "type": "React.ReactElement | undefined", "description": "Trailing icon or action button." },
+    { "name": "icon",        "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=14, m=16, l=18)." },
+    { "name": "iconEnd",     "type": "TablerIcon | undefined", "description": "Trailing icon. Same field-size-derived sizing as icon." },
     { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
     { "name": "errorMessage","type": "string | undefined", "description": "Error text shown when invalid=true." },
     { "name": "fullWidth",   "type": "boolean",   "default": false,  "description": "Expands to container width." },
@@ -50,7 +52,7 @@
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "s": 32, "m": 36, "l": 40 },
+      "values": { "s": 24, "m": 32, "l": 40 },
       "unit": "px",
       "note": "Shared field scale. Keep these values aligned with Select and Textarea density docs."
     },

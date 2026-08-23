@@ -63,17 +63,17 @@
     },
     {
       "name": "icon",
-      "type": "React.ReactElement | undefined",
+      "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Leading icon — pass a Tabler icon component. Always set size={16} stroke={1.5}. aria-hidden is set automatically.",
-      "usage": "<IconPlus size={16} stroke={1.5} />"
+      "description": "Leading icon, passed by reference (not pre-instantiated). Always rendered via the Icon component at size=16 stroke=1.5, regardless of button size — aria-hidden is set automatically.",
+      "usage": "icon={IconPlus}"
     },
     {
       "name": "iconEnd",
-      "type": "React.ReactElement | undefined",
+      "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Trailing icon. Always set size={16} stroke={1.5}.",
-      "usage": "<IconArrowRight size={16} stroke={1.5} />"
+      "description": "Trailing icon. Same fixed size=16 stroke=1.5 as icon.",
+      "usage": "iconEnd={IconArrowRight}"
     },
     {
       "name": "fullWidth",
@@ -91,7 +91,7 @@
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "xs": 24, "s": 32, "m": 36, "l": 40, "xl": 48 },
+      "values": { "xs": 16, "s": 24, "m": 32, "l": 40, "xl": 48 },
       "unit": "px",
       "note": "Set by size token —  never override manually."
     },
@@ -121,6 +121,7 @@
       "color.fill",
       "color.text",
       "color.border",
+      "color.icon",
       "spacing",
       "radius",
       "fontSize",

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IconX } from '@tabler/icons-react';
 import { cn } from '../../lib/utils';
+import { Icon } from '../Icon';
 import type { ChipProps } from './Chip.types';
 
 const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
@@ -48,16 +49,16 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
           {...props}
         >
           {icon && (
-            <span data-helix-part="chip-icon" aria-hidden="true">
-              {icon}
+            <span data-helix-part="chip-icon">
+              <Icon icon={icon} size={14} stroke={1.5} />
             </span>
           )}
 
           <span data-helix-part="chip-label">{label}</span>
 
           {iconEnd && (
-            <span data-helix-part="chip-icon-end" aria-hidden="true">
-              {iconEnd}
+            <span data-helix-part="chip-icon-end">
+              <Icon icon={iconEnd} size={14} stroke={1.5} />
             </span>
           )}
         </button>
@@ -73,7 +74,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
               onDismiss();
             }}
           >
-            <IconX size={12} stroke={1.5} />
+            <Icon icon={IconX} size={12} stroke={1.5} />
           </button>
         )}
       </span>

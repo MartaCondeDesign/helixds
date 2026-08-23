@@ -30,6 +30,7 @@
 
   "props": [
     { "name": "label", "type": "string", "required": true, "description": "Visible label text." },
+    { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the label visually but keeps it accessible via the label/button association — use when a custom heading elsewhere already displays it visibly." },
     { "name": "description", "type": "string | undefined", "description": "Helper text shown below the row." },
     { "name": "checked", "type": "boolean | undefined", "description": "Controlled checked state." },
     { "name": "defaultChecked", "type": "boolean | undefined", "description": "Uncontrolled initial checked state." },
@@ -54,7 +55,7 @@
   },
 
   "tokenPolicy": {
-    "allowed": ["color.fill", "color.text", "color.border"],
+    "allowed": ["color.fill", "color.text", "color.border", "radius", "spacing", "fontSize"],
     "forbidden": ["primitive.color"]
   },
 

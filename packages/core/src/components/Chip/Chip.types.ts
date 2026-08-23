@@ -1,4 +1,5 @@
 import type * as React from 'react';
+import type { TablerIcon } from '@tabler/icons-react';
 
 export type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 export type ChipSize = 's' | 'm';
@@ -14,10 +15,10 @@ export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonEle
   disabled?: boolean;
   /** Visible label. */
   label: string;
-  /** Leading icon. */
-  icon?: React.ReactElement;
-  /** Trailing icon. */
-  iconEnd?: React.ReactElement;
+  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconFilter). Always rendered at size=14 stroke=1.5. */
+  icon?: TablerIcon;
+  /** Trailing icon. Same fixed size as `icon`. */
+  iconEnd?: TablerIcon;
   /** Primary press handler. */
   onPress?: React.MouseEventHandler<HTMLButtonElement>;
   /** Shows a close button for removing the chip. */

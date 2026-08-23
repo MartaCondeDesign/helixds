@@ -64,7 +64,7 @@
   },
 
   "tokenPolicy": {
-    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius"],
+    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize"],
     "forbidden": ["primitive.color"]
   },
 

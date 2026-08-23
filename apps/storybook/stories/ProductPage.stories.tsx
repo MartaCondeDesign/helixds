@@ -98,7 +98,7 @@ function WorkspacePage() {
           <p style={{ margin: 0, color: 'var(--helix-color-text-neutral-light)' }}>
             Welcome to <strong>{form.workspace}</strong>. You're all set to start building.
           </p>
-          <Button variant="primary" iconEnd={<IconArrowRight size={16} />} onPress={() => setSubmitted(false)}>
+          <Button variant="primary" iconEnd={IconArrowRight} onPress={() => setSubmitted(false)}>
             Go to dashboard
           </Button>
         </div>
@@ -217,7 +217,7 @@ function WorkspacePage() {
 
               <Input
                 label="Full name" required fullWidth
-                icon={<IconUser size={16} />}
+                icon={IconUser}
                 placeholder="Sara Martinez"
                 value={form.name}
                 onChange={e => set('name', e.target.value)}
@@ -226,7 +226,7 @@ function WorkspacePage() {
               />
               <Input
                 label="Work email" type="email" required fullWidth
-                icon={<IconMail size={16} />}
+                icon={IconMail}
                 placeholder="sara@company.com"
                 value={form.email}
                 onChange={e => set('email', e.target.value)}
@@ -235,7 +235,7 @@ function WorkspacePage() {
               />
               <Input
                 label="Password" type="password" required fullWidth
-                icon={<IconLock size={16} />}
+                icon={IconLock}
                 description="Minimum 8 characters"
                 value={form.password}
                 onChange={e => set('password', e.target.value)}
@@ -260,7 +260,7 @@ function WorkspacePage() {
 
               <Input
                 label="Workspace name" required fullWidth
-                icon={<IconBuilding size={16} />}
+                icon={IconBuilding}
                 placeholder="Acme Design System"
                 description="This will be your team's shared workspace"
                 value={form.workspace}
@@ -335,7 +335,7 @@ function WorkspacePage() {
               type="submit"
               fullWidth
               loading={loading}
-              iconEnd={!loading ? <IconArrowRight size={16} /> : undefined}
+              iconEnd={IconArrowRight}
             >
               {loading ? 'Creating workspace…' : 'Create workspace'}
             </Button>

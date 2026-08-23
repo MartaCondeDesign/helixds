@@ -1,16 +1,5 @@
 /** Machine-readable component documentation for the Helix Switch. */
-
-export interface ComponentDoc {
-  name: string;
-  purpose: string;
-  contract: string;
-  a11y: string[];
-  variants: { name: string; description: string }[];
-  sizes: string[];
-  tokens: { part: string; label: string; token?: string; value?: string; kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other'; variant?: string; size?: string; state?: 'hover' | 'press' | 'disabled' | 'focus'; axis?: 'horizontal' | 'vertical'; meta?: string }[];
-  features: string[];
-  examples: { label: string; code: string }[];
-}
+import type { ComponentDoc } from '../../lib/component-doc';
 
 export const doc: ComponentDoc = {
   name: 'Switch',
@@ -53,6 +42,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'label — required accessible label',
+    'hideLabel — visually hides the label while keeping it as the accessible name',
     'description — optional helper copy below the row',
     'size — s or m track/thumb scale',
     'checked / defaultChecked — controlled or uncontrolled boolean state',

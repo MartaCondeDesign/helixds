@@ -34,6 +34,26 @@ CSS targets these attributes — never class selectors:
 [data-helix-part="button"][data-variant="primary"] { background: var(--helix-color-fill-primary); }
 ```
 
+## Icons — always through the `Icon` wrapper
+
+`src/components/Icon/` wraps every Tabler icon usage. **Never render a Tabler icon component directly**
+(`<IconPlus size={16} stroke={1.5} />`) — sizing, stroke, color, and aria all live in one place instead of
+being re-implemented (and drifting) at every call site. `pnpm verify:icons` enforces this by scanning
+`packages/**/*.tsx` for a raw `<IconXxx>` tag outside `src/components/Icon/`.
+
+```tsx
+import { Icon } from '../Icon';
+
+<span data-helix-part="button-icon">
+  <Icon icon={icon} size={16} stroke={1.5} />
+</span>
+```
+
+A component's `icon`/`iconEnd` prop takes the icon **component reference**, typed `TablerIcon` (from
+`@tabler/icons-react`) — not a pre-instantiated `React.ReactElement`. Consumers pass `icon={IconPlus}`,
+never `icon={<IconPlus size={16} />}`. See `Button`, `Badge`, `Chip`, `Input` for the pattern, and
+`contracts/components/Icon.json` for the full contract (allowed sizes, color rules, a11y).
+
 ## State pattern
 
 | State     | How to apply                             |

@@ -86,8 +86,8 @@ export const EmptyState: Story = {
       </div>
 
       <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <Button variant="secondary" icon={<IconUpload size={16} />}>Import</Button>
-        <Button variant="primary"   icon={<IconPlus size={16} />}>New project</Button>
+        <Button variant="secondary" icon={IconUpload}>Import</Button>
+        <Button variant="primary"   icon={IconPlus}>New project</Button>
       </div>
     </div>
   ),
@@ -121,8 +121,8 @@ export const ActionBarPageHeader: Story = {
         </p>
       </div>
       <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)' }}>
-        <Button variant="secondary" icon={<IconUpload size={16} />}>Import</Button>
-        <Button variant="primary"   icon={<IconPlus size={16} />}>New project</Button>
+        <Button variant="secondary" icon={IconUpload}>Import</Button>
+        <Button variant="primary"   icon={IconPlus}>New project</Button>
       </div>
     </div>
   ),
@@ -154,7 +154,7 @@ export const ActionBarBatchSelection: Story = {
           <Button variant="ghost" size="s">Move to…</Button>
         </div>
         <div style={{ marginLeft: 'var(--helix-primitive-spacing-100)' }}>
-          <Button variant="danger" size="s" icon={<IconTrash size={14} />}>Delete</Button>
+          <Button variant="danger" size="s" icon={IconTrash}>Delete</Button>
         </div>
       </div>
     );
@@ -181,11 +181,11 @@ export const StatusRows: Story = {
     ];
 
     const icons = {
-      success: <IconCheck size={10} />,
-      warning: <IconAlertTriangle size={10} />,
-      neutral: <IconClock size={10} />,
-      danger:  <IconX size={10} />,
-      info:    <IconInfoCircle size={10} />,
+      success: IconCheck,
+      warning: IconAlertTriangle,
+      neutral: IconClock,
+      danger:  IconX,
+      info:    IconInfoCircle,
     };
 
     return (
@@ -257,7 +257,7 @@ export const SearchAndFilter: Story = {
           <Input
             label="Search"
             hideLabel
-            icon={<IconSearch size={16} />}
+            icon={IconSearch}
             placeholder="Search projects…"
             value={query}
             onChange={e => setQuery(e.target.value)}
@@ -269,7 +269,7 @@ export const SearchAndFilter: Story = {
             <Button
               variant="ghost"
                 size="m"
-              icon={<IconX size={14} />}
+              icon={IconX}
               onPress={() => setActiveFilters([])}
             >
               Clear
@@ -287,7 +287,7 @@ export const SearchAndFilter: Story = {
                 key={f.key}
                 variant="secondary"
                 size="xs"
-                iconEnd={<IconX size={11} />}
+                iconEnd={IconX}
                 onPress={() => removeFilter(f.key)}
                 aria-label={`Remove filter: ${f.label}`}
               >

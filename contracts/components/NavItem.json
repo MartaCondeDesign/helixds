@@ -1,0 +1,45 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "NavItem",
+  "version": "1.0.0",
+  "status":  "stable",
+
+  "purpose": "A single entry in a persistent navigation list (a SideNav, a tab rail) that links to another view.",
+
+  "neverUseFor": [
+    "Triggering an action (saving, deleting, opening a dialog) — use Button, which Button.json's own neverUseFor list already forbids for navigation",
+    "External links that leave the app — still usable, but set target/rel explicitly at the usage site",
+    "A single standalone link inside body text — use a plain <a>, styled separately"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus"],
+    "authored": [
+      { "name": "current", "description": "This item represents the current view.", "aria": "aria-current='page'" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "nav-item",       "element": "a",    "description": "Root — always a native <a href>, never a <button>." },
+    { "part": "nav-item-icon",  "element": "slot", "description": "Leading icon, rendered via Icon.", "optional": true },
+    { "part": "nav-item-label", "element": "span", "description": "Visible label text." }
+  ],
+
+  "props": [
+    { "name": "label",  "type": "string", "required": true, "description": "Visible label text." },
+    { "name": "href",   "type": "string", "required": true, "description": "Navigation target." },
+    { "name": "icon",   "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered at a fixed 16px." },
+    { "name": "current", "type": "boolean", "default": false, "description": "Marks this item as representing the current view." }
+  ],
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "color.icon", "radius", "spacing", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "link (implicit from <a href>)",
+    "keyboardNav": ["Tab — moves focus", "Enter — activates"],
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

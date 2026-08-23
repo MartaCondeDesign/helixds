@@ -17,7 +17,19 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 ## Critical rules
 
 1. **Never add `<div>` for layout** — use the layout components in `packages/core/src/layout/`.
-2. **Token policy — not a blanket rule, has real exceptions:**
+2. **Never render a Tabler icon directly — always go through the `Icon` component**
+   (`packages/core/src/components/Icon/`, contract: `contracts/components/Icon.json`).
+   `<IconPlus size={16} stroke={1.5} />` re-implements sizing/stroke/color/aria at every call site and
+   drifts (that's exactly what happened before this rule existed — several components silently
+   diverged from the contract's own "always 16px" wording). Every component that renders an icon —
+   new or existing — must go through it instead: `<Icon icon={IconPlus} size={16} />`.
+   - Component `icon`/`iconEnd` props take the Tabler icon **component reference**, not a
+     pre-instantiated element: `icon?: TablerIcon`, not `icon?: React.ReactElement`. Consumers pass
+     `icon={IconPlus}`, never `icon={<IconPlus size={16} />}`.
+   - `pnpm verify:icons` scans `packages/**/*.tsx` for a raw `<IconXxx>` JSX tag outside
+     `packages/core/src/components/Icon/` (the one legitimate place it renders one) and reports any
+     violation — run it after adding or touching a component with an icon.
+3. **Token policy — not a blanket rule, has real exceptions:**
    - **Color:** always a `--helix-*` token. No exceptions.
    - **Border-radius:** always a `--helix-*` token. No exceptions.
    - **Spacing/padding:** always a token, **except** values above `128px` (`primitive.spacing.32`,
@@ -29,11 +41,11 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      not a violation (see `Button.json`'s `sizing.width` note).
 
    Token names live in `.ai/maps/prop-map.md`.
-3. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
-4. **Prop vocabulary** — canonical names in `.ai/maps/prop-map.md`. Anti-synonyms are invalid.
-5. **New component requires a contract** — create `contracts/components/{Name}.json` first, then the implementation.
-6. **Read the contract before touching a component** — the contract defines what the component IS.
-7. **Figma is reference only** — Helix contracts always win over Figma output.
+4. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
+5. **Prop vocabulary** — canonical names in `.ai/maps/prop-map.md`. Anti-synonyms are invalid.
+6. **New component requires a contract** — create `contracts/components/{Name}.json` first, then the implementation.
+7. **Read the contract before touching a component** — the contract defines what the component IS.
+8. **Figma is reference only** — Helix contracts always win over Figma output.
 
 ## Workflow commands
 
@@ -41,6 +53,7 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 pnpm contract <Name>        scaffold a new component contract
 pnpm verify:contract        validate contracts vs implementations
 pnpm verify:props           check prop names against prop-map
+pnpm verify:icons           check every Tabler icon renders through the Icon component
 pnpm report:paints          CSS paint audit report
 pnpm lint:ai                validate .ai/ directory structure
 ```
@@ -48,8 +61,7 @@ pnpm lint:ai                validate .ai/ directory structure
 ## Per-package context (load when working in that territory)
 
 - `packages/tokens/CLAUDE.md`  — token pipeline, DTCG format, build steps
-- `packages/core/CLAUDE.md`    — component anatomy, variant system, data-attributes
-- `packages/icons/CLAUDE.md`   — icon wrapper patterns, size/color tokens
+- `packages/core/CLAUDE.md`    — component anatomy, variant system, data-attributes, the `Icon` wrapper pattern
 - `apps/storybook/CLAUDE.md`   — every story's title+description header rule, token-driven story pattern, Foundation structure
 
 ## Context files (read when task requires it)

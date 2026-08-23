@@ -16,7 +16,7 @@ type Story = StoryObj;
 const semantic = tokensJson.semantic as unknown as {
   spacing: Record<string, TokenLeaf>;
   radius: Record<string, TokenLeaf>;
-  size: { control: Record<string, TokenLeaf> };
+  size: Record<string, TokenLeaf>;
   lineHeight: Record<string, TokenLeaf>;
   shadow: Record<string, TokenLeaf>;
   duration: Record<string, TokenLeaf>;
@@ -319,7 +319,7 @@ export const Motion: Story = {
               </tr>
             </thead>
             <tbody>
-              {(['base', 'in', 'out']).map(key => (
+              {(['base', 'in', 'out'] as const).map(key => (
                 <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
                   <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>easing.{key}</code></td>
                   <td style={tdStyle}>

@@ -1,1 +1,2 @@
-pnpm verify:contract && pnpm verify:props && pnpm verify:tokens && pnpm eval:run
+pnpm verify:contract && pnpm verify:props && pnpm verify:tokens && pnpm eval:run &&
+pnpm docs:token-exceptions && git add .ai/maps/component-token-exceptions.md

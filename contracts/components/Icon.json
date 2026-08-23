@@ -86,7 +86,9 @@
     "system": "fixed values — never scale with CSS font-size",
     "values": {
       "12": "xs contexts — dense UI, inline badges",
-      "16": "default — button slots, form elements, inline text",
+      "14": "compact controls — Chip, Input size=s",
+      "16": "default — button slots, form elements, inline text, Input size=m",
+      "18": "Input size=l",
       "20": "medium emphasis — card headers, section labels",
       "24": "large — native icon size, icon-only buttons, empty states",
       "32": "xlarge — feature icons, onboarding illustrations"
@@ -99,11 +101,11 @@
     "principle":  "Icons use their own icon/* semantic tokens, set explicitly — never inherited from a text/* token, even when the resolved color happens to match",
     "inButtons": {
       "primary":   "icon/inverse (white stroke)",
-      "secondary": "icon/neutral-dark (dark stroke)",
-      "ghost":     "icon/neutral-dark (dark stroke)",
+      "secondary": "icon/neutral (dark stroke)",
+      "ghost":     "icon/neutral (dark stroke)",
       "danger":    "icon/inverse (white stroke)"
     },
-    "standalone": "Use icon/neutral-dark, icon/neutral-light, or icon/neutral-lightest — never text/* tokens, never primitives",
+    "standalone": "Use icon/neutral, icon/neutral-light, or icon/neutral-lightest — never text/* tokens, never primitives",
     "forbidden":  "Never hardcode hex values. Never reference a text/* token for icon color. Never use primitive color scales directly."
   },
 
@@ -116,14 +118,20 @@
     {
       "part":        "icon-vector",
       "element":     "path (or g > path for compound icons)",
-      "description": "The drawn artwork. stroke=currentColor, fill=none, stroke-width=1.5."
+      "description": "The drawn artwork. stroke=currentColor, fill=none, stroke-width=1.5. Generated inside the Tabler icon component — not addressable as a data-helix-part from the Helix Icon wrapper; only icon-root carries the attribute."
     }
   ],
 
   "props": [
     {
+      "name": "icon",
+      "type": "TablerIcon",
+      "required": true,
+      "description": "The Tabler icon component to render, passed by reference (e.g. IconPlus), not by name string."
+    },
+    {
       "name": "size",
-      "type": "12 | 16 | 20 | 24 | 32",
+      "type": "12 | 14 | 16 | 18 | 20 | 24 | 32",
       "default": 16,
       "description": "Rendered icon size in pixels."
     },
