@@ -48,9 +48,9 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 <!-- AUTO:ASCII_TABLE -->
 ```
 +------------+----------------------+--------------------+--------------------------------------+
-| Componente | Token                | Valor actual       | Token propuesto                      |
+| Component  | Token                | Current Value      | Proposed Token                       |
 +============+======================+====================+======================================+
-+----------------------------------------- TIPOGRAFIA ------------------------------------------+
++----------------------------------------- TYPOGRAPHY ------------------------------------------+
 | Avatar     | fontWeight           | 600                | -- SC                                |
 | Badge      | fontSize             | 11px               | -- SC                                |
 | Badge      | fontWeight           | 600                | -- SC                                |
@@ -77,7 +77,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Table      | header.fontSize      | 11px               | -- SC                                |
 | Table      | header.fontWeight    | 600                | -- SC                                |
 +------------+----------------------+--------------------+--------------------------------------+
-+------------------------------------------- TAMANO --------------------------------------------+
++-------------------------------------------- SIZE ---------------------------------------------+
 | Badge      | height-s             | 24px               | -- ADR                               |
 | Badge      | height-xs            | 20px               | -- ADR                               |
 | Checkbox   | size                 | 16px               | primitive.size.100 (16px)            |
@@ -93,7 +93,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Switch     | width.s              | 28px               | primitive.size.175 (28px)            |
 | TopBar     | height               | 56px               | primitive.size.350 (56px) FE         |
 +------------+----------------------+--------------------+--------------------------------------+
-+------------------------------------------ ESPACIADO ------------------------------------------+
++------------------------------------------- SPACING -------------------------------------------+
 | Button     | padding.x-l          | 20px               | -- SM                                |
 | Button     | padding.x-m          | 16px               | semantic.spacing.component-l (16px)  |
 | Button     | padding.x-s          | 12px               | semantic.spacing.component-m (12px)  |
@@ -108,10 +108,10 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Input      | gap.description      | 4px                | semantic.spacing.component-xs (4px)  |
 | Input      | gap.label            | 4px                | semantic.spacing.component-xs (4px)  |
 +------------+----------------------+--------------------+--------------------------------------+
-+----------------------------------------- MOVIMIENTO ------------------------------------------+
++------------------------------------------- MOTION --------------------------------------------+
 | Button     | transition           | 120ms              | semantic.duration.base (120ms)       |
 +------------+----------------------+--------------------+--------------------------------------+
-+-------------------------------------------- BORDE --------------------------------------------+
++------------------------------------------- BORDER --------------------------------------------+
 | Chip       | border-width         | 1px                | -- SM                                |
 +------------+----------------------+--------------------+--------------------------------------+
 +-------------------------------------------- COLOR --------------------------------------------+

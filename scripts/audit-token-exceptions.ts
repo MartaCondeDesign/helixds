@@ -134,26 +134,26 @@ function pascalCase(componentKey: string): string {
 // ── categorize by token type ────────────────────────────────────────────────────
 
 const CATEGORY_ORDER = [
-  'TIPOGRAFIA',
-  'TAMANO',
-  'ESPACIADO',
-  'MOVIMIENTO',
-  'BORDE',
+  'TYPOGRAPHY',
+  'SIZE',
+  'SPACING',
+  'MOTION',
+  'BORDER',
   'COLOR',
-  'SOMBRA',
-  'OTROS',
+  'SHADOW',
+  'OTHER',
 ] as const;
 type Category = (typeof CATEGORY_ORDER)[number];
 
 function categorize(tokenPath: string): Category {
-  if (/fontSize|fontWeight|lineHeight/i.test(tokenPath)) return 'TIPOGRAFIA';
-  if (/padding|gap|margin/i.test(tokenPath)) return 'ESPACIADO';
-  if (/border-width/i.test(tokenPath)) return 'BORDE';
-  if (/height|width|thumb-size|(^|\.)size$/i.test(tokenPath)) return 'TAMANO';
-  if (/transition|duration/i.test(tokenPath)) return 'MOVIMIENTO';
-  if (/shadow/i.test(tokenPath)) return 'SOMBRA';
+  if (/fontSize|fontWeight|lineHeight/i.test(tokenPath)) return 'TYPOGRAPHY';
+  if (/padding|gap|margin/i.test(tokenPath)) return 'SPACING';
+  if (/border-width/i.test(tokenPath)) return 'BORDER';
+  if (/height|width|thumb-size|(^|\.)size$/i.test(tokenPath)) return 'SIZE';
+  if (/transition|duration/i.test(tokenPath)) return 'MOTION';
+  if (/shadow/i.test(tokenPath)) return 'SHADOW';
   if (/color|overlay|fill|text|icon/i.test(tokenPath)) return 'COLOR';
-  return 'OTROS';
+  return 'OTHER';
 }
 
 // ── classify every component.* leaf into one row ────────────────────────────────
@@ -161,14 +161,14 @@ function categorize(tokenPath: string): Category {
 type Row = { component: string; token: string; current: string; proposed: string };
 
 const rows: Record<Category, Row[]> = {
-  TIPOGRAFIA: [],
-  TAMANO: [],
-  ESPACIADO: [],
-  MOVIMIENTO: [],
-  BORDE: [],
+  TYPOGRAPHY: [],
+  SIZE: [],
+  SPACING: [],
+  MOTION: [],
+  BORDER: [],
   COLOR: [],
-  SOMBRA: [],
-  OTROS: [],
+  SHADOW: [],
+  OTHER: [],
 };
 
 const componentLeaves = collectLeaves(tokens.component, ['component']);
@@ -222,7 +222,7 @@ for (const category of CATEGORY_ORDER) {
 
 // ── render as a fixed-width ASCII box table ─────────────────────────────────────
 
-const HEADERS = ['Componente', 'Token', 'Valor actual', 'Token propuesto'] as const;
+const HEADERS = ['Component', 'Token', 'Current Value', 'Proposed Token'] as const;
 
 const allRows = CATEGORY_ORDER.flatMap(c => rows[c]);
 const widths = [
