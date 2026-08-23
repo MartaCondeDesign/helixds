@@ -1,19 +1,18 @@
 /**
- * Regenerates the auto-generated tables inside .ai/maps/component-token-exceptions.md
- * from the current state of packages/tokens/src/tokens.json.
+ * Regenerates the ASCII table inside .ai/maps/component-token-exceptions.md from the
+ * current state of packages/tokens/src/tokens.json.
  *
- * Every `component.*` leaf token is classified:
- *  - aliases `semantic.*`            -> clean, not listed anywhere
- *  - matches a KNOWN_EXCEPTIONS entry -> routed to that entry's documented bucket
- *    (this is the one place a human judgment call — "this is an intentional ADR-004
- *    density exception", "this is a one-off color" — gets recorded; everything else
- *    below is inferred purely from the data)
- *  - aliases `primitive.*` directly, category has no flat semantic layer -> NO_SEMANTIC_LAYER
- *  - aliases `primitive.*` directly, a same-category semantic token exists -> GAP
- *    (lists the matching rung if the resolved value matches one exactly, otherwise
- *    notes that no rung matches)
- *  - raw literal (no alias at all) -> RAW_LITERAL (proposes a same-value primitive
- *    alias if one exists)
+ * Every `component.*` leaf token that doesn't fully alias `semantic.*` gets one row,
+ * grouped by token type (Typography, Size, Spacing, Motion, Border, Color, Shadow):
+ *  - matches a KNOWN_EXCEPTIONS entry -> the human-judged tag/value for it
+ *    (this is the one place a judgment call — "this is an intentional ADR-004 density
+ *    exception", "this is a one-off color" — gets recorded; everything else below is
+ *    inferred purely from the data)
+ *  - aliases `primitive.*` directly, category has no flat semantic layer -> `-- SC`
+ *  - aliases `primitive.*` directly, a same-category semantic token exists with the
+ *    same resolved value -> that semantic token is proposed; no exact rung -> `-- SM`
+ *  - raw literal (no alias at all) -> proposes a same-value primitive if one exists,
+ *    otherwise `-- SM`
  *
  * Run: pnpm docs:token-exceptions
  * Wired into .husky/pre-commit so the doc can never drift from tokens.json.
@@ -32,28 +31,19 @@ const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
 //  - fontWeight: no semantic.fontWeight at all
 const NO_FLAT_SEMANTIC_LAYER = new Set(['fontSize', 'fontWeight']);
 
-type Bucket = 'ADR004' | 'BEYOND_LADDER' | 'RAW_NO_SCALE' | 'ONE_OFF_COLOR';
+type KnownTag = 'ADR' | 'FE' | 'SM';
 
 // Human judgment calls — the only hand-maintained data in this script. Add an entry
 // here when you consciously decide a token is a legitimate exception that the
-// mechanical rules below would otherwise mis-bucket (or miss the "why" for).
-const KNOWN_EXCEPTIONS: Record<string, { bucket: Bucket; why: string }> = {
-  'badge.height-xs': { bucket: 'ADR004', why: 'ADR-004 density exception, not the control ladder' },
-  'badge.height-s': { bucket: 'ADR004', why: 'ADR-004 density exception, not the control ladder' },
-  'chip.height-s': { bucket: 'ADR004', why: 'ADR-004 density exception, not the control ladder' },
-  'chip.height-m': { bucket: 'ADR004', why: 'ADR-004 density exception, not the control ladder' },
-  'topBar.height': {
-    bucket: 'BEYOND_LADDER',
-    why: "Past semantic.size's top rung (xl=48px) — next rung up on the same primitive scale",
-  },
-  'sideNav.width': {
-    bucket: 'RAW_NO_SCALE',
-    why: 'Standalone chrome dimension — no matching primitive/spacing/size rung',
-  },
-  'dialog.overlay': {
-    bucket: 'ONE_OFF_COLOR',
-    why: 'One-off backdrop color, no reusable semantic role exists for it',
-  },
+// mechanical rules below would otherwise mis-tag.
+const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag; showAlias?: boolean }> = {
+  'badge.height-xs': { tag: 'ADR' },
+  'badge.height-s': { tag: 'ADR' },
+  'chip.height-s': { tag: 'ADR' },
+  'chip.height-m': { tag: 'ADR' },
+  'topBar.height': { tag: 'FE', showAlias: true }, // beyond semantic.size's top rung — the alias itself is the proposal
+  'sideNav.width': { tag: 'SM' }, // standalone chrome dimension, no scale to belong to
+  'dialog.overlay': { tag: 'SM' }, // one-off backdrop color, no reusable semantic role
 };
 
 // ── tokens.json helpers ─────────────────────────────────────────────────────────
@@ -83,7 +73,7 @@ function resolveValue(dottedPath: string): string {
     node = getNode(target);
     value = node.$value;
   }
-  return value;
+  return String(value); // fontWeight etc. store $value as a JSON number, not a string
 }
 
 type Leaf = { path: string; value: unknown };
@@ -141,17 +131,45 @@ function pascalCase(componentKey: string): string {
   return componentKey[0].toUpperCase() + componentKey.slice(1);
 }
 
-// ── classify every component.* leaf ─────────────────────────────────────────────
+// ── categorize by token type ────────────────────────────────────────────────────
 
-type Row = { component: string; token: string; a: string; b: string };
+const CATEGORY_ORDER = [
+  'TIPOGRAFIA',
+  'TAMANO',
+  'ESPACIADO',
+  'MOVIMIENTO',
+  'BORDE',
+  'COLOR',
+  'SOMBRA',
+  'OTROS',
+] as const;
+type Category = (typeof CATEGORY_ORDER)[number];
 
-const noSemanticLayer: Row[] = [];
-const adr004: Row[] = [];
-const beyondLadder: Row[] = [];
-const rawNoScale: Row[] = [];
-const gap: Row[] = [];
-const rawLiteral: Row[] = [];
-const oneOffColor: Row[] = [];
+function categorize(tokenPath: string): Category {
+  if (/fontSize|fontWeight|lineHeight/i.test(tokenPath)) return 'TIPOGRAFIA';
+  if (/padding|gap|margin/i.test(tokenPath)) return 'ESPACIADO';
+  if (/border-width/i.test(tokenPath)) return 'BORDE';
+  if (/height|width|thumb-size|(^|\.)size$/i.test(tokenPath)) return 'TAMANO';
+  if (/transition|duration/i.test(tokenPath)) return 'MOVIMIENTO';
+  if (/shadow/i.test(tokenPath)) return 'SOMBRA';
+  if (/color|overlay|fill|text|icon/i.test(tokenPath)) return 'COLOR';
+  return 'OTROS';
+}
+
+// ── classify every component.* leaf into one row ────────────────────────────────
+
+type Row = { component: string; token: string; current: string; proposed: string };
+
+const rows: Record<Category, Row[]> = {
+  TIPOGRAFIA: [],
+  TAMANO: [],
+  ESPACIADO: [],
+  MOVIMIENTO: [],
+  BORDE: [],
+  COLOR: [],
+  SOMBRA: [],
+  OTROS: [],
+};
 
 const componentLeaves = collectLeaves(tokens.component, ['component']);
 
@@ -161,110 +179,105 @@ for (const leaf of componentLeaves) {
   const exceptionKey = `${componentKey}.${tokenPath}`;
   const componentName = pascalCase(componentKey);
   const known = KNOWN_EXCEPTIONS[exceptionKey];
+  const category = categorize(tokenPath);
 
   if (isAlias(leaf.value)) {
     const target = leaf.value.slice(1, -1);
     if (target.startsWith('semantic.')) continue; // clean — fully semantic-aliased
-
     if (!target.startsWith('primitive.')) continue; // alias into component.* itself etc — not this audit's concern
 
-    const category = target.split('.')[1];
+    const primitiveCategory = target.split('.')[1];
     const resolved = resolveValue(leaf.path);
 
+    let proposed: string;
     if (known) {
-      const row = { component: componentName, token: tokenPath, a: target, b: known.why };
-      if (known.bucket === 'ADR004') adr004.push(row);
-      else if (known.bucket === 'BEYOND_LADDER') beyondLadder.push(row);
-      continue;
+      proposed = known.showAlias ? `${target} (${resolved}) ${known.tag}` : `-- ${known.tag}`;
+    } else if (NO_FLAT_SEMANTIC_LAYER.has(primitiveCategory) || !(primitiveCategory in tokens.semantic)) {
+      proposed = '-- SC';
+    } else {
+      const match = findMatchingValue(`semantic.${primitiveCategory}`, resolved);
+      proposed = match ? `${match} (${resolved})` : '-- SM';
     }
 
-    if (NO_FLAT_SEMANTIC_LAYER.has(category) || !(category in tokens.semantic)) {
-      noSemanticLayer.push({
-        component: componentName,
-        token: tokenPath,
-        a: target,
-        b: `No semantic.${category} role layer`,
-      });
-      continue;
-    }
-
-    const match = findMatchingValue(`semantic.${category}`, resolved);
-    gap.push({
-      component: componentName,
-      token: tokenPath,
-      a: target,
-      b: match ?? `*(no matching rung — closest primitive value is ${resolved})*`,
-    });
+    rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposed });
     continue;
   }
 
   // raw literal — no alias at all
   const literal = String(leaf.value);
-
+  let proposed: string;
   if (known) {
-    const row = { component: componentName, token: tokenPath, a: literal, b: known.why };
-    if (known.bucket === 'RAW_NO_SCALE') rawNoScale.push(row);
-    else if (known.bucket === 'ONE_OFF_COLOR') oneOffColor.push(row);
-    continue;
+    proposed = `-- ${known.tag}`;
+  } else {
+    const match = findMatchingPrimitive(tokenPath, literal);
+    proposed = match ? `${match} (${literal})` : '-- SM';
   }
 
-  const match = findMatchingPrimitive(tokenPath, literal);
-  rawLiteral.push({
-    component: componentName,
-    token: tokenPath,
-    a: literal,
-    b: match ? `\`${match}\`` : '*(none — no matching primitive value)*',
-  });
+  rows[category].push({ component: componentName, token: tokenPath, current: literal, proposed });
 }
 
-// ── render ───────────────────────────────────────────────────────────────────────
-
-function sortRows(rows: Row[]): Row[] {
-  return [...rows].sort((x, y) => (x.component + x.token).localeCompare(y.component + y.token));
+for (const category of CATEGORY_ORDER) {
+  rows[category].sort((a, b) => (a.component + a.token).localeCompare(b.component + b.token));
 }
 
-function table(headers: [string, string, string, string], rows: Row[]): string {
-  if (rows.length === 0) return '*(none currently)*\n';
-  const head = `| ${headers[0]} | ${headers[1]} | ${headers[2]} | ${headers[3]} |`;
-  const sep = '|---|---|---|---|';
-  const body = sortRows(rows)
-    .map(r => `| ${r.component} | \`${r.token}\` | ${r.a} | ${r.b} |`)
-    .join('\n');
-  return `${head}\n${sep}\n${body}\n`;
+// ── render as a fixed-width ASCII box table ─────────────────────────────────────
+
+const HEADERS = ['Componente', 'Token', 'Valor actual', 'Token propuesto'] as const;
+
+const allRows = CATEGORY_ORDER.flatMap(c => rows[c]);
+const widths = [
+  Math.max(HEADERS[0].length, ...allRows.map(r => r.component.length)),
+  Math.max(HEADERS[1].length, ...allRows.map(r => r.token.length)),
+  Math.max(HEADERS[2].length, ...allRows.map(r => r.current.length)),
+  Math.max(HEADERS[3].length, ...allRows.map(r => r.proposed.length)),
+];
+
+function hline(ch = '-'): string {
+  return '+' + widths.map(w => ch.repeat(w + 2)).join('+') + '+';
 }
 
-const sections: Record<string, string> = {
-  NO_SEMANTIC_LAYER: table(['Component', 'Token', 'Aliases', 'Why'], noSemanticLayer),
-  ADR004: table(['Component', 'Token', 'Aliases', 'Why'], adr004),
-  BEYOND_LADDER: table(['Component', 'Token', 'Aliases', 'Why'], beyondLadder),
-  RAW_NO_SCALE: table(['Component', 'Token', 'Value', 'Note'], rawNoScale),
-  GAP: table(['Component', 'Token', 'Currently aliases', 'Matching semantic rung'], gap),
-  RAW_LITERAL: table(['Component', 'Token', 'Hardcoded value', 'Proposed token'], rawLiteral),
-  ONE_OFF_COLOR: table(['Component', 'Token', 'Value', 'Why'], oneOffColor),
-};
+function rowLine(cells: readonly [string, string, string, string]): string {
+  return '| ' + cells.map((c, i) => c.padEnd(widths[i])).join(' | ') + ' |';
+}
 
-// ── splice into the doc between <!-- AUTO:NAME --> ... <!-- /AUTO --> markers ──────
+function categoryDivider(name: string): string {
+  const innerWidth = widths.reduce((sum, w) => sum + w + 3, 0) - 1;
+  const label = ` ${name} `;
+  const padTotal = innerWidth - label.length;
+  const padLeft = Math.floor(padTotal / 2);
+  const padRight = padTotal - padLeft;
+  return '+' + '-'.repeat(padLeft) + label + '-'.repeat(padRight) + '+';
+}
+
+const lines: string[] = [];
+lines.push(hline());
+lines.push(rowLine(HEADERS));
+lines.push(hline('='));
+for (const category of CATEGORY_ORDER) {
+  if (rows[category].length === 0) continue;
+  lines.push(categoryDivider(category));
+  for (const r of rows[category]) {
+    lines.push(rowLine([r.component, r.token, r.current, r.proposed]));
+  }
+  lines.push(hline());
+}
+
+const asciiTable = '```\n' + lines.join('\n') + '\n```';
+
+// ── splice into the doc between <!-- AUTO:ASCII_TABLE --> ... <!-- /AUTO --> markers ──
 
 let doc = fs.readFileSync(docPath, 'utf-8');
-let missing: string[] = [];
+const re = /(<!-- AUTO:ASCII_TABLE -->\n)([\s\S]*?)(\n<!-- \/AUTO -->)/;
 
-for (const [name, content] of Object.entries(sections)) {
-  const re = new RegExp(`(<!-- AUTO:${name} -->\\n)([\\s\\S]*?)(\\n<!-- /AUTO -->)`);
-  if (!re.test(doc)) {
-    missing.push(name);
-    continue;
-  }
-  doc = doc.replace(re, `$1${content.trimEnd()}$3`);
-}
-
-if (missing.length > 0) {
-  console.error(`❌ Missing marker(s) in ${path.relative(process.cwd(), docPath)}: ${missing.join(', ')}`);
+if (!re.test(doc)) {
+  console.error(`❌ Missing <!-- AUTO:ASCII_TABLE --> marker in ${path.relative(process.cwd(), docPath)}`);
   process.exit(1);
 }
 
-const before = fs.readFileSync(docPath, 'utf-8');
-if (before !== doc) {
-  fs.writeFileSync(docPath, doc);
+const newDoc = doc.replace(re, `$1${asciiTable}$3`);
+
+if (doc !== newDoc) {
+  fs.writeFileSync(docPath, newDoc);
   console.log(`✅ Regenerated ${path.relative(process.cwd(), docPath)} from tokens.json`);
 } else {
   console.log(`✅ ${path.relative(process.cwd(), docPath)} already matches tokens.json — 0 changes`);
