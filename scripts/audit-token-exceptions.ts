@@ -159,6 +159,10 @@ function categorize(tokenPath: string): Category {
   return 'OTHER';
 }
 
+function toKebab(s: string): string {
+  return s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase().replace(/\./g, '-');
+}
+
 /**
  * Renders a full dotted token path as a short kebab-case name for the "Proposed Token"
  * column — e.g. `semantic.color.text.neutral` -> `color-text-neutral`,
@@ -167,16 +171,28 @@ function categorize(tokenPath: string): Category {
  * in a dense table.
  */
 function toShortTokenName(fullPath: string): string {
-  return fullPath
-    .replace(/^(semantic|primitive)\./, '')
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .toLowerCase()
-    .replace(/\./g, '-');
+  return toKebab(fullPath.replace(/^(semantic|primitive)\./, ''));
+}
+
+/**
+ * For a token with no existing match anywhere (an `NM` case not already reviewed via
+ * `KNOWN_EXCEPTIONS`): proposes what a brand-new shared token could be called, mechanically,
+ * from where it currently lives — e.g. `chip` + `fontSize.s` -> `chip-font-size-s`. This is
+ * a starting point for a human decision, not a recommendation to actually add it as-is.
+ */
+function proposeNewName(componentKey: string, tokenPath: string): string {
+  return toKebab(`${componentKey}.${tokenPath}`);
 }
 
 // ── classify every component.* leaf into one row ────────────────────────────────
 
-type Row = { component: string; token: string; current: string; proposed: string };
+type Row = {
+  component: string;
+  token: string;
+  current: string;
+  proposedToken: string;
+  proposedValue: string;
+};
 
 const rows: Record<Category, Row[]> = {
   TYPOGRAPHY: [],
@@ -213,31 +229,53 @@ for (const leaf of componentLeaves) {
     const primitiveCategory = target.split('.')[1];
     const resolved = resolveValue(leaf.path);
 
-    let proposed: string;
+    let proposedToken: string;
+    let proposedValue: string;
     if (known) {
-      proposed = known.showAlias ? `${toShortTokenName(target)} (${resolved}) ${known.tag}` : `-- ${known.tag}`;
+      if (known.showAlias) {
+        proposedToken = `${toShortTokenName(target)} (${known.tag})`;
+        proposedValue = resolved;
+      } else {
+        proposedToken = known.tag;
+        proposedValue = '--';
+      }
     } else if (NO_FLAT_SEMANTIC_LAYER.has(primitiveCategory) || !(primitiveCategory in tokens.semantic)) {
-      proposed = '-- SS';
+      proposedToken = 'SS';
+      proposedValue = '--';
     } else {
       const match = findMatchingValue(`semantic.${primitiveCategory}`, resolved);
-      proposed = match ? `${toShortTokenName(match)} (${resolved})` : '-- NM';
+      if (match) {
+        proposedToken = toShortTokenName(match);
+        proposedValue = resolved;
+      } else {
+        proposedToken = `${proposeNewName(componentKey, tokenPath)} (new)`;
+        proposedValue = resolved;
+      }
     }
 
-    rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposed });
+    rows[category].push({ component: componentName, token: tokenPath, current: resolved, proposedToken, proposedValue });
     continue;
   }
 
   // raw literal — no alias at all
   const literal = String(leaf.value);
-  let proposed: string;
+  let proposedToken: string;
+  let proposedValue: string;
   if (known) {
-    proposed = `-- ${known.tag}`;
+    proposedToken = known.tag;
+    proposedValue = '--';
   } else {
     const match = findMatchingPrimitive(tokenPath, literal);
-    proposed = match ? `${toShortTokenName(match)} (${literal})` : '-- NM';
+    if (match) {
+      proposedToken = toShortTokenName(match);
+      proposedValue = literal;
+    } else {
+      proposedToken = `${proposeNewName(componentKey, tokenPath)} (new)`;
+      proposedValue = literal;
+    }
   }
 
-  rows[category].push({ component: componentName, token: tokenPath, current: literal, proposed });
+  rows[category].push({ component: componentName, token: tokenPath, current: literal, proposedToken, proposedValue });
 }
 
 for (const category of CATEGORY_ORDER) {
@@ -246,21 +284,22 @@ for (const category of CATEGORY_ORDER) {
 
 // ── render as a fixed-width ASCII box table ─────────────────────────────────────
 
-const HEADERS = ['Component', 'Token', 'Current Value', 'Proposed Token'] as const;
+const HEADERS = ['Component', 'Token', 'Current Value', 'Proposed Token', 'Proposed Value'] as const;
 
 const allRows = CATEGORY_ORDER.flatMap(c => rows[c]);
 const widths = [
   Math.max(HEADERS[0].length, ...allRows.map(r => r.component.length)),
   Math.max(HEADERS[1].length, ...allRows.map(r => r.token.length)),
   Math.max(HEADERS[2].length, ...allRows.map(r => r.current.length)),
-  Math.max(HEADERS[3].length, ...allRows.map(r => r.proposed.length)),
+  Math.max(HEADERS[3].length, ...allRows.map(r => r.proposedToken.length)),
+  Math.max(HEADERS[4].length, ...allRows.map(r => r.proposedValue.length)),
 ];
 
 function hline(ch = '-'): string {
   return '+' + widths.map(w => ch.repeat(w + 2)).join('+') + '+';
 }
 
-function rowLine(cells: readonly [string, string, string, string]): string {
+function rowLine(cells: readonly [string, string, string, string, string]): string {
   return '| ' + cells.map((c, i) => c.padEnd(widths[i])).join(' | ') + ' |';
 }
 
@@ -281,7 +320,7 @@ for (const category of CATEGORY_ORDER) {
   if (rows[category].length === 0) continue;
   lines.push(categoryDivider(category));
   for (const r of rows[category]) {
-    lines.push(rowLine([r.component, r.token, r.current, r.proposed]));
+    lines.push(rowLine([r.component, r.token, r.current, r.proposedToken, r.proposedValue]));
   }
   lines.push(hline());
 }
