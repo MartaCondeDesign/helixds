@@ -30,7 +30,8 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      `packages/core/src/components/Icon/` (the one legitimate place it renders one) and reports any
      violation — run it after adding or touching a component with an icon.
 3. **Token policy — not a blanket rule, has real exceptions:**
-   - **Color:** always a `--helix-*` token. No exceptions.
+   - **Color:** always a `--helix-*` token. No exceptions. Also must pass WCAG AA contrast against its
+     paired fill — see rule 9 below.
    - **Border-radius:** always a `--helix-*` token. No exceptions.
    - **Spacing/padding:** always a token, **except** values above `128px` (`primitive.spacing.32`,
      the top of the scale) — those have no token and are legitimately hardcoded px.
@@ -39,13 +40,32 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    - **min-width / max-width:** variable, not tokenized — decided by the consumer, the component, or
      the pattern in use. There is no system token for this — a hardcoded px value here is correct,
      not a violation (see `Button.json`'s `sizing.width` note).
+   - **Shadow:** reserved for surfaces that visually float above other content — Dialog, Tooltip,
+     Popover, Menu (see [ADR-005](docs/ADR/ADR-005-elevation-policy.md)). Never use shadow on inline
+     content groupings like `Card` (and anything composed from it, e.g. the StatCard metric-card
+     pattern) — Helix is a flat design; a `box-shadow` there reads as
+     "this floats" when it doesn't. `component.input.shadow.focus` is a different concept (a focus-ring
+     glow) and isn't covered by this rule.
 
    Token names live in `.ai/maps/prop-map.md`.
 4. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
 5. **Prop vocabulary** — canonical names in `.ai/maps/prop-map.md`. Anti-synonyms are invalid.
-6. **New component requires a contract** — create `contracts/components/{Name}.json` first, then the implementation.
+6. **New component requires a contract** — create `contracts/components/{Name}.json` first, then the
+   implementation, then run `pnpm docs:manifest` (see below) so `contracts/manifest.json` picks it up.
 7. **Read the contract before touching a component** — the contract defines what the component IS.
 8. **Figma is reference only** — Helix contracts always win over Figma output.
+9. **Every new or edited text/icon color token must pass WCAG 2.2 AA color contrast** — 4.5:1 for normal
+   text, 3:1 for large text (≥18px, or ≥14px bold) and non-text UI components (icons, focus rings, borders
+   that convey meaning). This is not optional and not covered by "trust the semantic scale" — two roles at
+   the same named step (e.g. `danger` vs `success`/`warning`/`info` all at primitive `.700`, `danger` at
+   `.600`) can diverge in actual luminance. Check the specific text/fill (or icon/fill) pair you're adding,
+   not just that both sides are tokens. Storybook's a11y addon has `color-contrast` enabled
+   (`apps/storybook/.storybook/preview.ts`) and will catch this in the Accessibility panel — but don't rely
+   on noticing it there after the fact; compute or verify contrast before considering a color-token change
+   done, the same way `pnpm verify:tokens`/`pnpm docs:token-exceptions` are run before considering a token
+   change done. This applies to **both** light and dark mode independently — a pair fixed in one theme is
+   not guaranteed to pass in the other (dark mode's `darkOverrides` map in `packages/tokens/src/build.ts`
+   picks its own values per token; check each theme's actual resolved pair, don't assume symmetry).
 
 ## Workflow commands
 
@@ -54,9 +74,29 @@ pnpm contract <Name>        scaffold a new component contract
 pnpm verify:contract        validate contracts vs implementations
 pnpm verify:props           check prop names against prop-map
 pnpm verify:icons           check every Tabler icon renders through the Icon component
+pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
+pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
+pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, shown in Storybook's Changelog page
 pnpm report:paints          CSS paint audit report
 pnpm lint:ai                validate .ai/ directory structure
 ```
+
+**Run `pnpm docs:token-exceptions` after every token or component change** — any time a token is added/edited
+(`pnpm token:add` or a manual `tokens.json` edit) or a component's `component.*` tokens change, even if the
+edit looks like it wouldn't affect the table. It's a generated file (see its own "do not hand-edit" section);
+running the command is how it stays true, not an optional cleanup step. See `packages/tokens/CLAUDE.md` →
+"Adding a token" step 8 for what counts as a real ✅ exception vs. a gap the table should keep surfacing.
+
+**Run `pnpm docs:manifest` after adding/removing a component, contract, export, or story** —
+`contracts/manifest.json` is the single consolidated index of every component (name, category, status,
+contract/implementation/story paths, and what's actually exported from `packages/core/src/index.ts`),
+generated from `contracts/components/*.json` cross-checked against the real index.ts exports and the
+Storybook story files — never hand-edit it. Reach for it instead of globbing 20 contract files when you
+need "what components exist and what state are they in" — it's also how a component/token/story change gets
+checked for drift: a contract with no matching export, an export with no story, a missing `{Name}Props`
+type, etc. all print as a `drift` entry the command surfaces directly, not something you have to notice
+later in Storybook or a failed import. Treat a non-empty `drift` array the same way as a 🚩/🆕 row in
+`component-token-exceptions.md` — a real gap to close, not a report to ignore.
 
 ## Per-package context (load when working in that territory)
 
@@ -71,10 +111,27 @@ pnpm lint:ai                validate .ai/ directory structure
 - `.ai/maps/component-token-exceptions.md` — every `component.*` token that skips `semantic.*` (primitive-direct
   or raw literal) + why. Update it whenever you add or edit a component token — see the file's own
   "Maintenance rule".
+- `contracts/manifest.json`             — single generated index of every component (status, paths, real
+  exports) — check here first when you need "what components exist" instead of globbing contracts.
+- `.ai/maps/changelog.json`             — every commit, grouped by day, generated from `git log`, each
+  tagged `major`/`minor`/`patch`/`other` by a **keyword heuristic** on the commit subject (this repo
+  doesn't use conventional-commit prefixes, so there's no real semver signal to parse — treat the tag as a
+  rough read, not authoritative; nothing here is published, so no real version number depends on it
+  anyway). Rendered in Storybook's own "Changelog" page (`apps/storybook/stories/Changelog.stories.tsx`) —
+  no separate CHANGELOG.md, no manual curation. `.husky/post-commit` runs `pnpm docs:changelog`
+  automatically after every commit, so this normally doesn't need a manual regenerate — run it by hand
+  only if you want it to catch up mid-session without committing first.
 - `contracts/component.schema.json`    — JSON schema for component contracts
 - `docs/ADR/`                          — architecture decisions (read the ADR governing what you're touching)
 - `docs/ADR/ADR-004-size-standard.md`   — canonical size scale for interactive controls and fields
 - `.ai/memory/agnostic-lessons.md`     — lessons from previous sessions
+- `.ai/skills/components-to-figma.md`, `.ai/skills/tokens-to-figma.md`, `.ai/skills/icons-to-figma.md` —
+  **read all three, in full, before touching Figma for any component work.** They're the actual process
+  contract: variable collections must exist first (`tokens-to-figma`), then icons (`icons-to-figma`), then
+  the component (`components-to-figma` — mandatory `combineAsVariants` into one COMPONENT_SET, anatomy layer
+  names matching `data-helix-part`, Phase 2.5 auto-layout rules). Skipping this produced loose unfused
+  components, clipped doc text, and broken text alignment across 10 components in one session before it was
+  caught — see `contracts/figma-sync.json`'s `contractDiscoveredLate2026-08-24` note for the full story.
 
 ## Storybook
 

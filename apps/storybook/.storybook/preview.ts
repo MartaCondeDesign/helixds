@@ -8,11 +8,10 @@ import '@helix-ds/core/globals.css';
 
 const preview: Preview = {
   parameters: {
-    // Sidebar order: Foundation → Icons → Components → Patterns → Pages
     options: {
+      // Sidebar order: Getting Started → Changelog → Status → Figma Sync → Foundation → Icons → Components → Patterns → Pages
       storySort: {
-        order: ['Getting Started', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages', '*'],
-        method: 'alphabetical',
+        order: ['Getting Started', 'Changelog', 'Status', 'Figma Sync', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages'],
       },
     },
     // Background is driven by the theme switcher via CSS vars (--helix-color-fill-page).

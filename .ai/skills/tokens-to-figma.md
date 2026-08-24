@@ -62,7 +62,7 @@ matter here, both relevant when creating a **new** fontSize/lineHeight token pai
 2. **No percent/ratio unit for bound variables.** Figma Variables only hold raw numbers; a `lineHeight`
    bound to a Variable is always read as **pixels**, never percent or a ratio. This gap is resolved **once,
    at the primitive layer** — `Primitives.lineHeight/{key}` (Phase 5) stores the resolved `fontSize × ratio`
-   as a literal, keyed exactly like `fontSize` (`lineHeight/xs`, `lineHeight/l`, ...), never as named ratio
+   as a literal, keyed exactly like `fontSize` (`lineHeight/s`, `lineHeight/l`, ...), never as named ratio
    variables. (An earlier version of this file created 4 ratio-named variables —
    `tight`/`snug`/`normal`/`relaxed` — and had `Semantic`/`Responsive` alias *those*; nothing could ever
    bind to a raw ratio, so they sat unused and were deleted. A later version also tried giving `lineHeight`
@@ -599,11 +599,12 @@ design doesn't have.)
 const primColl = getOrCreateCollection('Primitives');
 const modeId = primColl.modes.find(m => m.name === 'default').modeId;
 
-const RATIO_BY_KEY = { xs: 1.5, s: 1.5, m: 1.5, l: 1.65, xl: 1.35, '2xl': 1.35, '3xl': 1.2, '4xl': 1.2, '5xl': 1.2, '6xl': 1.2 };
+const RATIO_BY_KEY = { s: 1.5, m: 1.5, l: 1.65, xl: 1.35, '2xl': 1.35, '3xl': 1.2, '4xl': 1.2, '5xl': 1.2, '6xl': 1.2 };
 
-// FLOAT vars — fontSize and fontWeight first, lineHeight computed from fontSize × RATIO_BY_KEY below
+// FLOAT vars — fontSize and fontWeight first, lineHeight computed from fontSize × RATIO_BY_KEY below.
+// No `fontSize/xs` — the 11px rung was removed 2026-08-23 (smallest fontSize is now `s`, 12px); every
+// component that used to bind fontSize/xs binds fontSize/s now.
 const typographyTokens = [
-  ['fontSize/xs',  11,  ['FONT_SIZE']],
   ['fontSize/s',   12,  ['FONT_SIZE']],
   ['fontSize/m',   14,  ['FONT_SIZE']],
   ['fontSize/l',   18,  ['FONT_SIZE']],

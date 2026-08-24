@@ -262,12 +262,14 @@ const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl
 const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
 // component.button.fontSize.* -> primitive.fontSize.{xs,s,s,m,l} = 11/12/12/14/18px — only button size
 // `xl` (resolves to 18px) crosses the 18px threshold, so it's the one sourced from Responsive, not Primitives.
-// NOTE the reuse: button size `m` resolves to fontSize/s, and button size `l` resolves to fontSize/m — this
-// is a deliberate, documented choice in component.button.fontSize.* (Button's own scale is denser than the
-// generic one), not a bug. lineHeight MUST pair with the underlying fontSize key it actually resolves to
-// (see below) — button size `m`'s lineHeight is lineHeight/s, NOT lineHeight/m, because its fontSize is
-// fontSize/s. Never derive the lineHeight key from the button's own size label.
-const FONTSIZE_PRIM_VAR = { xs: 'fontSize/xs', s: 'fontSize/s', m: 'fontSize/s', l: 'fontSize/m' };
+// NOTE the reuse: button sizes `xs`, `s`, AND `m` all resolve to fontSize/s (primitive.fontSize.xs was
+// removed — the smallest primitive rung is now `s`, 12px — so `xs` collapsed onto the same primitive `s`
+// already shared by `m`), and button size `l` resolves to fontSize/m — this is a deliberate, documented
+// choice in component.button.fontSize.* (Button's own scale is denser than the generic one), not a bug.
+// lineHeight MUST pair with the underlying fontSize key it actually resolves to (see below) — button size
+// `m`'s lineHeight is lineHeight/s, NOT lineHeight/m, because its fontSize is fontSize/s. Never derive the
+// lineHeight key from the button's own size label.
+const FONTSIZE_PRIM_VAR = { xs: 'fontSize/s', s: 'fontSize/s', m: 'fontSize/s', l: 'fontSize/m' };
 const FONTSIZE_RESP_VAR = { xl: 'fontSize/l' };
 // fill/text — variant-keyed, not size-keyed. No entry for 'ghost' in fill (matches code: no
 // component.button.fill.ghost token exists — ghost stays unbound/transparent).
@@ -365,9 +367,42 @@ compSet.name = 'Button'; // PascalCase component name
 `combineAsVariants` reads the `name` property of each component to infer VARIANT properties.
 Name format: `prop1=value1, prop2=value2` — this creates the variant properties automatically.
 
+**CRITICAL — call `combineAsVariants` EXACTLY ONCE per set, ever.** Never call it a second time on
+components that already have `variantProperties` from a prior combine, even after moving them out onto a
+page first. Discovered 2026-08-24: adding a `disabled` axis to an existing Chip COMPONENT_SET, and
+separately adding icon/spinner anatomy to an existing Button COMPONENT_SET, both did this (extract children
+→ mutate → `combineAsVariants` again) and both silently corrupted the set — the call completes without
+throwing and reports the expected child count, but `componentPropertyDefinitions`/`variantProperties` then
+throw `"Component set for node has existing errors"`, and every child's `.name` degrades to a garbled
+`"=value, =value"` string with property-name prefixes stripped. **There is no repair API** — the only fix
+is deleting the broken set and rebuilding the components from scratch (fresh `figma.createComponent()`
+calls, never `.clone()` of anything that was ever inside a COMPONENT_SET) in one single `combineAsVariants`
+call. What IS safe on an already-combined set: `appendChild`/`insertChild` of new anatomy layers directly
+onto existing children (adding an icon slot, a spinner, a trailing icon — confirmed working repeatedly),
+plus `addComponentProperty`/`componentPropertyReferences`/`editComponentProperty` — anything that doesn't
+touch `combineAsVariants` or a child's `.name`. If a component needs a genuinely NEW VARIANT AXIS after
+the fact (not just a Boolean/Text/InstanceSwap property), there is no safe in-place path: delete and
+rebuild clean, in one pass, from the start.
+
 ### Phase 4 — Add component properties (BOOLEAN, TEXT, INSTANCE_SWAP)
 
 After `combineAsVariants`, add properties and link them to anatomy layers.
+
+**Order every property to match the component's Storybook Controls panel — within two groups, not
+fully interleaved.** Figma's own Properties panel always groups Variant-type properties separately from
+Boolean/Text/InstanceSwap, regardless of `addComponentProperty` call order or `combineAsVariants` order —
+confirmed via `compSet.componentPropertyDefinitions` on Chip: `label`/`icon`/`iconEnd`/`dismissible` (added
+via `addComponentProperty` after the set already existed) came back BEFORE `variant`/`size`/`checked`/
+`disabled` (the original Variant axes), i.e. grouped by type, not creation order. True full interleaving
+matching Storybook exactly (`variant, size, checked, disabled, icon, iconEnd, dismissible` all mixed) is
+**not achievable** on this platform — don't attempt it. What IS controllable, and should always be done:
+(1) order the segments in each component's name string (`variant=X, size=Y, checked=Z`) to match
+Storybook's Variant-prop order; (2) call `addComponentProperty` for Boolean/Text/InstanceSwap props in
+Storybook's order too. Skip props with no Figma equivalent: JS event handlers (`onPress`, `onChange`,
+`onDismiss`) and behavioral props with no visual difference in the anatomy (e.g. `required` when no
+asterisk is rendered). Never add a Boolean/Text/InstanceSwap property before its anatomy layer exists —
+a property wired to nothing is worse than no property, since it looks complete in the panel but does
+nothing when toggled.
 
 ### INSTANCE_SWAP for icon slots
 
