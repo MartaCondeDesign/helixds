@@ -1,45 +1,81 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import {
-  AppShell, SideNav, NavItem, TopBar, PageHeader, StatCard, Card, Avatar, Icon,
+  AppShell, SideNav, NavItem, TopBar, PageHeader, Card, Avatar, Icon,
   Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell,
-  Button, Input, Select, Badge, Switch,
+  Button, IconButton, Input, Select, Badge, Switch,
 } from '@helix-ds/core';
 import {
-  IconLayoutDashboard, IconComponents, IconPalette, IconSettings,
-  IconBell, IconSearch, IconUsers, IconCode, IconBolt, IconTrendingUp,
+  IconBell, IconSearch, IconBolt, IconTrendingUp,
   IconFilter, IconDownload, IconPlus, IconDots, IconHelp,
+  IconArrowUpRight, IconArrowDownRight,
 } from '@tabler/icons-react';
+import { MEMBERS, NAV_ITEMS } from './fixtures/dashboard.fixture';
+import type { Member } from './fixtures/dashboard.fixture';
+
+// ── Stat Card pattern — Card composed with a fixed label/value/delta layout, not its own
+// component. See .ai/maps/patterns/stat-card.md / Patterns → StatCard for the canonical recipe. ──
+
+type Trend = 'up' | 'down';
+
+function StatCard({
+  label, value, delta, trend,
+}: { label: string; value: string; delta?: string; trend?: Trend }) {
+  return (
+    <Card>
+      <div style={{
+        fontSize:       'var(--helix-textStyle-body-s-medium-fontSize)',
+        fontWeight:     'var(--helix-textStyle-body-s-medium-fontWeight)',
+        color:          'var(--helix-color-text-neutral-lightest)',
+        textTransform:  'uppercase',
+        letterSpacing:  '0.05em',
+        marginBottom:   'var(--helix-spacing-xs)',
+      }}>
+        {label}
+      </div>
+      <div style={{
+        fontSize:      'var(--helix-textStyle-heading-3xl-bold-fontSize)',
+        fontWeight:    'var(--helix-textStyle-heading-3xl-bold-fontWeight)',
+        color:         'var(--helix-color-text-neutral)',
+        lineHeight:    1,
+        letterSpacing: '-0.02em',
+        fontVariantNumeric: 'tabular-nums',
+        marginBottom:  'var(--helix-spacing-xs)',
+      }}>
+        {value}
+      </div>
+      {delta && (
+        <div style={{
+          display:    'flex',
+          alignItems: 'center',
+          gap:        'var(--helix-spacing-xs)',
+          fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
+          fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
+          color: trend === 'up'   ? 'var(--helix-color-text-success)'
+               : trend === 'down' ? 'var(--helix-color-text-danger)'
+               : 'var(--helix-color-text-neutral-light)',
+        }}>
+          {trend && (
+            <Icon
+              icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
+              size={12}
+              color={trend === 'up' ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+            />
+          )}
+          {delta}
+        </div>
+      )}
+    </Card>
+  );
+}
 
 // ── Types ──────────────────────────────────────────────────────────────────
-
-type Member = {
-  id: string; name: string; email: string; role: string;
-  status: 'active' | 'invited' | 'suspended';
-  components: number; lastSeen: string;
-};
-
-const MEMBERS: Member[] = [
-  { id: '1', name: 'Ana García',   email: 'ana@company.com',   role: 'Design Lead',    status: 'active',    components: 24, lastSeen: '2 min ago' },
-  { id: '2', name: 'Pau Torres',   email: 'pau@company.com',   role: 'Engineer',       status: 'active',    components: 18, lastSeen: '1 hr ago'  },
-  { id: '3', name: 'Marta Conde',  email: 'marta@company.com', role: 'DS Specialist',  status: 'active',    components: 47, lastSeen: 'Just now'  },
-  { id: '4', name: 'Jordi Puig',   email: 'jordi@company.com', role: 'Frontend',       status: 'active',    components: 11, lastSeen: '3 hrs ago' },
-  { id: '5', name: 'Sara Navarro', email: 'sara@new.com',      role: 'Designer',       status: 'invited',   components: 0,  lastSeen: '—'         },
-  { id: '6', name: 'Alex Romero',  email: 'alex@company.com',  role: 'Product Manager',status: 'suspended', components: 3,  lastSeen: '2 days ago'},
-];
+// MEMBERS/NAV_ITEMS mock data lives in ./fixtures/dashboard.fixture.ts — shared with any future
+// test that wants the same demo data, instead of duplicated/hardcoded inline here.
 
 const STATUS_VARIANT: Record<Member['status'], 'success' | 'warning' | 'danger'> = {
   active: 'success', invited: 'warning', suspended: 'danger',
 };
-
-const NAV_ITEMS = [
-  { icon: IconLayoutDashboard, label: 'Dashboard',  href: '#' },
-  { icon: IconComponents,      label: 'Components', href: '#' },
-  { icon: IconPalette,         label: 'Tokens',      href: '#' },
-  { icon: IconUsers,           label: 'Team',        href: '#', current: true },
-  { icon: IconCode,            label: 'AI Context',  href: '#' },
-  { icon: IconSettings,        label: 'Settings',    href: '#' },
-];
 
 // ── Main page ──────────────────────────────────────────────────────────────
 
@@ -66,13 +102,13 @@ function DashboardPage() {
       sidenav={
         <SideNav
           brand={
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
               <span style={{
                 width: 28, height: 28, borderRadius: 'var(--helix-radius-m)',
-                background: 'var(--helix-color-fill-primary)', display: 'flex',
+                background: 'var(--helix-color-fill-primary-interactive-light-default)', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}>
-                <Icon icon={IconBolt} size={16} stroke={2.5} color="var(--helix-color-text-inverse)" />
+                <Icon icon={IconBolt} size={16} stroke={2.5} color="var(--helix-color-text-primary)" />
               </span>
               <span style={{
                 fontSize: 'var(--helix-primitive-fontSize-m)',
@@ -85,22 +121,26 @@ function DashboardPage() {
             </div>
           }
           footer={
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
-              <Avatar label="Marta Conde" variant="solid" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
+              <Avatar label="Marta Conde" />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{
-                  fontSize: 'var(--helix-primitive-fontSize-s)',
-                  fontWeight: 'var(--helix-primitive-fontWeight-medium)',
+                  fontSize: 'var(--helix-textStyle-body-s-medium-fontSize)',
+                  fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)',
                   color: 'var(--helix-color-text-neutral)',
                   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>
                   Marta Conde
                 </div>
-                <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)' }}>
+                <div style={{
+                  fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
+                  fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
+                  color: 'var(--helix-color-text-neutral-lightest)',
+                }}>
                   Admin
                 </div>
               </div>
-              <Button variant="ghost" size="s" icon={IconDots} aria-label="Account menu" />
+              <IconButton variant="ghost" size="s" icon={IconDots} label="Account menu" />
             </div>
           }
         >
@@ -122,9 +162,8 @@ function DashboardPage() {
           }
           end={
             <>
-              <Button variant="ghost" size="s" icon={IconBell} aria-label="Notifications" />
-              <Button variant="ghost" size="s" icon={IconHelp} aria-label="Help" />
-              <Avatar label="Marta Conde" variant="solid" size="s" />
+              <IconButton variant="ghost" size="m" icon={IconBell} label="Notifications" />
+              <IconButton variant="ghost" size="m" icon={IconHelp} label="Help" />
             </>
           }
         />
@@ -136,16 +175,16 @@ function DashboardPage() {
         actions={
           <>
             <Badge variant="success" icon={IconTrendingUp} label="+2 this month" />
-            <Button variant="primary" size="s" icon={IconPlus}>Invite member</Button>
+            <Button variant="primary" size="m" icon={IconPlus}>Invite member</Button>
           </>
         }
       />
 
       {/* KPIs */}
       <div style={{
-        display: 'flex',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
         gap: 'var(--helix-spacing-s)',
-        flexWrap: 'wrap',
         margin: 'var(--helix-spacing-l) 0',
       }}>
         <StatCard label="Members"        value="6"    delta="+2"    trend="up" />
@@ -158,27 +197,31 @@ function DashboardPage() {
       <div style={{ marginBottom: 'var(--helix-spacing-s)' }}>
         <Card>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
               <span style={{
                 width: 32, height: 32, borderRadius: 'var(--helix-radius-l)',
-                background: aiCtx ? 'var(--helix-color-fill-primary)' : 'var(--helix-color-fill-secondary-interactive-default)',
+                background: aiCtx ? 'var(--helix-color-fill-primary-interactive-light-default)' : 'var(--helix-color-fill-secondary-interactive-default)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}>
                 <Icon
                   icon={IconBolt}
                   size={16}
-                  color={aiCtx ? 'var(--helix-color-text-inverse)' : 'var(--helix-color-text-neutral-lightest)'}
+                  color={aiCtx ? 'var(--helix-color-text-primary)' : 'var(--helix-color-text-neutral-lightest)'}
                 />
               </span>
               <div>
                 <div style={{
-                  fontSize: 'var(--helix-primitive-fontSize-s)',
-                  fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
+                  fontSize: 'var(--helix-textStyle-caption-semibold-fontSize)',
+                  fontWeight: 'var(--helix-textStyle-caption-semibold-fontWeight)',
                   color: 'var(--helix-color-text-neutral)',
                 }}>
                   AI Context export
                 </div>
-                <div style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)' }}>
+                <div style={{
+                  fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
+                  fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
+                  color: 'var(--helix-color-text-neutral-light)',
+                }}>
                   Include team structure in <code style={{ fontFamily: 'monospace', fontSize: 'inherit' }}>llms.txt</code>
                 </div>
               </div>
@@ -192,7 +235,7 @@ function DashboardPage() {
       <Card
         padding="none"
         header={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)', flexWrap: 'wrap' }}>
             <div style={{ width: 200 }}>
               <Select
                 label="Role"
@@ -201,13 +244,13 @@ function DashboardPage() {
                 placeholder="All roles"
                 value={role}
                 onChange={setRole}
-                size="s"
+                size="m"
               />
             </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
               <Badge variant="neutral" label={`${filtered.length} members`} />
-              <Button variant="secondary" size="s" icon={IconFilter}>Filter</Button>
-              <Button variant="ghost"     size="s" icon={IconDownload}>Export</Button>
+              <Button variant="secondary" size="m" icon={IconFilter}>Filter</Button>
+              <Button variant="ghost"     size="m" icon={IconDownload}>Export</Button>
             </div>
           </div>
         }
@@ -227,19 +270,20 @@ function DashboardPage() {
             {filtered.map(m => (
               <TableRow key={m.id}>
                 <TableCell>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
                     <Avatar label={m.name} size="s" />
                     <div>
                       <div style={{
-                        fontSize: 'var(--helix-primitive-fontSize-s)',
-                        fontWeight: 'var(--helix-primitive-fontWeight-medium)',
+                        fontSize: 'var(--helix-textStyle-body-s-medium-fontSize)',
+                        fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)',
                         color: 'var(--helix-color-text-neutral)',
                         whiteSpace: 'nowrap',
                       }}>
                         {m.name}
                       </div>
                       <div style={{
-                        fontSize: 'var(--helix-primitive-fontSize-xs)',
+                        fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
+                        fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
                         color: 'var(--helix-color-text-neutral-lightest)',
                       }}>
                         {m.email}
@@ -251,7 +295,7 @@ function DashboardPage() {
                 <TableCell><Badge variant={STATUS_VARIANT[m.status]} label={m.status} /></TableCell>
                 <TableCell>{m.components}</TableCell>
                 <TableCell>{m.lastSeen}</TableCell>
-                <TableCell><Button variant="ghost" size="s" aria-label="Row actions">···</Button></TableCell>
+                <TableCell><IconButton variant="ghost" size="s" icon={IconDots} label="Row actions" /></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -276,7 +320,7 @@ export const TeamDashboard: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Full admin dashboard, built entirely from Helix DS components — AppShell, SideNav, NavItem, TopBar, PageHeader, StatCard, Card, Avatar, Table, Badge, Button, Input, Select, Switch, Icon.',
+        story: 'Full admin dashboard, built entirely from Helix DS components — AppShell, SideNav, NavItem, TopBar, PageHeader, Card (KPI row uses the StatCard pattern, see .ai/maps/patterns/stat-card.md), Avatar, Table, Badge, Button, IconButton, Input, Select, Switch, Icon.',
       },
     },
   },

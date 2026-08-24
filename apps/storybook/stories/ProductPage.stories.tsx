@@ -206,7 +206,7 @@ function WorkspacePage() {
             {/* Section: personal */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
+                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
                 color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase',
@@ -250,7 +250,7 @@ function WorkspacePage() {
             {/* Section: workspace */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
+                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
                 color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase', letterSpacing: '0.08em',
@@ -306,7 +306,7 @@ function WorkspacePage() {
             {/* Section: preferences */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-xs)',
+                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
                 fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
                 color: 'var(--helix-color-text-neutral-lightest)',
                 textTransform: 'uppercase', letterSpacing: '0.08em',
@@ -340,7 +340,7 @@ function WorkspacePage() {
               {loading ? 'Creating workspace…' : 'Create workspace'}
             </Button>
 
-            <p style={{ margin: 0, textAlign: 'center', fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)' }}>
+            <p style={{ margin: 0, textAlign: 'center', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)' }}>
               By creating a workspace you agree to our{' '}
               <a href="#" style={{ color: 'var(--helix-color-text-neutral-light)' }}>Terms</a>
               {' '}and{' '}

@@ -52,6 +52,52 @@ const TD_STYLE = {
   borderBottom: '1px solid var(--helix-color-border-neutral-light, #f1f5f9)',
 };
 
+// The panel renders in the Storybook MANAGER's own document — a separate frame from the
+// preview iframe, which is the only place `.storybook/preview.ts` actually imports the
+// tokens CSS. `var(--helix-table-header-color)` written directly in this file's own inline
+// styles therefore never resolves to anything (the manager never defines that custom
+// property) — every color swatch silently renders as transparent/blank regardless of which
+// component's tokens are showing. Read the REAL resolved value out of the preview iframe's
+// live DOM instead (same-origin, same dev server — a plain cross-frame getComputedStyle
+// works with no special permissions) and paint the swatch with that literal color, which
+// resolves correctly in any document.
+function resolvePreviewColor(token) {
+  if (!token || typeof document === 'undefined') return undefined;
+  const iframe = document.getElementById('storybook-preview-iframe');
+  const win = iframe?.contentWindow;
+  if (!win) return undefined;
+  try {
+    const value = win.getComputedStyle(win.document.documentElement).getPropertyValue(token).trim();
+    return value || undefined;
+  } catch {
+    // Cross-frame access can throw before the preview has finished its first paint, or if a
+    // consumer's Storybook build serves the preview from a different origin — fall back to
+    // the (non-resolving, but harmless) var() reference rather than crashing the panel.
+    return undefined;
+  }
+}
+
+// A row is only relevant if its `part` is actually rendered in the CURRENT story instance —
+// e.g. Card's `card-header` (and its `border-bottom` divider token) only exists in the DOM when
+// that story passes a `header` prop; a story with no header should never show that row, even
+// though the doc.ts token list includes it as part of Card's full surface. Reads the preview
+// iframe's live DOM (same cross-frame approach as resolvePreviewColor) rather than trying to
+// infer presence from args, since "does this part exist" is exactly what the DOM already knows.
+function getPresentParts() {
+  if (typeof document === 'undefined') return null;
+  const iframe = document.getElementById('storybook-preview-iframe');
+  const doc = iframe?.contentDocument;
+  if (!doc) return null;
+  try {
+    const present = new Set();
+    doc.querySelectorAll('[data-helix-part]').forEach(el => present.add(el.getAttribute('data-helix-part')));
+    return present;
+  } catch {
+    // Cross-frame access can throw before the preview has finished its first paint.
+    return null;
+  }
+}
+
 function normalizeKind(kind) {
   if (kind === 'color' || kind === 'typography' || kind === 'space' || kind === 'shadow' || kind === 'radius') return kind;
   return 'other';
@@ -88,10 +134,17 @@ function rowKeyFor(item) {
 // - `state: 'disabled'` rows are opt-in: they only show once the story's own `disabled`
 //   arg is actually turned on, unlike `hover`/`press` rows (untagged as `state`), which
 //   are pointer states of an always-interactive component and so always show.
-function matchesStoryState(item, args) {
+// - `part` must actually exist in the live DOM right now — a row for a sub-part that's
+//   conditionally rendered (Card's `card-header`, only present when `header` is passed)
+//   shouldn't show for a story instance that doesn't render it, even though it's a real
+//   part of the component's full documented surface. `presentParts === null` means the
+//   iframe DOM wasn't readable yet — fail OPEN (show the row) rather than hide everything
+//   while the preview is still loading.
+function matchesStoryState(item, args, presentParts) {
   if (args?.variant && item.variant && item.variant !== args.variant) return false;
   if (args?.size && item.size && item.size !== args.size) return false;
   if (item.state === 'disabled' && args?.disabled !== true) return false;
+  if (presentParts && item.part && !presentParts.has(item.part)) return false;
   return true;
 }
 
@@ -111,6 +164,24 @@ function TokensPanel({ active }) {
   const [hoveredRow, setHoveredRow] = React.useState(null);
   const channel = React.useMemo(() => addons.getChannel(), []);
 
+  // Swatch colors are read live from the preview iframe (see resolvePreviewColor) — on
+  // story navigation the iframe reloads and re-imports the tokens CSS, so a color read
+  // immediately on this panel's own re-render can land before that's ready. `paintTick`
+  // just forces one more render shortly after, by which point the preview has painted.
+  const [paintTick, setPaintTick] = React.useState(0);
+  React.useEffect(() => {
+    const raf1 = requestAnimationFrame(() => {
+      const raf2 = requestAnimationFrame(() => setPaintTick(t => t + 1));
+      return () => cancelAnimationFrame(raf2);
+    });
+    return () => cancelAnimationFrame(raf1);
+    // Re-check shortly after story navigation AND after any arg change (e.g. toggling a
+    // control that conditionally renders a part, like Card's `header`) — both can change
+    // which `data-helix-part` elements actually exist in the preview DOM.
+  }, [currentStory?.id, JSON.stringify(currentArgs)]);
+
+  const presentParts = React.useMemo(() => getPresentParts(), [currentStory?.id, JSON.stringify(currentArgs), paintTick]);
+
   // The preview iframe reloads its story on navigation — a highlight left over from a
   // hovered row in the previous story would otherwise point at DOM that no longer exists.
   React.useEffect(() => {
@@ -128,9 +199,9 @@ function TokensPanel({ active }) {
   }
 
   const categories = React.useMemo(() => {
-    const present = CATEGORY_ORDER.filter(kind => tokens.some(item => getCategory(item) === kind && matchesStoryState(item, currentArgs)));
+    const present = CATEGORY_ORDER.filter(kind => tokens.some(item => getCategory(item) === kind && matchesStoryState(item, currentArgs, presentParts)));
     return present;
-  }, [tokens, currentArgs]);
+  }, [tokens, currentArgs, presentParts]);
 
   React.useEffect(() => {
     if (!categories.length) return;
@@ -140,8 +211,8 @@ function TokensPanel({ active }) {
   }, [category, categories]);
 
   const filtered = React.useMemo(
-    () => tokens.filter(item => getCategory(item) === category && matchesStoryState(item, currentArgs)),
-    [tokens, category, currentArgs],
+    () => tokens.filter(item => getCategory(item) === category && matchesStoryState(item, currentArgs, presentParts)),
+    [tokens, category, currentArgs, presentParts],
   );
 
   const uniqueFiltered = React.useMemo(() => {
@@ -266,7 +337,13 @@ function TokensPanel({ active }) {
                             height: 28,
                             borderRadius: 8,
                             border: '1px solid var(--helix-color-border-neutral, #e2e8f0)',
-                            backgroundColor: item.token ? `var(${item.token})` : item.value ?? '',
+                            // resolvePreviewColor reads the REAL value from the preview iframe —
+                            // a bare var(--helix-*) written here never resolves (this panel's own
+                            // document doesn't define that custom property; see the function's
+                            // own comment). Falls back to the unresolved var()/literal only if
+                            // the iframe read fails, so the swatch degrades instead of crashing.
+                            backgroundColor: (item.token && resolvePreviewColor(item.token))
+                              || (item.token ? `var(${item.token})` : item.value ?? ''),
                           },
                         }),
                       )
