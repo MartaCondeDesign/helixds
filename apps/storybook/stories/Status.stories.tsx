@@ -4,6 +4,7 @@ import { Badge } from '@helix-ds/core';
 import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
 import manifest from '../../../contracts/manifest.json';
+import figmaSync from '../../../contracts/figma-sync.json';
 
 const meta: Meta = {
   title: 'Status',
@@ -72,6 +73,8 @@ const TD_STYLE: React.CSSProperties = {
   color: 'var(--helix-color-text-neutral)',
 };
 
+const figmaSyncByName = new Map(figmaSync.components.map(c => [c.name, c]));
+
 export const Overview: Story = {
   render: () => {
     const rows = [...manifest.components].sort((a, b) => a.name.localeCompare(b.name));
@@ -79,12 +82,13 @@ export const Overview: Story = {
       acc[r.status] = (acc[r.status] ?? 0) + 1;
       return acc;
     }, {});
+    const inFigmaCount = figmaSync.components.filter(c => c.inFigma).length;
 
     return (
       <div>
         <StoryHeader
           title="Status"
-          description={`Doneness matrix for ${manifest.count} components, generated from contracts/manifest.json (pnpm docs:manifest). ✓/✗ columns are real checks, not opinions — drift shows up in the generator's own output before it ever reaches this table.`}
+          description={`Doneness matrix for ${manifest.count} components, generated from contracts/manifest.json (pnpm docs:manifest). ✓/✗ columns are real checks, not opinions — drift shows up in the generator's own output before it ever reaches this table. The Figma column reflects contracts/figma-sync.json (${inFigmaCount}/${figmaSync.components.length} modeled so far) — see the Figma Sync page for the full per-component detail.`}
         />
 
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', marginBottom: 'var(--helix-spacing-l)' }}>
@@ -106,6 +110,11 @@ export const Overview: Story = {
                 <th style={TH_STYLE}>Types</th>
                 <th style={TH_STYLE}>Story</th>
                 <th style={TH_STYLE}>A11y</th>
+                <th style={TH_STYLE}>
+                  <a href="/?path=/docs/figma-sync--docs" target="_top" style={{ color: 'inherit', textDecoration: 'underline' }}>
+                    Figma
+                  </a>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -131,6 +140,7 @@ export const Overview: Story = {
                   <td style={TD_STYLE}><Check ok={r.exports.types.length > 0} /></td>
                   <td style={TD_STYLE}><Check ok={!!r.story} /></td>
                   <td style={TD_STYLE}><Check ok={r.a11yComplete} /></td>
+                  <td style={TD_STYLE}><Check ok={!!figmaSyncByName.get(r.name)?.inFigma} /></td>
                 </tr>
               ))}
             </tbody>

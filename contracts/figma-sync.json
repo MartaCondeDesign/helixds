@@ -8,12 +8,13 @@
   "components": [
     {
       "name": "AppShell",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file — only page currently present is Button (node 30:2)."
+      "inFigma": true,
+      "figmaNodeId": "334:4",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page.",
+      "compSetId": null
     },
     {
       "name": "Avatar",
@@ -47,12 +48,13 @@
     },
     {
       "name": "Card",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "326:20",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants).",
+      "compSetId": "326:20"
     },
     {
       "name": "Checkbox",
@@ -105,21 +107,23 @@
     },
     {
       "name": "NavItem",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "327:12",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"NavItem\") — current true/false, matching the `current` prop. Fill, text, icon color, radius bound to real variables against component.navItem.*; icon is a real \"Home\" instance from the Icons page. Property: label (TEXT).",
+      "compSetId": "327:12"
     },
     {
       "name": "PageHeader",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "328:26",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"PageHeader\") — level 1/2 x actions true/false (4 total), matching PageHeaderLevel and the optional `actions` prop. Title uses \"Heading / 2xl / Bold\" (level 1, 32px) vs \"Heading / xl / Bold\" (level 2, 24px) real text styles — verified via API (fontSize 32 vs 24, distinct textStyleId), not just eyeballed off a screenshot. Description uses \"Body / s / Regular\". Actions slot is a stubbed action-button shape (not a real Button instance — out of scope to nest a full component here) shown only on actions=true. Properties: label (TEXT, title) and description (TEXT).",
+      "compSetId": "328:26"
     },
     {
       "name": "RadioGroup",
@@ -143,12 +147,13 @@
     },
     {
       "name": "SideNav",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "332:4",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"SideNav\") — a single static composition: side-nav-brand (logo box + \"Helix\" text) + side-nav-items (4 real NavItem INSTANCES, reusing the actual NavItem component built earlier — not redrawn) + side-nav-footer (avatar stub + name). No variant/size prop of its own. Fill, border, width (224px literal, matches the hardcoded value in component.sideNav.width) bound to real variables against component.sideNav.*.",
+      "compSetId": null
     },
     {
       "name": "Switch",
@@ -162,12 +167,13 @@
     },
     {
       "name": "Table",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "330:4",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Table\") — a single static composition (header row + 3 data rows), not a variant grid: Table/TableHead/TableBody/TableRow/TableHeaderCell/TableCell have no variant or size prop in code, so there's no axis to model as Variant properties. Header text uses \"Caption / Semibold\" + text/neutral/lightest; cell text uses \"Body / s / Regular\" + text/neutral; row divider bound to border/neutral/light — matches component.table.* exactly.",
+      "compSetId": null
     },
     {
       "name": "Textarea",
@@ -181,12 +187,13 @@
     },
     {
       "name": "TopBar",
-      "inFigma": false,
-      "figmaNodeId": null,
-      "variantsMatch": null,
-      "tokensMatch": null,
-      "lastChecked": null,
-      "notes": "Not yet modeled in the Figma file."
+      "inFigma": true,
+      "figmaNodeId": "333:4",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-08-25",
+      "notes": "Built 2026-08-25 on its own Figma page (\"TopBar\") — a single static composition: topbar-start holds a real Input instance (size=m default), topbar-end holds two real ghost/m IconButton instances — reusing the actual components, not redrawn. No variant/size prop of its own. Fill, border, height (semantic.size.2xl = 56px) bound to real variables against component.topBar.*.",
+      "compSetId": null
     }
   ],
   "contractDiscoveredLate2026-08-24": ".ai/skills/components-to-figma.md (+ tokens-to-figma.md, icons-to-figma.md) is the actual process contract for building a Helix component in Figma — mandatory combineAsVariants into one COMPONENT_SET, anatomy layer names must match data-helix-part, Phase 2.5 auto-layout (HUG width by default, FIXED height, counterAxisAlignItems=CENTER). These files were not read before building Badge/Chip/Avatar/IconButton/Checkbox/Switch/RadioGroup/Input/Select/Textarea this session, which is why they shipped as loose components with inconsistent alignment and clipped doc text — all 10 were retroactively fixed (see each entry's own STRUCTURAL FIX note). Read these three files FIRST, in full, before building any further Figma component — they are not linked from CLAUDE.md, so they're easy to miss.",

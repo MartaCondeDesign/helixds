@@ -131,3 +131,17 @@ A token category that exists in both `primitive.*` and `semantic.*` (color, spac
 a section in both files. A category with no primitive layer (radius) or no semantic layer at time of
 writing gets a short explanatory note in the file where it's missing, rather than silently having no entry
 at all — see `Primitives.stories.tsx`'s `Radius` story for the pattern.
+
+## Every component story links to Figma
+
+Every `Components/*` and `Layout/*` story's autodocs page shows a "View in Figma ↗" link, right under the
+purpose description — sourced from `contracts/figma-sync.json` by component name, never hand-typed per
+story. This is automatic: `createComponentDocsParameters(XDoc)` (`_shared/component-docs.tsx`) looks the
+component up in `figma-sync.json` and appends the link to `docs.description.component` when
+`inFigma: true`; it renders nothing for a component not yet modeled in Figma, rather than a broken link.
+Nothing to do per-component — the link appears automatically the moment `figma-sync.json` marks that
+component `inFigma: true`, and disappears just as automatically if that ever flips back to `false`.
+
+`StoryHeader` (`_shared/StoryHeader.tsx`) also accepts an optional `figmaUrl` prop for the same link,
+rendered next to the title on the Canvas view — pass it (via the same `figma-sync.json` lookup) on any
+story that builds its own custom header instead of going through `createComponentDocsParameters`.

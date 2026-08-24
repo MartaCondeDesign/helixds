@@ -17,17 +17,40 @@
 const STORYBOOK_FONT_FAMILY =
   '"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", "system-ui", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif';
 
-export function StoryHeader({ title, description }: { title: string; description: string }) {
+// figmaUrl: every Components/* and Layout/* story must pass this — see apps/storybook/CLAUDE.md's
+// "Every component story links to Figma" rule. Built from contracts/figma-sync.json, not hand-typed
+// per story, so it can't drift from the actual node id on file.
+export function StoryHeader({ title, description, figmaUrl }: { title: string; description: string; figmaUrl?: string }) {
   return (
     <div>
-      <h1 style={{
-        margin: 0, marginBottom: 16,
-        fontSize: 32, fontWeight: 700, lineHeight: '36px',
-        fontFamily: STORYBOOK_FONT_FAMILY,
-        color: 'var(--helix-color-text-neutral)',
-      }}>
-        {title}
-      </h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+        <h1 style={{
+          margin: 0,
+          fontSize: 32, fontWeight: 700, lineHeight: '36px',
+          fontFamily: STORYBOOK_FONT_FAMILY,
+          color: 'var(--helix-color-text-neutral)',
+        }}>
+          {title}
+        </h1>
+        {figmaUrl && (
+          <a
+            href={figmaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 4,
+              fontSize: 13, fontWeight: 500, fontFamily: STORYBOOK_FONT_FAMILY,
+              color: 'var(--helix-color-text-neutral-light)',
+              textDecoration: 'none',
+              border: '1px solid var(--helix-color-border-neutral)',
+              borderRadius: 'var(--helix-radius-full)',
+              padding: '4px 10px',
+            }}
+          >
+            View in Figma ↗
+          </a>
+        )}
+      </div>
       <p style={{
         margin: 0, marginTop: 16, marginBottom: 16,
         fontSize: 14, fontWeight: 400, lineHeight: '24px',
