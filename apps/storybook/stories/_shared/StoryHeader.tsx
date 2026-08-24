@@ -49,7 +49,7 @@ export function StoryHeader({ title, description, figmaUrl }: { title: string; d
               padding: '4px 10px',
             }}
           >
-            View in Figma ↗
+            View in Figma
           </a>
         )}
       </div>

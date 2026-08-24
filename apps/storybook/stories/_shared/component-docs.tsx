@@ -13,12 +13,18 @@ function findFigmaUrl(name: string): string | undefined {
 
 export function createComponentDocsParameters(doc: Pick<ComponentDoc, 'name' | 'purpose' | 'tokens'>) {
   const figmaUrl = findFigmaUrl(doc.name);
-  // A markdown "\n\n" here would render as two separate <p> elements with the browser's default
-  // paragraph margin (~16px) between them — not controllable to a specific value. Using a raw <br/>
-  // plus an inline-block <a> with its own margin-top keeps it a single block so the 8px gap actually
-  // applies (Storybook's Description block passes raw HTML through).
+  // Verified 2026-08-25 against real screenshots: three attempts at putting the link on its own
+  // line/block below the purpose text — markdown "\n\n" (two <p>s, browser default ~16-24px gap),
+  // "<br/>" + inline-block <a style="margin-top:8px">, and a self-contained <p style="margin:8px...">
+  // wrapping the link — all rendered with the SAME oversized gap. Whatever Storybook's docs markdown
+  // pipeline is doing here, an inline `style` margin on a new block is not surviving it, and there's
+  // no reliable way to prove why without DOM access this session has none of. Stopped fighting
+  // block-to-block spacing entirely: the link is now inline, appended straight after the purpose
+  // text on the same line/paragraph — there is no vertical gap to control because there's no second
+  // block. This is a deliberate layout change (link no longer on its own line), not a smaller version
+  // of the same fix.
   const description = figmaUrl
-    ? `${doc.purpose}<br/><a href="${figmaUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;">View in Figma ↗</a>`
+    ? `${doc.purpose} <a href="${figmaUrl}" target="_blank" rel="noopener noreferrer">View in Figma</a>`
     : doc.purpose;
 
   return {
