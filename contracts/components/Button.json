@@ -45,9 +45,9 @@
     },
     {
       "name": "size",
-      "type": "'xs' | 's' | 'm' | 'l' | 'xl'",
+      "type": "'s' | 'm' | 'l'",
       "default": "m",
-      "description": "Physical size of the button. Affects padding, font size, and icon size."
+      "description": "Physical size of the button. Affects padding, font size, and icon size. 'm' is the default and the size used absent a specific reason to deviate — xs/xl were removed 2026-08-23 (too narrow a use case to justify a 5-rung scale)."
     },
     {
       "name": "loading",
@@ -65,14 +65,14 @@
       "name": "icon",
       "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Leading icon, passed by reference (not pre-instantiated). Always rendered via the Icon component at size=16 stroke=1.5, regardless of button size — aria-hidden is set automatically.",
+      "description": "Leading icon, passed by reference (not pre-instantiated). Always rendered via the Icon component at size=16 (stroke scales automatically), regardless of button size — aria-hidden is set automatically.",
       "usage": "icon={IconPlus}"
     },
     {
       "name": "iconEnd",
       "type": "TablerIcon | undefined",
       "default": null,
-      "description": "Trailing icon. Same fixed size=16 stroke=1.5 as icon.",
+      "description": "Trailing icon. Same fixed size=16 as icon.",
       "usage": "iconEnd={IconArrowRight}"
     },
     {
@@ -91,7 +91,7 @@
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "xs": 16, "s": 24, "m": 32, "l": 40, "xl": 48 },
+      "values": { "s": 24, "m": 32, "l": 40 },
       "unit": "px",
       "note": "Set by size token —  never override manually."
     },

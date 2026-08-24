@@ -14,7 +14,7 @@ const meta: Meta<typeof Icon> = {
   component:  Icon,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(IconDoc),
-  args: { icon: IconPlus, size: 16, stroke: 1.5, decorative: true },
+  args: { icon: IconPlus, size: 16, decorative: true },
   argTypes: {
     icon: { control: false },
     size: {
@@ -45,7 +45,7 @@ export const Sizes: Story = {
       {[12, 14, 16, 18, 20, 24, 32].map(size => (
         <div key={size} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)' }}>
           <Icon icon={IconSearch} size={size as 12 | 14 | 16 | 18 | 20 | 24 | 32} />
-          <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)' }}>{size}</span>
+          <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>{size}</span>
         </div>
       ))}
     </div>

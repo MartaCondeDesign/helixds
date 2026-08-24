@@ -3,16 +3,10 @@ import { cn } from '../../lib/utils';
 import type { AvatarProps } from './Avatar.types';
 
 function getInitials(label: string): string {
-  return label
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map(word => word[0])
-    .join('')
-    .toUpperCase();
+  return (label.trim()[0] ?? '').toUpperCase();
 }
 
-const Avatar = ({ label, src, size = 'm', variant = 'light', className }: AvatarProps) => {
+const Avatar = ({ label, src, size = 'm', className }: AvatarProps) => {
   const [imageFailed, setImageFailed] = React.useState(false);
   const showImage = !!src && !imageFailed;
 
@@ -20,7 +14,6 @@ const Avatar = ({ label, src, size = 'm', variant = 'light', className }: Avatar
     <span
       data-helix-part="avatar-root"
       data-size={size}
-      data-variant={variant}
       className={cn(className)}
     >
       {showImage ? (

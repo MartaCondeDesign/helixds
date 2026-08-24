@@ -2,7 +2,7 @@ import type * as React from 'react';
 import type { TablerIcon } from '@tabler/icons-react';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-export type ButtonSize    = 'xs' | 's' | 'm' | 'l' | 'xl';
+export type ButtonSize    = 's' | 'm' | 'l';
 
 export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   /** Visual style. Default: 'primary' */
@@ -11,7 +11,7 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   size?: ButtonSize;
   /** Async action in progress — shows spinner, disables interaction. */
   loading?: boolean;
-  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconPlus). Always rendered at size=16 stroke=1.5, regardless of button size. */
+  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconPlus). Always rendered at size=16 (stroke scales automatically via Icon), regardless of button size. */
   icon?: TablerIcon;
   /** Trailing icon. Same fixed size as `icon`. */
   iconEnd?: TablerIcon;

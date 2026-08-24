@@ -17,7 +17,7 @@ export const doc: ComponentDoc = {
     { name: 'danger',    description: 'Filled red. Use only for irreversible destructive actions.' },
   ],
 
-  sizes: ['xs', 's', 'm', 'l', 'xl'],
+  sizes: ['s', 'm', 'l'],
 
   tokens: [
     { part: 'button', label: 'fill.primary', token: '--helix-button-fill-primary-default', kind: 'color', variant: 'primary' },
@@ -38,21 +38,18 @@ export const doc: ComponentDoc = {
     { part: 'button', label: 'gap.icon.text', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },
     { part: 'button', label: 'padding.top', value: '0', kind: 'space', axis: 'vertical' },
     { part: 'button', label: 'padding.bottom', value: '0', kind: 'space', axis: 'vertical' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
     { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
     { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
-    { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-xl', kind: 'space', axis: 'horizontal', size: 'xl' },
-    { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-xl', kind: 'space', axis: 'horizontal', size: 'xl' },
-    { part: 'button', label: 'label', token: '--helix-button-fontSize-xs', kind: 'typography', meta: 'Caption / label', size: 'xs' },
-    { part: 'button', label: 'label', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Body small', size: 's' },
-    { part: 'button', label: 'label', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Body small', size: 'm' },
-    { part: 'button', label: 'label', token: '--helix-button-fontSize-l', kind: 'typography', meta: 'Body base', size: 'l' },
-    { part: 'button', label: 'label', token: '--helix-button-fontSize-xl', kind: 'typography', meta: 'Body large', size: 'xl' },
+    { part: 'button', label: 'fontSize', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
+    { part: 'button', label: 'fontWeight', token: '--helix-button-fontWeight-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
+    { part: 'button', label: 'fontSize', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Caption / Semibold', size: 'm' },
+    { part: 'button', label: 'fontWeight', token: '--helix-button-fontWeight-m', kind: 'typography', meta: 'Caption / Semibold', size: 'm' },
+    { part: 'button', label: 'fontSize', token: '--helix-button-fontSize-l', kind: 'typography', meta: 'Body / m / Semibold', size: 'l' },
+    { part: 'button', label: 'fontWeight', token: '--helix-button-fontWeight-l', kind: 'typography', meta: 'Body / m / Semibold', size: 'l' },
     { part: 'button', label: 'display', value: 'inline-flex' },
     { part: 'button', label: 'align-items', value: 'center' },
     { part: 'button', label: 'justify-content', value: 'center' },
@@ -75,7 +72,7 @@ export const doc: ComponentDoc = {
 
   features: [
     'forwardRef — accepts a ref to the underlying <button> element',
-    'size — shared control scale: xs=24px, s=32px, m=36px, l=40px, xl=48px',
+    "size — s=24px, m=32px (default, use unless there's a specific reason to deviate), l=40px",
     'loading — shows spinner, disables interaction, sets aria-busy',
     'icon / iconEnd — Tabler icon slots with aria-hidden',
     'fullWidth — stretches to container width',
@@ -89,11 +86,11 @@ export const doc: ComponentDoc = {
     },
     {
       label: 'With leading icon',
-      code: `<Button icon={<IconPlus size={16} stroke={1.5} />}>New item</Button>`,
+      code: `<Button icon={IconPlus}>New item</Button>`,
     },
     {
       label: 'With trailing icon',
-      code: `<Button iconEnd={<IconArrowRight size={16} stroke={1.5} />}>Continue</Button>`,
+      code: `<Button iconEnd={IconArrowRight}>Continue</Button>`,
     },
     {
       label: 'Loading state',

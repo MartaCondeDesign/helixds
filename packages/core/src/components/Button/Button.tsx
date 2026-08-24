@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <Spinner />
         ) : icon ? (
           <span data-helix-part="button-icon">
-            <Icon icon={icon} size={16} stroke={1.5} />
+            <Icon icon={icon} size={16} />
           </span>
         ) : null}
 
@@ -67,7 +67,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         {!loading && iconEnd && (
           <span data-helix-part="button-icon-end">
-            <Icon icon={iconEnd} size={16} stroke={1.5} />
+            <Icon icon={iconEnd} size={16} />
           </span>
         )}
       </button>

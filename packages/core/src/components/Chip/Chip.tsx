@@ -50,7 +50,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
         >
           {icon && (
             <span data-helix-part="chip-icon">
-              <Icon icon={icon} size={14} stroke={1.5} />
+              <Icon icon={icon} size={14} />
             </span>
           )}
 
@@ -58,7 +58,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
 
           {iconEnd && (
             <span data-helix-part="chip-icon-end">
-              <Icon icon={iconEnd} size={14} stroke={1.5} />
+              <Icon icon={iconEnd} size={14} />
             </span>
           )}
         </button>
@@ -74,7 +74,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
               onDismiss();
             }}
           >
-            <Icon icon={IconX} size={12} stroke={1.5} />
+            <Icon icon={IconX} size={12} />
           </button>
         )}
       </span>

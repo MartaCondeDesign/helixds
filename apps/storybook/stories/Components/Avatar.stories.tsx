@@ -7,15 +7,11 @@ const meta: Meta<typeof Avatar> = {
   component:  Avatar,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(AvatarDoc),
-  args: { label: 'Ana García', size: 'm', variant: 'light' },
+  args: { label: 'Ana García', size: 'm' },
   argTypes: {
     size: {
       control: 'select',
       options: ['s', 'm', 'l'],
-    },
-    variant: {
-      control: 'select',
-      options: ['light', 'solid'],
     },
     label: { control: 'text' },
     src:   { control: 'text' },
@@ -35,18 +31,6 @@ export const Sizes: Story = {
       <Avatar label="Ana García" size="l" />
     </div>
   ),
-};
-
-export const Variants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center' }}>
-      <Avatar label="Ana García" variant="light" />
-      <Avatar label="Ana García" variant="solid" />
-    </div>
-  ),
-  parameters: {
-    docs: { description: { story: 'light for dense repeated rows (a table, a list); solid for a single emphasized avatar (the current user).' } },
-  },
 };
 
 export const WithImage: Story = {

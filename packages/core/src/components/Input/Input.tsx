@@ -55,7 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           {icon && (
             <span data-helix-part="input-icon">
-              <Icon icon={icon} size={ICON_SIZE_BY_FIELD_SIZE[size]} stroke={1.5} />
+              <Icon icon={icon} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
             </span>
           )}
 
@@ -74,7 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           {iconEnd && (
             <span data-helix-part="input-icon-end">
-              <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} stroke={1.5} />
+              <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
             </span>
           )}
         </div>

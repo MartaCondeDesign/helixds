@@ -31,8 +31,8 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['xs', 's', 'm', 'l', 'xl'],
-      description: 'Physical size: xs → 16px height, s → 24px, m → 32px, l → 40px, xl → 48px.',
+      options: ['s', 'm', 'l'],
+      description: "Physical size: s → 24px, m → 32px (default — use unless there's a specific reason to deviate), l → 40px.",
     },
     loading: {
       control: 'boolean',
@@ -89,11 +89,9 @@ export const Danger: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap' }}>
-      <Button size="xs">Extra small</Button>
       <Button size="s">Small</Button>
-      <Button size="m">Medium</Button>
+      <Button size="m">Medium (default)</Button>
       <Button size="l">Large</Button>
-      <Button size="xl">Extra large</Button>
     </div>
   ),
   parameters: {

@@ -20,14 +20,13 @@
   "anatomy": [
     { "part": "avatar-root",     "element": "span", "description": "Root circular container." },
     { "part": "avatar-image",    "element": "img",  "description": "Rendered when src is provided.", "optional": true },
-    { "part": "avatar-initials", "element": "span", "description": "Fallback — the first letter of up to two words in label, rendered when src is absent.", "optional": true }
+    { "part": "avatar-initials", "element": "span", "description": "Fallback — the first letter of label, rendered when src is absent.", "optional": true }
   ],
 
   "props": [
     { "name": "label",  "type": "string", "required": true, "description": "The person's full name — source for the initials fallback, and the accessible name (image alt / aria-label)." },
     { "name": "src",    "type": "string | undefined", "description": "Image URL. When present, renders avatar-image; falls back to initials on load error." },
     { "name": "size",   "type": "'s' | 'm' | 'l'", "default": "m", "description": "Physical size. Shares the field scale with Input/Select (s=24, m=32, l=40)." },
-    { "name": "variant", "type": "'light' | 'solid'", "default": "light", "description": "'light' = tinted fill + colored initials, for dense repeated rows. 'solid' = filled brand background + inverse initials, for a single emphasized avatar (e.g. the current user)." },
     { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
   ],
 

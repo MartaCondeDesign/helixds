@@ -74,13 +74,13 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
       <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
+        <p style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
           size=&quot;xs&quot;
         </p>
         <Badge size="xs" variant="success" label="Active" />
       </div>
       <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
+        <p style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
           size=&quot;s&quot; (default)
         </p>
         <Badge size="s" variant="success" label="Active" />
@@ -129,7 +129,7 @@ export const StatusRowPattern: Story = {
               {row.label}
             </span>
             <Badge variant={row.status} label={config[row.status].label} />
-            <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', color: 'var(--helix-color-text-neutral-lightest)', minWidth: '52px', textAlign: 'right' }}>
+            <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)', minWidth: '52px', textAlign: 'right' }}>
               {row.meta}
             </span>
           </div>

@@ -63,9 +63,9 @@ export const doc: ComponentDoc = {
     { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
-    { part: 'chip', label: 'label', token: '--helix-chip-fontSize-s', kind: 'typography', meta: 'Body small', size: 's' },
-    { part: 'chip', label: 'label', token: '--helix-chip-fontSize-m', kind: 'typography', meta: 'Body small', size: 'm' },
-    { part: 'chip', label: 'weight', token: '--helix-chip-fontWeight', kind: 'typography', meta: 'Medium' },
+    { part: 'chip', label: 'fontSize', token: '--helix-chip-fontSize-s', kind: 'typography', meta: 'Body / s / Medium', size: 's' },
+    { part: 'chip', label: 'fontSize', token: '--helix-chip-fontSize-m', kind: 'typography', meta: 'Body / s / Medium', size: 'm' },
+    { part: 'chip', label: 'fontWeight', token: '--helix-chip-fontWeight', kind: 'typography', meta: 'Body / s / Medium' },
     { part: 'chip', label: 'display', value: 'inline-flex' },
     { part: 'chip', label: 'align-items', value: 'center' },
     { part: 'chip', label: 'justify-content', value: 'center' },
@@ -105,7 +105,7 @@ export const doc: ComponentDoc = {
     },
     {
       label: 'With icon',
-      code: `<Chip label="Filters" icon={<IconFilter size={14} stroke={1.5} />} />`,
+      code: `<Chip label="Filters" icon={IconFilter} />`,
     },
     {
       label: 'Dismissible',

@@ -15,7 +15,7 @@ export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonEle
   disabled?: boolean;
   /** Visible label. */
   label: string;
-  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconFilter). Always rendered at size=14 stroke=1.5. */
+  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconFilter). Always rendered at size=14 (stroke scales automatically via Icon). */
   icon?: TablerIcon;
   /** Trailing icon. Same fixed size as `icon`. */
   iconEnd?: TablerIcon;

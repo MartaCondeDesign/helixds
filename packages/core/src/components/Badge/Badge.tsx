@@ -13,7 +13,7 @@ const Badge = ({ variant = 'neutral', size = 's', label, icon, className }: Badg
       >
       {icon && (
         <span data-helix-part="badge-icon">
-          <Icon icon={icon} size={12} stroke={1.5} />
+          <Icon icon={icon} size={12} />
         </span>
       )}
       <span data-helix-part="badge-label">{label}</span>

@@ -9,20 +9,20 @@ export const doc: ComponentDoc = {
     'label is required — it drives both the initials fallback and the accessible name.',
     'Falls back to initials automatically if the image fails to load (broken URL, offline).',
   ],
-  variants: [
-    { name: 'light', description: 'Tinted fill, colored initials — for dense repeated rows (a table, a list).' },
-    { name: 'solid', description: 'Filled brand background, inverse initials — for a single emphasized avatar (the current user).' },
-  ],
+  variants: [],
   sizes: ['s', 'm', 'l'],
   tokens: [
     { part: 'avatar-root', label: 'height.s', token: '--helix-avatar-height-s', kind: 'space', size: 's' },
     { part: 'avatar-root', label: 'height.m', token: '--helix-avatar-height-m', kind: 'space', size: 'm' },
     { part: 'avatar-root', label: 'height.l', token: '--helix-avatar-height-l', kind: 'space', size: 'l' },
-    { part: 'avatar-root', label: 'fill.light', token: '--helix-avatar-fill-light', kind: 'color', variant: 'light' },
-    { part: 'avatar-root', label: 'fill.solid', token: '--helix-avatar-fill-solid', kind: 'color', variant: 'solid' },
-    { part: 'avatar-initials', label: 'text.light', token: '--helix-avatar-text-light', kind: 'color', variant: 'light' },
-    { part: 'avatar-initials', label: 'text.solid', token: '--helix-avatar-text-solid', kind: 'color', variant: 'solid' },
-    { part: 'avatar-initials', label: 'fontWeight', token: '--helix-avatar-fontWeight', kind: 'typography' },
+    { part: 'avatar-root', label: 'fill', token: '--helix-avatar-fill', kind: 'color' },
+    { part: 'avatar-initials', label: 'text', token: '--helix-avatar-text', kind: 'color' },
+    { part: 'avatar-initials', label: 'fontSize', token: '--helix-avatar-fontSize-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
+    { part: 'avatar-initials', label: 'fontWeight', token: '--helix-avatar-fontWeight-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
+    { part: 'avatar-initials', label: 'fontSize', token: '--helix-avatar-fontSize-m', kind: 'typography', meta: 'Caption / Semibold', size: 'm' },
+    { part: 'avatar-initials', label: 'fontWeight', token: '--helix-avatar-fontWeight-m', kind: 'typography', meta: 'Caption / Semibold', size: 'm' },
+    { part: 'avatar-initials', label: 'fontSize', token: '--helix-avatar-fontSize-l', kind: 'typography', meta: 'Body / m / Semibold', size: 'l' },
+    { part: 'avatar-initials', label: 'fontWeight', token: '--helix-avatar-fontWeight-l', kind: 'typography', meta: 'Body / m / Semibold', size: 'l' },
   ],
   features: [
     'src — renders an image, falling back to initials on load error',
@@ -31,6 +31,6 @@ export const doc: ComponentDoc = {
   examples: [
     { label: 'Initials', code: `<Avatar label="Ana García" />` },
     { label: 'Image', code: `<Avatar label="Ana García" src="/ana.jpg" />` },
-    { label: 'Emphasized (current user)', code: `<Avatar label="Marta Conde" variant="solid" />` },
+    { label: 'Current user', code: `<Avatar label="Marta Conde" />` },
   ],
 };
