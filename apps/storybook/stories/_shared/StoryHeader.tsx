@@ -23,7 +23,7 @@ const STORYBOOK_FONT_FAMILY =
 export function StoryHeader({ title, description, figmaUrl }: { title: string; description: string; figmaUrl?: string }) {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <h1 style={{
           margin: 0,
           fontSize: 32, fontWeight: 700, lineHeight: '36px',

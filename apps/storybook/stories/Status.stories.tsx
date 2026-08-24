@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
-import { Badge } from '@helix-ds/core';
+import { IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
+import { Badge, Icon } from '@helix-ds/core';
 import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
 import manifest from '../../../contracts/manifest.json';
@@ -46,12 +47,13 @@ function storyDocsHref(category: string, name: string): string {
 
 function Check({ ok }: { ok: boolean }) {
   return (
-    <span style={{
-      color: ok ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)',
-      fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)',
-    }}>
-      {ok ? '✓' : '✗'}
-    </span>
+    <Icon
+      icon={ok ? IconCircleCheckFilled : IconCircleXFilled}
+      size={16}
+      color={ok ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+      decorative={false}
+      label={ok ? 'Yes' : 'No'}
+    />
   );
 }
 
@@ -88,7 +90,7 @@ export const Overview: Story = {
       <div>
         <StoryHeader
           title="Status"
-          description={`Doneness matrix for ${manifest.count} components, generated from contracts/manifest.json (pnpm docs:manifest). ✓/✗ columns are real checks, not opinions — drift shows up in the generator's own output before it ever reaches this table. The Figma column reflects contracts/figma-sync.json (${inFigmaCount}/${figmaSync.components.length} modeled so far) — see the Figma Sync page for the full per-component detail.`}
+          description={`Doneness matrix for ${manifest.count} components, generated from contracts/manifest.json (pnpm docs:manifest). ✓/✗ columns are real checks, not opinions — drift shows up in the generator's own output before it ever reaches this table. The Figma column reflects contracts/figma-sync.json (${inFigmaCount}/${figmaSync.components.length} modeled so far).`}
         />
 
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', marginBottom: 'var(--helix-spacing-l)' }}>
@@ -110,11 +112,7 @@ export const Overview: Story = {
                 <th style={TH_STYLE}>Types</th>
                 <th style={TH_STYLE}>Story</th>
                 <th style={TH_STYLE}>A11y</th>
-                <th style={TH_STYLE}>
-                  <a href="/?path=/docs/figma-sync--docs" target="_top" style={{ color: 'inherit', textDecoration: 'underline' }}>
-                    Figma
-                  </a>
-                </th>
+                <th style={TH_STYLE}>Figma</th>
               </tr>
             </thead>
             <tbody>
