@@ -11,7 +11,9 @@
 // down, a different element entirely. If this ever needs re-verifying, inspect that live page again
 // rather than re-deriving from source.
 // Title       — 32px / 700 (bold) / line-height 36px / margin-bottom 16px
-// Description — 14px / 400 / line-height 24px / margin-top 16px / margin-bottom 16px
+// Description — 14px / 400 / line-height 24px / margin-bottom 16px
+// Description margin-top is 8px, not the 16px measured off the plain docs page — deliberately
+// tighter now that a title row can include the "View in Figma" link, per explicit feedback.
 // Font family — Storybook's own theme stack (Nunito Sans first), used by the docs chrome regardless
 // of Helix's own font tokens, since this header is mimicking that chrome's look.
 const STORYBOOK_FONT_FAMILY =
@@ -52,7 +54,7 @@ export function StoryHeader({ title, description, figmaUrl }: { title: string; d
         )}
       </div>
       <p style={{
-        margin: 0, marginTop: 16, marginBottom: 16,
+        margin: 0, marginTop: 8, marginBottom: 16,
         fontSize: 14, fontWeight: 400, lineHeight: '24px',
         fontFamily: STORYBOOK_FONT_FAMILY,
         color: 'var(--helix-color-text-neutral-light)', maxWidth: 720,
