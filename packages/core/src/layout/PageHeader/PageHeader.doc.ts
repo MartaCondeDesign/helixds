@@ -12,11 +12,13 @@ export const doc: ComponentDoc = {
   variants: [],
   sizes: [],
   tokens: [
-    { part: 'page-header-title', label: 'fontSize', token: '--helix-pageHeader-title-fontSize-1', kind: 'typography', meta: 'level=1' },
-    { part: 'page-header-title', label: 'fontSize', token: '--helix-pageHeader-title-fontSize-2', kind: 'typography', meta: 'level=2' },
-    { part: 'page-header-title', label: 'fontWeight', token: '--helix-pageHeader-title-fontWeight', kind: 'typography' },
+    { part: 'page-header-title', label: 'fontSize', token: '--helix-pageHeader-title-fontSize-1', kind: 'typography', meta: 'level=1 — Heading / 2xl / Bold' },
+    { part: 'page-header-title', label: 'fontWeight', token: '--helix-pageHeader-title-fontWeight-1', kind: 'typography', meta: 'level=1 — Heading / 2xl / Bold' },
+    { part: 'page-header-title', label: 'fontSize', token: '--helix-pageHeader-title-fontSize-2', kind: 'typography', meta: 'level=2 — Heading / xl / Bold' },
+    { part: 'page-header-title', label: 'fontWeight', token: '--helix-pageHeader-title-fontWeight-2', kind: 'typography', meta: 'level=2 — Heading / xl / Bold' },
     { part: 'page-header-title', label: 'color', token: '--helix-pageHeader-title-color', kind: 'color' },
-    { part: 'page-header-description', label: 'fontSize', token: '--helix-pageHeader-description-fontSize', kind: 'typography' },
+    { part: 'page-header-description', label: 'fontSize', token: '--helix-pageHeader-description-fontSize', kind: 'typography', meta: 'Body / s / Regular' },
+    { part: 'page-header-description', label: 'fontWeight', token: '--helix-pageHeader-description-fontWeight', kind: 'typography', meta: 'Body / s / Regular' },
     { part: 'page-header-description', label: 'color', token: '--helix-pageHeader-description-color', kind: 'color' },
   ],
   features: [

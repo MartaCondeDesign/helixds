@@ -4,7 +4,7 @@ import { PageHeader, PageHeaderDoc, Button, Badge } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof PageHeader> = {
-  title:     'Components/PageHeader',
+  title:     'Layout/PageHeader',
   component:  PageHeader,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(PageHeaderDoc),
