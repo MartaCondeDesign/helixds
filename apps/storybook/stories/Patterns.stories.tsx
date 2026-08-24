@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Button, Input, Badge } from '@helix-ds/core';
+import { Button, Input, Badge, Card, Icon } from '@helix-ds/core';
 import {
   IconPlus,
   IconUpload,
@@ -13,6 +13,8 @@ import {
   IconClock,
   IconInfoCircle,
   IconArrowRight,
+  IconArrowUpRight,
+  IconArrowDownRight,
 } from '@tabler/icons-react';
 
 const meta: Meta = {
@@ -34,6 +36,7 @@ Agents should read the pattern file before building that UI to avoid anti-patter
 | Action Bar | \`.ai/maps/patterns/action-bar.md\` |
 | Status Row | \`.ai/maps/patterns/status-row.md\` |
 | Search + Filter | \`.ai/maps/patterns/search-filter.md\` |
+| Stat Card | \`.ai/maps/patterns/stat-card.md\` |
         `,
       },
     },
@@ -216,7 +219,7 @@ export const StatusRows: Story = {
             </span>
             <Badge variant={row.variant} icon={icons[row.variant]} label={row.status} />
             <span style={{
-              fontSize:  'var(--helix-primitive-fontSize-xs)',
+              fontSize:  'var(--helix-primitive-fontSize-s)',
               color:     'var(--helix-color-text-neutral-lightest)',
               minWidth:  '64px',
               textAlign: 'right',
@@ -286,7 +289,7 @@ export const SearchAndFilter: Story = {
               <Button
                 key={f.key}
                 variant="secondary"
-                size="xs"
+                size="s"
                 iconEnd={IconX}
                 onPress={() => removeFilter(f.key)}
                 aria-label={`Remove filter: ${f.label}`}
@@ -303,6 +306,86 @@ export const SearchAndFilter: Story = {
     docs: {
       description: {
         story: '**Pattern: Search + Filter** — active filter chips use `<Button>`, not `<Badge>` (they must be interactive). Try removing a filter.',
+      },
+    },
+  },
+};
+
+/* ════════════════════════════════════════════════════════════════════════════
+   STAT CARD
+   ════════════════════════════════════════════════════════════════════════════ */
+
+type Trend = 'up' | 'down';
+
+function StatCard({
+  label, value, delta, trend,
+}: { label: string; value: string; delta?: string; trend?: Trend }) {
+  return (
+    <Card>
+      <div style={{
+        fontSize:       'var(--helix-textStyle-body-s-medium-fontSize)',
+        fontWeight:     'var(--helix-textStyle-body-s-medium-fontWeight)',
+        color:          'var(--helix-color-text-neutral-lightest)',
+        textTransform:  'uppercase',
+        letterSpacing:  '0.05em',
+        marginBottom:   'var(--helix-spacing-xs)',
+      }}>
+        {label}
+      </div>
+      <div style={{
+        fontSize:      'var(--helix-textStyle-heading-3xl-bold-fontSize)',
+        fontWeight:    'var(--helix-textStyle-heading-3xl-bold-fontWeight)',
+        color:         'var(--helix-color-text-neutral)',
+        lineHeight:    1,
+        letterSpacing: '-0.02em',
+        fontVariantNumeric: 'tabular-nums',
+        marginBottom:  'var(--helix-spacing-xs)',
+      }}>
+        {value}
+      </div>
+      {delta && (
+        <div style={{
+          display:    'flex',
+          alignItems: 'center',
+          gap:        'var(--helix-spacing-xs)',
+          fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
+          fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
+          color: trend === 'up'   ? 'var(--helix-color-text-success)'
+               : trend === 'down' ? 'var(--helix-color-text-danger)'
+               : 'var(--helix-color-text-neutral-light)',
+        }}>
+          {trend && (
+            <Icon
+              icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
+              size={12}
+              color={trend === 'up' ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+            />
+          )}
+          {delta}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+export const StatCardPattern: Story = {
+  render: () => (
+    <div style={{
+      display:               'grid',
+      gridTemplateColumns:   'repeat(auto-fit, minmax(180px, 1fr))',
+      gap:                   'var(--helix-spacing-s)',
+      maxWidth:               '700px',
+    }}>
+      <StatCard label="Members"    value="6"   delta="+2"   trend="up" />
+      <StatCard label="Active"     value="4"   delta="+1"   trend="up" />
+      <StatCard label="Components" value="103" delta="+14"  trend="up" />
+      <StatCard label="Coverage"   value="89%" delta="-2pp" trend="down" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story: '**Pattern: Stat Card** — `.ai/maps/patterns/stat-card.md`. A `Card` composed with a fixed label/value/delta layout — not its own component, copy the recipe.',
       },
     },
   },
