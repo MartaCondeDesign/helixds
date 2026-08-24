@@ -69,7 +69,6 @@ export const Typography: Story = {
           { token: 'fontSize-l', value: '18px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-l)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
           { token: 'fontSize-m', value: '14px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-m)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
           { token: 'fontSize-s', value: '12px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
-          { token: 'fontSize-xs', value: '11px', preview: <span style={{ fontSize: 'var(--helix-primitive-fontSize-xs)', fontWeight: 'var(--helix-primitive-fontWeight-semibold)' }}>The quick brown fox</span> },
         ],
       },
       {

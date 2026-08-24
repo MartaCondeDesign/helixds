@@ -80,7 +80,7 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
 
       {meta && (
         <span style={{
-          fontSize: 'var(--helix-primitive-fontSize-xs)',
+          fontSize: 'var(--helix-primitive-fontSize-s)',
           color:    'var(--helix-color-text-neutral-lightest)',
           minWidth: '60px',
           textAlign: 'right',

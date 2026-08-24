@@ -21,7 +21,14 @@ fs.mkdirSync(dist, { recursive: true });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type TokenNode = { $value: string | number; $type: string; $description?: string };
+// $value is usually a leaf (string/number). A DTCG composite token (e.g. $type: "typography" —
+// semantic.textStyle.*) instead holds an object of named sub-properties, each itself an alias
+// string ({primitive.fontSize.s}) — see the composite handling in flatten()/buildTs() below.
+type TokenNode = { $value: string | number | Record<string, string>; $type: string; $description?: string };
+
+function isComposite(value: TokenNode['$value']): value is Record<string, string> {
+  return typeof value === 'object' && value !== null;
+}
 type Tree = Record<string, unknown>;
 type CSSVar = { name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string };
 
@@ -32,13 +39,24 @@ function resolveRef(value: string, root: Tree): string {
   const refPath = value.slice(1, -1).split('.');
   let node: unknown = root;
   for (const key of refPath) {
+    // Composite token ($value is an object, e.g. semantic.textStyle.*) reached with path segments
+    // still remaining — those segments index into $value (fontSize/fontWeight/...), not the token
+    // node itself, since a composite's sub-properties live one level deeper than a normal leaf's.
+    if (node && typeof node === 'object' && '$value' in node && isComposite((node as TokenNode).$value)) {
+      node = ((node as TokenNode).$value as Record<string, unknown>)[key];
+      continue;
+    }
     if (typeof node !== 'object' || node === null) {
       throw new Error(`Cannot resolve token: ${value} — failed at key '${key}'`);
     }
     node = (node as Record<string, unknown>)[key];
   }
+  if (typeof node === 'string') return resolveRef(node, root); // landed on a composite sub-property's alias/literal
   if (typeof node === 'object' && node !== null && '$value' in node) {
     const t = node as TokenNode;
+    if (isComposite(t.$value)) {
+      throw new Error(`Token reference ${value} resolved to a composite token — reference one of its sub-properties instead.`);
+    }
     return resolveRef(String(t.$value), root);
   }
   throw new Error(`Token reference ${value} did not resolve to a leaf token`);
@@ -52,22 +70,26 @@ function flatten(obj: Tree, root: Tree, prefix: string[], layer: CSSVar['layer']
     const node = val as Tree;
     if ('$value' in node) {
       const token = node as unknown as TokenNode;
-      const rawValue = typeof token.$value === 'string'
-        ? resolveRef(token.$value, root)
-        : String(token.$value);
 
       // CSS name strategy per layer:
       // primitive.*  → --helix-primitive-{path}
       // semantic.*   → --helix-{path} (strip 'semantic.' prefix)
       // component.*  → --helix-{path} (strip 'component.' prefix)
-      let nameParts: string[];
-      if (layer === 'primitive') {
-        nameParts = ['primitive', ...prefix, key];
-      } else {
-        nameParts = [...prefix, key]; // prefix already strips layer name in the caller
+      const basePrefix = layer === 'primitive' ? ['primitive', ...prefix] : prefix;
+
+      if (isComposite(token.$value)) {
+        // One CSS var per sub-property — e.g. semantic.textStyle.body-s-medium.fontSize →
+        // --helix-textStyle-body-s-medium-fontSize. Each sub-value is itself an alias string.
+        return Object.entries(token.$value).map(([subKey, subVal]) => {
+          const name = '--helix-' + [...basePrefix, key, subKey].join('-').replace(/\./g, '-');
+          return { name, value: resolveRef(subVal, root), layer, description: token.$description };
+        });
       }
 
-      const name = '--helix-' + nameParts.join('-').replace(/\./g, '-');
+      const rawValue = typeof token.$value === 'string'
+        ? resolveRef(token.$value, root)
+        : String(token.$value);
+      const name = '--helix-' + [...basePrefix, key].join('-').replace(/\./g, '-');
       return [{ name, value: rawValue, layer, description: token.$description }];
     }
     return flatten(node, root, [...prefix, key], layer);
@@ -120,7 +142,7 @@ const darkOverrides: Record<string, string> = {
   '--helix-input-icon-default':          '#94a3b8',
   '--helix-input-border-default':           '#334155',
   '--helix-input-border-hover':          '#475569',
-  '--helix-card-fill':                   '#1e293b',
+  '--helix-card-fill':                   '#0f172a',
   '--helix-card-border':                 '#334155',
   '--helix-dialog-fill':                 '#1e293b',
   '--helix-button-fill-secondary-default':  '#1e293b',
@@ -192,6 +214,94 @@ const darkOverrides: Record<string, string> = {
   '--helix-switch-thumb-fill':           '#f1f5f9',
   '--helix-switch-text-label':           '#f1f5f9',
   '--helix-switch-text-description':     '#94a3b8',
+
+  // semantic — colored "-light" tint fills (badges/chips/nav "current" highlight),
+  // never overridden before now. Reuse steps already defined in each hue's own
+  // primitive ramp rather than inventing new colors. Status hues (danger/success/
+  // warning/info) use .800, one step lighter than .900, so the fill itself reads
+  // as a visible tinted chip rather than near-black; the brand "primary" tint
+  // (nav "current" highlight, avatar) stays at .900 since it isn't a status color.
+  '--helix-color-fill-primary-interactive-light-default': '#1e3a8a',
+  '--helix-color-fill-danger-interactive-light-default':  '#991b1b',
+  '--helix-color-fill-success-light':                     '#166534',
+  '--helix-color-fill-warning-light':                     '#92400e',
+  '--helix-color-fill-info-light':                        '#075985',
+
+  // semantic — status border on a colored "-light" tint background: a lighter,
+  // more saturated step so the outline stays visible against the dark fill above.
+  '--helix-color-border-danger':  '#f87171',
+  '--helix-color-border-success': '#4ade80',
+  '--helix-color-border-warning': '#fbbf24',
+  '--helix-color-border-info':    '#38bdf8',
+
+  // semantic — status text/icon on a colored "-light" tint background (badges, chips):
+  // the same medium-saturation hex used in light mode reads low-contrast against the
+  // dark tint fills above, so these get a lighter step of their own hue instead.
+  '--helix-color-text-info':    '#7dd3fc',
+  '--helix-color-text-success': '#86efac',
+  '--helix-color-text-warning': '#fcd34d',
+  '--helix-color-text-danger':  '#fecdd3',
+  '--helix-color-icon-info':    '#7dd3fc',
+  '--helix-color-icon-success': '#86efac',
+  '--helix-color-icon-warning': '#fcd34d',
+  '--helix-color-icon-danger':  '#fecdd3',
+
+  '--helix-iconButton-fill-secondary-default': '#1e293b',
+  '--helix-iconButton-fill-secondary-hover':   '#334155',
+  '--helix-iconButton-fill-secondary-press':   '#475569',
+  '--helix-iconButton-icon-primary':           '#0f172a',
+  '--helix-iconButton-icon-secondary':         '#f1f5f9',
+  '--helix-iconButton-icon-ghost':              '#f1f5f9',
+  '--helix-iconButton-icon-danger':            '#0f172a',
+  '--helix-iconButton-border-secondary-default': '#334155',
+  '--helix-iconButton-border-secondary-hover': '#475569',
+  '--helix-iconButton-border-focus':           '#60a5fa',
+
+  '--helix-badge-fill-neutral': '#1e293b',
+  '--helix-badge-fill-info':    '#075985',
+  '--helix-badge-fill-success': '#166534',
+  '--helix-badge-fill-warning': '#92400e',
+  '--helix-badge-fill-danger':  '#991b1b',
+  '--helix-badge-text-neutral': '#94a3b8',
+  '--helix-badge-text-info':    '#7dd3fc',
+  '--helix-badge-text-success': '#86efac',
+  '--helix-badge-text-warning': '#fcd34d',
+  '--helix-badge-text-danger':  '#fecdd3',
+  '--helix-badge-icon-neutral': '#94a3b8',
+  '--helix-badge-icon-info':    '#7dd3fc',
+  '--helix-badge-icon-success': '#86efac',
+  '--helix-badge-icon-warning': '#fcd34d',
+  '--helix-badge-icon-danger':  '#fecdd3',
+  '--helix-badge-border-neutral': '#334155',
+  '--helix-badge-border-info':    '#38bdf8',
+  '--helix-badge-border-success': '#4ade80',
+  '--helix-badge-border-warning': '#fbbf24',
+  '--helix-badge-border-danger':  '#f87171',
+
+  '--helix-avatar-fill': '#1e3a8a',
+  '--helix-avatar-text': '#60a5fa',
+
+  '--helix-pageHeader-title-color':       '#f1f5f9',
+  '--helix-pageHeader-description-color': '#94a3b8',
+
+  '--helix-table-header-color':  '#64748b',
+  '--helix-table-header-border': '#1e293b',
+  '--helix-table-row-border':    '#1e293b',
+  '--helix-table-row-hoverFill': '#1e293b',
+  '--helix-table-cell-color':    '#f1f5f9',
+
+  '--helix-navItem-fill-hover':    '#1e293b',
+  '--helix-navItem-fill-current':  '#1e3a8a',
+  '--helix-navItem-text-default':  '#94a3b8',
+  '--helix-navItem-text-current':  '#60a5fa',
+  '--helix-navItem-icon-default':  '#94a3b8',
+  '--helix-navItem-icon-current':  '#60a5fa',
+
+  '--helix-topBar-fill':   '#0f172a',
+  '--helix-topBar-border': '#1e293b',
+
+  '--helix-sideNav-fill':   '#0f172a',
+  '--helix-sideNav-border': '#1e293b',
 };
 
 // ─── Responsive typography (mobile fontSize override) ─────────────────────────
@@ -292,10 +402,18 @@ function buildTs(obj: Tree, root: Tree, indent = 1): string[] {
     const safeKey = /[^a-zA-Z0-9_$]/.test(key) ? `'${key}'` : key;
     if ('$value' in node) {
       const token = node as unknown as TokenNode;
-      const value = typeof token.$value === 'string'
-        ? resolveRef(token.$value, root)
-        : String(token.$value);
-      lines.push(`${pad}${safeKey}: '${value}',`);
+      if (isComposite(token.$value)) {
+        lines.push(`${pad}${safeKey}: {`);
+        for (const [subKey, subVal] of Object.entries(token.$value)) {
+          lines.push(`${pad}  ${subKey}: '${resolveRef(subVal, root)}',`);
+        }
+        lines.push(`${pad}},`);
+      } else {
+        const value = typeof token.$value === 'string'
+          ? resolveRef(token.$value, root)
+          : String(token.$value);
+        lines.push(`${pad}${safeKey}: '${value}',`);
+      }
     } else {
       lines.push(`${pad}${safeKey}: {`);
       lines.push(...buildTs(node, root, indent + 1));

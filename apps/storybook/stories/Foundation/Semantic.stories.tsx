@@ -28,7 +28,7 @@ const SPACING_PX: Record<string, string> = { xs: '8px', s: '12px', m: '16px', l:
 const RADIUS_PX: Record<string, string> = {
   none: '0px', xs: '2px', s: '4px', m: '6px', l: '8px', xl: '12px', '2xl': '16px', '3xl': '24px', full: '9999px',
 };
-const SIZE_CONTROL_PX: Record<string, string> = { xs: '16px', s: '24px', m: '32px', l: '40px', xl: '48px' };
+const SIZE_CONTROL_PX: Record<string, string> = { xs: '16px', s: '24px', m: '32px', l: '40px', xl: '48px', '2xl': '56px' };
 
 const tableStyle: React.CSSProperties = {
   width: '100%',
@@ -150,7 +150,7 @@ export const Sizing: Story = {
           </tr>
         </thead>
         <tbody>
-          {(['xs', 's', 'm', 'l', 'xl']).map(key => (
+          {(['xs', 's', 'm', 'l', 'xl', '2xl']).map(key => (
             <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>control.{key}</code></td>
               <td style={tdStyle}>

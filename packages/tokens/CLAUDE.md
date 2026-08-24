@@ -54,6 +54,11 @@ role, which is exactly what the naming overhaul (below) was fixing.
    do not author a second explanation elsewhere.
 3. Run `pnpm --filter @helix-ds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
 4. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
+   **For a color token specifically, also check WCAG AA contrast against its paired fill by hand** —
+   `verify:tokens` checks naming, not contrast, and a token that looks fine next to a same-hue sibling
+   (e.g. `danger` reusing a different primitive step than `success`/`warning`/`info` do) can quietly fail
+   4.5:1 while the others pass. See root `CLAUDE.md` rule 9. Check both light and dark mode's resolved
+   pair independently.
 5. **Update Figma** — add or rename the matching variable in the live file's `Theme` (or
    other relevant) collection via `use_figma`, **and set the Figma variable's own `.description` to the
    same text as `$description`** (Figma Variables have a native `description` property — set it
@@ -82,11 +87,15 @@ role, which is exactly what the naming overhaul (below) was fixing.
      category you touched.
 7. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
-8. **If the token is `component.*`: check it against `.ai/maps/component-token-exceptions.md`.** If its
-   `$value` aliases `semantic.*`, no action needed. If it aliases `primitive.*` directly, or is a raw
-   literal with no alias at all, add a row to that file under the matching section (or a new section if
-   it's a genuinely new kind of exception) — same rule for editing an existing component token: re-check
-   whether the edit adds it to, or removes it from, that table.
+8. **Run `pnpm docs:token-exceptions` after every token add/edit — not just `component.*` ones.** This
+   regenerates `.ai/maps/component-token-exceptions.md` from the current `tokens.json`; the table between
+   its `<!-- AUTO -->` markers is generated, never hand-edited (see that file's own "do not hand-edit"
+   section). A `semantic.*`/`primitive.*`-only change is typically a no-op for the table — confirm that by
+   running the command, don't assume it. A `component.*` add/edit that skips `semantic.*` (aliases
+   `primitive.*` directly, or is a raw literal) will show up as a new/changed 🚩 or 🆕 row automatically; if
+   it's a genuine, ADR-backed exception (not just a judgment call), add it to `KNOWN_EXCEPTIONS` in
+   `scripts/audit-token-exceptions.ts` and rerun — see that file's own header comment and
+   `component-token-exceptions.md`'s legend for what qualifies as ✅.
 
 **Adding or renaming a `primitive.fontSize.{key}` specifically:** always add/rename the matching
 `semantic.lineHeight.{key}` in the same change (same key name, e.g. a new `fontSize.7xl` needs a
@@ -117,7 +126,9 @@ aliasing `text.*`) — run it after adding a token. It does NOT catch stale *ref
 you renamed elsewhere in the repo (CSS vars in `globals.css`, dark overrides in `build.ts`, Storybook,
 Figma). `pnpm report:paints` is listed in the root `package.json` as where that broader check should
 live, but the script doesn't exist yet (`scripts/report-paints.ts` is missing). Until it's built, grep
-for the old name across the whole repo and fix every hit by hand, in this order:
+for the old name across the whole repo and fix every hit by hand, in this order — `contracts/manifest.json`
+(`pnpm docs:manifest`) has every component's implementation path if you need to jump straight to a
+specific one instead of grepping blind:
 
 1. `src/tokens.json` — rename the token, and every `{semantic....}` / `{component....}` alias that
    references it elsewhere in the same file (there are usually many).
@@ -164,12 +175,15 @@ category-first, with the exact key grammar for each.
   - `size.control` — the ADR-004 control/field height ladder (`xs`-`xl`)
   - `spacing` — `xs`/`s`/`m`/`l`/`xl` t-shirt scale, plus the older `component-*`/`layout-*` context scale
   - `fontSize.mobile` — the `<tablet` override for each `primitive.fontSize.*` rung that's
-    **`>= 18px`** (currently `l` through `6xl`; `xs`/`s`/`m` don't get a mobile override — 87.5% of
+    **`>= 18px`** (currently `l` through `6xl`; `s`/`m` don't get a mobile override — 87.5% of
     desktop, see ADR, feeds the `@media (max-width: 767px)` block `build.ts` emits).
   - `lineHeight` — one entry per `primitive.fontSize.*` key, **full range, same key name, every rung, no
     exceptions** (unlike `fontSize.mobile` above, `lineHeight` is NOT threshold-limited — Text Styles need
     a lineHeight for every size, including the ones below 18px):
-    `semantic.lineHeight.xs` pairs with `fontSize.xs`, `semantic.lineHeight.l` with `fontSize.l`, etc.
+    `semantic.lineHeight.s` pairs with `fontSize.s`, `semantic.lineHeight.l` with `fontSize.l`, etc.
+    (`primitive.fontSize.xs`/11px and its paired `semantic.lineHeight.xs` were removed 2026-08-23 — `s`,
+    12px, is now the smallest rung; every `component.*` token that aliased `fontSize.xs` was repointed to
+    `fontSize.s`.)
     **Rule: adding a new `primitive.fontSize.{key}` rung requires adding a matching
     `semantic.lineHeight.{key}` in the same change, always; add `semantic.fontSize.mobile.{key}` too only
     if the new rung's value is `>= 18px`.**
@@ -280,14 +294,31 @@ scale from — the named steps themselves are the source of truth):
 - `component.{name}.radius` → `{semantic.radius.*}`, e.g. `button.radius` → `{semantic.radius.m}`,
   `badge.radius` → `{semantic.radius.full}`
 
-**Typography** — no semantic layer and no composite "typography" token; 4 independent primitive scales, each
-`component` token aliases one of them directly:
-- `primitive.fontSize.{size}` — `xs`...`6xl`
+**Typography** — 4 independent primitive scales, plus one composite semantic layer that combines them:
+- `primitive.fontSize.{size}` — `s`...`6xl` (`xs`/11px was removed 2026-08-23 — `s`/12px is the smallest rung)
 - `primitive.fontWeight.{name}` — `regular`/`medium`/`semibold`/`bold`
 - `primitive.lineHeight.{name}` — `tight`/`snug`/`normal`/`relaxed`
 - `primitive.letterSpacing.{name}` — `tight`/`normal`/`wide`/`wider`
-- `component.{name}.fontSize`/`fontWeight`/etc. → aliases the matching primitive scale, e.g.
-  `button.fontSize.m` → `{primitive.fontSize.s}`, `badge.fontWeight` → `{primitive.fontWeight.semibold}`
+- **`semantic.textStyle.{key}`** — a DTCG **composite** token (`$type: "typography"`), added 2026-08-23. Each
+  `$value` is an object aliasing 4 primitives at once — `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`
+  (the last aliasing `semantic.lineHeight.{fontSize's key}`, per the pairing rule below) — under one named
+  role, e.g. `semantic.textStyle.body-s-medium`. These 16 styles mirror the Figma file's Text Styles 1:1
+  (`.ai/skills/tokens-to-figma.md` → Phase 6) — they ARE the semantic layer for typography; `component.*`
+  tokens should match one of these (by fontSize+fontWeight combo) before falling back to a direct primitive
+  alias. `scripts/text-styles.ts` loads and reshapes this JSON for `scripts/audit-token-exceptions.ts` and
+  `apps/storybook/stories/Foundation/TextStyles.stories.tsx` — neither holds its own copy of the list.
+  `build.ts`'s `flatten()`/`buildTs()` special-case an object `$value` (see `isComposite()`) to emit one CSS
+  var per sub-property (`--helix-textStyle-body-s-medium-fontSize`, etc.) instead of the single-leaf path
+  every other token takes — this is currently the only composite token category in the file.
+- `component.{name}.fontSize`/`fontWeight` → alias a **sub-property of the matching `semantic.textStyle.*`**
+  when one exists (added 2026-08-23) — e.g. `badge.fontSize` → `{semantic.textStyle.caption-semibold.fontSize}`,
+  `badge.fontWeight` → `{semantic.textStyle.caption-semibold.fontWeight}`. This is a path that continues
+  *past* a composite token into one of its own sub-properties — `resolveRef()` (`build.ts`) and `getNode()`
+  (`scripts/audit-token-exceptions.ts`) both special-case this: reaching a composite mid-path routes the
+  remaining segments into its `$value` object instead of treating them as further child keys. Falls back to
+  a direct `primitive.fontSize.*`/`primitive.fontWeight.*` alias only where no `semantic.textStyle.*` entry
+  matches yet (`.ai/maps/component-token-exceptions.md` tracks these as 🆕). No component currently binds a
+  *whole* composite token, only its individual `fontSize`/`fontWeight` pieces.
 
 **Component height is the one dimension category that DOES have a semantic layer** — unlike
 spacing(-for-components)/typography above, and unlike radius (which skips primitive entirely instead). Two

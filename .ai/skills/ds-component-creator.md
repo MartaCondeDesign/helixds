@@ -41,7 +41,11 @@ packages/core/src/components/{Name}/
 
 ### Step 3 — Implementation rules
 
-1. Extend a shadcn/ui primitive if one exists — run `pnpm dlx shadcn@latest add <primitive>` first
+1. Wrap the native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and add WAI-ARIA by
+   hand where the native element doesn't already cover it — no shadcn/Radix primitive layer (see
+   [ADR-001](../../docs/ADR/ADR-001-primitive-foundation.md)). A component with **no native
+   equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) needs its own ADR and an explicit
+   primitive choice before implementation — don't reach for shadcn/Radix as a default.
 2. Use `React.forwardRef` — all Helix components are forwardRef
 3. Add `data-helix-part="{component-name}"` to the root element
 4. Add `data-variant={variant}` and `data-size={size}` for styleable variants

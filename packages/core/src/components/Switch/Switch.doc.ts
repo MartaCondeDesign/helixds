@@ -22,7 +22,7 @@ export const doc: ComponentDoc = {
     { part: 'switch-label', label: 'Label text', token: '--helix-switch-text-label', kind: 'color' },
     { part: 'switch-description', label: 'Description text', token: '--helix-switch-text-description', kind: 'color' },
     { part: 'switch-label', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small' },
-    { part: 'switch-description', label: 'description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
+    { part: 'switch-description', label: 'description', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body xsmall' },
     { part: 'switch-track', label: 'track.width.s', token: '--helix-switch-width-s', kind: 'space', axis: 'horizontal', size: 's', meta: 'The one width-typed sizing token — sizing defaults to vertical everywhere else' },
     { part: 'switch-track', label: 'track.width.m', token: '--helix-switch-width-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'switch-track', label: 'track.height.s', token: '--helix-switch-height-s', kind: 'space', size: 's' },

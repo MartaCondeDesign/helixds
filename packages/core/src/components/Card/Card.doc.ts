@@ -3,7 +3,7 @@ import type { ComponentDoc } from '../../lib/component-doc';
 
 export const doc: ComponentDoc = {
   name: 'Card',
-  purpose: 'Groups related content in a visually distinct, elevated surface.',
+  purpose: 'Groups related content in a visually distinct, flat surface.',
   contract: 'contracts/components/Card.json',
   a11y: [
     'Card has no implicit landmark role — add one at the usage site only if the card represents a distinct region.',
@@ -14,7 +14,6 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'card-root', label: 'fill', token: '--helix-card-fill', kind: 'color' },
     { part: 'card-root', label: 'border', token: '--helix-card-border', kind: 'color' },
-    { part: 'card-root', label: 'shadow', token: '--helix-card-shadow', kind: 'shadow' },
     { part: 'card-root', label: 'radius', token: '--helix-card-radius', kind: 'radius' },
     { part: 'card-body', label: 'padding', token: '--helix-card-padding', kind: 'space' },
     { part: 'card-header', label: 'padding', token: '--helix-card-padding', kind: 'space' },

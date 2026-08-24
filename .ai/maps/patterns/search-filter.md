@@ -84,8 +84,8 @@ function SearchFilter({
             <Button
               key={f.key}
               variant="secondary"
-              size="xs"
-              iconEnd={<IconX size={12} />}
+              size="s"
+              iconEnd={IconX}
               onPress={() => onRemoveFilter?.(f.key)}
               aria-label={`Remove filter: ${f.label}`}
             >

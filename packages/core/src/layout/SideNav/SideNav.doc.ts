@@ -24,7 +24,7 @@ export const doc: ComponentDoc = {
       label: 'Full sidebar',
       code: `<SideNav
   brand={<Logo />}
-  footer={<Avatar label="Marta Conde" variant="solid" />}
+  footer={<Avatar label="Marta Conde" />}
 >
   <NavItem label="Dashboard" href="/dashboard" icon={IconLayoutDashboard} />
   <NavItem label="Team" href="/team" icon={IconUsers} current />

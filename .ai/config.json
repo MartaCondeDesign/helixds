@@ -14,7 +14,8 @@
     "schemaPath":      "contracts/component.schema.json",
     "bindingSchema":   "contracts/react-binding.schema.json",
     "componentsDir":   "contracts/components",
-    "requiredFields":  ["name", "purpose", "states", "anatomy", "props", "tokenPolicy"]
+    "requiredFields":  ["name", "purpose", "states", "anatomy", "props", "tokenPolicy"],
+    "manifest":        "contracts/manifest.json"
   },
   "propMap": {
     "path":              ".ai/maps/prop-map.md",
@@ -45,6 +46,7 @@
       ".ai/maps/prop-map.md",
       ".ai/memory/agnostic-lessons.md",
       "contracts/component.schema.json",
+      "contracts/manifest.json",
       "ds.config.json"
     ],
     "lintChecks": [

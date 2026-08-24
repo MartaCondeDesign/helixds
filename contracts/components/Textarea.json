@@ -53,7 +53,7 @@
       "mode": "rows-driven",
       "values": { "min": 32 },
       "unit": "px",
-      "note": "component.textarea.height aliases semantic.size.m (32px) and is applied as min-height on textarea-field — a floor, not a per-size ladder like Input/Select. `size` itself only changes font-size (s: --helix-primitive-fontSize-xs, m: base/default, l: --helix-primitive-fontSize-m); the visible height above the floor is controlled by the native `rows` attribute and `resize`."
+      "note": "component.textarea.height aliases semantic.size.m (32px) and is applied as min-height on textarea-field — a floor, not a per-size ladder like Input/Select. `size` itself only changes font-size (s: --helix-primitive-fontSize-s, m: base/default, l: --helix-primitive-fontSize-m); the visible height above the floor is controlled by the native `rows` attribute and `resize`."
     },
     "width": {
       "default": "hug",

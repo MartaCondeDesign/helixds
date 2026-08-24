@@ -19,8 +19,8 @@ export const doc: ComponentDoc = {
     { part: 'nav-item-icon', label: 'icon.default', token: '--helix-navItem-icon-default', kind: 'color' },
     { part: 'nav-item-icon', label: 'icon.current', token: '--helix-navItem-icon-current', kind: 'color' },
     { part: 'nav-item', label: 'radius', token: '--helix-navItem-radius', kind: 'radius' },
-    { part: 'nav-item-label', label: 'fontSize', token: '--helix-navItem-fontSize', kind: 'typography' },
-    { part: 'nav-item-label', label: 'fontWeight', token: '--helix-navItem-fontWeight', kind: 'typography' },
+    { part: 'nav-item-label', label: 'fontSize', token: '--helix-navItem-fontSize', kind: 'typography', meta: 'Body / s / Medium' },
+    { part: 'nav-item-label', label: 'fontWeight', token: '--helix-navItem-fontWeight', kind: 'typography', meta: 'Body / s / Medium' },
   ],
   features: [
     'current — the current-view state, aria-current="page" plus a tinted background and brand-colored text/icon',

@@ -4,6 +4,9 @@ import { StoryHeader, TableGroup, type TokenLeaf } from './_shared';
 // Note: primitive.fontSize.* has no $description by design (primitives never do — see
 // packages/tokens/CLAUDE.md "Adding a token"); semantic.lineHeight.* is the one that carries usage intent.
 import tokensJson from '../../../../packages/tokens/src/tokens.json';
+// TEXT_STYLES is the single source of truth for these 16 styles — scripts/audit-token-exceptions.ts
+// matches component typography against the same list, so both stay in sync automatically.
+import { TEXT_STYLES } from '../../../../scripts/text-styles';
 
 const semanticLineHeight = tokensJson.semantic.lineHeight as unknown as Record<string, TokenLeaf>;
 
@@ -15,26 +18,30 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-// Mirrors the named Text Styles defined in the Figma file (see .ai/skills/tokens-to-figma.md → Phase 6).
+// Sample text is presentation-only, so it stays local rather than living in the shared data module.
+const SAMPLE_TEXT: Record<string, string> = {
+  'Display / 6xl / Bold': 'Display 6xl',
+  'Display / 5xl / Bold': 'Display 5xl',
+  'Heading / 4xl / Bold': 'Heading 4xl',
+  'Heading / 3xl / Semibold': 'Heading 3xl',
+  'Heading / 2xl / Semibold': 'Heading 2xl',
+  'Heading / xl / Semibold': 'Heading xl',
+  'Body / l / Medium': 'Body large, medium weight',
+  'Body / l / Regular': 'Body large, regular weight',
+  'Body / m / Medium': 'Body, medium weight',
+  'Body / m / Regular': 'Body, regular weight',
+  'Body / s / Medium': 'Body small, medium weight',
+  'Body / s / Regular': 'Body small, regular weight',
+  'Caption / Semibold': 'Caption, semibold',
+  'Caption / Regular': 'Caption, regular',
+  'Label / Uppercase': 'LABEL UPPERCASE',
+  'Code / Regular': 'code.regular()',
+};
+
 // group | name | fontWeight key | fontSize/lineHeight key | sample text
-const STYLES: [string, string, string, string, string][] = [
-  ['Display', 'Display / 6xl / Bold',      'bold',      '6xl', 'Display 6xl'],
-  ['Display', 'Display / 5xl / Bold',      'bold',      '5xl', 'Display 5xl'],
-  ['Heading', 'Heading / 4xl / Bold',      'bold',      '4xl', 'Heading 4xl'],
-  ['Heading', 'Heading / 3xl / Semibold',  'semibold',  '3xl', 'Heading 3xl'],
-  ['Heading', 'Heading / 2xl / Semibold',  'semibold',  '2xl', 'Heading 2xl'],
-  ['Heading', 'Heading / xl / Semibold',   'semibold',  'xl',  'Heading xl'],
-  ['Body',    'Body / l / Medium',         'medium',    'l',   'Body large, medium weight'],
-  ['Body',    'Body / l / Regular',        'regular',   'l',   'Body large, regular weight'],
-  ['Body',    'Body / m / Medium',         'medium',    'm',   'Body, medium weight'],
-  ['Body',    'Body / m / Regular',        'regular',   'm',   'Body, regular weight'],
-  ['Body',    'Body / s / Medium',         'medium',    's',   'Body small, medium weight'],
-  ['Body',    'Body / s / Regular',        'regular',   's',   'Body small, regular weight'],
-  ['Other',   'Caption / Semibold',        'semibold',  's',   'Caption, semibold'],
-  ['Other',   'Caption / Regular',         'regular',   's',   'Caption, regular'],
-  ['Other',   'Label / Uppercase',         'semibold',  's',   'LABEL UPPERCASE'],
-  ['Other',   'Code / Regular',            'regular',   's',   'code.regular()'],
-];
+const STYLES: [string, string, string, string, string][] = TEXT_STYLES.map(
+  s => [s.group, s.name, s.weight, s.size, SAMPLE_TEXT[s.name] ?? s.name],
+);
 
 function TextStyleRow({ name, weight, sizeKey, sample }: { name: string; weight: string; sizeKey: string; sample: string }) {
   const isLabel = name.startsWith('Label');

@@ -69,11 +69,32 @@ from the shared `primitive.size.*` scale, just not through `semantic.size`:
 This is a component-level exception, not a new global scale — but it's still a real token, never a raw
 px value with nothing behind it.
 
+**`Badge.s` (24px) and `Chip.m` (32px) happen to land on the exact same px as `semantic.size.s`/`.m`** —
+`primitive.size.150`/`.200` are shared rungs, so the numbers coincide. This is NOT a documented exception —
+`.ai/maps/component-token-exceptions.md` correctly flags both 🚩 (an existing token already has this exact
+value), same as any other coincidental match anywhere else in the audit. It's flagged, not silently hidden
+as ✅, precisely because re-pointing them is a real, live option: pro is one less primitive-direct alias;
+con is coupling those 2 rungs to the Control scale while `Badge.xs`/`Chip.s` (20px/28px, no `semantic.size`
+match at all) would stay primitive-aliased — a mixed-sourcing ladder, some rungs tracking Control-scale
+changes and some not. Left un-acted-on as of 2026-08-23 for that reason, but it's an open 🚩 to revisit, not
+a closed decision — don't add it to `KNOWN_EXCEPTIONS` to make it go away.
+
+**One exception to that exception, added 2026-08-23:** `Chip`'s internal icon/label `gap` is `6px` at every
+size, and stays an unreferenced literal — `component.chip.gap.{s,m}`, no `primitive.*` alias. `6px` doesn't
+land on the `primitive.spacing.*`/`primitive.size.*` grid (both step in 4px multiples: `4`, `8`, `12`...) and
+isn't meant to — it's a deliberately tighter density than either neighboring rung (`4px` reads too cramped
+next to Chip's `12`/`16px` horizontal padding, `8px` reads too loose for a compact pill), not an
+approximation of one. Adding a one-off `primitive.spacing.37`/`primitive.size.87` rung just to give this a
+name would break the grid's own 4px rhythm for every other consumer, for a value only Chip uses — worse than
+the literal it would replace. Reviewed and kept as-is; `.ai/maps/component-token-exceptions.md`'s audit
+records this in `KNOWN_EXCEPTIONS` (tag `ADR`, pointing here) rather than flagging it as a gap.
+
 ## Rules
 
 - Use the global scale by default.
 - Exceptions must be explicit in the contract and docs, and must still alias `primitive.size.*` — a
-  component-local value is allowed, an unreferenced px literal is not.
+  component-local value is allowed, an unreferenced px literal is not, **except** `Chip.gap` above, the one
+  documented case where forcing a primitive alias would cost more (a grid-breaking rung) than it buys.
 - `m` remains the reference size for standard components.
 - Prefer the Button size ladder as the reference for new interactive components.
 

@@ -12,13 +12,14 @@ export const doc: ComponentDoc = {
   variants: [],
   sizes: [],
   tokens: [
-    { part: 'table-header-cell', label: 'fontSize', token: '--helix-table-header-fontSize', kind: 'typography' },
-    { part: 'table-header-cell', label: 'fontWeight', token: '--helix-table-header-fontWeight', kind: 'typography' },
+    { part: 'table-header-cell', label: 'fontSize', token: '--helix-table-header-fontSize', kind: 'typography', meta: 'Caption / Semibold' },
+    { part: 'table-header-cell', label: 'fontWeight', token: '--helix-table-header-fontWeight', kind: 'typography', meta: 'Caption / Semibold' },
     { part: 'table-header-cell', label: 'color', token: '--helix-table-header-color', kind: 'color' },
     { part: 'table-header-cell', label: 'border-bottom', token: '--helix-table-header-border', kind: 'color' },
     { part: 'table-row', label: 'border-bottom', token: '--helix-table-row-border', kind: 'color' },
     { part: 'table-row', label: 'hover fill', token: '--helix-table-row-hoverFill', kind: 'color', state: 'hover' },
-    { part: 'table-cell', label: 'fontSize', token: '--helix-table-cell-fontSize', kind: 'typography' },
+    { part: 'table-cell', label: 'fontSize', token: '--helix-table-cell-fontSize', kind: 'typography', meta: 'Body / s / Regular' },
+    { part: 'table-cell', label: 'fontWeight', token: '--helix-table-cell-fontWeight', kind: 'typography', meta: 'Body / s / Regular' },
     { part: 'table-cell', label: 'color', token: '--helix-table-cell-color', kind: 'color' },
   ],
   features: [

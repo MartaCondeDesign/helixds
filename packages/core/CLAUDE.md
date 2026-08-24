@@ -5,6 +5,13 @@
 All Helix UI components, built directly on native HTML elements + Tailwind CSS v4.
 See [ADR-001](../../docs/ADR/ADR-001-primitive-foundation.md) for why there is no shadcn/ui or Radix primitive layer.
 
+**Before building a new component, check `contracts/manifest.json`** — the generated index of every existing
+component (status, contract/implementation/story paths, real exports). It's the fast way to confirm
+something doesn't already exist under a different name, and to see which components are still `draft`/`beta`
+(patterns worth copying with more caution than a `stable` one). After adding a component — contract,
+`index.ts` export, doc export, type export, and Storybook story all in place — run `pnpm docs:manifest` to
+regenerate it; a non-empty `drift` array in the output means one of those five pieces is still missing.
+
 ```
 src/
   components/

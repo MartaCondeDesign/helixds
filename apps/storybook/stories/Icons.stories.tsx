@@ -40,6 +40,16 @@ import {
 
 type IconComponent = React.FC<{ size?: number; stroke?: number; color?: string }>;
 
+// Same compensated scale as Icon.tsx's STROKE_BY_SIZE, adapted to this slider's reachable sizes
+// (16–40 in steps of 4) — a flat stroke shrinks in real screen pixels as size drops (Tabler's
+// viewBox stays fixed at 24×24), so a raw Tabler render here would exhibit the same "too thin at
+// small size" look Icon already compensates for.
+function strokeForSize(size: number): number {
+  if (size <= 16) return 1.75;
+  if (size <= 20) return 1.6;
+  return 1.5;
+}
+
 const ICONS: [string, IconComponent][] = [
   ['IconAccessible', IconAccessible], ['IconActivity', IconActivity], ['IconAdjustments', IconAdjustments],
   ['IconAlarm', IconAlarm], ['IconAlertCircle', IconAlertCircle], ['IconAlertTriangle', IconAlertTriangle],
@@ -193,7 +203,7 @@ function IconBrowser() {
               }
             }}
           >
-            <IconComp size={size} stroke={1.5} />
+            <IconComp size={size} stroke={strokeForSize(size)} />
             <span style={{
               fontSize: 10, fontFamily: 'monospace', color: 'inherit',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%',
@@ -217,7 +227,7 @@ export const Browse: Story = {
 
 \`\`\`tsx
 import { IconBolt } from '@tabler/icons-react';
-<IconBolt size={20} stroke={1.5} />
+<IconBolt size={20} stroke={1.6} />
 \`\`\`
         `,
       },

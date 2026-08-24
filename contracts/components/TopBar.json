@@ -20,7 +20,7 @@
   "anatomy": [
     { "part": "topbar-root",  "element": "header", "description": "Root — always a native <header>, fixed height." },
     { "part": "topbar-start", "element": "div",    "description": "Leading slot — typically a search Input.", "optional": true },
-    { "part": "topbar-end",   "element": "div",    "description": "Trailing slot — typically icon Buttons and an Avatar.", "optional": true }
+    { "part": "topbar-end",   "element": "div",    "description": "Trailing slot — typically IconButtons (notifications, help, quick actions). The current user lives in SideNav's footer, not here.", "optional": true }
   ],
 
   "props": [

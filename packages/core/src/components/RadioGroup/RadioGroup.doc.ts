@@ -33,7 +33,7 @@ export const doc: ComponentDoc = {
     { part: 'radio-legend', label: 'legend.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
     { part: 'radio-item-label', label: 'item.label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small' },
     { part: 'radio-item-label', label: 'item.label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
-    { part: 'radio-item-description', label: 'item.description', token: '--helix-primitive-fontSize-xs', kind: 'typography', meta: 'Body xsmall' },
+    { part: 'radio-item-description', label: 'item.description', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body xsmall' },
     { part: 'radio-control', label: 'control.size', token: '--helix-radio-size', kind: 'space' },
     { part: 'radio-options', label: 'gap.options', token: '--helix-primitive-spacing-75', kind: 'space', axis: 'vertical' },
     { part: 'radio-item', label: 'gap.control.content', token: '--helix-primitive-spacing-50', kind: 'space', axis: 'horizontal' },

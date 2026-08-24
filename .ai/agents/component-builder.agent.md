@@ -30,7 +30,10 @@ Run this checklist. If any item fails, stop and resolve it before continuing.
 
 1. Fill in the contract JSON (`contracts/components/{Name}.json`)
 2. Run `pnpm verify:contract` — contract must pass before step 3
-3. Run `pnpm dlx shadcn@latest add {primitive}` if a shadcn primitive is needed
+3. Decide the primitive: wrap the native HTML element directly (`<button>`, `<select>`, `<input>`,
+   ...), adding WAI-ARIA by hand where the native element doesn't already cover it — no shadcn/Radix
+   layer (see [ADR-001](../../docs/ADR/ADR-001-primitive-foundation.md)). No native equivalent
+   (Dialog, Popover, Menu, Combobox, Tooltip, ...)? Stop and write that component's own ADR first.
 4. Create `{Name}.types.ts` with all prop types (no `any`, no `object`, no `React.FC`)
 5. Create `{Name}.tsx` using forwardRef + data-* anatomy pattern
 6. Create component CSS in `packages/core/src/globals.css` under `@layer components`
@@ -44,7 +47,8 @@ The component you produce is **INVALID** if any of these are true. Stop and fix 
 
 - ❌ A prop uses an anti-synonym from `.ai/maps/prop-map.md` (e.g., `isLoading`, `onClick`, `type`)
 - ❌ Any CSS value is a hardcoded hex, px, or rem not derived from a token
-- ❌ A shadcn/ui primitive is imported directly in consuming code (not via the Helix wrapper)
+- ❌ A shadcn/ui or Radix primitive is imported anywhere — Helix has no primitive-library
+  dependency; wrap the native HTML element instead (see [ADR-001](../../docs/ADR/ADR-001-primitive-foundation.md))
 - ❌ `React.FC` is used (prefer `React.forwardRef` with explicit return type)
 - ❌ The root element lacks `data-helix-part="{component-name}"`
 - ❌ Hover/focus styles are applied via JS props instead of CSS `:hover`/`:focus-visible`

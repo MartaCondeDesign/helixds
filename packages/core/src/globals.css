@@ -51,7 +51,7 @@
   :focus-visible {
     outline:        2px solid var(--helix-color-border-focus);
     outline-offset: 2px;
-    border-radius:  2px;
+    border-radius:  var(--helix-radius-xs);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -86,7 +86,6 @@
     justify-content: center;
     gap:             var(--helix-primitive-spacing-50);
     font-family:     inherit;
-    font-weight:     var(--helix-primitive-fontWeight-semibold);
     border-radius:   var(--helix-button-radius);
     border:          1px solid transparent;
     cursor:          pointer;
@@ -105,30 +104,23 @@
   }
 
   /* Sizes — use component tokens for height + padding */
-  [data-helix-part="button"][data-size="xs"] {
-    height:      var(--helix-button-height-xs);
-    padding:     0 var(--helix-button-padding-x-xs);
-    font-size:   var(--helix-button-fontSize-xs);
-  }
   [data-helix-part="button"][data-size="s"] {
     height:      var(--helix-button-height-s);
     padding:     0 var(--helix-button-padding-x-s);
     font-size:   var(--helix-button-fontSize-s);
+    font-weight: var(--helix-button-fontWeight-s);
   }
   [data-helix-part="button"][data-size="m"] {
     height:      var(--helix-button-height-m);
     padding:     0 var(--helix-button-padding-x-m);
     font-size:   var(--helix-button-fontSize-m);
+    font-weight: var(--helix-button-fontWeight-m);
   }
   [data-helix-part="button"][data-size="l"] {
     height:      var(--helix-button-height-l);
     padding:     0 var(--helix-button-padding-x-l);
     font-size:   var(--helix-button-fontSize-l);
-  }
-  [data-helix-part="button"][data-size="xl"] {
-    height:      var(--helix-button-height-xl);
-    padding:     0 var(--helix-button-padding-x-xl);
-    font-size:   var(--helix-button-fontSize-xl);
+    font-weight: var(--helix-button-fontWeight-l);
   }
 
   /* Variant: primary */
@@ -240,6 +232,123 @@
 
 
   /* ════════════════════════════════════════════════════════════════════════
+     ICON BUTTON
+     Contract: contracts/components/IconButton.json
+     Tokens:   --helix-iconButton-*  (component layer)
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="icon-button"] {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    padding:         0;
+    border-radius:   var(--helix-iconButton-radius);
+    border:          1px solid transparent;
+    cursor:          pointer;
+    transition:
+      background-color var(--helix-iconButton-transition) var(--helix-primitive-easing-base),
+      border-color     var(--helix-iconButton-transition) var(--helix-primitive-easing-base),
+      color             var(--helix-iconButton-transition) var(--helix-primitive-easing-base);
+    outline:         none;
+    flex-shrink:     0;
+    position:        relative;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border-color:    transparent;
+  }
+
+  /* Sizes — square: width matches height, same token */
+  [data-helix-part="icon-button"][data-size="s"] {
+    width:  var(--helix-iconButton-height-s);
+    height: var(--helix-iconButton-height-s);
+  }
+  [data-helix-part="icon-button"][data-size="m"] {
+    width:  var(--helix-iconButton-height-m);
+    height: var(--helix-iconButton-height-m);
+  }
+  [data-helix-part="icon-button"][data-size="l"] {
+    width:  var(--helix-iconButton-height-l);
+    height: var(--helix-iconButton-height-l);
+  }
+
+  /* Variant: primary */
+  [data-helix-part="icon-button"][data-variant="primary"] {
+    background-color: var(--helix-iconButton-fill-primary-default);
+    color:            var(--helix-iconButton-icon-primary);
+    border-color:     var(--helix-iconButton-fill-primary-default);
+  }
+  [data-helix-part="icon-button"][data-variant="primary"]:hover:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-primary-hover);
+    border-color:     var(--helix-iconButton-fill-primary-hover);
+  }
+  [data-helix-part="icon-button"][data-variant="primary"]:active:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-primary-press);
+    border-color:     var(--helix-iconButton-fill-primary-press);
+  }
+
+  /* Variant: secondary */
+  [data-helix-part="icon-button"][data-variant="secondary"] {
+    background-color: var(--helix-iconButton-fill-secondary-default);
+    color:            var(--helix-iconButton-icon-secondary);
+    border-color:     var(--helix-iconButton-border-secondary-default);
+  }
+  [data-helix-part="icon-button"][data-variant="secondary"]:hover:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-secondary-hover);
+    border-color:     var(--helix-iconButton-border-secondary-hover);
+  }
+  [data-helix-part="icon-button"][data-variant="secondary"]:active:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-secondary-press);
+  }
+
+  /* Variant: ghost */
+  [data-helix-part="icon-button"][data-variant="ghost"] {
+    background-color: transparent;
+    color:            var(--helix-iconButton-icon-ghost);
+    border-color:     transparent;
+  }
+  [data-helix-part="icon-button"][data-variant="ghost"]:hover:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-secondary-default);
+  }
+  [data-helix-part="icon-button"][data-variant="ghost"]:active:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-secondary-hover);
+  }
+
+  /* Variant: danger */
+  [data-helix-part="icon-button"][data-variant="danger"] {
+    background-color: var(--helix-iconButton-fill-danger-default);
+    color:            var(--helix-iconButton-icon-danger);
+    border-color:     var(--helix-iconButton-fill-danger-default);
+  }
+  [data-helix-part="icon-button"][data-variant="danger"]:hover:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-danger-hover);
+    border-color:     var(--helix-iconButton-fill-danger-hover);
+  }
+  [data-helix-part="icon-button"][data-variant="danger"]:active:not(:disabled):not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-danger-press);
+    border-color:     var(--helix-iconButton-fill-danger-press);
+  }
+
+  /* States */
+  [data-helix-part="icon-button"]:disabled,
+  [data-helix-part="icon-button"][data-loading] {
+    opacity: 0.5;
+    cursor:  not-allowed;
+    pointer-events: none;
+  }
+  [data-helix-part="icon-button"]:focus-visible {
+    outline:        2px solid var(--helix-iconButton-border-focus);
+    outline-offset: 2px;
+    box-shadow:     0 0 0 4px color-mix(in srgb, var(--helix-iconButton-border-focus) 20%, transparent);
+  }
+
+  /* Spinner animation — shares the same @keyframes helix-spin defined in BUTTON above */
+  [data-helix-part="icon-button-spinner"] {
+    animation: helix-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
      INPUT
      Contract: contracts/components/Input.json
      Tokens:   --helix-input-*  (component layer)
@@ -309,7 +418,7 @@
     height:           var(--helix-input-height-m);
   }
   [data-helix-part="input-field"][data-size="s"] {
-    font-size: var(--helix-primitive-fontSize-xs);
+    font-size: var(--helix-primitive-fontSize-s);
     height:    var(--helix-input-height-s);
   }
   [data-helix-part="input-field"][data-size="m"] {
@@ -346,12 +455,12 @@
   }
 
   [data-helix-part="input-description"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-input-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="input-error"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-input-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
     display:     flex;
@@ -684,8 +793,8 @@
     display:        inline-flex;
     align-items:    center;
     justify-content: center;
-    width:          20px;
-    height:         20px;
+    width:          var(--helix-primitive-size-125);
+    height:         var(--helix-primitive-size-125);
     border-radius:  var(--helix-radius-full);
     border:         1px solid var(--helix-color-border-neutral-light);
     background:     var(--helix-color-fill-surface);
@@ -780,7 +889,7 @@
     box-sizing:  border-box;
     resize:      vertical;
   }
-  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-primitive-fontSize-xs); }
+  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-primitive-fontSize-s); }
   [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-primitive-fontSize-m); }
   [data-helix-part="textarea-field"][data-resize="none"]       { resize: none; }
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
@@ -792,18 +901,18 @@
     position:   absolute;
     bottom:     var(--helix-primitive-spacing-50);
     right:      var(--helix-primitive-spacing-75);
-    font-size:  var(--helix-primitive-fontSize-xs);
+    font-size:  var(--helix-primitive-fontSize-s);
     color:      var(--helix-textarea-text-counter);
     pointer-events: none;
   }
 
   [data-helix-part="textarea-description"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-textarea-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="textarea-error"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-textarea-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -859,7 +968,7 @@
   }
   [data-helix-part="select-trigger"][data-size="s"] {
     height:    var(--helix-select-height-s);
-    font-size: var(--helix-primitive-fontSize-xs);
+    font-size: var(--helix-primitive-fontSize-s);
     padding:   0 var(--helix-primitive-spacing-200) 0 var(--helix-primitive-spacing-50);
   }
   [data-helix-part="select-trigger"][data-size="m"] {
@@ -903,12 +1012,12 @@
   }
 
   [data-helix-part="select-description"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-select-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="select-error"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-select-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -1012,13 +1121,13 @@
 
   [data-helix-part="checkbox-description"] {
     padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));
-    font-size:    var(--helix-primitive-fontSize-xs);
+    font-size:    var(--helix-primitive-fontSize-s);
     color:        var(--helix-checkbox-text-description);
     line-height:  var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="checkbox-error"] {
     padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));
-    font-size:    var(--helix-primitive-fontSize-xs);
+    font-size:    var(--helix-primitive-fontSize-s);
     color:        var(--helix-checkbox-text-error);
     line-height:  var(--helix-primitive-lineHeight-snug);
   }
@@ -1144,14 +1253,14 @@
     font-weight: var(--helix-primitive-fontWeight-medium);
   }
   [data-helix-part="radio-item-description"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     color:       var(--helix-radio-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
 
   [data-helix-part="radio-description"],
   [data-helix-part="radio-error"] {
-    font-size:   var(--helix-primitive-fontSize-xs);
+    font-size:   var(--helix-primitive-fontSize-s);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="radio-description"] { color: var(--helix-radio-text-description); }
@@ -1251,7 +1360,7 @@
   }
 
   [data-helix-part="switch-description"] {
-    font-size:    var(--helix-primitive-fontSize-xs);
+    font-size:    var(--helix-primitive-fontSize-s);
     color:        var(--helix-switch-text-description);
     line-height:  var(--helix-primitive-lineHeight-snug);
   }
@@ -1273,7 +1382,6 @@
     background-color: var(--helix-card-fill);
     border:           1px solid var(--helix-card-border);
     border-radius:    var(--helix-card-radius);
-    box-shadow:       var(--helix-card-shadow);
     overflow:         hidden;
   }
 
@@ -1303,13 +1411,11 @@
     flex-shrink:    0;
     border-radius:  var(--helix-radius-full);
     overflow:       hidden;
+    background-color: var(--helix-avatar-fill);
   }
   [data-helix-part="avatar-root"][data-size="s"] { width: var(--helix-avatar-height-s); height: var(--helix-avatar-height-s); }
   [data-helix-part="avatar-root"][data-size="m"] { width: var(--helix-avatar-height-m); height: var(--helix-avatar-height-m); }
   [data-helix-part="avatar-root"][data-size="l"] { width: var(--helix-avatar-height-l); height: var(--helix-avatar-height-l); }
-
-  [data-helix-part="avatar-root"][data-variant="light"] { background-color: var(--helix-avatar-fill-light); }
-  [data-helix-part="avatar-root"][data-variant="solid"] { background-color: var(--helix-avatar-fill-solid); }
 
   [data-helix-part="avatar-image"] {
     width:      100%;
@@ -1318,15 +1424,13 @@
   }
 
   [data-helix-part="avatar-initials"] {
-    font-weight:  var(--helix-avatar-fontWeight);
     line-height:  1;
     user-select:  none;
+    color:        var(--helix-avatar-text);
   }
-  [data-helix-part="avatar-root"][data-size="s"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-xs); }
-  [data-helix-part="avatar-root"][data-size="m"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-s); }
-  [data-helix-part="avatar-root"][data-size="l"] [data-helix-part="avatar-initials"] { font-size: var(--helix-primitive-fontSize-m); }
-  [data-helix-part="avatar-root"][data-variant="light"] [data-helix-part="avatar-initials"] { color: var(--helix-avatar-text-light); }
-  [data-helix-part="avatar-root"][data-variant="solid"] [data-helix-part="avatar-initials"] { color: var(--helix-avatar-text-solid); }
+  [data-helix-part="avatar-root"][data-size="s"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-s); font-weight: var(--helix-avatar-fontWeight-s); }
+  [data-helix-part="avatar-root"][data-size="m"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-m); font-weight: var(--helix-avatar-fontWeight-m); }
+  [data-helix-part="avatar-root"][data-size="l"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-l); font-weight: var(--helix-avatar-fontWeight-l); }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1344,17 +1448,17 @@
 
   [data-helix-part="page-header-title"] {
     margin:        0;
-    font-weight:   var(--helix-pageHeader-title-fontWeight);
     color:         var(--helix-pageHeader-title-color);
     line-height:   var(--helix-primitive-lineHeight-tight);
     letter-spacing: -0.02em;
   }
-  [data-helix-part="page-header-title"][data-level="1"] { font-size: var(--helix-pageHeader-title-fontSize-1); }
-  [data-helix-part="page-header-title"][data-level="2"] { font-size: var(--helix-pageHeader-title-fontSize-2); }
+  [data-helix-part="page-header-title"][data-level="1"] { font-size: var(--helix-pageHeader-title-fontSize-1); font-weight: var(--helix-pageHeader-title-fontWeight-1); }
+  [data-helix-part="page-header-title"][data-level="2"] { font-size: var(--helix-pageHeader-title-fontSize-2); font-weight: var(--helix-pageHeader-title-fontWeight-2); }
 
   [data-helix-part="page-header-description"] {
     margin:      var(--helix-primitive-spacing-25) 0 0;
     font-size:   var(--helix-pageHeader-description-fontSize);
+    font-weight: var(--helix-pageHeader-description-fontWeight);
     color:       var(--helix-pageHeader-description-color);
   }
 
@@ -1365,46 +1469,6 @@
     flex-shrink:  0;
   }
 
-
-  /* ════════════════════════════════════════════════════════════════════════
-     STAT CARD
-     Contract: contracts/components/StatCard.json
-     Tokens:   --helix-statCard-*
-     Note: StatCard composes Card for its fill/border/radius/shadow — see the
-     CARD section above for those tokens.
-     ════════════════════════════════════════════════════════════════════════ */
-
-  [data-helix-part="stat-card-label"] {
-    font-size:      var(--helix-statCard-label-fontSize);
-    font-weight:    var(--helix-statCard-label-fontWeight);
-    color:          var(--helix-statCard-label-color);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom:  var(--helix-primitive-spacing-50);
-  }
-
-  [data-helix-part="stat-card-value"] {
-    font-size:      var(--helix-statCard-value-fontSize);
-    font-weight:    var(--helix-statCard-value-fontWeight);
-    color:          var(--helix-statCard-value-color);
-    line-height:    1;
-    letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
-    margin-bottom:  var(--helix-primitive-spacing-50);
-  }
-
-  [data-helix-part="stat-card-delta"] {
-    display:      flex;
-    align-items:  center;
-    gap:          var(--helix-primitive-spacing-25);
-    font-size:    var(--helix-statCard-delta-fontSize);
-  }
-  [data-helix-part="stat-card-delta"][data-trend="up"]   { color: var(--helix-statCard-delta-textUp); }
-  [data-helix-part="stat-card-delta"][data-trend="down"] { color: var(--helix-statCard-delta-textDown); }
-  [data-helix-part="stat-card-delta"]:not([data-trend])  { color: var(--helix-color-text-neutral-light); }
-
-  [data-helix-part="stat-card-delta"][data-trend="up"]   [data-helix-part="stat-card-delta-icon"] { color: var(--helix-statCard-delta-iconUp); }
-  [data-helix-part="stat-card-delta"][data-trend="down"] [data-helix-part="stat-card-delta-icon"] { color: var(--helix-statCard-delta-iconDown); }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1442,9 +1506,10 @@
   }
 
   [data-helix-part="table-cell"] {
-    padding:    var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100);
-    font-size:  var(--helix-table-cell-fontSize);
-    color:      var(--helix-table-cell-color);
+    padding:     var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100);
+    font-size:   var(--helix-table-cell-fontSize);
+    font-weight: var(--helix-table-cell-fontWeight);
+    color:       var(--helix-table-cell-color);
   }
 
 
@@ -1519,7 +1584,7 @@
   [data-helix-part="topbar-end"] {
     display:      flex;
     align-items:  center;
-    gap:          var(--helix-primitive-spacing-25);
+    gap:          var(--helix-spacing-component-xs);
     margin-left:  auto;
   }
 

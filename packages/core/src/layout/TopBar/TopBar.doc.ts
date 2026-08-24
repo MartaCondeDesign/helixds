@@ -23,7 +23,7 @@ export const doc: ComponentDoc = {
       label: 'Search + actions',
       code: `<TopBar
   start={<Input label="Search" hideLabel icon={IconSearch} placeholder="Search…" />}
-  end={<><Button variant="ghost" size="s" icon={IconBell} /><Avatar label="Marta Conde" variant="solid" /></>}
+  end={<IconButton variant="ghost" size="m" icon={IconBell} label="Notifications" />}
 />`,
     },
   ],
