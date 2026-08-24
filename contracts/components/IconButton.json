@@ -1,0 +1,94 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "IconButton",
+  "version": "1.0.0",
+  "status": "stable",
+  "purpose": "Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control.",
+  "neverUseFor": [
+    "Any action without an unambiguous, universally recognizable icon — use Button with a text label instead; a mystery-meat icon is worse than no shortcut at all",
+    "The primary CTA of a view — a labelled Button reads with more intent and is easier to scan for",
+    "A toggle/pressed state (e.g. bold/italic in a toolbar) — that needs aria-pressed and a distinct on/off visual, neither of which IconButton models; compose a dedicated toggle control instead"
+  ],
+  "states": {
+    "intrinsic": ["hover", "focus", "active", "disabled"],
+    "authored": ["loading"]
+  },
+  "anatomy": [
+    {
+      "part": "icon-button",
+      "element": "button",
+      "description": "Root — a real <button>, square (width = height, same token), fill/border/radius by variant. Never a <div> with a click handler."
+    }
+  ],
+  "props": [
+    {
+      "name": "icon",
+      "type": "TablerIcon",
+      "required": true,
+      "description": "The icon to render, passed by reference (e.g. IconTrash), not pre-instantiated.",
+      "usage": "icon={IconTrash}"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name — there is no visible text for this to describe, so it's required, not optional. Rendered as the button's aria-label.",
+      "usage": "label=\"Delete item\""
+    },
+    {
+      "name": "variant",
+      "type": "'primary' | 'secondary' | 'ghost' | 'danger'",
+      "default": "ghost",
+      "description": "Visual style — same 4-variant system as Button. Defaults to 'ghost' (not Button's 'primary'): an icon-only control is almost always a secondary/utility action (toolbar, row action, dismiss), rarely a view's main CTA."
+    },
+    {
+      "name": "size",
+      "type": "'s' | 'm' | 'l'",
+      "default": "m",
+      "description": "Physical size — same scale and same height tokens as Button (s=24px, m=32px, l=40px), width matches height (square)."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": false,
+      "description": "When true, shows a spinner in place of the icon and disables interaction."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "When true, the button is non-interactive."
+    },
+    {
+      "name": "onPress",
+      "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
+      "description": "Click/press handler."
+    },
+    {
+      "name": "className",
+      "type": "string | undefined",
+      "description": "Additional className for the root."
+    }
+  ],
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "s": 24, "m": 32, "l": 40 },
+      "unit": "px",
+      "note": "Identical to Button's own height scale (ADR-004 Control scale) — component.iconButton.height aliases the same semantic.size.* rungs Button's component.button.height does, so the two components always stay the same physical height at a matching size."
+    },
+    "width": {
+      "default": "fixed",
+      "note": "Always equal to height (square) — aliases the SAME token as height, not an independent value. An icon-only control has no text to size around, so 'hug'/'fill' don't apply."
+    }
+  },
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.border", "color.icon", "radius"],
+    "forbidden": ["primitive.color", "color.text"]
+  },
+  "a11y": {
+    "role": "button (native)",
+    "keyboardNav": ["Enter/Space activates, same as any native <button>"],
+    "wcag": ["4.1.2 Name, Role, Value (label is required precisely to satisfy this — no visible text exists to fall back on)", "1.4.3 Contrast (AA)"]
+  }
+}

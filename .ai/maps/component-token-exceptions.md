@@ -3,37 +3,125 @@
 Every `component.*` token should alias `semantic.*` where a semantic role exists for it (per
 `packages/tokens/CLAUDE.md` → "Token layers"). The table below lists every token that does **not** — it
 aliases `primitive.*` directly, or has no alias at all (a raw literal) — grouped by token type, with the
-current value and the closest existing token that could apply.
+proposed token and value that should replace the current one.
 
-**This is not automatically a violation.** Some of these are legitimate: the category has no semantic layer
-at all (typography), the component is a documented ADR-004 density exception (Badge, Chip), or the value is
-past the shared scale's top rung (TopBar). Others are real gaps — a matching token exists and simply isn't
-wired up yet.
+**This is not automatically a violation** — but a ✅ only stands if it's backed by an actual ADR, not a
+structural gap or a comment in the audit script. Exactly one thing currently qualifies: a **documented
+[ADR-004](../../docs/ADR/ADR-004-size-standard.md) exception** — Badge/Chip `height` use ADR-004's
+"Compact/status components" density model instead of the shared control ladder, and (added 2026-08-23)
+Chip's `gap` (`6px`, every size) stays an unreferenced literal because it doesn't land on the
+`primitive.spacing.*`/`primitive.size.*` 4px grid and a one-off rung to name it would cost more than it
+buys — see ADR-004's "One exception to that exception". The ADR names both explicitly.
 
-**"Token" / "Variant Size" columns:** the t-shirt size variant (`xs`/`s`/`m`/`l`/`xl`...) is split out into
-its own column instead of staying glued to the property name — `Token: height`, `Variant Size: s` instead of
-`height.s` or `height-s` in one string. This also normalizes Button's `padding.x-l` (axis and size fused
-into one key, an inconsistency with the rest of the system) into the same shape as everywhere else:
-`Token: padding-x`, `Variant Size: l` — same display Chip's `padding-x.m` already had. A row with `--` in
-this column has no size variant at all (it's a single value, or the trailing segment is a sub-part name
-like `title`/`label`/`description`, not a size).
+**Typography (`fontSize`/`fontWeight`) is not a ✅** (2026-08-23 review). It used to be, on the reasoning that
+no flat `semantic.fontSize.*`/`semantic.fontWeight.*` role layer exists — but that reasoning missed
+Helix's actual semantic layer for typography: the named **Text Styles** at `semantic.textStyle.*` in
+`tokens.json` (`display-6xl-bold`, `body-s-medium`, `caption-semibold`, ... — DTCG composite
+`$type: "typography"` tokens, each `$value` an object of `fontFamily`/`fontSize`/`fontWeight`/`lineHeight`
+aliases), mirrored 1:1 in the Figma file (`.ai/skills/tokens-to-figma.md` → Phase 6) and in Storybook
+(`Foundation/Text Styles`). [`scripts/text-styles.ts`](../../scripts/text-styles.ts) loads and reshapes that
+JSON for both this audit script and the Storybook story — it holds no data of its own. Each style combines
+`primitive.fontSize` + `primitive.fontWeight` (+ the paired `semantic.lineHeight` rung) under one role name —
+proposing a standalone `semantic.fontSize.xs` next to a standalone `semantic.fontWeight.semibold` would just
+reinvent that combination badly, one property at a time, and miss that a matching combined style might
+already exist.
 
-**The flag prefixed onto "Current Value"** tells you the outcome at a glance:
+The typography rows below are matched **per usage** (a component's fontSize+fontWeight pair, not each
+property separately) against the full `semantic.textStyle.*` list, AND checked for whether they're already
+fully wired: a row only disappears from the table when its `fontSize` *and* `fontWeight` both alias
+straight into the **same named** `semantic.textStyle.{key}` (not just two values that happen to resolve to
+a matching style — the actual reference has to name it). As of 2026-08-23, every `component.*`
+fontSize/fontWeight token aliases a Text Style's own sub-property directly — `component.badge.fontSize` →
+`{semantic.textStyle.caption-semibold.fontSize}`, not a step short at `{primitive.fontSize.s}` — the full
+`primitive → semantic.textStyle → component` chain the rest of the token layers already use. Getting there
+took a few kinds of fixes, worth remembering as the pattern for the next gap:
+- **Filling in the untokenized half** — Button (`fontWeight`), Avatar (`fontSize`), and
+  StatCard.delta/Table.cell/PageHeader.description (`fontWeight`) never got a `component.*` token for one
+  side of the pair; the real value existed only hardcoded in `globals.css`. Added the missing token, then
+  updated `globals.css` to reference it instead of the hardcoded value.
+- **Snapping an off-scale literal onto the scale** — Chip's `fontSize` was a raw literal (`13px`, no
+  `{...}` alias at all) that didn't land on any `primitive.fontSize.*` rung. Re-aliased it to
+  `{primitive.fontSize.s}` (12px) — a real, deliberate value change, not just a tokenization — to actually
+  match `Body / s / Medium` instead of only approximating it.
+- **Adding the missing style** — 5 new `semantic.textStyle.*` entries where no existing style matched a
+  real size+weight combo: `body-m-semibold`, `body-l-semibold`, `heading-2xl-bold`, `heading-xl-bold`,
+  `heading-3xl-bold`.
+- **Pointing straight at the Text Style, not just a matching primitive** — every `component.*` token above
+  was re-aliased from `{primitive.fontSize/fontWeight.*}` to `{semantic.textStyle.{style}.fontSize/
+  fontWeight}`. Required extending the alias resolver in `build.ts` (`resolveRef`) and
+  `scripts/audit-token-exceptions.ts` (`getNode`) to walk *into* a composite token's `$value` object when a
+  reference path continues past it — until 2026-08-23 the resolver only handled a path ending exactly on a
+  token, never one that kept going into a sub-property.
+- **Splitting a shared `fontWeight` into size variants** — Avatar, Button, and PageHeader.title each had
+  ONE non-size-varying `fontWeight` token shared across size variants that resolve to **different** named
+  styles (same resolved weight number either way, e.g. `600`/semibold for every Button size — but `xs`/`s`/
+  `m` name `Caption / Semibold` while `l` names `Body / m / Semibold`). A single shared token can only point
+  at one style's name at a time, so 4 rows (Avatar.l, Button.l, Button.xl, PageHeader.title.2) stayed 🚩
+  after every other fix — value matched, but not wired to *that* size's actual style. Fixed by turning each
+  into a `fontWeight.{size}` object (mirroring the `fontSize.{size}` shape it already had), one entry per
+  size pointing at its own correct style — `component.button.fontWeight.xs/s/m` →
+  `{semantic.textStyle.caption-semibold.fontWeight}`, `.l` → `{...body-m-semibold...}`, `.xl` →
+  `{...body-l-semibold...}`. `globals.css` updated to match (the shared `font-weight` declaration moved out
+  of each component's base rule into its per-size rule, alongside `font-size`). Every value is identical to
+  before — this only makes explicit, per size, which named style it belongs to.
+
+If a future component change reopens a 🆕 here, don't add a token or a new Text Style without confirming
+first — figure out which of the three fixes above it needs, and which one changes rendered output (the
+snap-to-scale kind) versus which is a pure tokenization (the other two).
+
+Anything else that used to sit here as a ✅ with no ADR or structural reason behind it — just a hand-written
+"reviewed one-off" note in the script — has also been reclassified to 🆕 (2026-08-23 review): a comment in
+`KNOWN_EXCEPTIONS` recorded someone's judgment call, but judgment calls without an ADR are exactly the kind
+of undocumented exception this table exists to surface, not suppress. `TopBar.height` (past `semantic.size`'s
+top rung) and `Dialog.overlay` (a one-off backdrop color) now show as 🆕 pending an actual decision — see the
+table below for each.
+
+**Dialog.overlay, specifically:** `rgba(15,23,42,0.6)` is `semantic.color.fill.overlay` (→
+`primitive.color.gray.900` = `#0f172a` = `rgb(15,23,42)`) at 60% opacity — a semantic token for exactly this
+role already exists, unused. The mechanical value-matching in the audit script doesn't catch it because the
+literal is written as an `rgba()` string rather than a resolved hex, so it still shows as 🆕 `dialog-overlay`
+above rather than 🚩. Wiring it up means deciding how the 60% opacity gets expressed (a dedicated
+`component.dialog.overlay-opacity` token, `color-mix()`, or similar) — not a straight re-alias.
+
+**The 5 columns:**
+
+- **Component** — which component owns the token.
+- **Type** — the token's property, e.g. `height`, `padding-x`. A sub-part name like `title.fontWeight` stays
+  dotted here rather than being split further. Typography rows show `textStyle` (or `{subpart}.textStyle`,
+  e.g. `title.textStyle`) instead of `fontSize`/`fontWeight` — one row already represents the matched
+  fontSize+fontWeight **pair**, not a single property (see the typography section above).
+- **Size** — the t-shirt size variant (`xs`/`s`/`m`/`l`/`xl`...) split out into its own column instead of
+  staying glued to the property name in **Type** — `Type: height`, `Size: s` instead of `height.s` or
+  `height-s` in one string. This also normalizes Button's `padding.x-l` (axis and size fused into one key,
+  an inconsistency with the rest of the system) into the same shape as everywhere else: `Type: padding-x`,
+  `Size: l` — same display Chip's `padding-x.m` already had. A row with `--` here has no size variant at all
+  (a single value, or the trailing segment is a sub-part name like `title`/`label`/`description`, not a
+  size).
+- **Proposed Token** — the flag, then the token name that should replace the current alias/literal — or,
+  for a ✅ row, the reason it needs no replacement.
+- **Proposed Value** — that proposed token's value (hex, px, etc.). For a ✅ row this is the token's own
+  *current* value, not a change to make — nothing is being proposed, this column just states what the
+  reviewed-and-kept exception actually resolves to.
+
+**The flag prefixed onto "Proposed Token"** tells you the outcome at a glance:
 
 | Flag | Meaning |
 |------|---------|
-| ✅ | Reviewed and correct as-is — no token needed (no semantic layer for this category, a documented ADR-004 density exception, past the shared scale's top rung, or a reviewed one-off value like `Dialog.overlay`) |
+| ✅ | Reviewed and correct as-is — no token needed. The only qualifying reason is a documented [ADR-004](../../docs/ADR/ADR-004-size-standard.md) density exception (Badge, Chip) |
 | 🚩 | An existing token already has this exact value — should be reused instead of the current alias |
 | 🆕 | No existing token matches — a new one is proposed, named mechanically from where it currently lives |
 
-**"Proposed Token" / "Proposed Value" columns**, matching the flag:
+**What "Proposed Token" holds**, matching the flag:
 
-- ✅ rows: "Proposed Token" holds a short reason instead of a name (`no semantic layer`, `ADR-004 exception`,
-  `past top rung`, `reviewed one-off`); "Proposed Value" is `--` — nothing to change.
-- 🚩 rows: a real, existing token name (e.g. `spacing-component-l`) + its value — this token already has the
-  exact same resolved value, so re-aliasing to it is low-risk, same visual result, cleaner alias chain.
-- 🆕 rows: a mechanically-generated new name (e.g. `chip-font-size-s`) + the value it would carry — a
-  starting point for a human to review, not a vetted proposal, before actually adding it as a new token.
+- ✅ rows: "Proposed Token" holds the reason instead of a name (`ADR-004 exception`); "Proposed Value" holds
+  the token's current, kept value (e.g. `6px` for Chip's `gap`) — not a change, just what it already is.
+- 🚩 rows: a real, existing token name (e.g. `spacing-component-l`) — this token already has the exact same
+  resolved value ("Proposed Value"), so re-aliasing to it is low-risk, same visual result, cleaner alias
+  chain.
+- 🆕 rows: a mechanically-generated new name — a starting point for a human to review, not a vetted
+  proposal, before actually adding it. Two shapes, depending on the category: a **component**-scoped flat
+  kebab name (e.g. `chip-font-size-s`) for everything outside typography; a **Text Style** name (e.g.
+  `Heading / 3xl / Bold`) for every typography row — see the section above for how those are matched.
 
 **`width` tokens are excluded from this audit entirely** (they never appear as a row, in any category) — per
 this file's own root `CLAUDE.md` token policy, min-/max-width is deliberately never tokenized; it's decided
@@ -58,81 +146,36 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 - Runs automatically on every commit via `.husky/pre-commit` (after `verify:tokens`) — so the moment a new
   component's tokens land in `tokens.json`, this file reflects them in the same commit, no one has to
   remember to update it by hand.
-- When the auto-classifier flags a token 🆕 and you've reviewed it and decided it's deliberately a one-off
-  (like `Dialog.overlay`), or you've decided a 🚩/🆕 is actually a documented exception (like Badge/Chip
-  height), add one line to `KNOWN_EXCEPTIONS` in `scripts/audit-token-exceptions.ts` and rerun — it becomes
-  ✅ and the doc follows.
+- When the auto-classifier flags a token 🚩/🆕 and it's actually a documented ADR exception (like Badge/Chip
+  height under ADR-004), add one line to `KNOWN_EXCEPTIONS` in `scripts/audit-token-exceptions.ts` and rerun
+  — it becomes ✅ and the doc follows. **Don't add an entry for a one-off judgment call with no ADR behind
+  it** — that's exactly the undocumented-exception pattern this table exists to surface (see 2026-08-23
+  review above). Write the ADR first, then add the entry.
 
 ---
 
 <!-- AUTO:ASCII_TABLE -->
 ```
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-| Component  | Token                | Variant Size | Current Value         | Proposed Token           | Proposed Value |
-+============+======================+==============+=======================+==========================+================+
-+----------------------------------------------------- TYPOGRAPHY -----------------------------------------------------+
-| Avatar     | fontWeight           | --           | ✅ 600                | no semantic layer        | --             |
-| Badge      | fontSize             | --           | ✅ 11px               | no semantic layer        | --             |
-| Badge      | fontWeight           | --           | ✅ 600                | no semantic layer        | --             |
-| Button     | fontSize             | xs           | ✅ 11px               | no semantic layer        | --             |
-| Button     | fontSize             | s            | ✅ 12px               | no semantic layer        | --             |
-| Button     | fontSize             | m            | ✅ 12px               | no semantic layer        | --             |
-| Button     | fontSize             | l            | ✅ 14px               | no semantic layer        | --             |
-| Button     | fontSize             | xl           | ✅ 18px               | no semantic layer        | --             |
-| Chip       | fontSize             | s            | 🆕 13px               | chip-font-size-s         | 13px           |
-| Chip       | fontSize             | m            | 🆕 13px               | chip-font-size-m         | 13px           |
-| Chip       | fontWeight           | --           | ✅ 500                | no semantic layer        | --             |
-| NavItem    | fontSize             | --           | ✅ 12px               | no semantic layer        | --             |
-| NavItem    | fontWeight           | --           | ✅ 500                | no semantic layer        | --             |
-| PageHeader | description.fontSize | --           | ✅ 12px               | no semantic layer        | --             |
-| PageHeader | title.fontSize.1     | --           | ✅ 32px               | no semantic layer        | --             |
-| PageHeader | title.fontSize.2     | --           | ✅ 24px               | no semantic layer        | --             |
-| PageHeader | title.fontWeight     | --           | ✅ 700                | no semantic layer        | --             |
-| StatCard   | delta.fontSize       | --           | ✅ 11px               | no semantic layer        | --             |
-| StatCard   | label.fontSize       | --           | ✅ 11px               | no semantic layer        | --             |
-| StatCard   | label.fontWeight     | --           | ✅ 500                | no semantic layer        | --             |
-| StatCard   | value.fontSize       | --           | ✅ 40px               | no semantic layer        | --             |
-| StatCard   | value.fontWeight     | --           | ✅ 700                | no semantic layer        | --             |
-| Table      | cell.fontSize        | --           | ✅ 12px               | no semantic layer        | --             |
-| Table      | header.fontSize      | --           | ✅ 11px               | no semantic layer        | --             |
-| Table      | header.fontWeight    | --           | ✅ 600                | no semantic layer        | --             |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-+------------------------------------------------------- COLOR --------------------------------------------------------+
-| Dialog     | overlay              | --           | ✅ rgba(15,23,42,0.6) | reviewed one-off         | --             |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-+------------------------------------------------------- BORDER -------------------------------------------------------+
-| Chip       | border-width         | --           | 🆕 1px                | chip-border-width        | 1px            |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-+------------------------------------------------------- MOTION -------------------------------------------------------+
-| Button     | transition           | --           | 🚩 120ms              | duration-base            | 120ms          |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-+------------------------------------------------------ SPACING -------------------------------------------------------+
-| Button     | padding-x            | xs           | 🚩 8px                | spacing-component-s      | 8px            |
-| Button     | padding-x            | s            | 🚩 12px               | spacing-component-m      | 12px           |
-| Button     | padding-x            | m            | 🚩 16px               | spacing-component-l      | 16px           |
-| Button     | padding-x            | l            | 🆕 20px               | button-padding-x-l       | 20px           |
-| Button     | padding-x            | xl           | 🚩 24px               | spacing-component-xl     | 24px           |
-| Card       | padding              | --           | 🚩 24px               | spacing-component-xl     | 24px           |
-| Chip       | gap                  | s            | 🆕 6px                | chip-gap-s               | 6px            |
-| Chip       | gap                  | m            | 🆕 6px                | chip-gap-m               | 6px            |
-| Chip       | padding-x            | s            | 🚩 12px               | spacing-75               | 12px           |
-| Chip       | padding-x            | m            | 🚩 16px               | spacing-100              | 16px           |
-| Dialog     | padding              | --           | 🚩 24px               | spacing-component-xl     | 24px           |
-| Input      | gap.description      | --           | 🚩 4px                | spacing-component-xs     | 4px            |
-| Input      | gap.label            | --           | 🚩 4px                | spacing-component-xs     | 4px            |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
-+-------------------------------------------------------- SIZE --------------------------------------------------------+
-| Badge      | height               | xs           | ✅ 20px               | ADR-004 exception        | --             |
-| Badge      | height               | s            | ✅ 24px               | ADR-004 exception        | --             |
-| Checkbox   | size                 | --           | 🚩 16px               | size-100                 | 16px           |
-| Chip       | height               | s            | ✅ 28px               | ADR-004 exception        | --             |
-| Chip       | height               | m            | ✅ 32px               | ADR-004 exception        | --             |
-| Radio      | size                 | --           | 🚩 16px               | size-100                 | 16px           |
-| Switch     | height               | s            | 🚩 16px               | size-100                 | 16px           |
-| Switch     | height               | m            | 🚩 20px               | size-125                 | 20px           |
-| Switch     | thumb-size           | s            | 🚩 12px               | size-75                  | 12px           |
-| Switch     | thumb-size           | m            | 🚩 16px               | size-100                 | 16px           |
-| TopBar     | height               | --           | ✅ 56px               | size-350 (past top rung) | 56px           |
-+------------+----------------------+--------------+-----------------------+--------------------------+----------------+
++-----------+--------------+------+----------------------------------------+--------------------+
+| Component | Type         | Size | Proposed Token                         | Proposed Value     |
++===========+==============+======+========================================+====================+
++-------------------------------------------- COLOR --------------------------------------------+
+| Badge     | icon.danger  | --   | 🚩 color-fill-danger-interactive-hover | #b91c1c            |
+| Badge     | text.danger  | --   | 🚩 color-fill-danger-interactive-hover | #b91c1c            |
+| Dialog    | overlay      | --   | 🆕 dialog-overlay                      | rgba(15,23,42,0.6) |
++-----------+--------------+------+----------------------------------------+--------------------+
++------------------------------------------- BORDER --------------------------------------------+
+| Chip      | border-width | --   | 🆕 chip-border-width                   | 1px                |
++-----------+--------------+------+----------------------------------------+--------------------+
++------------------------------------------- SPACING -------------------------------------------+
+| Button    | padding-x    | l    | 🆕 button-padding-x-l                  | 20px               |
+| Chip      | gap          | s    | ✅ ADR-004 exception                   | 6px                |
+| Chip      | gap          | m    | ✅ ADR-004 exception                   | 6px                |
++-----------+--------------+------+----------------------------------------+--------------------+
++-------------------------------------------- SIZE ---------------------------------------------+
+| Badge     | height       | xs   | ✅ ADR-004 exception                   | 20px               |
+| Chip      | height       | s    | ✅ ADR-004 exception                   | 28px               |
+| Switch    | height       | m    | 🆕 switch-height-m                     | 20px               |
++-----------+--------------+------+----------------------------------------+--------------------+
 ```
 <!-- /AUTO -->
