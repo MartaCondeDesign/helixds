@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Helix Design System — AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
+  "license": "MIT",
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=20"
