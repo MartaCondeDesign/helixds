@@ -122,7 +122,9 @@ later in Storybook or a failed import. Treat a non-empty `drift` array the same 
   automatically after every commit, so this normally doesn't need a manual regenerate — run it by hand
   only if you want it to catch up mid-session without committing first.
 - `contracts/component.schema.json`    — JSON schema for component contracts
-- `docs/ADR/`                          — architecture decisions (read the ADR governing what you're touching)
+- `docs/ADR/`                          — architecture decisions (read the ADR governing what you're touching).
+  **`docs/ADR/*.md` is the only home for ADRs — never surface them in Storybook** (no `Decisions/*.mdx`
+  page, no sidebar entry). This was tried once and reverted per explicit direction; don't reintroduce it.
 - `docs/ADR/ADR-004-size-standard.md`   — canonical size scale for interactive controls and fields
 - `.ai/memory/agnostic-lessons.md`     — lessons from previous sessions
 - `.ai/skills/components-to-figma.md`, `.ai/skills/tokens-to-figma.md`, `.ai/skills/icons-to-figma.md` —
