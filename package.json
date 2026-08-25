@@ -23,6 +23,7 @@
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",
     "docs:manifest": "tsx scripts/generate-component-manifest.ts",
     "docs:changelog": "tsx scripts/generate-changelog.ts",
+    "docs:readme": "tsx scripts/generate-readme-stats.ts",
     "contract": "tsx scripts/contract-cli.ts",
     "token:add": "tsx scripts/token-cli.ts",
     "eval:run": "tsx scripts/eval-run.ts",

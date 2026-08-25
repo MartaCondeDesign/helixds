@@ -77,6 +77,7 @@ pnpm verify:icons           check every Tabler icon renders through the Icon com
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, shown in Storybook's Changelog page
+pnpm docs:readme            sync component counts in README.md with contracts/manifest.json
 pnpm report:paints          CSS paint audit report
 pnpm lint:ai                validate .ai/ directory structure
 ```
@@ -97,6 +98,11 @@ checked for drift: a contract with no matching export, an export with no story, 
 type, etc. all print as a `drift` entry the command surfaces directly, not something you have to notice
 later in Storybook or a failed import. Treat a non-empty `drift` array the same way as a 🚩/🆕 row in
 `component-token-exceptions.md` — a real gap to close, not a report to ignore.
+
+`pnpm docs:readme` runs automatically in `.husky/pre-commit` (after `docs:token-exceptions`), so
+README.md's component counts can't go stale in a commit — it only rewrites text wrapped in
+`<!--helix:*-->` markers, never the surrounding prose. If it looks wrong after adding/removing a
+component, run `pnpm docs:manifest` first — the README script trusts `contracts/manifest.json` as-is.
 
 ## Per-package context (load when working in that territory)
 
