@@ -122,7 +122,12 @@ to `Responsive`. See `.ai/skills/tokens-to-figma.md` → Phase 5/6/7 for the exa
 
 `pnpm verify:tokens` (`scripts/verify-token-naming.ts`) checks new/renamed **keys** in `tokens.json`
 against the naming rules above (no `rest`/`active`/`subtle`/`strong`/`brand`, icon tokens never
-aliasing `text.*`) — run it after adding a token. It does NOT catch stale *references* to a token
+aliasing `text.*`, AND — since 2026-08-25 — that every `-light`/`-dark`/`-lightest`/`-darkest` key
+actually resolves lighter/darker than its role's base tone and its own siblings, via
+`checkRelativeLightness` in `token-naming-lib.ts`: it follows the alias chain to a literal hex,
+computes HSL lightness, and compares) — run it after adding a token. `pnpm token:add` runs this same
+relative check before writing a new `semantic.color.*` key, refusing to write one that fails it. It
+does NOT catch stale *references* to a token
 you renamed elsewhere in the repo (CSS vars in `globals.css`, dark overrides in `build.ts`, Storybook,
 Figma). `pnpm report:paints` is listed in the root `package.json` as where that broader check should
 live, but the script doesn't exist yet (`scripts/report-paints.ts` is missing). Until it's built, grep

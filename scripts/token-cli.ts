@@ -19,7 +19,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { checkKeyNaming, checkIconAliasNaming } from './token-naming-lib';
+import { checkKeyNaming, checkIconAliasNaming, checkRelativeLightness } from './token-naming-lib';
 
 const args = process.argv.slice(2);
 const [dotPath, value] = args;
@@ -92,6 +92,25 @@ if (typeof node !== 'object' || node === null || '$value' in node) {
 if (newKey in node) {
   console.error(`❌ '${dotPath}' already exists. Edit tokens.json directly to change an existing token.`);
   process.exit(1);
+}
+
+// ── Relative light/dark check — only meaningful for semantic.color.* additions, since it
+// compares a role's tiers against each other (checkRelativeLightness needs the whole tree to
+// find siblings, so simulate the addition on a clone rather than duplicating its logic here) ──
+
+if (layer === 'semantic' && pathParts[1] === 'color' && type === 'color') {
+  const simulated = JSON.parse(raw);
+  let simNode: any = simulated;
+  for (const part of parentPath) simNode = simNode[part];
+  simNode[newKey] = { $value: value, $type: type };
+
+  const lightnessIssues = checkRelativeLightness(simulated).filter(msg => msg.includes(`.${newKey}:`));
+  if (lightnessIssues.length > 0) {
+    console.error(`❌ '${dotPath}' fails the relative light/dark check:`);
+    for (const v of lightnessIssues) console.error(`   ${v}`);
+    console.error('\nSee packages/tokens/CLAUDE.md → "Semantic naming vocabulary" (the light/dark-vs-base-tone rule). Not written.');
+    process.exit(1);
+  }
 }
 
 // ── Surgical text insertion ───────────────────────────────────────────────────

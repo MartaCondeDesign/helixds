@@ -3,16 +3,18 @@
  * packages/tokens/CLAUDE.md ("Semantic naming vocabulary"). Only checks the semantic
  * and component layers — the primitive layer (blue/gray/red/...) is exempt by design.
  *
- * Scope: the clear-cut, no-judgment-call rules only. Deciding whether a gray token
- * should be `neutral`, `neutral-light`, or `neutral-lightest` depends on its siblings
- * in the same group — that's a human call, not something this script infers.
+ * Scope: the clear-cut, no-judgment-call rules, PLUS one relational check that used to be
+ * undocumented-as-code — whether a `-light`/`-dark`/`-lightest`/`-darkest` modifier is
+ * correct relative to its role's base tone and siblings (checkRelativeLightness, added
+ * 2026-08-25). Everything else stays a human call: e.g. whether a role even NEEDS a
+ * `-light` tier in the first place isn't something this script infers.
  *
  * Report violations — does NOT gate yet. Run: pnpm verify:tokens
  * To promote to gate: change REPORT_ONLY to false.
  */
 import fs from 'fs';
 import path from 'path';
-import { checkKeyNaming, checkIconAliasNaming } from './token-naming-lib';
+import { checkKeyNaming, checkIconAliasNaming, checkRelativeLightness } from './token-naming-lib';
 
 const REPORT_ONLY = true;
 
@@ -48,6 +50,10 @@ function walk(node: unknown, pathParts: string[]): void {
 
 walk(tokens.semantic, ['semantic']);
 walk(tokens.component, ['component']);
+
+for (const message of checkRelativeLightness(tokens)) {
+  issues.push({ path: 'semantic.color', message, severity: 'error' });
+}
 
 // ── Report ────────────────────────────────────────────────────────────────────
 
