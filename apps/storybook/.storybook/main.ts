@@ -6,6 +6,10 @@ import { fileURLToPath } from 'url';
 const config: StorybookConfig = {
   stories: [
     '../stories/**/*.stories.@(ts|tsx)',
+    // ADR docs pages — MDX (not *.stories.tsx), so they need their own glob entry.
+    // "ADR-*" excludes _template.mdx on purpose — it's a copy-paste starting point, not a
+    // real decision record, and shouldn't show up as its own page in the sidebar.
+    '../stories/Decisions/ADR-*.mdx',
   ],
 
   addons: [
