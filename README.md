@@ -1,47 +1,108 @@
-# Helix DS
+<div align="center">
 
-Design system **AI-ready**: construido para que tanto personas como agentes de IA puedan generar UI consistente sin adivinar tokens, props o patrones de layout.
+# ⚡ Helix DS
 
-Base: elementos HTML nativos + WAI-ARIA escrito a mano, Tailwind CSS v4 y Tabler Icons. Ver el porqué en [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
+**The design system an AI agent can use without guessing.**
 
-## Qué hay aquí
+Explicit per-component contracts, script-verified tokens, and a canonical prop vocabulary — built so humans *and* agents generate the same consistent UI on the first try.
 
-- **`packages/tokens`** — tokens de diseño en formato DTCG (`tokens.json`) compilados a variables CSS (`--helix-*`) y constantes TS. Ver [ADR-002](docs/ADR/ADR-002-token-strategy.md).
-- **`packages/core`** — componentes React (Button, Input, Select, Badge, Checkbox, Chip, RadioGroup, Switch, Textarea) que envuelven el elemento HTML nativo correspondiente.
-- **`packages/storybook-addon-tokens`** — addon de Storybook para inspeccionar tokens.
-- **`apps/storybook`** — Storybook con historias por componente y por patrón (`pnpm sb` → http://localhost:6006).
-- **`contracts/`** — un `.json` por componente que define su contrato (props, variantes, reglas) antes de la implementación. Los contratos mandan sobre Figma.
-- **`.ai/`** — mapas de props canónicas, patrones de diseño y skills para agentes de IA (Figma, tokens, iconos).
-- **`docs/ADR/`** — decisiones de arquitectura: fundación de primitivos, estrategia de tokens, infraestructura para IA, escala de tamaños.
-- **`evals/`** — prompts y outputs de evaluación automática (¿el código generado por un LLM usa los props/tokens correctos?).
-- **`llms.txt`** — índice pensado para que un LLM cargue contexto del sistema rápidamente.
+<!-- helix:badge-components:start -->
+![Components](https://img.shields.io/badge/components-19-6366f1)
+<!-- helix:badge-components:end -->
+![Node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/react-19-61DAFB?logo=react&logoColor=white)
+![Tailwind](https://img.shields.io/badge/tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript&logoColor=white)
+![AI-ready](https://img.shields.io/badge/AI--ready-contracts%20%2B%20evals-000000)
 
-## Qué hemos hecho en este commit
+<br>
 
-- Refinado el pipeline de build de tokens (`packages/tokens/src/build.ts`, `tokens.json`) y su documentación (`packages/tokens/CLAUDE.md`).
-- Añadidos scripts nuevos: `scripts/token-cli.ts` (alta de tokens), `scripts/token-naming-lib.ts` y `scripts/verify-token-naming.ts` (verificación de nomenclatura de tokens vía `pnpm verify:tokens`).
-- Sincronizadas las historias de Storybook y los `.doc.ts` de componentes con los cambios de tokens.
-- Actualizados los patrones (`.ai/maps/patterns/`) y skills de Figma (`.ai/skills/`).
+<img src="docs/assets/dashboard-hero.png" alt="A dashboard built entirely from Helix components — StatCard, Table, Badge, Switch" width="820">
 
-## Comandos
+<sub>Everything in this screenshot is Helix: <code>AppShell</code>, <code>SideNav</code>, <code>StatCard</code>, <code>Table</code>, <code>Badge</code>, <code>Switch</code> — zero hand-written layout <code>&lt;div&gt;</code>s.</sub>
+
+</div>
+
+---
+
+## What this is
+
+Helix is a design system built directly on **native HTML elements** — no primitive kit underneath — plus Tailwind CSS v4 and Tabler Icons. [Why, in ADR-001](docs/ADR/ADR-001-primitive-foundation.md). Every component ships with:
+
+- A **contract** (`contracts/components/{Name}.json`) that defines props, variants, and rules before a single line of implementation exists.
+- **Tokens** in DTCG format (`--helix-*`), automatically checked against WCAG AA contrast and semantic naming.
+- **Evals**: real code-generation prompts run against an LLM, to verify the system itself is interpretable by an agent — not just by a person reading Storybook.
+
+## Getting started as a consumer
+
+```bash
+pnpm add @helix-ds/core @helix-ds/tokens
+```
+
+```tsx
+// app/layout.tsx or main.tsx
+import '@helix-ds/tokens/helix.css';   // CSS custom properties
+import '@helix-ds/core/globals.css';   // Tailwind base + component styles
+```
+
+To get an AI agent (Claude, Cursor, Copilot...) working in your repo up to speed on Helix's rules from the start:
+
+```bash
+node node_modules/@helix-ds/core/scripts/setup-ai.mjs
+```
+
+Copies `AGENTS.md` into your project (never overwriting one you've hand-edited — it flags the conflict instead of clobbering it) and drops a pointer file for `.cursor/` or `.github/` if those folders already exist. Full detail in [AGENTS.md](AGENTS.md).
+
+## Everything it includes
+
+| | |
+|---|---|
+| 🧩 **<!--helix:count-->19<!--/helix:count--> components** | <!--helix:core-count-->15<!--/helix:core-count--> content components (Button, Input, Select, Badge, Checkbox, Chip, RadioGroup, Switch, Textarea, Card, Avatar, IconButton, Table...) + <!--helix:layout-count-->4<!--/helix:layout-count--> layout components (AppShell, PageHeader, SideNav, TopBar) |
+| 🎨 **DTCG tokens** | `tokens.json` → CSS variables + TS constants, with documented, audited exceptions (`pnpm docs:token-exceptions`) |
+| 📐 **No-`<div>` layout** | Every page composition goes through a layout component — never hand-written `display:flex` |
+| 📄 **Contract before code** | Every new component starts as a `.json` in `contracts/`; Figma is reference only, the contract wins |
+| ♿ **Verified contrast** | Every text/icon-on-fill color pair is checked against WCAG 2.2 AA, in both light and dark |
+| 🤖 **AI-ready by default** | `AGENTS.md`, `llms.txt`, contracts, and `.ai/maps/` — an agent can generate correct UI without exploring the codebase first |
+| ✅ **Script-verified, not eyeballed** | `verify:contract`, `verify:props`, `verify:tokens`, `verify:icons` run locally before anything is considered done |
+
+## Commands (for working on Helix itself)
 
 ```bash
 pnpm install
-pnpm sb                 # Storybook
-pnpm contract <Name>     # scaffold de un contrato de componente nuevo
-pnpm verify:contract     # valida contratos vs implementación
-pnpm verify:props        # nombres de props vs .ai/maps/prop-map.md
-pnpm verify:tokens       # nomenclatura de tokens
-pnpm token:add           # alta de un token nuevo
-pnpm eval:run            # evals de generación de código con LLM
+pnpm sb                    # Storybook → http://localhost:6006
+pnpm contract <Name>        # scaffold a new component contract
+pnpm verify:contract        # validate contracts vs implementation
+pnpm verify:props           # prop names vs .ai/maps/prop-map.md
+pnpm verify:tokens          # token naming
+pnpm verify:icons           # every Tabler icon goes through the Icon component
+pnpm token:add              # add a new token
+pnpm docs:manifest          # regenerate contracts/manifest.json
+pnpm docs:changelog         # regenerate the changelog shown in Storybook
+pnpm eval:run               # LLM code-generation evals
 ```
 
-## Reglas críticas (resumen)
+## Repo structure
 
-1. Nunca `<div>` para layout — componentes de `packages/core/src/layout/`.
-2. Color y border-radius: siempre token `--helix-*`, sin excepción.
-3. Nueva pieza de UI sin equivalente HTML nativo → requiere ADR antes de implementarse.
-4. Vocabulario de props canónico en `.ai/maps/prop-map.md`; los sinónimos no están permitidos.
-5. Componente nuevo → primero el contrato en `contracts/components/{Name}.json`, luego el código.
+- **`packages/tokens`** — DTCG tokens compiled to CSS and TS. [ADR-002](docs/ADR/ADR-002-token-strategy.md)
+- **`packages/core`** — the <!--helix:count-->19<!--/helix:count--> React components.
+- **`packages/storybook-addon-tokens`** — Storybook addon for inspecting tokens.
+- **`apps/storybook`** — stories per component and per pattern.
+- **`contracts/`** — one `.json` per component; `manifest.json` is the generated index of all of them.
+- **`.ai/`** — prop vocabulary, design patterns, and skills for agents (Figma, tokens, icons).
+- **`docs/ADR/`** — architecture decisions.
+- **`evals/`** — prompts and outputs from automated evaluation.
+- **`llms.txt`** — index for an LLM to load system context quickly.
 
-Detalle completo en [CLAUDE.md](CLAUDE.md) / [AGENTS.md](AGENTS.md).
+## Critical rules (summary)
+
+1. Never `<div>` for layout — use the components in `packages/core/src/layout/`.
+2. Never render a Tabler icon directly — always go through the `Icon` component.
+3. Color and border-radius: always a `--helix-*` token, no exceptions.
+4. New UI with no native HTML equivalent → needs an ADR before implementation.
+5. Canonical prop vocabulary lives in `.ai/maps/prop-map.md`; synonyms aren't allowed.
+6. New component → contract first, at `contracts/components/{Name}.json`, then the code.
+
+Full detail in [CLAUDE.md](CLAUDE.md) — to contribute to Helix itself, see [contributor-ai/CONTRIBUTOR.md](contributor-ai/CONTRIBUTOR.md).
+
+<!-- Component counts above (marked with helix:* comments) are generated by `pnpm docs:readme` from contracts/manifest.json — don't hand-edit the numbers, edit the surrounding prose freely. -->
+
