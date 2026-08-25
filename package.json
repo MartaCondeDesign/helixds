@@ -28,6 +28,7 @@
     "eval:run": "tsx scripts/eval-run.ts",
     "eval:generate": "tsx scripts/eval-generate.ts",
     "eval:report": "tsx scripts/eval-report.ts",
+    "setup:ai": "node scripts/setup-ai.mjs",
     "prepare": "husky"
   },
   "devDependencies": {

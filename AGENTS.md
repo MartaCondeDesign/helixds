@@ -84,16 +84,26 @@ Use the canonical prop names below. Anti-synonyms are rejected by CI.
 
 ## AI context installation
 
-To install Helix AI context in your project (Claude, Gemini, Copilot):
+To install Helix AI context in your project:
 
 ```bash
-npx @helix-ds/cli setup-ai
+node node_modules/@helix-ds/core/scripts/setup-ai.mjs
+# or, from a clone of this repo:
+pnpm setup:ai [target-dir] [--dry-run]
 ```
 
-This copies AGENTS.md to the correct location for each detected AI tool and
-configures MCP servers if available.
+This copies AGENTS.md into your project (never overwriting a hand-edited one — it flags
+a conflict instead) and writes a pointer file for whichever AI tool directories it finds
+already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instructions.md`).
+Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
+not touch.
 
-## MCP servers (when available)
+## MCP servers (planned, not published yet)
+
+The shape below is the intended direction — no `@helix-ds/storybook-mcp` or
+`@helix-ds/tokens-mcp` package exists yet, so `setup:ai` does not write this
+configuration for you today. Don't add it to your project's MCP config expecting it to
+resolve.
 
 ```json
 {
@@ -110,7 +120,7 @@ configures MCP servers if available.
 }
 ```
 
-Tools exposed: `getComponentList`, `getComponentProps`, `getTokenValue`, `searchTokens`.
+Planned tools once published: `getComponentList`, `getComponentProps`, `getTokenValue`, `searchTokens`.
 
 ## What agents should NOT do
 
