@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helix-ds/schemas/token-naming.schema.json",
+  "title": "Helix Semantic Token Naming Grammar",
+  "description": "Formalizes the key grammar for semantic.color.{fill,text,icon,border}.* keys documented in packages/tokens/CLAUDE.md's \"Semantic naming vocabulary\" (decided 2026-08-21): {role}[-interactive][-modifier][-state]. This is the STRUCTURAL/vocabulary half of token-name validation only — it checks that a key is built from the right words in the right order. It deliberately does NOT (and cannot) check the one rule that matters most in practice: whether a `-light`/`-dark` modifier is correct RELATIVE to a token's siblings in the same role group (e.g. is this really the lightest of three tones?) — that's a comparison across resolved values, which a per-key schema has no way to see. scripts/verify-token-naming.ts still owns that check; this schema and that script are complementary, not redundant — see packages/tokens/CLAUDE.md for the prose version of these same rules and scripts/token-naming-lib.ts for the banned-segment list this schema's `not` block mirrors.",
+
+  "$defs": {
+    "role": {
+      "description": "The base semantic role a color token stands for. Not every role appears under every surface (fill/text/icon/border) — see roleBySurface in this file's `examples` for the real per-surface set as of 2026-08-25.",
+      "enum": [
+        "neutral", "primary", "secondary", "danger", "success", "warning", "info",
+        "disabled", "surface", "page", "overlay", "focus", "inverse", "link"
+      ]
+    },
+    "modifier": {
+      "description": "A tone added BESIDE a role's base value — the base itself never carries one, even if it happens to be the lightest/darkest in its group (see packages/tokens/CLAUDE.md's border.default/border.neutral example).",
+      "enum": ["light", "dark", "lightest", "darkest"]
+    },
+    "state": {
+      "description": "Interaction state — only ever present when the literal 'interactive' segment is also present, EXCEPT for the documented link exception (link-hover has no 'interactive' marker, since link has no non-interactive sibling use to disambiguate from).",
+      "enum": ["default", "hover", "press"]
+    },
+    "bannedSegment": {
+      "description": "A hyphen-delimited segment that must never appear in a semantic/component token key — mirrors scripts/token-naming-lib.ts's BANNED_SEGMENTS exactly. Each has one required replacement, spelled out in `bannedSegmentReplacements` below rather than here (JSON Schema `not` can reject, but can't express 'use X instead' as part of the validation itself).",
+      "enum": ["rest", "active", "subtle", "strong", "brand"]
+    },
+
+    "generalGrammarKey": {
+      "description": "The general-case grammar: {role}[-interactive[-modifier]-state][-modifier]. The interactive block, when present, bundles its own optional modifier with its required state (matching fill.primary-interactive-light-default); a role can ALSO carry a bare trailing modifier with no interactive block at all (matching text.neutral-light, border.neutral-dark).",
+      "type": "string",
+      "pattern": "^(neutral|primary|secondary|danger|success|warning|info)(-interactive(-(light|dark|lightest|darkest))?-(default|hover|press))?(-(light|dark|lightest|darkest))?$"
+    },
+    "documentedExceptionKey": {
+      "description": "Keys that don't follow generalGrammarKey because the role itself is a standalone utility value (no interactive/modifier/state axis at all) or — for link/link-hover — because the role is interactive by definition with no non-interactive sibling, so the 'interactive' marker is deliberately skipped per packages/tokens/CLAUDE.md's own documented exception.",
+      "enum": [
+        "disabled", "surface", "surface-dark", "page", "overlay", "focus", "inverse",
+        "link", "link-hover"
+      ]
+    }
+  },
+
+  "type": "string",
+  "oneOf": [
+    { "$ref": "#/$defs/generalGrammarKey" },
+    { "$ref": "#/$defs/documentedExceptionKey" }
+  ],
+  "not": {
+    "anyOf": [
+      { "pattern": "(^|-)(rest)(-|$)" },
+      { "pattern": "(^|-)(active)(-|$)" },
+      { "pattern": "(^|-)(subtle)(-|$)" },
+      { "pattern": "(^|-)(strong)(-|$)" },
+      { "pattern": "(^|-)(brand)(-|$)" }
+    ]
+  },
+
+  "bannedSegmentReplacements": {
+    "rest": "default",
+    "active": "press",
+    "subtle": "a `-light` modifier (e.g. `primary-light`)",
+    "strong": "a `-dark` modifier (e.g. `neutral-dark`)",
+    "brand": "primary"
+  },
+
+  "roleBySurface": {
+    "$comment": "The real per-surface role set in packages/tokens/src/tokens.json as of 2026-08-25 — not every role in $defs/role appears under every surface. Regenerate this block by hand if the vocabulary changes; nothing currently derives it automatically.",
+    "fill":   ["danger", "disabled", "info", "overlay", "page", "primary", "secondary", "success", "surface", "warning"],
+    "text":   ["danger", "disabled", "info", "inverse", "link", "neutral", "primary", "success", "warning"],
+    "icon":   ["danger", "disabled", "info", "inverse", "neutral", "primary", "success", "warning"],
+    "border": ["danger", "focus", "info", "inverse", "neutral", "success", "warning"]
+  },
+
+  "examples": [
+    "fill.primary-interactive-default",
+    "fill.primary-interactive-hover",
+    "fill.primary-interactive-light-default",
+    "fill.danger-interactive-light-hover",
+    "text.neutral",
+    "text.neutral-light",
+    "text.neutral-lightest",
+    "border.neutral-dark",
+    "text.link",
+    "text.link-hover",
+    "fill.disabled",
+    "fill.surface-dark",
+    "border.focus"
+  ],
+  "counterExamples": {
+    "$comment": "Real violations this schema rejects — mirrors scripts/token-naming-lib.ts's own worked examples.",
+    "fill.primary-rest": "banned segment 'rest' — use 'default'",
+    "fill.primary-active": "banned segment 'active' — use 'press'",
+    "border.neutral-subtle": "banned segment 'subtle' — use a '-light' modifier",
+    "fill.brand-interactive-default": "banned segment 'brand' — use 'primary'",
+    "fill.primary-hover": "missing the required 'interactive' marker before a state segment"
+  }
+}

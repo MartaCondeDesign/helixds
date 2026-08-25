@@ -122,6 +122,9 @@ later in Storybook or a failed import. Treat a non-empty `drift` array the same 
   automatically after every commit, so this normally doesn't need a manual regenerate — run it by hand
   only if you want it to catch up mid-session without committing first.
 - `contracts/component.schema.json`    — JSON schema for component contracts
+- `contracts/token-naming.schema.json` — JSON schema for the semantic token key grammar
+  (`{role}[-interactive][-modifier][-state]`) — validates key structure/vocabulary only, not the
+  relative light/dark-vs-siblings judgment call that `scripts/verify-token-naming.ts` still owns
 - `docs/ADR/`                          — architecture decisions (read the ADR governing what you're touching).
   **`docs/ADR/*.md` is the only home for ADRs — never surface them in Storybook** (no `Decisions/*.mdx`
   page, no sidebar entry). This was tried once and reverted per explicit direction; don't reintroduce it.

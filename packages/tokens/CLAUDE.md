@@ -351,6 +351,15 @@ rule targets; it only applies where the varying part IS the size scale itself.
 
 ### Semantic naming vocabulary (decided 2026-08-21)
 
+Formalized as a JSON Schema at `contracts/token-naming.schema.json` — the `{role}[-interactive][-modifier]
+[-state]` grammar below, plus the banned-segment list, as `enum`/`pattern` constraints instead of only prose.
+It validates a key's STRUCTURE (right words, right order) — it does NOT and cannot check whether a
+`-light`/`-dark` modifier is correct relative to a token's siblings (e.g. whether this is genuinely the
+lightest of three tones in its group), since that's a comparison across resolved values, not something a
+per-key schema can see. `scripts/verify-token-naming.ts` still owns that relative check — the schema and
+the script are complementary, not redundant; read the schema's own `description`/`counterExamples` fields
+for the worked-through reasoning.
+
 - **Brand/accent color roles use `primary` / `secondary` / `tertiary`** — e.g.
   `semantic.color.text.primary`, `semantic.color.icon.primary`.
 - **`light` / `dark` (and `lightest` / `darkest`) are modifiers for tones *added on top of* a role's
