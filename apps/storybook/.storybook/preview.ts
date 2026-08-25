@@ -9,9 +9,9 @@ import '@helix-ds/core/globals.css';
 const preview: Preview = {
   parameters: {
     options: {
-      // Sidebar order: Getting Started → Changelog → Status → Foundation → Icons → Components → Patterns → Pages → Decisions
+      // Sidebar order: Getting Started → Changelog → Status → Foundation → Icons → Components → Patterns → Pages
       storySort: {
-        order: ['Getting Started', 'Changelog', 'Status', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages', 'Decisions'],
+        order: ['Getting Started', 'Changelog', 'Status', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages'],
       },
     },
     // Background is driven by the theme switcher via CSS vars (--helix-color-fill-page).
