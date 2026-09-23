@@ -7,7 +7,7 @@
   "dataPrefix": "data-helix-",
   "classPrefix": "hx-",
   "foundation": {
-    "base": "shadcn/ui",
+    "base": "native-html",
     "icons": "@tabler/icons-react",
     "styling": "tailwindcss@4"
   },

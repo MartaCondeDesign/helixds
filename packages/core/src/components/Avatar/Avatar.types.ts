@@ -9,4 +9,6 @@ export interface AvatarProps {
   size?: AvatarSize;
   /** Additional className for the root. */
   className?: string;
+  /** Forwarded to the root — set by Tooltip when Avatar is used as its trigger (e.g. inside AvatarGroup). */
+  'aria-describedby'?: string;
 }

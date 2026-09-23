@@ -8,7 +8,10 @@ const meta: Meta<typeof Textarea> = {
   component:  Textarea,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TextareaDoc),
-  args: { label: 'Description', placeholder: 'Write something…', size: 'm' },
+  // w-[300px] — same width-stability fix as Input/Select's own stories; className previously
+  // reached the inner <textarea> field instead of textarea-root, so a consumer couldn't actually
+  // constrain the component's width at all until that was fixed.
+  args: { label: 'Description', placeholder: 'Write something…', size: 'm', className: 'w-[300px]' },
   argTypes: {
      size:      { control: 'select', options: ['s', 'm', 'l'] },
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },

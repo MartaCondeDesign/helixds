@@ -20,9 +20,10 @@
   },
 
   "anatomy": [
-    { "part": "nav-item",       "element": "a",    "description": "Root — always a native <a href>, never a <button>." },
-    { "part": "nav-item-icon",  "element": "slot", "description": "Leading icon, rendered via Icon.", "optional": true },
-    { "part": "nav-item-label", "element": "span", "description": "Visible label text." }
+    { "part": "nav-item",           "element": "a",    "description": "Root — always a native <a href>, never a <button>." },
+    { "part": "nav-item-indicator", "element": "span", "description": "The current-item background, absolutely positioned behind icon/label. Shares a Motion layoutId across every NavItem instance (ADR-007) so it slides to the newly-current item instead of the background cutting over.", "optional": true },
+    { "part": "nav-item-icon",      "element": "slot", "description": "Leading icon, rendered via Icon.", "optional": true },
+    { "part": "nav-item-label",     "element": "span", "description": "Visible label text." }
   ],
 
   "props": [

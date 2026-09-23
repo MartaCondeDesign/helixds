@@ -3,7 +3,7 @@ import type { ComponentDoc } from '../../lib/component-doc';
 
 export const doc: ComponentDoc = {
   name: 'Icon',
-  purpose: 'Communicates meaning, action, or status through a recognizable Tabler outline symbol. Always supplemental to text — never the sole conveyor of information without a label.',
+  purpose: 'Communicates meaning, action, or status through a recognizable icon symbol. Defaults to Tabler\'s outline set but accepts any icon-set-agnostic component (ADR-014). Always supplemental to text — never the sole conveyor of information without a label.',
   contract: 'contracts/components/Icon.json',
   a11y: [
     "Default (decorative=true) renders aria-hidden='true' — use when a visible label sits next to the icon.",
@@ -27,7 +27,7 @@ export const doc: ComponentDoc = {
     { part: 'icon-root', label: 'viewBox', value: '0 0 24 24', kind: 'other' },
   ],
   features: [
-    'icon — the Tabler icon component to render (e.g. IconPlus), passed by reference not by name string',
+    'icon — any HelixIconComponent-shaped icon (e.g. IconPlus), passed by reference not by name string — Tabler is the default set, not a requirement',
     'size — fixed pixel size, one of 12 | 16 | 20 | 24 | 32 — never scales with font-size',
     'stroke — defaults to 1.5, the Helix-specific override of Tabler\'s default 2',
     'decorative/label — controls aria-hidden vs role="img" + aria-label',
@@ -36,5 +36,6 @@ export const doc: ComponentDoc = {
     { label: 'Decorative (default, paired with visible text)', code: `<Icon icon={IconPlus} />` },
     { label: 'Icon-only, needs a label', code: `<Icon icon={IconTrash} decorative={false} label="Delete" />` },
     { label: 'Sized + colored via token', code: `<Icon icon={IconAlertCircle} size={20} className="text-[color:var(--helix-color-icon-danger)]" />` },
+    { label: 'Non-Tabler icon set via adapter', code: `const LucideSearch = createIconAdapter(Search, { strokeProp: 'strokeWidth' });\n<Icon icon={LucideSearch} />` },
   ],
 };

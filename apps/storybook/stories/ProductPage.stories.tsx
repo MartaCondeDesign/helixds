@@ -201,16 +201,20 @@ function WorkspacePage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)' }}>
+          {/* Between blocks (a labeled section of fields, or the divider that separates one from
+              the next) is 24px (primitive.spacing.150) — see .ai/maps/patterns/form-field-spacing.md. */}
+          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-150)' }}>
 
             {/* Section: personal */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
+              {/* heading-m-bold — the block-title style (.ai/maps/patterns/form-field-spacing.md),
+                  16px below it to the first field, same as the field-to-field gap. */}
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
-                fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-neutral-lightest)',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
+                margin: 0,
+                fontSize: 'var(--helix-textStyle-heading-m-bold-fontSize)',
+                fontWeight: 'var(--helix-textStyle-heading-m-bold-fontWeight)',
+                lineHeight: 'var(--helix-textStyle-heading-m-bold-lineHeight)',
+                color: 'var(--helix-color-text-neutral)',
               }}>
                 Personal info
               </h3>
@@ -250,10 +254,11 @@ function WorkspacePage() {
             {/* Section: workspace */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
-                fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-neutral-lightest)',
-                textTransform: 'uppercase', letterSpacing: '0.08em',
+                margin: 0,
+                fontSize: 'var(--helix-textStyle-heading-m-bold-fontSize)',
+                fontWeight: 'var(--helix-textStyle-heading-m-bold-fontWeight)',
+                lineHeight: 'var(--helix-textStyle-heading-m-bold-lineHeight)',
+                color: 'var(--helix-color-text-neutral)',
               }}>
                 Workspace
               </h3>
@@ -306,10 +311,11 @@ function WorkspacePage() {
             {/* Section: preferences */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
               <h3 style={{
-                margin: 0, fontSize: 'var(--helix-primitive-fontSize-s)',
-                fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
-                color: 'var(--helix-color-text-neutral-lightest)',
-                textTransform: 'uppercase', letterSpacing: '0.08em',
+                margin: 0,
+                fontSize: 'var(--helix-textStyle-heading-m-bold-fontSize)',
+                fontWeight: 'var(--helix-textStyle-heading-m-bold-fontWeight)',
+                lineHeight: 'var(--helix-textStyle-heading-m-bold-lineHeight)',
+                color: 'var(--helix-color-text-neutral)',
               }}>
                 Preferences
               </h3>

@@ -1,0 +1,69 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "CheckboxGroup",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "Lets users choose zero or more options from a small, visible set of independent choices.",
+
+  "neverUseFor": [
+    "A single independent on/off choice — use Checkbox alone instead",
+    "Mutually exclusive choices — use RadioGroup instead",
+    "Large option sets or anything needing search — use a multi-select instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      { "name": "invalid", "description": "The selection fails validation.", "aria": "aria-invalid='true' on each checkbox input" },
+      { "name": "disabled", "description": "The whole group, or an individual option, is non-interactive.", "aria": "disabled (native HTML attribute)" },
+      { "name": "required", "description": "At least one value must be selected before form submission.", "aria": "aria-required='true' on the fieldset" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "checkbox-group", "element": "fieldset", "description": "Root element — groups the legend and options for assistive tech." },
+    { "part": "checkbox-group-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md." },
+    { "part": "checkbox-group-options", "element": "div", "description": "Layout wrapper for the option list. Each option renders a real `Checkbox`." },
+    { "part": "checkbox-group-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
+    { "part": "checkbox-group-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Accessible group label, rendered as the fieldset's legend." },
+    { "name": "options", "type": "CheckboxOption[]", "required": true, "description": "The list of choices. Each option: { value, label, description?, disabled? }." },
+    { "name": "value", "type": "string[] | undefined", "description": "Controlled selected values." },
+    { "name": "defaultValue", "type": "string[] | undefined", "description": "Uncontrolled initial values." },
+    { "name": "onChange", "type": "((values: string[]) => void) | undefined", "description": "Selection change handler — receives the full updated set of selected values." },
+    { "name": "orientation", "type": "'vertical' | 'horizontal'", "default": "vertical", "description": "Layout direction of the option list." },
+    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the group." },
+    { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
+    { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Disables every option in the group." },
+    { "name": "required", "type": "boolean", "default": false, "description": "Marks the group as required (at least one selection)." },
+    { "name": "name", "type": "string | undefined", "description": "Native checkbox name shared by every input, for form serialization. Auto-generated if omitted." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 16 },
+      "unit": "px",
+      "note": "No size prop exists — each checkbox control is one fixed size (16px), inherited unchanged from Checkbox. Does not follow the ADR-004 field scale."
+    },
+    "width": {
+      "default": "hug"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "group (native fieldset/legend + independent checkbox inputs)",
+    "keyboardNav": ["Tab — moves focus between options and into/out of the group", "Space — toggles the focused option"],
+    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

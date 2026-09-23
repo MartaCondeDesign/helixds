@@ -35,10 +35,15 @@ const meta: Meta<typeof Select> = {
   component:  Select,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SelectDoc),
-  args: { label: 'Role', options: ROLES, placeholder: 'Choose a role…', size: 'm' },
-  argTypes: {
-     size: { control: 'select', options: ['s', 'm', 'l'] },
-  },
+  // w-[300px] — a true fixed width, not min-width. Without a consumer-set width at all, the
+  // trigger's width is driven by whichever option's label is currently selected and visibly
+  // shrinks/grows as the selection changes (e.g. "Product Manager" vs "PM"); min-width alone only
+  // stops it shrinking below a floor, it can still grow past that for a longer label — the trigger
+  // now truncates a label that doesn't fit with an ellipsis (select-trigger-label) instead of
+  // growing the box, matching a native <select>'s own behavior at a fixed width. Select has no
+  // built-in default per CLAUDE.md's min-width policy (a consumer/pattern decision, not a system
+  // token) — this is the demonstrated example default.
+  args: { label: 'Role', options: ROLES, placeholder: 'Choose a role…', className: 'w-[300px]' },
 };
 
 export default meta;
@@ -51,7 +56,7 @@ export const Controlled: Story = {
     const [value, setValue] = useState('');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" />
+        <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" className="w-[300px]" />
         {value && (
           <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
             Selected: <strong>{value}</strong>
@@ -79,14 +84,4 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'designer' },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
-      <Select label="Small"  size="s" options={ROLES} placeholder="size=s"           onChange={() => {}} />
-      <Select label="Medium" size="m" options={ROLES} placeholder="size=m (default)" onChange={() => {}} />
-      <Select label="Large"  size="l" options={ROLES} placeholder="size=l"           onChange={() => {}} />
-    </div>
-  ),
 };

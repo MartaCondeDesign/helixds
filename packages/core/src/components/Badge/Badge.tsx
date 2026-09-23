@@ -1,7 +1,27 @@
 import * as React from 'react';
+import {
+  IconInfoCircle,
+  IconCircleCheck,
+  IconAlertTriangle,
+  IconAlertHexagon,
+} from '@tabler/icons-react';
 import { cn } from '../../lib/utils';
 import { Icon } from '../Icon';
-import type { BadgeProps } from './Badge.types';
+import type { HelixIconComponent } from '../Icon';
+import type { BadgeProps, BadgeVariant } from './Badge.types';
+
+// The canonical icon shape per variant, matching Toast's own ICON_BY_VARIANT one-for-one — same
+// shape family (info-circle / circle-check / alert-triangle / alert-hexagon), Outline build instead
+// of Toast's Filled build. Badge's `icon` prop stays fully opt-in (nothing renders unless a caller
+// passes one) — this is a convenience mapping for callers who want the matching shape, not an
+// automatic default, so no existing Badge usage changes visually just by this existing.
+export const BADGE_ICON_BY_VARIANT: Record<BadgeVariant, HelixIconComponent> = {
+  neutral: IconInfoCircle,
+  info: IconInfoCircle,
+  success: IconCircleCheck,
+  warning: IconAlertTriangle,
+  danger: IconAlertHexagon,
+};
 
 const Badge = ({ variant = 'neutral', size = 's', label, icon, className }: BadgeProps) => {
   return (

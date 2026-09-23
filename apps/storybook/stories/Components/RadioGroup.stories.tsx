@@ -49,14 +49,6 @@ export const Horizontal: Story = {
   },
 };
 
-export const WithDescription: Story = {
-  args: { description: 'You can change your plan at any time.' },
-  render: (args) => {
-    const [value, setValue] = useState('pro');
-    return <RadioGroup {...args} value={value} onChange={setValue} />;
-  },
-};
-
 export const Invalid: Story = {
   args: { value: '', invalid: true, errorMessage: 'Please select a plan to continue.' },
 };

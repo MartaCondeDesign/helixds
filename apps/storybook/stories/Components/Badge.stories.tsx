@@ -32,12 +32,6 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 
-export const Neutral: Story  = { args: { variant: 'neutral', label: 'Draft' } };
-export const Info: Story     = { args: { variant: 'info',    label: 'Scheduled' } };
-export const Success: Story  = { args: { variant: 'success', label: 'Active' } };
-export const Warning: Story  = { args: { variant: 'warning', label: 'Pending' } };
-export const Danger: Story   = { args: { variant: 'danger',  label: 'Failed' } };
-
 export const AllVariants: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -73,18 +67,8 @@ export const WithIcons: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
-      <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
-          size=&quot;xs&quot;
-        </p>
-        <Badge size="xs" variant="success" label="Active" />
-      </div>
-      <div>
-        <p style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)', marginBottom: '8px' }}>
-          size=&quot;s&quot; (default)
-        </p>
-        <Badge size="s" variant="success" label="Active" />
-      </div>
+      <Badge size="xs" variant="success" label="Active" />
+      <Badge size="s" variant="success" label="Active" />
     </div>
   ),
 };

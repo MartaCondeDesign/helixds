@@ -1,0 +1,70 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "RadioButton",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g. a single option embedded in a custom layout, or a hand-assembled set sharing `name`).",
+
+  "neverUseFor": [
+    "A set of mutually exclusive options — use RadioGroup instead, which renders one of these per option with the correct fieldset/legend wrapper for free",
+    "A single independent on/off choice — use Checkbox or Switch instead",
+    "Anything needing search or many options — use Select instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus", "active"],
+    "authored": [
+      { "name": "checked", "description": "Whether this radio is selected. Controlled via `checked`, uncontrolled via `defaultChecked` — same split as Switch.", "aria": "native :checked state" },
+      { "name": "invalid", "description": "Fails validation.", "aria": "aria-invalid='true'" },
+      { "name": "disabled", "description": "Non-interactive.", "aria": "disabled (native HTML attribute)" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "radio-item", "element": "label", "description": "Wraps the input, visual control, and content — identical anatomy to one RadioGroup option, so it shares all of RadioGroup's CSS with no duplication." },
+    { "part": "radio-input", "element": "input", "description": "The native radio input." },
+    { "part": "radio-control", "element": "span", "description": "Visual circle — reflects checked state via CSS." },
+    { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when checked.", "optional": true },
+    { "part": "radio-item-content", "element": "span", "description": "Wraps the label and description." },
+    { "part": "radio-item-label", "element": "span", "description": "Visible label." },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text. Sits exactly 4px below the label — same structure as Checkbox's own description.", "optional": true },
+    { "part": "radio-item-error", "element": "span", "description": "Error text, shown instead of the description when `errorMessage` is set — identical structure to Checkbox's own error message.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label." },
+    { "name": "name", "type": "string | undefined", "description": "Native radio group name, shared with any sibling RadioButtons it should be mutually exclusive with. Auto-generated (unique to this instance) if omitted — meaning it won't group with anything unless you set this explicitly." },
+    { "name": "value", "type": "string | undefined", "description": "Native radio value, read from the form on submit. Defaults to the native 'on' if omitted." },
+    { "name": "checked", "type": "boolean | undefined", "description": "Controlled checked state." },
+    { "name": "defaultChecked", "type": "boolean", "default": false, "description": "Uncontrolled initial checked state." },
+    { "name": "onChange", "type": "((checked: boolean) => void) | undefined", "description": "Change handler." },
+    { "name": "description", "type": "string | undefined", "description": "Helper text shown under the label. Not shown when errorMessage is also set." },
+    { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown under the label when invalid is true — takes over from description." },
+    { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Disables the input." },
+    { "name": "required", "type": "boolean", "default": false, "description": "Marks the input as required." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 16 },
+      "unit": "px",
+      "note": "Same fixed 16px control as RadioGroup's own option — this IS that option, standalone."
+    },
+    "width": { "default": "hug" }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "radio (native input type=radio)",
+    "keyboardNav": ["Space — selects it", "Tab — moves focus to/from it"],
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

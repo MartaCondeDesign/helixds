@@ -30,13 +30,43 @@ which are prerequisites, not part of this skill).
 
 ## Prop taxonomy
 
-From the files above, classify every prop into:
+Classify every prop from the files above by its code shape, then convert using the general rule below.
+Prop *names* are canonical vocabulary (`.ai/maps/prop-map.md`) — this taxonomy is about prop *shape*,
+which only matters here, for the Figma conversion.
 
-| Figma property type | Code source | Examples |
+### Step 1 — code shape
+
+| Prop shape       | TypeScript pattern                                          | Examples                                      |
+|-------------------|---------------------------------------------------------------|-------------------------------------------------|
+| Boolean           | `prop?: boolean`                                               | `loading`, `disabled`, `fullWidth`, `required`  |
+| Variant / enum    | `prop?: 'a' \| 'b' \| 'c'` (union type)                         | `variant`, `size`                               |
+| Text / string     | `prop?: string`, or `children?: React.ReactNode` (label-only)  | `label`, `placeholder`, `children`              |
+| Icon reference    | `prop?: TablerIcon` — component reference, never a pre-instantiated element or string | `icon`, `iconEnd` |
+| Event handler     | `prop?: (event) => void`                                       | `onPress`, `onChange`, `onFocus`, `onBlur`, `onDismiss` |
+| Nested content    | `children?: React.ReactNode` holding another component         | e.g. a `Card`'s body                            |
+
+### Step 2 — code shape → Figma property type
+
+Figma component properties come in exactly 4 types: `BOOLEAN`, `TEXT`, `INSTANCE_SWAP`, `VARIANT`.
+
+### General rule
+
+| Code prop shape | Figma property type | Examples |
 |--------------------|-------------|---------|
-| `VARIANT` | Union types in `.types.ts` | `variant`, `size` |
-| `BOOLEAN` (visibility) | Optional boolean props | `loading`, `disabled`, `icon`, `iconEnd`, `fullWidth` |
-| `TEXT` | `children` / label props | `children` |
+| Boolean (simple show/hide, no visual variant) | `BOOLEAN` | `loading`, `fullWidth` |
+| Variant/enum (union type, multiple selectable values) | `VARIANT` | `variant`, `size` |
+| Text / label | `TEXT` | `children` (label-only), `placeholder` |
+| Icon component reference | `BOOLEAN` (is it shown) **+** `INSTANCE_SWAP` (which icon), both bound to the same layer — see "Icon slots need BOTH..." below | `icon`, `iconEnd` |
+| `children` nesting another component / arbitrary content | *not a component property* — a nested anatomy layer built in Phase 2, not `addComponentProperty` (don't call this a "slot property" — "slot" already means *icon slot* throughout this skill) | e.g. a `Card`'s body |
+
+### Exceptions to the general rule
+
+| Prop | Code type | Figma property type | Why |
+|------|-----------|---------------------|-----|
+| `disabled` | `boolean` | `VARIANT` (`disabled=false` / `disabled=true`), not BOOLEAN | BOOLEAN can't express the opacity change (0.5); VARIANT makes the state visible/selectable in the panel — see "Disabled state rule" below |
+| `icon` / `iconEnd` | icon component reference | falls back to `BOOLEAN`-only if the icon library isn't imported into Figma yet (no `INSTANCE_SWAP` without real icon components to reference) | see "Icon discovery flow" and "Icon slots need BOTH..." below |
+| `onPress`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
+| `required` (when no asterisk rendered) | `boolean` | *(no Figma property — skipped)* | No visual difference in the anatomy |
 
 **Naming rule:** prop name in Figma = prop name in code. Lowercase. No capitalization changes.
 - `variant=primary` not `Variant=Primary`
@@ -95,40 +125,29 @@ Use this map in Phase 2 to create icon slots as INSTANCE nodes with INSTANCE_SWA
 
 ### Phase 1 — Build individual components
 
-Create one Figma COMPONENT per variant+size combination. Pre-position them in a grid before `combineAsVariants`.
+Create one Figma COMPONENT per variant+size combination, `disabled=false` only for now — its
+`disabled=true` sibling gets cloned in Phase 2.75, once anatomy and auto-layout exist to clone from.
+Collect every component into one array as you create it (e.g. `allComponents = []`) — Phase 3 needs ALL
+of them, both disabled states included, in a single `combineAsVariants` call.
 
 ```js
 // use_figma: create one component
 const comp = figma.createComponent();
-comp.name = 'variant=primary, size=m'; // EXACT prop=value format, lowercase
+comp.name = 'variant=primary, size=m, disabled=false'; // EXACT prop=value format, lowercase
 comp.resize(width, height); // use token values from tokens.json component layer
 comp.x = col * (width + gap);
 comp.y = row * (height + gap);
+allComponents.push(comp);
 ```
 
 **Grid layout (position BEFORE combineAsVariants):**
-- Rows = sizes (xs, s, m, l, xl) × disabled states (false/true) — 2 sub-rows per size
+- Rows = sizes (xs, s, m, l, xl) × disabled states (false/true) — 2 sub-rows per size; the `disabled=true`
+  row is left empty here and filled in by the Phase 2.75 clone
 - Columns = variants (primary, secondary, ghost, danger)
 
-### Disabled state rule (MANDATORY)
-
-If the component has a `disabled` prop in code, represent it as a **VARIANT**, NOT a BOOLEAN.
-
-- Name format: `variant=primary, size=m, disabled=false` / `variant=primary, size=m, disabled=true`
-- The `disabled=true` variants are clones of their `disabled=false` counterparts with `opacity = 0.5`
-- This matches the code: `[data-helix-part="button"]:disabled { opacity: 0.5 }`
-
-```js
-// use_figma: after creating default variants, clone for disabled
-for (const child of [...compSet.children]) {
-  const clone = child.clone();
-  clone.name = child.name.replace('disabled=false', 'disabled=true');
-  clone.opacity = 0.5;
-  compSet.appendChild(clone);
-}
-```
-
-**Never use a BOOLEAN for disabled** — BOOLEAN can't express opacity changes; VARIANT makes the state visible and selectable in Figma's panel.
+If the component has a `disabled` prop in code, its `disabled=true` state is represented as a **VARIANT**,
+NOT a BOOLEAN — full rule in Phase 2.75. **Never use a BOOLEAN for disabled** — BOOLEAN can't express
+opacity changes; VARIANT makes the state visible and selectable in Figma's panel.
 
 ### Phase 2 — Build anatomy layers
 
@@ -247,34 +266,34 @@ Before setting auto-layout, check the CSS and contract:
 `component.*` tokens live only in code. Bind each property directly to whichever of
 `Theme`/`Semantic`/`Primitives`/`Responsive` the matching `component.*` token resolves to: walk the alias
 chain in `tokens.json` yourself (`component.button.height.*` → `semantic.size.*` — bind to
-`Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`; fontSize AND its
-paired lineHeight follow the 18px threshold from `tokens-to-figma.md` — bind both to `Responsive` when the
-resolved `primitive.fontSize >= 18px`, `Primitives` otherwise. **Bind `lineHeight` every time you bind
-`fontSize` on a text node — an earlier version of this skill only bound `fontSize`, and every Button label
-across all 40 size/variant/state combinations ended up with `lineHeight` completely unbound as a result.
-There is no QA step that catches an unbound property by rendering alone — the pixel value can look
-identical to the bound one, since Figma's font-size default line-height is close to the token value. Always
-check `boundVariables.lineHeight` on the node explicitly, never just eyeball the render.**
+`Semantic`; `component.button.padding.x-*` → `primitive.spacing.*` — bind to `Primitives`).
+
+**Typography is the one exception — never bind `fontSize`/`lineHeight` as loose Variables on the label
+node.** Apply a real named Figma Text Style instead (`label.setTextStyleIdAsync(...)`). This isn't a
+style preference — a loose binding silently misses `fontFamily`/`fontWeight` entirely, which is exactly
+what happened to Button in production: see "Text Styles are mandatory, not a fallback" below for the
+incident and the real fix.
+
+**Code is the source of truth for which style name to use — Figma is reference only** (root `CLAUDE.md`
+rule 8). Derive it from `tokens.json`: `component.button.fontSize.{size}` aliases to
+`semantic.textStyle.{key}.fontSize` — that `{key}` (kebab-case, e.g. `caption-semibold`) converts to the
+Figma Text Style name via `tokens-to-figma.md` Phase 6's naming convention (Title Case, `/`-joined:
+`'Caption / Semibold'`). `contracts/figma-sync.json` only records whether the *live Figma file* currently
+matches that — useful to catch drift, never the source you derive the name from.
 
 ```js
 // Figma variable names per size — resolved one hop from tokens.json's component.button.* aliases.
-const HEIGHT_VAR    = { xs: 'size/xs', s: 'size/s', m: 'size/m', l: 'size/l', xl: 'size/xl' }; // Semantic
-const PADDING_X_VAR  = { xs: 'spacing/50', s: 'spacing/75', m: 'spacing/100', l: 'spacing/125', xl: 'spacing/150' }; // Primitives
-// component.button.fontSize.* -> primitive.fontSize.{xs,s,s,m,l} = 11/12/12/14/18px — only button size
-// `xl` (resolves to 18px) crosses the 18px threshold, so it's the one sourced from Responsive, not Primitives.
-// NOTE the reuse: button sizes `xs`, `s`, AND `m` all resolve to fontSize/s (primitive.fontSize.xs was
-// removed — the smallest primitive rung is now `s`, 12px — so `xs` collapsed onto the same primitive `s`
-// already shared by `m`), and button size `l` resolves to fontSize/m — this is a deliberate, documented
-// choice in component.button.fontSize.* (Button's own scale is denser than the generic one), not a bug.
-// lineHeight MUST pair with the underlying fontSize key it actually resolves to (see below) — button size
-// `m`'s lineHeight is lineHeight/s, NOT lineHeight/m, because its fontSize is fontSize/s. Never derive the
-// lineHeight key from the button's own size label.
-const FONTSIZE_PRIM_VAR = { xs: 'fontSize/s', s: 'fontSize/s', m: 'fontSize/s', l: 'fontSize/m' };
-const FONTSIZE_RESP_VAR = { xl: 'fontSize/l' };
+// Button's size scale is s/m/l — see ButtonSize in Button.types.ts, the source of truth (not Figma).
+const HEIGHT_VAR    = { s: 'size/s', m: 'size/m', l: 'size/l' }; // Semantic
+const PADDING_X_VAR = { s: 'spacing/75', m: 'spacing/100', l: 'spacing/125' }; // Primitives
 // fill/text — variant-keyed, not size-keyed. No entry for 'ghost' in fill (matches code: no
 // component.button.fill.ghost token exists — ghost stays unbound/transparent).
 const FILL_VAR = { primary: 'fill/primary/interactive/default', secondary: 'fill/secondary/interactive/default', danger: 'fill/danger/interactive/default' };
 const TEXT_VAR = { primary: 'text/inverse', secondary: 'text/neutral', ghost: 'text/neutral', danger: 'text/inverse' };
+// Named Text Style per size — derived from tokens.json: component.button.fontSize.s/m alias to
+// semantic.textStyle.caption-semibold.fontSize, component.button.fontSize.l aliases to
+// semantic.textStyle.body-m-semibold.fontSize. Kebab-case key -> Figma name via the Phase 6 convention.
+const TEXT_STYLE = { s: 'Caption / Semibold', m: 'Caption / Semibold', l: 'Body / m / Semibold' };
 
 const primByName = {}, semByName = {}, themeByName = {}, respByName = {};
 figma.variables.getLocalVariables().forEach(v => {
@@ -304,23 +323,51 @@ if (fillVar) comp.fills = [figma.variables.setBoundVariableForPaint(comp.fills[0
 const label = comp.findOne(n => n.type === 'TEXT' && n.name === 'button-label');
 const textVar = themeByName[TEXT_VAR[variant]];
 if (textVar) label.fills = [figma.variables.setBoundVariableForPaint(label.fills[0], 'color', textVar)];
-const isResponsive = !!FONTSIZE_RESP_VAR[size];
-const fsVar = isResponsive ? respByName[FONTSIZE_RESP_VAR[size]] : primByName[FONTSIZE_PRIM_VAR[size]];
-label.setBoundVariable('fontSize', fsVar); // font must be loaded on the label first — see figma-use skill
 
-// lineHeight MUST be bound alongside fontSize, every time — derive its key from the fontSize variable's
-// OWN resolved name (fsVar.name), not from `size`, since component.button.fontSize.* reuses primitive keys
-// across button sizes (see the FONTSIZE_PRIM_VAR note above) and the lineHeight pairing follows the
-// fontSize key, not the button size label. Same collection as fsVar — Responsive if fontSize crossed the
-// 18px threshold, Primitives otherwise.
-const fsKey = fsVar.name.replace('fontSize/', '');
-const lhVar = isResponsive ? respByName[`lineHeight/${fsKey}`] : primByName[`lineHeight/${fsKey}`];
-label.setBoundVariable('lineHeight', lhVar);
+// Typography: apply the real named Text Style — never bind fontSize/lineHeight loose on the node.
+const textStyles = await figma.getLocalTextStylesAsync();
+const style = textStyles.find(s => s.name === TEXT_STYLE[size]);
+await label.setTextStyleIdAsync(style.id);
 ```
 
 `paddingTop`/`paddingBottom` (always `0`) and the icon↔label `itemSpacing` (`8`) stay plain literals — they
 aren't backed by a token in `tokens.json` today either, so there's nothing to bind to yet. That's a
 pre-existing gap, not something this pattern papers over; add the token first if you want those bound too.
+
+### Text Styles are mandatory, not a fallback
+
+`tokens-to-figma.md` Phase 6 creates named, reusable Figma Text Styles (`'Caption / Semibold'`, `'Body /
+m / Semibold'`, `'Heading / xl / Semibold'`, ...) that bundle all 4 typography properties — `fontSize`,
+`fontFamily`, `fontWeight`, `lineHeight` — each bound to a Variable, in one object. **Every component
+label must apply one of these via `setTextStyleIdAsync`. There is no manual fallback** — binding
+`fontSize`/`lineHeight` as loose Variables directly on a text node, instead of applying a named style, is
+not a lesser alternative, it's the specific bug already found and fixed once:
+
+> *(`contracts/figma-sync.json`, `typographyGapFoundAndFixed2026-08-24`)* — "Component text should always
+> be applied via a real named Figma text style (`setTextStyleIdAsync`), never a loose fontSize variable
+> binding on its own — a loose binding misses `fontWeight`/`lineHeight`/`fontFamily` entirely and was the
+> bug this note is recording so it isn't reintroduced."
+
+```js
+// use_figma: apply an existing named Text Style to a label
+const textStyles = await figma.getLocalTextStylesAsync();
+const style = textStyles.find(s => s.name === 'Body / m / Medium');
+await label.setTextStyleIdAsync(style.id);
+```
+
+**If the exact style you need doesn't exist yet** (this happened for 4 of 20 styles on 2026-08-24 — see
+the same `figma-sync.json` note), create it in `tokens-to-figma.md` Phase 6 first, bound to the same
+`fontSize`/`lineHeight`/`fontFamily`/`fontWeight` Variables as its nearest sibling style. Don't reach for
+a loose per-node binding as a shortcut instead — that's what caused the incident.
+
+**Finding which style name applies to a given component/size — derive it from code, not from Figma:**
+`tokens.json`'s `component.{name}.fontSize.{size}` aliases to `semantic.textStyle.{key}.fontSize` — that
+`{key}` is the answer (kebab-case; convert to the Figma name via Phase 6's Title-Case-`/`-joined
+convention). For Button: `component.button.fontSize.s`/`.m` alias to
+`semantic.textStyle.caption-semibold` → `'Caption / Semibold'`; `.l` aliases to
+`semantic.textStyle.body-m-semibold` → `'Body / m / Semibold'`. `contracts/figma-sync.json` records
+whether the live file currently has that applied — check it to catch drift (or confirm the style already
+exists in Figma before you build), not as the source of the name itself.
 
 ### Min/max-width
 
@@ -340,23 +387,55 @@ Button has no min/max-width in CSS — leave as `null` per contract.
 - [ ] `paddingLeft`/`paddingRight` are *bound* to the matching `Primitives` variable (`spacing/*`, not a
       plain number that happens to match — check `boundVariables.paddingLeft` on the node)
 - [ ] Gap matches itemSpacing between anatomy parts (still a plain literal — no token backs it yet)
-- [ ] `height` is *bound* to the matching `Semantic` variable (`size/*`; xs=16, s=24, m=32, l=40, xl=48 for
-      Button, per ADR-004) — check `boundVariables.height` on the node, not just the rendered pixel value
+- [ ] `height` is *bound* to the matching `Semantic` variable (`size/*`) — check `boundVariables.height`
+      on the node, not just the rendered pixel value. Verify the size scale itself against the
+      component's own `.types.ts` union (source of truth) before assuming ADR-004's generic 5-step
+      ladder applies — Button's is `ButtonSize = 's' | 'm' | 'l'` only (`s`=24, `m`=32, `l`=40), not
+      `xs`-`xl`
 - [ ] `fills` on the component and on the label TEXT node are *bound* to `Theme` (`fill/*`, `text/*`)
       directly — there is no `Component` collection to bind to instead
-- [ ] Label `fontSize` is *bound* to `Responsive` when the resolved size is `>= 18px`, `Primitives`
-      otherwise (for Button, only size `xl` crosses the threshold) — never left as a plain number
-- [ ] Label `lineHeight` is *bound* too, to the SAME collection as `fontSize` and to the key `fontSize`'s
-      own variable resolved to (not the button's size label — `m` resolves to `fontSize/s`, so its
-      lineHeight is `lineHeight/s`, not `lineHeight/m`) — check `boundVariables.lineHeight` on the node
-      explicitly. **This is the single most missed step in this whole phase** — the rendered pixel value
-      looks fine either way (Figma's font-size default line-height is close to the token value), so a
-      completely unbound `lineHeight` on every label across every size/variant/state was shipped and went
-      unnoticed until checked via the API, not the render
+- [ ] Label typography uses a real named Text Style (`label.setTextStyleIdAsync(...)`) — check
+      `label.textStyleId` is set to a non-empty id, not just that the label *looks* right. **Never** a
+      loose `fontSize`/`lineHeight` Variable binding on the node instead — that exact pattern was shipped
+      on every Button label across all 40 size/variant/state combinations, silently missing
+      `fontWeight`/`fontFamily` too, and wasn't caught by rendering alone (the pixel value looks fine
+      either way). Fixed 2026-08-24 — see `contracts/figma-sync.json`'s `typographyGapFoundAndFixed...`
+      note. Derive the *correct* style name from `tokens.json` (`component.{name}.fontSize.{size}` →
+      `semantic.textStyle.{key}`), not from Figma — `figma-sync.json` only confirms whether Figma matches.
+
+### Phase 2.75 — Disabled state rule (MANDATORY if the component has a `disabled` prop)
+
+Clone each finished `disabled=false` component (anatomy + auto-layout already applied) into its
+`disabled=true` sibling — on the standalone `comp` objects still in `allComponents`, NOT on
+`compSet.children`, since `compSet` doesn't exist until Phase 3. Cloning now, before the single
+`combineAsVariants` call, avoids adding a new variant axis to an already-combined set — exactly the
+scenario Phase 3's CRITICAL warning below identifies as a confirmed cause of set corruption (the
+2026-08-24 incident).
+
+- Name format: `variant=primary, size=m, disabled=false` → `variant=primary, size=m, disabled=true`
+- The `disabled=true` clone gets `opacity = 0.5`
+- This matches the code: `[data-helix-part="button"]:disabled { opacity: 0.5 }`
+
+```js
+// use_figma: clone each disabled=false component into its disabled=true sibling, BEFORE combineAsVariants
+const disabledClones = [];
+for (const comp of allComponents) {
+  const clone = comp.clone();
+  clone.name = comp.name.replace('disabled=false', 'disabled=true');
+  clone.opacity = 0.5;
+  clone.x = comp.x;
+  clone.y = comp.y + comp.height + gap; // the disabled=true sub-row from the Phase 1 grid
+  disabledClones.push(clone);
+}
+allComponents.push(...disabledClones);
+```
+
+`allComponents` now holds both disabled states for every variant×size — pass it whole into Phase 3's
+single `combineAsVariants` call below.
 
 ### Phase 3 — Create COMPONENT_SET
 
-After all individual components are positioned:
+After all individual components — both disabled states, from Phase 2.75 — are positioned:
 
 ```js
 // use_figma: combine into component set
@@ -404,40 +483,50 @@ asterisk is rendered). Never add a Boolean/Text/InstanceSwap property before its
 a property wired to nothing is worse than no property, since it looks complete in the panel but does
 nothing when toggled.
 
-### INSTANCE_SWAP for icon slots
+### Icon slots need BOTH a BOOLEAN and an INSTANCE_SWAP property
 
-If icon slots were created as INSTANCE nodes (Phase 2 — icon slot rule), add INSTANCE_SWAP properties:
+An icon slot is controlled by **two** component properties bound to the *same* layer, not one or the
+other — a `BOOLEAN` (is the icon shown at all?) and an `INSTANCE_SWAP` (which icon renders when it is
+shown?). This matches what the Phase 2 icon slot rule already assumes
+(`newInst.componentPropertyReferences = { visible: boolPropKey, mainComponent: swapPropKey }`) — create
+both keys here before that binding happens.
 
 ```js
-// use_figma: add INSTANCE_SWAP property with preferred values
-const iconKey = compSet.addComponentProperty('icon', 'INSTANCE_SWAP', defaultIconId);
+// use_figma: create both properties for one icon slot ('icon' → button-icon layer)
+const boolKey = compSet.addComponentProperty('icon', 'BOOLEAN', false);
+const swapKey = compSet.addComponentProperty('icon', 'INSTANCE_SWAP', defaultIconId);
 
-// Set preferred values to all available Tabler icons
+// Set preferred values to every imported Tabler icon
 const preferredValues = Object.entries(iconMap).map(([name, id]) => ({
   type: 'COMPONENT', key: id
 }));
-compSet.editComponentProperty(iconKey, { preferredValues });
+compSet.editComponentProperty(swapKey, { preferredValues });
 
-// Link to the slot layer in each child component
+// Link BOTH properties to the same layer in every child component
 for (const comp of compSet.children) {
-  const slot = comp.findOne(n => n.name === 'button-icon');
-  if (slot && slot.type === 'INSTANCE') {
-    slot.componentPropertyReferences = { mainComponent: iconKey };
+  const slot = comp.children.find(n => n.name === 'button-icon'); // direct children only — see findOne warning below
+  if (slot?.type === 'INSTANCE') {
+    slot.componentPropertyReferences = { visible: boolKey, mainComponent: swapKey };
   }
 }
 ```
 
-If icon slots are plain frames (fallback), add a BOOLEAN property instead (standard visibility control).
+Repeat the same pair for `iconEnd` → `button-icon-end`. A duplicate base name (`icon` used for both the
+BOOLEAN and the INSTANCE_SWAP) is fine — the actual property key is `name#nodeId` (see
+`componentPropertyDefinitions` below), and the `nodeId` half is what Figma guarantees unique, not the name.
 
-### BOOLEAN component properties
+**Fallback — no icon library imported yet:** create the slot as a plain frame (Phase 2 fallback) and add
+only the `BOOLEAN` property (standard visibility control) — there's no `INSTANCE_SWAP` without real icon
+components to reference yet. Note in the Phase 4 summary that the fallback was used, so a later pass can
+add the `INSTANCE_SWAP` property once icons are imported (see `icons-to-figma.md`).
 
-After `combineAsVariants`, add boolean properties and link them to layer visibility:
+### Other BOOLEAN component properties
+
+Non-icon boolean props (e.g. `loading`) follow the same pattern, just without the INSTANCE_SWAP pairing:
 
 ```js
-// use_figma: add boolean properties
+// use_figma: add a plain boolean property
 compSet.addComponentProperty('loading', 'BOOLEAN', false);
-compSet.addComponentProperty('icon', 'BOOLEAN', false);
-compSet.addComponentProperty('iconEnd', 'BOOLEAN', false);
 
 // Link property to layer visibility on every child component
 for (const comp of compSet.children) {
@@ -502,6 +591,10 @@ After building the component:
 - [ ] VARIANT values are lowercase (`primary`, `xs`, `false`, `true`) — match TypeScript unions exactly
 - [ ] `disabled` is a VARIANT (not BOOLEAN) — `disabled=false` / `disabled=true`, opacity 0.5 on true
 - [ ] BOOLEAN property names match code (`icon`, `iconEnd`, `loading`) — NOT `disabled`
+- [ ] Icon slots have BOTH a BOOLEAN (visibility) and an INSTANCE_SWAP (which icon) property bound to the
+      same layer via a single `componentPropertyReferences = { visible: ..., mainComponent: ... }` call —
+      not just one or the other (unless the icon-library fallback applies, BOOLEAN-only)
+- [ ] INSTANCE_SWAP `preferredValues` includes every icon in `iconMap`, not just the default one
 - [ ] Layer names match `data-helix-part` values from `{Name}.tsx`
 - [ ] Icon slot stroke color bound to correct token per variant (inverse for primary/danger, default for secondary/ghost)
 - [ ] Icon slot stroke set BEFORE nesting inside COMPONENT (Plugin API limitation — see icon slot rule)
@@ -528,6 +621,14 @@ After building the component:
 ## References
 
 - `contracts/component.schema.json` — schema for all contracts
-- `.ai/skills/tokens-to-figma.md` — must run first to create variable collections
+- `.ai/skills/ds-component-creator.md` — produces the contract, `.types.ts`, and `.tsx` files this skill
+  reads in "Files to read BEFORE starting"; run it first if the component doesn't exist in code yet
+- `.ai/skills/tokens-to-figma.md` — must run first to create variable collections; Phase 6 creates the
+  named Text Styles this skill applies to labels
 - `.ai/skills/icons-to-figma.md` — run in Phase 0 if component has icon slots
+- `contracts/figma-sync.json` — an audit log of whether the *live Figma file* currently matches code for
+  each component (variant/token match, Text Style names actually applied, known incidents). Code
+  (`.types.ts`, `tokens.json`, contracts) is still the source of truth per root `CLAUDE.md` rule 8 —
+  this file only tells you where Figma has drifted from it, or confirms a past fix landed; never derive
+  a variable/style name or a size scale from it instead of from code.
 - `packages/core/src/components/Button/` — canonical reference for anatomy + token bindings

@@ -7,7 +7,7 @@
 Explicit per-component contracts, script-verified tokens, and a canonical prop vocabulary — built so humans *and* agents generate the same consistent UI on the first try.
 
 <!-- helix:badge-components:start -->
-![Components](https://img.shields.io/badge/components-19-6366f1)
+![Components](https://img.shields.io/badge/components-30-6366f1)
 <!-- helix:badge-components:end -->
 ![Node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/react-19-61DAFB?logo=react&logoColor=white)
@@ -73,7 +73,7 @@ Copies `AGENTS.md` into your project (never overwriting one you've hand-edited �
 
 | | |
 |---|---|
-| 🧩 **<!--helix:count-->19<!--/helix:count--> components** | <!--helix:core-count-->15<!--/helix:core-count--> content components (Button, Input, Select, Badge, Checkbox, Chip, RadioGroup, Switch, Textarea, Card, Avatar, IconButton, Table...) + <!--helix:layout-count-->4<!--/helix:layout-count--> layout components (AppShell, PageHeader, SideNav, TopBar) |
+| 🧩 **<!--helix:count-->30<!--/helix:count--> components** | <!--helix:core-count-->26<!--/helix:core-count--> content components (Button, Input, Select, Badge, Checkbox, Chip, RadioGroup, Switch, Textarea, Card, Avatar, IconButton, Table...) + <!--helix:layout-count-->4<!--/helix:layout-count--> layout components (AppShell, PageHeader, SideNav, TopBar) |
 | 🎨 **DTCG tokens** | `tokens.json` → CSS variables + TS constants, with documented, audited exceptions (`pnpm docs:token-exceptions`) |
 | 📐 **No-`<div>` layout** | Every page composition goes through a layout component — never hand-written `display:flex` |
 | 📄 **Contract before code** | Every new component starts as a `.json` in `contracts/`; Figma is reference only, the contract wins |
@@ -110,7 +110,7 @@ pnpm eval:run               # LLM code-generation evals
 ## Repo structure
 
 - **`packages/tokens`** — DTCG tokens compiled to CSS and TS. [ADR-002](docs/ADR/ADR-002-token-strategy.md)
-- **`packages/core`** — the <!--helix:count-->19<!--/helix:count--> React components.
+- **`packages/core`** — the <!--helix:count-->30<!--/helix:count--> React components.
 - **`packages/storybook-addon-tokens`** — Storybook addon for inspecting tokens.
 - **`apps/storybook`** — stories per component and per pattern.
 - **`contracts/`** — one `.json` per component; `manifest.json` is the generated index of all of them.

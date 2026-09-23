@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>@helix-ds/wc pilot sandbox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    section { margin-bottom: 48px; }
+    h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: #666; }
+    .row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+
+    /* Live token-override demo (ADR-015 verification) — redefines a token on this one wrapper's
+       :root-scoped custom property to prove --helix-* inherits through Shadow DOM unchanged. */
+    .override-demo { --helix-button-fill-primary-default: #7c3aed; --helix-button-fill-primary-hover: #6d28d9; }
+  </style>
+</head>
+<body>
+  <h1>@helix-ds/wc pilot sandbox</h1>
+  <p>Four piloted custom elements (ADR-015) — <code>helix-icon</code>, <code>helix-badge</code>, <code>helix-button</code>, <code>helix-tooltip</code>. No React, no build-time framework in this page at all.</p>
+
+  <section>
+    <h2>Icon — any inline SVG, any icon set</h2>
+    <div class="row">
+      <helix-icon size="24" style="color: var(--helix-color-icon-danger)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+      </helix-icon>
+      <helix-icon size="16" decorative="false" label="Info">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
+      </helix-icon>
+    </div>
+  </section>
+
+  <section>
+    <h2>Badge</h2>
+    <div class="row">
+      <helix-badge variant="success" label="Active"></helix-badge>
+      <helix-badge variant="warning" size="xs" label="Pending"></helix-badge>
+      <helix-badge variant="danger" label="Failed">
+        <svg slot="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 8v4M12 16h.01" /></svg>
+      </helix-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2>Button — keyboard-focusable, click bubbles natively</h2>
+    <div class="row">
+      <helix-button id="primary-btn" variant="primary" size="m">Save</helix-button>
+      <helix-button variant="secondary" size="m">Cancel</helix-button>
+      <helix-button variant="danger" size="s" loading>Deleting…</helix-button>
+      <helix-button variant="ghost" size="l" disabled>Disabled</helix-button>
+    </div>
+    <p id="click-log" style="font-size: 13px; color: #666;">Click "Save" — no addEventListener plumbing beyond a plain native click listener.</p>
+
+    <h2 style="margin-top: 24px;">Token override — proves --helix-* inherits through Shadow DOM</h2>
+    <div class="row override-demo">
+      <helix-button variant="primary" size="m">Overridden purple</helix-button>
+      <span style="font-size: 13px; color: #666;">← this wrapper redefines --helix-button-fill-primary-default locally, no component code touched</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tooltip — hand-rolled positioning + ARIA across the shadow boundary</h2>
+    <div class="row" style="padding-top: 60px;">
+      <helix-tooltip label="Top placement, default" placement="top">
+        <helix-button variant="secondary" size="m">Hover me (top)</helix-button>
+      </helix-tooltip>
+      <helix-tooltip label="Forced visible via expanded=true" placement="bottom" expanded="true">
+        <helix-button variant="secondary" size="m">Always shown</helix-button>
+      </helix-tooltip>
+      <helix-tooltip label="Flips to bottom when top would clip the viewport top edge" placement="top">
+        <helix-button variant="secondary" size="m">Near top edge</helix-button>
+      </helix-tooltip>
+    </div>
+    <p style="font-size: 13px; color: #666;">Check the browser Accessibility tree on the first trigger button — it should carry <code>aria-describedby</code> pointing at a real element id, both in light DOM (see ADR-015's "why the content node lives in light DOM" note).</p>
+  </section>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

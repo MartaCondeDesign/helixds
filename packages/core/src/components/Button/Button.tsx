@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { motion } from 'motion/react';
 import { cn } from '../../lib/utils';
+import { PRESS_SCALE_DEFAULT } from '../../lib/motionPresets';
 import { Icon } from '../Icon';
 import type { ButtonProps } from './Button.types';
 
@@ -33,6 +35,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children,
       onPress,
+      // Not forwarded to motion.button: Motion's HTMLMotionProps redefines these native names (style,
+      // onDrag and its siblings) with incompatible signatures for its own gesture/animation system —
+      // same reason FAB (ADR-007) doesn't spread them either. Everything else in ...props still passes
+      // through untouched (type, form, name, title, data-*, aria-*, ...).
+      style: _style,
+      onDrag: _onDrag,
+      onDragStart: _onDragStart,
+      onDragEnd: _onDragEnd,
+      onAnimationStart: _onAnimationStart,
+      onAnimationEnd: _onAnimationEnd,
+      onAnimationIteration: _onAnimationIteration,
       ...props
     },
     ref,
@@ -40,7 +53,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     return (
-      <button
+      <motion.button
         ref={ref}
         data-helix-part="button"
         data-variant={variant}
@@ -51,6 +64,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading ? 'true' : undefined}
         className={cn(className)}
         onClick={onPress}
+        // Subtle press feedback — Motion, not CSS, so it composes with the loading/disabled states via
+        // the same isDisabled check rather than fighting a :active pseudo-class. See ADR-007 /
+        // .ai/maps/patterns/motion-effects.md.
+        transition={{ duration: 0.1 }}
+        {...(isDisabled ? {} : { whileTap: { scale: PRESS_SCALE_DEFAULT } })}
         {...props}
       >
         {loading ? (
@@ -70,7 +88,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             <Icon icon={iconEnd} size={16} />
           </span>
         )}
-      </button>
+      </motion.button>
     );
   },
 );

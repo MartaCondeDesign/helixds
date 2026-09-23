@@ -1,0 +1,61 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "Menu",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals).",
+
+  "neverUseFor": [
+    "A standalone navigable menu bar — this is a single anchored popup list, not a menubar widget",
+    "Content that isn't a flat or single-level-grouped list of choices — this is a listbox, not a generic popover"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus"],
+    "authored": [
+      { "name": "expanded", "description": "Whether the popup is currently rendered and visible.", "aria": "consumer's trigger sets aria-expanded" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "menu", "element": "div", "description": "Root popup surface. `role=\"listbox\"`. Portaled to document.body." },
+    { "part": "menu-group-divider", "element": "div", "description": "Full-width divider before a group, except the first one (nothing above it to separate from). `role=\"separator\"`. Bleeds edge-to-edge past the menu's own padding.", "optional": true },
+    { "part": "menu-group-label", "element": "div", "description": "Non-interactive label for a group of options. Uses semantic.textStyle.label-uppercase, no added letter-spacing.", "optional": true },
+    { "part": "menu-item", "element": "button", "description": "One selectable option. `role=\"option\"`, `aria-selected`." }
+  ],
+
+  "props": [
+    { "name": "id", "type": "string", "required": true, "description": "Listbox element id, referenced by the consumer's trigger via aria-controls/aria-activedescendant." },
+    { "name": "expanded", "type": "boolean", "required": true, "description": "Whether the menu is rendered." },
+    { "name": "anchorRef", "type": "React.RefObject<HTMLElement | null>", "required": true, "description": "The trigger element the menu positions itself against." },
+    { "name": "options", "type": "(MenuOption | MenuOptionGroup)[]", "required": true, "description": "Flat options or grouped options: { value, label, disabled? } or { label, options }." },
+    { "name": "value", "type": "string | undefined", "description": "Currently selected value, for aria-selected + visual highlight." },
+    { "name": "activeValue", "type": "string | undefined", "description": "Keyboard-highlighted value (not yet selected) — the consumer owns keyboard nav on its trigger and passes this down; Menu renders the highlight and exposes ids for aria-activedescendant." },
+    { "name": "onSelect", "type": "(value: string) => void", "required": true, "description": "Fires when an option is clicked." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "item": 32 },
+      "unit": "px",
+      "note": "Each option row is semantic.size.m (32px). The popup's own height is intrinsic to its option count, not fixed."
+    },
+    "width": {
+      "default": "component.menu.width (240px) — matches the common Select trigger width; not driven by a semantic token per CLAUDE.md's width policy (variable, consumer/component judgment call, no system token for it)."
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "color.border", "shadow", "spacing", "radius", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "listbox (hand-rolled — see ADR-013)",
+    "keyboardNav": ["Handled by the consumer's trigger, not Menu itself — Menu is presentational plus click-to-select. See Select's own contract for the actual Arrow/Home/End/typeahead handling."],
+    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

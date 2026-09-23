@@ -13,21 +13,23 @@
   ],
 
   "states": {
-    "intrinsic": ["hover", "focus", "active", "open"],
+    "intrinsic": ["hover", "focus"],
     "authored": [
       { "name": "invalid", "description": "The selected value fails validation.", "aria": "aria-invalid='true'" },
       { "name": "disabled", "description": "The field is non-interactive.", "aria": "disabled (native)" },
-      { "name": "required", "description": "The field must have a value before form submission.", "aria": "aria-required='true'" }
+      { "name": "required", "description": "The field must have a value before form submission.", "aria": "aria-required='true'. Not natively enforced — see ADR-013's consequences; a hand-rolled trigger has no native constraint validation to inherit." },
+      { "name": "open", "description": "The popup listbox is showing.", "aria": "aria-expanded='true'/'false' on the trigger button" }
     ]
   },
 
   "anatomy": [
     { "part": "select-root", "element": "div", "description": "Layout wrapper for label, field, and messages." },
-    { "part": "select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only." },
-    { "part": "select-wrapper", "element": "div", "description": "Positions the native control and chevron." },
-    { "part": "select-trigger", "element": "select", "description": "Native select control." },
-    { "part": "select-chevron", "element": "slot", "description": "Trailing chevron icon.", "optional": true },
-    { "part": "select-description", "element": "span", "description": "Helper text below the field.", "optional": true },
+    { "part": "select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the trigger — see .ai/maps/patterns/form-field-spacing.md." },
+    { "part": "select-wrapper", "element": "div", "description": "Positions the trigger button and chevron." },
+    { "part": "select-trigger", "element": "button", "description": "The visible control. Real DOM focus stays here at all times — see ADR-013. `role` is implicit (button); `aria-haspopup=\"listbox\"`, `aria-expanded`, `aria-controls`, `aria-activedescendant` wire it to the portaled Menu." },
+    { "part": "select-trigger-label", "element": "span", "description": "Wraps the trigger's own displayed text (selected option's label, or placeholder). Truncates with an ellipsis at a fixed/narrow consumer-set width instead of overflowing or forcing the trigger to grow — matches a native <select>'s own behavior." },
+    { "part": "select-chevron", "element": "slot", "description": "Trailing chevron icon. Flips via `aria-expanded` on the trigger, same scaleY treatment as Accordion's chevron (.ai/maps/patterns/expand-collapse-chevron.md) — now real, not the earlier documented exception, since the trigger's own React state knows whether it's open.", "optional": true },
+    { "part": "select-description", "element": "span", "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
     { "part": "select-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 
@@ -45,17 +47,17 @@
     { "name": "required", "type": "boolean", "default": false, "description": "Marks field as required." },
     { "name": "fullWidth", "type": "boolean", "default": false, "description": "Expands to container width." },
     { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the label visually but keeps it accessible." },
-    { "name": "size", "type": "'s' | 'm' | 'l'", "default": "m", "description": "Field size. Uses the shared field scale." },
     { "name": "id", "type": "string | undefined", "description": "Optional field id override." },
-    { "name": "name", "type": "string | undefined", "description": "Native form field name." }
+    { "name": "name", "type": "string | undefined", "description": "Native form field name." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root. Use it to set a min-width so the trigger doesn't visibly resize when a shorter/longer option is selected — Select has no built-in minimum, per CLAUDE.md's min-width/max-width policy (a consumer/pattern decision, not a system token)." }
   ],
 
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "s": 24, "m": 32, "l": 40 },
+      "values": { "default": 32 },
       "unit": "px",
-      "note": "Shared field scale. Keep these values aligned with Input and Textarea density docs."
+      "note": "One fixed size only, deliberately — no size prop. Matches semantic.size.m, the same height Input/Textarea's own 'm' field uses, so a Select trigger and its Menu items read as one continuous, aligned scale (see ADR-013's amendment)."
     },
     "width": {
       "default": "hug",
@@ -73,8 +75,8 @@
   },
 
   "a11y": {
-    "role": "select (implicit native control)",
-    "keyboardNav": ["Arrow keys - move between options", "Enter/Space - open or confirm", "Tab - move focus"],
+    "role": "button trigger + hand-rolled listbox popup (Menu) — see ADR-013. Not a native <select>.",
+    "keyboardNav": ["Arrow Up/Down - opens the menu, or moves the highlighted option while open", "Home/End - jump to first/last enabled option while open", "Enter/Space - open the menu, or confirm the highlighted option while open", "Escape - close without changing the selection", "Tab - move focus (closes the menu first)"],
     "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
   }
 }

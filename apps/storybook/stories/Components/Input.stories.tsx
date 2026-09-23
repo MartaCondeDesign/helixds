@@ -16,10 +16,15 @@ const meta: Meta<typeof Input> = {
   component:  Input,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(InputDoc),
+  // w-[300px] — a true fixed width, not min-width (a floor alone would still let the box grow for
+  // longer typed content). Input has no built-in default per CLAUDE.md's min-width policy (a
+  // consumer/pattern decision, not a system token) — this is the demonstrated example default,
+  // matching Select/Textarea's own stories.
   args: {
     label:    'Label',
     size:     'm',
     onChange: fn(),
+    className: 'w-[300px]',
   },
   argTypes: {
      size:      { control: 'select', options: ['s', 'm', 'l'] },
@@ -127,14 +132,22 @@ export const LoginFormPattern: Story = {
     const [email, setEmail]               = useState('');
     const [password, setPassword]         = useState('');
     const [emailInvalid, setEmailInvalid] = useState(false);
+    const [emailAttempt, setEmailAttempt] = useState(0);
     const [isLoading, setIsLoading]       = useState(false);
     const [formError, setFormError]       = useState<string | null>(null);
 
     async function handleSubmit(e: React.FormEvent) {
       e.preventDefault();
       setFormError(null);
+      if (!email.includes('@')) {
+        // Bumping invalidAttempt (not just setEmailInvalid(true)) is what makes the
+        // shake replay on a second failed submit — invalid alone can stay true across
+        // both attempts with nothing in between to edge-detect.
+        setEmailInvalid(true);
+        setEmailAttempt(n => n + 1);
+        return;
+      }
       setEmailInvalid(false);
-      if (!email.includes('@')) { setEmailInvalid(true); return; }
       setIsLoading(true);
       await new Promise(r => setTimeout(r, 1500));
       setIsLoading(false);
@@ -163,7 +176,7 @@ export const LoginFormPattern: Story = {
           label="Email" type="email" required autoComplete="email"
           icon={IconMail}
           value={email} onChange={e => setEmail(e.target.value)}
-          invalid={emailInvalid} errorMessage="Enter a valid email address" fullWidth
+          invalid={emailInvalid} invalidAttempt={emailAttempt} errorMessage="Enter a valid email address" fullWidth
         />
 
         <Input

@@ -23,7 +23,7 @@
 
   "anatomy": [
     { "part": "radio-group", "element": "fieldset", "description": "Root element — groups the legend and options for assistive tech." },
-    { "part": "radio-legend", "element": "legend", "description": "Accessible group label." },
+    { "part": "radio-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md." },
     { "part": "radio-options", "element": "div", "description": "Layout wrapper for the option list." },
     { "part": "radio-item", "element": "label", "description": "Wraps one option's input, visual control, and content." },
     { "part": "radio-input", "element": "input", "description": "The native radio input for one option." },
@@ -31,8 +31,8 @@
     { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when the option is checked.", "optional": true },
     { "part": "radio-item-content", "element": "span", "description": "Wraps one option's label and description." },
     { "part": "radio-item-label", "element": "span", "description": "Visible label for one option." },
-    { "part": "radio-item-description", "element": "span", "description": "Helper text for one option.", "optional": true },
-    { "part": "radio-description", "element": "span", "description": "Helper text for the whole group.", "optional": true },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text for one option. Sits exactly 8px below the label — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
+    { "part": "radio-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
     { "part": "radio-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 

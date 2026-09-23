@@ -1,0 +1,26 @@
+{
+  "name": "@helix-ds/wc",
+  "version": "0.1.0",
+  "description": "Helix DS — Web Components pilot (Lit + Shadow DOM). See ADR-015. Icon, Badge, Button, Tooltip only — not a full port.",
+  "type": "module",
+  "main":    "./dist/index.js",
+  "module":  "./dist/index.js",
+  "types":   "./dist/index.d.ts",
+  "exports": {
+    ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build":     "tsup src/index.ts --format esm --dts --out-dir dist",
+    "dev":       "tsup src/index.ts --format esm --dts --out-dir dist --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@helix-ds/tokens": "workspace:*",
+    "lit": "^3.2.0"
+  },
+  "devDependencies": {
+    "tsup":       "^8.0.0",
+    "typescript": "*"
+  }
+}

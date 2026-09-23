@@ -18,6 +18,10 @@ Each token item must follow this shape:
   token?: string;
   value?: string;
   kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'other';
+  colorRole?: 'background' | 'text' | 'border' | 'icon' | 'asset';
+  padding?: 'all' | 'top' | 'end' | 'bottom' | 'start' | string;
+  paddingSides?: Array<'top' | 'end' | 'bottom' | 'start'>;
+  relationship?: 'text-to-text' | 'header-to-text' | 'icon-to-text' | 'icon-to-header' | 'element-to-element' | 'element-to-text' | string;
   variant?: string;
   size?: string;
   state?: 'hover' | 'press' | 'disabled' | 'focus';
@@ -78,7 +82,7 @@ Rules:
   actually appears on screen).
 - **Every `spacing`/`sizing` relationship the component actually has must get a row** —
   not just the first gap that comes to mind. Audit the component's CSS for: `padding-top`,
-  `padding-bottom`, `padding-start`/`padding-left`, `padding-end`/`padding-right` (as four
+  `padding-bottom`, `padding-start`, `padding-end` (as four
   separate rows — asymmetric padding, e.g. Select's wider trailing edge for its chevron, is
   real and worth seeing as two different values, not one shared "padding" row), and every
   `gap` between two visually distinct children in either axis: icon↔text, label↔field,
@@ -117,6 +121,63 @@ Rules:
   same token onto one `hoveredRow` string, so hovering any one of them re-highlights all
   of them at once (confirmed with Textarea's padding rows) — check `rowKeyFor` first if a
   hover ever seems to light up more than the one row the cursor is actually over.
+
+## Value column rules
+
+- **Values never change on hover.** Every value read from the preview DOM is snapshotted once
+  per story / args change. Hovering a row repaints the element in the highlight color, so a
+  live read at that moment would report the highlight instead of the applied token.
+- **Spacing and Sizing are always shown in px.** A token written in `rem`, `em`, `%` or
+  `calc()` is converted; a row with no matching CSS property (e.g. `height.m`, `size`) is
+  measured from the rendered element. An empty Value cell for a `space` row is a bug.
+- **Hidden components still show all their tokens.** When none of a story's declared parts is
+  visible (a closed Modal, a Toast before it fires, a Tooltip before hover), every row is shown
+  and tagged `HIDDEN`; values are read from the token itself. A component that is on screen
+  still hides sub-parts the story doesn't render (Card without a header).
+- **Applied tokens first, hardcoded values last — a token is never shown as hardcoded.** Text
+  on screen that no row documents is looked up in the CSS: if a token colors it, the row shows
+  that token (and is skipped if the token is already documented); only text with no token
+  behind it shows its raw value, tagged `hardcoded`.
+- **Color is split into sections:** BACKGROUND, BORDER, one TEXT section per kind of text
+  (`TEXT · VALUE`, `TEXT · PLACEHOLDER`, `TEXT · LABEL`…), ICON. Value and placeholder are
+  different categories, never one "text" pile.
+- **Motion is its own category, last.** Duration / easing / delay tokens go under Motion, never
+  Sizing, and keep their authored value (`200ms`, `cubic-bezier(…)`) — never converted to px.
+- **Element names are unique within a section — suffix only on a clash.** A suffix is added
+  ONLY when two or more rows in the same section would have the same name, and it is what tells
+  them apart, taken from their tokens: `border` ×4 → `border-default`, `border-checked`,
+  `border-focus`, `border-invalid` (state / variant / size / part when the tokens don't differ).
+  A row whose name is already unique never gets a suffix.
+- **Casing: section headers are always UPPERCASE; element names are always lowercase.**
+- **Spacing sides are logical: `start` / `end`, never `left` / `right`.** Use
+  `padding.start` / `padding.end` labels and `paddingSides: ['start', 'end']`. They follow
+  the element's writing direction (RTL-safe). Legacy `left`/`right` input is still accepted
+  and mapped, but new rows must not use it.
+- **Spacing numbers appear only in the Value column, never on the component.** Hovering a
+  Spacing row paints the zone (visible fill + dashed edge) with no px label. A `0` value
+  paints nothing.
+- **Gaps are drawn between the two named elements.** `gap.control.description` /
+  `icon-to-text` name them: the preview finds `*-control` and `*-description` in the
+  component and paints from the first element's edge to where the second's content starts,
+  across the second element's extent — not a strip on the row's own element.
+- **Color rows tint, never outline.** A color row without a token (computed from rendered
+  CSS) tints the real property it describes (`color`, or `border-color` for borders) with the
+  highlight color, exactly like token rows.
+- **Typography Token column has one line per property** — font-family, font-size,
+  font-weight, line-height — each showing the component token that property consumes,
+  aligned with the same line in Value. A property with no component token reads
+  `no component token` rather than being hidden. The Text Style name is the description
+  underneath.
+- **Typography is one row per text element.** The addon detects which Text Style the text
+  renders with — custom properties matching `textStylePattern` (default
+  `--{prefix}textStyle-{name}-{fontFamily|fontSize|fontWeight|lineHeight}`), matched against
+  what the element renders. Token shows the component's own typography token(s) (e.g.
+  `--helix-button-fontSize-m`) with the Text Style name as the description underneath
+  (`Caption / Semibold`); Value shows all four properties of that Text Style. font-size +
+  font-weight identify the style; line-height and font-family only rank candidates. When no
+  style has that size + weight, the description reads `No Text Style` and Value lists the
+  rendered values. Override the pattern through the
+  addon config parameter if your system names Text Styles differently.
 
 ## Hover → live-component highlight
 

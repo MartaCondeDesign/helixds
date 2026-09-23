@@ -26,6 +26,7 @@ export const doc: ComponentDoc = {
     'Table / TableHead / TableBody / TableRow / TableHeaderCell / TableCell — one wrapper per native table element',
     'Cell content is fully consumer-controlled — a TableCell can hold text, Avatar, Badge, Button, anything',
     'v1 scope: rendering only, no built-in sorting or pagination',
+    'Drag-to-reorder rows is NOT a Table prop — a consumer can compose real rows with Motion\'s Reorder.Group/Reorder.Item (as="tbody"/as="tr") for that. Try it live in the "DragReorder" story on this page, or see it in context in Storybook\'s Team Dashboard page. Storybook-only pattern today, not part of this contract — see .ai/maps/patterns/motion-effects.md.',
   ],
   examples: [
     {

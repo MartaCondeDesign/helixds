@@ -20,6 +20,12 @@ overlays the layout beneath it, not one that sits inline within it. Concretely:
   aren't implemented yet (see [ADR-001](ADR-001-primitive-foundation.md) — each needs its own ADR and
   primitive choice before implementation), but `component.dialog.shadow` stays reserved in `tokens.json`
   for when Dialog is built.
+- **Amendment, 2026-09-09 — FAB also gets a shadow.** FAB is the first exception to "shadow means overlay/
+  portal": it's not portaled and doesn't overlay other content the way a Dialog or Menu does, but it *does*
+  genuinely float — a fixed/absolute-positioned action sitting above the page's normal flow, not an inline
+  content grouping like Card. `component.fab.shadow` → `{semantic.shadow.m}` (the "popovers, menus"
+  prominence tier — a docked FAB reads at that weight, not a full-screen Dialog's `xl`). See
+  [ADR-006](ADR-006-liquid-motion-effects.md) for the motion effect FAB pairs this with.
 - **Never gets a shadow:** Card, and anything that composes Card (the StatCard pattern, and any future
   dashboard-widget pattern) — these are inline content groupings, not overlays. Definition comes from
   `fill` + `border` only.

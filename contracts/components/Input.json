@@ -15,7 +15,7 @@
   "states": {
     "intrinsic": ["hover", "focus", "active", "placeholder-shown"],
     "authored": [
-      { "name": "invalid", "description": "The field value fails validation. Shows error styling and message.", "aria": "aria-invalid='true'" },
+      { "name": "invalid", "description": "The field value fails validation. Shows error styling and message, and plays a one-time shake when it transitions from valid to invalid (not on initial mount, and not repeatedly while it stays invalid) — disabled automatically under prefers-reduced-motion.", "aria": "aria-invalid='true'" },
       { "name": "disabled", "description": "The field is non-interactive.", "aria": "disabled (native)" },
       { "name": "required", "description": "The field must have a value before form submission.", "aria": "aria-required='true'" },
       { "name": "loading", "description": "An async operation is checking this field's value (e.g. username availability check).", "aria": "aria-busy='true'" }
@@ -24,12 +24,12 @@
 
   "anatomy": [
     { "part": "input-root",        "element": "div",   "description": "Layout wrapper — provides relative positioning for icon slots." },
-    { "part": "input-label",       "element": "label", "description": "Accessible label. Always rendered — visible or sr-only.", "optional": true },
+    { "part": "input-label",       "element": "label", "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
     { "part": "input-wrapper",     "element": "div",   "description": "Wraps the leading icon, native field, and trailing icon; carries invalid/disabled/loading data attributes." },
     { "part": "input-icon",        "element": "slot",  "description": "Leading icon.", "optional": true },
     { "part": "input-field",       "element": "input", "description": "The native <input> element." },
     { "part": "input-icon-end",    "element": "slot",  "description": "Trailing icon or action.", "optional": true },
-    { "part": "input-description", "element": "p",     "description": "Helper text below the field.", "optional": true },
+    { "part": "input-description", "element": "p",     "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
     { "part": "input-error",       "element": "p",     "description": "Error message shown when invalid=true.", "optional": true }
   ],
 
@@ -45,6 +45,7 @@
     { "name": "iconEnd",     "type": "TablerIcon | undefined", "description": "Trailing icon. Same field-size-derived sizing as icon." },
     { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
     { "name": "errorMessage","type": "string | undefined", "description": "Error text shown when invalid=true." },
+    { "name": "invalidAttempt", "type": "number | undefined", "description": "Bump on each failed validation attempt to retrigger the error shake even while invalid stays true (e.g. a resubmit with the same bad value) — a plain invalid false→true edge only fires once per outage." },
     { "name": "fullWidth",   "type": "boolean",   "default": false,  "description": "Expands to container width." },
     { "name": "onChange",    "type": "React.ChangeEventHandler<HTMLInputElement> | undefined", "description": "Value change handler." }
   ],

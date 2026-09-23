@@ -13,6 +13,7 @@
     "@helix-ds/storybook-addon-tokens": "workspace:*",
     "@helix-ds/tokens": "workspace:*",
     "@tabler/icons-react": "^3.0.0",
+    "motion": "13.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

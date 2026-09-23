@@ -20,6 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       iconEnd,
       description,
       errorMessage,
+      invalidAttempt,
       id,
       disabled,
       className,
@@ -31,6 +32,30 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const descId  = description  ? `${uid}-desc`  : undefined;
     const errorId = errorMessage ? `${uid}-error` : undefined;
     const describedBy = [descId, errorId].filter(Boolean).join(' ') || undefined;
+
+    const wrapperRef = React.useRef<HTMLDivElement>(null);
+    const prevShakeSignal = React.useRef({ invalid, invalidAttempt });
+
+    React.useEffect(() => {
+      const prev = prevShakeSignal.current;
+      // Shake on a false->true edge, OR on `invalidAttempt` changing while already
+      // invalid — the edge alone misses a consumer that sets invalid(false) then
+      // invalid(true) synchronously in one handler (React 18 batches that to a
+      // no-op re-render when it was already true), which is the common "resubmit
+      // while still invalid" shape.
+      const becameInvalid  = invalid && !prev.invalid;
+      const retriedInvalid = invalid && invalidAttempt !== undefined && invalidAttempt !== prev.invalidAttempt;
+      if (becameInvalid || retriedInvalid) {
+        const el = wrapperRef.current;
+        if (el) {
+          // Remove-reflow-reapply so the shake restarts even on a repeat trigger.
+          el.removeAttribute('data-shaking');
+          void el.offsetWidth;
+          el.setAttribute('data-shaking', 'true');
+        }
+      }
+      prevShakeSignal.current = { invalid, invalidAttempt };
+    }, [invalid, invalidAttempt]);
 
     return (
       <div
@@ -48,10 +73,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </label>
 
         <div
+          ref={wrapperRef}
           data-helix-part="input-wrapper"
+          data-size={size}
           data-invalid={invalid ? 'true' : undefined}
           data-disabled={disabled ? 'true' : undefined}
           data-loading={loading ? 'true' : undefined}
+          onAnimationEnd={() => wrapperRef.current?.removeAttribute('data-shaking')}
         >
           {icon && (
             <span data-helix-part="input-icon">

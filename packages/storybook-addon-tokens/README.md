@@ -4,6 +4,27 @@ Adds a "Tokens" tab to the Storybook manager for any `Components/*` story that d
 `parameters.helixTokens`. Hovering a row highlights the real, live component in the
 preview canvas — see `CONTRACT.md` for the full data contract and hover-behavior spec.
 
+## Install in a Storybook project
+
+```bash
+pnpm add -D @helix-ds/storybook-addon-tokens
+```
+
+Register the addon by its package name in `.storybook/main.ts`:
+
+```ts
+import type { StorybookConfig } from '@storybook/react-vite';
+
+const config: StorybookConfig = {
+  addons: ['@helix-ds/storybook-addon-tokens'],
+};
+
+export default config;
+```
+
+The addon does not require `@helix-ds/tokens`. Token names and values come from each
+story's `parameters.helixTokens` data, so it can be used with any design-token system.
+
 ```ts
 {
   part: string;
@@ -18,6 +39,13 @@ preview canvas — see `CONTRACT.md` for the full data contract and hover-behavi
   meta?: string;
 }
 ```
+
+Color rows should declare their visual surface with `colorRole`: `background`, `text`,
+`border`, `icon`, or `asset`. Padding rows use `padding: 'all'` for all four sides, a
+single side such as `top`, or `paddingSides: ['top', 'right']` for combinations. The
+preview highlights only those real zones with a lilac layer and keeps the pixel value in
+the table. Use `relationship` for spacing between elements, such as `icon-to-text`,
+`header-to-text`, `text-to-text`, `element-to-element`, or `element-to-text`.
 
 ## Using this addon outside Helix
 

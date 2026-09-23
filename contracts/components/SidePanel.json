@@ -1,0 +1,56 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "SidePanel",
+  "version": "0.1.0",
+  "status":  "draft",
+
+  "purpose": "A modal panel anchored to the right edge of the viewport, for a persistent secondary task alongside — but still blocking — the main page (details, a form, a filter builder).",
+
+  "neverUseFor": [
+    "A quick, focused decision that should fully interrupt the page — use Modal instead",
+    "Non-blocking supplementary info — use Tooltip or Popover instead",
+    "Primary navigation — use SideNav instead"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": [
+      { "name": "expanded", "description": "Whether the panel is open. Same native <dialog> + JS-timed close choreography as Modal — see ADR-010.", "aria": "native <dialog> semantics; role=\"dialog\" is implicit" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "side-panel-root",    "element": "dialog", "description": "Native <dialog>, opened via showModal(), styled to the right or bottom edge (see `placement`) instead of centered — same primitive as Modal (ADR-010). No backdrop scrim (unlike Modal) — the page behind stays visible." },
+    { "part": "side-panel-header",  "element": "div",    "description": "Contains the title." },
+    { "part": "side-panel-title",   "element": "h2",     "description": "The panel's accessible name — referenced via aria-labelledby. Same text style as Modal's title." },
+    { "part": "side-panel-close",   "element": "slot",   "description": "An IconButton (IconX, size l) positioned top-right, calls onDismiss.", "optional": true },
+    { "part": "side-panel-body",    "element": "div",    "description": "The panel's content (children)." }
+  ],
+
+  "props": [
+    { "name": "label",                "type": "string",   "required": true, "description": "The panel's title — rendered visibly and used as its accessible name." },
+    { "name": "children",             "type": "React.ReactNode", "required": true, "description": "The panel's body content." },
+    { "name": "expanded",             "type": "boolean",  "required": true, "description": "Whether the panel is open. Always controlled, same reasoning as Modal." },
+    { "name": "onDismiss",            "type": "() => void", "required": true, "description": "Called when the panel should close — the close (X) button, Escape, or a backdrop click." },
+    { "name": "showCloseButton",      "type": "boolean",  "default": "true", "description": "Whether to render the header's close (X) button." },
+    { "name": "closeOnBackdropClick", "type": "boolean",  "default": "true", "description": "Whether clicking outside the panel dismisses it." },
+    { "name": "placement",           "type": "'right' | 'bottom'", "default": "right", "description": "Which edge of the viewport the panel is anchored to and slides from. Same vocabulary as Tooltip's `placement` — only the two edges that make sense for a full-height ('right') or full-width ('bottom') panel." },
+    { "name": "className",           "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "width":  { "mode": "fixed", "values": { "default": 400 }, "unit": "px", "note": "Fixed panel width, not on the shared size scale — same category of per-component literal as Tooltip's 240px max-width." },
+    "height": { "mode": "fixed", "note": "Full viewport height — anchored top-to-bottom against the right edge." }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "spacing", "fontSize", "fontWeight", "shadow"],
+    "forbidden": ["primitive.color", "radius"]
+  },
+
+  "a11y": {
+    "role": "dialog (implicit via native <dialog>)",
+    "keyboardNav": ["Escape — dismisses (native <dialog> cancel event, redirected through onDismiss per ADR-010)", "Tab — cycles focus, trapped inside the panel (native)"],
+    "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value"]
+  }
+}

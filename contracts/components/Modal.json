@@ -1,0 +1,67 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Modal",
+  "version": "0.1.0",
+  "status":  "draft",
+
+  "purpose": "A centered overlay that interrupts the page for a focused task or decision — blocks interaction with the rest of the page until dismissed.",
+
+  "neverUseFor": [
+    "Non-blocking supplementary info — use Tooltip or Popover instead",
+    "A persistent side task alongside the main content — use SidePanel instead",
+    "Simple confirmations that don't need to block the whole page — consider inline UI first"
+  ],
+
+  "states": {
+    "intrinsic": [],
+    "authored": [
+      { "name": "expanded", "description": "Whether the modal is open. See ADR-010 for the open/close choreography (native `<dialog>` + `showModal()`, JS-timed close).", "aria": "native <dialog> semantics; role=\"dialog\" is implicit" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "modal-root",    "element": "dialog", "description": "Native <dialog>, opened via showModal() — provides the backdrop, focus trap, Escape-to-close, and top-layer stacking for free (ADR-010). Centered, min-height 400px." },
+    { "part": "modal-header",  "element": "div",    "description": "Contains the title." },
+    { "part": "modal-title",   "element": "h2",     "description": "The modal's accessible name — referenced via aria-labelledby." },
+    { "part": "modal-close",   "element": "slot",   "description": "An IconButton (IconX, size l) positioned top-right, calls onDismiss.", "optional": true },
+    { "part": "modal-body",    "element": "div",    "description": "The modal's content (children)." },
+    { "part": "modal-footer",       "element": "div", "description": "Two-slot action row (space-between) — start/end below. Rendered only when at least one action label is given.", "optional": true },
+    { "part": "modal-footer-start", "element": "div", "description": "Bottom-left slot — the tertiary action, if any.", "optional": true },
+    { "part": "modal-footer-end",   "element": "div", "description": "Bottom-right slot — secondary button (if any), then primary.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "label",                 "type": "string",   "required": true, "description": "The modal's title — rendered visibly and used as its accessible name." },
+    { "name": "children",              "type": "React.ReactNode", "required": true, "description": "The modal's body content." },
+    { "name": "expanded",              "type": "boolean",  "required": true, "description": "Whether the modal is open. Modal is always controlled — there's no uncontrolled/defaultExpanded form, since something outside the modal always has to trigger it open." },
+    { "name": "onDismiss",             "type": "() => void", "required": true, "description": "Called when the modal should close — the close (X) button, Escape, or a backdrop click. Modal does not close itself; the consumer sets `expanded` to false in response." },
+    { "name": "showCloseButton",       "type": "boolean",  "default": "true", "description": "Whether to render the header's close (X) button." },
+    { "name": "closeOnBackdropClick",  "type": "boolean",  "default": "true", "description": "Whether clicking the backdrop dismisses the modal." },
+    { "name": "primaryActionLabel",    "type": "string | undefined", "description": "Footer primary action button label. Omit (with secondaryActionLabel) to render no footer." },
+    { "name": "onPrimaryAction",       "type": "(() => void) | undefined", "description": "Primary action handler." },
+    { "name": "secondaryActionLabel",  "type": "string | undefined", "description": "Footer secondary action button label, to the primary's left." },
+    { "name": "onSecondaryAction",     "type": "(() => void) | undefined", "description": "Secondary action handler." },
+    { "name": "tertiaryActionLabel",   "type": "string | undefined", "description": "A tertiary action button, pinned to the footer's bottom-left corner (Button's `ghost` variant), separate from the primary/secondary group." },
+    { "name": "onTertiaryAction",      "type": "(() => void) | undefined", "description": "Tertiary action handler." },
+    { "name": "className",            "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "width":  { "default": "hug", "note": "Content-driven up to a reasonable reading width — no fixed rung, same category as Tooltip's max-width." },
+    "height": { "mode": "fixed", "values": { "default": 400 }, "unit": "px", "note": "min-height, not a fixed height — grows for longer content. Not on the shared size scale, same category of per-component literal as SidePanel's width." }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "spacing", "radius", "fontSize", "fontWeight", "shadow"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "dialog (implicit via native <dialog>)",
+    "keyboardNav": ["Escape — dismisses (native <dialog> cancel event, redirected through onDismiss per ADR-010)", "Tab — cycles focus, trapped inside the modal (native)"],
+    "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value", "1.4.13 Content on Hover or Focus"],
+    "notes": [
+      "showCloseButton=false with no footer action leaves the modal with no on-screen dismiss affordance — the component logs a dev-only console.warn in that case (Escape and closeOnBackdropClick, when enabled, still work)."
+    ]
+  }
+}

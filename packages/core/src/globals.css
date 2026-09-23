@@ -87,7 +87,7 @@
     gap:             var(--helix-primitive-spacing-50);
     font-family:     inherit;
     border-radius:   var(--helix-button-radius);
-    border:          1px solid transparent;
+    border:          var(--helix-borderWidth-default) solid transparent;
     cursor:          pointer;
     transition:
       background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
@@ -181,11 +181,27 @@
   }
 
   /* States */
-  [data-helix-part="button"]:disabled,
+  /* Loading keeps the variant's own colors — no graying, no opacity. The spinner in front of the
+     label is the only visible change; the button still reads as "this is a primary/danger/etc
+     action", just busy right now. `disabled` is native on the element while loading (see
+     Button.tsx), so every rule below has to say `:not([data-loading])` to stay loading-only. */
   [data-helix-part="button"][data-loading] {
-    opacity: 0.5;
     cursor:  not-allowed;
     pointer-events: none;
+  }
+  /* True disabled (not loading) — a solid gray state via real disabled tokens, never opacity.
+     Opacity is reserved for large surfaces/images going translucent as a whole (e.g. disabling an
+     entire table) — a small control like this gets its own explicit disabled colors instead. */
+  [data-helix-part="button"]:disabled:not([data-loading]) {
+    background-color: var(--helix-button-fill-disabled);
+    color:            var(--helix-button-text-disabled);
+    border-color:     var(--helix-button-border-disabled);
+    cursor:           not-allowed;
+    pointer-events:   none;
+  }
+  [data-helix-part="button"]:disabled:not([data-loading]) [data-helix-part="button-icon"],
+  [data-helix-part="button"]:disabled:not([data-loading]) [data-helix-part="button-icon-end"] {
+    color: var(--helix-button-icon-disabled);
   }
   [data-helix-part="button"]:focus-visible {
     outline:        2px solid var(--helix-button-border-focus);
@@ -243,7 +259,7 @@
     justify-content: center;
     padding:         0;
     border-radius:   var(--helix-iconButton-radius);
-    border:          1px solid transparent;
+    border:          var(--helix-borderWidth-default) solid transparent;
     cursor:          pointer;
     transition:
       background-color var(--helix-iconButton-transition) var(--helix-primitive-easing-base),
@@ -328,10 +344,16 @@
     border-color:     var(--helix-iconButton-fill-danger-press);
   }
 
-  /* States */
-  [data-helix-part="icon-button"]:disabled,
+  /* States — see .ai/maps/patterns/disabled-state.md: loading keeps the variant's own colors,
+     disabled gets a real gray via dedicated tokens, never opacity. */
   [data-helix-part="icon-button"][data-loading] {
-    opacity: 0.5;
+    cursor:  not-allowed;
+    pointer-events: none;
+  }
+  [data-helix-part="icon-button"]:disabled:not([data-loading]) {
+    background-color: var(--helix-iconButton-fill-disabled);
+    color:            var(--helix-iconButton-icon-disabled);
+    border-color:     var(--helix-iconButton-border-disabled);
     cursor:  not-allowed;
     pointer-events: none;
   }
@@ -349,6 +371,106 @@
 
 
   /* ════════════════════════════════════════════════════════════════════════
+     FAB
+     Contract: contracts/components/FAB.json
+     Tokens:   --helix-fab-*  (component layer)
+     Motion:   Speed-dial expand/collapse via Motion springs — see ADR-007 and
+               .ai/maps/patterns/motion-effects.md. Position/transform of the
+               trigger and its actions is owned by motion.button at the JS
+               layer (FAB.tsx) — this block only styles the buttons' own
+               resting look (fill/icon/radius/shadow), never their transform.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="fab-root-wrapper"] {
+    position: relative;
+    display:  inline-flex;
+    /* Explicit, guaranteed 48×48 box — fab-actions' `inset: 0` positions itself against THIS box, not
+       against whatever size <Liquid>'s own internal rendering happens to produce. Without this, the
+       stacked actions' resting anchor point is undefined and the morph offsets read as overlapping
+       instead of cleanly separated. */
+    width:  var(--helix-fab-height);
+    height: var(--helix-fab-height);
+  }
+
+  [data-helix-part="fab-root"] {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    width:           var(--helix-fab-height);
+    height:          var(--helix-fab-height);
+    border-radius:   var(--helix-fab-radius);
+    border:          none;
+    padding:         0;
+    background-color: var(--helix-fab-fill-default);
+    color:           var(--helix-fab-icon);
+    box-shadow:      var(--helix-fab-shadow);
+    cursor:          pointer;
+    outline:         none;
+    flex-shrink:     0;
+    -webkit-appearance: none;
+    transition:      background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="fab-root"]:hover:not(:disabled) {
+    background-color: var(--helix-fab-fill-hover);
+  }
+  [data-helix-part="fab-root"]:active:not(:disabled) {
+    background-color: var(--helix-fab-fill-press);
+  }
+  [data-helix-part="fab-root"]:disabled {
+    opacity:        0.5;
+    cursor:         not-allowed;
+    pointer-events: none;
+  }
+  [data-helix-part="fab-root"]:focus-visible {
+    outline:        2px solid var(--helix-fab-border-focus);
+    outline-offset: 2px;
+  }
+
+  /* Trigger icon rotates 45° when the speed-dial is expanded — a plain "+" reads as a close/"×" affordance
+     without needing a second icon swap. CSS transform only; independent of the Morph silhouette itself. */
+  [data-helix-part="fab-icon"] {
+    display:    inline-flex;
+    transition: transform var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="fab-icon"][data-expanded="true"] {
+    transform: rotate(45deg);
+  }
+
+  [data-helix-part="fab-actions"] {
+    position:       absolute;
+    inset:          0;
+    pointer-events: none;
+  }
+
+  [data-helix-part="fab-action"] {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    width:           var(--helix-fab-action-height);
+    height:          var(--helix-fab-action-height);
+    border-radius:   var(--helix-fab-radius);
+    border:          1px solid var(--helix-fab-action-border);
+    padding:         0;
+    background-color: var(--helix-fab-action-fill);
+    color:           var(--helix-fab-action-icon);
+    box-shadow:      var(--helix-fab-action-shadow);
+    cursor:          pointer;
+    outline:         none;
+    pointer-events:  auto;
+    -webkit-appearance: none;
+  }
+  [data-helix-part="fab-action"]:disabled {
+    opacity:        0.5;
+    cursor:         not-allowed;
+    pointer-events: none;
+  }
+  [data-helix-part="fab-action"]:focus-visible {
+    outline:        2px solid var(--helix-fab-border-focus);
+    outline-offset: 2px;
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
      INPUT
      Contract: contracts/components/Input.json
      Tokens:   --helix-input-*  (component layer)
@@ -357,7 +479,7 @@
   [data-helix-part="input-root"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-input-gap-label);
+    gap:            var(--helix-input-gap);
     width:          fit-content;
   }
   [data-helix-part="input-root"][data-full-width] {
@@ -365,8 +487,8 @@
   }
 
   [data-helix-part="input-label"] {
-    font-size:   var(--helix-primitive-fontSize-s);
-    font-weight: var(--helix-primitive-fontWeight-medium);
+    font-size:   var(--helix-input-text-labelFontSize);
+    font-weight: var(--helix-input-text-labelFontWeight);
     color:       var(--helix-input-text-label);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -380,16 +502,30 @@
     display:         flex;
     align-items:     center;
     background-color: var(--helix-input-fill-default);
-    border:          1.5px solid var(--helix-input-border-default);
+    border:          var(--helix-borderWidth-default) solid var(--helix-input-border-default);
     border-radius:   var(--helix-input-radius);
+    /* Height (border-box, border included) lives here, on the bordered element,
+       not on input-field — matching Button/Select's model where the sized,
+       bordered element are the same node. Previously input-field alone carried
+       a fixed height while this wrapper's own border sat outside it, making
+       Input ~3px taller than a same-size Button at the same nominal size. */
+    height:          var(--helix-input-height-m);
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
+      border-width var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-  [data-helix-part="input-wrapper"]:hover:not([data-disabled]):not([data-invalid]) {
+  [data-helix-part="input-wrapper"][data-size="s"] { height: var(--helix-input-height-s); }
+  [data-helix-part="input-wrapper"][data-size="m"] { height: var(--helix-input-height-m); }
+  [data-helix-part="input-wrapper"][data-size="l"] { height: var(--helix-input-height-l); }
+  /* :not(:focus-within) — without it, hover's own specificity (4 compound selectors) beats the
+     focus rule below (3), so a focused-AND-hovered field silently fell back to the gray hover
+     border instead of staying blue. Hover must yield whenever the field is actually focused. */
+  [data-helix-part="input-wrapper"]:hover:not([data-disabled]):not([data-invalid]):not(:focus-within) {
     border-color: var(--helix-input-border-hover);
   }
   [data-helix-part="input-wrapper"]:focus-within:not([data-invalid]) {
+    border-width: var(--helix-borderWidth-focus);
     border-color: var(--helix-input-border-focus);
     box-shadow:   var(--helix-input-shadow-focus);
   }
@@ -397,8 +533,38 @@
     border-color: var(--helix-input-border-invalid);
   }
   [data-helix-part="input-wrapper"][data-invalid]:focus-within {
+    border-width: var(--helix-borderWidth-focus);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-input-border-invalid) 20%, transparent);
   }
+
+  /* Error-state shake — plays once when a field transitions into `invalid`
+     (see Input.tsx's remove/reflow/reapply on `data-shaking`), not a Motion
+     effect: bespoke per-segment easing authored in Figma, not the shared
+     duration/easing scale — same "plain CSS, not Motion" call as Checkbox/
+     RadioGroup's check pop-in. See .ai/maps/patterns/motion-effects.md.
+     Values are real tokens now (component.input.shake.* in tokens.json,
+     documented as an exception in component-token-exceptions.md) — no
+     longer declared locally here, `--helix-input-shake-*` comes from
+     @helix-ds/tokens/helix.css like every other component token. */
+  [data-helix-part="input-wrapper"][data-shaking="true"] {
+    animation: helix-input-shake calc(
+        var(--helix-input-shake-dur-a) * 2 + var(--helix-input-shake-dur-b) * 2
+      ) linear;
+  }
+  @keyframes helix-input-shake {
+    0%      { transform: translateX(0);                                              animation-timing-function: var(--helix-input-shake-ease); }
+    28.57%  { transform: translateX(var(--helix-input-shake-distance));               animation-timing-function: var(--helix-input-shake-ease); }
+    57.14%  { transform: translateX(calc(var(--helix-input-shake-distance) * -1));    animation-timing-function: var(--helix-input-shake-ease); }
+    78.57%  { transform: translateX(var(--helix-input-shake-overshoot));              animation-timing-function: var(--helix-input-shake-ease); }
+    100%    { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="input-wrapper"][data-shaking="true"] {
+      animation: none;
+      transform: none;
+    }
+  }
+
   [data-helix-part="input-wrapper"][data-disabled] {
     background-color: var(--helix-input-fill-disabled);
     border-color:     var(--helix-input-border-disabled);
@@ -412,21 +578,18 @@
     outline:          none;
     color:            var(--helix-input-text-value);
     font-family:      inherit;
-    font-size:        var(--helix-primitive-fontSize-s);
+    font-size:        var(--helix-input-text-valueFontSize-m);
     padding:          0 var(--helix-primitive-spacing-75);
     min-width:        0;
-    height:           var(--helix-input-height-m);
+    /* Fills the wrapper's own height (see input-wrapper) — not an independent
+       fixed height, so it can never make the wrapper taller than its token. */
+    height:           100%;
   }
   [data-helix-part="input-field"][data-size="s"] {
-    font-size: var(--helix-primitive-fontSize-s);
-    height:    var(--helix-input-height-s);
-  }
-  [data-helix-part="input-field"][data-size="m"] {
-    height: var(--helix-input-height-m);
+    font-size: var(--helix-input-text-valueFontSize-s);
   }
   [data-helix-part="input-field"][data-size="l"] {
-    font-size: var(--helix-primitive-fontSize-m);
-    height:    var(--helix-input-height-l);
+    font-size: var(--helix-input-text-valueFontSize-l);
     padding:   0 var(--helix-primitive-spacing-100);
   }
   [data-helix-part="input-field"]::placeholder {
@@ -455,12 +618,12 @@
   }
 
   [data-helix-part="input-description"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-input-text-descriptionFontSize);
     color:       var(--helix-input-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="input-error"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-input-text-errorFontSize);
     color:       var(--helix-input-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
     display:     flex;
@@ -482,12 +645,12 @@
     gap:           var(--helix-primitive-spacing-25);
     border-radius: var(--helix-badge-radius);
     height:        var(--helix-badge-height-s);
+    font-family:   var(--helix-badge-fontFamily);
     font-size:     var(--helix-badge-fontSize);
     font-weight:   var(--helix-badge-fontWeight);
     white-space:   nowrap;
-    line-height:   1;
+    line-height:   var(--helix-badge-lineHeight);
     border:        1px solid transparent;
-    letter-spacing: var(--helix-primitive-letterSpacing-wide);
   }
 
   [data-helix-part="badge"][data-size="xs"] {
@@ -619,28 +782,34 @@
     pointer-events: none;
   }
 
+  /* One gray step per state, using the same fill.secondary-interactive-{default,hover,press} ladder
+     Button/IconButton's secondary variant already uses (gray.50 -> .100 -> .200 -> .300 -> .400) — not a
+     dramatic jump between any two adjacent states. Contrast against the dark text token stays comfortably
+     above AA (12:1 at gray.300, 6.97:1 at gray.400) all the way down the ladder, so text color never needs
+     to invert. */
   [data-helix-part="chip"][data-variant="neutral"] {
     background:   var(--helix-color-fill-surface);
     color:        var(--helix-color-text-neutral);
     border-color: var(--helix-color-border-neutral);
   }
   [data-helix-part="chip"][data-variant="neutral"]:hover:not(:disabled):not([data-disabled]) {
-    background:   var(--helix-color-fill-surface-dark);
+    background:   var(--helix-color-fill-secondary-interactive-default);
     border-color: var(--helix-color-border-neutral-dark);
   }
   [data-helix-part="chip"][data-variant="neutral"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-secondary-interactive-default);
-  }
-  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"] {
-    background:   var(--helix-color-fill-secondary-interactive-default);
-    color:        var(--helix-color-text-neutral);
-    border-color: var(--helix-color-border-neutral-dark);
-  }
-  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
     background: var(--helix-color-fill-secondary-interactive-hover);
   }
+  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"] {
+    /* No border when checked — a solid fill reads as one filled shape, not a lighter fill + outline. */
+    background:   var(--helix-color-fill-secondary-interactive-press);
+    color:        var(--helix-color-text-neutral);
+    border-color: transparent;
+  }
+  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
+    background: var(--helix-color-border-neutral-dark);
+  }
   [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-secondary-interactive-press);
+    background: var(--helix-color-border-neutral-dark);
   }
 
   [data-helix-part="chip"][data-variant="info"] {
@@ -649,21 +818,31 @@
     border-color: var(--helix-color-border-info);
   }
   [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
+    background:   color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
+    border-color: var(--helix-color-border-info-dark);
   }
   [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
     background: color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] {
-    background:   var(--helix-color-fill-info-interactive-default);
-    color:        var(--helix-color-text-inverse);
-    border-color: var(--helix-color-border-info);
+    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
+       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
+       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
+       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
+       here) which already use white — those already existed before this pass and sit closer to the AA
+       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
+       is silently fixing or leaving worse. */
+    background:   color-mix(in srgb, var(--helix-color-fill-info-interactive-default) 60%, var(--helix-color-fill-info-light) 40%);
+    color:        var(--helix-color-text-neutral);
+    border-color: transparent;
   }
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-info-interactive-hover);
-  }
+  [data-helix-part="chip"][data-variant="info"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
   [data-helix-part="chip"][data-variant="info"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-info-interactive-hover);
+    /* Was fill-info-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
+       from the checked rule above, changed there for the same reason), and dark text on that fully
+       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
+       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
+    background: color-mix(in srgb, var(--helix-color-fill-info-interactive-default) 75%, var(--helix-color-fill-info-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="success"] {
@@ -672,21 +851,31 @@
     border-color: var(--helix-color-border-success);
   }
   [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
+    background:   color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
+    border-color: var(--helix-color-border-success-dark);
   }
   [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
     background: color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] {
-    background:   var(--helix-color-fill-success-interactive-default);
-    color:        var(--helix-color-text-inverse);
-    border-color: var(--helix-color-border-success);
+    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
+       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
+       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
+       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
+       here) which already use white — those already existed before this pass and sit closer to the AA
+       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
+       is silently fixing or leaving worse. */
+    background:   color-mix(in srgb, var(--helix-color-fill-success-interactive-default) 60%, var(--helix-color-fill-success-light) 40%);
+    color:        var(--helix-color-text-neutral);
+    border-color: transparent;
   }
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-success-interactive-hover);
-  }
+  [data-helix-part="chip"][data-variant="success"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
   [data-helix-part="chip"][data-variant="success"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-success-interactive-hover);
+    /* Was fill-success-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
+       from the checked rule above, changed there for the same reason), and dark text on that fully
+       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
+       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
+    background: color-mix(in srgb, var(--helix-color-fill-success-interactive-default) 75%, var(--helix-color-fill-success-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="warning"] {
@@ -695,21 +884,31 @@
     border-color: var(--helix-color-border-warning);
   }
   [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
+    background:   color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
+    border-color: var(--helix-color-border-warning-dark);
   }
   [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
     background: color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] {
-    background:   var(--helix-color-fill-warning-interactive-default);
-    color:        var(--helix-color-text-inverse);
-    border-color: var(--helix-color-border-warning);
+    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
+       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
+       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
+       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
+       here) which already use white — those already existed before this pass and sit closer to the AA
+       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
+       is silently fixing or leaving worse. */
+    background:   color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) 60%, var(--helix-color-fill-warning-light) 40%);
+    color:        var(--helix-color-text-neutral);
+    border-color: transparent;
   }
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-warning-interactive-hover);
-  }
+  [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-warning-interactive-hover);
+    /* Was fill-warning-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
+       from the checked rule above, changed there for the same reason), and dark text on that fully
+       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
+       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
+    background: color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) 75%, var(--helix-color-fill-warning-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="danger"] {
@@ -718,21 +917,31 @@
     border-color: var(--helix-color-border-danger);
   }
   [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
-    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
+    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
+    border-color: var(--helix-color-border-danger-dark);
   }
   [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
     background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page));
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] {
-    background:   var(--helix-color-fill-danger-interactive-default);
-    color:        var(--helix-color-text-inverse);
-    border-color: var(--helix-color-border-danger);
+    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
+       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
+       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
+       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
+       here) which already use white — those already existed before this pass and sit closer to the AA
+       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
+       is silently fixing or leaving worse. */
+    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) 60%, var(--helix-color-fill-danger-interactive-light-default) 40%);
+    color:        var(--helix-color-text-neutral);
+    border-color: transparent;
   }
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-danger-interactive-hover);
-  }
+  [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-fill-danger-interactive-hover);
+    /* Was fill-danger-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
+       from the checked rule above, changed there for the same reason), and dark text on that fully
+       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
+       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
+    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) 75%, var(--helix-color-fill-danger-interactive-light-default) 25%);
   }
 
   [data-helix-part="chip-icon"],
@@ -752,7 +961,9 @@
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-inverse);
+    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
+       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
+    color: var(--helix-color-icon-neutral);
   }
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon-end"] {
@@ -760,7 +971,9 @@
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-inverse);
+    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
+       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
+    color: var(--helix-color-icon-neutral);
   }
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon-end"] {
@@ -768,7 +981,9 @@
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-inverse);
+    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
+       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
+    color: var(--helix-color-icon-neutral);
   }
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon-end"] {
@@ -776,7 +991,9 @@
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-inverse);
+    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
+       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
+    color: var(--helix-color-icon-neutral);
   }
 
   [data-helix-part="chip-shell"] {
@@ -796,21 +1013,22 @@
     width:          var(--helix-primitive-size-125);
     height:         var(--helix-primitive-size-125);
     border-radius:  var(--helix-radius-full);
-    border:         1px solid var(--helix-color-border-neutral-light);
-    background:     var(--helix-color-fill-surface);
+    border:         none;
+    /* Bare icon at rest — no circular fill until hover, regardless of the chip's own variant/checked
+       background (transparent always reads as "nothing" here, unlike matching the chip's own fill token,
+       which only looked invisible by coincidence on some variants). */
+    background:     transparent;
     color:          var(--helix-color-text-neutral-light);
     cursor:         pointer;
     flex-shrink:    0;
     transition:
       background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
-      border-color     var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       color            var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
 
   [data-helix-part="chip-dismiss"]:hover:not(:disabled) {
-    background:   var(--helix-color-fill-surface-dark);
-    border-color: var(--helix-color-border-neutral-dark);
-    color:        var(--helix-color-text-neutral);
+    background: var(--helix-color-fill-surface-dark);
+    color:      var(--helix-color-text-neutral);
   }
 
   [data-helix-part="chip-dismiss"]:focus-visible {
@@ -818,9 +1036,11 @@
     outline-offset: 2px;
   }
 
+  /* Real disabled color, not opacity — .ai/maps/patterns/disabled-state.md. Semantic directly,
+     matching this element's own rest-state color above (also semantic, not a component token). */
   [data-helix-part="chip-dismiss"]:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    color:  var(--helix-color-text-disabled);
   }
 
 
@@ -833,14 +1053,14 @@
   [data-helix-part="textarea-root"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-primitive-spacing-25);
+    gap:            var(--helix-textarea-gap);
     width:          fit-content;
   }
   [data-helix-part="textarea-root"][data-full-width] { width: 100%; }
 
   [data-helix-part="textarea-label"] {
-    font-size:   var(--helix-primitive-fontSize-s);
-    font-weight: var(--helix-primitive-fontWeight-medium);
+    font-size:   var(--helix-textarea-text-labelFontSize);
+    font-weight: var(--helix-textarea-text-labelFontWeight);
     color:       var(--helix-textarea-text-label);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -848,16 +1068,19 @@
   [data-helix-part="textarea-wrapper"] {
     position:         relative;
     background-color: var(--helix-textarea-fill-default);
-    border:           1.5px solid var(--helix-textarea-border-default);
+    border:           var(--helix-borderWidth-default) solid var(--helix-textarea-border-default);
     border-radius:    var(--helix-textarea-radius);
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
+      border-width var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-  [data-helix-part="textarea-wrapper"]:hover:not([data-disabled]):not([data-invalid]) {
+  /* :not(:focus-within) — same specificity fix as Input's own hover rule above. */
+  [data-helix-part="textarea-wrapper"]:hover:not([data-disabled]):not([data-invalid]):not(:focus-within) {
     border-color: var(--helix-textarea-border-hover);
   }
   [data-helix-part="textarea-wrapper"]:focus-within:not([data-invalid]) {
+    border-width: var(--helix-borderWidth-focus);
     border-color: var(--helix-textarea-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-focus) 20%, transparent);
   }
@@ -865,6 +1088,7 @@
     border-color: var(--helix-textarea-border-invalid);
   }
   [data-helix-part="textarea-wrapper"][data-invalid]:focus-within {
+    border-width: var(--helix-borderWidth-focus);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-invalid) 20%, transparent);
   }
   [data-helix-part="textarea-wrapper"][data-disabled] {
@@ -881,7 +1105,7 @@
     outline:     none;
     color:       var(--helix-textarea-text-value);
     font-family: inherit;
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-textarea-text-valueFontSize-m);
     line-height: var(--helix-primitive-lineHeight-normal);
     padding:     var(--helix-primitive-spacing-75);
     min-width:   0;
@@ -889,8 +1113,8 @@
     box-sizing:  border-box;
     resize:      vertical;
   }
-  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-primitive-fontSize-s); }
-  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-primitive-fontSize-m); }
+  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-textarea-text-valueFontSize-s); }
+  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-textarea-text-valueFontSize-l); }
   [data-helix-part="textarea-field"][data-resize="none"]       { resize: none; }
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
   [data-helix-part="textarea-field"][data-resize="both"]       { resize: both; }
@@ -901,18 +1125,18 @@
     position:   absolute;
     bottom:     var(--helix-primitive-spacing-50);
     right:      var(--helix-primitive-spacing-75);
-    font-size:  var(--helix-primitive-fontSize-s);
+    font-size:  var(--helix-textarea-text-counterFontSize);
     color:      var(--helix-textarea-text-counter);
     pointer-events: none;
   }
 
   [data-helix-part="textarea-description"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-textarea-text-descriptionFontSize);
     color:       var(--helix-textarea-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="textarea-error"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-textarea-text-errorFontSize);
     color:       var(--helix-textarea-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -924,17 +1148,20 @@
      Tokens:   --helix-select-*
      ════════════════════════════════════════════════════════════════════════ */
 
+  /* A plain flex gap works here — label→trigger and trigger→description are both 8px per the
+     form-field-spacing pattern (.ai/maps/patterns/form-field-spacing.md), so one shared value
+     serves both without needing per-element margins. */
   [data-helix-part="select-root"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-primitive-spacing-25);
+    gap:            var(--helix-select-gap);
     width:          fit-content;
   }
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
 
   [data-helix-part="select-label"] {
-    font-size:   var(--helix-primitive-fontSize-s);
-    font-weight: var(--helix-primitive-fontWeight-medium);
+    font-size:   var(--helix-select-text-labelFontSize);
+    font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
@@ -951,38 +1178,48 @@
   [data-helix-part="select-trigger"] {
     appearance:       none;
     -webkit-appearance: none;
+    display:          flex;
+    align-items:      center;
     width:            100%;
     background-color: var(--helix-select-fill-default);
-    border:           1.5px solid var(--helix-select-border-default);
+    border:           var(--helix-borderWidth-default) solid var(--helix-select-border-default);
     border-radius:    var(--helix-select-radius);
     color:            var(--helix-select-text-value);
     font-family:      inherit;
-    font-size:        var(--helix-primitive-fontSize-s);
-    height:           var(--helix-select-height-m);
+    font-size:        var(--helix-select-text-valueFontSize);
+    height:           var(--helix-select-height);
     padding:          0 var(--helix-primitive-spacing-250) 0 var(--helix-primitive-spacing-75);
+    text-align:       left;
     cursor:           pointer;
     outline:          none;
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
+      border-width var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-  [data-helix-part="select-trigger"][data-size="s"] {
-    height:    var(--helix-select-height-s);
-    font-size: var(--helix-primitive-fontSize-s);
-    padding:   0 var(--helix-primitive-spacing-200) 0 var(--helix-primitive-spacing-50);
+  /* Own block, not inline text — lets the label truncate with an ellipsis inside a fixed-width
+     trigger instead of overflowing or forcing the button (and everything measured from it,
+     including the anchored Menu) to grow with a long option's label. */
+  [data-helix-part="select-trigger-label"] {
+    display:       block;
+    min-width:     0;
+    flex:          1;
+    overflow:      hidden;
+    white-space:   nowrap;
+    text-overflow: ellipsis;
   }
-  [data-helix-part="select-trigger"][data-size="m"] {
-    height:    var(--helix-select-height-m);
-  }
-  [data-helix-part="select-trigger"][data-size="l"] {
-    height:    var(--helix-select-height-l);
-    font-size: var(--helix-primitive-fontSize-m);
-    padding:   0 var(--helix-primitive-spacing-250) 0 var(--helix-primitive-spacing-100);
-  }
-  [data-helix-part="select-trigger"]:hover:not(:disabled) {
+  /* :not([aria-expanded="true"]) and :not(:focus-visible) — without them, hover's higher
+     specificity (3 compound selectors vs. 2) silently beat the open/focus rule below whenever the
+     mouse stayed over an opened trigger, turning the border gray instead of staying blue. */
+  [data-helix-part="select-trigger"]:hover:not(:disabled):not([aria-expanded="true"]):not(:focus-visible) {
     border-color: var(--helix-select-border-hover);
   }
-  [data-helix-part="select-trigger"]:focus {
+  /* Same focus treatment on open as on focus — a hand-rolled trigger's "open" state IS its focus
+     state (real DOM focus never leaves the button; see Select.tsx/ADR-013), so both share one rule
+     rather than the open state getting a weaker one-off. */
+  [data-helix-part="select-trigger"]:focus-visible,
+  [data-helix-part="select-trigger"][aria-expanded="true"] {
+    border-width: var(--helix-borderWidth-focus);
     border-color: var(--helix-select-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
   }
@@ -995,8 +1232,7 @@
     color:            var(--helix-select-text-disabled);
     cursor:           not-allowed;
   }
-  [data-helix-part="select-trigger"]:invalid,
-  [data-helix-part="select-trigger"] option[value=""] {
+  [data-helix-part="select-trigger"][data-placeholder] {
     color: var(--helix-select-text-placeholder);
   }
 
@@ -1004,22 +1240,132 @@
     position:        absolute;
     right:           var(--helix-primitive-spacing-75);
     top:             50%;
-    transform:       translateY(-50%);
+    transform:       translateY(-50%) scaleY(1);
+    transform-origin: center;
     color:           var(--helix-select-icon-default);
     pointer-events:  none;
     display:         flex;
     align-items:     center;
+    transition:      transform var(--helix-select-duration-chevron) var(--helix-select-easing-collapse);
+  }
+  [data-helix-part="select-trigger"][aria-expanded="true"] ~ [data-helix-part="select-chevron"] {
+    transform:  translateY(-50%) scaleY(-1);
+    transition: transform var(--helix-select-duration-chevron) var(--helix-select-easing);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="select-chevron"] { transition: none !important; }
   }
 
   [data-helix-part="select-description"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-select-text-descriptionFontSize);
     color:       var(--helix-select-text-description);
     line-height: var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="select-error"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-size:   var(--helix-select-text-errorFontSize);
     color:       var(--helix-select-text-error);
     line-height: var(--helix-primitive-lineHeight-snug);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     MENU
+     Contract: contracts/components/Menu.json
+     Tokens:   --helix-menu-*
+     Portaled to document.body (Menu.tsx) — positioned via inline style computed
+     by usePosition(), not CSS. See ADR-013.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="menu"] {
+    background:    var(--helix-menu-fill);
+    border:        var(--helix-borderWidth-default) solid var(--helix-menu-border);
+    border-radius: var(--helix-menu-radius);
+    box-shadow:    var(--helix-menu-shadow);
+    padding:       var(--helix-menu-padding);
+    z-index:       var(--helix-primitive-zIndex-dropdown);
+    display:       flex;
+    flex-direction: column;
+    max-height:    320px;
+    overflow-y:    auto;
+  }
+
+  /* Full-width divider between groups — bleeds past the menu's own padding via a negative
+     inline margin so it reaches both edges, per review feedback. Asymmetric on purpose: 8px above
+     (to whatever content precedes it) but 16px below (to the group label/title right after it) —
+     both real tokens, not one-off literals. Not rendered before the first group (Menu.tsx only
+     emits one when something already precedes it). */
+  [data-helix-part="menu-group-divider"] {
+    height:         1px;
+    border:         none;
+    background:     var(--helix-menu-groupDivider-color);
+    margin-top:     var(--helix-menu-groupDivider-marginTop);
+    margin-bottom:  var(--helix-menu-groupDivider-marginBottom);
+    margin-inline:  calc(-1 * var(--helix-menu-padding));
+    flex-shrink:    0;
+  }
+
+  [data-helix-part="menu-group-label"] {
+    padding:     0 var(--helix-menu-item-paddingX) var(--helix-menu-groupLabel-marginBottom);
+    font-size:   var(--helix-menu-groupLabel-fontSize);
+    font-weight: var(--helix-menu-groupLabel-fontWeight);
+    color:       var(--helix-menu-groupLabel-text);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  /* The first group has no divider above it to supply spacing (Menu.tsx only renders one before a
+     non-first group), so its label would otherwise sit only the menu's own 4px padding from the top
+     edge. Top up to the same 16px every other group gets below its divider, for visual consistency
+     regardless of position — real tokens, not a literal (matches groupDivider's own marginBottom). */
+  [data-helix-part="menu-group-label"]:first-child {
+    margin-top: calc(var(--helix-menu-groupDivider-marginBottom) - var(--helix-menu-padding));
+  }
+
+  [data-helix-part="menu-item"] {
+    display:       flex;
+    align-items:   center;
+    /* min-height, not height — a fixed height was clipping the hover/selected highlight to one
+       line whenever an option's label wrapped to two (e.g. "Product Manager"), leaving the
+       second line rendered outside its own highlight box. min-height keeps 24px as the floor and
+       lets the row grow to actually hug wrapped content, per review feedback. */
+    min-height:    var(--helix-menu-item-height);
+    padding:       var(--helix-menu-item-paddingY) var(--helix-menu-item-paddingX);
+    border-radius: var(--helix-menu-item-radius);
+    border:        none;
+    background:    transparent;
+    color:         var(--helix-menu-item-text);
+    font-family:   inherit;
+    font-size:     var(--helix-menu-item-fontSize);
+    font-weight:   var(--helix-menu-item-fontWeight);
+    line-height:   var(--helix-primitive-lineHeight-snug);
+    text-align:    left;
+    width:         100%;
+    cursor:        pointer;
+    flex-shrink:   0;
+    margin-bottom: var(--helix-menu-gap);
+  }
+  [data-helix-part="menu-item"]:last-child,
+  [data-helix-part="menu-item"]:has(+ [data-helix-part="menu-group-divider"]) {
+    /* No trailing item-gap directly before the menu's own end or a group divider — the divider
+       supplies its own full 8px margin-top, and stacking the item's 2px gap on top of that would
+       make it 10px instead of the requested 8px. */
+    margin-bottom: 0;
+  }
+  [data-helix-part="menu-item"]:hover:not(:disabled),
+  [data-helix-part="menu-item"][data-active] {
+    background: var(--helix-menu-item-fill-hover);
+  }
+  [data-helix-part="menu-item"][aria-selected="true"] {
+    background:  var(--helix-menu-item-fill-selected);
+    color:       var(--helix-menu-item-text-selected);
+    font-weight: var(--helix-menu-item-fontWeight-selected);
+  }
+  [data-helix-part="menu-item"][aria-selected="true"]:hover,
+  [data-helix-part="menu-item"][aria-selected="true"][data-active] {
+    background: var(--helix-menu-item-fill-selected);
+  }
+  [data-helix-part="menu-item"]:disabled {
+    color:  var(--helix-menu-item-text-disabled);
+    cursor: not-allowed;
   }
 
 
@@ -1032,7 +1378,7 @@
   [data-helix-part="checkbox-root"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-primitive-spacing-25);
+    gap:            var(--helix-checkbox-gapDescription);
   }
 
   [data-helix-part="checkbox-label"] {
@@ -1042,9 +1388,10 @@
     cursor:      pointer;
     user-select: none;
   }
+  /* Real disabled colors, not opacity — .ai/maps/patterns/disabled-state.md */
   [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-label"] {
     cursor: not-allowed;
-    opacity: 0.5;
+    color:  var(--helix-checkbox-text-disabled);
   }
 
   /* sr-only hidden native input */
@@ -1065,7 +1412,7 @@
     width:       var(--helix-checkbox-size);
     height:      var(--helix-checkbox-size);
     border-radius: var(--helix-checkbox-radius);
-    border:      1.5px solid var(--helix-checkbox-border-default);
+    border:      var(--helix-borderWidth-default) solid var(--helix-checkbox-border-default);
     background:  var(--helix-checkbox-fill-default);
     display:     flex;
     align-items: center;
@@ -1073,7 +1420,8 @@
     margin-top:  1px;
     transition:
       background-color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
-      border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
+      border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
+      border-width     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
   }
 
   /* Hover — input not checked */
@@ -1093,6 +1441,7 @@
 
   /* Focus-visible ring */
   [data-helix-part="checkbox-input"]:focus-visible + [data-helix-part="checkbox-control"] {
+    border-width:   var(--helix-borderWidth-focus);
     outline:        2px solid var(--helix-checkbox-border-focus);
     outline-offset: 2px;
   }
@@ -1102,35 +1451,119 @@
     border-color: var(--helix-checkbox-border-invalid);
   }
 
+  /* Disabled — real gray fill/border, wins over :checked's colors (placed after it in source order,
+     same specificity). .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="checkbox-input"]:disabled + [data-helix-part="checkbox-control"] {
+    background:   var(--helix-checkbox-fill-disabled);
+    border-color: var(--helix-checkbox-border-disabled);
+  }
+
+  /* Pop-in via CSS transform/opacity, not Motion — the icon toggling needs to track :checked on the
+     native input, which correctly reflects both controlled AND uncontrolled usage on its own (that's
+     exactly the CSS mechanism Checkbox already relies on). Driving this with Motion would mean adding a
+     JS-tracked boolean mirroring the input's checked state, which is precisely the kind of extra state
+     layer that introduced the real uncontrolled-mode bug found and fixed in Switch earlier — not worth
+     that risk here for a checkmark pop, where CSS already does the job correctly and can't drift out of
+     sync with the real input. display:none couldn't transition at all before; scale+opacity can. */
   [data-helix-part="checkbox-indicator"] {
     color:    var(--helix-checkbox-icon-color);
-    display:  none;
+    display:  flex;
     align-items: center;
     line-height: 1;
+    transform: scale(0);
+    opacity:   0;
+    transition:
+      transform var(--helix-primitive-duration-fast) cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity   var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
   }
   [data-helix-part="checkbox-input"]:checked + [data-helix-part="checkbox-control"] [data-helix-part="checkbox-indicator"],
   [data-helix-part="checkbox-input"][data-indeterminate] + [data-helix-part="checkbox-control"] [data-helix-part="checkbox-indicator"] {
-    display: flex;
+    transform: scale(1);
+    opacity:   1;
+  }
+  /* Disabled + checked/indeterminate — the checkmark itself also needs its own disabled color,
+     not the inverse (white) it uses at rest; wins by coming after in source order. */
+  [data-helix-part="checkbox-input"]:disabled + [data-helix-part="checkbox-control"] [data-helix-part="checkbox-indicator"] {
+    color: var(--helix-checkbox-icon-disabled);
   }
 
   [data-helix-part="checkbox-text"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-family: var(--helix-checkbox-text-labelFontFamily);
+    font-size:   var(--helix-checkbox-text-labelFontSize);
+    font-weight: var(--helix-checkbox-text-labelFontWeight);
+    line-height: var(--helix-checkbox-text-labelLineHeight);
     color:       var(--helix-checkbox-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
   }
 
   [data-helix-part="checkbox-description"] {
     padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));
-    font-size:    var(--helix-primitive-fontSize-s);
+    font-family:  var(--helix-checkbox-text-descriptionFontFamily);
+    font-size:    var(--helix-checkbox-text-descriptionFontSize);
+    font-weight:  var(--helix-checkbox-text-descriptionFontWeight);
+    line-height:  var(--helix-checkbox-text-descriptionLineHeight);
     color:        var(--helix-checkbox-text-description);
-    line-height:  var(--helix-primitive-lineHeight-snug);
   }
   [data-helix-part="checkbox-error"] {
     padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));
-    font-size:    var(--helix-primitive-fontSize-s);
+    font-family:  var(--helix-checkbox-text-descriptionFontFamily);
+    font-size:    var(--helix-checkbox-text-descriptionFontSize);
+    font-weight:  var(--helix-checkbox-text-descriptionFontWeight);
+    line-height:  var(--helix-checkbox-text-descriptionLineHeight);
     color:        var(--helix-checkbox-text-error);
-    line-height:  var(--helix-primitive-lineHeight-snug);
   }
+
+  /* ════════════════════════════════════════════════════════════════════════
+     CHECKBOX GROUP
+     Contract: contracts/components/CheckboxGroup.json
+     Composes real Checkbox instances internally — no new visual tokens, just
+     fieldset/legend layout reusing the same primitive spacing/typography
+     vocabulary RadioGroup already uses.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="checkbox-group"] {
+    border:  none;
+    padding: 0;
+    margin:  0;
+    display: flex;
+    flex-direction: column;
+    gap:     var(--helix-checkbox-gap);
+  }
+
+  [data-helix-part="checkbox-group-legend"] {
+    font-family: var(--helix-checkbox-text-legendFontFamily);
+    font-size:   var(--helix-checkbox-text-legendFontSize);
+    font-weight: var(--helix-checkbox-text-legendFontWeight);
+    line-height: var(--helix-checkbox-text-legendLineHeight);
+    color:       var(--helix-checkbox-text-label);
+    margin-bottom: var(--helix-checkbox-gap);
+    padding:     0;
+    float:       left;
+    width:       100%;
+  }
+  [data-helix-part="checkbox-group-legend"] + * { clear: left; }
+
+  [data-helix-part="checkbox-group-options"] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--helix-primitive-spacing-75);
+  }
+  [data-helix-part="checkbox-group-options"][data-orientation="horizontal"] {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  /* Aligned with each option's own text, not with its checkbox square — same left offset the
+     standalone Checkbox's own description/error already use. */
+  [data-helix-part="checkbox-group-description"],
+  [data-helix-part="checkbox-group-error"] {
+    padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));
+    font-family:  var(--helix-checkbox-text-descriptionFontFamily);
+    font-size:    var(--helix-checkbox-text-descriptionFontSize);
+    font-weight:  var(--helix-checkbox-text-descriptionFontWeight);
+    line-height:  var(--helix-checkbox-text-descriptionLineHeight);
+  }
+  [data-helix-part="checkbox-group-description"] { color: var(--helix-checkbox-text-description); }
+  [data-helix-part="checkbox-group-error"]       { color: var(--helix-checkbox-text-error); }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1145,15 +1578,16 @@
     margin:  0;
     display: flex;
     flex-direction: column;
-    gap:     var(--helix-primitive-spacing-50);
+    gap:     var(--helix-radio-gap);
   }
 
   [data-helix-part="radio-legend"] {
-    font-size:   var(--helix-primitive-fontSize-s);
-    font-weight: var(--helix-primitive-fontWeight-medium);
+    font-family: var(--helix-radio-text-legendFontFamily);
+    font-size:   var(--helix-radio-text-legendFontSize);
+    font-weight: var(--helix-radio-text-legendFontWeight);
+    line-height: var(--helix-radio-text-legendLineHeight);
     color:       var(--helix-radio-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
-    margin-bottom: var(--helix-primitive-spacing-25);
+    margin-bottom: var(--helix-radio-gap);
     padding:     0;
     float:       left;
     width:       100%;
@@ -1177,9 +1611,13 @@
     cursor:      pointer;
     user-select: none;
   }
+  /* Real disabled colors, not opacity — .ai/maps/patterns/disabled-state.md */
   [data-helix-part="radio-item"][data-disabled] {
-    cursor:  not-allowed;
-    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-label"],
+  [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-description"] {
+    color: var(--helix-radio-text-disabled);
   }
 
   /* sr-only native radio */
@@ -1200,7 +1638,7 @@
     width:        var(--helix-radio-size);
     height:       var(--helix-radio-size);
     border-radius: 50%;
-    border:       1.5px solid var(--helix-radio-border-default);
+    border:       var(--helix-borderWidth-default) solid var(--helix-radio-border-default);
     background:   var(--helix-radio-fill-default);
     display:      flex;
     align-items:  center;
@@ -1208,7 +1646,8 @@
     margin-top:   1px;
     transition:
       background-color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
-      border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
+      border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
+      border-width     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
   }
 
   [data-helix-part="radio-item"]:hover [data-helix-part="radio-input"]:not(:checked):not(:disabled) + [data-helix-part="radio-control"] {
@@ -1223,45 +1662,76 @@
     border-color: var(--helix-radio-fill-checked-hover);
   }
   [data-helix-part="radio-input"]:focus-visible + [data-helix-part="radio-control"] {
+    border-width:   var(--helix-borderWidth-focus);
     outline:        2px solid var(--helix-radio-border-focus);
     outline-offset: 2px;
   }
-  [data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-control"] {
+  [data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-control"],
+  [data-helix-part="radio-item"][data-invalid] [data-helix-part="radio-control"] {
     border-color: var(--helix-radio-border-invalid);
   }
 
+  /* Disabled — real gray fill/border, wins over :checked's colors (placed after it in source
+     order, same specificity). .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="radio-input"]:disabled + [data-helix-part="radio-control"] {
+    background:   var(--helix-radio-fill-disabled);
+    border-color: var(--helix-radio-border-disabled);
+  }
+  [data-helix-part="radio-input"]:disabled + [data-helix-part="radio-control"] [data-helix-part="radio-dot"] {
+    background: var(--helix-radio-dot-disabled);
+  }
+
+  /* Same reasoning as checkbox-indicator above: CSS transform/opacity, not Motion — :checked already
+     tracks controlled/uncontrolled correctly on its own, no JS state worth adding just for this pop. */
   [data-helix-part="radio-dot"] {
     width:         6px;
     height:        6px;
     border-radius: 50%;
     background:    var(--helix-radio-dot);
-    display:       none;
+    display:       block;
+    transform:     scale(0);
+    transition:    transform var(--helix-primitive-duration-fast) cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   [data-helix-part="radio-input"]:checked + [data-helix-part="radio-control"] [data-helix-part="radio-dot"] {
-    display: block;
+    transform: scale(1);
   }
 
   [data-helix-part="radio-item-content"] {
     display:        flex;
     flex-direction: column;
-    gap:            var(--helix-primitive-spacing-25);
+    gap:            var(--helix-radio-gapDescription);
   }
   [data-helix-part="radio-item-label"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-family: var(--helix-radio-text-labelFontFamily);
+    font-size:   var(--helix-radio-text-labelFontSize);
+    font-weight: var(--helix-radio-text-labelFontWeight);
+    line-height: var(--helix-radio-text-labelLineHeight);
     color:       var(--helix-radio-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
-    font-weight: var(--helix-primitive-fontWeight-medium);
   }
   [data-helix-part="radio-item-description"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-family: var(--helix-radio-text-descriptionFontFamily);
+    font-size:   var(--helix-radio-text-descriptionFontSize);
+    font-weight: var(--helix-radio-text-descriptionFontWeight);
+    line-height: var(--helix-radio-text-descriptionLineHeight);
     color:       var(--helix-radio-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+  }
+  [data-helix-part="radio-item-error"] {
+    font-family: var(--helix-radio-text-descriptionFontFamily);
+    font-size:   var(--helix-radio-text-descriptionFontSize);
+    font-weight: var(--helix-radio-text-descriptionFontWeight);
+    line-height: var(--helix-radio-text-descriptionLineHeight);
+    color:       var(--helix-radio-text-error);
   }
 
+  /* Aligned with each option's own text, not with its radio circle — same left offset the
+     standalone RadioButton's own description already uses. */
   [data-helix-part="radio-description"],
   [data-helix-part="radio-error"] {
-    font-size:   var(--helix-primitive-fontSize-s);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    padding-left: calc(var(--helix-radio-size) + var(--helix-primitive-spacing-50));
+    font-family:  var(--helix-radio-text-descriptionFontFamily);
+    font-size:    var(--helix-radio-text-descriptionFontSize);
+    font-weight:  var(--helix-radio-text-descriptionFontWeight);
+    line-height:  var(--helix-radio-text-descriptionLineHeight);
   }
   [data-helix-part="radio-description"] { color: var(--helix-radio-text-description); }
   [data-helix-part="radio-error"]       { color: var(--helix-radio-text-error); }
@@ -1288,6 +1758,7 @@
   [data-helix-part="switch-track"] {
     appearance:    none;
     position:      relative;
+    overflow:      hidden;
     border-radius: var(--helix-radius-full);
     background:    var(--helix-switch-track-fill-off);
     border:        none;
@@ -1321,15 +1792,13 @@
     outline-offset: 2px;
   }
 
+  /* Position/transform of the thumb is owned by motion.span at the JS layer (Switch.tsx) — see ADR-007
+     and .ai/maps/patterns/motion-effects.md — so this block only styles the thumb's own resting look,
+     never its position. */
   [data-helix-part="switch-thumb"] {
     display:       block;
-    position:      absolute;
-    top:           50%;
-    left:          2px;
-    transform:     translateY(-50%);
     border-radius: 50%;
     background:    var(--helix-switch-thumb-fill);
-    transition:    left var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
     pointer-events: none;
     box-shadow:    0 1px 2px rgba(0,0,0,0.2);
   }
@@ -1341,12 +1810,6 @@
     width:  var(--helix-switch-thumb-size-m);
     height: var(--helix-switch-thumb-size-m);
   }
-  [data-helix-part="switch-track"][data-size="s"][aria-checked="true"] [data-helix-part="switch-thumb"] {
-    left: calc(var(--helix-switch-width-s) - var(--helix-switch-thumb-size-s) - 2px);
-  }
-  [data-helix-part="switch-track"][data-size="m"][aria-checked="true"] [data-helix-part="switch-thumb"] {
-    left: calc(var(--helix-switch-width-m) - var(--helix-switch-thumb-size-m) - 2px);
-  }
 
   [data-helix-part="switch-label"] {
     font-size:   var(--helix-primitive-fontSize-s);
@@ -1354,9 +1817,11 @@
     line-height: var(--helix-primitive-lineHeight-snug);
     cursor:      pointer;
   }
-  [data-helix-part="switch-root"][data-disabled] [data-helix-part="switch-label"] {
-    cursor:  not-allowed;
-    opacity: 0.5;
+  /* Real disabled color, not opacity — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="switch-root"][data-disabled] [data-helix-part="switch-label"],
+  [data-helix-part="switch-root"][data-disabled] [data-helix-part="switch-description"] {
+    cursor: not-allowed;
+    color:  var(--helix-switch-text-disabled);
   }
 
   [data-helix-part="switch-description"] {
@@ -1386,12 +1851,23 @@
   }
 
   [data-helix-part="card-header"] {
-    padding:      var(--helix-card-padding);
-    border-bottom: 1px solid var(--helix-card-border);
+    padding:        var(--helix-card-padding);
+    padding-bottom: var(--helix-card-header-paddingBottom);
+    font-family:    var(--helix-card-header-fontFamily);
+    font-size:      var(--helix-card-header-fontSize);
+    font-weight:    var(--helix-card-header-fontWeight);
+    line-height:    var(--helix-card-header-lineHeight);
+    color:          var(--helix-color-text-neutral);
   }
 
   [data-helix-part="card-body"] {
-    padding: var(--helix-card-padding);
+    padding:     var(--helix-card-padding);
+    padding-top: var(--helix-card-body-paddingTop);
+    font-family: var(--helix-textStyle-body-m-regular-fontFamily);
+    font-size: var(--helix-textStyle-body-m-regular-fontSize);
+    font-weight: var(--helix-textStyle-body-m-regular-fontWeight);
+    line-height: var(--helix-textStyle-body-m-regular-lineHeight);
+    color:       var(--helix-color-text-neutral);
   }
   [data-helix-part="card-root"][data-padding="none"] [data-helix-part="card-body"] {
     padding: 0;
@@ -1431,6 +1907,434 @@
   [data-helix-part="avatar-root"][data-size="s"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-s); font-weight: var(--helix-avatar-fontWeight-s); }
   [data-helix-part="avatar-root"][data-size="m"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-m); font-weight: var(--helix-avatar-fontWeight-m); }
   [data-helix-part="avatar-root"][data-size="l"] [data-helix-part="avatar-initials"] { font-size: var(--helix-avatar-fontSize-l); font-weight: var(--helix-avatar-fontWeight-l); }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     AVATAR GROUP
+     Contract: contracts/components/AvatarGroup.json
+     Tokens:   --helix-avatarGroup-*, --helix-avatar-height-*, fontSize-*, fontWeight-* (shared with Avatar
+               for the overflow indicator's sizing/type, but its own neutral fill/text — never Avatar's
+               tinted ones, see avatarGroup.overflow-fill/overflow-text)
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="avatar-group-root"] {
+    display:     inline-flex;
+    align-items: center;
+  }
+
+  [data-helix-part="avatar-group-item"] {
+    display:       inline-flex;
+    flex-shrink:   0;
+    position:      relative;
+    border-radius: var(--helix-radius-full);
+    border:        var(--helix-avatarGroup-border-width) solid var(--helix-avatarGroup-ring);
+    transform:     translateY(0) scale(1);
+    transition:    transform var(--helix-duration-base) var(--helix-easing-base);
+  }
+  [data-helix-part="avatar-group-item"] + [data-helix-part="avatar-group-item"] {
+    margin-left: calc(-1 * var(--helix-avatarGroup-overlap));
+  }
+  /* Hover lift — only the hovered avatar moves, no cascade to siblings. Plain CSS :hover, no JS:
+     see .ai/maps/patterns/motion-effects.md's AvatarGroup row for why Motion isn't used here.
+     No z-index override here on purpose: the base rule already gives every item a `transform`
+     (translateY(0) scale(1)), which establishes a stacking context per item ordered by DOM
+     position alone — the item stacked later (visually on top, e.g. further right) already
+     paints above an earlier one with no z-index needed. Forcing z-index:2 on hover used to make
+     the hovered avatar jump above EVERY sibling, including a later one that normally sits on
+     top of it — visually "covering" a neighbor it shouldn't. Removing it keeps each avatar's
+     existing stacking order intact through the lift: it rises in place, never reordering
+     relative to its neighbors. */
+  [data-helix-part="avatar-group-item"]:hover {
+    transform: translateY(var(--helix-avatarGroup-hover-lift)) scale(var(--helix-avatarGroup-hover-scale));
+    transition-duration: var(--helix-duration-fast);
+    transition-timing-function: var(--helix-easing-out);
+  }
+
+  [data-helix-part="avatar-group-overflow"] {
+    display:          inline-flex;
+    align-items:      center;
+    justify-content:  center;
+    border-radius:    var(--helix-radius-full);
+    line-height:      1;
+    user-select:      none;
+    background-color: var(--helix-avatarGroup-overflow-fill);
+    color:            var(--helix-avatarGroup-overflow-text);
+  }
+  [data-helix-part="avatar-group-root"][data-size="s"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-s); height: var(--helix-avatar-height-s); font-size: var(--helix-avatar-fontSize-s); font-weight: var(--helix-avatar-fontWeight-s); }
+  [data-helix-part="avatar-group-root"][data-size="m"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-m); height: var(--helix-avatar-height-m); font-size: var(--helix-avatar-fontSize-m); font-weight: var(--helix-avatar-fontWeight-m); }
+  [data-helix-part="avatar-group-root"][data-size="l"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-l); height: var(--helix-avatar-height-l); font-size: var(--helix-avatar-fontSize-l); font-weight: var(--helix-avatar-fontWeight-l); }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     TOOLTIP
+     Contract: contracts/components/Tooltip.json
+     ADR:      docs/ADR/ADR-008-tooltip-primitive.md — hand-rolled, CSS-only show/hide, no library.
+     Tokens:   --helix-tooltip-*, --helix-primitive-zIndex-tooltip
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="tooltip-root"] {
+    position: relative;
+    display:  inline-flex;
+  }
+
+  [data-helix-part="tooltip-content"] {
+    position:      absolute;
+    z-index:       var(--helix-primitive-zIndex-tooltip);
+    width:         max-content;
+    max-width:     240px; /* content-driven width above the token scale — see Tooltip.json's sizing note */
+    background-color: var(--helix-tooltip-fill);
+    color:         var(--helix-tooltip-text);
+    border-radius: var(--helix-tooltip-radius);
+    box-shadow:    var(--helix-tooltip-shadow);
+    padding:       var(--helix-tooltip-padding-y) var(--helix-tooltip-padding-x);
+    font-size:     var(--helix-tooltip-fontSize);
+    font-weight:   var(--helix-tooltip-fontWeight);
+    line-height:   1.4;
+    /* pre-line, not normal: AvatarGroup's overflow tooltip joins hidden names with '\n' so each
+       renders on its own line — normal whitespace still collapses/wraps as usual. */
+    white-space:    pre-line;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    /* Cross-axis centering + edge-clamp shift come from --tooltip-shift, set inline by Tooltip.tsx's
+       auto-placement (ADR-009) — CSS still owns `transform` itself so :hover/[data-expanded] below can
+       animate the enter/leave `scale()`. Base (leave) state: quick 50ms ease-in, no delay. */
+    transition: opacity var(--helix-tooltip-duration-out) var(--helix-easing-in),
+                transform var(--helix-tooltip-duration-out) var(--helix-easing-in),
+                visibility 0s linear var(--helix-tooltip-duration-out);
+  }
+
+  /* Show on hover/focus — delayed (ADR-008: "don't show instantly"). Hide is immediate: leaving
+     :hover/:focus-within drops back to the base rule above, whose transition-delay is 0s. */
+  [data-helix-part="tooltip-root"]:hover [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"]:focus-within [data-helix-part="tooltip-content"] {
+    opacity:    1;
+    visibility: visible;
+    transition-duration: var(--helix-tooltip-duration-in);
+    transition-timing-function: var(--helix-easing-out);
+    transition-delay: var(--helix-tooltip-delay), var(--helix-tooltip-delay), var(--helix-tooltip-delay);
+  }
+
+  /* `expanded` prop — forces visible/hidden regardless of interaction. */
+  [data-helix-part="tooltip-root"][data-expanded="true"] [data-helix-part="tooltip-content"] {
+    opacity:    1;
+    visibility: visible;
+    transition-delay: 0s, 0s, 0s;
+  }
+  [data-helix-part="tooltip-root"][data-expanded="false"] [data-helix-part="tooltip-content"] {
+    opacity:    0 !important;
+    visibility: hidden !important;
+  }
+
+  /* transform-origin sits at the edge nearest the trigger, so the scale-in reads as growing OUT of
+     the trigger rather than from its own center. --tooltip-shift defaults to 0px when auto-placement
+     hasn't run yet (first paint, before the layout effect measures). */
+  [data-helix-part="tooltip-root"][data-placement="top"] [data-helix-part="tooltip-content"] {
+    bottom: calc(100% + var(--helix-tooltip-offset));
+    left: 50%;
+    transform-origin: 50% 100%;
+    transform: translateX(calc(-50% + var(--tooltip-shift, 0px))) scale(var(--helix-tooltip-scale-enter));
+  }
+  [data-helix-part="tooltip-root"][data-placement="bottom"] [data-helix-part="tooltip-content"] {
+    top: calc(100% + var(--helix-tooltip-offset));
+    left: 50%;
+    transform-origin: 50% 0%;
+    transform: translateX(calc(-50% + var(--tooltip-shift, 0px))) scale(var(--helix-tooltip-scale-enter));
+  }
+  [data-helix-part="tooltip-root"][data-placement="left"] [data-helix-part="tooltip-content"] {
+    right: calc(100% + var(--helix-tooltip-offset));
+    top: 50%;
+    transform-origin: 100% 50%;
+    transform: translateY(calc(-50% + var(--tooltip-shift, 0px))) scale(var(--helix-tooltip-scale-enter));
+  }
+  [data-helix-part="tooltip-root"][data-placement="right"] [data-helix-part="tooltip-content"] {
+    left: calc(100% + var(--helix-tooltip-offset));
+    top: 50%;
+    transform-origin: 0% 50%;
+    transform: translateY(calc(-50% + var(--tooltip-shift, 0px))) scale(var(--helix-tooltip-scale-enter));
+  }
+  [data-helix-part="tooltip-root"][data-placement="top"]:hover [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="top"]:focus-within [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="top"][data-expanded="true"] [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="bottom"]:hover [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="bottom"]:focus-within [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="bottom"][data-expanded="true"] [data-helix-part="tooltip-content"] {
+    transform: translateX(calc(-50% + var(--tooltip-shift, 0px))) scale(1);
+  }
+  [data-helix-part="tooltip-root"][data-placement="left"]:hover [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="left"]:focus-within [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="left"][data-expanded="true"] [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="right"]:hover [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="right"]:focus-within [data-helix-part="tooltip-content"],
+  [data-helix-part="tooltip-root"][data-placement="right"][data-expanded="true"] [data-helix-part="tooltip-content"] {
+    transform: translateY(calc(-50% + var(--tooltip-shift, 0px))) scale(1);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     ACCORDION
+     Contract: contracts/components/Accordion.json
+     Tokens:   --helix-accordion-*
+     Built on native <details>/<summary> — the grid-rows 0fr↔1fr trick needs the panel to stay
+     `display: grid` even while closed, which requires overriding the UA stylesheet's own
+     `details:not([open]) > *:not(summary) { display: none }` rule — the `!important` below is that
+     override, not decoration (same class of justified override as Tooltip's [data-expanded="false"]).
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="accordion-root"] {
+    background-color: var(--helix-accordion-fill);
+    border:        1px solid var(--helix-accordion-border);
+    border-radius: var(--helix-accordion-radius);
+  }
+
+  [data-helix-part="accordion-header"] {
+    display:         flex;
+    align-items:      center;
+    justify-content:  space-between;
+    gap:              var(--helix-accordion-padding-y);
+    padding:          var(--helix-accordion-padding-y) var(--helix-accordion-padding-x);
+    cursor:           pointer;
+    list-style:       none;
+    color:            var(--helix-accordion-text);
+    font-size:        var(--helix-accordion-fontSize);
+    font-weight:      var(--helix-accordion-fontWeight);
+  }
+  [data-helix-part="accordion-header"]::-webkit-details-marker {
+    display: none; /* Chrome/Safari's own disclosure triangle — replaced by our own chevron */
+  }
+  [data-helix-part="accordion-header"][aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* Keyed off data-state (open/closing/closed), not the native [open] attribute — [open] stays true
+     for the entire close transition and only flips false once it finishes. See
+     useDisclosureTransition.ts for why: the browser hides <details> content the instant [open] is
+     removed, which happens synchronously on click and would otherwise skip the collapse transition
+     entirely (only the expand direction would ever animate).
+
+     `height` is set inline by Accordion.tsx (measured via scrollHeight), not animated here via
+     grid-template-rows 0fr/1fr — that technique's 'fr' unit interpolation doesn't track the same
+     visual pace in both directions even with matched duration/easing, which read as a slow/laggy
+     collapse. CSS only owns overflow + the transition itself; the real height value is JS's job,
+     same "shift responsibilities" split as Tooltip's --tooltip-shift. */
+  [data-helix-part="accordion-panel"] {
+    display: block !important; /* overrides the UA's details-closed `display: none` */
+    overflow: hidden;
+    height: 0px;
+    transition: height var(--helix-accordion-duration-collapse) var(--helix-accordion-easing-collapse);
+  }
+  [data-helix-part="accordion-root"][data-state="open"] > [data-helix-part="accordion-panel"] {
+    transition: height var(--helix-accordion-duration-expand) var(--helix-accordion-easing);
+  }
+
+  [data-helix-part="accordion-panel-inner"] {
+    opacity:    0;
+    filter:     blur(var(--helix-accordion-blur-enter));
+    padding:    0 var(--helix-accordion-padding-x) var(--helix-accordion-padding-y);
+    transition: opacity var(--helix-accordion-duration-collapse) var(--helix-accordion-easing-collapse),
+                filter  var(--helix-accordion-duration-collapse) var(--helix-accordion-easing-collapse);
+  }
+  [data-helix-part="accordion-root"][data-state="open"] [data-helix-part="accordion-panel-inner"] {
+    opacity: 1;
+    filter:  blur(0);
+    transition: opacity var(--helix-accordion-duration-expand) var(--helix-accordion-easing),
+                filter  var(--helix-accordion-duration-expand) var(--helix-accordion-easing);
+  }
+
+  [data-helix-part="accordion-chevron"] {
+    display:   inline-flex;
+    color:     var(--helix-accordion-chevron);
+    transform: scaleY(1);
+    transform-origin: center;
+    transition: transform var(--helix-accordion-duration-chevron) var(--helix-accordion-easing-collapse);
+  }
+  [data-helix-part="accordion-root"][data-state="open"] [data-helix-part="accordion-chevron"] {
+    transform: scaleY(-1);
+    transition: transform var(--helix-accordion-duration-chevron) var(--helix-accordion-easing);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     MODAL
+     Contract: contracts/components/Modal.json
+     ADR:      docs/ADR/ADR-010-modal-sidepanel-primitive.md — native <dialog> + showModal(), JS-timed
+               close via useDialogTransition (packages/core/src/lib/useDialogTransition.ts).
+     Tokens:   --helix-modal-*
+     `data-state` (closed/open/closing) is written by useDialogTransition, not CSS-driven :open-style
+     selectors — see the ADR for why this needs JS timing, not a pure media/attribute transition.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="modal-root"] {
+    /* Reset native <dialog> UA styles — border/padding/background are ours, not the browser's. */
+    border:  none;
+    padding: 0;
+    /* Explicit position+inset+margin, not left to the UA's own `dialog:modal` centering — Tailwind's
+       preflight zeroes `margin` on every element (`*{margin:0}`), which cancels the UA's `margin:auto`
+       centering trick. Re-declaring it here at author-level restores centering regardless of preflight. */
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    min-height: var(--helix-modal-minHeight);
+    max-width: min(560px, calc(100vw - var(--helix-spacing-xl) * 2));
+    display: flex;
+    flex-direction: column;
+    border-radius:    var(--helix-modal-radius);
+    box-shadow:       var(--helix-modal-shadow);
+    background-color: var(--helix-modal-fill);
+    color:            var(--helix-modal-text);
+    transform: scale(var(--helix-modal-scale-enter));
+    opacity:   0;
+    transition: transform var(--helix-modal-duration-close) var(--helix-modal-easing),
+                opacity    var(--helix-modal-duration-close) var(--helix-modal-easing);
+  }
+  [data-helix-part="modal-root"][data-state="open"] {
+    transform: scale(1);
+    opacity:   1;
+    transition-duration: var(--helix-modal-duration-open);
+  }
+  [data-helix-part="modal-root"][data-state="closing"] {
+    transform: scale(var(--helix-modal-scale-enter));
+    opacity:   0;
+    transition-duration: var(--helix-modal-duration-close);
+  }
+  [data-helix-part="modal-root"]::backdrop {
+    background-color: var(--helix-modal-overlay);
+  }
+  [data-helix-part="modal-header"] {
+    /* Right-padded clear of the absolutely-positioned close button (inset + its own ~40px box + a
+       small gap), so a long title wraps before it, never runs under it. */
+    padding: var(--helix-modal-padding) calc(var(--helix-modal-closeInset) * 2 + 40px) 0 var(--helix-modal-padding);
+  }
+  [data-helix-part="modal-title"] {
+    margin:      0;
+    font-size:   var(--helix-modal-titleFontSize);
+    font-weight: var(--helix-modal-titleFontWeight);
+  }
+  [data-helix-part="modal-close"] {
+    position: absolute;
+    top:   var(--helix-modal-closeInset);
+    right: var(--helix-modal-closeInset);
+  }
+  [data-helix-part="modal-body"] {
+    flex: 1;
+    padding: var(--helix-modal-padding);
+  }
+  [data-helix-part="modal-footer"] {
+    display:          flex;
+    flex-shrink:      0;
+    justify-content:  space-between;
+    align-items:      center;
+    gap:              var(--helix-modal-footerGap);
+    padding:          0 var(--helix-modal-padding) var(--helix-modal-padding);
+  }
+  [data-helix-part="modal-footer-start"],
+  [data-helix-part="modal-footer-end"] {
+    display: flex;
+    align-items: center;
+    gap: var(--helix-modal-footerGap);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     SIDE PANEL
+     Contract: contracts/components/SidePanel.json
+     ADR:      docs/ADR/ADR-010-modal-sidepanel-primitive.md — same native <dialog> primitive as
+               Modal, positioned against the right edge instead of centered.
+     Tokens:   --helix-sidePanel-*
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="side-panel-root"] {
+    /* Reset native <dialog> UA centering — anchored to an edge instead, per `data-placement`. */
+    border:  none;
+    margin:  0;
+    padding: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--helix-sidePanel-fill);
+    color:            var(--helix-sidePanel-text);
+    opacity: 0;
+    filter:  blur(var(--helix-sidePanel-blur-enter));
+    transition: transform var(--helix-sidePanel-duration-close) var(--helix-sidePanel-easing),
+                opacity    var(--helix-sidePanel-duration-close) var(--helix-sidePanel-easing),
+                filter     var(--helix-sidePanel-duration-close) var(--helix-sidePanel-easing);
+  }
+  [data-helix-part="side-panel-root"][data-state="open"] {
+    opacity: 1;
+    filter:  blur(0);
+    transition-duration: var(--helix-sidePanel-duration-open);
+  }
+  [data-helix-part="side-panel-root"][data-state="closing"] {
+    opacity: 0;
+    filter:  blur(var(--helix-sidePanel-blur-enter));
+    transition-duration: var(--helix-sidePanel-duration-close);
+  }
+
+  /* placement="right" (default) — full height, fixed width, slides in from the right edge.
+     shadow (not shadowBottom): the visible edge facing the page is the left edge, and shadow.xl's
+     blur radius already reaches it — no directional flip needed the way "bottom" does below. */
+  [data-helix-part="side-panel-root"][data-placement="right"] {
+    inset: 0 0 0 auto;
+    height: 100vh;
+    max-height: 100vh;
+    width: var(--helix-sidePanel-width);
+    max-width: calc(100vw - var(--helix-spacing-xl) * 2);
+    box-shadow: var(--helix-sidePanel-shadow);
+    transform: translateX(100%);
+  }
+  [data-helix-part="side-panel-root"][data-placement="right"][data-state="open"] {
+    transform: translateX(0);
+  }
+  [data-helix-part="side-panel-root"][data-placement="right"][data-state="closing"] {
+    transform: translateX(100%);
+  }
+
+  /* placement="bottom" — full width, content-driven height up to 80vh, slides up from the bottom edge.
+     shadowBottom, not shadow: the visible edge facing the page is the TOP edge here, and shadow.xl's
+     positive Y-offset casts most of its strength downward (off-screen, behind the sheet) — barely
+     anything shows above. shadowBottom is the same weight/blur with the Y sign flipped, so the
+     visible side actually gets the strong part of the shadow. */
+  [data-helix-part="side-panel-root"][data-placement="bottom"] {
+    inset: auto 0 0 0;
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 80vh;
+    box-shadow: var(--helix-sidePanel-shadowBottom);
+    transform: translateY(100%);
+  }
+  [data-helix-part="side-panel-root"][data-placement="bottom"][data-state="open"] {
+    transform: translateY(0);
+  }
+  [data-helix-part="side-panel-root"][data-placement="bottom"][data-state="closing"] {
+    transform: translateY(100%);
+  }
+  /* No scrim — unlike Modal, SidePanel leaves the page behind fully visible. showModal() still gives
+     the focus trap/Escape/top-layer stacking. `background: transparent` here is NOT decorative —
+     browsers apply their own default ::backdrop dimming (e.g. Chrome's ~10% black) even with no
+     author rule at all, so simply omitting a background-color declaration still shows a grey scrim. */
+  [data-helix-part="side-panel-root"]::backdrop {
+    background: transparent;
+  }
+  [data-helix-part="side-panel-header"] {
+    /* Right-padded clear of the absolutely-positioned close button — same reasoning as Modal's header. */
+    padding: var(--helix-sidePanel-padding) calc(var(--helix-sidePanel-closeInset) * 2 + 40px) 0 var(--helix-sidePanel-padding);
+    flex-shrink: 0;
+  }
+  [data-helix-part="side-panel-title"] {
+    margin:      0;
+    font-size:   var(--helix-sidePanel-titleFontSize);
+    font-weight: var(--helix-sidePanel-titleFontWeight);
+  }
+  [data-helix-part="side-panel-close"] {
+    position: absolute;
+    top:   var(--helix-sidePanel-closeInset);
+    right: var(--helix-sidePanel-closeInset);
+  }
+  [data-helix-part="side-panel-body"] {
+    padding:  var(--helix-sidePanel-padding);
+    overflow-y: auto;
+    flex: 1;
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1520,6 +2424,7 @@
      ════════════════════════════════════════════════════════════════════════ */
 
   [data-helix-part="nav-item"] {
+    position:        relative;
     display:         flex;
     align-items:     center;
     gap:             var(--helix-primitive-spacing-50);
@@ -1532,11 +2437,22 @@
   [data-helix-part="nav-item"]:hover:not([data-current]) {
     background-color: var(--helix-navItem-fill-hover);
   }
-  [data-helix-part="nav-item"][data-current] {
+
+  /* The "current" background lives on this indicator, not the <a> itself — it's a motion.span with a
+     shared layoutId (NavItem.tsx), so Motion animates it sliding from the previous current item to this
+     one instead of the background just cutting over. Icon/label get z-index above it (position:relative,
+     see below) since a positioned sibling with no z-index would otherwise paint over static content. */
+  [data-helix-part="nav-item-indicator"] {
+    position:       absolute;
+    inset:          0;
+    z-index:        0;
+    border-radius:  var(--helix-navItem-radius);
     background-color: var(--helix-navItem-fill-current);
   }
 
   [data-helix-part="nav-item-icon"] {
+    position:     relative;
+    z-index:      1;
     display:      flex;
     align-items:  center;
     flex-shrink:  0;
@@ -1547,6 +2463,8 @@
   }
 
   [data-helix-part="nav-item-label"] {
+    position:    relative;
+    z-index:     1;
     font-size:   var(--helix-navItem-fontSize);
     font-weight: var(--helix-navItem-fontWeight);
     color:       var(--helix-navItem-text-default);
@@ -1556,6 +2474,86 @@
   }
   [data-helix-part="nav-item"][data-current] [data-helix-part="nav-item-label"] {
     color: var(--helix-navItem-text-current);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     SEGMENTED CONTROL
+     Contract: contracts/components/SegmentedControl.json
+     Tokens:   --helix-segmentedControl-*
+     The sliding pill reuses NavItem's exact layering: the pill is a motion.span
+     with a shared layoutId (SegmentedControl.tsx), absolutely positioned to fill
+     its parent button, with the label given z-index above it — see ADR-012.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="segmented-control-root"] {
+    position:      relative;
+    display:       inline-flex;
+    align-items:   center;
+    gap:           var(--helix-segmentedControl-padding);
+    padding:       var(--helix-segmentedControl-padding);
+    border-radius: var(--helix-segmentedControl-radius);
+    background-color: var(--helix-segmentedControl-fill-track);
+  }
+  /* Real disabled colors, not opacity — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="segmented-control-root"][data-disabled] {
+    background-color: var(--helix-segmentedControl-fill-disabled);
+    pointer-events: none;
+  }
+  [data-helix-part="segmented-control-root"][data-disabled] [data-helix-part="segmented-control-item-label"] {
+    color: var(--helix-segmentedControl-text-disabled);
+  }
+
+  [data-helix-part="segmented-control-item"] {
+    position:      relative;
+    appearance:    none;
+    -webkit-appearance: none;
+    border:        0;
+    background-color: transparent;
+    font-family:   inherit;
+    height:        var(--helix-segmentedControl-height);
+    padding:       0 var(--helix-segmentedControl-paddingX);
+    border-radius: var(--helix-segmentedControl-radius);
+    cursor:        pointer;
+    outline:       none;
+    transition:    color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="segmented-control-item"]:disabled {
+    cursor: not-allowed;
+  }
+  [data-helix-part="segmented-control-item"]:focus-visible {
+    outline:        2px solid var(--helix-color-border-focus);
+    outline-offset: 2px;
+  }
+
+  /* Same layering NavItem's indicator uses: absolutely positioned, z-index below the label, so a
+     single shared motion.span (one per checked item at a time) can slide between siblings via
+     Motion's layoutId instead of the background just cutting over. */
+  [data-helix-part="segmented-control-pill"] {
+    position:      absolute;
+    inset:         0;
+    z-index:       0;
+    border-radius: var(--helix-segmentedControl-radius);
+    background-color: var(--helix-segmentedControl-fill-pill);
+  }
+
+  [data-helix-part="segmented-control-item-label"] {
+    position:    relative;
+    z-index:     1;
+    display:     block;
+    font-size:   var(--helix-segmentedControl-fontSize);
+    font-weight: var(--helix-segmentedControl-fontWeight);
+    color:       var(--helix-segmentedControl-text-default);
+    white-space: nowrap;
+    transition:  color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="segmented-control-item"][aria-checked="true"] [data-helix-part="segmented-control-item-label"],
+  [data-helix-part="segmented-control-item"]:not([aria-checked="true"]):not(:disabled):hover [data-helix-part="segmented-control-item-label"] {
+    color: var(--helix-segmentedControl-text-checked);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="segmented-control-pill"] { transition: none !important; }
   }
 
 
@@ -1649,5 +2647,114 @@
     flex:      1;
     overflow-y: auto;
     padding:    var(--helix-spacing-l);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
+     TOAST
+     Contract: contracts/components/Toast.json
+     ADR:      docs/ADR/ADR-011-toast-primitive.md — imperative API, portal to document.body,
+               JS-measured stacking (not grid/percentage tricks — see that ADR for why).
+     Tokens:   --helix-toast-*, --helix-badge-icon-* (icon color only — the one place variant
+               color shows; background/text never tint per variant, unlike Badge itself).
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="toast-viewport"] {
+    position: fixed;
+    top: var(--helix-spacing-l);
+    right: var(--helix-spacing-l);
+    width: var(--helix-toast-width);
+    z-index: var(--helix-primitive-zIndex-toast);
+  }
+
+  [data-helix-part="toast"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--helix-toast-width);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--helix-toast-gap);
+    padding: var(--helix-toast-padding);
+    background-color: var(--helix-toast-fill);
+    border-radius: var(--helix-toast-radius);
+    box-shadow: var(--helix-toast-shadow);
+    /* Top-center, not bottom — the viewport is anchored to the TOP of the screen, so depth grows
+       downward into the page (see the depth/spread rules below), same reasoning as SidePanel's
+       bottom placement needing its own shadow direction. */
+    transform-origin: 50% 0%;
+    will-change: transform, opacity, filter;
+    transition:
+      transform var(--helix-toast-durationClose) var(--helix-toast-easing),
+      opacity   var(--helix-toast-durationClose) var(--helix-toast-easing),
+      filter    var(--helix-toast-durationClose) var(--helix-toast-easing);
+  }
+
+  [data-helix-part="toast-icon"] {
+    flex-shrink: 0;
+    margin-top: 1px;
+    width: var(--helix-toast-iconSize);
+    height: var(--helix-toast-iconSize);
+  }
+  [data-helix-part="toast-content"] { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  [data-helix-part="toast-title"] {
+    font-size: var(--helix-primitive-fontSize-s);
+    font-weight: var(--helix-primitive-fontWeight-bold);
+    color: var(--helix-toast-text);
+  }
+  [data-helix-part="toast-description"] {
+    font-size: var(--helix-primitive-fontSize-s);
+    color: var(--helix-toast-textDescription);
+    margin-top: 2px;
+  }
+
+  /* Depth grows DOWNWARD (positive translateY), not upward — the viewport is pinned to the top of the
+     screen, so stacking upward would push older toasts off-screen. Same "must stay inside the visible
+     page" principle ADR-009 established for Tooltip's auto-placement.
+     --peek-y is a measured pixel offset (React computes it in Toast.tsx from real offsetHeight), not
+     `peek * depth` — a flat multiple only gives an equal-looking sliver between each pair of toasts
+     when every toast happens to be the same height; two different heights (a 2-line description vs.
+     a 1-line one) immediately made the gaps look uneven. Same root cause, and the same fix, as
+     --spread-y below. */
+  [data-helix-part="toast"][data-depth="0"] { z-index: 3; transform: translateY(0) scale(1); opacity: 1; }
+  [data-helix-part="toast"][data-depth="1"] {
+    z-index: 2;
+    transform: translateY(var(--peek-y, 0px)) scale(calc(1 - var(--helix-toast-depthScale)));
+    opacity: calc(1 - var(--helix-toast-depthFade));
+  }
+  [data-helix-part="toast"][data-depth="2"] {
+    z-index: 1;
+    transform: translateY(var(--peek-y, 0px)) scale(calc(1 - var(--helix-toast-depthScale) * 2));
+    opacity: calc(1 - var(--helix-toast-depthFade) * 1.6);
+  }
+
+  /* --spread-y is a real measured pixel offset (React sets it inline via offsetHeight — see
+     Toast.tsx), not `100% * depth` — percentage math broke as soon as two toasts had different
+     heights, since each only knows its OWN height, not the taller one actually sitting above it.
+     See ADR-011 for the full story (caught in the pre-implementation preview, not after shipping). */
+  [data-helix-part="toast-viewport"][data-spread="true"] [data-helix-part="toast"][data-depth="1"],
+  [data-helix-part="toast-viewport"][data-spread="true"] [data-helix-part="toast"][data-depth="2"] {
+    opacity: 1;
+    transform: translateY(var(--spread-y, 0px)) scale(1);
+  }
+
+  [data-helix-part="toast"][data-state="closed"] {
+    transition: none !important;
+    transform: translateY(calc(var(--helix-toast-rise) * -1)) scale(var(--helix-toast-scaleEnter));
+    opacity: 0;
+    filter: blur(var(--helix-toast-blurEnter));
+  }
+  [data-helix-part="toast"][data-state="open"] {
+    transition-duration: var(--helix-toast-durationOpen);
+  }
+  [data-helix-part="toast"][data-state="closing"] {
+    z-index: 0;
+    transform: translateY(calc(var(--helix-toast-peek) * 3)) scale(calc(1 - var(--helix-toast-depthScale) * 3));
+    opacity: 0;
+    filter: blur(var(--helix-toast-blurEnter));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="toast"] { transition: none !important; transform: none !important; filter: none !important; }
   }
 }

@@ -31,10 +31,16 @@ const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
 // to live here as 'FE'/'NM' judgment calls with no ADR to back them; per 2026-08-23
 // review neither is documented anywhere, so they were removed and now fall through to
 // the mechanical 🆕 classification below like any other unreviewed gap.
-type KnownTag = 'ADR';
+type KnownTag = 'ADR-004' | 'ADR-005' | 'ADR-008' | 'ADR-010' | 'ADR-011' | 'ADR-013' | 'ADR-016';
 
 const REASON_TEXT: Record<KnownTag, string> = {
-  ADR: 'ADR-004 exception',
+  'ADR-004': 'ADR-004 exception',
+  'ADR-005': 'ADR-005 exception',
+  'ADR-008': 'ADR-008 exception',
+  'ADR-010': 'ADR-010 exception',
+  'ADR-011': 'ADR-011 exception',
+  'ADR-013': 'ADR-013 exception',
+  'ADR-016': 'ADR-016 exception',
 };
 
 // Human judgment calls — the only hand-maintained data in this script. Add an entry
@@ -47,14 +53,70 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   // them here would suppress that and misrepresent "reviewed, nothing to do" for a row that mechanically
   // has something to do. See ADR-004's density-model note for why the coincidence isn't acted on by
   // default even though it's flagged.
-  'badge.height.xs': { tag: 'ADR' },
-  'chip.height.s': { tag: 'ADR' },
+  'badge.height.xs': { tag: 'ADR-004' },
+  'chip.height.s': { tag: 'ADR-004' },
   // 6px lands between primitive.spacing.25 (4px) and .50 (8px) with no grid rung of its own — see
   // ADR-004's "One exception to that exception" for why a new rung isn't worth adding for this.
-  'chip.gap.s': { tag: 'ADR' },
-  'chip.gap.m': { tag: 'ADR' },
+  'chip.gap.s': { tag: 'ADR-004' },
+  'chip.gap.m': { tag: 'ADR-004' },
+  // FAB's speed-dial actions render smaller than the trigger — 36px, between Control's m (32px) and
+  // l (40px) — a documented local exception, see ADR-004's "FAB, added 2026-09-09" note.
+  'fab.action.height': { tag: 'ADR-004' },
   // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped
   // entirely below, per CLAUDE.md's token policy that width is deliberately not tokenized.
+
+  // Toast's tuned animation/timing constants — no semantic.duration.* rung matches
+  // durationOpen/durationClose without changing the actual tuned feel, and the rest have no
+  // shared cross-component concept to alias at all. See ADR-011's "Tuned constants, not tokens".
+  'toast.durationOpen': { tag: 'ADR-011' },
+  'toast.durationClose': { tag: 'ADR-011' },
+  'toast.autoDismissMs': { tag: 'ADR-011' },
+  // blurEnter is no longer an exception — promoted to semantic.blur.enter once Accordion, SidePanel,
+  // and Toast turned out to share the identical 2px value (see packages/tokens/CLAUDE.md's "Motion
+  // naming vocabulary" — a value shared by 3+ components is exactly the bar for a real shared token).
+  'toast.scaleEnter': { tag: 'ADR-011' },
+  'toast.depthScale': { tag: 'ADR-011' },
+  'toast.depthFade': { tag: 'ADR-011' },
+  // A slide-up-on-enter travel distance, not a spacing/gap value — semantic.spacing.* tops out at
+  // 32px (xl) with nothing near 80px, and forcing it onto primitive.spacing.500 directly misrepresents
+  // it as "a spacing usage" when it's really an animation offset, same category as blurEnter/scaleEnter.
+  'toast.rise': { tag: 'ADR-011' },
+  // 2px hairline gap between menu items, explicit review feedback (not a rounding of the 4px
+  // primitive.spacing.25 rung, deliberately smaller) — see ADR-013's amendment.
+  'menu.gap': { tag: 'ADR-013' },
+
+  // Tooltip's tuned show/hide timing — ADR-008 explicitly discusses the show-delay's purpose
+  // ("a short show delay avoids flashing one on every incidental mouse pass, matching the APG
+  // pattern's guidance"); duration-in/duration-out/scale-enter are the same primitive's own
+  // animation constants, same category as Toast's ADR-011 exceptions.
+  'tooltip.delay': { tag: 'ADR-008' },
+  'tooltip.duration-in': { tag: 'ADR-008' },
+  'tooltip.duration-out': { tag: 'ADR-008' },
+  'tooltip.scale-enter': { tag: 'ADR-008' },
+
+  // Modal's open/close choreography and backdrop — ADR-010 defines Modal as this exact pattern
+  // ("flip to data-state=closing, wait the component's own close-duration token... each
+  // supplying its own close-duration token"), so its tuned duration/scale-enter/overlay values
+  // are this same decision's implementation detail, not a separate unreviewed gap.
+  'modal.duration-open': { tag: 'ADR-010' },
+  'modal.duration-close': { tag: 'ADR-010' },
+  'modal.scale-enter': { tag: 'ADR-010' },
+  'modal.overlay': { tag: 'ADR-010' },
+
+  // SidePanel shares ADR-010 with Modal for the same open/close choreography reasoning.
+  'sidePanel.duration-open': { tag: 'ADR-010' },
+  'sidePanel.duration-close': { tag: 'ADR-010' },
+  // The bottom-edge shadow exists because ADR-005 puts SidePanel in the "gets a shadow" overlay
+  // category at all — this compound value is that policy's implementation detail for the one
+  // edge that needs its own separate shadow (the panel's leading edge).
+  'sidePanel.shadowBottom': { tag: 'ADR-005' },
+
+  // Accordion's chevron/height/content all transition on the same duration on purpose, so the
+  // chevron finishes rotating exactly when the panel finishes expanding or collapsing — see
+  // ADR-016 (written to close this gap; no prior ADR covered Accordion's motion at all).
+  'accordion.duration-expand': { tag: 'ADR-016' },
+  'accordion.duration-collapse': { tag: 'ADR-016' },
+  'accordion.duration-chevron': { tag: 'ADR-016' },
 };
 
 // The 3 possible outcomes, flagged with an emoji prefixed onto the "Current Value" cell:

@@ -22,7 +22,7 @@
       },
       {
         "name": "disabled",
-        "description": "The button is not interactive. Communicates the option exists but is currently unavailable.",
+        "description": "The button is not interactive. Communicates the option exists but is currently unavailable. Solid gray via dedicated fill/text/icon/border.disabled tokens, never opacity — see .ai/maps/patterns/disabled-state.md.",
         "aria": "disabled (native HTML attribute)"
       }
     ]

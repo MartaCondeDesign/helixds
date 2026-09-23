@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { motion } from 'motion/react';
 import { cn } from '../../lib/utils';
+import { PRESS_SCALE_COMPACT } from '../../lib/motionPresets';
 import { Icon } from '../Icon';
 import type { IconButtonProps } from './IconButton.types';
 
@@ -33,14 +35,25 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       className,
       disabled,
       onPress,
+      // Not forwarded to motion.button — same reason as Button (ADR-007): Motion's HTMLMotionProps
+      // redefines these native names for its own gesture/animation system.
+      style: _style,
+      onDrag: _onDrag,
+      onDragStart: _onDragStart,
+      onDragEnd: _onDragEnd,
+      onAnimationStart: _onAnimationStart,
+      onAnimationEnd: _onAnimationEnd,
+      onAnimationIteration: _onAnimationIteration,
       ...props
     },
     ref,
   ) => {
     const isDisabled = disabled || loading;
 
+    // `scale` (in whileTap below) is Motion's own animation-target key — a verify:props false positive,
+    // same category as Button.tsx's whileTap.
     return (
-      <button
+      <motion.button
         ref={ref}
         data-helix-part="icon-button"
         data-variant={variant}
@@ -51,10 +64,12 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         aria-label={label}
         className={cn(className)}
         onClick={onPress}
+        transition={{ duration: 0.1 }}
+        {...(isDisabled ? {} : { whileTap: { scale: PRESS_SCALE_COMPACT } })}
         {...props}
       >
         {loading ? <Spinner /> : <Icon icon={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />}
-      </button>
+      </motion.button>
     );
   },
 );

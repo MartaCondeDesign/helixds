@@ -1,10 +1,28 @@
-import type { TablerIcon } from '@tabler/icons-react';
+import type * as React from 'react';
 
 export type IconSize = 12 | 14 | 16 | 18 | 20 | 24 | 32;
 
+/**
+ * Structural shape Helix's `Icon` wrapper actually renders through — `size`, `stroke`, `color`,
+ * plus standard SVG/aria passthrough. Every `@tabler/icons-react` icon already satisfies this
+ * type as-is (Tabler is the documented default set), so existing usage is unaffected. Any other
+ * icon component matching this same prop shape can be passed directly too; one that doesn't
+ * (different prop names, e.g. Lucide's `strokeWidth`) can be wrapped with `createIconAdapter` —
+ * see `Icon/createIconAdapter.ts` and ADR-014.
+ */
+export type HelixIconComponent = React.ComponentType<
+  Omit<React.SVGProps<SVGSVGElement>, 'size' | 'stroke' | 'color'> & {
+    size?: number | string;
+    stroke?: number;
+    color?: string;
+  }
+>;
+
 export interface IconProps {
-  /** The Tabler icon component to render, e.g. `IconPlus`. */
-  icon: TablerIcon;
+  /** The icon component to render, passed by reference (e.g. `IconPlus`), not pre-instantiated.
+   *  Defaults to Tabler's outline set; any `HelixIconComponent`-shaped component works — see
+   *  `createIconAdapter` for sets with an incompatible prop dialect. */
+  icon: HelixIconComponent;
   /** Rendered icon size in pixels. Default: 16 */
   size?: IconSize;
   /**

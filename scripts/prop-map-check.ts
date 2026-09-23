@@ -46,6 +46,20 @@ function buildPattern(name: string) {
 type Violation = { file: string; line: number; invalid: string; canonical: string; snippet: string };
 const violations: Violation[] = [];
 
+// Motion (motion/react, ADR-007) has its own animation-target vocabulary — `scale`, `type`
+// (spring vs tween), `drag`, etc. — set inside `initial`/`animate`/`exit`/`whileTap`/
+// `whileHover`/`whileFocus`/`whileInView`/`transition` object literals. Those are Motion's own
+// keys, not Helix component props, so they can't be renamed to satisfy prop-map.md — a line that
+// sets one of MOTION_ANTI_SYNONYMS inside one of these containers isn't a real violation. Every
+// current usage is a single-line object literal (see Button/Chip/FAB/IconButton), so a per-line
+// check is enough; this isn't a general JS parser.
+const MOTION_CONTAINERS = /\b(animate|initial|exit|whileTap|whileHover|whileFocus|whileDrag|whileInView|transition)\b/;
+const MOTION_ANTI_SYNONYMS = new Set(['scale', 'type', 'drag']);
+
+function isMotionAnimationLine(line: string, invalid: string): boolean {
+  return MOTION_ANTI_SYNONYMS.has(invalid) && MOTION_CONTAINERS.test(line);
+}
+
 async function scan() {
   const files: string[] = [];
   for await (const f of glob('packages/**/*.tsx', { cwd: path.resolve(import.meta.dirname, '..') })) {
@@ -66,6 +80,10 @@ async function scan() {
       const patterns = buildPattern(invalid);
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i] ?? '';
+        // A `//`-comment line only ever mentions a prop name in prose (e.g. explaining a
+        // deliberate choice) — never an actual usage worth flagging.
+        if (line.trim().startsWith('//')) continue;
+        if (isMotionAnimationLine(line, invalid)) continue;
         for (const pattern of patterns) {
           pattern.lastIndex = 0;
           if (pattern.test(line)) {

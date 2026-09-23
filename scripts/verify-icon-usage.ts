@@ -17,7 +17,12 @@ import { glob } from 'fs/promises';
 
 const REPORT_ONLY = true;
 
-const ICON_JSX_PATTERN = /<Icon[A-Z]\w*[\s/>]/;
+// Negative lookahead excludes `<IconButton` — a real Helix wrapper component (like `Icon` itself),
+// not a raw Tabler icon, but its name happens to match "Icon" + an uppercase letter just like
+// `IconPlus`/`IconX` do. Caught when Modal/SidePanel/Toast became the first REAL components (not
+// just Storybook stories, which this script's `packages/**/*.tsx` glob never reaches) to render
+// `<IconButton>` from inside another component's own .tsx file.
+const ICON_JSX_PATTERN = /<Icon(?!Button\b)[A-Z]\w*[\s/>]/;
 const EXEMPT_DIR = path.join('packages', 'core', 'src', 'components', 'Icon');
 
 type Violation = { file: string; line: number; snippet: string };

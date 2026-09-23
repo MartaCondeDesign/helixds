@@ -47,6 +47,7 @@ export const doc: ComponentDoc = {
     'size — s or m track/thumb scale',
     'checked / defaultChecked — controlled or uncontrolled boolean state',
     'onChange fires immediately on toggle — no separate confirm step',
+    'Thumb slides via a Motion spring (ADR-007) instead of a flat CSS transition; internal only, no new prop',
   ],
   examples: [
     { label: 'Default', code: `<Switch label="Enable notifications" />` },

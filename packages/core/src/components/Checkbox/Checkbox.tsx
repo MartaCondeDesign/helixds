@@ -55,6 +55,7 @@ export function Checkbox({
           aria-invalid={invalid || undefined}
           aria-describedby={describedby}
           data-helix-part="checkbox-input"
+          {...(indeterminate ? { 'data-indeterminate': '' } : {})}
           onChange={e => onChange?.(e.target.checked)}
         />
 

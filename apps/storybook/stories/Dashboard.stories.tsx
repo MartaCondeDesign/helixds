@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Reorder, useDragControls } from 'motion/react';
 import {
-  AppShell, SideNav, NavItem, TopBar, PageHeader, Card, Avatar, Icon,
-  Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell,
-  Button, IconButton, Input, Select, Badge, Switch,
+  AppShell, SideNav, NavItem, TopBar, PageHeader, Card, Avatar, Icon, Select, FAB,
+  Table, TableHead, TableHeaderCell, TableCell,
+  Button, IconButton, Input, Badge,
 } from '@helix-ds/core';
 import {
-  IconBell, IconSearch, IconBolt, IconTrendingUp,
-  IconFilter, IconDownload, IconPlus, IconDots, IconHelp,
+  IconBell, IconSearch, IconBolt,
+  IconDownload, IconPlus, IconDots, IconHelp,
   IconArrowUpRight, IconArrowDownRight,
+  IconTable, IconLayoutGrid, IconGripVertical, IconUserPlus,
 } from '@tabler/icons-react';
 import { MEMBERS, NAV_ITEMS } from './fixtures/dashboard.fixture';
 import type { Member } from './fixtures/dashboard.fixture';
@@ -77,25 +79,101 @@ const STATUS_VARIANT: Record<Member['status'], 'success' | 'warning' | 'danger'>
   active: 'success', invited: 'warning', suspended: 'danger',
 };
 
+const ROLES = Array.from(new Set(MEMBERS.map(m => m.role)));
+
+// One row, its own Reorder.Item — useDragControls is a hook, it needs its own component instance per
+// row (can't call it inside a .map() callback directly, that breaks the Rules of Hooks). dragListener is
+// off so the row itself isn't draggable by clicking anywhere in it (that would fight the row's own
+// interactive content, e.g. "Row actions"); the grip icon starts the drag explicitly via dragControls.
+function MemberRow({ member }: { member: Member }) {
+  const dragControls = useDragControls();
+  return (
+    <Reorder.Item
+      as="tr"
+      value={member}
+      data-helix-part="table-row"
+      dragListener={false}
+      dragControls={dragControls}
+    >
+      <TableCell>
+        <span
+          onPointerDown={e => dragControls.start(e)}
+          style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
+          aria-label={`Reorder ${member.name}`}
+        >
+          <Icon icon={IconGripVertical} size={16} />
+        </span>
+      </TableCell>
+      <TableCell>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
+          <Avatar label={member.name} size="s" />
+          <div>
+            <div style={{
+              fontSize: 'var(--helix-textStyle-body-s-medium-fontSize)',
+              fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)',
+              color: 'var(--helix-color-text-neutral)',
+              whiteSpace: 'nowrap',
+            }}>
+              {member.name}
+            </div>
+            <div style={{
+              fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
+              fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
+              color: 'var(--helix-color-text-neutral-lightest)',
+            }}>
+              {member.email}
+            </div>
+          </div>
+        </div>
+      </TableCell>
+      <TableCell>{member.role}</TableCell>
+      <TableCell><Badge variant={STATUS_VARIANT[member.status]} label={member.status} /></TableCell>
+      <TableCell>{member.components}</TableCell>
+      <TableCell>{member.lastSeen}</TableCell>
+      <TableCell><IconButton variant="ghost" size="s" icon={IconDots} label="Row actions" /></TableCell>
+    </Reorder.Item>
+  );
+}
+
+// ── Motion additions (ADR-007) ──────────────────────────────────────────────
+// Role filter: the real Select component, single-value — a custom multi-select dropdown panel was tried
+// here and reverted, this page only uses real Helix components. Table rows: Motion's native
+// Reorder.Group/Reorder.Item (as="tbody"/as="tr" — real table elements, no CSS table box-generation
+// issue). Cards view: plain, no drag. FAB: Morph-style speed-dial via Motion springs. Switch: Motion
+// spring thumb (in the real Switch component, not here). See .ai/maps/patterns/motion-effects.md for the
+// full effect-by-component map.
+
 // ── Main page ──────────────────────────────────────────────────────────────
 
 function DashboardPage() {
   const [search, setSearch] = useState('');
-  const [role,   setRole]   = useState('');
-  const [aiCtx,  setAiCtx]  = useState(true);
+  const [view, setView] = useState<'table' | 'cards'>('table');
+  const [role, setRole] = useState('');
+  const [memberOrder, setMemberOrder] = useState<string[]>(MEMBERS.map(m => m.id));
 
-  const roles = [
-    { value: 'design',   label: 'Design'      },
-    { value: 'engineer', label: 'Engineering' },
-    { value: 'pm',       label: 'Product'     },
-  ];
+  const orderedMembers = useMemo(
+    () => memberOrder.map(id => MEMBERS.find(m => m.id === id)).filter((m): m is Member => !!m),
+    [memberOrder],
+  );
 
-  const filtered = MEMBERS.filter(m => {
+  const filtered = orderedMembers.filter(m => {
     const q = search.toLowerCase();
     const matchSearch = m.name.toLowerCase().includes(q) || m.email.toLowerCase().includes(q);
-    const matchRole   = !role || m.role.toLowerCase().includes(role);
+    const matchRole   = !role || m.role === role;
     return matchSearch && matchRole;
   });
+
+  // Motion's Reorder.Group works on the currently VISIBLE (filtered) array; reordering within that
+  // subset gets spliced back into the full underlying order, so hidden (filtered-out) members keep their
+  // relative position instead of being disturbed by a drag they can't see.
+  const handleReorder = (newFilteredOrder: Member[]) => {
+    const newIds = newFilteredOrder.map(m => m.id);
+    setMemberOrder(order => {
+      const filteredIdSet = new Set(newIds);
+      let idx = 0;
+      return order.map(id => (filteredIdSet.has(id) ? newIds[idx++] : id));
+    });
+  };
 
   return (
     <AppShell
@@ -173,10 +251,7 @@ function DashboardPage() {
         label="Team"
         description="Manage members and their access to the Helix workspace."
         actions={
-          <>
-            <Badge variant="success" icon={IconTrendingUp} label="+2 this month" />
-            <Button variant="primary" size="m" icon={IconPlus}>Invite member</Button>
-          </>
+          <Button variant="primary" size="m" icon={IconPlus}>Invite member</Button>
         }
       />
 
@@ -193,114 +268,100 @@ function DashboardPage() {
         <StatCard label="Token coverage" value="89%"  delta="-2pp"  trend="down" />
       </div>
 
-      {/* AI context banner */}
-      <div style={{ marginBottom: 'var(--helix-spacing-s)' }}>
-        <Card>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
-              <span style={{
-                width: 32, height: 32, borderRadius: 'var(--helix-radius-l)',
-                background: aiCtx ? 'var(--helix-color-fill-primary-interactive-light-default)' : 'var(--helix-color-fill-secondary-interactive-default)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              }}>
-                <Icon
-                  icon={IconBolt}
-                  size={16}
-                  color={aiCtx ? 'var(--helix-color-text-primary)' : 'var(--helix-color-text-neutral-lightest)'}
-                />
-              </span>
-              <div>
-                <div style={{
-                  fontSize: 'var(--helix-textStyle-caption-semibold-fontSize)',
-                  fontWeight: 'var(--helix-textStyle-caption-semibold-fontWeight)',
-                  color: 'var(--helix-color-text-neutral)',
-                }}>
-                  AI Context export
-                </div>
-                <div style={{
-                  fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
-                  fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
-                  color: 'var(--helix-color-text-neutral-light)',
-                }}>
-                  Include team structure in <code style={{ fontFamily: 'monospace', fontSize: 'inherit' }}>llms.txt</code>
-                </div>
-              </div>
-            </div>
-            <Switch label="AI Context export" hideLabel checked={aiCtx} onChange={setAiCtx} />
+      {/* One row: real Select for the role filter on the left, Export + view toggle pushed to the far
+          right (view toggle rightmost). Single-select, matching what Select actually is — no invented
+          multi-select panel. */}
+      <div
+        style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap', marginBottom: 'var(--helix-spacing-s)' }}
+      >
+        <div style={{ width: 200 }}>
+          <Select
+            label="Role"
+            hideLabel
+            options={ROLES.map(r => ({ value: r, label: r }))}
+            placeholder="All roles"
+            value={role}
+            onChange={setRole}
+          />
+        </div>
+
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+          <Button variant="ghost" size="m" icon={IconDownload}>Export</Button>
+          {/* View toggle — view-toggle.md recipe */}
+          <div role="group" aria-label="View" style={{ display: 'inline-flex', gap: 'var(--helix-primitive-spacing-25)' }}>
+            <IconButton
+              icon={IconTable}
+              label="Table view"
+              variant={view === 'table' ? 'secondary' : 'ghost'}
+              aria-pressed={view === 'table'}
+              onPress={() => setView('table')}
+            />
+            <IconButton
+              icon={IconLayoutGrid}
+              label="Cards view"
+              variant={view === 'cards' ? 'secondary' : 'ghost'}
+              aria-pressed={view === 'cards'}
+              onPress={() => setView('cards')}
+            />
           </div>
-        </Card>
+        </div>
       </div>
 
-      {/* Member table */}
-      <Card
-        padding="none"
-        header={
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)', flexWrap: 'wrap' }}>
-            <div style={{ width: 200 }}>
-              <Select
-                label="Role"
-                hideLabel
-                options={roles}
-                placeholder="All roles"
-                value={role}
-                onChange={setRole}
-                size="m"
-              />
-            </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
-              <Badge variant="neutral" label={`${filtered.length} members`} />
-              <Button variant="secondary" size="m" icon={IconFilter}>Filter</Button>
-              <Button variant="ghost"     size="m" icon={IconDownload}>Export</Button>
-            </div>
-          </div>
-        }
-      >
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableHeaderCell>Member</TableHeaderCell>
-              <TableHeaderCell>Role</TableHeaderCell>
-              <TableHeaderCell>Status</TableHeaderCell>
-              <TableHeaderCell>Components</TableHeaderCell>
-              <TableHeaderCell>Last seen</TableHeaderCell>
-              <TableHeaderCell>{''}</TableHeaderCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filtered.map(m => (
-              <TableRow key={m.id}>
-                <TableCell>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
-                    <Avatar label={m.name} size="s" />
-                    <div>
-                      <div style={{
-                        fontSize: 'var(--helix-textStyle-body-s-medium-fontSize)',
-                        fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)',
-                        color: 'var(--helix-color-text-neutral)',
-                        whiteSpace: 'nowrap',
-                      }}>
-                        {m.name}
-                      </div>
-                      <div style={{
-                        fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)',
-                        fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
-                        color: 'var(--helix-color-text-neutral-lightest)',
-                      }}>
-                        {m.email}
-                      </div>
-                    </div>
+      {/* Member table/cards — draggable to reorder via Motion's Reorder (ADR-007). Reorder.Item/
+          Reorder.Group both take an `as` prop — `tr`/`tbody` render as real table elements, so this
+          doesn't hit the CSS table box-generation problem a generic wrapper element would. */}
+      {view === 'table' ? (
+        <Card padding="none">
+          <Table>
+            <TableHead>
+              <tr data-helix-part="table-row">
+                <TableHeaderCell>{''}</TableHeaderCell>
+                <TableHeaderCell>Member</TableHeaderCell>
+                <TableHeaderCell>Role</TableHeaderCell>
+                <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell>Components</TableHeaderCell>
+                <TableHeaderCell>Last seen</TableHeaderCell>
+                <TableHeaderCell>{''}</TableHeaderCell>
+              </tr>
+            </TableHead>
+            <Reorder.Group as="tbody" axis="y" values={filtered} onReorder={handleReorder} data-helix-part="table-body">
+              {filtered.map(m => <MemberRow key={m.id} member={m} />)}
+            </Reorder.Group>
+          </Table>
+        </Card>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--helix-spacing-m)' }}>
+          {filtered.map(m => (
+            <Card key={m.id}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
+                <Avatar label={m.name} size="s" />
+                <div>
+                  <div style={{ fontSize: 'var(--helix-textStyle-body-s-medium-fontSize)', fontWeight: 'var(--helix-textStyle-body-s-medium-fontWeight)' }}>
+                    {m.name}
                   </div>
-                </TableCell>
-                <TableCell>{m.role}</TableCell>
-                <TableCell><Badge variant={STATUS_VARIANT[m.status]} label={m.status} /></TableCell>
-                <TableCell>{m.components}</TableCell>
-                <TableCell>{m.lastSeen}</TableCell>
-                <TableCell><IconButton variant="ghost" size="s" icon={IconDots} label="Row actions" /></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
+                  <div style={{ fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)', color: 'var(--helix-color-text-neutral-lightest)' }}>
+                    {m.role}
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: 'var(--helix-spacing-s)' }}>
+                <Badge variant={STATUS_VARIANT[m.status]} label={m.status} />
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      <div style={{ position: 'fixed', bottom: 'var(--helix-spacing-l)', right: 'var(--helix-spacing-l)' }}>
+        <FAB
+          icon={IconUserPlus}
+          label="Add"
+          actions={[
+            { icon: IconUserPlus, label: 'Invite member', onPress: () => {} },
+            { icon: IconDownload, label: 'Export list', onPress: () => {} },
+          ]}
+        />
+      </div>
     </AppShell>
   );
 }
@@ -320,7 +381,7 @@ export const TeamDashboard: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Full admin dashboard, built entirely from Helix DS components — AppShell, SideNav, NavItem, TopBar, PageHeader, Card (KPI row uses the StatCard pattern, see .ai/maps/patterns/stat-card.md), Avatar, Table, Badge, Button, IconButton, Input, Select, Switch, Icon.',
+        story: 'Full admin dashboard, built from Helix DS components — AppShell, SideNav, NavItem, TopBar, PageHeader, Card (KPI row uses the StatCard pattern, see .ai/maps/patterns/stat-card.md), Avatar, Table, Badge, Button, IconButton, Input, Select, Icon, FAB. Table rows drag-reorder via Motion Reorder (ADR-007); the FAB speed-dial uses Motion springs.',
       },
     },
   },

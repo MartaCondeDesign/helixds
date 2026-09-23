@@ -1,4 +1,4 @@
-import type { TablerIcon } from '@tabler/icons-react';
+import type { HelixIconComponent } from '../Icon';
 
 export interface NavItemProps {
   /** Visible label text. */
@@ -6,7 +6,7 @@ export interface NavItemProps {
   /** Navigation target. */
   href: string;
   /** Leading icon, passed by reference. Rendered at a fixed 16px. */
-  icon?: TablerIcon;
+  icon?: HelixIconComponent;
   /** Marks this item as representing the current view. Default: false */
   current?: boolean;
   /** Additional className for the root. */

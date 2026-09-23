@@ -6,7 +6,7 @@ function getInitials(label: string): string {
   return (label.trim()[0] ?? '').toUpperCase();
 }
 
-const Avatar = ({ label, src, size = 'm', className }: AvatarProps) => {
+const Avatar = ({ label, src, size = 'm', className, 'aria-describedby': ariaDescribedBy }: AvatarProps) => {
   const [imageFailed, setImageFailed] = React.useState(false);
   const showImage = !!src && !imageFailed;
 
@@ -14,6 +14,7 @@ const Avatar = ({ label, src, size = 'm', className }: AvatarProps) => {
     <span
       data-helix-part="avatar-root"
       data-size={size}
+      aria-describedby={ariaDescribedBy}
       className={cn(className)}
     >
       {showImage ? (

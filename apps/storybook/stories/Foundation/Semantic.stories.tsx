@@ -21,6 +21,7 @@ const semantic = tokensJson.semantic as unknown as {
   shadow: Record<string, TokenLeaf>;
   duration: Record<string, TokenLeaf>;
   easing: Record<string, TokenLeaf>;
+  transform: { lift: Record<string, TokenLeaf>; scale: Record<string, TokenLeaf> };
 };
 
 // Resolved px values, used only for display (Storybook renders live via CSS vars regardless).
@@ -274,6 +275,32 @@ function EasingPreview({ easing }: { easing: 'base' | 'in' | 'out' }) {
   );
 }
 
+function TransformPreview({ kind, token }: { kind: 'lift' | 'scale'; token: string }) {
+  const style: React.CSSProperties =
+    kind === 'lift'
+      ? { transform: `translateY(var(--helix-transform-lift-${token}))` }
+      : { transform: `scale(var(--helix-transform-scale-${token}))` };
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+      <div style={{ width: 68, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: 'var(--helix-radius-s)',
+            background: 'var(--helix-color-fill-neutral)',
+            border: '1px solid var(--helix-color-border-neutral-dark)',
+            ...style,
+          }}
+        />
+      </div>
+      <code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>
+        var(--helix-transform-{kind}-{token})
+      </code>
+    </div>
+  );
+}
+
 export const Motion: Story = {
   render: () => {
     const [active, setActive] = useState<string | null>('base');
@@ -330,6 +357,38 @@ export const Motion: Story = {
               ))}
             </tbody>
           </table>
+        </TableGroup>
+        <TableGroup title="Transform">
+          <table style={tableStyle}>
+            <thead>
+              <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
+                <th style={thStyle}>Token</th>
+                <th style={thStyle}>Preview</th>
+                <th style={{ ...thStyle, borderRight: 'none' }}>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(['s', 'm', 'l']).map(key => (
+                <tr key={`lift-${key}`} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+                  <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>transform.lift.{key}</code></td>
+                  <td style={tdStyle}><TransformPreview kind="lift" token={key} /></td>
+                  <td style={{ ...tdStyle, borderRight: 'none' }}><span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{semantic.transform.lift[key]?.$description}</span></td>
+                </tr>
+              ))}
+              {(['s', 'm', 'l']).map(key => (
+                <tr key={`scale-${key}`} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+                  <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>transform.scale.{key}</code></td>
+                  <td style={tdStyle}><TransformPreview kind="scale" token={key} /></td>
+                  <td style={{ ...tdStyle, borderRight: 'none' }}><span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{semantic.transform.scale[key]?.$description}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-lightest)', marginTop: 10 }}>
+            New 2026-09-11 — a generic hover lift/scale scale, not yet consumed by any shipped component.
+            Proposed for AvatarGroup's hover state (preview pending sign-off); any future component can
+            reference the same scale instead of inventing its own.
+          </p>
         </TableGroup>
       </div>
     );

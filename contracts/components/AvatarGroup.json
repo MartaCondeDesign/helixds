@@ -1,0 +1,60 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "AvatarGroup",
+  "version": "0.1.0",
+  "status":  "draft",
+
+  "purpose": "Shows several people or entities associated with the same record as a compact overlapping stack of Avatars, collapsing whatever doesn't fit into a '+N' count.",
+
+  "neverUseFor": [
+    "A single person — use Avatar directly",
+    "A full member/roster list where every name matters — use Table or List with one Avatar per row, not a collapsed stack",
+    "Decorative clusters not tied to real people/entities on the record"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus"],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "avatar-group-root",     "element": "div",  "description": "Root flex container. Stacks child avatars with a negative overlap and renders them in reverse DOM order so the first item in `avatars` sits visually on top." },
+    { "part": "avatar-group-item",     "element": "span", "description": "Wraps each rendered Avatar to apply the overlap offset and the page-color separation ring." },
+    { "part": "avatar-group-overflow", "element": "span", "description": "The '+N' indicator for avatars beyond `max`. Rendered only when `avatars.length` exceeds `max`, always last — rightmost, on top of the stack, overlapping the last visible avatar. Neutral gray, never Avatar's tinted fill/text.", "optional": true }
+  ],
+
+  "props": [
+    { "name": "avatars", "type": "{ label: string; src?: string }[]", "required": true, "description": "The people/entities to display, in the order they should stack — first entry renders on top. Each item maps 1:1 to Avatar's `label`/`src`." },
+    { "name": "max",     "type": "number | undefined", "description": "Maximum number of avatars to render before collapsing the rest into a '+N' overflow indicator. Unset shows every avatar." },
+    { "name": "size",    "type": "'s' | 'm' | 'l'", "default": "m", "description": "Physical size applied to every avatar and the overflow indicator. Shares Avatar's field scale (s=24, m=32, l=40)." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "s": 24, "m": 32, "l": 40 },
+      "unit": "px",
+      "note": "Matches Avatar's height exactly — same semantic.size.{s,m,l} rungs, since every child is an Avatar at the group's size."
+    },
+    "width": {
+      "default": "hug",
+      "note": "Width hugs content: (visible avatar count) x size, minus the overlap between each pair. Not fixed — driven by `avatars.length` and `max`."
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color", "shadow"]
+  },
+
+  "a11y": {
+    "role": "group",
+    "keyboardNav": [],
+    "wcag": ["1.1.1 Non-text Content", "4.1.2 Name, Role, Value", "1.4.13 Content on Hover or Focus"],
+    "notes": [
+      "Each avatar is wrapped in Tooltip (see contracts/components/Tooltip.json), showing that person's name on hover — mouse only, since individual avatars carry no tabindex/focus behavior (keyboardNav stays []).",
+      "The '+N' overflow indicator is also wrapped in Tooltip, listing the hidden names (comma-separated) — no longer presentational-only."
+    ]
+  }
+}

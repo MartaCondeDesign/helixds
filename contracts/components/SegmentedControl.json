@@ -1,0 +1,60 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "SegmentedControl",
+  "version": "0.1.0",
+  "status": "draft",
+
+  "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
+
+  "neverUseFor": [
+    "Navigating between real pages or routes — use NavItem/Tab instead",
+    "Content that switches inside an associated panel — that's a tabs pattern (tablist/tab), not this",
+    "More than ~5 options, or options with long labels — use RadioGroup or Select instead"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus"],
+    "authored": [
+      { "name": "disabled", "description": "The whole control, or an individual option, is non-interactive.", "aria": "disabled (native HTML attribute) on the option's button" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "segmented-control-root", "element": "div", "description": "Root element. `role=\"radiogroup\"`." },
+    { "part": "segmented-control-pill", "element": "span", "description": "The sliding highlight behind the checked option. Purely decorative — `aria-hidden`." },
+    { "part": "segmented-control-item", "element": "button", "description": "One option. `role=\"radio\"`, `aria-checked`, roving `tabIndex`." }
+  ],
+
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Accessible name for the group (`aria-label` on the root — this control has no visible legend)." },
+    { "name": "options", "type": "SegmentedControlOption[]", "required": true, "description": "The list of choices. Each option: { value, label, disabled? }." },
+    { "name": "value", "type": "string | undefined", "description": "Controlled selected value." },
+    { "name": "defaultValue", "type": "string | undefined", "description": "Uncontrolled initial value." },
+    { "name": "onChange", "type": "((value: string) => void) | undefined", "description": "Selection change handler." },
+    { "name": "disabled", "type": "boolean", "default": false, "description": "Disables every option in the group." },
+    { "name": "name", "type": "string | undefined", "description": "Native form field name, submitted via a hidden input mirroring the selected value. Auto-generated if omitted." }
+  ],
+
+  "sizing": {
+    "height": {
+      "mode": "fixed",
+      "values": { "default": 24 },
+      "unit": "px",
+      "note": "semantic.size.s — one rung below Button's default height/Input's default field height on the same shared scale. No size prop; this control has one fixed size."
+    },
+    "width": {
+      "default": "hug"
+    }
+  },
+
+  "tokenPolicy": {
+    "allowed": ["color.fill", "color.text", "spacing", "radius", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "radiogroup (hand-rolled — root is a plain div, options are buttons, not native inputs; see ADR-012)",
+    "keyboardNav": ["Arrow keys — move selection between options (roving tabindex, hand-rolled)", "Space/Enter — selects the focused option", "Tab — moves focus into and out of the group (only the checked option is in the tab order)"],
+    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  }
+}

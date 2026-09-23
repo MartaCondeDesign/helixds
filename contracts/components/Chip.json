@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Chip",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
 
@@ -52,8 +52,8 @@
     {
       "name": "size",
       "type": "'s' | 'm'",
-      "default": "m",
-      "description": "Horizontal density preset. Chip is a documented exception to the global scale."
+      "default": "s",
+      "description": "Horizontal density preset. Chip is a documented exception to the global scale — default is 's', not 'm', a deliberate deviation from ADR-004's general 'm is the default' convention for this component specifically."
     },
     {
       "name": "checked",

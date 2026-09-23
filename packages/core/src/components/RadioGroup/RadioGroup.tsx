@@ -54,7 +54,7 @@ export function RadioGroup({
                 name={name}
                 value={opt.value}
                 checked={isChecked}
-                defaultChecked={defaultValue === opt.value && isChecked === undefined}
+                defaultChecked={isChecked === undefined && defaultValue === opt.value ? true : undefined}
                 disabled={opt.disabled || disabled}
                 required={required}
                 aria-invalid={invalid || undefined}

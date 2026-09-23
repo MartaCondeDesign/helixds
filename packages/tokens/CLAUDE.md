@@ -418,6 +418,55 @@ for the worked-through reasoning.
     sibling, AND is the role also used somewhere non-interactive? Both yes → add `interactive` and
     make the state explicit. Either no → leave it plain.
 
+### Motion naming vocabulary (decided 2026-09-11)
+
+Unlike color, motion values split across two homes depending on whether the destination can read a CSS
+custom property at all — the naming vocabulary is shared, the storage mechanism isn't:
+
+- **CSS-expressible values** (duration, easing, transform, and now blur) are real `tokens.json` entries
+  under `semantic.*`, same as everywhere else: `semantic.duration.{instant,fast,base,slow,slower}`,
+  `semantic.easing.{base,in,out,gentle}`, `semantic.transform.{lift,scale}.{s,m,l}`, and
+  `semantic.blur.{enter}`. None of these have a role/modifier/state axis like color does — they're flat
+  named scales (a short enum with a `$description` each), so there's no grammar schema to write for them
+  the way `contracts/token-naming.schema.json` formalizes color's `{role}[-interactive][-modifier][-state]`.
+  `component.*` tokens should alias one of these (`component.avatarGroup.hover.lift` →
+  `{semantic.transform.lift.m}`) the same way `component.button.transition` aliases
+  `{semantic.duration.base}` — never a raw px/ms/number literal at the component layer unless it's a
+  documented exception (see `component.input.shake.*` below).
+  - **The bar for promoting a component-scoped literal into a new shared `semantic.*` rung: 3+
+    components independently landing on the identical value**, not just "this value could theoretically
+    be reused someday." `semantic.blur.enter` (2px) is the worked example — Accordion, SidePanel, and
+    Toast each shipped their own `blur-enter`/`blurEnter` literal, all independently tuned to 2px; once
+    that convergence was real (not hypothetical), it became one token all three alias. A duration/scale
+    value that's *different* per component (Modal's `scale-enter` 0.96, Tooltip's 0.98, Toast's 0.97 —
+    all deliberately, independently tuned) stays a component-scoped literal — forcing those onto one
+    shared number would misrepresent three different tuned feels as interchangeable.
+- **JS-only values Motion (`motion/react`) consumes as plain numbers/arrays** — spring `stiffness`/
+  `damping` (no CSS transition can express spring physics) and cubic-bezier arrays used as a JS
+  `ease` — have no `var()` form and can never be a `tokens.json` entry (see "What NOT to do" below).
+  These live in `packages/core/src/lib/motionPresets.ts` instead: named exports
+  (`SPRING_SNAPPY`, `EASE_BACK`, `FAB_EXPAND_TRANSITION`, `PRESS_SCALE_DEFAULT`, ...), imported by
+  every component that needs one, instead of retyped inline per call site. This is what actually
+  caught real drift: Switch's thumb spring and NavItem's sliding indicator were meant to feel
+  identical and had quietly diverged (`damping: 32` vs `damping: 35`, no comment explaining why) —
+  exactly the "re-implemented at every call site and drifts" problem the `Icon` wrapper rule (root
+  `CLAUDE.md` rule 2) already solves for icons, just for spring physics instead.
+  - Where a JS-only value happens to coincide with a real duration token, derive it from
+    `@helix-ds/tokens`'s generated `tokens` export instead of retyping the literal — see
+    `motionPresets.ts`'s `FAB_COLLAPSE_TRANSITION` (300ms, same value as `semantic.duration.slower`,
+    read via `tokens.semantic.duration.slower` rather than hardcoded as `0.3`). A value with no
+    matching token (FAB's other two transitions, both bespoke-tuned) stays a literal — forcing it onto
+    the scale just to look consistent would change the actual tuned feel for no reason.
+- **A component-scoped motion value that used to be a bare CSS custom property with no token backing**
+  (Input's error-shake — `--helix-input-shake-distance/-overshoot/-dur-a/-dur-b/-ease`, previously
+  hand-declared only in `globals.css`) is now `component.input.shake.*` in `tokens.json`, same as any
+  other component token. It skips `semantic.*` (no shared "shake" concept exists elsewhere) — a
+  documented exception in `component-token-exceptions.md`, same category as `avatarGroup.border-width`.
+- This section's JS-only half is a deliberate, narrow exception to the "What NOT to do" rule below, not
+  a contradiction of it: that rule is about keeping `tokens.json`/the CSS pipeline free of values that
+  can't become a real `var()` — `motionPresets.ts` is the dedicated place for exactly that category,
+  outside the token file, not a backdoor into it.
+
 ## Dark mode tokens
 
 Dark overrides are in `dist/helix.css` under `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`.
@@ -427,4 +476,6 @@ When adding a semantic color token that needs a dark value, add both variants.
 
 - Don't add raw hex values to semantic tokens — always reference a primitive
 - Don't add tokens for one-off component states not shared across 3+ components
-- Don't add JS-only constants that don't have a CSS counterpart
+- Don't add JS-only constants that don't have a CSS counterpart *to this file* — Motion's spring/
+  cubic-bezier values genuinely can't be tokens.json entries; they belong in
+  `packages/core/src/lib/motionPresets.ts` instead, per "Motion naming vocabulary" above

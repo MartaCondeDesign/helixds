@@ -142,7 +142,6 @@ function ChangelogPage() {
               options={authorOptions}
               value={authorFilter}
               onChange={setAuthorFilter}
-              size="m"
             />
           </div>
         </div>

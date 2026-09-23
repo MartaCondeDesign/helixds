@@ -1,0 +1,13 @@
+/* Storybook-only "Reduced motion" toolbar control (see preview.tsx). Mirrors the shipped
+   `@media (prefers-reduced-motion: reduce)` rule in packages/core/src/globals.css exactly, but keyed
+   by a class instead of the media query so it can be toggled on demand in the toolbar — a real OS
+   setting can't be flipped from inside the browser. NOT shipped in the design system itself. */
+.sb-reduced-motion,
+.sb-reduced-motion *,
+.sb-reduced-motion *::before,
+.sb-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

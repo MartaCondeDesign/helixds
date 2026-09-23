@@ -89,6 +89,14 @@ name would break the grid's own 4px rhythm for every other consumer, for a value
 the literal it would replace. Reviewed and kept as-is; `.ai/maps/component-token-exceptions.md`'s audit
 records this in `KNOWN_EXCEPTIONS` (tag `ADR`, pointing here) rather than flagging it as a gap.
 
+**FAB, added 2026-09-09:** ships a single size (48px, `semantic.size.xl` — the Control scale's own `xl`
+rung, previously defined but unwired to any component). `FAB`'s revealed speed-dial actions
+(`component.fab.action.height`) are their own documented local exception at `36px`
+(`primitive.size.225`) — a size between Control's `m` (32px) and `l` (40px) that exists specifically
+because a speed-dial action reads as "smaller than the trigger" without needing a whole second control
+scale for one component's secondary elements. Same category as Badge/Chip's density model above: a real,
+traceable primitive alias, not a magic number.
+
 ## Rules
 
 - Use the global scale by default.

@@ -9,8 +9,6 @@ export interface SelectOptionGroup {
   options: SelectOption[];
 }
 
-export type SelectSize = 's' | 'm' | 'l';
-
 export interface SelectProps {
   label:        string;
   options:      (SelectOption | SelectOptionGroup)[];
@@ -25,7 +23,7 @@ export interface SelectProps {
   required?:    boolean;
   fullWidth?:   boolean;
   hideLabel?:   boolean;
-  size?:        SelectSize;
   id?:          string;
   name?:        string;
+  className?:  string;
 }

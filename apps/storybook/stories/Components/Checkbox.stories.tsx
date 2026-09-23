@@ -14,15 +14,20 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
-export const Default: Story = {
+export const AllTypes: Story = {
   render: () => {
     const [checked, setChecked] = useState(false);
-    return <Checkbox label="Remember me" checked={checked} onChange={setChecked} />;
+    return (
+      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
+        <Checkbox label="Default" checked={checked} onChange={setChecked} />
+        <Checkbox label="Checked" checked />
+        <Checkbox label="Indeterminate" indeterminate />
+      </div>
+    );
   },
-};
-
-export const Checked: Story = {
-  args: { checked: true, label: 'Notifications enabled' },
+  parameters: {
+    docs: { description: { story: 'Default (interactive), Checked, and Indeterminate — indeterminate is used in a parent checkbox when only some children are checked.' } },
+  },
 };
 
 export const WithDescription: Story = {
@@ -38,13 +43,6 @@ export const Invalid: Story = {
     label:        'I agree to the Terms of Service',
     invalid:      true,
     errorMessage: 'You must accept the terms to continue.',
-  },
-};
-
-export const Indeterminate: Story = {
-  args: { label: 'Select all (3 items)', indeterminate: true },
-  parameters: {
-    docs: { description: { story: '`indeterminate` is used in parent checkboxes when only some children are checked.' } },
   },
 };
 
@@ -73,14 +71,16 @@ export const Group: Story = {
     }
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-62-5)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-25)' }}>
         <Checkbox
           label="Select all"
           checked={allChecked}
           indeterminate={someChecked}
           onChange={toggleAll}
         />
-        <div style={{ paddingLeft: 'var(--helix-primitive-spacing-125)', display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
+        {/* 24px = checkbox size (16px) + checkbox gap (8px) — lines each child's own checkbox up
+            directly under "Select all"'s label text, not just under its checkbox square. */}
+        <div style={{ paddingLeft: 'var(--helix-primitive-spacing-150)', display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-25)' }}>
           {options.map(opt => (
             <Checkbox key={opt} label={opt} checked={selected.includes(opt)} onChange={() => toggle(opt)} />
           ))}

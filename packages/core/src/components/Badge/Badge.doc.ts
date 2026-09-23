@@ -35,8 +35,10 @@ export const doc: ComponentDoc = {
     { part: 'badge', label: 'border.danger', token: '--helix-badge-border-danger', kind: 'color', variant: 'danger' },
     { part: 'badge', label: 'badge.root', token: '--helix-badge-radius', kind: 'radius' },
     { part: 'badge', label: 'gap.icon.text', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'horizontal' },
+    { part: 'badge', label: 'fontFamily', token: '--helix-badge-fontFamily', kind: 'typography', meta: 'Caption / Semibold' },
     { part: 'badge', label: 'fontSize', token: '--helix-badge-fontSize', kind: 'typography', meta: 'Caption / Semibold' },
     { part: 'badge', label: 'fontWeight', token: '--helix-badge-fontWeight', kind: 'typography', meta: 'Caption / Semibold' },
+    { part: 'badge', label: 'lineHeight', token: '--helix-badge-lineHeight', kind: 'typography', meta: 'Caption / Semibold' },
     { part: 'badge', label: 'badge.height', token: '--helix-badge-height-xs', kind: 'space', size: 'xs' },
     { part: 'badge', label: 'badge.height', token: '--helix-badge-height-s', kind: 'space', size: 's' },
     { part: 'badge', label: 'padding.top', value: '2px', kind: 'space', axis: 'vertical', size: 'xs', meta: 'No token — literal per-size density value' },
@@ -57,11 +59,13 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'size — horizontal density preset (documented exception to the global scale)',
-    'icon — optional leading 12px icon',
+    'icon — optional leading 12px icon, fully opt-in (nothing renders unless a caller passes one)',
+    'BADGE_ICON_BY_VARIANT — canonical icon shape per variant (info-circle / circle-check / alert-triangle / alert-hexagon, Outline build), matching Toast\'s own icon shapes one-for-one (Toast uses the Filled build of the same four). A convenience mapping, not an automatic default — pass it explicitly when you want the matching shape.',
   ],
   examples: [
     { label: 'Default', code: `<Badge label="Draft" />` },
     { label: 'XS', code: `<Badge size="xs" label="Draft" />` },
-    { label: 'With icon', code: `<Badge icon={<IconClock size={12} />} label="Queued" />` },
+    { label: 'With icon', code: `<Badge icon={IconClock} label="Queued" />` },
+    { label: 'With the canonical variant icon', code: `<Badge variant="danger" icon={BADGE_ICON_BY_VARIANT.danger} label="Failed" />` },
   ],
 };

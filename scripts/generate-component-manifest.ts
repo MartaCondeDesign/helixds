@@ -15,6 +15,10 @@ const contractsDir   = path.join(root, 'contracts/components');
 const indexPath      = path.join(root, 'packages/core/src/index.ts');
 const componentsDir  = path.join(root, 'packages/core/src/components');
 const layoutDir      = path.join(root, 'packages/core/src/layout');
+// Additive only (ADR-015) — a component may also have a Web Components pilot implementation
+// alongside its React one. Most components have none; this stays null for those, same as
+// `story` staying null when a story file doesn't exist yet.
+const wcComponentsDir = path.join(root, 'packages/wc/src/components');
 const storiesComponentsDir = path.join(root, 'apps/storybook/stories/Components');
 const storiesLayoutDir     = path.join(root, 'apps/storybook/stories/Layout');
 const outPath        = path.join(root, 'contracts/manifest.json');
@@ -37,6 +41,7 @@ type ManifestEntry = {
   purpose: string;
   contract: string;
   implementation: string;
+  wcImplementation: string | null;
   story: string | null;
   exports: {
     component: boolean;
@@ -68,6 +73,11 @@ for (const file of contractFiles) {
   const implementation = isLayout
     ? `packages/core/src/layout/${name}`
     : `packages/core/src/components/${name}`;
+
+  const wcDir = path.join(wcComponentsDir, name.toLowerCase());
+  const wcImplementation = fs.existsSync(wcDir)
+    ? `packages/wc/src/components/${name.toLowerCase()}`
+    : null;
 
   // Component export: `export { Name }` or `export { Name, ... }` from the right path.
   const componentExportRe = new RegExp(`export \\{[^}]*\\b${name}\\b[^}]*\\}\\s*from '\\./(components|layout)/${name}'`);
@@ -122,6 +132,7 @@ for (const file of contractFiles) {
     purpose: contract.purpose,
     contract: `contracts/components/${file}`,
     implementation,
+    wcImplementation,
     story: hasStory ? path.relative(root, storyFile) : null,
     exports: {
       component: hasComponentExport,

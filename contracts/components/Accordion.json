@@ -1,0 +1,57 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Accordion",
+  "version": "0.1.0",
+  "status":  "draft",
+
+  "purpose": "A single collapsible disclosure — a header that expands/collapses a panel of content, with no JS height measurement needed.",
+
+  "neverUseFor": [
+    "A single always-visible section — just render the content directly",
+    "Primary page navigation — use SideNav/NavItem instead",
+    "Hiding required/critical content the user must always see"
+  ],
+
+  "states": {
+    "intrinsic": ["hover", "focus"],
+    "authored": [
+      { "name": "expanded", "description": "Whether the panel is expanded. Uncontrolled via `defaultExpanded`, or controlled via `expanded`/`onExpandedChange` — mirrors Switch's controlled/uncontrolled pattern. The native toggle is intercepted (see useDisclosureTransition) so collapsing can animate before `open` is actually removed — an explicit aria-expanded on the header reflects the target state during that transition.", "aria": "aria-expanded on the header, explicit (not left to the browser's own <details> mapping) since `open` and the visually-settled state briefly diverge during a collapse" },
+      { "name": "disabled", "description": "Prevents toggling.", "aria": "aria-disabled on the header" }
+    ]
+  },
+
+  "anatomy": [
+    { "part": "accordion-root",         "element": "details", "description": "Native disclosure element — provides the open/closed state, keyboard support, and implicit ARIA for free (see ADR-001: wraps a native element directly, no hand-rolled ARIA pattern needed)." },
+    { "part": "accordion-header",       "element": "summary", "description": "The clickable header. Native focus/keyboard (Enter/Space) support." },
+    { "part": "accordion-title",        "element": "span",    "description": "The header's text label." },
+    { "part": "accordion-chevron",      "element": "span",    "description": "Wraps a Tabler chevron-down icon (via the Icon component) — flips vertically (scaleY) between closed (v) and open (^). This is the canonical Helix expand/collapse chevron treatment — see .ai/maps/patterns/expand-collapse-chevron.md before adding a chevron to any other hand-rolled disclosure component." },
+    { "part": "accordion-panel",        "element": "div",     "description": "JS-measured explicit pixel height on open/close, not grid-template-rows 0fr/1fr — 'fr' unit interpolation didn't track the same visual pace in both directions, which read as a laggy collapse." },
+    { "part": "accordion-panel-inner",  "element": "div",     "description": "Clips overflow during the grid-row animation and cross-fades/blurs its content in." }
+  ],
+
+  "props": [
+    { "name": "label",            "type": "string",   "required": true, "description": "The header's text label." },
+    { "name": "children",         "type": "React.ReactNode", "required": true, "description": "The panel's content." },
+    { "name": "expanded",         "type": "boolean | undefined", "description": "Controlled open state. Leave unset for uncontrolled (see `defaultExpanded`)." },
+    { "name": "defaultExpanded",  "type": "boolean", "default": "false", "description": "Initial open state for uncontrolled usage." },
+    { "name": "onExpandedChange", "type": "(expanded: boolean) => void", "description": "Fires whenever the disclosure toggles, controlled or not." },
+    { "name": "disabled",         "type": "boolean", "default": "false", "description": "Prevents toggling." },
+    { "name": "className",       "type": "string | undefined", "description": "Additional className for the root." }
+  ],
+
+  "sizing": {
+    "width": { "default": "fill", "note": "Fills its container width, matching Card." },
+    "height": { "mode": "content-driven", "note": "Header height is content-driven; panel height animates via CSS grid, no fixed rung." }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "color.border", "color.icon", "spacing", "radius", "fontSize", "fontWeight"],
+    "forbidden": ["primitive.color", "shadow"]
+  },
+
+  "a11y": {
+    "role": "native <details>/<summary> disclosure — no hand-rolled role needed",
+    "keyboardNav": ["Enter / Space on the header — toggles (native <summary> behavior)"],
+    "wcag": ["4.1.2 Name, Role, Value", "2.1.1 Keyboard"]
+  }
+}

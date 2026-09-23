@@ -6,8 +6,20 @@ import {
   IconSearch,
   IconArrowRight,
 } from '@tabler/icons-react';
-import { Icon, IconDoc } from '@helix-ds/core';
+import { Icon, IconDoc, createIconAdapter } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+
+// Stand-in for a foreign icon set whose prop dialect differs from Tabler's — `strokeWidth`
+// instead of `stroke`, no `color` prop at all (relies on `currentColor` via className/style
+// like most outline sets do). Demonstrates createIconAdapter (ADR-014) without adding a real
+// third-party icon dependency just for this one story.
+const ForeignSetHeart = ({ size, strokeWidth, className }: { size?: number; strokeWidth?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.5 4.04 3 5.5l7 7Z" />
+  </svg>
+);
+
+const AdaptedHeart = createIconAdapter(ForeignSetHeart, { strokeProp: 'strokeWidth' });
 
 const meta: Meta<typeof Icon> = {
   title:     'Components/Icon',
@@ -67,6 +79,18 @@ export const Colors: Story = {
   ),
   parameters: {
     docs: { description: { story: 'Color always comes from a --helix-color-icon-* token, set explicitly — never inherited from a text/* token.' } },
+  },
+};
+
+export const CustomIconSet: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
+      <Icon icon={AdaptedHeart} size={24} className="text-[color:var(--helix-color-icon-danger)]" />
+      <Icon icon={AdaptedHeart} size={16} className="text-[color:var(--helix-color-icon-neutral)]" />
+    </div>
+  ),
+  parameters: {
+    docs: { description: { story: 'Icon is icon-set-agnostic (ADR-014) — Tabler is the default, not a requirement. A foreign icon set whose props don\'t match Tabler\'s dialect (here, strokeWidth instead of stroke) is wrapped once with createIconAdapter, then passed to icon/iconEnd like any Tabler icon.' } },
   },
 };
 

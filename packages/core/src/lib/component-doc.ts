@@ -12,6 +12,10 @@ export interface ComponentDoc {
     token?: string;
     value?: string;
     kind?: 'color' | 'typography' | 'space' | 'radius' | 'shadow' | 'style' | 'other';
+    colorRole?: 'background' | 'text' | 'border' | 'icon' | 'asset';
+    padding?: 'all' | 'top' | 'right' | 'bottom' | 'left' | string;
+    paddingSides?: ('top' | 'end' | 'bottom' | 'start')[];
+    relationship?: string;
     variant?: string;
     size?: string;
     state?: 'hover' | 'press' | 'disabled' | 'focus';

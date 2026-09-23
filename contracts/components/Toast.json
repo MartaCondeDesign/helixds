@@ -1,0 +1,53 @@
+{
+  "$schema": "../component.schema.json",
+  "name":    "Toast",
+  "version": "0.1.0",
+  "status":  "draft",
+
+  "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
+
+  "neverUseFor": [
+    "A message the user must act on before continuing — use Modal instead, Toast can be missed or auto-dismiss",
+    "Form field validation errors — show them inline next to the field, not as a Toast",
+    "Anything the user needs to refer back to later — Toast auto-dismisses and doesn't persist"
+  ],
+
+  "states": {
+    "intrinsic": ["hover"],
+    "authored": []
+  },
+
+  "anatomy": [
+    { "part": "toast-viewport",     "element": "div", "description": "Fixed, top-right, portaled to document.body via createPortal (ADR-011). Rendered by the <Toast /> component, mounted once by the consuming app." },
+    { "part": "toast",              "element": "div", "description": "One notification. Background is always the page fill — color lives only on the icon, never the card (ADR-011), a deliberate difference from Badge's own tinted-surface convention." },
+    { "part": "toast-icon",         "element": "slot", "description": "A real Filled Tabler icon through the Icon component, fixed per variant — not caller-supplied like Badge's own icon prop." },
+    { "part": "toast-content",      "element": "div", "description": "Wraps the title and description." },
+    { "part": "toast-title",        "element": "span", "description": "Bold title text." },
+    { "part": "toast-description",  "element": "span", "description": "Lighter supporting text.", "optional": true },
+    { "part": "toast-close",        "element": "slot", "description": "An IconButton (IconX) that dismisses this toast early." }
+  ],
+
+  "props": [
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the viewport." }
+  ],
+
+  "sizing": {
+    "width":  { "mode": "fixed", "values": { "default": 340 }, "unit": "px", "note": "Fixed viewport/card width, not on the shared size scale — same category of per-component literal as SidePanel's width." },
+    "height": { "mode": "content-driven" }
+  },
+
+  "tokenPolicy": {
+    "allowed":   ["color.fill", "color.text", "color.icon", "spacing", "radius", "fontSize", "fontWeight", "shadow"],
+    "forbidden": ["primitive.color"]
+  },
+
+  "a11y": {
+    "role": "each toast-viewport region uses aria-live=\"polite\" so screen readers announce new toasts without interrupting; toast-close is a real button with an accessible label",
+    "keyboardNav": ["Tab reaches each visible toast's close button", "Hovering (mouse) pauses auto-dismiss and pauses no keyboard-equivalent yet — see ADR-011's open item on this"],
+    "wcag": ["4.1.3 Status Messages", "1.4.13 Content on Hover or Focus"],
+    "notes": [
+      "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?)), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own.",
+      "Stacking depth (max 3 visible) and hover-to-spread use real measured pixel heights (offsetHeight), not percentage-based transforms — a percentage approach was tried and broken in the pre-implementation preview by two toasts of different heights; see ADR-011."
+    ]
+  }
+}

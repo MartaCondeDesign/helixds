@@ -90,7 +90,7 @@ export const doc: ComponentDoc = {
     'dismissible — optional close button for removable chips',
     'icon / iconEnd — optional icon slots with aria-hidden',
     'onPress — canonical handler',
-    'onDismiss — close button handler',
+    'onDismiss — close button handler; fires after a Motion fade+scale exit finishes (ADR-007), not on click itself, so the consumer removes it from their list exactly as it goes invisible — see .ai/maps/patterns/motion-effects.md',
     'disabled — native button disabled state',
   ],
 

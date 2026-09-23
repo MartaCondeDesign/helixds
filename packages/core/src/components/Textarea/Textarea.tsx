@@ -1,4 +1,5 @@
 import { forwardRef, useId, useRef, useState, type ChangeEvent } from 'react';
+import { cn } from '../../lib/utils';
 import type { TextareaProps } from './Textarea.types';
 
 let idCounter = 0;
@@ -20,6 +21,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       showCount = false,
       disabled,
       onChange,
+      className,
       ...rest
     },
     ref,
@@ -46,6 +48,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {...(fullWidth  ? { 'data-full-width': '' } : {})}
         {...(disabled   ? { 'data-disabled':   '' } : {})}
         {...(invalid    ? { 'data-invalid':     '' } : {})}
+        className={cn(className)}
       >
         <label
           data-helix-part="textarea-label"

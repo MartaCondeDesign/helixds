@@ -71,7 +71,12 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 
 ```
 pnpm contract <Name>        scaffold a new component contract
-pnpm verify:contract        validate contracts vs implementations
+pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
+                            (schema/naming only — does NOT read the implementation; see verify:types for that)
+pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract
+                            (--dry-run prints instead of writing; refuses to overwrite an existing file)
+pnpm verify:types           check every contract's props are present in its {Name}.types.ts
+                            (the actual contract-vs-implementation check, for prop types specifically)
 pnpm verify:props           check prop names against prop-map
 pnpm verify:icons           check every Tabler icon renders through the Icon component
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json

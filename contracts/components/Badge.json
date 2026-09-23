@@ -39,7 +39,7 @@
     {
       "name": "icon",
       "type": "TablerIcon | undefined",
-      "description": "Leading icon, passed by reference (e.g. IconClock). Rendered via the Icon component at a fixed 12px."
+      "description": "Leading icon, passed by reference (e.g. IconClock). Rendered via the Icon component at a fixed 12px. Fully opt-in — nothing renders unless supplied. For a status variant, prefer BADGE_ICON_BY_VARIANT[variant] (exported alongside Badge) over picking an icon ad hoc — it matches Toast's own icon shape per variant (Outline build vs Toast's Filled build)."
     },
     {
       "name": "label",

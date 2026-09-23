@@ -105,7 +105,7 @@
       "ghost":     "icon/neutral (dark stroke)",
       "danger":    "icon/inverse (white stroke)"
     },
-    "standalone": "Use icon/neutral, icon/neutral-light, or icon/neutral-lightest — never text/* tokens, never primitives",
+    "standalone": "Use icon/neutral or icon/neutral-light — never text/* tokens, never primitives",
     "forbidden":  "Never hardcode hex values. Never reference a text/* token for icon color. Never use primitive color scales directly."
   },
 
@@ -125,9 +125,9 @@
   "props": [
     {
       "name": "icon",
-      "type": "TablerIcon",
+      "type": "HelixIconComponent",
       "required": true,
-      "description": "The Tabler icon component to render, passed by reference (e.g. IconPlus), not by name string."
+      "description": "The icon component to render, passed by reference (e.g. IconPlus), not by name string. Defaults to Tabler's outline set, but accepts any component matching the size/stroke/color/SVG-passthrough shape (see interop note below) — not a Tabler-only prop."
     },
     {
       "name": "size",
@@ -168,6 +168,10 @@
     "naming":      "Bare PascalCase — 'Plus', not 'IconPlus', not 'tabler/Plus'",
     "vector":      "Named 'vector', constraints: SCALE/SCALE",
     "skill":       ".ai/skills/icons-to-figma.md"
+  },
+
+  "interop": {
+    "note": "Icon is icon-set-agnostic by type (ADR-014) — Tabler is the documented default, not a hard requirement. Any component matching HelixIconComponent's shape (size/stroke/color + standard SVG props) can be passed directly to icon/iconEnd on any Helix component. Sets with a different prop dialect (e.g. Lucide's strokeWidth) can be wrapped with createIconAdapter from packages/core/src/components/Icon/createIconAdapter.ts before being passed."
   },
 
   "a11y": {

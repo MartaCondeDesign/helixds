@@ -24,10 +24,12 @@
     "@tabler/icons-react":   "^3.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx":                  "^2.1.0",
+    "motion":                "13.2.0",
     "tailwind-merge":        "^2.5.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "typescript":   "*"
   }
 }

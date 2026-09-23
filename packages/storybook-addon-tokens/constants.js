@@ -4,7 +4,7 @@ export const HELIX_HIGHLIGHT_EVENT = 'helix-ds/storybook-addon-tokens/highlight'
 // element-highlight overlay), deliberately independent of the story's own light/dark theme
 // so it reads clearly against either background.
 export const HELIX_HIGHLIGHT_COLOR = '#8b5cf6';
-export const HELIX_HIGHLIGHT_COLOR_SOFT = 'rgba(139, 92, 246, 0.35)';
+export const HELIX_HIGHLIGHT_COLOR_SOFT = 'rgba(139, 92, 246, 0.16)';
 
 // Everything here is Helix-specific by DEFAULT only — a consuming project can override any
 // of it via `parameters.helixTokensConfig` in its own `.storybook/preview.ts`, without
@@ -20,6 +20,9 @@ export const DEFAULT_CONFIG = {
   variantAttribute: 'data-variant',
   highlightColor: HELIX_HIGHLIGHT_COLOR,
   highlightColorSoft: HELIX_HIGHLIGHT_COLOR_SOFT,
+  // Custom properties that define a Text Style in the preview's CSS. Capture group 1 is the
+  // style name, group 2 the property — e.g. `--helix-textStyle-body-m-semibold-fontSize`.
+  textStylePattern: '^--(?:.*-)?textStyle-(.+)-(fontFamily|fontSize|fontWeight|lineHeight)$',
 };
 
 export function resolveConfig(parameters) {

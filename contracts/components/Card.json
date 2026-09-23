@@ -24,7 +24,7 @@
   ],
 
   "props": [
-    { "name": "header",   "type": "React.ReactNode | undefined", "description": "Optional header content (e.g. a title + action buttons), rendered above the body with a divider." },
+    { "name": "header",   "type": "React.ReactNode | undefined", "description": "Optional header content (e.g. a title + action buttons), rendered above the body with 8px of space between them, no divider." },
     { "name": "children", "type": "React.ReactNode", "required": true, "description": "Card body content." },
     { "name": "padding",  "type": "'none' | 'default'", "default": "default", "description": "'none' removes the body's internal padding — use when the content (e.g. a Table) manages its own edge-to-edge spacing." },
     { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }

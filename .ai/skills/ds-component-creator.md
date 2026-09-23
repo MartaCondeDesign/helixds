@@ -20,6 +20,10 @@ Before writing any `.tsx` file:
 - [ ] Check `AGENTS.md` component inventory — does the component exist already?
 - [ ] Check `contracts/components/` — does the contract exist?
 - [ ] Check `.ai/maps/prop-map.md` — identify the canonical prop names for this component's API
+- [ ] Does this component need a liquid motion effect (a gooey merge, a trailing thumb, a bend-on-drag)?
+      Check `.ai/maps/patterns/motion-effects.md` for the approved component↔effect table and the token/
+      reduced-motion rules **before** inventing ad-hoc motion — don't reach for a new animation approach
+      per component when one is already governed
 - [ ] Run `pnpm contract <ComponentName>` — scaffolds the contract **and** a matching eval prompt
       (`evals/prompts/{name}-basic.md`) in one step, so the component gets vibe-test coverage from day one
 - [ ] Read the generated contract stub and fill in: purpose, states, anatomy, props, tokenPolicy, sizing
@@ -27,6 +31,10 @@ Before writing any `.tsx` file:
 - [ ] Fill in the generated eval prompt's Success criteria / Invalid patterns from the finished contract,
       then run `pnpm eval:run --prompt {name}-basic` — if the reference code you write doesn't score 100%,
       the criteria are ambiguous
+- [ ] **Mandatory, per [`ds-preview-before-ship.md`](ds-preview-before-ship.md):** before writing the real
+      `.tsx`, build a live visual preview (Artifact or unexported Storybook story) of the component using
+      the contract's real anatomy/tokens, and get explicit sign-off. `verify:contract` checks the spec is
+      internally consistent; it doesn't tell you the thing looks right — this step does.
 
 ### Step 2 — Scaffold the component
 
@@ -38,6 +46,17 @@ packages/core/src/components/{Name}/
   {Name}.stories.tsx   ← Storybook stories
   index.ts             ← barrel export
 ```
+
+Generate `{Name}.types.ts` from the now-filled contract instead of writing it by hand:
+`pnpm generate:types {Name}` (add `--dry-run` to preview without writing). It derives the union type
+aliases, the `extends React.{Tag}HTMLAttributes<...>` clause from the contract's root anatomy element,
+and skips native-passthrough props (`disabled`, `className`, `onChange`, ...) that come from that extends
+clause instead of needing an explicit field. **Still review the output** — JSDoc is copied verbatim from
+the contract's (longer) prop descriptions and usually needs trimming to match the house style in
+`packages/core/src/components/Button/Button.types.ts`; an `Omit<...>` beyond `'onClick'`, or a root
+element the generator doesn't recognize, needs a manual fix too. Refuses to overwrite an existing file —
+for an already-implemented component, run `pnpm verify:types` instead to check it's still in sync with
+the contract.
 
 ### Step 3 — Implementation rules
 
@@ -91,7 +110,8 @@ export type { {Name}Props } from './components/{Name}/{Name}.types';
 ### Step 7 — Verify
 
 ```bash
-pnpm verify:contract   # contract vs implementation match
+pnpm verify:contract   # contract's own structure/naming against the schema (not the implementation)
+pnpm verify:types      # contract props actually present in {Name}.types.ts — the real cross-check
 pnpm verify:props      # no anti-synonym prop names
 pnpm typecheck         # TypeScript strict mode
 ```
@@ -115,6 +135,7 @@ A complete, contract-backed component with:
 ## Regression checklist
 
 - [ ] `pnpm verify:contract` passes with 0 errors
+- [ ] `pnpm verify:types` passes with 0 errors
 - [ ] `pnpm verify:props` passes with 0 warnings
 - [ ] `pnpm typecheck` passes
 - [ ] All variants render in Storybook without console errors

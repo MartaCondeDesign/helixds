@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Card, CardDoc, Badge } from '@helix-ds/core';
+import { Card, CardDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Card> = {
@@ -31,9 +31,9 @@ type Story = StoryObj<typeof Card>;
 // ReactNode, not something a text field can produce).
 export const Default = {
   args: {
-    children: 'Card body content.',
+    children: 'Card is a flat, bordered container for grouping related content. It has no shadow by design — Helix reserves elevation for surfaces that float above the page, like Modal and Tooltip. Use it to group a form section, a settings block, or a summary of related fields.',
     padding: 'default',
-    showHeader: false,
+    showHeader: true,
     headerText: 'Card title',
   },
   argTypes: {
@@ -41,47 +41,20 @@ export const Default = {
     headerText: { control: 'text', description: 'Header text, only shown when showHeader is on.' },
   },
   render: (args: { children: string; padding: 'default' | 'none'; className?: string; showHeader: boolean; headerText: string }) => (
-    <Card
-      padding={args.padding}
-      className={args.className}
-      header={args.showHeader ? <strong style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)' }}>{args.headerText}</strong> : undefined}
-    >
-      {args.children}
-    </Card>
+    // Wider than tall — a horizontal rectangle instead of the narrow CardGrid cell, so the header
+    // and body text each read on a couple of lines rather than a long single narrow column.
+    <div style={{ width: '340px' }}>
+      <Card
+        padding={args.padding}
+        className={args.className}
+        // No inline font styling needed — card-header itself now carries heading-l-bold
+        // (fontFamily/fontSize/fontWeight/lineHeight) plus its own color, straight from tokens.
+        header={args.showHeader ? args.headerText : undefined}
+      >
+        {args.children}
+      </Card>
+    </div>
   ),
-};
-
-export const WithHeader: Story = {
-  render: () => (
-    <Card
-      header={
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <strong style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)' }}>
-            Team activity
-          </strong>
-          <Badge variant="success" label="Live" />
-        </div>
-      }
-    >
-      Content below the header, separated by a divider.
-    </Card>
-  ),
-  parameters: {
-    docs: { description: { story: 'Fixed example — this story\'s content is hardcoded, so Controls won\'t change it. header renders above the body with a divider — commonly a title plus trailing actions or a status badge. Use the Default story to try the header/divider live.' } },
-  },
-};
-
-export const NoPadding: Story = {
-  render: () => (
-    <Card padding="none">
-      <div style={{ padding: 'var(--helix-primitive-spacing-100)' }}>
-        Content that manages its own edge-to-edge spacing (e.g. a Table) sets padding='none' on Card.
-      </div>
-    </Card>
-  ),
-  parameters: {
-    docs: { description: { story: "Fixed example — this story's content is hardcoded, so Controls won't change it. padding='none' removes Card's own body padding — use when the content inside (a Table, a List) needs to reach the card's edges." } },
-  },
 };
 
 type GridItem = { label: string; value: string };
@@ -111,7 +84,16 @@ export const CardGrid = {
     }}>
       {args.items.map(item => (
         <Card key={item.label} padding={args.padding}>
-          <div style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 'var(--helix-primitive-spacing-50)' }}>
+          <div style={{
+            fontFamily: 'var(--helix-textStyle-caption-semibold-fontFamily)',
+            fontSize: 'var(--helix-textStyle-caption-semibold-fontSize)',
+            fontWeight: 'var(--helix-textStyle-caption-semibold-fontWeight)',
+            lineHeight: 'var(--helix-textStyle-caption-semibold-lineHeight)',
+            color: 'var(--helix-color-text-neutral-lightest)',
+            textTransform: 'uppercase',
+            letterSpacing: 'var(--helix-primitive-letterSpacing-wide)',
+            marginBottom: 'var(--helix-primitive-spacing-50)',
+          }}>
             {item.label}
           </div>
           <div style={{ fontSize: 'var(--helix-primitive-fontSize-3xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-neutral)' }}>

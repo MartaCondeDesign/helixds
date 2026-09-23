@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Checkbox",
   "version": "0.1.0",
-  "status": "draft",
+  "status": "stable",
 
   "purpose": "Lets users select one or more independent options from a set, or confirm a single binary choice.",
 
@@ -29,7 +29,7 @@
     { "part": "checkbox-control", "element": "span", "description": "Visual box — reflects checked/indeterminate state via CSS.", "optional": false },
     { "part": "checkbox-indicator", "element": "slot", "description": "Check or minus icon inside the control." },
     { "part": "checkbox-text", "element": "span", "description": "Visible label text." },
-    { "part": "checkbox-description", "element": "span", "description": "Helper text below the control.", "optional": true },
+    { "part": "checkbox-description", "element": "span", "description": "Helper text below the control. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
     { "part": "checkbox-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 
