@@ -31,7 +31,7 @@ const meta: Meta<typeof Icon> = {
     icon: { control: false },
     size: {
       control: 'select',
-      options: [12, 14, 16, 18, 20, 24, 32],
+      options: [12, 14, 16, 18, 20, 24, 28, 32, 36, 40],
     },
     stroke: { control: 'number' },
     decorative: { control: 'boolean' },
@@ -54,9 +54,9 @@ export const IconOnly: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
-      {[12, 14, 16, 18, 20, 24, 32].map(size => (
+      {([12, 14, 16, 18, 20, 24, 28, 32, 36, 40] as const).map(size => (
         <div key={size} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)' }}>
-          <Icon icon={IconSearch} size={size as 12 | 14 | 16 | 18 | 20 | 24 | 32} />
+          <Icon icon={IconSearch} size={size} />
           <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>{size}</span>
         </div>
       ))}

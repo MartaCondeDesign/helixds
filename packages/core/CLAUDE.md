@@ -52,9 +52,16 @@ being re-implemented (and drifting) at every call site. `pnpm verify:icons` enfo
 import { Icon } from '../Icon';
 
 <span data-helix-part="button-icon">
-  <Icon icon={icon} size={16} stroke={1.5} />
+  <Icon icon={icon} size={16} />
 </span>
 ```
+
+**Never pass `stroke` to adjust how heavy an icon looks.** `Icon` derives it from `size` via the
+stroke rule in `Icon/iconStroke.ts` (ADR-017): a real on-screen line of 1.3px at 12 → 2.8px at 40.
+To make icons heavier or lighter, change `ICON_STROKE_PX_BY_SIZE` there (and keep ADR-017 +
+`Icon.json`'s `iconStyle.helixStrokeRule` in sync) — every icon in the system follows. A per-call
+`stroke` is only for a deliberate, commented one-off at least as thick as the rule (Checkbox's
+checkmark).
 
 A component's `icon`/`iconEnd` prop takes the icon **component reference**, typed `TablerIcon` (from
 `@tabler/icons-react`) — not a pre-instantiated `React.ReactElement`. Consumers pass `icon={IconPlus}`,

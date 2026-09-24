@@ -26,6 +26,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    - Component `icon`/`iconEnd` props take the Tabler icon **component reference**, not a
      pre-instantiated element: `icon?: TablerIcon`, not `icon?: React.ReactElement`. Consumers pass
      `icon={IconPlus}`, never `icon={<IconPlus size={16} />}`.
+   - **Never pass `stroke` to change how heavy an icon looks** — `Icon` derives it from `size` via
+     the stroke rule ([ADR-017](docs/ADR/ADR-017-icon-stroke-rule.md), `Icon/iconStroke.ts`). To
+     re-weight icons, edit `ICON_STROKE_PX_BY_SIZE` (real on-screen px per size), not call sites.
    - `pnpm verify:icons` scans `packages/**/*.tsx` for a raw `<IconXxx>` JSX tag outside
      `packages/core/src/components/Icon/` (the one legitimate place it renders one) and reports any
      violation — run it after adding or touching a component with an icon.

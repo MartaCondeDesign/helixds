@@ -24,7 +24,8 @@ Path data source: `packages/core/node_modules/@tabler/icons-react/dist/esm/icons
 Helix DS uses the **outline** variant of Tabler Icons — stroked paths, no fill.
 
 ```
-stroke-width    = 1.5          ← Helix DS override (Tabler default is 2). Always pass stroke={1.5} at usage site.
+stroke-width    = 1.8          ← 24px master, per the ADR-017 stroke rule (real px by size: 12→1.3 … 24→1.8 … 32→2.0).
+                                 In code, Icon applies the rule automatically — never pass stroke at a usage site.
 stroke-linecap  = round
 stroke-linejoin = round
 fill            = none         ← NEVER fill, always outline
@@ -105,7 +106,7 @@ All 161 icons use only `path` elements (no `circle`, `rect`, or other SVG elemen
 Only `IconAccessible` has a path with explicit `fill="currentColor"`:
 `M11.5 7.5a.5 .5 0 1 0 1 0a.5 .5 0 1 0 -1 0` (radius=0.5 head circle)
 
-With `stroke-width="1.5"`, this tiny circle renders visually filled because the stroke covers its center — **no special treatment needed**. Use `fill="none"` for all icons uniformly.
+With `stroke-width="1.8"`, this tiny circle renders visually filled because the stroke covers its center — **no special treatment needed**. Use `fill="none"` for all icons uniformly.
 
 ---
 
@@ -144,7 +145,7 @@ COMPONENT "Plus"   (24×24, fills: none)
 - VECTOR keeps its **natural SVG bounding box** — do NOT force-resize it
 - The VECTOR is named exactly `"vector"`
 - Constraints must be `{ horizontal: 'SCALE', vertical: 'SCALE' }`
-- **stroke-width = 1.5** (matches `stroke={1.5}` used in `Icons.stories.tsx` icon browser)
+- **stroke-width = 1.8** (the ADR-017 rule at the 24px master size — same value `iconStrokeForSize(24)` returns in code)
 
 ### Creation pattern (addIcon function)
 
@@ -153,10 +154,10 @@ function addIcon(name, d, idx) {
   const col = idx % ROW_MAX;
   const row = Math.floor(idx / ROW_MAX);
 
-  // Build SVG — stroke-width 1.5 to match Storybook
+  // Build SVG — stroke-width 1.8 = ADR-017 rule at 24px, matches Storybook
   const fr = figma.createNodeFromSvg(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-      <path d="${d}" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="${d}" stroke="black" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     </svg>`
   );
   if (!fr.children.length) { fr.remove(); return null; }
@@ -180,8 +181,8 @@ function addIcon(name, d, idx) {
   vec.constraints = { horizontal: 'SCALE', vertical: 'SCALE' };
 
   // DO NOT convert the stroke to filled geometry (outlineStroke / strokeGeometry-in-place).
-  // That breaks the icons. Leave the vector as a real stroke: strokeWeight = 1.5, fills empty.
-  // createNodeFromSvg already parsed stroke="black" stroke-width="1.5" from the SVG above into
+  // That breaks the icons. Leave the vector as a real stroke: strokeWeight = 1.8, fills empty.
+  // createNodeFromSvg already parsed stroke="black" stroke-width="1.8" from the SVG above into
   // vec.strokes / vec.strokeWeight — nothing more to set here. Color gets bound to a variable
   // later (Step 3 here for a flat currentColor-equivalent, or per-variant in components-to-figma's
   // icon slot rule, which also binds to vec.strokes — keep both skills consistent on this point).
@@ -194,7 +195,7 @@ function addIcon(name, d, idx) {
 
 **Why NOT force-resize the vector**: Tabler icon vectors have non-square natural bounding boxes (e.g., `IconMinus` is ~14×1.5px). Forcing `vec.resize(20, 20)` distorts them. Let the vector keep its natural dimensions.
 
-**Why NOT `strokeGeometry`-in-place (don't convert the stroke to filled geometry)**: an earlier version of this skill replaced `vec.vectorPaths` with the `strokeGeometry` expansion (turning the stroke into filled vector geometry) to get the line weight to scale proportionally with the icon. **That approach breaks the icons** — import with a real stroke instead: leave `vec.strokes` as parsed from the SVG (`stroke="black" stroke-width="1.5"`), don't touch `vec.fills`/`vec.vectorPaths`. The tradeoff is that a plain resize doesn't scale `strokeWeight` proportionally (1.5px stays 1.5px at any instance size) — accept that; it's not worth broken icons to avoid it.
+**Why NOT `strokeGeometry`-in-place (don't convert the stroke to filled geometry)**: an earlier version of this skill replaced `vec.vectorPaths` with the `strokeGeometry` expansion (turning the stroke into filled vector geometry) to get the line weight to scale proportionally with the icon. **That approach breaks the icons** — import with a real stroke instead: leave `vec.strokes` as parsed from the SVG (`stroke="black" stroke-width="1.8"`), don't touch `vec.fills`/`vec.vectorPaths`. The tradeoff is that a plain resize doesn't scale `strokeWeight` proportionally (1.8px stays 1.8px at any instance size — set `strokeWeight` per instance size from the ADR-017 table if it matters) — accept that; it's not worth broken icons to avoid it.
 
 ### Idempotency
 
@@ -315,7 +316,7 @@ An "Icons" page in the Figma file containing one COMPONENT per Tabler icon (161 
 - [ ] Each icon is a COMPONENT (not a frame or group)
 - [ ] Naming: bare name with no prefix — `Plus`, not `tabler/Plus`, not `IconPlus`
 - [ ] All components are 24×24
-- [ ] stroke-width = 1.5 on every vector's `strokeWeight` (real stroke, not converted to fill)
+- [ ] stroke-width = 1.8 (ADR-017 at 24px) on every vector's `strokeWeight` (real stroke, not converted to fill)
 - [ ] `vec.strokes` is non-empty and `vec.fills` is empty on every vector — NOT the reverse
 - [ ] Every vector's stroke is bound to the `icon/neutral` variable (Color Semantic collection) —
       not a flat unbound black (`boundVariables.strokes` set, run tokens-to-figma first if missing)

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState, useMemo } from 'react';
+import { iconStrokeForSize } from '@helix-ds/core';
 
 import {
   IconAccessible, IconActivity, IconAdjustments, IconAlarm,
@@ -39,16 +40,6 @@ import {
 } from '@tabler/icons-react';
 
 type IconComponent = React.FC<{ size?: number; stroke?: number; color?: string }>;
-
-// Same compensated scale as Icon.tsx's STROKE_BY_SIZE, adapted to this slider's reachable sizes
-// (16–40 in steps of 4) — a flat stroke shrinks in real screen pixels as size drops (Tabler's
-// viewBox stays fixed at 24×24), so a raw Tabler render here would exhibit the same "too thin at
-// small size" look Icon already compensates for.
-function strokeForSize(size: number): number {
-  if (size <= 16) return 1.75;
-  if (size <= 20) return 1.6;
-  return 1.5;
-}
 
 const ICONS: [string, IconComponent][] = [
   ['IconAccessible', IconAccessible], ['IconActivity', IconActivity], ['IconAdjustments', IconAdjustments],
@@ -203,7 +194,8 @@ function IconBrowser() {
               }
             }}
           >
-            <IconComp size={size} stroke={strokeForSize(size)} />
+            {/* Raw Tabler render, so apply Icon's ADR-017 stroke rule by hand (28/36/40 are rungs of the rule too) */}
+            <IconComp size={size} stroke={iconStrokeForSize(size)} />
             <span style={{
               fontSize: 10, fontFamily: 'monospace', color: 'inherit',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%',
@@ -226,8 +218,9 @@ export const Browse: Story = {
 **@tabler/icons-react** — curated set of the most-used icons. Click to copy the import name.
 
 \`\`\`tsx
+import { Icon } from '@helix-ds/core';
 import { IconBolt } from '@tabler/icons-react';
-<IconBolt size={20} stroke={1.6} />
+<Icon icon={IconBolt} size={20} /> // stroke comes from the ADR-017 rule
 \`\`\`
         `,
       },

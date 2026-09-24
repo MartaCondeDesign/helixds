@@ -13,7 +13,7 @@ export { CheckboxGroup } from './components/CheckboxGroup';
 export { RadioGroup } from './components/RadioGroup';
 export { RadioButton } from './components/RadioButton';
 export { Switch }     from './components/Switch';
-export { Icon, createIconAdapter } from './components/Icon';
+export { Icon, createIconAdapter, iconStrokeForSize, ICON_STROKE_PX_BY_SIZE } from './components/Icon';
 export { Card }       from './components/Card';
 export { Avatar }     from './components/Avatar';
 export { AvatarGroup } from './components/AvatarGroup';

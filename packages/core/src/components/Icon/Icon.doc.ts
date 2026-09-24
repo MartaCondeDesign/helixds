@@ -11,7 +11,7 @@ export const doc: ComponentDoc = {
     'Never rely on the icon alone to convey status — pair with text or an explicit label.',
   ],
   variants: [],
-  sizes: ['12', '14', '16', '18', '20', '24', '32'],
+  sizes: ['12', '14', '16', '18', '20', '24', '28', '32', '36', '40'],
   tokens: [
     { part: 'icon-root', label: 'color.neutral', token: '--helix-color-icon-neutral', kind: 'color' },
     { part: 'icon-root', label: 'color.neutral-light', token: '--helix-color-icon-neutral-light', kind: 'color' },
@@ -23,13 +23,13 @@ export const doc: ComponentDoc = {
     { part: 'icon-root', label: 'color.success', token: '--helix-color-icon-success', kind: 'color' },
     { part: 'icon-root', label: 'color.warning', token: '--helix-color-icon-warning', kind: 'color' },
     { part: 'icon-root', label: 'color.info', token: '--helix-color-icon-info', kind: 'color' },
-    { part: 'icon-root', label: 'stroke-width', value: '1.5', kind: 'other', meta: 'Helix override of Tabler default (2) — always pass explicitly, never rely on the library default' },
+    { part: 'icon-root', label: 'stroke-width', value: '1.3px → 2.8px real', kind: 'other', meta: 'ADR-017 stroke rule — real on-screen width per size (12: 1.3, 14: 1.4, 16: 1.5, 18: 1.6, 20: 1.7, 24: 1.8, 28: 2.0, 32: 2.2, 36: 2.4, 40: 2.8px), applied automatically by Icon' },
     { part: 'icon-root', label: 'viewBox', value: '0 0 24 24', kind: 'other' },
   ],
   features: [
     'icon — any HelixIconComponent-shaped icon (e.g. IconPlus), passed by reference not by name string — Tabler is the default set, not a requirement',
-    'size — fixed pixel size, one of 12 | 16 | 20 | 24 | 32 — never scales with font-size',
-    'stroke — defaults to 1.5, the Helix-specific override of Tabler\'s default 2',
+    'size — fixed pixel size, one of 12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40 — never scales with font-size',
+    'stroke — derived automatically from size (ADR-017 stroke rule); pass only for a deliberate one-off',
     'decorative/label — controls aria-hidden vs role="img" + aria-label',
   ],
   examples: [

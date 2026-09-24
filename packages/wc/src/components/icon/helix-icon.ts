@@ -1,6 +1,15 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+// Copy of @helix-ds/core's ICON_STROKE_PX_BY_SIZE (ADR-017) — this package can't import core.
+// Real on-screen line width in px per icon size; keep in sync when that table changes.
+const STROKE_PX_BY_SIZE: Record<number, number> = {
+  12: 1.3, 14: 1.4, 16: 1.5, 18: 1.6, 20: 1.7, 24: 1.8, 28: 2.0, 32: 2.2, 36: 2.4, 40: 2.8,
+};
+
+/** SVG stroke (24×24 viewBox units) for `size`, per ADR-017. Off-scale sizes hold 16px's weight. */
+const strokeForSize = (size: number) => ((STROKE_PX_BY_SIZE[size] ?? 1.5) * 24) / size;
+
 /**
  * `<helix-icon>` — pilot Web Components equivalent of `@helix-ds/core`'s `Icon` (ADR-015).
  *
@@ -27,11 +36,12 @@ export class HelixIcon extends LitElement {
       width: var(--helix-icon-size, 16px);
       height: var(--helix-icon-size, 16px);
       stroke: currentColor;
+      stroke-width: var(--helix-icon-stroke, 2.25);
       fill: none;
     }
   `;
 
-  /** Rendered icon size in pixels. Default: 16 — same fixed scale as the React Icon (12–32). */
+  /** Rendered icon size in pixels. Default: 16 — same fixed scale as the React Icon (12–40). */
   @property({ type: Number }) size = 16;
 
   /** Accessible label for icon-only usage. Required when `decorative` is false. */
@@ -42,13 +52,16 @@ export class HelixIcon extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.applySize();
+  }
+
+  private applySize() {
     this.style.setProperty('--helix-icon-size', `${this.size}px`);
+    this.style.setProperty('--helix-icon-stroke', String(strokeForSize(this.size)));
   }
 
   updated(changed: Map<string, unknown>) {
-    if (changed.has('size')) {
-      this.style.setProperty('--helix-icon-size', `${this.size}px`);
-    }
+    if (changed.has('size')) this.applySize();
     // Reflected onto the host, not just inside the shadow root — a screen reader inspects the host
     // element's own attributes, not shadow-internal markup (same reasoning as helix-tooltip's
     // aria-describedby placement below).

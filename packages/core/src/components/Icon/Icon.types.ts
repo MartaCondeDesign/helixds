@@ -1,6 +1,6 @@
 import type * as React from 'react';
 
-export type IconSize = 12 | 14 | 16 | 18 | 20 | 24 | 32;
+export type IconSize = 12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40;
 
 /**
  * Structural shape Helix's `Icon` wrapper actually renders through — `size`, `stroke`, `color`,
@@ -26,12 +26,12 @@ export interface IconProps {
   /** Rendered icon size in pixels. Default: 16 */
   size?: IconSize;
   /**
-   * Stroke width applied to the icon path. Default: scales with `size` (see `STROKE_BY_SIZE` in
-   * Icon.tsx) — 1.5 at the 24px reference, compensated thicker below it so small icons don't read
-   * as weak. Tabler's SVG viewBox stays fixed at 24×24 regardless of rendered size, so a flat
-   * stroke value shrinks in real screen pixels as `size` drops — 1.5 unchanged at every size looks
-   * proportionally correct on paper but visibly thin once rendered small. Pass explicitly only to
-   * deviate from the scale on purpose (e.g. Checkbox's bold `stroke={3}` checkmark).
+   * Stroke width applied to the icon path (24×24 viewBox units). Default: derived automatically
+   * from `size` by the icon stroke rule (ADR-017, `ICON_STROKE_PX_BY_SIZE` in iconStroke.ts) —
+   * a real on-screen line of 1.3px at 12 rising to 2.8px at 40. Tabler's viewBox stays fixed at
+   * 24×24, so a flat stroke value would get thinner on screen as `size` drops. Don't pass it to
+   * fix a "too thin" icon — change the rule instead. Pass explicitly only for a deliberate
+   * one-off (e.g. Checkbox's bold `stroke={3}` checkmark).
    */
   stroke?: number;
   /** Icon stroke color. Default: 'currentColor' — prefer inheriting from surrounding text/token. */

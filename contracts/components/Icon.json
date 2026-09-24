@@ -24,9 +24,18 @@
       "width":     2,
       "note":      "Tabler default. Goes on the root <svg> ONLY — never on <path> children. Configurable via CSS."
     },
-    "helixStrokeOverride": {
-      "width":     1.5,
-      "note":      "Helix DS design decision. Always pass stroke={1.5} at usage site: <IconPlus size={16} stroke={1.5} />. Never hardcode — use the prop."
+    "helixStrokeRule": {
+      "adr":       "docs/ADR/ADR-017-icon-stroke-rule.md",
+      "source":    "packages/core/src/components/Icon/iconStroke.ts (ICON_STROKE_PX_BY_SIZE + iconStrokeForSize)",
+      "unit":      "Line width as seen on screen, in CSS px. The SVG stroke attribute is converted from this in code (iconStrokeForSize) — never documented or edited by hand.",
+      "realPxBySize": { "12": 1.3, "14": 1.4, "16": 1.5, "18": 1.6, "20": 1.7, "24": 1.8, "28": 2.0, "32": 2.2, "36": 2.4, "40": 2.8 },
+      "rules": [
+        "Icon applies the rule automatically — never pass stroke at a call site to make an icon heavier or lighter.",
+        "To change icon weight system-wide, edit ICON_STROKE_PX_BY_SIZE (and this block + ADR-017), nothing else.",
+        "Real px must never decrease as size grows — each rung is at least as thick as the one below it.",
+        "Line weight grows faster as icons get larger: +0.1px per step up to 24px, +0.2px per 4px from 24 to 36, +0.4px from 36 to 40 — large icons need visibly heavier lines to hold their presence. Sizes between rungs interpolate real px linearly; outside 12–40 the edge rung's svg stroke is held.",
+        "A deliberate one-off override (e.g. Checkbox's stroke={3} checkmark) must be at least as thick as the rule at that size, and commented at the call site."
+      ]
     },
     "stroke": {
       "linecap":   "round",
@@ -91,7 +100,10 @@
       "18": "Input size=l",
       "20": "medium emphasis — card headers, section labels",
       "24": "large — native icon size, icon-only buttons, empty states",
-      "32": "xlarge — feature icons, onboarding illustrations"
+      "28": "between large and xlarge",
+      "32": "xlarge — feature icons, onboarding illustrations",
+      "36": "xxlarge — hero / empty-state feature icons",
+      "40": "xxxlarge — largest icon size, same use as 36"
     },
     "defaultInButton": 16,
     "note": "Icon components always render at the size passed via the size prop. The Figma component is 24×24 (native grid); resize the instance at usage site."
@@ -118,7 +130,7 @@
     {
       "part":        "icon-vector",
       "element":     "path (or g > path for compound icons)",
-      "description": "The drawn artwork. stroke=currentColor, fill=none, stroke-width=1.5. Generated inside the Tabler icon component — not addressable as a data-helix-part from the Helix Icon wrapper; only icon-root carries the attribute."
+      "description": "The drawn artwork. stroke=currentColor, fill=none, stroke-width derived from size by the ADR-017 stroke rule (see iconStyle.helixStrokeRule). Generated inside the Tabler icon component — not addressable as a data-helix-part from the Helix Icon wrapper; only icon-root carries the attribute."
     }
   ],
 
@@ -131,15 +143,15 @@
     },
     {
       "name": "size",
-      "type": "12 | 14 | 16 | 18 | 20 | 24 | 32",
+      "type": "12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40",
       "default": 16,
       "description": "Rendered icon size in pixels."
     },
     {
       "name": "stroke",
       "type": "number",
-      "default": 1.5,
-      "description": "Stroke width applied to the icon path."
+      "default": "iconStrokeForSize(size)",
+      "description": "Stroke width applied to the icon path. Defaults to the ADR-017 stroke rule for the rendered size (see iconStyle.helixStrokeRule) — don't pass it to adjust weight; only for a deliberate, commented one-off."
     },
     {
       "name": "color",
@@ -190,7 +202,7 @@
     "importFromTabler": ".ai/skills/icons-to-figma.md",
     "createCustomIcon": [
       "1. Study 2–3 reference icons from customIconRules.referenceIcons",
-      "2. Sketch paths on 24×24 grid, stroke-width=1.5, rounded caps",
+      "2. Sketch paths on 24×24 grid, stroke-width=1.8 (the ADR-017 rule at 24px), rounded caps",
       "3. Export SVG — extract the path d= attribute",
       "4. Add to Icons.stories.tsx ICONS array",
       "5. Create .mjs file in packages/core/node_modules/@tabler/icons-react/dist/esm/icons/ (if custom)",

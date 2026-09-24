@@ -62,6 +62,8 @@ export function Checkbox({
         {/* custom visual control — styled via CSS sibling selector */}
         <span data-helix-part="checkbox-control" aria-hidden="true">
           <span data-helix-part="checkbox-indicator">
+            {/* Deliberate override of the ADR-017 stroke rule (2.6 at 12px): the checkmark is the
+                whole signal of the control, so it's drawn bolder (3 → 1.5px real). */}
             {indeterminate
               ? <Icon icon={IconMinus} size={12} stroke={3} />
               : <Icon icon={IconCheck} size={12} stroke={3} />
