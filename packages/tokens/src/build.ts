@@ -30,7 +30,7 @@ function isComposite(value: TokenNode['$value']): value is Record<string, string
   return typeof value === 'object' && value !== null;
 }
 type Tree = Record<string, unknown>;
-type CSSVar = { name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string };
+type CSSVar = { name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string | undefined };
 
 // ─── Resolve DTCG references ({a.b.c} → value) ───────────────────────────────
 
