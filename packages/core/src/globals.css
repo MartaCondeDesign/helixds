@@ -1971,6 +1971,15 @@
     transition-duration: var(--helix-duration-fast);
     transition-timing-function: var(--helix-easing-out);
   }
+  /* Reduced motion: the hovered avatar doesn't move at all — no lift, no scale, no transition.
+     The name still shows in its Tooltip. */
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="avatar-group-item"],
+    [data-helix-part="avatar-group-item"]:hover {
+      transform:  none;
+      transition: none;
+    }
+  }
 
   [data-helix-part="avatar-group-overflow"] {
     display:          inline-flex;
