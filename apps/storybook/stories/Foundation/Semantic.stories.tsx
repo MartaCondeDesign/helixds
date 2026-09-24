@@ -385,7 +385,7 @@ export const Motion: Story = {
             </tbody>
           </table>
           <p style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-lightest)', marginTop: 10 }}>
-            A generic hover lift/scale scale. In use by AvatarGroup (lift.m + scale.s on the hovered
+            A generic hover lift/scale scale. In use by AvatarGroup (lift.s + scale.s on the hovered
             avatar, approved 2026-09-24; no movement under prefers-reduced-motion). Any future component
             can reference the same scale instead of inventing its own.
           </p>
