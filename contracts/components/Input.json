@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Input",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "draft",
 
   "purpose": "Allows users to enter a single line of free-form text.",
 

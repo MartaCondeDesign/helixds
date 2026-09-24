@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "PageHeader",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "draft",
 
   "purpose": "Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row.",
 

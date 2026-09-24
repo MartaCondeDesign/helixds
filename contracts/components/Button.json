@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Button",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "draft",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
 

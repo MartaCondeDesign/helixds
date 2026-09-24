@@ -56,6 +56,15 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 5. **Prop vocabulary** — canonical names in `.ai/maps/prop-map.md`. Anti-synonyms are invalid.
 6. **New component requires a contract** — create `contracts/components/{Name}.json` first, then the
    implementation, then run `pnpm docs:manifest` (see below) so `contracts/manifest.json` picks it up.
+   Building it also means creating everything the stability criteria check ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)):
+   a story per variant, size and authored state; a keyboard `play` test per key in `a11y.keyboardNav`;
+   `<MotionConfig reducedMotion="user">` around any Motion animation; an eval prompt. Then run
+   `pnpm verify:stable` (Storybook running).
+6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
+   `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
+   criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA
+   contrast in light and dark, reduced motion, eval), not in Figma yet · **stable** = beta + in Figma.
+   Figma is the one manual step, done only when asked; `contracts/figma-sync.json` records it.
 7. **Read the contract before touching a component** — the contract defines what the component IS.
 8. **Figma is reference only** — Helix contracts always win over Figma output.
 9. **Every new or edited text/icon color token must pass WCAG 2.2 AA color contrast** — 4.5:1 for normal
@@ -79,6 +88,8 @@ pnpm verify:contract        validate a contract's own structure against componen
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
+pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
+                            ADR-018 — needs Storybook running; --details lists what's missing
 pnpm verify:types           check every contract's props are present in its {Name}.types.ts
                             (the actual contract-vs-implementation check, for prop types specifically)
 pnpm verify:props           check prop names against prop-map

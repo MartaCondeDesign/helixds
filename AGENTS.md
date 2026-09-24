@@ -25,15 +25,19 @@ import '@helix-ds/core/globals.css';   // Tailwind base + component styles
 
 ## Component inventory
 
-| Component  | Status | Import path                              | Purpose                      |
-|------------|--------|------------------------------------------|------------------------------|
-| Button     | ✅ stable | `@helix-ds/core`                      | Actions, CTAs, links         |
-| Input      | ✅ stable | `@helix-ds/core`                      | Text input, search           |
-| Badge      | ✅ stable | `@helix-ds/core`                      | Status, counts, labels       |
-| Chip       | 🚧 beta   | `@helix-ds/core`                      | Selectable tags / filters    |
-| Card       | 🚧 beta  | `@helix-ds/core`                      | Content grouping, widgets    |
-| Dialog     | 🚧 beta  | `@helix-ds/core`                      | Modal overlays               |
-| Select     | 🚧 beta  | `@helix-ds/core`                      | Dropdown selection           |
+Every component's current status (draft / beta / stable) is **computed**, not listed here — see
+Storybook → **Status**, or `contracts/stability.json` (`pnpm verify:stable`, ADR-018). draft = exists and
+works; beta = passes all 8 automatic quality criteria; stable = beta + modeled in Figma.
+
+| Component  | Import path                              | Purpose                      |
+|------------|------------------------------------------|------------------------------|
+| Button     | `@helix-ds/core`                      | Actions, CTAs, links         |
+| Input      | `@helix-ds/core`                      | Text input, search           |
+| Badge      | `@helix-ds/core`                      | Status, counts, labels       |
+| Chip       | `@helix-ds/core`                      | Selectable tags / filters    |
+| Card       | `@helix-ds/core`                      | Content grouping, widgets    |
+| Modal      | `@helix-ds/core`                      | Modal overlays               |
+| Select     | `@helix-ds/core`                      | Dropdown selection           |
 
 ## Component hierarchy (enforce this order)
 

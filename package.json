@@ -21,6 +21,7 @@
     "verify:props": "tsx scripts/prop-map-check.ts",
     "verify:icons": "tsx scripts/verify-icon-usage.ts",
     "verify:types": "tsx scripts/verify-types.ts",
+    "verify:stable": "tsx scripts/verify-stable.ts",
     "report:paints": "tsx scripts/report-paints.ts",
     "lint:ai": "tsx scripts/lint-ai.ts",
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",

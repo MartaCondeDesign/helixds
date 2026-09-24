@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "AvatarGroup",
   "version": "0.1.0",
-  "status":  "draft",
+  "status":  "beta",
 
   "purpose": "Shows several people or entities associated with the same record as a compact overlapping stack of Avatars, collapsing whatever doesn't fit into a '+N' count.",
 

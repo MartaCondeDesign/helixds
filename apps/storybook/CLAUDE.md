@@ -13,11 +13,11 @@ renders `.ai/maps/changelog.json`, generated from `git log` by `pnpm docs:change
 only changelog — there is no separate `CHANGELOG.md` to keep in sync. Regenerate it (from the repo root)
 when you want the page to reflect commits made since its last run.
 
-**`Status.stories.tsx`** (top-level, right after Changelog) renders `contracts/manifest.json` as a doneness
-matrix — every component's status (draft/beta/stable/deprecated, with a legend explaining each), and
-whether it has a contract/export/doc/types/story/documented-a11y, plus a Figma column sourced from
-`contracts/figma-sync.json` (whether that component is modeled in Figma). Each component name links to its
-own docs page. Regenerate the manifest source with `pnpm docs:manifest`.
+**`Status.stories.tsx`** (top-level, right after Changelog) renders `contracts/stability.json` — every
+component's computed status (draft/beta/stable, ADR-018) with one ✓/✗ column per automatic criterion
+(contract, types, tokens, stories + a11y, keyboard, contrast light + dark, reduced motion, eval) plus
+Figma, and a legend. Each component name links to its own docs page; hovering a ✗ shows what's missing.
+Regenerate the source with `pnpm verify:stable` (Storybook running).
 
 **`contracts/figma-sync.json`** tracks, per component, whether it's modeled in the Figma file, whether its
 variants match the code, and whether its Figma variable bindings match `component.*` tokens — surfaced in

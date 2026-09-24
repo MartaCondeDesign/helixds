@@ -114,7 +114,13 @@ pnpm verify:contract   # contract's own structure/naming against the schema (not
 pnpm verify:types      # contract props actually present in {Name}.types.ts — the real cross-check
 pnpm verify:props      # no anti-synonym prop names
 pnpm typecheck         # TypeScript strict mode
+pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs Storybook running
 ```
+
+Before calling the component done, create what `verify:stable` checks (ADR-018): a story per variant,
+size and authored state; a keyboard `play` test per key in `a11y.keyboardNav` (`userEvent.keyboard('{Enter}')`,
+`userEvent.tab()`… from `@storybook/test`); `<MotionConfig reducedMotion="user">` around any Motion
+animation; a filled eval prompt. Never set `status` by hand — the script does.
 
 ## Output
 

@@ -4,8 +4,7 @@ import { IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
 import { Badge, Icon } from '@helix-ds/core';
 import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
-import manifest from '../../../contracts/manifest.json';
-import figmaSync from '../../../contracts/figma-sync.json';
+import stability from '../../../contracts/stability.json';
 
 const meta: Meta = {
   title: 'Status',
@@ -14,7 +13,7 @@ const meta: Meta = {
     layout: 'padded',
     docs: {
       description: {
-        story: 'A doneness matrix for every component — generated from `contracts/manifest.json`, nothing here is hand-written.',
+        story: 'Every component’s status, computed from 8 automatic criteria + Figma — generated from `contracts/stability.json` (`pnpm verify:stable`), nothing here is hand-written.',
       },
     },
   },
@@ -32,11 +31,14 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
 };
 
 const STATUS_LEGEND: { status: string; description: string }[] = [
-  { status: 'draft',      description: 'In active development — API and behavior can still change without notice. Not safe to depend on yet.' },
-  { status: 'beta',       description: 'Contract is defined and the component works, but it’s still being validated in real use before it’s locked in.' },
-  { status: 'stable',     description: 'Contract is frozen and production-ready. Breaking changes only ship through a deprecation, not a silent edit.' },
-  { status: 'deprecated', description: 'Scheduled for removal — do not use in new work; existing usages should migrate off it.' },
+  { status: 'draft',      description: 'The component exists and works, but at least one of the 8 automatic criteria still fails (hover a ✗ to see what).' },
+  { status: 'beta',       description: 'All 8 automatic criteria pass — built, in Storybook, tokens applied, accessible and tested in light and dark. Not in Figma yet.' },
+  { status: 'stable',     description: 'Beta, and also modeled in Figma. The Figma step is done on request, then the next pnpm verify:stable promotes it.' },
+  { status: 'deprecated', description: 'Scheduled for removal — do not use in new work; existing usages should migrate off it. The only status set by hand.' },
 ];
+
+type CriterionKey = keyof typeof stability.criteria;
+const CRITERIA = Object.entries(stability.criteria) as [CriterionKey, string][];
 
 // Mirrors Storybook's own id sanitizer: "{Components|Layout}/{Name}" -> "components-name"/"layout-name",
 // lowercased, no word-splitting on camelCase — matches what /index.json actually serves.
@@ -45,15 +47,17 @@ function storyDocsHref(category: string, name: string): string {
   return `/?path=/docs/${group}-${name.toLowerCase()}--docs`;
 }
 
-function Check({ ok }: { ok: boolean }) {
+function Check({ ok, details = [] }: { ok: boolean; details?: string[] }) {
   return (
-    <Icon
-      icon={ok ? IconCircleCheckFilled : IconCircleXFilled}
-      size={16}
-      color={ok ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
-      decorative={false}
-      label={ok ? 'Yes' : 'No'}
-    />
+    <span title={ok ? undefined : details.join('\n')} style={{ display: 'inline-flex' }}>
+      <Icon
+        icon={ok ? IconCircleCheckFilled : IconCircleXFilled}
+        size={16}
+        color={ok ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+        decorative={false}
+        label={ok ? 'Yes' : `No: ${details.join('; ')}`}
+      />
+    </span>
   );
 }
 
@@ -75,22 +79,20 @@ const TD_STYLE: React.CSSProperties = {
   color: 'var(--helix-color-text-neutral)',
 };
 
-const figmaSyncByName = new Map(figmaSync.components.map(c => [c.name, c]));
-
 export const Overview: Story = {
   render: () => {
-    const rows = [...manifest.components].sort((a, b) => a.name.localeCompare(b.name));
+    const rows = [...stability.components].sort((a, b) => a.name.localeCompare(b.name));
     const byStatus = rows.reduce<Record<string, number>>((acc, r) => {
       acc[r.status] = (acc[r.status] ?? 0) + 1;
       return acc;
     }, {});
-    const inFigmaCount = figmaSync.components.filter(c => c.inFigma).length;
+    const inFigmaCount = rows.filter(r => r.inFigma).length;
 
     return (
       <div>
         <StoryHeader
           title="Status"
-          description={`Doneness matrix for ${manifest.count} components, generated from contracts/manifest.json (pnpm docs:manifest). ✓/✗ columns are real checks, not opinions — drift shows up in the generator's own output before it ever reaches this table. The Figma column reflects contracts/figma-sync.json (${inFigmaCount}/${figmaSync.components.length} modeled so far).`}
+          description={`Status of ${rows.length} components, computed by pnpm verify:stable (ADR-018) from 8 automatic criteria — real checks run in a browser, in light and dark mode, not opinions — plus Figma (${inFigmaCount}/${rows.length} modeled). Hover a ✗ to see what's missing. Last run: ${new Date(stability.generatedAt).toLocaleString()}.`}
         />
 
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', marginBottom: 'var(--helix-spacing-l)' }}>
@@ -105,14 +107,10 @@ export const Overview: Story = {
               <tr>
                 <th style={TH_STYLE}>Component</th>
                 <th style={TH_STYLE}>Status</th>
-                <th style={TH_STYLE}>Category</th>
-                <th style={TH_STYLE}>Contract</th>
-                <th style={TH_STYLE}>Export</th>
-                <th style={TH_STYLE}>Doc</th>
-                <th style={TH_STYLE}>Types</th>
-                <th style={TH_STYLE}>Story</th>
-                <th style={TH_STYLE}>A11y</th>
-                <th style={TH_STYLE}>Figma</th>
+                {CRITERIA.map(([key, label], i) => (
+                  <th key={key} style={TH_STYLE} title={label}>{i + 1} {label}</th>
+                ))}
+                <th style={TH_STYLE}>9 Figma</th>
               </tr>
             </thead>
             <tbody>
@@ -131,14 +129,10 @@ export const Overview: Story = {
                   <td style={TD_STYLE}>
                     <Badge variant={STATUS_VARIANT[r.status] ?? 'neutral'} label={r.status} />
                   </td>
-                  <td style={TD_STYLE}>{r.category}</td>
-                  <td style={TD_STYLE}><Check ok={!!r.contract} /></td>
-                  <td style={TD_STYLE}><Check ok={r.exports.component} /></td>
-                  <td style={TD_STYLE}><Check ok={r.exports.doc} /></td>
-                  <td style={TD_STYLE}><Check ok={r.exports.types.length > 0} /></td>
-                  <td style={TD_STYLE}><Check ok={!!r.story} /></td>
-                  <td style={TD_STYLE}><Check ok={r.a11yComplete} /></td>
-                  <td style={TD_STYLE}><Check ok={!!figmaSyncByName.get(r.name)?.inFigma} /></td>
+                  {CRITERIA.map(([key]) => (
+                    <td key={key} style={TD_STYLE}><Check ok={r.checks[key].pass} details={r.checks[key].details} /></td>
+                  ))}
+                  <td style={TD_STYLE}><Check ok={r.inFigma} details={['Not modeled in Figma yet — done on request']} /></td>
                 </tr>
               ))}
             </tbody>

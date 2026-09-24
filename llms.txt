@@ -15,14 +15,13 @@
 - @helix-ds/core    — UI components (Button, Input, Badge, Card, Dialog, Select)
 - @helix-ds/icons   — Tabler Icons wrapper with size/color tokens
 
-## Components (stable)
+## Components
+
+Status (draft / beta / stable) is computed per component — see contracts/stability.json (ADR-018).
 
 - Button    — Actions, CTAs. Variants: primary secondary ghost danger. Sizes: xs s m l xl.
 - Input     — Text fields, search. States: default error disabled. Supports icon, iconEnd.
 - Badge     — Status, counts. Variants: neutral success warning danger info.
-
-## Components (beta)
-
 - Card      — Content grouping. Has header, body, footer slots.
 - Dialog    — Modal overlay with trigger, title, description, footer.
 - Select    — Dropdown with option groups, search, multi-select.

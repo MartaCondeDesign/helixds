@@ -9,6 +9,7 @@ dist/
 *.local
 coverage/
 evals/outputs/
+apps/storybook/.test-results/
 
 # Standalone addon — its own git repo (github.com/MartaCondeDesign/tokens-storybook-addon)
 packages/helix-storybook-addon-tokens/
