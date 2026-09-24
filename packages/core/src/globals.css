@@ -1170,6 +1170,20 @@
     position: relative;
     display:  flex;
   }
+  /* Invisible native input for form submit + required validation — pinned to the field's bottom
+     edge so the browser's "fill in this field" bubble points at the Select, not the page corner. */
+  [data-helix-part="select-native"] {
+    position:       absolute;
+    left:           0;
+    bottom:         0;
+    width:          100%;
+    height:         1px;
+    padding:        0;
+    margin:         0;
+    border-width:   0;
+    opacity:        0;
+    pointer-events: none;
+  }
   [data-helix-part="select-wrapper"][data-full-width],
   [data-helix-part="select-root"][data-full-width] [data-helix-part="select-wrapper"] {
     width: 100%;

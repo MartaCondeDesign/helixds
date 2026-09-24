@@ -44,7 +44,7 @@
     { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
     { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
     { "name": "disabled", "type": "boolean", "default": false, "description": "Non-interactive state." },
-    { "name": "required", "type": "boolean", "default": false, "description": "Marks field as required." },
+    { "name": "required", "type": "boolean", "default": false, "description": "Marks field as required. Enforced natively: an invisible form input carries the value, so an empty required Select blocks form submit exactly like a native <select> (the browser's validation message points at the field and focus lands on the trigger)." },
     { "name": "fullWidth", "type": "boolean", "default": false, "description": "Expands to container width." },
     { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the label visually but keeps it accessible." },
     { "name": "id", "type": "string | undefined", "description": "Optional field id override." },

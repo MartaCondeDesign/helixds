@@ -192,10 +192,25 @@ export function Select({
           {...(activeValue !== undefined ? { activeValue } : {})}
         />
 
-        {/* Form participation — a hand-rolled trigger has nothing native to submit with otherwise.
-            Native constraint validation doesn't apply to hidden inputs (`required` is a no-op here);
-            real required-field validation for Select is a known follow-up, not solved by this alone. */}
-        {name && <input type="hidden" name={name} value={current ?? ''} />}
+        {/* Form participation — a hand-rolled trigger has nothing native to submit or validate with.
+            A real (not type="hidden") input so native constraint validation applies: `required`
+            blocks submit while empty, same as a native <select>. Not readOnly either — readOnly
+            inputs are barred from validation too. Invisible, untabbable and aria-hidden; when the
+            browser focuses it to report the error, focus is handed to the trigger instead. */}
+        {(name || required) && (
+          <input
+            data-helix-part="select-native"
+            type="text"
+            tabIndex={-1}
+            aria-hidden="true"
+            name={name}
+            value={current ?? ''}
+            required={required}
+            disabled={disabled}
+            onChange={() => {}} // mirrors `current`; the Menu owns the real value change
+            onFocus={() => triggerRef.current?.focus()}
+          />
+        )}
       </div>
 
       {description && !errorMessage && (
