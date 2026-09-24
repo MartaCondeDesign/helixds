@@ -38,7 +38,7 @@ const STATUS_LEGEND: { status: string; description: string }[] = [
 ];
 
 type CriterionKey = keyof typeof stability.criteria;
-const CRITERIA = Object.entries(stability.criteria) as [CriterionKey, string][];
+const CRITERIA = Object.entries(stability.criteria) as [CriterionKey, { label: string; description: string }][];
 
 // Mirrors Storybook's own id sanitizer: "{Components|Layout}/{Name}" -> "components-name"/"layout-name",
 // lowercased, no word-splitting on camelCase — matches what /index.json actually serves.
@@ -70,6 +70,15 @@ const TH_STYLE: React.CSSProperties = {
   textTransform: 'uppercase',
   color: 'var(--helix-color-text-neutral-lightest)',
   borderBottom: '1px solid var(--helix-color-border-neutral)',
+};
+
+// Criterion headers carry their explanation in a native tooltip (title) — dotted underline + help
+// cursor signal that hovering reveals more.
+const HINT_TH_STYLE: React.CSSProperties = {
+  ...TH_STYLE,
+  cursor: 'help',
+  textDecoration: 'underline dotted',
+  textUnderlineOffset: 3,
 };
 
 const TD_STYLE: React.CSSProperties = {
@@ -107,10 +116,10 @@ export const Overview: Story = {
               <tr>
                 <th style={TH_STYLE}>Component</th>
                 <th style={TH_STYLE}>Status</th>
-                {CRITERIA.map(([key, label], i) => (
-                  <th key={key} style={TH_STYLE} title={label}>{i + 1} {label}</th>
+                {CRITERIA.map(([key, { label, description }]) => (
+                  <th key={key} style={HINT_TH_STYLE} title={description}>{label}</th>
                 ))}
-                <th style={TH_STYLE}>9 Figma</th>
+                <th style={HINT_TH_STYLE} title={stability.figma.description}>{stability.figma.label}</th>
               </tr>
             </thead>
             <tbody>
