@@ -7,24 +7,37 @@ turns: 1
 
 # Prompt
 
-TODO: a natural-language task an agent would ask for that should use Tooltip.
+A toolbar has an icon-only "Archive" button. Using Helix DS, show a short "Archive" hint when the
+user hovers or focuses it.
 
 # Success criteria
 
 - [ ] Imports `Tooltip` from `@helix-ds/core`
-- [ ] TODO: canonical prop usage, taken from `contracts/components/Tooltip.json` once it's filled in
+- [ ] Uses `label` prop for the tooltip text (not `content`, `title`, `text`)
+- [ ] Wraps the trigger directly as its child: `<Tooltip` around `<IconButton`
+- [ ] The wrapped IconButton keeps its own `label` accessible name
 
 # Escape hatches (partial credit)
 
-- TODO: legitimate but non-ideal outputs
+- Sets `placement="bottom"` for a top-of-page toolbar (the default `top` auto-flips anyway)
 
 # Invalid patterns (auto-fail)
 
-- TODO: anti-synonyms and hallucinated props to catch, from `.ai/maps/prop-map.md`
+- `open=` — anti-synonym for expanded; hover/focus drive visibility on their own
+- `onMouseEnter=` — Tooltip already handles hover and focus
+- `title=` — native title attribute instead of Tooltip
 
 # Expected output shape
 
 ```tsx
-// TODO: reference implementation. `pnpm eval:run` scores this against the criteria
-// above — if it doesn't score 100%, the criteria are written ambiguously.
+import { Tooltip, IconButton } from '@helix-ds/core';
+import { IconArchive } from '@tabler/icons-react';
+
+function ArchiveAction({ onArchive }: { onArchive: () => void }) {
+  return (
+    <Tooltip label="Archive" placement="bottom">
+      <IconButton icon={IconArchive} label="Archive" onPress={onArchive} />
+    </Tooltip>
+  );
+}
 ```

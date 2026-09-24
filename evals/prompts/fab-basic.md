@@ -1,30 +1,60 @@
 ---
 id: fab-basic
 category: component-selection
-difficulty: easy
+difficulty: medium
 turns: 1
 ---
 
 # Prompt
 
-TODO: a natural-language task an agent would ask for that should use FAB.
+Add a floating "create" button to a documents screen using Helix DS. Pressing it should reveal three
+related actions: new document, new folder, and upload file.
 
 # Success criteria
 
 - [ ] Imports `FAB` from `@helix-ds/core`
-- [ ] TODO: canonical prop usage, taken from `contracts/components/FAB.json` once it's filled in
+- [ ] Passes the trigger icon by reference with `icon={IconPlus}` (not `icon={<`)
+- [ ] Uses `label` prop for the trigger's accessible name (not `aria-label`, `title`)
+- [ ] Uses the `actions` prop for the speed-dial items (not `items`, `options`)
+- [ ] Each action uses `onPress` (not `onClick`)
 
 # Escape hatches (partial credit)
 
-- TODO: legitimate but non-ideal outputs
+- Controls the speed-dial with `expanded` + `onExpandedChange` (uncontrolled is also fine)
+- Positions the FAB via `className` — FAB never positions itself
 
 # Invalid patterns (auto-fail)
 
-- TODO: anti-synonyms and hallucinated props to catch, from `.ai/maps/prop-map.md`
+- `open=` — anti-synonym for expanded
+- `isOpen=` — anti-synonym for expanded
+- `<IconButton` stacked by hand to fake a speed-dial — FAB's actions prop already models it
 
 # Expected output shape
 
 ```tsx
-// TODO: reference implementation. `pnpm eval:run` scores this against the criteria
-// above — if it doesn't score 100%, the criteria are written ambiguously.
+import { FAB } from '@helix-ds/core';
+import { IconPlus, IconFileText, IconFolderPlus, IconUpload } from '@tabler/icons-react';
+
+function DocumentsCreateFAB({
+  onNewDocument,
+  onNewFolder,
+  onUpload,
+}: {
+  onNewDocument: () => void;
+  onNewFolder: () => void;
+  onUpload: () => void;
+}) {
+  return (
+    <FAB
+      icon={IconPlus}
+      label="Create"
+      actions={[
+        { icon: IconFileText, label: 'New document', onPress: onNewDocument },
+        { icon: IconFolderPlus, label: 'New folder', onPress: onNewFolder },
+        { icon: IconUpload, label: 'Upload file', onPress: onUpload },
+      ]}
+      className="documents-create-fab" // fixed position set in the screen's own CSS
+    />
+  );
+}
 ```

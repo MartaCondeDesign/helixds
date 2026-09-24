@@ -31,13 +31,17 @@ Content types in `.ai/`:
 - **Maps** (`.ai/maps/`) — canonical vocabularies (prop-map.md)
 - **Config** (`.ai/config.json`) — structured validation data, not narrative
 
-Multi-LLM installation: a `setup:ai` script is intended to copy/link skills into:
+Multi-LLM installation: a `setup:ai` script was originally intended to copy/link skills into:
 - `.claude/skills/` (Claude Code)
 - `.gemini/skills/` (Gemini CLI)
 - `.github/copilot-instructions.md` (GitHub Copilot)
 
-**Status: not yet implemented.** There is no `setup:ai` entry in `package.json` today — only
-`pnpm lint:ai` exists. Until `setup:ai` ships, keep `.claude/skills/` in sync with `.ai/skills/` by hand.
+**Status (updated 2026-09-24): partially implemented, with a different scope.** `pnpm setup:ai`
+(`scripts/setup-ai.mjs`) now exists, but it serves the **consumer** audience: it copies `AGENTS.md` into a
+target project and writes pointer files for Cursor (`.cursor/rules/helix.mdc`) and Copilot
+(`.github/copilot-instructions.md`) when those tools are detected there. It does **not** sync this repo's
+own `.ai/skills/` into `.claude/skills/` or `.gemini/skills/` — that contributor-side sync is still not
+built, so keep those in sync with `.ai/skills/` by hand.
 
 CI validation: `pnpm lint:ai` validates the .ai/ directory structure (SPORT sections present,
 agent frontmatter complete, memory files non-empty, config.json valid).
@@ -45,11 +49,12 @@ agent frontmatter complete, memory files non-empty, config.json valid).
 ## Consequences
 
 - **Positive:** Editing `.ai/skills/ds-component-creator.md` propagates to Cursor automatically (symlink)
-  and to Claude Code once `setup:ai` exists or the copy is done by hand.
+  and to Claude Code once the copy is done by hand (`setup:ai` doesn't cover this — see Status above).
 - **Positive:** `pnpm lint:ai` catches drift in `.ai/` structure in CI.
-- **Negative:** `.claude/skills/` can silently drift from `.ai/skills/` until `setup:ai` is built.
+- **Negative:** `.claude/skills/` can silently drift from `.ai/skills/` until a contributor-side sync is built.
 - **Negative:** On Windows, the `.cursor` symlink requires developer mode or Admin rights.
-- **Open item:** build the `setup:ai` script this ADR assumes exists.
+- **Open item:** the contributor-side skill sync (`.ai/skills/` → `.claude/skills/`, `.gemini/skills/`)
+  — `setup:ai` shipped for consumers only.
 
 ## Two-audience principle
 

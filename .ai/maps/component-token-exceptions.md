@@ -76,12 +76,14 @@ of undocumented exception this table exists to surface, not suppress. `TopBar.he
 top rung) and `Dialog.overlay` (a one-off backdrop color) now show as 🆕 pending an actual decision — see the
 table below for each.
 
-**Dialog.overlay, specifically:** `rgba(15,23,42,0.6)` is `semantic.color.fill.overlay` (→
-`primitive.color.gray.900` = `#0f172a` = `rgb(15,23,42)`) at 60% opacity — a semantic token for exactly this
-role already exists, unused. The mechanical value-matching in the audit script doesn't catch it because the
-literal is written as an `rgba()` string rather than a resolved hex, so it still shows as 🆕 `dialog-overlay`
-above rather than 🚩. Wiring it up means deciding how the 60% opacity gets expressed (a dedicated
-`component.dialog.overlay-opacity` token, `color-mix()`, or similar) — not a straight re-alias.
+**Modal.overlay (formerly Dialog.overlay), specifically:** the table now shows it as ✅ ADR-010, because
+`KNOWN_EXCEPTIONS` in the audit script groups it with Modal's open/close choreography. That tag is broader
+than what ADR-010 actually decides — ADR-010 covers the `<dialog>` primitive and its timing, never the
+backdrop color — so the underlying gap is still open: `rgba(15,23,42,0.6)` is `semantic.color.fill.overlay`
+(→ `primitive.color.gray.900` = `#0f172a` = `rgb(15,23,42)`) at 60% opacity, a semantic token for exactly
+this role that exists and is unused, and a raw color literal conflicts with the root CLAUDE.md's "color:
+always a `--helix-*` token, no exceptions". Wiring it up means deciding how the 60% opacity gets expressed
+(a dedicated `component.modal.overlay-opacity` token, `color-mix()`, or similar) — not a straight re-alias.
 
 **The 5 columns:**
 

@@ -7,24 +7,41 @@ turns: 1
 
 # Prompt
 
-TODO: a natural-language task an agent would ask for that should use AvatarGroup.
+Show the members assigned to a project card using Helix DS: a compact overlapping stack of their
+avatars, showing at most 3 and collapsing the rest into a "+N" count.
 
 # Success criteria
 
 - [ ] Imports `AvatarGroup` from `@helix-ds/core`
-- [ ] TODO: canonical prop usage, taken from `contracts/components/AvatarGroup.json` once it's filled in
+- [ ] Passes the people through the `avatars` prop (not `users`, `members`, `items`)
+- [ ] Each entry uses `label` for the person's name (not `name:`, `title:`)
+- [ ] Uses `max={3}` to collapse the overflow into "+N"
 
 # Escape hatches (partial credit)
 
-- TODO: legitimate but non-ideal outputs
+- Passes `src` for people who have a photo (initials fallback is also fine)
+- Sets `size="s"` for a dense card
 
 # Invalid patterns (auto-fail)
 
-- TODO: anti-synonyms and hallucinated props to catch, from `.ai/maps/prop-map.md`
+- `<Avatar ` rendered one by one in a map — AvatarGroup owns the stack and the "+N" overflow
+- `size="sm"` — the size scale is s / m / l
+- `limit=` — the prop is max
 
 # Expected output shape
 
 ```tsx
-// TODO: reference implementation. `pnpm eval:run` scores this against the criteria
-// above — if it doesn't score 100%, the criteria are written ambiguously.
+import { AvatarGroup } from '@helix-ds/core';
+
+type Member = { fullName: string; photoUrl?: string };
+
+function ProjectMembers({ team }: { team: Member[] }) {
+  return (
+    <AvatarGroup
+      avatars={team.map(m => ({ label: m.fullName, src: m.photoUrl }))}
+      max={3}
+      size="s"
+    />
+  );
+}
 ```

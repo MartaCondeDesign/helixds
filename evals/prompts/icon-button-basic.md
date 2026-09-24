@@ -7,24 +7,42 @@ turns: 1
 
 # Prompt
 
-TODO: a natural-language task an agent would ask for that should use IconButton.
+Add a row action to each item in a file list using Helix DS: a small icon-only button with a trash
+icon that deletes the file. There's no room for a text label.
 
 # Success criteria
 
 - [ ] Imports `IconButton` from `@helix-ds/core`
-- [ ] TODO: canonical prop usage, taken from `contracts/components/IconButton.json` once it's filled in
+- [ ] Passes the icon by reference with `icon={IconTrash}` (not `icon={<`)
+- [ ] Uses `label` prop for the accessible name (not `aria-label`, `title`)
+- [ ] Uses `onPress` for the handler (not `onClick`)
 
 # Escape hatches (partial credit)
 
-- TODO: legitimate but non-ideal outputs
+- Uses `variant="danger"` to signal a destructive action (the default `ghost` is also fine for a row action)
+- Uses `size="s"` for a dense list row
 
 # Invalid patterns (auto-fail)
 
-- TODO: anti-synonyms and hallucinated props to catch, from `.ai/maps/prop-map.md`
+- `<Button` — a labelled Button when there's no room for text; IconButton is the icon-only control
+- `<IconTrash` rendered directly — icons always go through the component's icon prop
+- `isLoading=` — anti-synonym for loading
 
 # Expected output shape
 
 ```tsx
-// TODO: reference implementation. `pnpm eval:run` scores this against the criteria
-// above — if it doesn't score 100%, the criteria are written ambiguously.
+import { IconButton } from '@helix-ds/core';
+import { IconTrash } from '@tabler/icons-react';
+
+function FileRowActions({ fileName, onDelete }: { fileName: string; onDelete: () => void }) {
+  return (
+    <IconButton
+      icon={IconTrash}
+      label={`Delete ${fileName}`}
+      variant="danger"
+      size="s"
+      onPress={onDelete}
+    />
+  );
+}
 ```
