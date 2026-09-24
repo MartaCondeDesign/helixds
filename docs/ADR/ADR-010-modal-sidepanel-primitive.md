@@ -61,6 +61,12 @@ that case.
 **Naming note:** this component is called `Modal`, not `Dialog` — decided after this ADR was first drafted
 under the working name `Dialog`; the primitive decision and reasoning above are unaffected by the rename.
 
+**Backdrop (added 2026-09-24):** the `::backdrop` color is `semantic.color.fill.overlay` (via
+`component.modal.overlay`), applied at `component.modal.overlay-opacity` (`0.6`) with
+`color-mix(in srgb, <overlay> <opacity × 100%>, transparent)`. Same rendered color as the previous
+hand-written `rgba(15,23,42,0.6)`, but the color now comes from the token (and follows it if the token
+changes); only the opacity is Modal-local.
+
 ## Consequences
 
 - **Positive:** zero new dependency; focus trap, `::backdrop`, Escape-to-close, and top-layer stacking are

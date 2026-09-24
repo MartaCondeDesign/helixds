@@ -31,11 +31,12 @@ const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
 // to live here as 'FE'/'NM' judgment calls with no ADR to back them; per 2026-08-23
 // review neither is documented anywhere, so they were removed and now fall through to
 // the mechanical 🆕 classification below like any other unreviewed gap.
-type KnownTag = 'ADR-004' | 'ADR-005' | 'ADR-008' | 'ADR-010' | 'ADR-011' | 'ADR-013' | 'ADR-016';
+type KnownTag = 'ADR-004' | 'ADR-005' | 'ADR-007' | 'ADR-008' | 'ADR-010' | 'ADR-011' | 'ADR-013' | 'ADR-016';
 
 const REASON_TEXT: Record<KnownTag, string> = {
   'ADR-004': 'ADR-004 exception',
   'ADR-005': 'ADR-005 exception',
+  'ADR-007': 'ADR-007 exception',
   'ADR-008': 'ADR-008 exception',
   'ADR-010': 'ADR-010 exception',
   'ADR-011': 'ADR-011 exception',
@@ -62,6 +63,12 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   // FAB's speed-dial actions render smaller than the trigger — 36px, between Control's m (32px) and
   // l (40px) — a documented local exception, see ADR-004's "FAB, added 2026-09-09" note.
   'fab.action.height': { tag: 'ADR-004' },
+  // Switch m is 20px — its own track proportions, not the control ladder (no 20px semantic.size
+  // rung). Same category as Badge/Chip; see ADR-004's "Switch and Button l, added 2026-09-24".
+  'switch.height.m': { tag: 'ADR-004' },
+  // Button l's 20px side space = 16px padding (semantic.spacing.component-l) + this 2px label box,
+  // since the spacing scale has no 20px step. Same ADR-004 note.
+  'button.label.padding.x-l': { tag: 'ADR-004' },
   // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped
   // entirely below, per CLAUDE.md's token policy that width is deliberately not tokenized.
 
@@ -101,7 +108,9 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   'modal.duration-open': { tag: 'ADR-010' },
   'modal.duration-close': { tag: 'ADR-010' },
   'modal.scale-enter': { tag: 'ADR-010' },
-  'modal.overlay': { tag: 'ADR-010' },
+  // The backdrop color itself is semantic.color.fill.overlay; only its opacity is Modal-local —
+  // see ADR-010's "Backdrop" note.
+  'modal.overlay-opacity': { tag: 'ADR-010' },
 
   // SidePanel shares ADR-010 with Modal for the same open/close choreography reasoning.
   'sidePanel.duration-open': { tag: 'ADR-010' },
@@ -117,6 +126,11 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   'accordion.duration-expand': { tag: 'ADR-016' },
   'accordion.duration-collapse': { tag: 'ADR-016' },
   'accordion.duration-chevron': { tag: 'ADR-016' },
+
+  // Input's one-off error shake (CSS keyframes) — tuned travel distance and second-phase timing
+  // with no shared cross-component concept; see ADR-007's "Tuned one-off CSS motion" amendment.
+  'input.shake.distance': { tag: 'ADR-007' },
+  'input.shake.dur-b': { tag: 'ADR-007' },
 };
 
 // The 3 possible outcomes, flagged with an emoji prefixed onto the "Current Value" cell:

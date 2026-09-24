@@ -32,7 +32,7 @@ export const doc: ComponentDoc = {
     { part: 'modal-footer-end', label: 'gap.actions', token: '--helix-modal-footerGap', kind: 'space', axis: 'horizontal', meta: 'Between the footer buttons' },
     { part: 'modal-close', label: 'inset.top', token: '--helix-modal-closeInset', kind: 'space', axis: 'vertical' },
     { part: 'modal-close', label: 'inset.end', token: '--helix-modal-closeInset', kind: 'space', axis: 'horizontal' },
-    { part: 'modal-root', label: 'min-height', token: '--helix-modal-minHeight', kind: 'space', axis: 'vertical' },
+    { part: 'modal-root', label: 'min-height', value: '400px', kind: 'other', meta: 'Per-component characteristic, not a token — same policy as min/max-width' },
     { part: 'modal-root', label: 'duration.open', token: '--helix-modal-duration-open', kind: 'other' },
     { part: 'modal-root', label: 'duration.close', token: '--helix-modal-duration-close', kind: 'other' },
     { part: 'modal-root', label: 'easing', token: '--helix-modal-easing', kind: 'other' },

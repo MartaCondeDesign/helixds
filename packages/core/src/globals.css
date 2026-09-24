@@ -122,6 +122,10 @@
     font-size:   var(--helix-button-fontSize-l);
     font-weight: var(--helix-button-fontWeight-l);
   }
+  /* 16px button padding + 2px label box = 20px — a step the spacing scale doesn't have (ADR-004). */
+  [data-helix-part="button"][data-size="l"] [data-helix-part="button-label"] {
+    padding: 0 var(--helix-button-label-padding-x-l);
+  }
 
   /* Variant: primary */
   [data-helix-part="button"][data-variant="primary"] {
@@ -1876,12 +1880,16 @@
 
   [data-helix-part="card-body"] {
     padding:     var(--helix-card-padding);
-    padding-top: var(--helix-card-body-paddingTop);
     font-family: var(--helix-textStyle-body-m-regular-fontFamily);
     font-size: var(--helix-textStyle-body-m-regular-fontSize);
     font-weight: var(--helix-textStyle-body-m-regular-fontWeight);
     line-height: var(--helix-textStyle-body-m-regular-lineHeight);
     color:       var(--helix-color-text-neutral);
+  }
+  /* With a header, the header's own padding-bottom is the 8px gap to the body (contract) — so the
+     body drops its top padding only then. Without a header it keeps the full 24px, like the bottom. */
+  [data-helix-part="card-header"] + [data-helix-part="card-body"] {
+    padding-top: 0;
   }
   [data-helix-part="card-root"][data-padding="none"] [data-helix-part="card-body"] {
     padding: 0;
@@ -2188,7 +2196,7 @@
     position: fixed;
     inset: 0;
     margin: auto;
-    min-height: var(--helix-modal-minHeight);
+    min-height: 400px; /* per-component characteristic, not a token — same policy as min/max-width */
     max-width: min(560px, calc(100vw - var(--helix-spacing-xl) * 2));
     display: flex;
     flex-direction: column;
@@ -2212,7 +2220,7 @@
     transition-duration: var(--helix-modal-duration-close);
   }
   [data-helix-part="modal-root"]::backdrop {
-    background-color: var(--helix-modal-overlay);
+    background-color: color-mix(in srgb, var(--helix-modal-overlay) calc(var(--helix-modal-overlay-opacity) * 100%), transparent);
   }
   [data-helix-part="modal-header"] {
     /* Right-padded clear of the absolutely-positioned close button (inset + its own ~40px box + a

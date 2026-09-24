@@ -40,8 +40,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      the top of the scale) — those have no token and are legitimately hardcoded px.
    - **Component height:** driven by the shared size scale (see ADR-004) — but documented
      per-component exceptions exist (`Badge`, `Chip` use a local density model, not the control ladder).
-   - **min-width / max-width:** variable, not tokenized — decided by the consumer, the component, or
-     the pattern in use. There is no system token for this — a hardcoded px value here is correct,
+   - **min-width / max-width / min-height / max-height:** variable, not tokenized — a per-component
+     characteristic decided by the consumer, the component, or the pattern in use (e.g. Modal's
+     `min-height: 400px`). There is no system token for this — a hardcoded px value here is correct,
      not a violation (see `Button.json`'s `sizing.width` note).
    - **Shadow:** reserved for surfaces that visually float above other content — Dialog, Tooltip,
      Popover, Menu (see [ADR-005](docs/ADR/ADR-005-elevation-policy.md)). Never use shadow on inline

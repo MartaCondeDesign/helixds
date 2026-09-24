@@ -71,3 +71,12 @@ See [`.ai/maps/patterns/motion-effects.md`](../../.ai/maps/patterns/motion-effec
 - **Negative (carried over from ADR-006, not resolved by this decision):** none of Table/Card/Chip's real
   contracts are touched by drag-reorder — it remains a Storybook-only pattern (now via `Reorder`, not the
   old spike), same status as before.
+
+## Amendment 2026-09-24 — tuned one-off CSS motion constants
+
+Not every animation in Helix goes through Motion: `Input`'s error shake is a CSS `@keyframes` that plays
+once when a field turns `invalid`. Its easing aliases `semantic.easing.gentle` and its first phase uses
+`semantic.duration.fast`, but two values stay component-local literals — `component.input.shake.distance`
+(`6px` travel) and `component.input.shake.dur-b` (`60ms` return phase). They're tuned for this one gesture,
+with no shared cross-component concept to alias (same reasoning as Toast's/Tooltip's tuned constants in
+ADR-011/ADR-008). If a second component ever needs a shake, promote them to `semantic.*` instead.

@@ -20,6 +20,7 @@ export const doc: ComponentDoc = {
     { part: 'card-body', label: 'padding.end', token: '--helix-card-padding', kind: 'space', paddingSides: ['end'] },
     { part: 'card-body', label: 'padding.bottom', token: '--helix-card-padding', kind: 'space', paddingSides: ['bottom'] },
     { part: 'card-body', label: 'padding.start', token: '--helix-card-padding', kind: 'space', paddingSides: ['start'] },
+    { part: 'card-body', label: 'padding.top', token: '--helix-card-padding', kind: 'space', paddingSides: ['top'], meta: 'Without a header only — after a header the body starts right below its 8px gap' },
     { part: 'card-header', label: 'padding.top', token: '--helix-card-padding', kind: 'space', paddingSides: ['top'] },
     { part: 'card-header', label: 'padding.end', token: '--helix-card-padding', kind: 'space', paddingSides: ['end'] },
     { part: 'card-header', label: 'padding.start', token: '--helix-card-padding', kind: 'space', paddingSides: ['start'] },
