@@ -44,7 +44,7 @@ export const doc: ComponentDoc = {
     { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'button', label: 'padding.start', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
     { part: 'button', label: 'padding.end', token: '--helix-button-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l' },
-    { part: 'button-label', label: 'padding.x', token: '--helix-button-label-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l', meta: '16px + 2px label box = 20px side space at size l (ADR-004)' },
+    { part: 'button-label', label: 'padding.x', token: '--helix-button-label-padding-x-l', kind: 'space', axis: 'horizontal', size: 'l', meta: '16px button padding + 4px label box = 20px per side at size l (ADR-004)' },
     { part: 'button', label: 'fontSize', token: '--helix-button-fontSize-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
     { part: 'button', label: 'fontWeight', token: '--helix-button-fontWeight-s', kind: 'typography', meta: 'Caption / Semibold', size: 's' },
     { part: 'button', label: 'fontSize', token: '--helix-button-fontSize-m', kind: 'typography', meta: 'Caption / Semibold', size: 'm' },

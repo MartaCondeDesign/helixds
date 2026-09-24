@@ -66,9 +66,6 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   // Switch m is 20px — its own track proportions, not the control ladder (no 20px semantic.size
   // rung). Same category as Badge/Chip; see ADR-004's "Switch and Button l, added 2026-09-24".
   'switch.height.m': { tag: 'ADR-004' },
-  // Button l's 20px side space = 16px padding (semantic.spacing.component-l) + this 2px label box,
-  // since the spacing scale has no 20px step. Same ADR-004 note.
-  'button.label.padding.x-l': { tag: 'ADR-004' },
   // Note: `*.width` tokens (SideNav.width, etc.) never reach this map — they're skipped
   // entirely below, per CLAUDE.md's token policy that width is deliberately not tokenized.
 

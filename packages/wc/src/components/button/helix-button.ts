@@ -33,7 +33,7 @@ export class HelixButton extends LitElement {
       gap: var(--helix-primitive-spacing-50);
       font-family: inherit;
       border-radius: var(--helix-button-radius);
-      border: var(--helix-borderWidth-default) solid transparent;
+      border: var(--helix-borderWidth-thin) solid transparent;
       cursor: pointer;
       transition:
         background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),

@@ -100,10 +100,10 @@ traceable primitive alias, not a magic number.
 **Switch and Button l, added 2026-09-24:**
 - `Switch` `m` is **20px** (`primitive.size.125`) — the Switch uses its own track proportions, not the
   control ladder (which jumps from 16px to 24px), same category as Badge/Chip above.
-- `Button` `l` keeps **20px** of horizontal space, built from tokens instead of an off-scale step: the button
-  pads `16px` (`semantic.spacing.component-l`, same as size `m`) and its `button-label` box adds `2px` per side
-  (`component.button.label.padding.x-l`). The spacing scale has no 20px step; the 2px label box is the one
-  unreferenced literal here, documented rather than inventing a spacing rung for a single component.
+- `Button` `l` keeps **20px** of horizontal space per side, built from two real scale steps instead of an
+  off-scale 20px: the button pads `16px` (`semantic.spacing.component-l`, same as size `m`) and its
+  `button-label` box — a box inside the box — adds `4px` per side (`semantic.spacing.component-xs`, via
+  `component.button.label.padding.x-l`). No literal, no exception: both values are on the scale.
 
 ## Rules
 

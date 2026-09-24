@@ -87,7 +87,7 @@
     gap:             var(--helix-primitive-spacing-50);
     font-family:     inherit;
     border-radius:   var(--helix-button-radius);
-    border:          var(--helix-borderWidth-default) solid transparent;
+    border:          var(--helix-borderWidth-thin) solid transparent;
     cursor:          pointer;
     transition:
       background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
@@ -122,7 +122,7 @@
     font-size:   var(--helix-button-fontSize-l);
     font-weight: var(--helix-button-fontWeight-l);
   }
-  /* 16px button padding + 2px label box = 20px — a step the spacing scale doesn't have (ADR-004). */
+  /* 16px button padding + 4px label box = 20px per side — two scale steps instead of an off-scale 20px (ADR-004). */
   [data-helix-part="button"][data-size="l"] [data-helix-part="button-label"] {
     padding: 0 var(--helix-button-label-padding-x-l);
   }
@@ -263,7 +263,7 @@
     justify-content: center;
     padding:         0;
     border-radius:   var(--helix-iconButton-radius);
-    border:          var(--helix-borderWidth-default) solid transparent;
+    border:          var(--helix-borderWidth-thin) solid transparent;
     cursor:          pointer;
     transition:
       background-color var(--helix-iconButton-transition) var(--helix-primitive-easing-base),
@@ -506,7 +506,7 @@
     display:         flex;
     align-items:     center;
     background-color: var(--helix-input-fill-default);
-    border:          var(--helix-borderWidth-default) solid var(--helix-input-border-default);
+    border:          var(--helix-borderWidth-thin) solid var(--helix-input-border-default);
     border-radius:   var(--helix-input-radius);
     /* Height (border-box, border included) lives here, on the bordered element,
        not on input-field — matching Button/Select's model where the sized,
@@ -529,7 +529,7 @@
     border-color: var(--helix-input-border-hover);
   }
   [data-helix-part="input-wrapper"]:focus-within:not([data-invalid]) {
-    border-width: var(--helix-borderWidth-focus);
+    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-input-border-focus);
     box-shadow:   var(--helix-input-shadow-focus);
   }
@@ -537,7 +537,7 @@
     border-color: var(--helix-input-border-invalid);
   }
   [data-helix-part="input-wrapper"][data-invalid]:focus-within {
-    border-width: var(--helix-borderWidth-focus);
+    border-width: var(--helix-borderWidth-thick);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-input-border-invalid) 20%, transparent);
   }
 
@@ -1072,7 +1072,7 @@
   [data-helix-part="textarea-wrapper"] {
     position:         relative;
     background-color: var(--helix-textarea-fill-default);
-    border:           var(--helix-borderWidth-default) solid var(--helix-textarea-border-default);
+    border:           var(--helix-borderWidth-thin) solid var(--helix-textarea-border-default);
     border-radius:    var(--helix-textarea-radius);
     transition:
       border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
@@ -1084,7 +1084,7 @@
     border-color: var(--helix-textarea-border-hover);
   }
   [data-helix-part="textarea-wrapper"]:focus-within:not([data-invalid]) {
-    border-width: var(--helix-borderWidth-focus);
+    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-textarea-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-focus) 20%, transparent);
   }
@@ -1092,7 +1092,7 @@
     border-color: var(--helix-textarea-border-invalid);
   }
   [data-helix-part="textarea-wrapper"][data-invalid]:focus-within {
-    border-width: var(--helix-borderWidth-focus);
+    border-width: var(--helix-borderWidth-thick);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-invalid) 20%, transparent);
   }
   [data-helix-part="textarea-wrapper"][data-disabled] {
@@ -1200,7 +1200,7 @@
     align-items:      center;
     width:            100%;
     background-color: var(--helix-select-fill-default);
-    border:           var(--helix-borderWidth-default) solid var(--helix-select-border-default);
+    border:           var(--helix-borderWidth-thin) solid var(--helix-select-border-default);
     border-radius:    var(--helix-select-radius);
     color:            var(--helix-select-text-value);
     font-family:      inherit;
@@ -1237,7 +1237,7 @@
      rather than the open state getting a weaker one-off. */
   [data-helix-part="select-trigger"]:focus-visible,
   [data-helix-part="select-trigger"][aria-expanded="true"] {
-    border-width: var(--helix-borderWidth-focus);
+    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-select-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
   }
@@ -1296,7 +1296,7 @@
 
   [data-helix-part="menu"] {
     background:    var(--helix-menu-fill);
-    border:        var(--helix-borderWidth-default) solid var(--helix-menu-border);
+    border:        var(--helix-borderWidth-thin) solid var(--helix-menu-border);
     border-radius: var(--helix-menu-radius);
     box-shadow:    var(--helix-menu-shadow);
     padding:       var(--helix-menu-padding);
@@ -1430,7 +1430,7 @@
     width:       var(--helix-checkbox-size);
     height:      var(--helix-checkbox-size);
     border-radius: var(--helix-checkbox-radius);
-    border:      var(--helix-borderWidth-default) solid var(--helix-checkbox-border-default);
+    border:      var(--helix-borderWidth-thin) solid var(--helix-checkbox-border-default);
     background:  var(--helix-checkbox-fill-default);
     display:     flex;
     align-items: center;
@@ -1459,7 +1459,7 @@
 
   /* Focus-visible ring */
   [data-helix-part="checkbox-input"]:focus-visible + [data-helix-part="checkbox-control"] {
-    border-width:   var(--helix-borderWidth-focus);
+    border-width:   var(--helix-borderWidth-thick);
     outline:        2px solid var(--helix-checkbox-border-focus);
     outline-offset: 2px;
   }
@@ -1656,7 +1656,7 @@
     width:        var(--helix-radio-size);
     height:       var(--helix-radio-size);
     border-radius: 50%;
-    border:       var(--helix-borderWidth-default) solid var(--helix-radio-border-default);
+    border:       var(--helix-borderWidth-thin) solid var(--helix-radio-border-default);
     background:   var(--helix-radio-fill-default);
     display:      flex;
     align-items:  center;
@@ -1680,7 +1680,7 @@
     border-color: var(--helix-radio-fill-checked-hover);
   }
   [data-helix-part="radio-input"]:focus-visible + [data-helix-part="radio-control"] {
-    border-width:   var(--helix-borderWidth-focus);
+    border-width:   var(--helix-borderWidth-thick);
     outline:        2px solid var(--helix-radio-border-focus);
     outline-offset: 2px;
   }

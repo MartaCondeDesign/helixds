@@ -175,7 +175,6 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Tooltip   | duration-out      | --   | ✅ ADR-008 exception | 50ms                                                        |
 +-----------+-------------------+------+----------------------+-------------------------------------------------------------+
 +--------------------------------------------------------- SPACING ---------------------------------------------------------+
-| Button    | label.padding-x   | l    | ✅ ADR-004 exception | 2px                                                         |
 | Chip      | gap               | s    | ✅ ADR-004 exception | 6px                                                         |
 | Chip      | gap               | m    | ✅ ADR-004 exception | 6px                                                         |
 | Menu      | gap               | --   | ✅ ADR-013 exception | 2px                                                         |
