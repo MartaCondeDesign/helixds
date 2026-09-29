@@ -115,10 +115,14 @@ function WorkspacePage() {
       gridTemplateColumns: '1fr 1fr',
       fontFamily: 'system-ui, -apple-system, sans-serif',
     }}>
+      {/* Brand panel colors are primitives on purpose: the panel is dark in BOTH themes, and semantic
+          tokens flip with the theme (text-neutral would turn dark-on-dark in light mode). Every text
+          pair is AA against both gradient ends (#0f172a top, #1e3a8a bottom) — gray-300 for the small
+          supporting text, since gray-500 was 2.18:1 at the bottom. */}
       {/* ── Left panel: brand hero ──────────────────────────────────── */}
       {/* Fills the full screen-tall row, testimonial pinned to the bottom. */}
       <div style={{
-        background: 'linear-gradient(160deg, #0f172a 0%, #1e3a8a 100%)',
+        background: 'linear-gradient(160deg, var(--helix-primitive-color-gray-900) 0%, var(--helix-primitive-color-blue-900) 100%)',
         padding: '48px 56px',
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
         minHeight: 0,
@@ -127,19 +131,19 @@ function WorkspacePage() {
         <div>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
-            color: '#60a5fa', fontWeight: 700, fontSize: 18, marginBottom: 48,
+            color: 'var(--helix-primitive-color-blue-400)', fontWeight: 700, fontSize: 18, marginBottom: 48,
           }}>
             <span style={{ fontSize: 24 }}>✦</span>
             <span>Helix</span>
           </div>
 
           <h1 style={{
-            color: '#ffffff', fontSize: 36, fontWeight: 800, lineHeight: 1.2,
+            color: 'var(--helix-primitive-color-gray-0)', fontSize: 36, fontWeight: 800, lineHeight: 1.2,
             letterSpacing: '-0.02em', margin: '0 0 16px',
           }}>
             Ship great UI,<br />every sprint.
           </h1>
-          <p style={{ color: '#93c5fd', fontSize: 16, lineHeight: 1.6, margin: '0 0 48px', maxWidth: 360 }}>
+          <p style={{ color: 'var(--helix-primitive-color-blue-300)', fontSize: 16, lineHeight: 1.6, margin: '0 0 48px', maxWidth: 360 }}>
             A design system built for speed. Tokens, contracts, and AI context baked in from day one.
           </p>
 
@@ -152,15 +156,15 @@ function WorkspacePage() {
               <div key={f.label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                 <div style={{
                   width: 36, height: 36, borderRadius: 8,
-                  background: 'rgba(96,165,250,0.15)',
+                  background: 'color-mix(in srgb, var(--helix-primitive-color-blue-400) 15%, transparent)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#60a5fa', flexShrink: 0,
+                  color: 'var(--helix-primitive-color-blue-400)', flexShrink: 0,
                 }}>
                   {f.icon}
                 </div>
                 <div>
-                  <div style={{ color: '#e2e8f0', fontWeight: 600, fontSize: 14, marginBottom: 2 }}>{f.label}</div>
-                  <div style={{ color: '#64748b', fontSize: 13, lineHeight: 1.5 }}>{f.desc}</div>
+                  <div style={{ color: 'var(--helix-primitive-color-gray-200)', fontWeight: 600, fontSize: 14, marginBottom: 2 }}>{f.label}</div>
+                  <div style={{ color: 'var(--helix-primitive-color-gray-300)', fontSize: 13, lineHeight: 1.5 }}>{f.desc}</div>
                 </div>
               </div>
             ))}
@@ -168,13 +172,13 @@ function WorkspacePage() {
         </div>
 
         <blockquote style={{
-          borderLeft: '3px solid #3b82f6',
+          borderLeft: '3px solid var(--helix-primitive-color-blue-500)',
           paddingLeft: 16, margin: 0,
         }}>
-          <p style={{ color: '#cbd5e1', fontStyle: 'italic', fontSize: 14, lineHeight: 1.6, margin: '0 0 8px' }}>
+          <p style={{ color: 'var(--helix-primitive-color-gray-300)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.6, margin: '0 0 8px' }}>
             "We cut design-to-code time in half. The AI context alone is worth the switch."
           </p>
-          <footer style={{ color: '#64748b', fontSize: 13 }}>
+          <footer style={{ color: 'var(--helix-primitive-color-gray-300)', fontSize: 13 }}>
             Sara M. — Lead Designer, Lumino
           </footer>
         </blockquote>
