@@ -87,6 +87,38 @@ export const Disabled: Story = {
   args: { disabled: true, value: 'designer' },
 };
 
+export const MinimumWidth: Story = {
+  render: () => {
+    const [role, setRole] = useState('');
+    const [count, setCount] = useState('');
+    return (
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-m)', alignItems: 'flex-end' }}>
+        <Select
+          label="Role"
+          options={[{ value: 'pm', label: 'PM' }, { value: 'qa', label: 'QA' }]}
+          placeholder="Role"
+          value={role}
+          onChange={setRole}
+        />
+        <Select
+          label="Seats"
+          options={['1', '2', '1000', '2000'].map(n => ({ value: n, label: n }))}
+          placeholder="1"
+          value={count}
+          onChange={setCount}
+        />
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Width rule: word options get a 150px minimum even when the labels are short ("PM", "QA"); an all-numeric option list (1, 2, 1000, 2000) has no minimum and hugs its content.',
+      },
+    },
+  },
+};
+
 export const Required: Story = {
   args: { required: true },
   parameters: {

@@ -169,6 +169,9 @@ const darkOverrides: Record<string, string> = {
   '--helix-accordion-chevron':           '#94a3b8',
   '--helix-button-fill-secondary-default':  '#1e293b',
   '--helix-button-fill-secondary-hover': '#334155',
+  // Ghost: same semantic pair (and the same dark values) as IconButton ghost's hover/press.
+  '--helix-button-fill-ghost-hover':     '#1e293b',
+  '--helix-button-fill-ghost-press':     '#334155',
   '--helix-button-text-secondary':       '#f1f5f9',
   '--helix-button-text-ghost':           '#f1f5f9',
   '--helix-button-icon-secondary':       '#f1f5f9',

@@ -279,16 +279,15 @@ function DashboardPage() {
       <div
         style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap', marginBottom: 'var(--helix-spacing-s)' }}
       >
-        <div style={{ width: 200 }}>
-          <Select
-            label="Role"
-            hideLabel
-            options={ROLES.map(r => ({ value: r, label: r }))}
-            placeholder="All roles"
-            value={role}
-            onChange={setRole}
-          />
-        </div>
+        {/* No width wrapper: Select's own 150px minimum for word options applies (Select contract) */}
+        <Select
+          label="Role"
+          hideLabel
+          options={ROLES.map(r => ({ value: r, label: r }))}
+          placeholder="All roles"
+          value={role}
+          onChange={setRole}
+        />
 
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
           <Button variant="ghost" size="m" icon={IconDownload}>Export</Button>

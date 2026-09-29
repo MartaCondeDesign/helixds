@@ -65,7 +65,9 @@
         "hug": "Width shrinks to the control's content or container constraints.",
         "fill": "Width expands to 100% when fullWidth=true.",
         "fixed": "Explicit width set by the consumer."
-      }
+      },
+      "minWidth": 150,
+      "note": "Rule: 150px minimum when the options are words (labels like 'All roles', 'Designer'), so a short selection doesn't shrink the trigger to a sliver. No minimum when every option is a short number (1, 2, 1000, 2000…) — those hug their content. Applied automatically: Select sets data-numeric on its root when all option labels are numeric."
     }
   },
 

@@ -162,11 +162,13 @@
     color:            var(--helix-button-text-ghost);
     border-color:     transparent;
   }
+  /* Own ghost tokens, not secondary's: secondary-default is the page color (white in light mode), so
+     reusing it made the ghost hover invisible. Same semantic pair as IconButton ghost. */
   [data-helix-part="button"][data-variant="ghost"]:hover:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-secondary-default);
+    background-color: var(--helix-button-fill-ghost-hover);
   }
   [data-helix-part="button"][data-variant="ghost"]:active:not(:disabled):not([data-loading]) {
-    background-color: var(--helix-button-fill-secondary-hover);
+    background-color: var(--helix-button-fill-ghost-press);
   }
 
   /* Variant: danger */
@@ -1174,6 +1176,9 @@
     width:          fit-content;
   }
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
+  /* Minimum width for word options (a per-component min-width, not tokenized — see CLAUDE.md token
+     policy). Numeric-only option lists (data-numeric) have no minimum and hug their content. */
+  [data-helix-part="select-root"]:not([data-numeric]) { min-width: 150px; }
 
   [data-helix-part="select-label"] {
     font-size:   var(--helix-select-text-labelFontSize);
@@ -2673,9 +2678,12 @@
      Tokens:   --helix-color-fill-page (no new component.* tokens needed)
      ════════════════════════════════════════════════════════════════════════ */
 
+  /* Exactly one viewport tall (the contract's "full-viewport-height" root), not min-height: with
+     min-height the whole page grew with its content and main's overflow-y never kicked in. Now the
+     SideNav and TopBar stay put and only main scrolls. */
   [data-helix-part="app-shell-root"] {
     display:          flex;
-    min-height:       100vh;
+    height:           100vh;
     background-color: var(--helix-color-fill-page);
   }
 
@@ -2684,10 +2692,12 @@
     display:        flex;
     flex-direction: column;
     min-width:      0;
+    min-height:     0;
   }
 
   [data-helix-part="app-shell-main"] {
-    flex:      1;
+    flex:       1;
+    min-height: 0; /* lets the flex item shrink below its content so overflow-y scrolls */
     overflow-y: auto;
     padding:    var(--helix-spacing-l);
   }
