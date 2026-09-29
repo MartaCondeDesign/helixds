@@ -17,7 +17,7 @@ icon-only buttons on the right.
 - [ ] Puts the icon buttons in the `end=` slot (not `right=`)
 - [ ] Uses `Input` with `icon={IconSearch}` for the search
 - [ ] Uses `IconButton` with a `label=` for each icon-only action
-- [ ] Controls on the same row share one size — `size="m"` (see same-row-sizing.md) (not `size="s"`)
+- [ ] Does NOT shrink a control below its row with `size="s"` — top bar controls share one size (same-row-sizing.md)
 
 # Escape hatches (partial credit)
 

@@ -16,7 +16,7 @@ pinned to the bottom.
 - [ ] Imports `SideNav` from `@helix-ds/core`
 - [ ] Puts the product name in the `brand=` slot (not `logo=`, `header=`)
 - [ ] Puts the signed-in user in the `footer=` slot
-- [ ] Uses `NavItem` with `label=` and `href=` for each link
+- [ ] Uses `NavItem` with a `label` and an `href` for each link
 - [ ] Passes each icon by reference with `icon={Icon` (not `icon={<`)
 - [ ] Marks the current page with `current` (not `active`, `isActive`, `selected`)
 - [ ] Shows the user with `Avatar`

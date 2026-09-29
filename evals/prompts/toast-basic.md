@@ -14,7 +14,7 @@ Using Helix DS, after the user saves their profile, briefly confirm "Profile sav
 
 - [ ] Imports `Toast` from `@helix-ds/core` and renders `<Toast />` once
 - [ ] Fires the notification with `toast.success(` (not `toast.show(`, `toast(`)
-- [ ] Passes the title and the detail as two arguments
+- [ ] Passes the detail as a plain string second argument (not `description:`) — Helix's toast is `toast.success(label, description?)`, not Sonner's options object
 
 # Escape hatches (partial credit)
 

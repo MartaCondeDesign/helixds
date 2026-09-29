@@ -18,7 +18,7 @@ the right, and the page content — a "Team" page header — in the main area.
 - [ ] Passes a `TopBar` through the `topbar=` slot (not `header=`)
 - [ ] Puts the page content as AppShell's children, starting with `PageHeader`
 - [ ] Marks the current link with `current` (not `active`, `isActive`)
-- [ ] Top bar controls share one size — `size="m"` (see same-row-sizing.md) (not `size="s"`)
+- [ ] Does NOT shrink a control below its row with `size="s"` — top bar controls share one size (same-row-sizing.md)
 
 # Escape hatches (partial credit)
 

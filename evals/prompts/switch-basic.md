@@ -14,7 +14,7 @@ Using Helix DS, add an "Email notifications" setting that turns on or off immedi
 
 - [ ] Imports `Switch` from `@helix-ds/core`
 - [ ] Uses `label=` for the visible text
-- [ ] Controls it with `checked=` and `onChange=` (not `isChecked=`, `on=`)
+- [ ] Controls it with `checked=` and `onChange=` (not `isChecked=`)
 
 # Escape hatches (partial credit)
 

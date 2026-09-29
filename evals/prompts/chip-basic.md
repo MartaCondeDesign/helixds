@@ -14,7 +14,7 @@ Helix DS, where the user can select any combination of them.
 
 - [ ] Imports `Chip` from `@helix-ds/core`
 - [ ] Uses `label` prop for the chip text (not `children`)
-- [ ] Uses `checked` prop for the toggle state (not `active` or `selected`)
+- [ ] Uses `checked=` for the toggle state (not `active=`, `selected=`)
 - [ ] Uses `onPress` for the toggle handler (not `onClick`)
 
 # Escape hatches (partial credit)

@@ -13,7 +13,7 @@ related actions: new document, new folder, and upload file.
 # Success criteria
 
 - [ ] Imports `FAB` from `@helix-ds/core`
-- [ ] Passes the trigger icon by reference with `icon={IconPlus}` (not `icon={<`)
+- [ ] Passes the trigger icon by reference with `icon={Icon` (not `icon={<`)
 - [ ] Uses `label` prop for the trigger's accessible name (not `aria-label`, `title`)
 - [ ] Uses the `actions` prop for the speed-dial items (not `items`, `options`)
 - [ ] Each action uses `onPress` (not `onClick`)

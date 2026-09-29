@@ -16,7 +16,7 @@ Button labelled "Sort by", so a regular form Select doesn't fit.
 - [ ] Imports `Menu` from `@helix-ds/core`
 - [ ] Opens and closes it with `expanded=` (not `open=`, `isOpen=`)
 - [ ] Positions it against the trigger with `anchorRef=`
-- [ ] Handles the choice with `onSelect=` (not `onChange=`)
+- [ ] Handles the choice with Menu's own `onSelect=`
 - [ ] Passes the choices as `options=` objects with `value` and `label`
 - [ ] Links the trigger to the list with `aria-controls=` and `aria-expanded=`
 - [ ] Uses Helix `Button` with `onPress=` as the trigger (not `onClick=`)
