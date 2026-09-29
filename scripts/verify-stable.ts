@@ -67,8 +67,13 @@ if (!skipBrowser) {
   fs.mkdirSync(a11yDir, { recursive: true });
   console.log(`▶ Running the Storybook test-runner against ${sbUrl} (stories, keyboard tests, axe light + dark)…`);
   // Non-zero exit just means some play test failed — that's data for criterion 5, not a crash.
-  spawnSync('npx', ['test-storybook', '--url', sbUrl, '--json', '--outputFile', jestJson,
-    'stories/Components', 'stories/Layout', '--maxWorkers=4'], { cwd: sbDir, stdio: 'ignore' });
+  // test-runner doesn't forward jest's --outputFile (it's read as a test path pattern instead), so
+  // --json prints the report to stdout — capture it and write jest.json ourselves.
+  const run = spawnSync('npx', ['test-storybook', '--url', sbUrl, '--json',
+    'stories/Components', 'stories/Layout', '--maxWorkers=4'],
+    { cwd: sbDir, encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024 });
+  const report = (run.stdout ?? '').split('\n').find(l => l.startsWith('{"num'));
+  if (report) fs.writeFileSync(jestJson, report);
 }
 if (!fs.existsSync(a11yDir) || !fs.existsSync(jestJson)) {
   console.error('❌ No test-runner results found — run without --skip-browser first.');
