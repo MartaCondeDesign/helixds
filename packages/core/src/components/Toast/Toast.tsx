@@ -63,7 +63,8 @@ function ToastItem({
     return () => window.clearTimeout(timeout);
   }, [record.leaving, record.id]);
 
-  // Auto-dismiss, paused (not restarted) while hovered — matches the approved preview.
+  // Auto-dismiss, stopped (not restarted) once the pointer OR keyboard focus enters the toast —
+  // hover alone left keyboard users no way to keep a toast on screen (WCAG 2.2.1 Timing Adjustable).
   React.useEffect(() => {
     if (record.leaving) return;
     const el = ref.current;
@@ -72,9 +73,11 @@ function ToastItem({
     const timer = window.setTimeout(() => toast.dismiss(record.id), ms);
     const clear = () => window.clearTimeout(timer);
     el.addEventListener('mouseenter', clear);
+    el.addEventListener('focusin', clear);
     return () => {
       window.clearTimeout(timer);
       el.removeEventListener('mouseenter', clear);
+      el.removeEventListener('focusin', clear);
     };
   }, [record.id, record.leaving]);
 
@@ -115,7 +118,11 @@ function ToastItem({
 const Toast = ({ className }: ToastProps) => {
   const [mounted, setMounted] = React.useState(false);
   const [records, setRecords] = React.useState<ToastRecord[]>([]);
-  const [spread, setSpread] = React.useState(false);
+  // The stack spreads while hovered OR while keyboard focus is inside it (either one keeps it open, so
+  // moving the mouse away doesn't collapse it under a keyboard user).
+  const [hovered, setHovered] = React.useState(false);
+  const [focusWithin, setFocusWithin] = React.useState(false);
+  const spread = hovered || focusWithin;
   const [spreadOffsets, setSpreadOffsets] = React.useState<Record<string, number>>({});
   const [peekOffsets, setPeekOffsets] = React.useState<Record<string, number>>({});
   const itemElsRef = React.useRef(new Map<string, HTMLDivElement>());
@@ -179,10 +186,15 @@ const Toast = ({ className }: ToastProps) => {
       data-helix-part="toast-viewport"
       data-spread={spread ? 'true' : undefined}
       role="region"
+      aria-label="Notifications"
       aria-live="polite"
       className={cn(className)}
-      onMouseEnter={() => setSpread(true)}
-      onMouseLeave={() => setSpread(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setFocusWithin(true)}
+      onBlur={e => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusWithin(false);
+      }}
     >
       {records.map((record) => (
         <ToastItem

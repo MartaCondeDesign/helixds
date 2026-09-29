@@ -66,7 +66,9 @@ apply here.
 
 **Auto-dismiss, hover-to-pause, max visible depth** — a toast dismisses itself after
 `component.toast.autoDismissMs` unless the pointer is over it (timer cleared on `mouseenter`, not
-restarted on `mouseleave` — matches the approved preview). Depth caps at 3 visible; anything past that plays
+restarted on `mouseleave` — matches the approved preview). **Amendment 2026-09-29:** keyboard focus
+entering a toast (`focusin`) stops its timer the same way, and focus inside the viewport spreads the stack
+like hover does — closing the open item about hover having no keyboard equivalent (WCAG 2.2.1). Depth caps at 3 visible; anything past that plays
 the leaving transition and is removed, same as a 4th banner in the original reference snippet.
 
 **Tuned constants, not tokens — `durationOpen` (350ms), `durationClose` (250ms), `autoDismissMs` (4000ms),

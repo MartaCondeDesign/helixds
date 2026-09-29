@@ -43,8 +43,9 @@
 
   "a11y": {
     "role": "each toast-viewport region uses aria-live=\"polite\" so screen readers announce new toasts without interrupting; toast-close is a real button with an accessible label",
-    "keyboardNav": ["Tab reaches each visible toast's close button", "Hovering (mouse) pauses auto-dismiss and pauses no keyboard-equivalent yet — see ADR-011's open item on this"],
-    "wcag": ["4.1.3 Status Messages", "1.4.13 Content on Hover or Focus"],
+    "keyboardNav": ["Tab reaches each visible toast's close button", "Focus inside a toast (e.g. Tab onto its close button) stops its auto-dismiss and spreads the stack — the keyboard equivalent of hovering it (WCAG 2.2.1 Timing Adjustable)"],
+    "wcag": ["4.1.3 Status Messages", "1.4.13 Content on Hover or Focus",
+  "2.2.1 Timing Adjustable"],
     "notes": [
       "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?)), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own.",
       "Stacking depth (max 3 visible) and hover-to-spread use real measured pixel heights (offsetHeight), not percentage-based transforms — a percentage approach was tried and broken in the pre-implementation preview by two toasts of different heights; see ADR-011."

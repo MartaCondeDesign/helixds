@@ -52,8 +52,14 @@ export const KeyboardReach: Story = {
     await expect(first).toHaveFocus();
     await userEvent.tab();
     await expect(second).toHaveFocus();
+
+    // Focus inside keeps them: the stack spreads (like hover) and auto-dismiss (4s) is stopped
+    const viewport = canvasElement.ownerDocument.querySelector('[data-helix-part="toast-viewport"]')!;
+    await waitFor(() => expect(viewport).toHaveAttribute('data-spread', 'true'));
+    await new Promise(r => setTimeout(r, 4500));
+    await expect(page.getAllByRole('button', { name: 'Dismiss' })).toHaveLength(2);
   },
   parameters: {
-    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab reaches each visible toast’s close button.' } },
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab reaches each visible toast’s close button; with focus inside, the stack spreads and the toasts stay past the 4s auto-dismiss.' } },
   },
 };
