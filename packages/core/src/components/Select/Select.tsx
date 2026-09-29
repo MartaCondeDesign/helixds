@@ -50,9 +50,6 @@ export function Select({
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const flatOptions = React.useMemo(() => flattenOptions(options), [options]);
   const selectedOption = flatOptions.find(o => o.value === current);
-  // Width rule (contract sizing.width.minWidth): a 150px minimum when the options are words, none
-  // when every option is a short number (1, 2, 1000…), which should stay as narrow as its content.
-  const numericOnly = flatOptions.length > 0 && flatOptions.every(o => /^[\d\s.,%+-]+$/.test(o.label.trim()));
 
   const commit = (next: string) => {
     if (!isControlled) setInternalValue(next);
@@ -144,7 +141,6 @@ export function Select({
   return (
     <div
       data-helix-part="select-root"
-      {...(numericOnly ? { 'data-numeric': '' } : {})}
       {...(fullWidth ? { 'data-full-width': '' } : {})}
       {...(disabled  ? { 'data-disabled':   '' } : {})}
       {...(invalid   ? { 'data-invalid':    '' } : {})}

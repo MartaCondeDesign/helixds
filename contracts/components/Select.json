@@ -66,8 +66,7 @@
         "fill": "Width expands to 100% when fullWidth=true.",
         "fixed": "Explicit width set by the consumer."
       },
-      "minWidth": 150,
-      "note": "Rule: 150px minimum when the options are words (labels like 'All roles', 'Designer'), so a short selection doesn't shrink the trigger to a sliver. No minimum when every option is a short number (1, 2, 1000, 2000…) — those hug their content. Applied automatically: Select sets data-numeric on its root when all option labels are numeric."
+      "note": "The trigger has no minimum width — it can be as narrow as its content. The minimum width rule lives on the popup (Menu contract, sizing.width): 150px for word options, none for numeric-only lists."
     }
   },
 

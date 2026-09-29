@@ -44,7 +44,9 @@
       "note": "Each option row is semantic.size.m (32px). The popup's own height is intrinsic to its option count, not fixed."
     },
     "width": {
-      "default": "component.menu.width (240px) — matches the common Select trigger width; not driven by a semantic token per CLAUDE.md's width policy (variable, consumer/component judgment call, no system token for it)."
+      "default": "The anchor's (trigger's) width — not driven by a semantic token per CLAUDE.md's width policy (variable, consumer/component judgment call, no system token for it).",
+      "minWidth": 150,
+      "note": "Rule: 150px minimum when the options are words, so a narrow trigger (Select has no minimum) doesn't squeeze them. No minimum when every option is a number (1, 2, 1000, 2000…) — Menu sets data-numeric on its root in that case."
     }
   },
 

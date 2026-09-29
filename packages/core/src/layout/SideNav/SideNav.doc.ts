@@ -13,7 +13,7 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'side-nav-root', label: 'width', token: '--helix-sideNav-width', kind: 'space' },
     { part: 'side-nav-root', label: 'fill', token: '--helix-sideNav-fill', kind: 'color' },
-    { part: 'side-nav-root', label: 'border-right', token: '--helix-sideNav-border', kind: 'color' },
+    { part: 'side-nav-footer', label: 'border-top', token: '--helix-sideNav-border', kind: 'color' },
   ],
   features: [
     'children — a list of NavItem, not a config array, keeps composition explicit',

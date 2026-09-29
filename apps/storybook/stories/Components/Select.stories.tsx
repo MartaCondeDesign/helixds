@@ -110,10 +110,13 @@ export const MinimumWidth: Story = {
       </div>
     );
   },
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('combobox', { name: /Role/ }));
+  },
   parameters: {
     docs: {
       description: {
-        story: 'Width rule: word options get a 150px minimum even when the labels are short ("PM", "QA"); an all-numeric option list (1, 2, 1000, 2000) has no minimum and hugs its content.',
+        story: 'Width rule: the trigger has no minimum and hugs its content, but the menu does — word options ("PM", "QA") open a menu at least 150px wide; an all-numeric list (1, 2, 1000, 2000) has no minimum. Shown with the word menu open.',
       },
     },
   },

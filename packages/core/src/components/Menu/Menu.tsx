@@ -69,6 +69,11 @@ export function Menu({ id, expanded, anchorRef, options, value, activeValue, onS
 
   if (!expanded) return null;
 
+  // Width rule (contract sizing.width): 150px minimum for word options, none when every option is a
+  // number (1, 2, 1000…).
+  const flat = options.flatMap(o => ('options' in o ? o.options : [o]));
+  const numericOnly = flat.length > 0 && flat.every(o => /^[\d\s.,%+-]+$/.test(o.label.trim()));
+
   const renderOption = (opt: MenuOption) => (
     <button
       key={opt.value}
@@ -94,6 +99,7 @@ export function Menu({ id, expanded, anchorRef, options, value, activeValue, onS
       ref={menuRef}
       id={id}
       data-helix-part="menu"
+      {...(numericOnly ? { 'data-numeric': '' } : {})}
       role="listbox"
       style={style}
       className={cn(className)}

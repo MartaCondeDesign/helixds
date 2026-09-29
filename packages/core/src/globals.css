@@ -1176,9 +1176,6 @@
     width:          fit-content;
   }
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
-  /* Minimum width for word options (a per-component min-width, not tokenized — see CLAUDE.md token
-     policy). Numeric-only option lists (data-numeric) have no minimum and hug their content. */
-  [data-helix-part="select-root"]:not([data-numeric]) { min-width: 150px; }
 
   [data-helix-part="select-label"] {
     font-size:   var(--helix-select-text-labelFontSize);
@@ -1323,6 +1320,10 @@
     max-height:    320px;
     overflow-y:    auto;
   }
+  /* Minimum popup width when the options are words — the menu takes its trigger's width, and a
+     narrow trigger (Select has no minimum) would otherwise squeeze the options. Numeric-only lists
+     (data-numeric: 1, 2, 1000…) have no minimum. Per-component min-width, not tokenized (CLAUDE.md). */
+  [data-helix-part="menu"]:not([data-numeric]) { min-width: 150px; }
 
   /* Full-width divider between groups — bleeds past the menu's own padding via a negative
      inline margin so it reaches both edges, per review feedback. Asymmetric on purpose: 8px above
@@ -2647,7 +2648,7 @@
     width:            var(--helix-sideNav-width);
     flex-shrink:      0;
     background-color: var(--helix-sideNav-fill);
-    border-right:     1px solid var(--helix-sideNav-border);
+    /* No divider against the main content — the sidebar sits flush with the page. */
     padding:          var(--helix-primitive-spacing-75) 0;
   }
 
