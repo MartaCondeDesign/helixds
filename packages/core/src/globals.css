@@ -803,6 +803,16 @@
   [data-helix-part="chip"][data-variant="neutral"]:active:not(:disabled):not([data-disabled]) {
     background: var(--helix-color-fill-secondary-interactive-hover);
   }
+  /* Checked-chip blend weight toward the saturated fill (the tint gets the rest). 60% in light mode.
+     Dark mode drops it to 40%: there the tint is itself dark (fill-*-light → #166534 etc.), so a 60%
+     blend lands mid-tone and light text only reaches ~3.9–4.0:1 on success/warning. At 40% every
+     variant passes AA (success 4.69, warning 4.64, info 5.37, danger higher). */
+  [data-helix-part="chip"] { --chip-checked-weight: 60%; }
+  :root[data-theme="dark"] [data-helix-part="chip"] { --chip-checked-weight: 40%; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) [data-helix-part="chip"] { --chip-checked-weight: 40%; }
+  }
+
   [data-helix-part="chip"][data-variant="neutral"][data-checked="true"] {
     /* No border when checked — a solid fill reads as one filled shape, not a lighter fill + outline. */
     background:   var(--helix-color-fill-secondary-interactive-press);
@@ -836,7 +846,7 @@
        here) which already use white — those already existed before this pass and sit closer to the AA
        edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
        is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-info-interactive-default) 60%, var(--helix-color-fill-info-light) 40%);
+    background:   color-mix(in srgb, var(--helix-color-fill-info-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-info-light));
     color:        var(--helix-color-text-neutral);
     border-color: transparent;
   }
@@ -869,7 +879,7 @@
        here) which already use white — those already existed before this pass and sit closer to the AA
        edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
        is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-success-interactive-default) 60%, var(--helix-color-fill-success-light) 40%);
+    background:   color-mix(in srgb, var(--helix-color-fill-success-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-success-light));
     color:        var(--helix-color-text-neutral);
     border-color: transparent;
   }
@@ -902,7 +912,7 @@
        here) which already use white — those already existed before this pass and sit closer to the AA
        edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
        is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) 60%, var(--helix-color-fill-warning-light) 40%);
+    background:   color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-warning-light));
     color:        var(--helix-color-text-neutral);
     border-color: transparent;
   }
@@ -935,7 +945,7 @@
        here) which already use white — those already existed before this pass and sit closer to the AA
        edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
        is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) 60%, var(--helix-color-fill-danger-interactive-light-default) 40%);
+    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-danger-interactive-light-default));
     color:        var(--helix-color-text-neutral);
     border-color: transparent;
   }
@@ -961,7 +971,7 @@
   }
   [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-info);
+    color: var(--helix-color-text-info); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon-end"] {
@@ -971,7 +981,7 @@
   }
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-success);
+    color: var(--helix-color-text-success); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon-end"] {
@@ -981,7 +991,7 @@
   }
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-warning);
+    color: var(--helix-color-text-warning); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon-end"] {
@@ -991,7 +1001,7 @@
   }
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-icon-danger);
+    color: var(--helix-color-text-danger); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon-end"] {
@@ -1008,14 +1018,16 @@
 
   [data-helix-part="chip-dismiss"] {
     position:       absolute;
-    right:          var(--helix-primitive-spacing-25);
+    /* 24px target (WCAG 2.5.8 target-size minimum), 2px from the edge — the icon's center stays where
+       the earlier 20px button at 4px put it (14px from the chip's right edge). */
+    right:          var(--helix-spacing-3xs);
     top:            50%;
     transform:      translateY(-50%);
     display:        inline-flex;
     align-items:    center;
     justify-content: center;
-    width:          var(--helix-primitive-size-125);
-    height:         var(--helix-primitive-size-125);
+    width:          var(--helix-primitive-size-150);
+    height:         var(--helix-primitive-size-150);
     border-radius:  var(--helix-radius-full);
     border:         none;
     /* Bare icon at rest — no circular fill until hover, regardless of the chip's own variant/checked

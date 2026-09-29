@@ -79,6 +79,12 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    change done. This applies to **both** light and dark mode independently — a pair fixed in one theme is
    not guaranteed to pass in the other (dark mode's `darkOverrides` map in `packages/tokens/src/build.ts`
    picks its own values per token; check each theme's actual resolved pair, don't assume symmetry).
+10. **Status icons use `--helix-color-icon-*`, never `--helix-color-text-*`** — the two diverge in dark
+   mode on purpose: `text-{info,success,warning,danger}` is a pale tone tuned for text on a colored tint
+   (Badge, Chip), `icon-*` is the saturated tone for an icon on the plain page/surface (Toast, Status,
+   trend arrows, validation icons). Coloring an icon with `text-danger` makes it read washed-out pink next
+   to every other dark-mode error icon. Exception: an icon sitting *on a colored tint* matches its label's
+   `text-*` tone (Badge's `badge-icon-*`, Chip's CSS).
 
 ## Workflow commands
 

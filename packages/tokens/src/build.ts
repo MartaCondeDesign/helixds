@@ -116,7 +116,9 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-fill-disabled':         '#1e293b',
   '--helix-color-text-neutral':     '#f1f5f9',
   '--helix-color-text-neutral-light':    '#94a3b8',
-  '--helix-color-text-neutral-lightest': '#64748b',
+  // Not gray-500 (#64748b) like light mode: that's only 3.75:1 on the dark page and 3.07:1 on
+  // surface — fails AA for normal text. #8391a7 (between slate 400 and 500): 5.59:1 page, 4.58:1 surface.
+  '--helix-color-text-neutral-lightest': '#8391a7',
   '--helix-color-text-disabled':         '#475569',
   '--helix-color-text-inverse':          '#0f172a',
   '--helix-color-text-primary':          '#60a5fa',
@@ -135,7 +137,8 @@ const darkOverrides: Record<string, string> = {
   '--helix-input-fill-default':             '#1e293b',
   '--helix-input-fill-disabled':         '#0f172a',
   '--helix-input-text-value':            '#f1f5f9',
-  '--helix-input-text-placeholder':      '#64748b',
+  '--helix-input-text-placeholder':      '#8391a7', // = text-neutral-lightest dark (gray-500 fails AA on #1e293b)
+  '--helix-input-text-error':            '#fca5a5', // same as select/textarea/checkbox error — #b91c1c was 2.75:1 on the page
   '--helix-input-text-disabled':         '#475569',
   '--helix-input-text-label':            '#f1f5f9',
   '--helix-input-text-description':      '#94a3b8',
@@ -156,16 +159,9 @@ const darkOverrides: Record<string, string> = {
   '--helix-toast-fill':                  '#1e293b',
   '--helix-toast-text':                  '#f1f5f9',
   '--helix-toast-textDescription':       '#94a3b8',
-  // Decoupled from --helix-badge-icon-* on purpose (ADR-011 amendment) — Toast sits on a plain
-  // fill.page background, not a saturated colored fill like Badge, so its icon can stay noticeably
-  // darker/more saturated in dark mode without failing contrast. Each verified >=3:1 (icon threshold)
-  // against Toast's own dark fill (#1e293b): info .600 3.57:1, success .600 4.44:1, warning .600
-  // 4.59:1, danger .500 3.89:1 (danger .600 was only 3.03:1, too tight a margin).
+  // Toast's status icons follow semantic.color.icon.* (no override of their own) — that semantic dark
+  // value IS the "icon on a plain page/surface background" tone Toast was verified against.
   '--helix-toast-icon-neutral':          '#94a3b8',
-  '--helix-toast-icon-info':             '#0284c7',
-  '--helix-toast-icon-success':          '#16a34a',
-  '--helix-toast-icon-warning':          '#d97706',
-  '--helix-toast-icon-danger':           '#ef4444',
   // Accordion: no shadow, not elevated (blends with the page, same as Card) — page's own dark tone.
   '--helix-accordion-fill':              '#0f172a',
   '--helix-accordion-text':              '#f1f5f9',
@@ -180,7 +176,7 @@ const darkOverrides: Record<string, string> = {
   '--helix-select-fill-default':            '#1e293b',
   '--helix-select-fill-disabled':        '#0f172a',
   '--helix-select-text-value':           '#f1f5f9',
-  '--helix-select-text-placeholder':     '#64748b',
+  '--helix-select-text-placeholder':     '#8391a7',
   '--helix-select-text-disabled':        '#475569',
   '--helix-select-text-label':           '#f1f5f9',
   '--helix-select-text-description':     '#94a3b8',
@@ -198,7 +194,7 @@ const darkOverrides: Record<string, string> = {
   // the surface tone for both would make hover disappear (same color as its own container).
   '--helix-menu-fill':                   '#0f172a',
   '--helix-menu-border':                 '#334155',
-  '--helix-menu-groupLabel-text':        '#64748b',
+  '--helix-menu-groupLabel-text':        '#8391a7',
   '--helix-menu-item-fill-hover':        '#1e293b',
   '--helix-menu-item-fill-selected':     '#1e3a8a',
   '--helix-menu-item-text':              '#f1f5f9',
@@ -212,7 +208,7 @@ const darkOverrides: Record<string, string> = {
   '--helix-textarea-fill-default':          '#1e293b',
   '--helix-textarea-fill-disabled':      '#0f172a',
   '--helix-textarea-text-value':         '#f1f5f9',
-  '--helix-textarea-text-placeholder':   '#64748b',
+  '--helix-textarea-text-placeholder':   '#8391a7',
   '--helix-textarea-text-disabled':      '#475569',
   '--helix-textarea-text-label':         '#f1f5f9',
   '--helix-textarea-text-description':   '#94a3b8',
@@ -295,17 +291,22 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-border-info':    '#38bdf8',
   '--helix-color-border-info-light': '#38bdf8',
 
-  // semantic — status text/icon on a colored "-light" tint background (badges, chips):
-  // the same medium-saturation hex used in light mode reads low-contrast against the
-  // dark tint fills above, so these get a lighter step of their own hue instead.
+  // semantic — status TEXT sits mostly on a colored "-light" tint background (badges, chips): the
+  // light-mode hex reads low-contrast against the dark tint fills above, so text gets a lighter step
+  // of its own hue.
   '--helix-color-text-info':    '#7dd3fc',
   '--helix-color-text-success': '#86efac',
   '--helix-color-text-warning': '#fcd34d',
   '--helix-color-text-danger':  '#fecdd3',
-  '--helix-color-icon-info':    '#7dd3fc',
-  '--helix-color-icon-success': '#86efac',
-  '--helix-color-icon-warning': '#fcd34d',
-  '--helix-color-icon-danger':  '#fecdd3',
+  // semantic — status ICONS default to a plain page/surface background (Toast, Status, a trend arrow,
+  // a validation icon), so they keep the saturated tone — one "danger red" everywhere in dark mode.
+  // >=3:1 (icon threshold) on page / surface: info 4.36/3.57, success 5.42/4.44, warning 5.60/4.59,
+  // danger 4.74/3.89. Icons on a colored tint (Badge, Chip) don't use these — they match their
+  // label's text tone instead (--helix-badge-icon-*, Chip's CSS).
+  '--helix-color-icon-info':    '#0284c7',
+  '--helix-color-icon-success': '#16a34a',
+  '--helix-color-icon-warning': '#d97706',
+  '--helix-color-icon-danger':  '#ef4444',
 
   '--helix-iconButton-fill-secondary-default': '#1e293b',
   '--helix-iconButton-fill-secondary-hover':   '#334155',
@@ -355,7 +356,7 @@ const darkOverrides: Record<string, string> = {
   '--helix-pageHeader-title-color':       '#f1f5f9',
   '--helix-pageHeader-description-color': '#94a3b8',
 
-  '--helix-table-header-color':  '#64748b',
+  '--helix-table-header-color':  '#8391a7', // = text-neutral-lightest dark; #64748b was 3.75:1
   '--helix-table-header-border': '#1e293b',
   '--helix-table-row-border':    '#1e293b',
   '--helix-table-row-hoverFill': '#1e293b',
@@ -364,9 +365,10 @@ const darkOverrides: Record<string, string> = {
   '--helix-navItem-fill-hover':    '#1e293b',
   '--helix-navItem-fill-current':  '#1e3a8a',
   '--helix-navItem-text-default':  '#94a3b8',
-  '--helix-navItem-text-current':  '#60a5fa',
+  // blue-300, not blue-400: #60a5fa on the #1e3a8a current fill is 4.07:1 (fails AA); #93c5fd is 5.74:1
+  '--helix-navItem-text-current':  '#93c5fd',
   '--helix-navItem-icon-default':  '#94a3b8',
-  '--helix-navItem-icon-current':  '#60a5fa',
+  '--helix-navItem-icon-current':  '#93c5fd',
 
   '--helix-topBar-fill':   '#0f172a',
   '--helix-topBar-border': '#1e293b',
@@ -428,10 +430,9 @@ const darkOverrides: Record<string, string> = {
   '--helix-toast-shadow':            '0 20px 25px rgba(0,0,0,0.45), 0 10px 10px rgba(0,0,0,0.25)',
   //
   // 4) Textarea's character counter aliases semantic.color.text.neutral-lightest, which
-  //    already has its own dark entry above (#64748b, deliberately the SAME hex in both
-  //    themes — gray-500 already reads fine on both a white and a near-black page) — the
+  //    has its own dark entry above (#8391a7 — gray-500 fails AA on the dark page) — the
   //    counter just never got its own copy of that same value.
-  '--helix-textarea-text-counter': '#64748b',
+  '--helix-textarea-text-counter': '#8391a7',
   //
   // NOT changed, on purpose: the saturated brand fills (`*-interactive-default/hover/press`
   // for primary/danger/success/warning/info, and every Button/IconButton/FAB variant built

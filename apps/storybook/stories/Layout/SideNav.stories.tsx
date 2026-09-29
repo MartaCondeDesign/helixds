@@ -35,7 +35,7 @@ export const Default: Story = {
               background: 'var(--helix-color-fill-primary-interactive-light-default)', display: 'flex',
               alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <Icon icon={IconBolt} size={16} stroke={2.5} color="var(--helix-color-text-primary)" />
+              <Icon icon={IconBolt} size={16} color="var(--helix-color-icon-primary)" />
             </span>
             <strong style={{ fontSize: 'var(--helix-primitive-fontSize-m)', color: 'var(--helix-color-text-neutral)' }}>
               Helix DS

@@ -25,7 +25,7 @@ const semantic = tokensJson.semantic as unknown as {
 };
 
 // Resolved px values, used only for display (Storybook renders live via CSS vars regardless).
-const SPACING_PX: Record<string, string> = { xs: '8px', s: '12px', m: '16px', l: '24px', xl: '32px' };
+const SPACING_PX: Record<string, string> = { '3xs': '2px', '2xs': '4px', xs: '8px', s: '12px', m: '16px', l: '24px', xl: '32px' };
 const RADIUS_PX: Record<string, string> = {
   none: '0px', xs: '2px', s: '4px', m: '6px', l: '8px', xl: '12px', '2xl': '16px', '3xl': '24px', full: '9999px',
 };
@@ -74,7 +74,7 @@ export const Spacing: Story = {
           </tr>
         </thead>
         <tbody>
-          {(['xs', 's', 'm', 'l', 'xl']).map(key => (
+          {(['3xs', '2xs', 'xs', 's', 'm', 'l', 'xl']).map(key => (
             <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>{key}</code></td>
               <td style={tdStyle}>

@@ -85,6 +85,13 @@ role, which is exactly what the naming overhaul (below) was fixing.
    - This applies to `ColorSemantic`'s existing `TokenGroup` lists as it always did (add the new token, or
      update the label on a rename) — extend the same expectation to whichever other story covers the
      category you touched.
+6b. **A `component.*` alias does NOT inherit its semantic token's dark value.** The build resolves every
+   alias to a literal, and `darkOverrides` in `src/build.ts` is keyed per CSS variable — so
+   `component.input.text.error → {semantic.color.text.danger}` still renders the *light* hex in dark mode
+   unless `--helix-input-text-error` has its own `darkOverrides` entry. When you add or change a semantic
+   dark override, grep `tokens.json` for every `component.*` aliasing it and give each the same dark
+   value (or a deliberate, commented different one). Most dark-mode contrast failures found so far were
+   exactly this drift.
 7. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
 8. **Run `pnpm docs:token-exceptions` after every token add/edit — not just `component.*` ones.** This
@@ -287,7 +294,8 @@ skipping semantic:
 **Spacing** — percentage-keyed primitive scale, `100` = `16px` (`1rem`) anchor; component tokens still alias
 `primitive` directly (the semantic layer is real now but not yet wired into any component):
 - `primitive.spacing.{pct}` — e.g. `spacing.100` = 16px, `spacing.150` = 24px, `spacing.50` = 8px
-- `semantic.spacing.{xs,s,m,l,xl}` — t-shirt scale (8/12/16/24/32px), aliases `primitive.spacing.{50,75,100,150,200}`.
+- `semantic.spacing.{3xs,2xs,xs,s,m,l,xl}` — t-shirt scale (2/4/8/12/16/24/32px), aliases `primitive.spacing.{12,25,50,75,100,150,200}`.
+  `primitive.spacing.12` is 2px (12.5% of the anchor — the key is rounded because a `.` would break the dot-path).
   The older `component-*`/`layout-*` context keys still exist alongside it — neither is referenced by any
   `component.*` token yet (check before assuming either is live)
 - `component.{name}.padding`/`gap`/etc. → aliases `primitive.spacing.*` directly, e.g. `button.padding.x-m` →

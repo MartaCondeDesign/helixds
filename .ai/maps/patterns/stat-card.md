@@ -43,21 +43,26 @@ function StatCard({
   return (
     <Card>
       <div style={{
-        fontSize:       'var(--helix-textStyle-body-s-medium-fontSize)',
-        fontWeight:     'var(--helix-textStyle-body-s-medium-fontWeight)',
-        color:          'var(--helix-color-text-neutral-lightest)',
+        // semantic.textStyle.label-uppercase — its token description asks for text-transform +
+        // letter-spacing at the call site, so both come from here (letter-spacing from its token).
+        fontFamily:     'var(--helix-textStyle-label-uppercase-fontFamily)',
+        fontSize:       'var(--helix-textStyle-label-uppercase-fontSize)',
+        fontWeight:     'var(--helix-textStyle-label-uppercase-fontWeight)',
+        lineHeight:     'var(--helix-textStyle-label-uppercase-lineHeight)',
         textTransform:  'uppercase',
-        letterSpacing:  '0.05em',
+        letterSpacing:  'var(--helix-primitive-letterSpacing-wide)',
+        color:          'var(--helix-color-text-neutral-lightest)',
         marginBottom:   'var(--helix-spacing-xs)',
       }}>
         {label}
       </div>
       <div style={{
+        fontFamily:    'var(--helix-textStyle-heading-3xl-bold-fontFamily)',
         fontSize:      'var(--helix-textStyle-heading-3xl-bold-fontSize)',
         fontWeight:    'var(--helix-textStyle-heading-3xl-bold-fontWeight)',
+        lineHeight:    'var(--helix-textStyle-heading-3xl-bold-lineHeight)',
+        letterSpacing: 'var(--helix-primitive-letterSpacing-tight)',
         color:         'var(--helix-color-text-neutral)',
-        lineHeight:    1,
-        letterSpacing: '-0.02em',
         fontVariantNumeric: 'tabular-nums',
         marginBottom:  'var(--helix-spacing-xs)',
       }}>
@@ -67,7 +72,7 @@ function StatCard({
         <div style={{
           display:    'flex',
           alignItems: 'center',
-          gap:        'var(--helix-spacing-xs)',
+          gap:        'var(--helix-spacing-3xs)', // 2px — arrow and delta read as one unit
           fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
           fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
           color: trend === 'up'   ? 'var(--helix-color-text-success)'
@@ -78,7 +83,7 @@ function StatCard({
             <Icon
               icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
               size={12}
-              color={trend === 'up' ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+              color={trend === 'up' ? 'var(--helix-color-icon-success)' : 'var(--helix-color-icon-danger)'}
             />
           )}
           {delta}

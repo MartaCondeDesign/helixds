@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
 import { IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
-import { Badge, Icon } from '@helix-ds/core';
+import { Badge, Icon, Tooltip } from '@helix-ds/core';
 import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
 import stability from '../../../contracts/stability.json';
@@ -53,7 +53,7 @@ function Check({ ok, details = [] }: { ok: boolean; details?: string[] }) {
       <Icon
         icon={ok ? IconCircleCheckFilled : IconCircleXFilled}
         size={16}
-        color={ok ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-danger)'}
+        color={ok ? 'var(--helix-color-icon-success)' : 'var(--helix-color-icon-danger)'}
         decorative={false}
         label={ok ? 'Yes' : `No: ${details.join('; ')}`}
       />
@@ -72,14 +72,18 @@ const TH_STYLE: React.CSSProperties = {
   borderBottom: '1px solid var(--helix-color-border-neutral)',
 };
 
-// Criterion headers carry their explanation in a native tooltip (title) — dotted underline + help
-// cursor signal that hovering reveals more.
-const HINT_TH_STYLE: React.CSSProperties = {
-  ...TH_STYLE,
-  cursor: 'help',
-  textDecoration: 'underline dotted',
-  textUnderlineOffset: 3,
-};
+// Criterion headers explain themselves in a Helix Tooltip (above the header) on hover/focus. text-transform and
+// letter-spacing live on the label span, not the <th>, so the tooltip content (a descendant of the
+// <th>) doesn't inherit the header's uppercase styling.
+const { textTransform, letterSpacing, ...HINT_TH_STYLE } = TH_STYLE;
+
+function HeaderHint({ label, description }: { label: string; description: string }) {
+  return (
+    <Tooltip label={description}>
+      <span tabIndex={0} style={{ textTransform, letterSpacing }}>{label}</span>
+    </Tooltip>
+  );
+}
 
 const TD_STYLE: React.CSSProperties = {
   padding: '8px 12px',
@@ -110,43 +114,43 @@ export const Overview: Story = {
           ))}
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                <th style={TH_STYLE}>Component</th>
-                <th style={TH_STYLE}>Status</th>
-                {CRITERIA.map(([key, { label, description }]) => (
-                  <th key={key} style={HINT_TH_STYLE} title={description}>{label}</th>
-                ))}
-                <th style={HINT_TH_STYLE} title={stability.figma.description}>{stability.figma.label}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map(r => (
-                <tr key={r.name}>
-                  <td style={{ ...TD_STYLE, fontWeight: 500 }}>
-                    <a
-                      href={storyDocsHref(r.category, r.name)}
-                      target="_top"
-                      title={`Open ${r.name}'s docs page`}
-                      style={{ color: 'var(--helix-color-text-neutral)', textDecoration: 'underline' }}
-                    >
-                      {r.name}
-                    </a>
-                  </td>
-                  <td style={TD_STYLE}>
-                    <Badge variant={STATUS_VARIANT[r.status] ?? 'neutral'} label={r.status} />
-                  </td>
-                  {CRITERIA.map(([key]) => (
-                    <td key={key} style={TD_STYLE}><Check ok={r.checks[key].pass} details={r.checks[key].details} /></td>
-                  ))}
-                  <td style={TD_STYLE}><Check ok={r.inFigma} details={['Not modeled in Figma yet — done on request']} /></td>
-                </tr>
+        {/* No overflow wrapper around the table: any overflow other than visible would clip the
+            header tooltips, which open above the header row. */}
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={TH_STYLE}>Component</th>
+              <th style={TH_STYLE}>Status</th>
+              {CRITERIA.map(([key, { label, description }]) => (
+                <th key={key} style={HINT_TH_STYLE}><HeaderHint label={label} description={description} /></th>
               ))}
-            </tbody>
-          </table>
-        </div>
+              <th style={HINT_TH_STYLE}><HeaderHint label={stability.figma.label} description={stability.figma.description} /></th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(r => (
+              <tr key={r.name}>
+                <td style={{ ...TD_STYLE, fontWeight: 500 }}>
+                  <a
+                    href={storyDocsHref(r.category, r.name)}
+                    target="_top"
+                    title={`Open ${r.name}'s docs page`}
+                    style={{ color: 'var(--helix-color-text-neutral)', textDecoration: 'underline' }}
+                  >
+                    {r.name}
+                  </a>
+                </td>
+                <td style={TD_STYLE}>
+                  <Badge variant={STATUS_VARIANT[r.status] ?? 'neutral'} label={r.status} />
+                </td>
+                {CRITERIA.map(([key]) => (
+                  <td key={key} style={TD_STYLE}><Check ok={r.checks[key].pass} details={r.checks[key].details} /></td>
+                ))}
+                <td style={TD_STYLE}><Check ok={r.inFigma} details={['Not modeled in Figma yet — done on request']} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
         <dl style={{
           display: 'grid',
