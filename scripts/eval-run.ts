@@ -61,3 +61,8 @@ for (const p of prompts) {
 
 const passedCount = results.filter(r => r.passed).length;
 console.log(`\n${passedCount}/${results.length} prompts passed.`);
+
+// Self-test mode (no --input) scores each prompt's OWN reference code — a failure there means the prompt's
+// criteria are broken, so exit non-zero and let the pre-commit hook block it. With --input, a failing
+// score is the measurement itself, not an error.
+if (!inputFile && passedCount < results.length) process.exit(1);
