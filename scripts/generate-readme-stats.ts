@@ -61,3 +61,27 @@ if (changed) {
 } else {
   console.log(`✅ README.md stats already match — ${total} components (${core} core + ${layout} layout)`);
 }
+
+// AGENTS.md's component inventory (what an agent in a consuming app reads first) — one row per manifest
+// component, so it can't fall behind the real set the way a hand-written list did (it listed 7 of 30).
+const agentsPath = path.join(root, 'AGENTS.md');
+const firstSentence = (text: string) => (text.match(/^.*?[.!?](\s|$)/)?.[0] ?? text).trim();
+const inventory = [
+  '| Component | Category | Purpose |',
+  '|---|---|---|',
+  ...manifest.components.map(c => `| \`${c.name}\` | ${c.category} | ${firstSentence(String((c as { purpose?: string }).purpose ?? '')).replace(/\|/g, '\\|')} |`),
+].join('\n');
+const prevAgents = fs.readFileSync(agentsPath, 'utf-8');
+const agents = replaceBlock(prevAgents, 'component-inventory', inventory);
+fs.writeFileSync(agentsPath, agents);
+// Same list for llms.txt (the index an LLM reads first).
+const llmsPath = path.join(root, 'llms.txt');
+const componentList = manifest.components
+  .map(c => `- ${c.name} (${c.category}) — ${firstSentence(String((c as { purpose?: string }).purpose ?? ''))}`)
+  .join('\n');
+const prevLlms = fs.readFileSync(llmsPath, 'utf-8');
+fs.writeFileSync(llmsPath, replaceBlock(prevLlms, 'component-list', componentList));
+
+console.log(agents !== prevAgents
+  ? `✅ AGENTS.md component inventory regenerated — ${total} components`
+  : `✅ AGENTS.md component inventory already matches — ${total} components`);

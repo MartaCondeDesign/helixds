@@ -104,7 +104,8 @@ pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md fr
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, shown in Storybook's Changelog page
-pnpm docs:readme            sync component counts in README.md with contracts/manifest.json
+pnpm docs:readme            sync component counts in README.md + the component lists in AGENTS.md and llms.txt
+                            with contracts/manifest.json (auto-runs in pre-commit)
 pnpm report:paints          CSS paint audit report
 pnpm lint:ai                validate .ai/ directory structure
 ```

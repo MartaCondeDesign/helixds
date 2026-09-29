@@ -13,7 +13,10 @@ predictable token structure, and machine-readable documentation.
 |-----------------------|--------------------------------------|----------------------------------|
 | `@helix-ds/core`      | All UI components                    | `pnpm add @helix-ds/core`       |
 | `@helix-ds/tokens`    | CSS tokens + TypeScript constants    | `pnpm add @helix-ds/tokens`     |
-| `@helix-ds/icons`     | Tabler Icons wrapper                 | `pnpm add @helix-ds/icons`      |
+
+Icons are [Tabler Icons](https://tabler.io/icons) (`@tabler/icons-react`, a peer dependency of core),
+always rendered through core's `Icon` component or a component's `icon` prop — never as a raw
+`<IconXxx />` tag.
 
 ## Setup (required, once)
 
@@ -29,15 +32,43 @@ Every component's current status (draft / beta / stable) is **computed**, not li
 Storybook → **Status**, or `contracts/stability.json` (`pnpm verify:stable`, ADR-018). draft = exists and
 works; beta = passes all 8 automatic quality criteria; stable = beta + modeled in Figma.
 
-| Component  | Import path                              | Purpose                      |
-|------------|------------------------------------------|------------------------------|
-| Button     | `@helix-ds/core`                      | Actions, CTAs, links         |
-| Input      | `@helix-ds/core`                      | Text input, search           |
-| Badge      | `@helix-ds/core`                      | Status, counts, labels       |
-| Chip       | `@helix-ds/core`                      | Selectable tags / filters    |
-| Card       | `@helix-ds/core`                      | Content grouping, widgets    |
-| Modal      | `@helix-ds/core`                      | Modal overlays               |
-| Select     | `@helix-ds/core`                      | Dropdown selection           |
+All components import from `@helix-ds/core`. Generated from `contracts/manifest.json` on every commit
+(`pnpm docs:readme`) — do not edit the table by hand.
+
+<!-- helix:component-inventory:start -->
+| Component | Category | Purpose |
+|---|---|---|
+| `Accordion` | core | A single collapsible disclosure — a header that expands/collapses a panel of content, with no JS height measurement needed. |
+| `AppShell` | layout | The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. |
+| `Avatar` | core | Represents a person or entity as a small circular image or initials indicator — a table row, a nav footer, a comment author. |
+| `AvatarGroup` | core | Shows several people or entities associated with the same record as a compact overlapping stack of Avatars, collapsing whatever doesn't fit into a '+N' count. |
+| `Badge` | core | Communicates status, category labels, or counts in a compact, high-contrast capsule. |
+| `Button` | core | Triggers an action or navigates to a destination when pressed by the user. |
+| `Card` | core | Groups related content in a visually distinct, flat surface — a dashboard widget, a settings group, a gallery tile. |
+| `Checkbox` | core | Lets users select one or more independent options from a set, or confirm a single binary choice. |
+| `CheckboxGroup` | core | Lets users choose zero or more options from a small, visible set of independent choices. |
+| `Chip` | core | Represents a compact selectable label for filters, categories, or short choices. |
+| `FAB` | core | A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial. |
+| `Icon` | core | Communicates meaning, action, or status through a recognizable visual symbol. |
+| `IconButton` | core | Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control. |
+| `Input` | core | Allows users to enter a single line of free-form text. |
+| `Menu` | core | A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals). |
+| `Modal` | core | A centered overlay that interrupts the page for a focused task or decision — blocks interaction with the rest of the page until dismissed. |
+| `NavItem` | core | A single entry in a persistent navigation list (a SideNav, a tab rail) that links to another view. |
+| `PageHeader` | layout | Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row. |
+| `RadioButton` | core | A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g. |
+| `RadioGroup` | core | Lets users choose exactly one option from a small, visible set of mutually exclusive choices. |
+| `SegmentedControl` | core | Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel. |
+| `Select` | core | Lets users choose a single value from a predefined list. |
+| `SideNav` | layout | The persistent vertical navigation rail of an app shell — brand mark, primary nav entries, and a footer slot for the current user. |
+| `SidePanel` | core | A modal panel anchored to the right edge of the viewport, for a persistent secondary task alongside — but still blocking — the main page (details, a form, a filter builder). |
+| `Switch` | core | Lets users toggle a single setting on or off, with the change taking effect immediately. |
+| `Table` | core | Displays tabular data edge-to-edge — rows and columns of related records, e.g. |
+| `Textarea` | core | Lets users enter multi-line free-form text. |
+| `Toast` | core | A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel. |
+| `Tooltip` | core | Reveals a short, non-interactive text label for whatever it wraps, on hover or keyboard focus — identifies an ambiguous control (an icon-only button, an avatar) without adding permanent visible text. |
+| `TopBar` | layout | The fixed-height chrome bar at the top of a page — search, quick actions, and the current user, always in the same place. |
+<!-- helix:component-inventory:end -->
 
 ## Component hierarchy (enforce this order)
 
@@ -90,9 +121,9 @@ Use the canonical prop names below. Anti-synonyms are rejected by CI.
 
 To install Helix AI context in your project:
 
+From a clone of the Helix repo:
+
 ```bash
-node node_modules/@helix-ds/core/scripts/setup-ai.mjs
-# or, from a clone of this repo:
 pnpm setup:ai [target-dir] [--dry-run]
 ```
 
@@ -101,30 +132,6 @@ a conflict instead) and writes a pointer file for whichever AI tool directories 
 already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instructions.md`).
 Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
 not touch.
-
-## MCP servers (planned, not published yet)
-
-The shape below is the intended direction — no `@helix-ds/storybook-mcp` or
-`@helix-ds/tokens-mcp` package exists yet, so `setup:ai` does not write this
-configuration for you today. Don't add it to your project's MCP config expecting it to
-resolve.
-
-```json
-{
-  "mcpServers": {
-    "helix-storybook": {
-      "command": "npx",
-      "args": ["@helix-ds/storybook-mcp"]
-    },
-    "helix-tokens": {
-      "command": "npx",
-      "args": ["@helix-ds/tokens-mcp"]
-    }
-  }
-}
-```
-
-Planned tools once published: `getComponentList`, `getComponentProps`, `getTokenValue`, `searchTokens`.
 
 ## What agents should NOT do
 

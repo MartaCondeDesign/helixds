@@ -13,14 +13,7 @@
  * Run: node scripts/setup-ai.mjs [target-dir] [--dry-run]
  * Default target-dir is the current working directory.
  *
- * Fixes a real gap: AGENTS.md's own "AI context installation" section has always
- * pointed at `npx @helix-ds/cli setup-ai` and a `@helix-ds/storybook-mcp` /
- * `@helix-ds/tokens-mcp` MCP config — none of those packages exist yet. This script is
- * the actual, working implementation; AGENTS.md's promised commands remain a future
- * package boundary this script can be lifted into unchanged once @helix-ds/cli exists.
- * The MCP servers step is deliberately NOT implemented here for the same reason: writing
- * an mcp.json entry for a package that isn't published would just trade one broken
- * promise for another.
+ * AGENTS.md is the single source of truth this copies; the pointer files only point back to it.
  */
 import fs from 'fs';
 import path from 'path';
@@ -123,8 +116,5 @@ if (report.conflicts.length) {
   report.conflicts.forEach(f => console.log(`  ! ${f}`));
   console.log('  Not overwritten. Diff by hand and merge what you want to keep.');
 }
-
-console.log(`\nNOT done by this script (no published package to configure yet): MCP server setup`);
-console.log(`(@helix-ds/storybook-mcp, @helix-ds/tokens-mcp — see AGENTS.md's own note on this).\n`);
 
 process.exit(report.conflicts.length > 0 ? 1 : 0);
