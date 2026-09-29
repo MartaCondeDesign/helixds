@@ -16,7 +16,10 @@ history for the concrete bugs it caught before they reached real code.
 
 **Imperative API, a single `toast` object** — `toast.success(label, description?)`,
 `toast.info(...)`, `toast.warning(...)`, `toast.danger(...)`, `toast.neutral(...)`, each returning an id;
-`toast.dismiss(id)` removes one early. This is the Sonner/react-hot-toast pattern: calling
+`toast.dismiss(id)` removes one early. **Amendment 2026-09-29:** the second argument also accepts
+Sonner's `{ description }` object — the first real eval run showed agents reaching for that shape — and
+`toast.*` logs a console warning if no `<Toast />` is mounted a second later (otherwise the call silently
+shows nothing). This is the Sonner/react-hot-toast pattern: calling
 `toast.success('Saved')` from anywhere (an event handler, a fetch `.then()`, outside any component) is what
 this need actually looks like in practice — a component you'd have to render conditionally yourself at the
 call site doesn't fit "fire and forget" notifications the way it fits Modal/SidePanel (which are genuinely

@@ -96,7 +96,7 @@ export type { TooltipProps, TooltipPlacement }                       from './com
 export type { AccordionProps }                                       from './components/Accordion';
 export type { ModalProps }                                           from './components/Modal';
 export type { SidePanelProps }                                       from './components/SidePanel';
-export type { ToastProps, ToastVariant, ToastRecord }                from './components/Toast';
+export type { ToastProps, ToastVariant, ToastRecord, ToastOptions } from './components/Toast';
 export type { SegmentedControlProps, SegmentedControlOption }        from './components/SegmentedControl';
 export type { TopBarProps }                                          from './layout/TopBar';
 export type { SideNavProps }                                         from './layout/SideNav';

@@ -133,6 +133,20 @@ already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instruction
 Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
 not touch.
 
+## Common mistakes (seen in real eval runs)
+
+These came up when an agent was asked to build with Helix without reading the contracts first
+(`pnpm eval:generate`). Check them before writing the code:
+
+- **Toast needs `<Toast />` mounted once** (near the app root). `toast.success(...)` only queues the
+  notification; with no `<Toast />` nothing appears (Helix logs a console warning). Signature:
+  `toast.success(label, description?)` — the description can also be `{ description }`.
+- **TopBar's slots are `start` and `end`** — not `search`/`actions`, not `left`/`right`.
+- **Canonical prop names only** — `onPress` (not `onClick`), `expanded` (not `open`/`isOpen`),
+  `label` (not `title`/`name`), `checked` (not `active`/`selected`), `current` (not `active`). Full list:
+  `.ai/maps/prop-map.md`.
+- **Icons by reference** — `icon={IconPlus}`, never `icon={<IconPlus />}`, never a raw `<IconPlus />`.
+
 ## What agents should NOT do
 
 - Use `style={{ color: '#xxx' }}` — always use token CSS variables

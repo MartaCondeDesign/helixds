@@ -47,7 +47,7 @@
     "wcag": ["4.1.3 Status Messages", "1.4.13 Content on Hover or Focus",
   "2.2.1 Timing Adjustable"],
     "notes": [
-      "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?)), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own.",
+      "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?) — the description may also be passed Sonner-style as { description }), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own. Calling toast.* with no <Toast /> mounted logs a console warning (nothing would be shown).",
       "Stacking depth (max 3 visible) and hover-to-spread use real measured pixel heights (offsetHeight), not percentage-based transforms — a percentage approach was tried and broken in the pre-implementation preview by two toasts of different heights; see ADR-011."
     ]
   }

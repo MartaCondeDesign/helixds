@@ -16,7 +16,7 @@ import { subscribeToasts, removeToast, toast, type ToastRecord, type ToastVarian
 import type { ToastProps } from './Toast.types';
 
 export { toast } from './toastStore';
-export type { ToastVariant, ToastRecord } from './toastStore';
+export type { ToastVariant, ToastRecord, ToastOptions } from './toastStore';
 
 // Real Filled Tabler icons, fixed per variant — not caller-supplied like Badge's own `icon` prop
 // (ADR-011). neutral/info share IconInfoCircleFilled; danger uses the hexagon shape explicitly

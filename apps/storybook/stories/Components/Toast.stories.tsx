@@ -41,10 +41,11 @@ export const KeyboardReach: Story = {
   play: async ({ canvasElement }) => {
     const trigger = within(canvasElement).getByRole('button', { name: 'Show toast' });
     toast.success('Published', 'Your changes are now live.');
-    toast.info('Update available', 'A new version is ready — refresh to update.');
+    toast.info('Update available', { description: 'A new version is ready — refresh to update.' }); // Sonner-style form
     const page = within(canvasElement.ownerDocument.body);
     await waitFor(() => expect(page.getAllByRole('button', { name: 'Dismiss' })).toHaveLength(2));
     const [first, second] = page.getAllByRole('button', { name: 'Dismiss' });
+    await expect(page.getByText('A new version is ready — refresh to update.')).toBeInTheDocument();
 
     // Tab reaches each visible toast's close button, in order
     trigger.focus();

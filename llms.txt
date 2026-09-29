@@ -54,6 +54,13 @@ contracts/manifest.json on every commit.
 - TopBar (layout) — The fixed-height chrome bar at the top of a page — search, quick actions, and the current user, always in the same place.
 <!-- helix:component-list:end -->
 
+## Common mistakes (from real eval runs)
+
+- Toast: render <Toast /> once near the app root, or nothing shows; toast.success(label, description?)
+- TopBar slots are start / end (not search/actions, not left/right)
+- onPress not onClick · expanded not open · label not title · checked not active · current not active
+- Icons by reference: icon={IconPlus}, never icon={<IconPlus />}
+
 ## Tokens (semantic layer — use these in app code)
 
 - color.text.*    — neutral, neutral-light, neutral-lightest, disabled, inverse, primary, link, danger, success, warning, info
