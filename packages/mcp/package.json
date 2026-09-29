@@ -1,0 +1,24 @@
+{
+  "name": "@helix-ds/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Helix DS MCP server — components, contracts, tokens, prop vocabulary and patterns for AI agents, read live from the repo",
+  "type": "module",
+  "bin": {
+    "helix-mcp": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "test": "tsx src/smoke-test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}

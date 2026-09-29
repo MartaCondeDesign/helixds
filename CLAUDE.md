@@ -106,7 +106,13 @@ pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, s
 pnpm docs:readme            sync component counts in README.md with contracts/manifest.json
 pnpm report:paints          CSS paint audit report
 pnpm lint:ai                validate .ai/ directory structure
+pnpm --filter @helix-ds/mcp test   end-to-end check of the helix MCP server (all 8 tools)
 ```
+
+**MCP server** — `packages/mcp` (`helix`, registered in `.mcp.json`) answers component, token, prop
+and pattern questions from the live repo files. When you add a tool or change what a data file looks
+like (manifest, contract shape, prop-map table format, tokens.json layers), run its test — see
+`AGENTS.md` → "MCP server" for the tool list.
 
 **Run `pnpm docs:token-exceptions` after every token or component change** — any time a token is added/edited
 (`pnpm token:add` or a manual `tokens.json` edit) or a component's `component.*` tokens change, even if the

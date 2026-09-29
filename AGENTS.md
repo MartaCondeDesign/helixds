@@ -102,29 +102,40 @@ already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instruction
 Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
 not touch.
 
-## MCP servers (planned, not published yet)
+## MCP server
 
-The shape below is the intended direction — no `@helix-ds/storybook-mcp` or
-`@helix-ds/tokens-mcp` package exists yet, so `setup:ai` does not write this
-configuration for you today. Don't add it to your project's MCP config expecting it to
-resolve.
+`packages/mcp` is a working MCP server (`helix`, stdio) that answers questions about Helix
+directly — no need to read the repo's files yourself. It reads the repo live on every call
+(contracts, manifest, tokens.json + the built CSS, prop-map, patterns, this file), so it can't
+drift from the source.
+
+| Tool | What it answers |
+|---|---|
+| `helix_list_components` | Which components exist, their category, status and purpose |
+| `helix_get_component` | One component's full contract (props, states, keyboard, sizing), import line, status |
+| `helix_search_tokens` | Tokens matching words/values, with real light **and** dark values |
+| `helix_get_token` | One token by CSS variable or path, with its alias chain |
+| `helix_check_props` | Whether prop names are canonical (flags `onClick`, `isOpen`…) and exist on a component |
+| `helix_list_patterns` / `helix_get_pattern` | Documented compositions and their code |
+| `helix_get_rules` | This guide + the full prop vocabulary |
+
+**Inside this repo** it's already registered in `.mcp.json` — Claude Code picks it up (approve it
+once when asked, or check with `/mcp`).
+
+**From another project**, point it at a Helix checkout with `HELIX_ROOT` (it isn't published to npm
+yet, so it runs from the repo):
 
 ```json
 {
   "mcpServers": {
-    "helix-storybook": {
-      "command": "npx",
-      "args": ["@helix-ds/storybook-mcp"]
-    },
-    "helix-tokens": {
-      "command": "npx",
-      "args": ["@helix-ds/tokens-mcp"]
+    "helix": {
+      "command": "/path/to/helix-ds/packages/mcp/node_modules/.bin/tsx",
+      "args": ["/path/to/helix-ds/packages/mcp/src/index.ts"],
+      "env": { "HELIX_ROOT": "/path/to/helix-ds" }
     }
   }
 }
 ```
-
-Planned tools once published: `getComponentList`, `getComponentProps`, `getTokenValue`, `searchTokens`.
 
 ## What agents should NOT do
 
