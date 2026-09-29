@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "helix": {
-      "command": "node",
-      "args": ["--import", "tsx", "packages/mcp/src/index.ts"]
-    }
-  }
-}
