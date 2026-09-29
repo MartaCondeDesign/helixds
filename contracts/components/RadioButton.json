@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "RadioButton",
   "version": "0.1.0",
-  "status": "draft",
+  "status": "beta",
 
   "purpose": "A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g. a single option embedded in a custom layout, or a hand-assembled set sharing `name`).",
 

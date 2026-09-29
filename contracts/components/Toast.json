@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Toast",
   "version": "0.1.0",
-  "status":  "draft",
+  "status":  "beta",
 
   "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
 

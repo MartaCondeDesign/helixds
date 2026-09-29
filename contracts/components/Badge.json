@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Badge",
   "version": "1.0.0",
-  "status":  "draft",
+  "status":  "stable",
 
   "purpose": "Communicates status, category labels, or counts in a compact, high-contrast capsule.",
 

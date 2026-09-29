@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Icon",
   "version": "1.0.0",
-  "status":  "draft",
+  "status":  "stable",
 
   "purpose": "Communicates meaning, action, or status through a recognizable visual symbol. Always supplemental to text — never the sole conveyor of information without a tooltip or label.",
 

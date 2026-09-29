@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Menu",
   "version": "0.1.0",
-  "status": "draft",
+  "status": "beta",
 
   "purpose": "A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals).",
 

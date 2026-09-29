@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "SegmentedControl",
   "version": "0.1.0",
-  "status": "draft",
+  "status": "beta",
 
   "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
 

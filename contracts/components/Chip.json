@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Chip",
   "version": "1.0.0",
-  "status":  "draft",
+  "status":  "stable",
 
   "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
 

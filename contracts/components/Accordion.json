@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Accordion",
   "version": "0.1.0",
-  "status":  "draft",
+  "status":  "beta",
 
   "purpose": "A single collapsible disclosure — a header that expands/collapses a panel of content, with no JS height measurement needed.",
 

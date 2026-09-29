@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Tooltip",
   "version": "0.1.0",
-  "status":  "draft",
+  "status":  "beta",
 
   "purpose": "Reveals a short, non-interactive text label for whatever it wraps, on hover or keyboard focus — identifies an ambiguous control (an icon-only button, an avatar) without adding permanent visible text.",
 
