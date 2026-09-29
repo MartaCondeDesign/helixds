@@ -2458,6 +2458,24 @@
     background-color: var(--helix-table-row-hoverFill);
   }
 
+  /* Drag-to-reorder (Motion Reorder pattern — the row sets data-dragging while it's being dragged).
+     While any row is dragging: the dragged row stays highlighted, the others drop their hover fill and
+     its transition — rows sliding under the pointer would otherwise fade the fill in/out (a flash) —
+     and no text can be selected as the pointer crosses rows. */
+  [data-helix-part="table-body"]:has([data-dragging]) {
+    user-select: none;
+    cursor: grabbing;
+  }
+  [data-helix-part="table-body"]:has([data-dragging]) [data-helix-part="table-row"] {
+    transition: none;
+  }
+  [data-helix-part="table-body"]:has([data-dragging]) [data-helix-part="table-row"]:not([data-dragging]):hover {
+    background-color: transparent;
+  }
+  [data-helix-part="table-body"] [data-helix-part="table-row"][data-dragging] {
+    background-color: var(--helix-table-row-hoverFill);
+  }
+
   [data-helix-part="table-cell"] {
     padding:     var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100);
     font-size:   var(--helix-table-cell-fontSize);

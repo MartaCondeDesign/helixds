@@ -92,17 +92,24 @@ const ROLES = Array.from(new Set(MEMBERS.map(m => m.role)));
 // interactive content, e.g. "Row actions"); the grip icon starts the drag explicitly via dragControls.
 function MemberRow({ member }: { member: Member }) {
   const dragControls = useDragControls();
+  const [dragging, setDragging] = useState(false);
   return (
     <Reorder.Item
       as="tr"
       value={member}
       data-helix-part="table-row"
+      data-dragging={dragging || undefined}
       dragListener={false}
       dragControls={dragControls}
+      onDragStart={() => setDragging(true)}
+      onDragEnd={() => setDragging(false)}
     >
       <TableCell>
         <span
-          onPointerDown={e => dragControls.start(e)}
+          onPointerDown={e => {
+            e.preventDefault(); // no text selection starting under the pointer as it crosses rows
+            dragControls.start(e);
+          }}
           style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
           aria-label={`Reorder ${member.name}`}
         >

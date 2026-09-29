@@ -86,12 +86,25 @@ const DRAG_MEMBERS: DragMember[] = [
 
 function DragRow({ member }: { member: DragMember }) {
   const dragControls = useDragControls();
+  const [dragging, setDragging] = useState(false);
   return (
-    <Reorder.Item as="tr" value={member} data-helix-part="table-row" dragListener={false} dragControls={dragControls}>
+    <Reorder.Item
+      as="tr"
+      value={member}
+      data-helix-part="table-row"
+      data-dragging={dragging || undefined}
+      dragListener={false}
+      dragControls={dragControls}
+      onDragStart={() => setDragging(true)}
+      onDragEnd={() => setDragging(false)}
+    >
       <TableCell>
         <span
           role="button"
-          onPointerDown={e => dragControls.start(e)}
+          onPointerDown={e => {
+            e.preventDefault(); // no text selection starting under the pointer as it crosses rows
+            dragControls.start(e);
+          }}
           style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
           aria-label={`Reorder ${member.name}`}
         >
