@@ -134,12 +134,11 @@ export const KeyboardSpeedDial: Story = {
     await expect(args.onPress).toHaveBeenCalledTimes(1);
     await expect(trigger).toHaveAttribute('aria-expanded', 'true');
 
-    // Tab moves through the revealed actions — they precede the trigger in DOM order, so it's Shift+Tab
-    // from the trigger that reaches them
-    await userEvent.tab({ shift: true });
-    await expect(canvas.getByRole('button', { name: 'Export' })).toHaveFocus();
-    await userEvent.tab({ shift: true });
+    // Tab moves through the revealed actions in visual order: nearest to the trigger first
+    await userEvent.tab();
     await expect(canvas.getByRole('button', { name: 'Add member' })).toHaveFocus();
+    await userEvent.tab();
+    await expect(canvas.getByRole('button', { name: 'Export' })).toHaveFocus();
 
     // Escape collapses and returns focus to the trigger
     await userEvent.keyboard('{Escape}');

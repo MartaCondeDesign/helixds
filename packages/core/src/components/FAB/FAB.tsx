@@ -137,6 +137,25 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
       // ADR-007.
       <MotionConfig reducedMotion="user">
         <div ref={rootRef} data-helix-part="fab-root-wrapper" className={cn(className)}>
+          <motion.button
+            ref={setTriggerRef}
+            type="button"
+            data-helix-part="fab-root"
+            aria-label={label}
+            aria-expanded={hasActions ? expanded : undefined}
+            disabled={disabled}
+            onClick={handleTriggerPress}
+            animate={{ scale: triggerScale }}
+            transition={TRIGGER_BOUNCE_TRANSITION}
+          >
+            <span data-helix-part="fab-icon" data-expanded={hasActions && expanded ? 'true' : undefined}>
+              <Icon icon={icon} size={20} />
+            </span>
+          </motion.button>
+
+          {/* After the trigger in DOM order, so Tab goes trigger → nearest action → next (visual order,
+              bottom-up). Painting order is kept by CSS: fab-root has z-index 1, so collapsing actions
+              still slide in UNDER the trigger. */}
           {hasActions && (
             <div data-helix-part="fab-actions">
               <AnimatePresence>
@@ -170,22 +189,6 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
               </AnimatePresence>
             </div>
           )}
-
-          <motion.button
-            ref={setTriggerRef}
-            type="button"
-            data-helix-part="fab-root"
-            aria-label={label}
-            aria-expanded={hasActions ? expanded : undefined}
-            disabled={disabled}
-            onClick={handleTriggerPress}
-            animate={{ scale: triggerScale }}
-            transition={TRIGGER_BOUNCE_TRANSITION}
-          >
-            <span data-helix-part="fab-icon" data-expanded={hasActions && expanded ? 'true' : undefined}>
-              <Icon icon={icon} size={20} />
-            </span>
-          </motion.button>
         </div>
       </MotionConfig>
     );

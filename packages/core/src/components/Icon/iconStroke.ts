@@ -15,7 +15,7 @@ export const ICON_STROKE_PX_BY_SIZE: Record<IconSize, number> = {
   12: 1.3,
   14: 1.4,
   16: 1.5,
-  18: 1.6,
+  18: 1.5, // same as 16 (was 1.6): IconButton's 18px icons read heavier than Button's 16px ones side by side
   20: 1.7,
   24: 1.8,
   28: 2.0,

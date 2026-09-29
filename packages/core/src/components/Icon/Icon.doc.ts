@@ -23,7 +23,7 @@ export const doc: ComponentDoc = {
     { part: 'icon-root', label: 'color.success', token: '--helix-color-icon-success', kind: 'color' },
     { part: 'icon-root', label: 'color.warning', token: '--helix-color-icon-warning', kind: 'color' },
     { part: 'icon-root', label: 'color.info', token: '--helix-color-icon-info', kind: 'color' },
-    { part: 'icon-root', label: 'stroke-width', value: '1.3px → 2.8px real', kind: 'other', meta: 'ADR-017 stroke rule — real on-screen width per size (12: 1.3, 14: 1.4, 16: 1.5, 18: 1.6, 20: 1.7, 24: 1.8, 28: 2.0, 32: 2.2, 36: 2.4, 40: 2.8px), applied automatically by Icon' },
+    { part: 'icon-root', label: 'stroke-width', value: '1.3px → 2.8px real', kind: 'other', meta: 'ADR-017 stroke rule — real on-screen width per size (12: 1.3, 14: 1.4, 16: 1.5, 18: 1.5, 20: 1.7, 24: 1.8, 28: 2.0, 32: 2.2, 36: 2.4, 40: 2.8px), applied automatically by Icon' },
     { part: 'icon-root', label: 'viewBox', value: '0 0 24 24', kind: 'other' },
   ],
   features: [

@@ -205,10 +205,10 @@ _No Figma-mappable props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `fab-root-wrapper`
-- `fab-actions`
-- `fab-action`
 - `fab-root`
 - `fab-icon`
+- `fab-actions`
+- `fab-action`
 
 ### Icon (`v1.0.0`, stable)
 

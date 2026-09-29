@@ -28,13 +28,16 @@ and docs/contract/Figma skill still saying "always 1.5").
    | 12        | 1.3px                |
    | 14        | 1.4px                |
    | 16        | 1.5px                |
-   | 18        | 1.6px                |
+   | 18        | 1.5px ¹              |
    | 20        | 1.7px                |
    | 24        | 1.8px                |
    | 28        | 2.0px                |
    | 32        | 2.2px                |
    | 36        | 2.4px                |
    | 40        | 2.8px                |
+
+   ¹ Amended 2026-09-29: was 1.6px. 18px is IconButton's default (`m`) icon size, and next to
+   Button's 16px / 1.5px icons it read visibly heavier; 16 and 18 now share 1.5px.
 
    These are the only numbers anyone designs or edits. The SVG `stroke` attribute Tabler needs is
    an internal conversion done in code — never documented as a design value.
