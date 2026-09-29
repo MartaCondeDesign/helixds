@@ -101,6 +101,7 @@ pnpm verify:types           check every contract's props are present in its {Nam
 pnpm verify:props           check prop names against prop-map
 pnpm verify:icons           check every Tabler icon renders through the Icon component
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
+pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, shown in Storybook's Changelog page
 pnpm docs:readme            sync component counts in README.md with contracts/manifest.json

@@ -1,3 +1,4 @@
 pnpm verify:contract && pnpm verify:props && pnpm verify:tokens && pnpm eval:run &&
 pnpm docs:token-exceptions && git add .ai/maps/component-token-exceptions.md &&
+pnpm docs:figma-map && git add .ai/maps/figma-map.md &&
 pnpm docs:readme && git add README.md

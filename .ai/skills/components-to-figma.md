@@ -19,6 +19,7 @@ which are prerequisites, not part of this skill).
 
 | File | What it gives you |
 |------|-------------------|
+| `.ai/maps/figma-map.md` | **Read first.** Generated (`pnpm docs:figma-map`) per-component table of every prop → Figma property type, name and values, plus the anatomy layer names from `data-helix-part`. It applies this skill's taxonomy and exceptions — if it ever disagrees with this skill, the skill wins and the generator (`scripts/docs-figma-map.ts`) needs fixing. |
 | `contracts/components/{Name}.json` | Canonical props, anatomy, states, token policy |
 | `packages/core/src/components/{Name}/{Name}.types.ts` | Exact TypeScript types — prop names + value unions |
 | `packages/core/src/components/{Name}/{Name}.tsx` | `data-helix-part` anatomy, state attributes |
