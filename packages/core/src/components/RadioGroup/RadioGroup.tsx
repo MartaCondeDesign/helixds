@@ -25,6 +25,9 @@ export function RadioGroup({
   return (
     <fieldset
       data-helix-part="radio-group"
+      // radiogroup, as the contract states — a bare fieldset is role "group", which doesn't allow the
+      // aria-required below.
+      role="radiogroup"
       data-orientation={orientation}
       {...(disabled ? { 'data-disabled': '' } : {})}
       {...(invalid  ? { 'data-invalid':  '' } : {})}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { Textarea, TextareaDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -69,4 +70,24 @@ export const Sizes: Story = {
 export const FullWidth: Story = {
   args: { fullWidth: true, rows: 4 },
   decorators: [Story => <div style={{ maxWidth: 480 }}><Story /></div>],
+};
+
+export const KeyboardFocus: Story = {
+  play: async ({ canvasElement }) => {
+    const field = within(canvasElement).getByRole('textbox', { name: /Description/ });
+
+    // Tab focuses the field
+    await userEvent.tab();
+    await expect(field).toHaveFocus();
+    await userEvent.keyboard('First line');
+    await expect(field).toHaveValue('First line');
+
+    // Escape blurs it, keeping the value
+    await userEvent.keyboard('{Escape}');
+    await expect(field).not.toHaveFocus();
+    await expect(field).toHaveValue('First line');
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the field, Escape blurs it without clearing the value.' } },
+  },
 };

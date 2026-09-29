@@ -40,11 +40,17 @@ export function CheckboxGroup({
       {...(disabled ? { 'data-disabled': '' } : {})}
       {...(invalid  ? { 'data-invalid':  '' } : {})}
       aria-describedby={describedby}
-      aria-required={required || undefined}
     >
       <legend data-helix-part="checkbox-group-legend">
         {label}
         {required && <span aria-hidden="true" style={{ color: 'var(--helix-color-text-danger)', marginLeft: 2 }}>*</span>}
+        {/* A group has no ARIA "required" (aria-required isn't allowed on role="group"), so it's
+            announced as part of the legend instead — visually hidden, the * above covers sighted users. */}
+        {required && (
+          <span style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+            {' '}(required)
+          </span>
+        )}
       </legend>
 
       <div data-helix-part="checkbox-group-options" data-orientation={orientation}>
@@ -59,7 +65,9 @@ export function CheckboxGroup({
             checked={selected.includes(opt.value)}
             onChange={checked => toggle(opt.value, checked)}
             disabled={opt.disabled || disabled}
-            required={required}
+            // Not `required` on each checkbox: native validation would then demand EVERY option be
+            // checked, while the group's contract means "at least one". The consumer enforces that
+            // through `invalid` + `errorMessage`.
             invalid={invalid}
           />
         ))}

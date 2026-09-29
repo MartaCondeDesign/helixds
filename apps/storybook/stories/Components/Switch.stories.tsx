@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { Switch, SwitchDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -100,5 +101,24 @@ export const SettingsGroup: Story = {
   },
   parameters: {
     docs: { description: { story: 'Settings panel pattern: label + description on the left, switch on the right.' } },
+  },
+};
+
+export const KeyboardToggle: Story = {
+  play: async ({ canvasElement }) => {
+    const toggle = within(canvasElement).getByRole('switch', { name: /Enable notifications/ });
+
+    // Tab moves focus to the switch
+    await userEvent.tab();
+    await expect(toggle).toHaveFocus();
+
+    // Space toggles it
+    await userEvent.keyboard('[Space]');
+    await expect(toggle).toBeChecked();
+    await userEvent.keyboard('[Space]');
+    await expect(toggle).not.toBeChecked();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the switch, Space toggles it.' } },
   },
 };

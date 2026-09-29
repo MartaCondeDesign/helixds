@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Input",
   "version": "1.0.0",
-  "status":  "draft",
+  "status":  "stable",
 
   "purpose": "Allows users to enter a single line of free-form text.",
 
@@ -41,7 +41,7 @@
     { "name": "disabled",    "type": "boolean",   "default": false,  "description": "Non-interactive state." },
     { "name": "required",    "type": "boolean",   "default": false,  "description": "Marks field as required." },
     { "name": "loading",     "type": "boolean",   "default": false,  "description": "Async validation in progress." },
-    { "name": "icon",        "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=14, m=16, l=18)." },
+    { "name": "icon",        "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18)." },
     { "name": "iconEnd",     "type": "TablerIcon | undefined", "description": "Trailing icon. Same field-size-derived sizing as icon." },
     { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
     { "name": "errorMessage","type": "string | undefined", "description": "Error text shown when invalid=true." },

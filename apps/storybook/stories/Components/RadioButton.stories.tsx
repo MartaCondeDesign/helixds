@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { RadioButton, RadioButtonDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -90,5 +91,22 @@ export const Group: Story = {
   },
   parameters: {
     docs: { description: { story: 'Standalone RadioButtons sharing one `name` — native mutual exclusivity, same as RadioGroup\'s own options, without the fieldset wrapper.' } },
+  },
+};
+
+export const KeyboardSelect: Story = {
+  play: async ({ canvasElement }) => {
+    const radio = within(canvasElement).getByRole('radio', { name: /Free/ });
+
+    // Tab moves focus to it
+    await userEvent.tab();
+    await expect(radio).toHaveFocus();
+
+    // Space selects it
+    await userEvent.keyboard('[Space]');
+    await expect(radio).toBeChecked();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the radio, Space selects it.' } },
   },
 };

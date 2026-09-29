@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import {
   IconPlus,
   IconDownload,
@@ -162,4 +162,25 @@ export const FullWidth: Story = {
       </div>
     ),
   ],
+};
+
+export const KeyboardActivation: Story = {
+  args: { children: 'Save' },
+  play: async ({ args, canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Save' });
+
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+
+    await userEvent.keyboard('[Space]');
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the button, Enter and Space each activate it.' },
+    },
+  },
 };

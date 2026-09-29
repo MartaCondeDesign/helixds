@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { Toast, ToastDoc, Button, toast } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -27,5 +28,32 @@ export const Default: Story = {
   ),
   parameters: {
     docs: { description: { story: 'Fire a few in a row to see the stack (newest on top, older ones peek behind). Hover the stack to spread them apart and read the older ones — the stack expands downward, since it\'s pinned to the top of the screen. Each auto-dismisses after 4s unless hovered.' } },
+  },
+};
+
+export const KeyboardReach: Story = {
+  render: () => (
+    <>
+      <Button variant="secondary" onPress={() => toast.success('Published', 'Your changes are now live.')}>Show toast</Button>
+      <Toast />
+    </>
+  ),
+  play: async ({ canvasElement }) => {
+    const trigger = within(canvasElement).getByRole('button', { name: 'Show toast' });
+    toast.success('Published', 'Your changes are now live.');
+    toast.info('Update available', 'A new version is ready — refresh to update.');
+    const page = within(canvasElement.ownerDocument.body);
+    await waitFor(() => expect(page.getAllByRole('button', { name: 'Dismiss' })).toHaveLength(2));
+    const [first, second] = page.getAllByRole('button', { name: 'Dismiss' });
+
+    // Tab reaches each visible toast's close button, in order
+    trigger.focus();
+    await userEvent.tab();
+    await expect(first).toHaveFocus();
+    await userEvent.tab();
+    await expect(second).toHaveFocus();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab reaches each visible toast’s close button.' } },
   },
 };

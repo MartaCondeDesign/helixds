@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import { cn } from '../../lib/utils';
 import { SPRING_SNAPPY } from '../../lib/motionPresets';
 import { Icon } from '../Icon';
@@ -12,7 +12,9 @@ import type { NavItemProps } from './NavItem.types';
 const ACTIVE_INDICATOR_LAYOUT_ID = 'helix-nav-item-active-indicator';
 
 const NavItem = ({ label, href, icon, current = false, className }: NavItemProps) => {
+  // MotionConfig scoped locally — Motion doesn't honor prefers-reduced-motion on its own (ADR-007).
   return (
+    <MotionConfig reducedMotion="user">
     <a
       data-helix-part="nav-item"
       data-current={current ? 'true' : undefined}
@@ -37,6 +39,7 @@ const NavItem = ({ label, href, icon, current = false, className }: NavItemProps
       )}
       <span data-helix-part="nav-item-label">{label}</span>
     </a>
+    </MotionConfig>
   );
 };
 

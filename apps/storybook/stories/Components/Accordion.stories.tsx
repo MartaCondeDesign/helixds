@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { Accordion, AccordionDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -38,5 +40,42 @@ export const Stack: Story = {
   ),
   parameters: {
     docs: { description: { story: 'Several independent Accordions stacked — each opens/closes on its own, no exclusive-open group behavior.' } },
+  },
+};
+
+export const Controlled: Story = {
+  render: args => {
+    const [expanded, setExpanded] = useState(true);
+    return (
+      <Accordion {...args} expanded={expanded} onExpandedChange={setExpanded}>
+        {args.children}
+      </Accordion>
+    );
+  },
+  parameters: {
+    docs: { description: { story: 'Controlled: `expanded` + `onExpandedChange` hold the open state in the parent — here it starts expanded.' } },
+  },
+};
+
+export const KeyboardToggle: Story = {
+  play: async ({ canvasElement }) => {
+    const header = within(canvasElement).getByText('Shipping details').closest('summary')!;
+
+    // focus() rather than userEvent.tab(): user-event's simulated Tab order doesn't include <summary>
+    // (a real browser's does)
+    header.focus();
+    await expect(header).toHaveFocus();
+    await expect(header).toHaveAttribute('aria-expanded', 'false');
+
+    // Enter toggles open
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => expect(header).toHaveAttribute('aria-expanded', 'true'));
+
+    // Space toggles closed
+    await userEvent.keyboard('[Space]');
+    await waitFor(() => expect(header).toHaveAttribute('aria-expanded', 'false'));
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Enter and Space on the focused header each toggle the panel.' } },
   },
 };

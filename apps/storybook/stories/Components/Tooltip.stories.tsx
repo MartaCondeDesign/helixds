@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { IconTrash } from '@tabler/icons-react';
 import { Tooltip, TooltipDoc, IconButton, Avatar } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
@@ -58,5 +59,33 @@ export const AlwaysExpanded: Story = {
   args: { expanded: true },
   parameters: {
     docs: { description: { story: 'A controlled/always-visible case via the `expanded` prop — bypasses hover/focus entirely.' } },
+  },
+};
+
+export const KeyboardFocus: Story = {
+  args: {},
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('button', { name: 'Delete' });
+    // hidden: true — the content is `visibility: hidden` until shown, which excludes it from the
+    // accessibility tree getByRole searches by default
+    const tooltip = canvas.getByRole('tooltip', { hidden: true });
+
+    await expect(tooltip).not.toBeVisible();
+
+    // Tab focuses the trigger, which shows the tooltip
+    await userEvent.tab();
+    await expect(trigger).toHaveFocus();
+    await expect(trigger).toHaveAttribute('aria-describedby', tooltip.id);
+    await waitFor(() => expect(tooltip).toBeVisible());
+
+    // Escape dismisses it
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(tooltip).not.toBeVisible());
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the trigger and shows the tooltip, Escape dismisses it.' },
+    },
   },
 };

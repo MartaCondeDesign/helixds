@@ -60,7 +60,10 @@ export function Select({
 
   const openMenu = (initialActive?: string) => {
     if (disabled) return;
-    setActiveValue(initialActive ?? current ?? flatOptions.find(o => !o.disabled)?.value);
+    // Highlight the selected option if it's a real, enabled one — not just `current ?? first`: a
+    // controlled "nothing selected" value of '' isn't nullish, and would open with no highlight at all.
+    const selected = flatOptions.find(o => o.value === current && !o.disabled)?.value;
+    setActiveValue(initialActive ?? selected ?? flatOptions.find(o => !o.disabled)?.value);
     setOpen(true);
   };
 
@@ -113,6 +116,10 @@ export function Select({
       case 'Escape':
         if (open) { e.preventDefault(); closeMenu(); }
         break;
+      case 'Tab':
+        // Close first, then let focus move on as usual (no preventDefault) — contract a11y.keyboardNav.
+        if (open) closeMenu();
+        break;
       default:
         break;
     }
@@ -160,9 +167,15 @@ export function Select({
           data-helix-part="select-trigger"
           {...(!selectedOption ? { 'data-placeholder': '' } : {})}
           disabled={disabled}
+          // role="combobox" — the WAI-ARIA select-only combobox pattern. A plain button role doesn't
+          // allow aria-required or aria-activedescendant (axe aria-allowed-attr); combobox allows both
+          // and is a permitted role on <button> (ARIA in HTML).
+          role="combobox"
           aria-haspopup="listbox"
           aria-expanded={open}
-          aria-controls={menuId}
+          // Only while open: Menu isn't in the DOM when closed, and an id reference to a missing element
+          // is invalid ARIA (axe aria-valid-attr-value).
+          aria-controls={open ? menuId : undefined}
           aria-invalid={invalid || undefined}
           aria-describedby={describedby}
           aria-required={required || undefined}
@@ -179,7 +192,7 @@ export function Select({
         </button>
 
         <span data-helix-part="select-chevron" aria-hidden="true">
-          <Icon icon={IconChevronDown} size={14} />
+          <Icon icon={IconChevronDown} size={16} />
         </span>
 
         <Menu

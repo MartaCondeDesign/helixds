@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import {
   IconTrash,
   IconX,
@@ -124,6 +124,26 @@ export const AllVariants: Story = {
   parameters: {
     docs: {
       description: { story: 'Complete matrix: all variants × all states.' },
+    },
+  },
+};
+
+export const KeyboardActivation: Story = {
+  play: async ({ args, canvasElement }) => {
+    const button = within(canvasElement).getByRole('button', { name: 'Delete item' });
+
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+
+    await userEvent.keyboard('[Space]');
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+  },
+  parameters: {
+    docs: {
+      description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the button, Enter and Space each activate it, same as a native `<button>`.' },
     },
   },
 };

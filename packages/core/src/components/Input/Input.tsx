@@ -5,7 +5,9 @@ import type { InputProps } from './Input.types';
 
 let idCounter = 0;
 
-const ICON_SIZE_BY_FIELD_SIZE = { s: 14, m: 16, l: 18 } as const;
+// Form-field icons never go below 16px — s shares m's 16 so a small field's icon stays legible and
+// matches Select's chevron (also 16) in the same row.
+const ICON_SIZE_BY_FIELD_SIZE = { s: 16, m: 16, l: 18 } as const;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
@@ -24,6 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       id,
       disabled,
       className,
+      onKeyDown,
       ...props
     },
     ref,
@@ -98,6 +101,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             aria-busy={loading ? 'true' : undefined}
             aria-describedby={describedBy}
             {...props}
+            onKeyDown={e => {
+              onKeyDown?.(e);
+              // Contract a11y.keyboardNav: Escape blurs the field (unless the consumer handled it).
+              if (e.key === 'Escape' && !e.defaultPrevented) e.currentTarget.blur();
+            }}
           />
 
           {iconEnd && (

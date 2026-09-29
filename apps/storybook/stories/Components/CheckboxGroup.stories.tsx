@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { CheckboxGroup, CheckboxGroupDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -73,5 +74,35 @@ export const WithDisabledOption: Story = {
   },
   parameters: {
     docs: { description: { story: 'Individual options can be disabled while the group remains interactive.' } },
+  },
+};
+
+export const Required: Story = {
+  args: { required: true, defaultValue: [] },
+  parameters: {
+    docs: { description: { story: '`required`: at least one option must be selected before the form submits (`aria-required` on the fieldset).' } },
+  },
+};
+
+export const KeyboardToggle: Story = {
+  args: { defaultValue: [] },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const comments = canvas.getByRole('checkbox', { name: /Comments/ });
+    const mentions = canvas.getByRole('checkbox', { name: /Mentions/ });
+
+    // Tab moves into the group, then between options
+    await userEvent.tab();
+    await expect(comments).toHaveFocus();
+    await userEvent.tab();
+    await expect(mentions).toHaveFocus();
+
+    // Space toggles the focused option only
+    await userEvent.keyboard('[Space]');
+    await expect(mentions).toBeChecked();
+    await expect(comments).not.toBeChecked();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between options, Space toggles the focused one.' } },
   },
 };

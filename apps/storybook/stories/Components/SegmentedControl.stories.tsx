@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { SegmentedControl, SegmentedControlDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -61,4 +62,40 @@ export const WithDisabledOption: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'plan' },
+};
+
+export const KeyboardNavigation: Story = {
+  render: (args) => {
+    const [value, setValue] = useState('plan');
+    return <SegmentedControl {...args} value={value} onChange={setValue} />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const plan = canvas.getByRole('radio', { name: 'Plan' });
+    const debug = canvas.getByRole('radio', { name: 'Debug' });
+
+    // Tab moves focus into the group — onto the checked option, the only one in the tab order
+    await userEvent.tab();
+    await expect(plan).toHaveFocus();
+
+    // Arrow keys move focus and selection together
+    await userEvent.keyboard('{ArrowRight}');
+    await expect(debug).toHaveFocus();
+    await expect(debug).toBeChecked();
+    await userEvent.keyboard('{ArrowLeft}');
+    await expect(plan).toBeChecked();
+
+    // Space / Enter select the focused option
+    await userEvent.keyboard('[Space]');
+    await expect(plan).toBeChecked();
+    await userEvent.keyboard('{Enter}');
+    await expect(plan).toBeChecked();
+
+    // Tab moves out of the group in one step, not through every option
+    await userEvent.tab();
+    await expect(canvas.queryAllByRole('radio').some(r => r === document.activeElement)).toBe(false);
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab enters on the checked option, arrow keys move the selection, Space/Enter select, the next Tab leaves the group.' } },
+  },
 };

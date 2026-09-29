@@ -60,8 +60,20 @@ export function useDialogTransition(
       event.preventDefault();
       onDismiss?.();
     };
+    // Escape handled on keydown too, not only via the native `cancel` it would trigger:
+    // preventDefault here stops that close request, so a press dismisses exactly once — and Escape
+    // works the same for synthetic key events (tests), which never fire `cancel`.
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      onDismiss?.();
+    };
     el.addEventListener('cancel', handleCancel);
-    return () => el.removeEventListener('cancel', handleCancel);
+    el.addEventListener('keydown', handleKeyDown);
+    return () => {
+      el.removeEventListener('cancel', handleCancel);
+      el.removeEventListener('keydown', handleKeyDown);
+    };
   }, [onDismiss]);
 
   React.useEffect(() => {

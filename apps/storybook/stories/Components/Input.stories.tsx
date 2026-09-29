@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import { useState } from 'react';
 import {
   IconMail,
@@ -197,5 +197,26 @@ export const LoginFormPattern: Story = {
         story: 'Login form pattern. Try submitting with an invalid email.',
       },
     },
+  },
+};
+
+export const KeyboardFocus: Story = {
+  args: { label: 'Email', type: 'email', placeholder: 'you@example.com' },
+  play: async ({ canvasElement }) => {
+    const field = within(canvasElement).getByRole('textbox', { name: /Email/ });
+
+    // Tab focuses the field
+    await userEvent.tab();
+    await expect(field).toHaveFocus();
+    await userEvent.keyboard('ana@helix.dev');
+    await expect(field).toHaveValue('ana@helix.dev');
+
+    // Escape blurs it, keeping the value
+    await userEvent.keyboard('{Escape}');
+    await expect(field).not.toHaveFocus();
+    await expect(field).toHaveValue('ana@helix.dev');
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the field, Escape blurs it without clearing the value.' } },
   },
 };

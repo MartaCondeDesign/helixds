@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { Checkbox, CheckboxDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -90,5 +91,31 @@ export const Group: Story = {
   },
   parameters: {
     docs: { description: { story: 'Parent–child checkbox group with indeterminate state on the parent.' } },
+  },
+};
+
+export const Required: Story = {
+  args: { label: 'I agree to the Terms of Service', required: true },
+  parameters: {
+    docs: { description: { story: '`required` marks the checkbox as needed before the form submits (`aria-required`) and adds the required indicator.' } },
+  },
+};
+
+export const KeyboardToggle: Story = {
+  play: async ({ canvasElement }) => {
+    const checkbox = within(canvasElement).getByRole('checkbox', { name: /Accept terms of service/ });
+
+    // Tab moves focus to the checkbox
+    await userEvent.tab();
+    await expect(checkbox).toHaveFocus();
+
+    // Space toggles it
+    await userEvent.keyboard('[Space]');
+    await expect(checkbox).toBeChecked();
+    await userEvent.keyboard('[Space]');
+    await expect(checkbox).not.toBeChecked();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab focuses the checkbox, Space toggles it.' } },
   },
 };

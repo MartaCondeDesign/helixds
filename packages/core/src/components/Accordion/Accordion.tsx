@@ -56,14 +56,27 @@ const Accordion = ({
     }
   };
 
-  const handleSummaryClick = (event: React.MouseEvent<HTMLElement>) => {
-    // Always prevent the native instant toggle — see useDisclosureTransition's own comment for why:
-    // collapsing has to play the closing transition before `open` actually comes off.
-    event.preventDefault();
+  const toggle = () => {
     if (disabled) return;
     const next = !isExpanded;
     if (!isControlled) setUncontrolledExpanded(next);
     onExpandedChange?.(next);
+  };
+
+  const handleSummaryClick = (event: React.MouseEvent<HTMLElement>) => {
+    // Always prevent the native instant toggle — see useDisclosureTransition's own comment for why:
+    // collapsing has to play the closing transition before `open` actually comes off.
+    event.preventDefault();
+    toggle();
+  };
+
+  // Enter/Space handled here rather than left to <summary>'s native activation: preventDefault on the
+  // keydown cancels the native click, so each press toggles exactly once — and the behavior no longer
+  // depends on the browser's own summary activation, which synthetic key events (tests) don't trigger.
+  const handleSummaryKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    toggle();
   };
 
   return (
@@ -78,6 +91,7 @@ const Accordion = ({
         aria-disabled={disabled ? 'true' : undefined}
         aria-expanded={isExpanded ? 'true' : 'false'}
         onClick={handleSummaryClick}
+        onKeyDown={handleSummaryKeyDown}
       >
         <span data-helix-part="accordion-title">{label}</span>
         <span data-helix-part="accordion-chevron" aria-hidden="true">

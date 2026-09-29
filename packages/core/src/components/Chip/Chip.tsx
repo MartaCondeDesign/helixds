@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import { IconX } from '@tabler/icons-react';
 import { cn } from '../../lib/utils';
 import { Icon } from '../Icon';
@@ -36,7 +36,9 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
 
     // `scale` (in animate below) is Motion's own animation-target key — a verify:props false positive,
     // same category as Button.tsx's whileTap.
+    // MotionConfig scoped locally — Motion doesn't honor prefers-reduced-motion on its own (ADR-007).
     return (
+      <MotionConfig reducedMotion="user">
       <motion.span
         data-helix-part="chip-shell"
         data-dismissible={isDismissible ? 'true' : undefined}
@@ -91,6 +93,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
           </button>
         )}
       </motion.span>
+      </MotionConfig>
     );
   },
 );

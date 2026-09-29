@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/react';
 import { SidePanel, SidePanelDoc, Button } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
@@ -41,5 +42,60 @@ export const BottomPlacement: Story = {
   },
   parameters: {
     docs: { description: { story: "placement=\"bottom\" — full width, slides up from the bottom edge instead of in from the right." } },
+  },
+};
+
+export const RightPlacement: Story = {
+  render: (args) => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button variant="primary" onPress={() => setOpen(true)}>Open SidePanel</Button>
+        <SidePanel {...args} expanded={open} onDismiss={() => setOpen(false)} placement="right" />
+      </>
+    );
+  },
+  parameters: {
+    docs: { description: { story: 'placement="right" (the default) — full height, slides in from the right edge.' } },
+  },
+};
+
+export const KeyboardDismiss: Story = {
+  render: (args) => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button variant="primary" onPress={() => setOpen(true)}>Open SidePanel</Button>
+        <SidePanel
+          {...args}
+          expanded={open}
+          onDismiss={() => setOpen(false)}
+        >
+          <Button variant="secondary">Inside action</Button>
+        </SidePanel>
+      </>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const opener = canvas.getByRole('button', { name: 'Open SidePanel' });
+    await userEvent.click(opener);
+    const dialog = await canvas.findByRole('dialog');
+    await waitFor(() => expect(dialog).toHaveAttribute('open'));
+    const controls = within(dialog).getAllByRole('button');
+
+    // Tab moves focus between the panel's own controls — the page behind is inert while it's open
+    controls[0]!.focus();
+    await userEvent.tab();
+    await expect(dialog.contains(document.activeElement)).toBe(true);
+    await expect(document.activeElement).not.toBe(controls[0]);
+    await expect(opener).not.toHaveFocus();
+
+    // Escape dismisses it (through onDismiss, with the close animation)
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(dialog).not.toHaveAttribute('open'));
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between the panel’s controls, Escape dismisses it.' } },
   },
 };

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { Select, SelectDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -84,4 +85,82 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'designer' },
+};
+
+export const Required: Story = {
+  args: { required: true },
+  parameters: {
+    docs: { description: { story: '`required`: a value must be chosen before the form submits — adds the required indicator and `aria-required`.' } },
+  },
+};
+
+export const Open: Story = {
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('combobox', { name: /Role/ }));
+  },
+  parameters: {
+    docs: { description: { story: 'The open state — the popup listbox showing, `aria-expanded="true"` on the trigger.' } },
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  render: () => {
+    const [value, setValue] = useState('');
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
+        <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" className="w-[300px]" />
+        <button type="button">After</button>
+      </div>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('combobox', { name: /Role/ });
+    const highlighted = () => trigger.getAttribute('aria-activedescendant') ?? '';
+
+    await userEvent.tab();
+    await expect(trigger).toHaveFocus();
+
+    // Arrow Down opens the menu on the first option; Arrow Down/Up move the highlight
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    await waitFor(() => expect(highlighted()).toMatch(/designer$/));
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(highlighted()).toMatch(/engineer$/));
+    await userEvent.keyboard('{ArrowUp}');
+    await waitFor(() => expect(highlighted()).toMatch(/designer$/));
+
+    // Home / End jump to the first / last option
+    await userEvent.keyboard('{End}');
+    await waitFor(() => expect(highlighted()).toMatch(/other$/));
+    await userEvent.keyboard('{Home}');
+    await waitFor(() => expect(highlighted()).toMatch(/designer$/));
+
+    // Escape closes without changing the selection
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
+    await expect(trigger).toHaveTextContent('Choose a role…');
+
+    // Enter opens; Enter confirms the highlighted option
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    await userEvent.keyboard('{ArrowDown}');
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
+    await expect(trigger).toHaveTextContent('Engineer');
+
+    // Space opens too; Tab closes the menu and moves focus on
+    await userEvent.keyboard('[Space]');
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'true'));
+    await userEvent.tab();
+    await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
+    await expect(canvas.getByRole('button', { name: 'After' })).toHaveFocus();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Keyboard test (contract `a11y.keyboardNav`): arrows open and move the highlight, Home/End jump, Enter/Space open and confirm, Escape closes without selecting, Tab closes and moves focus on.',
+      },
+    },
+  },
 };

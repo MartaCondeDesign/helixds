@@ -21,6 +21,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       showCount = false,
       disabled,
       onChange,
+      onKeyDown,
       className,
       ...rest
     },
@@ -79,6 +80,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-required={required || undefined}
             onChange={handleChange}
             {...rest}
+            onKeyDown={e => {
+              onKeyDown?.(e);
+              // Contract a11y.keyboardNav: Escape blurs the field (unless the consumer handled it).
+              if (e.key === 'Escape' && !e.defaultPrevented) e.currentTarget.blur();
+            }}
           />
           {showCount && maxLength && (
             <span data-helix-part="textarea-counter" aria-live="polite">

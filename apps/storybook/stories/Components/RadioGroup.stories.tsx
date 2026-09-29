@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
+import { expect, userEvent, within } from '@storybook/test';
 import { RadioGroup, RadioGroupDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -73,5 +74,41 @@ export const WithDisabledOption: Story = {
   },
   parameters: {
     docs: { description: { story: 'Individual options can be disabled while the group remains interactive.' } },
+  },
+};
+
+export const Required: Story = {
+  args: { required: true },
+  parameters: {
+    docs: { description: { story: '`required`: a plan must be chosen before the form submits (`aria-required` on the fieldset).' } },
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const free = canvas.getByRole('radio', { name: /Free/ });
+    const pro = canvas.getByRole('radio', { name: /Pro/ });
+    const team = canvas.getByRole('radio', { name: /Team/ });
+
+    // Tab moves focus into the group (first option, nothing selected yet)
+    await userEvent.tab();
+    await expect(free).toHaveFocus();
+
+    // Space selects the focused option
+    await userEvent.keyboard('[Space]');
+    await expect(free).toBeChecked();
+
+    // Arrow keys move the selection
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(pro).toHaveFocus();
+    await expect(pro).toBeChecked();
+    await userEvent.keyboard('{ArrowDown}');
+    await expect(team).toBeChecked();
+    await userEvent.keyboard('{ArrowUp}');
+    await expect(pro).toBeChecked();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab enters the group, Space selects, arrow keys move the selection.' } },
   },
 };

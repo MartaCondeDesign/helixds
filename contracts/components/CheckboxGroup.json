@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "CheckboxGroup",
   "version": "0.1.0",
-  "status": "draft",
+  "status": "beta",
 
   "purpose": "Lets users choose zero or more options from a small, visible set of independent choices.",
 
@@ -17,7 +17,7 @@
     "authored": [
       { "name": "invalid", "description": "The selection fails validation.", "aria": "aria-invalid='true' on each checkbox input" },
       { "name": "disabled", "description": "The whole group, or an individual option, is non-interactive.", "aria": "disabled (native HTML attribute)" },
-      { "name": "required", "description": "At least one value must be selected before form submission.", "aria": "aria-required='true' on the fieldset" }
+      { "name": "required", "description": "At least one value must be selected before form submission.", "aria": "Announced as a visually hidden \"(required)\" in the legend — role=\"group\" does not allow aria-required. Not set on each checkbox: native required there would demand every option be checked." }
     ]
   },
 

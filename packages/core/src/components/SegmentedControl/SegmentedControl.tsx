@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { motion } from 'motion/react';
+import { motion, MotionConfig } from 'motion/react';
 import { cn } from '../../lib/utils';
 import { SPRING_SNAPPY } from '../../lib/motionPresets';
 import type { SegmentedControlProps } from './SegmentedControl.types';
@@ -59,7 +59,9 @@ export function SegmentedControl({
     itemRefs.current.get(next.value)?.focus();
   };
 
+  // MotionConfig scoped locally — Motion doesn't honor prefers-reduced-motion on its own (ADR-007).
   return (
+    <MotionConfig reducedMotion="user">
     <div
       data-helix-part="segmented-control-root"
       role="radiogroup"
@@ -100,6 +102,7 @@ export function SegmentedControl({
         );
       })}
     </div>
+    </MotionConfig>
   );
 }
 

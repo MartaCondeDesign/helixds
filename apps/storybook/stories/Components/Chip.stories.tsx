@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import {
   IconFilter,
   IconCheck,
@@ -109,4 +110,23 @@ export const Sizes: Story = {
       <Chip size="m" label="Medium" />
     </div>
   ),
+};
+
+export const KeyboardActivation: Story = {
+  args: { label: 'Filter', onPress: fn() },
+  play: async ({ args, canvasElement }) => {
+    const chip = within(canvasElement).getByRole('button', { name: 'Filter' });
+
+    await userEvent.tab();
+    await expect(chip).toHaveFocus();
+
+    // Enter and Space each activate it
+    await userEvent.keyboard('{Enter}');
+    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await userEvent.keyboard('[Space]');
+    await expect(args.onPress).toHaveBeenCalledTimes(2);
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Enter and Space each activate the focused chip.' } },
+  },
 };
