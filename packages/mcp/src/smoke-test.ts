@@ -8,6 +8,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { spawn } from 'node:child_process';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const client = new Client({ name: 'helix-smoke-test', version: '0.0.0' });
@@ -64,4 +66,31 @@ assert.ok((await call('helix_get_pattern', { name: 'nope' })).isError);
 assert.match((await call('helix_get_rules')).body, /Canonical Prop Vocabulary/);
 
 await client.close();
-console.log(`✅ helix MCP — ${tools.length} tools, all checks passed`);
+
+// ── HTTP transport (claude.ai custom connectors) ─────────────────────────────
+const PORT = 3900 + Math.floor(Math.random() * 90);
+const SECRET = 'smoke-test-secret';
+const httpServer = spawn(process.execPath, ['--import', 'tsx', path.join(here, 'http.ts')], {
+  cwd: path.resolve(here, '..'),
+  env: { ...process.env, PORT: String(PORT), HELIX_MCP_SECRET: SECRET },
+  stdio: ['ignore', 'pipe', 'inherit'],
+});
+await new Promise<void>((resolve, reject) => {
+  httpServer.stdout!.on('data', d => String(d).includes('helix MCP (HTTP)') && resolve());
+  httpServer.on('exit', code => reject(new Error(`http server exited (${code})`)));
+});
+try {
+  const base = `http://localhost:${PORT}`;
+  assert.equal((await fetch(`${base}/health`)).status, 200);
+  assert.equal((await fetch(`${base}/mcp`, { method: 'POST' })).status, 404, 'no secret → 404');
+  const remote = new Client({ name: 'helix-smoke-test-http', version: '0.0.0' });
+  await remote.connect(new StreamableHTTPClientTransport(new URL(`${base}/mcp/${SECRET}`)));
+  assert.equal((await remote.listTools()).tools.length, 8);
+  const res = await remote.callTool({ name: 'helix_get_token', arguments: { name: '--helix-spacing-3xs' } });
+  assert.equal(JSON.parse((res.content as { text: string }[])[0]!.text).light, '2px');
+  await remote.close();
+} finally {
+  httpServer.kill();
+}
+
+console.log(`✅ helix MCP — ${tools.length} tools, all checks passed (stdio + HTTP)`);

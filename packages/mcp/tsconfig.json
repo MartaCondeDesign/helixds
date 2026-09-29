@@ -5,7 +5,10 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["node"]
+    "types": ["node"],
+    // The MCP SDK's own types (Transport.onclose, transport options) aren't written for
+    // exactOptionalPropertyTypes; the base config's setting makes valid SDK usage fail to compile.
+    "exactOptionalPropertyTypes": false
   },
   "include": ["src/**/*.ts"]
 }
