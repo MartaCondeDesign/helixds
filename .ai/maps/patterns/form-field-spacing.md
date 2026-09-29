@@ -48,7 +48,7 @@ applied as its own explicit `margin-bottom` instead, since flex `gap` skips floa
 
 ## Multi-field forms: fields, blocks, and section headers
 
-A longer form (settings pages, onboarding flows — see `Pages/CreateWorkspace`) groups fields into
+A longer form (settings pages, onboarding flows — see `Pages/Form`) groups fields into
 labeled **blocks** (e.g. "Personal info", "Workspace", "Preferences"). This is a page-level layout
 pattern, not a single component, so there's no `component.*` token for it — these are `primitive.spacing.*`
 values applied directly at the composition site, same as any other layout decision `CLAUDE.md`

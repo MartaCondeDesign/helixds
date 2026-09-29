@@ -9,7 +9,7 @@ import {
 } from '@tabler/icons-react';
 
 const meta: Meta = {
-  title: 'Pages/CreateWorkspace',
+  title: 'Pages/Form',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -107,18 +107,21 @@ function WorkspacePage() {
   }
 
   return (
+    // Exactly one screen tall — like every Pages/* template: the form scrolls inside its own column,
+    // the page itself never grows past the viewport.
     <div style={{
-      minHeight: '100vh',
+      height: '100vh',
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
       fontFamily: 'system-ui, -apple-system, sans-serif',
     }}>
       {/* ── Left panel: brand hero ──────────────────────────────────── */}
+      {/* Fills the full screen-tall row, testimonial pinned to the bottom. */}
       <div style={{
         background: 'linear-gradient(160deg, #0f172a 0%, #1e3a8a 100%)',
         padding: '48px 56px',
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        position: 'sticky', top: 0, height: '100vh',
+        minHeight: 0,
         overflowY: 'auto',
       }}>
         <div>
@@ -182,6 +185,7 @@ function WorkspacePage() {
         background: 'var(--helix-color-fill-page)',
         padding: '48px 56px',
         overflowY: 'auto',
+        minHeight: 0, // lets the grid item shrink to the row so overflowY actually scrolls
       }}>
         <div style={{ maxWidth: 480, margin: '0 auto' }}>
           <div style={{ marginBottom: 32 }}>
@@ -359,7 +363,7 @@ function WorkspacePage() {
   );
 }
 
-export const CreateWorkspace: Story = {
+export const Form: Story = {
   render: () => <WorkspacePage />,
   parameters: {
     docs: {
