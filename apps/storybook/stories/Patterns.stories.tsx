@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Button, Input, Badge, Card, Icon } from '@helix-ds/core';
+import { Button, Input, Badge, Card, Chip } from '@helix-ds/core';
 import {
   IconPlus,
   IconUpload,
@@ -192,20 +192,27 @@ export const StatusRows: Story = {
     };
 
     return (
+      // Rows share the container's columns (subgrid), so every badge sits in the same column, left-aligned —
+      // per-row flex left each badge wherever its own label's width happened to end.
       <div style={{
-        border:       '1px solid var(--helix-color-border-neutral)',
-        borderRadius: 'var(--helix-radius-l)',
-        overflow:     'hidden',
-        maxWidth:     '500px',
+        display:             'grid',
+        gridTemplateColumns: '1fr auto auto',
+        columnGap:           'var(--helix-primitive-spacing-75)',
+        border:              '1px solid var(--helix-color-border-neutral)',
+        borderRadius:        'var(--helix-radius-l)',
+        overflow:            'hidden',
+        maxWidth:            '500px',
       }}>
         {rows.map((row, i) => (
           <div
             key={row.label}
             style={{
-              display:      'flex',
-              alignItems:   'center',
-              gap:          'var(--helix-primitive-spacing-75)',
-              padding:      'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
+              display:             'grid',
+              gridColumn:          '1 / -1',
+              gridTemplateColumns: 'subgrid',
+              alignItems:          'center',
+              justifyItems:        'start',
+              padding:             'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
               borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >
@@ -221,7 +228,7 @@ export const StatusRows: Story = {
             <span style={{
               fontSize:  'var(--helix-primitive-fontSize-s)',
               color:     'var(--helix-color-text-neutral-lightest)',
-              minWidth:  '64px',
+              justifySelf: 'end',
               textAlign: 'right',
             }}>
               {row.meta}
@@ -266,15 +273,8 @@ export const SearchAndFilter: Story = {
             onChange={e => setQuery(e.target.value)}
             fullWidth
           />
-          <Button variant="secondary" size="m">Status</Button>
-          <Button variant="secondary" size="m">Date</Button>
           {activeFilters.length > 0 && (
-            <Button
-              variant="ghost"
-                size="m"
-              icon={IconX}
-              onPress={() => setActiveFilters([])}
-            >
+            <Button variant="secondary" size="m" onPress={() => setActiveFilters([])}>
               Clear
             </Button>
           )}
@@ -286,16 +286,14 @@ export const SearchAndFilter: Story = {
             style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap' }}
           >
             {activeFilters.map(f => (
-              <Button
+              <Chip
                 key={f.key}
-                variant="secondary"
+                variant="neutral"
                 size="s"
-                iconEnd={IconX}
-                onPress={() => removeFilter(f.key)}
-                aria-label={`Remove filter: ${f.label}`}
-              >
-                {f.label}
-              </Button>
+                label={f.label}
+                dismissible
+                onDismiss={() => removeFilter(f.key)}
+              />
             ))}
           </div>
         )}
@@ -305,7 +303,7 @@ export const SearchAndFilter: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**Pattern: Search + Filter** — active filter chips use `<Button>`, not `<Badge>` (they must be interactive). Try removing a filter.',
+        story: '**Pattern: Search + Filter** — active filters are real neutral `<Chip>`s (`dismissible`, not `checked` — the darker checked fill is too heavy here), not a `<Button>` with an X nor a `<Badge>` (not interactive). Try removing a filter with its ×.',
       },
     },
   },
@@ -349,25 +347,13 @@ function StatCard({
         {value}
       </div>
       {delta && (
-        <div style={{
-          display:    'flex',
-          alignItems: 'center',
-          gap:        'var(--helix-spacing-3xs)', // 2px — arrow and delta read as one unit
-          fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
-          fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
-          color: trend === 'up'   ? 'var(--helix-color-text-success)'
-               : trend === 'down' ? 'var(--helix-color-text-danger)'
-               : 'var(--helix-color-text-neutral-light)',
-        }}>
-          {trend && (
-            <Icon
-              icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
-              size={12}
-              color={trend === 'up' ? 'var(--helix-color-icon-success)' : 'var(--helix-color-icon-danger)'}
-            />
-          )}
-          {delta}
-        </div>
+        // The delta is a Badge: success when up, danger when down, neutral with no trend — its icon slot
+        // carries the trend arrow.
+        <Badge
+          variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'neutral'}
+          label={delta}
+          {...(trend ? { icon: trend === 'up' ? IconArrowUpRight : IconArrowDownRight } : {})}
+        />
       )}
     </Card>
   );

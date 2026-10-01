@@ -1,7 +1,7 @@
 ---
 name: stat-card
 category: data-display
-components: [Card, Icon]
+components: [Card, Badge]
 when: "Showing a single labeled metric with an optional trend delta — a dashboard KPI, an analytics summary tile."
 ---
 
@@ -25,14 +25,14 @@ expecting an import.
 ┌───────────────────────┐
 │  MEMBERS              │
 │  103                  │
-│  ↗ +14                │
+│  [↗ +14]              │   ← delta in a Badge (success up / danger down)
 └───────────────────────┘
 ```
 
 ## Code
 
 ```tsx
-import { Card, Icon } from '@helix-ds/core';
+import { Card, Badge } from '@helix-ds/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 
 type Trend = 'up' | 'down';
@@ -69,25 +69,13 @@ function StatCard({
         {value}
       </div>
       {delta && (
-        <div style={{
-          display:    'flex',
-          alignItems: 'center',
-          gap:        'var(--helix-spacing-3xs)', // 2px — arrow and delta read as one unit
-          fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
-          fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
-          color: trend === 'up'   ? 'var(--helix-color-text-success)'
-               : trend === 'down' ? 'var(--helix-color-text-danger)'
-               : 'var(--helix-color-text-neutral-light)',
-        }}>
-          {trend && (
-            <Icon
-              icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
-              size={12}
-              color={trend === 'up' ? 'var(--helix-color-icon-success)' : 'var(--helix-color-icon-danger)'}
-            />
-          )}
-          {delta}
-        </div>
+        // The delta is a Badge: success when up, danger when down, neutral with no trend — its icon slot
+        // carries the trend arrow.
+        <Badge
+          variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'neutral'}
+          label={delta}
+          {...(trend ? { icon: trend === 'up' ? IconArrowUpRight : IconArrowDownRight } : {})}
+        />
       )}
     </Card>
   );
@@ -97,7 +85,8 @@ function StatCard({
 ## Rules
 
 1. `value` is a pre-formatted string from the consumer (`'103'`, `'89%'`) — this pattern never formats numbers itself
-2. Omit `trend` to render `delta` as plain neutral text with no icon (e.g. a delta with no clear direction)
+2. The delta is a `Badge`: `success` + up arrow when `trend="up"`, `danger` + down arrow when `trend="down"`.
+   Omit `trend` for a delta with no clear direction — a `neutral` Badge with no icon
 3. Lay several of these out with a real CSS grid (`grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))`), not `display: flex` with no basis — flex items without an explicit width just hug their own content, so cards end up different widths with no logic. See `apps/storybook/stories/Dashboard.stories.tsx`'s KPI row.
 4. No shadow — Card is flat by design (see [ADR-005](../../docs/ADR/ADR-005-elevation-policy.md))
 
@@ -105,4 +94,5 @@ function StatCard({
 
 - ❌ Reaching for a `StatCard` import — it doesn't exist; copy the code above
 - ❌ Hardcoded px/hex values instead of the tokens shown above
+- ❌ The delta as loose colored text + a separate Icon — it's a Badge, which already pairs color, icon and text
 - ❌ A `box-shadow` on the card to make it "pop" — see ADR-005

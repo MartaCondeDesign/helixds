@@ -16,7 +16,7 @@ when: "Filtering a list or table with a search field + optional filter buttons."
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  🔍 Search projects…         [Status ▾] [Date ▾]  [Clear] │
+│  🔍 Search projects…                              [Clear] │
 │                                                            │
 │  Active filters:  [Status: Active ×]  [Date: This week ×] │
 └────────────────────────────────────────────────────────────┘
@@ -27,12 +27,11 @@ when: "Filtering a list or table with a search field + optional filter buttons."
 ```tsx
 import { useState } from 'react';
 import { Input, Button, Chip } from '@helix-ds/core';
-import { IconSearch, IconX } from '@tabler/icons-react';
+import { IconSearch } from '@tabler/icons-react';
 // icon/iconEnd take the Tabler icon component by reference — never a pre-instantiated
 // element like `icon={<IconSearch size={16} />}` — see root CLAUDE.md rule 2.
-import type { ChipVariant } from '@helix-ds/core';
 
-type ActiveFilter = { key: string; label: string; variant: ChipVariant };
+type ActiveFilter = { key: string; label: string };
 
 function SearchFilter({
   placeholder = 'Search…',
@@ -70,7 +69,7 @@ function SearchFilter({
         />
         {filters}
         {hasActive && (
-          <Button variant="ghost" icon={IconX} onPress={onClearAll}>
+          <Button variant="secondary" onPress={onClearAll}>
             Clear
           </Button>
         )}
@@ -85,9 +84,9 @@ function SearchFilter({
           {activeFilters?.map(f => (
             <Chip
               key={f.key}
-              variant={f.variant}
+              variant="neutral"
+              size="s"
               label={f.label}
-              checked
               dismissible
               onDismiss={() => onRemoveFilter?.(f.key)}
             />
@@ -102,17 +101,19 @@ function SearchFilter({
 ## Rules
 
 1. The search Input must have `label` (use `hideLabel` if visually hidden — still needed for a11y)
-2. Active filter chips use the real `<Chip>` component (`checked` + `dismissible`/`onDismiss`) — not
+2. Active filter chips use the real `<Chip>` component, unchecked (`dismissible`/`onDismiss`, default
+   look, `variant="neutral"`, smallest size `s` — not `checked`, whose darker fill is too heavy for a row
+   of removable filters) — not
    `<Badge>` (not interactive) and not a plain `<Button>` (Chip's whole `purpose` is "a compact selectable
    label for filters, categories, or short choices" — this is precisely that case; an earlier version of
    this doc predated Chip's existence and used Button instead, now corrected)
-3. Clear all is `variant="ghost"` Button — it's a tertiary action
+3. Clear all is a `variant="secondary"` Button with no icon, same size as the search field (same-row-sizing.md)
 4. `aria-label="Active filters"` on the chip container is required for screen readers
 
 ## Anti-patterns
 
 - ❌ Using `<Badge>` for active filter chips — they're not interactive; use `<Chip>`
-- ❌ Using a plain `<Button>` for active filter chips — `<Chip>` already models `checked`/`dismissible`
+- ❌ Using a plain `<Button>` for active filter chips — `<Chip>` already models `dismissible`
   states with the right ARIA (`aria-pressed`, `aria-label="Dismiss {label}"`) for free
 - ❌ Hiding the search label entirely with no `aria-label` fallback
 - ❌ Triggering search on button click instead of `onChange` — users expect immediate filtering

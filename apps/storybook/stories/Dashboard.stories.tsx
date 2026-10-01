@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import type * as React from 'react';
 import { useMemo, useState } from 'react';
 import { Reorder, useDragControls } from 'motion/react';
 import {
@@ -52,25 +53,13 @@ function StatCard({
         {value}
       </div>
       {delta && (
-        <div style={{
-          display:    'flex',
-          alignItems: 'center',
-          gap:        'var(--helix-spacing-3xs)', // 2px — arrow and delta read as one unit
-          fontSize:   'var(--helix-textStyle-body-s-regular-fontSize)',
-          fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)',
-          color: trend === 'up'   ? 'var(--helix-color-text-success)'
-               : trend === 'down' ? 'var(--helix-color-text-danger)'
-               : 'var(--helix-color-text-neutral-light)',
-        }}>
-          {trend && (
-            <Icon
-              icon={trend === 'up' ? IconArrowUpRight : IconArrowDownRight}
-              size={12}
-              color={trend === 'up' ? 'var(--helix-color-icon-success)' : 'var(--helix-color-icon-danger)'}
-            />
-          )}
-          {delta}
-        </div>
+        // The delta is a Badge: success when up, danger when down, neutral with no trend — its icon slot
+        // carries the trend arrow.
+        <Badge
+          variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'neutral'}
+          label={delta}
+          {...(trend ? { icon: trend === 'up' ? IconArrowUpRight : IconArrowDownRight } : {})}
+        />
       )}
     </Card>
   );
@@ -90,6 +79,10 @@ const ROLES = Array.from(new Set(MEMBERS.map(m => m.role)));
 // row (can't call it inside a .map() callback directly, that breaks the Rules of Hooks). dragListener is
 // off so the row itself isn't draggable by clicking anywhere in it (that would fight the row's own
 // interactive content, e.g. "Row actions"); the grip icon starts the drag explicitly via dragControls.
+const VISUALLY_HIDDEN: React.CSSProperties = {
+  position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap',
+};
+
 function MemberRow({ member }: { member: Member }) {
   const dragControls = useDragControls();
   const [dragging, setDragging] = useState(false);
@@ -110,6 +103,7 @@ function MemberRow({ member }: { member: Member }) {
             e.preventDefault(); // no text selection starting under the pointer as it crosses rows
             dragControls.start(e);
           }}
+          role="button"
           style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
           aria-label={`Reorder ${member.name}`}
         >
@@ -326,13 +320,14 @@ function DashboardPage() {
           <Table>
             <TableHead>
               <tr data-helix-part="table-row">
-                <TableHeaderCell>{''}</TableHeaderCell>
+                {/* Icon-only columns still need a header name for screen readers — visually hidden */}
+                <TableHeaderCell><span style={VISUALLY_HIDDEN}>Reorder</span></TableHeaderCell>
                 <TableHeaderCell>Member</TableHeaderCell>
                 <TableHeaderCell>Role</TableHeaderCell>
                 <TableHeaderCell>Status</TableHeaderCell>
                 <TableHeaderCell>Components</TableHeaderCell>
                 <TableHeaderCell>Last seen</TableHeaderCell>
-                <TableHeaderCell>{''}</TableHeaderCell>
+                <TableHeaderCell><span style={VISUALLY_HIDDEN}>Actions</span></TableHeaderCell>
               </tr>
             </TableHead>
             <Reorder.Group as="tbody" axis="y" values={filtered} onReorder={handleReorder} data-helix-part="table-body">

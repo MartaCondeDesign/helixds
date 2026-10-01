@@ -92,20 +92,27 @@ export const StatusRowPattern: Story = {
     };
 
     return (
+      // Rows share the container's columns (subgrid), so every badge sits in the same column, left-aligned —
+      // per-row flex left each badge wherever its own label's width happened to end.
       <div style={{
-        border:       '1px solid var(--helix-color-border-neutral)',
-        borderRadius: 'var(--helix-radius-l)',
-        overflow:     'hidden',
-        maxWidth:     '480px',
+        display:             'grid',
+        gridTemplateColumns: '1fr auto auto',
+        columnGap:           'var(--helix-primitive-spacing-75)',
+        border:              '1px solid var(--helix-color-border-neutral)',
+        borderRadius:        'var(--helix-radius-l)',
+        overflow:            'hidden',
+        maxWidth:            '480px',
       }}>
         {rows.map((row, i) => (
           <div
             key={row.label}
             style={{
-              display:      'flex',
-              alignItems:   'center',
-              gap:          'var(--helix-primitive-spacing-75)',
-              padding:      'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
+              display:             'grid',
+              gridColumn:          '1 / -1',
+              gridTemplateColumns: 'subgrid',
+              alignItems:          'center',
+              justifyItems:        'start',
+              padding:             'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
               borderBottom: i < rows.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
             }}
           >
@@ -113,7 +120,7 @@ export const StatusRowPattern: Story = {
               {row.label}
             </span>
             <Badge variant={row.status} label={config[row.status].label} />
-            <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)', minWidth: '52px', textAlign: 'right' }}>
+            <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)', justifySelf: 'end', textAlign: 'right' }}>
               {row.meta}
             </span>
           </div>

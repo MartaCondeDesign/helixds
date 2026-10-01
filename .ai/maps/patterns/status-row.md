@@ -53,6 +53,24 @@ const statusConfig: Record<Status, { variant: BadgeVariant; label: string }> = {
   scheduled: { variant: 'info',   label: 'Scheduled' },
 };
 
+// A list of rows that share columns, so every Badge lines up in one column, left-aligned. Each row is a
+// subgrid of the list's three columns (label · status · meta); a per-row flex layout would instead
+// start each Badge wherever that row's label happened to end.
+function StatusList({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      data-helix-pattern="status-row-list"
+      style={{
+        display:             'grid',
+        gridTemplateColumns: '1fr auto auto',
+        columnGap:           'var(--helix-primitive-spacing-75)',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function StatusRow({ label, status, meta }: { label: string; status: Status; meta?: string }) {
   const { variant, label: statusLabel } = statusConfig[status];
 
@@ -60,17 +78,18 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
     <div
       data-helix-pattern="status-row"
       style={{
-        display:        'flex',
-        alignItems:     'center',
-        gap:            'var(--helix-primitive-spacing-3)',
-        padding:        'var(--helix-primitive-spacing-3) var(--helix-primitive-spacing-4)',
-        borderBottom:   '1px solid var(--helix-color-border-neutral-light)',
+        display:             'grid',
+        gridColumn:          '1 / -1',
+        gridTemplateColumns: 'subgrid',
+        alignItems:          'center',
+        justifyItems:        'start',
+        padding:             'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
+        borderBottom:        '1px solid var(--helix-color-border-neutral-light)',
       }}
     >
       <span style={{
-        flex:      1,
-        fontSize:  'var(--helix-primitive-fontSize-s)',
-        color:     'var(--helix-color-text-neutral)',
+        fontSize:   'var(--helix-primitive-fontSize-s)',
+        color:      'var(--helix-color-text-neutral)',
         fontWeight: 'var(--helix-primitive-fontWeight-medium)',
       }}>
         {label}
@@ -78,19 +97,21 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
 
       <Badge variant={variant} label={statusLabel} />
 
-      {meta && (
-        <span style={{
-          fontSize: 'var(--helix-primitive-fontSize-s)',
-          color:    'var(--helix-color-text-neutral-lightest)',
-          minWidth: '60px',
-          textAlign: 'right',
-        }}>
-          {meta}
-        </span>
-      )}
+      <span style={{
+        justifySelf: 'end',
+        fontSize:    'var(--helix-primitive-fontSize-s)',
+        color:       'var(--helix-color-text-neutral-lightest)',
+      }}>
+        {meta}
+      </span>
     </div>
   );
 }
+
+// <StatusList>
+//   <StatusRow label="Deploy to production" status="active" meta="2 min ago" />
+//   <StatusRow label="Code review" status="failed" meta="1 hr ago" />
+// </StatusList>
 ```
 
 ## Rules
@@ -99,6 +120,7 @@ function StatusRow({ label, status, meta }: { label: string; status: Status; met
 2. Use the semantic variant that matches the emotional valence (success = good, danger = bad)
 3. When status is dynamic (changes without page reload), add `role="status"` to the Badge
 4. Avoid mixing `size="s"` and `size="m"` badges in the same table column
+5. Rows go inside a `StatusList` (shared columns) so the badges line up, left-aligned, in one column
 
 ## Anti-patterns
 
