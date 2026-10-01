@@ -26,7 +26,7 @@
     { "part": "multi-select-root", "element": "div", "description": "Layout wrapper for label, field, and messages." },
     { "part": "multi-select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. 8px above the field (form-field-spacing pattern)." },
     { "part": "multi-select-field", "element": "div", "description": "The visible field: Select's border, fill and 32px minimum height. Holds the chips and the combobox; grows downward when the chips wrap. Clicking its empty area toggles the menu." },
-    { "part": "multi-select-chip", "element": "slot", "description": "One dismissible Chip (size s, 28px) per selected value — 2px from the field's outer edge. Its × removes the value.", "optional": true },
+    { "part": "multi-select-chip", "element": "slot", "description": "One dismissible Chip (size s, 24px) per selected value — 4px from the field's outer edge. Its × removes the value.", "optional": true },
     { "part": "multi-select-trigger", "element": "button", "description": "role=\"combobox\" button filling the rest of the field. Owns real DOM focus (ADR-013/019); shows the placeholder when nothing is selected and announces the selection to assistive tech." },
     { "part": "multi-select-chevron", "element": "slot", "description": "Trailing chevron. Flips on open, same treatment as Select." },
     { "part": "multi-select-description", "element": "span", "description": "Helper text below the field.", "optional": true },
@@ -57,7 +57,7 @@
       "mode": "fixed",
       "values": { "default": 32 },
       "unit": "px",
-      "note": "32px minimum, same as Select (semantic.size.m). 1px border + 1px padding leaves exactly 28px inside, so Chip s (28px) sits 2px from the outer edge. Grows downward when chips wrap (rows 2px apart) — see ADR-019."
+      "note": "32px minimum, same as Select (semantic.size.m). Chip s (24px) is centered in it, 4px from the outer edge on every side. Grows downward when chips wrap (rows 4px apart) — see ADR-019."
     },
     "width": {
       "default": "hug",

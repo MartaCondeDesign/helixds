@@ -298,10 +298,10 @@ function DashboardPage() {
           onChange={setRole}
         />
 
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }}>
           <Button variant="ghost" size="m" icon={IconDownload}>Export</Button>
           {/* View toggle — view-toggle.md recipe */}
-          <div role="group" aria-label="View" style={{ display: 'inline-flex', gap: 'var(--helix-primitive-spacing-25)' }}>
+          <div role="group" aria-label="View" style={{ display: 'inline-flex', gap: 'var(--helix-spacing-2xs)' }}>
             <IconButton
               icon={IconTable}
               label="Table view"

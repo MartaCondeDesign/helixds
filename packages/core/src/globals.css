@@ -758,13 +758,6 @@
     padding-right: calc(var(--helix-chip-padding-x-m) + var(--helix-primitive-spacing-150));
   }
 
-  /* xs: 24px — same height as Badge s and the control ladder's s, for compact rows (filter chips). */
-  [data-helix-part="chip"][data-size="xs"] {
-    gap:         var(--helix-chip-gap-xs);
-    height:      var(--helix-chip-height-xs);
-    padding:     0 var(--helix-chip-padding-x-xs);
-    font-size:   var(--helix-chip-fontSize-xs);
-  }
   [data-helix-part="chip"][data-size="s"] {
     gap:         var(--helix-chip-gap-s);
     height:      var(--helix-chip-height-s);
@@ -776,9 +769,6 @@
     height:      var(--helix-chip-height-m);
     padding:     0 var(--helix-chip-padding-x-m);
     font-size:   var(--helix-chip-fontSize-m);
-  }
-  [data-helix-part="chip"][data-size="xs"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-chip-padding-x-xs) + var(--helix-primitive-spacing-150));
   }
   [data-helix-part="chip"][data-size="s"][data-dismissible="true"] {
     padding-right: calc(var(--helix-chip-padding-x-s) + var(--helix-primitive-spacing-150));
@@ -1319,7 +1309,7 @@
      Contract: contracts/components/MultiSelect.json · ADR-019
      Tokens:   --helix-select-* (same field as Select, shared on purpose — ADR-019) + Chip's own
      The field is a container (chips + a combobox button), not a button: the chips' × can't nest
-     inside a <button>. 1px border + 1px padding = Chip s (28px) sits 2px from the outer edge.
+     inside a <button>. Chip s (24px) centered in the 32px field = 4px from the outer edge.
      ════════════════════════════════════════════════════════════════════════ */
 
   [data-helix-part="multi-select-root"] {
@@ -1344,15 +1334,15 @@
     flex-wrap:        wrap;
     align-items:      center;
     column-gap:       var(--helix-spacing-2xs);
-    row-gap:          var(--helix-spacing-3xs);
+    row-gap:          var(--helix-spacing-2xs);
     box-sizing:       border-box;
     min-height:       var(--helix-select-height);
-    /* 2px from the OUTER edge to the chips, border included: padding = 3xs − border width. The chevron
-       side keeps Select's own trailing room. */
-    padding:          calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin))
+    /* Chips centered in the 32px field: padding = (field − chip) / 2 − border, i.e. 4px from the OUTER
+       edge on every side. The chevron side keeps Select's own trailing room. */
+    padding:          calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thin))
                       var(--helix-primitive-spacing-250)
-                      calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin))
-                      calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin));
+                      calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thin))
+                      calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thin));
     background-color: var(--helix-select-fill-default);
     border:           var(--helix-borderWidth-thin) solid var(--helix-select-border-default);
     border-radius:    var(--helix-select-radius);
@@ -1373,9 +1363,9 @@
     border-width:   var(--helix-borderWidth-thick);
     border-color:   var(--helix-select-border-focus);
     box-shadow:     0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
-    padding-top:    calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
-    padding-bottom: calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
-    padding-left:   calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
+    padding-top:    calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
+    padding-bottom: calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
+    padding-left:   calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
   }
   [data-helix-part="multi-select-field"][data-invalid]:not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
     border-color: var(--helix-select-border-invalid);
@@ -1395,8 +1385,9 @@
     -webkit-appearance: none;
     flex:        1;
     min-width:   40px; /* room to click past the last chip — per-component min-width, not tokenized (CLAUDE.md) */
-    height:      calc(var(--helix-select-height) - 2 * var(--helix-spacing-3xs));
-    padding:     0 0 0 calc(var(--helix-primitive-spacing-75) - var(--helix-spacing-3xs) + var(--helix-borderWidth-thin));
+    height:      var(--helix-chip-height-s);
+    /* With no chips, the placeholder starts 12px inside the border like Select's text. */
+    padding:     0 0 0 calc(var(--helix-primitive-spacing-75) - (var(--helix-select-height) - var(--helix-chip-height-s)) / 2 + var(--helix-borderWidth-thin));
     border:      none;
     background:  transparent;
     color:       var(--helix-select-text-value);

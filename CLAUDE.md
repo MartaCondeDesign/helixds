@@ -38,6 +38,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    - **Border-radius:** always a `--helix-*` token. No exceptions.
    - **Spacing/padding:** always a token, **except** values above `128px` (`primitive.spacing.32`,
      the top of the scale) — those have no token and are legitimately hardcoded px.
+   - **Groups:** elements of the same kind one after another (buttons, icon buttons, chips, badges) are
+     `var(--helix-spacing-2xs)` (4px) apart — wider only between different groups. See
+     `.ai/maps/patterns/group-spacing.md`.
    - **Component height:** driven by the shared size scale (see ADR-004) — but documented
      per-component exceptions exist (`Badge`, `Chip` use a local density model, not the control ladder).
    - **min-width / max-width / min-height / max-height:** variable, not tokenized — a per-component

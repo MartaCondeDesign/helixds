@@ -51,7 +51,7 @@
     },
     {
       "name": "size",
-      "type": "'xs' | 's' | 'm'",
+      "type": "'s' | 'm'",
       "default": "s",
       "description": "Horizontal density preset. Chip is a documented exception to the global scale — default is 's', not 'm', a deliberate deviation from ADR-004's general 'm is the default' convention for this component specifically."
     },
@@ -106,9 +106,9 @@
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "xs": 24, "s": 28, "m": 32 },
+      "values": { "s": 24, "m": 32 },
       "unit": "px",
-      "note": "Chip uses a local density model; this does not redefine the global scale. xs (24px) = semantic.size.s, for compact rows such as removable filter chips; s (28px) also fits inside a 32px field 2px from its edge (MultiSelect, ADR-019)."
+      "note": "Chip uses a local density model; this does not redefine the global scale. s = 24px (semantic.size.s, was 28px until 2026-10-01): same height as Badge s and the control ladder's s, and it sits 4px inside a 32px field (MultiSelect, ADR-019)."
     },
     "width": {
       "default": "hug",

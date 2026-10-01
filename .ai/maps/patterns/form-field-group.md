@@ -76,7 +76,7 @@ function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: s
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-5)', maxWidth: '360px' }}>
+    <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
 
       {formError && (
         <Badge variant="danger" label={formError} />
@@ -87,7 +87,7 @@ function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: s
         type="email"
         required
         autoComplete="email"
-        icon={<IconMail size={16} />}
+        icon={IconMail}
         value={email}
         onChange={e => setEmail(e.target.value)}
         invalid={emailInvalid}
@@ -100,14 +100,14 @@ function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: s
         type="password"
         required
         autoComplete="current-password"
-        icon={<IconLock size={16} />}
+        icon={IconLock}
         description="Min. 8 characters"
         value={password}
         onChange={e => setPassword(e.target.value)}
         fullWidth
       />
 
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)', justifyContent: 'flex-end' }}>
         <Button variant="secondary" type="button" onPress={() => {}}>Cancel</Button>
         <Button variant="primary" type="submit" loading={isLoading}>Sign in</Button>
       </div>

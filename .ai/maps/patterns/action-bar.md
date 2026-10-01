@@ -48,12 +48,12 @@ function PageActions({ onNew, onImport }: { onNew: () => void; onImport: () => v
   return (
     <div
       data-helix-pattern="action-bar"
-      style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-2)' }}
+      style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }} // button group: 4px (group-spacing.md)
     >
-      <Button variant="secondary" icon={<IconUpload size={16} />} onPress={onImport}>
+      <Button variant="secondary" icon={IconUpload} onPress={onImport}>
         Import
       </Button>
-      <Button variant="primary" icon={<IconPlus size={16} />} onPress={onNew}>
+      <Button variant="primary" icon={IconPlus} onPress={onNew}>
         New project
       </Button>
     </div>
@@ -80,23 +80,23 @@ function BatchActions({
       style={{
         display:    'flex',
         alignItems: 'center',
-        gap:        'var(--helix-primitive-spacing-2)',
+        gap:        'var(--helix-primitive-spacing-50)',
       }}
     >
       <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
         {count} selected
       </span>
 
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-1)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
         <Button variant="ghost" onPress={onArchive}>Archive</Button>
         <Button variant="ghost" onPress={onMove}>Move to…</Button>
       </div>
 
       {/* Danger is separated by a larger gap */}
-      <div style={{ marginLeft: 'var(--helix-primitive-spacing-4)' }}>
+      <div style={{ marginLeft: 'var(--helix-primitive-spacing-100)' }}>
         <Button
           variant="danger"
-          icon={<IconTrash size={16} />}
+          icon={IconTrash}
           onPress={onDelete}
         >
           Delete

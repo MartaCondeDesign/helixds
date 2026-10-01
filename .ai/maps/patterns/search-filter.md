@@ -79,13 +79,13 @@ function SearchFilter({
       {hasActive && (
         <div
           aria-label="Active filters"
-          style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap' }}
+          style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)', flexWrap: 'wrap' }}
         >
           {activeFilters?.map(f => (
             <Chip
               key={f.key}
               variant="neutral"
-              size="xs"
+              size="s"
               label={f.label}
               dismissible
               onDismiss={() => onRemoveFilter?.(f.key)}
@@ -102,7 +102,7 @@ function SearchFilter({
 
 1. The search Input must have `label` (use `hideLabel` if visually hidden — still needed for a11y)
 2. Active filter chips use the real `<Chip>` component, unchecked (`dismissible`/`onDismiss`, default
-   look, `variant="neutral"`, smallest size `xs` (24px) — not `checked`, whose darker fill is too heavy for a row
+   look, `variant="neutral"`, smallest size `s` (24px) — not `checked`, whose darker fill is too heavy for a row
    of removable filters) — not
    `<Badge>` (not interactive) and not a plain `<Button>` (Chip's whole `purpose` is "a compact selectable
    label for filters, categories, or short choices" — this is precisely that case; an earlier version of

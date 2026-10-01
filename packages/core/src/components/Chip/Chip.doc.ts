@@ -18,7 +18,7 @@ export const doc: ComponentDoc = {
     { name: 'danger', description: 'Red semantic chip for destructive or error-related states.' },
   ],
 
-  sizes: ['xs', 's', 'm'],
+  sizes: ['s', 'm'],
 
   tokens: [
     // Unchecked-state fills, per variant. `checked` layers a second, independent set of
@@ -53,21 +53,16 @@ export const doc: ComponentDoc = {
     { part: 'chip', label: 'text.disabled', token: '--helix-color-text-disabled', kind: 'color', state: 'disabled' },
     { part: 'chip', label: 'border.disabled', token: '--helix-color-border-neutral-light', kind: 'color', state: 'disabled' },
     { part: 'chip', label: 'chip.root', token: '--helix-chip-radius', kind: 'radius' },
-    { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
     { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'chip', label: 'gap.icon.text', token: '--helix-chip-gap-m', kind: 'space', axis: 'horizontal', size: 'm' },
-    { part: 'chip', label: 'chip.height', token: '--helix-chip-height-xs', kind: 'space', size: 'xs' },
     { part: 'chip', label: 'chip.height', token: '--helix-chip-height-s', kind: 'space', size: 's' },
     { part: 'chip', label: 'chip.height', token: '--helix-chip-height-m', kind: 'space', size: 'm' },
     { part: 'chip', label: 'padding.top', value: '0', kind: 'space', axis: 'vertical' },
     { part: 'chip', label: 'padding.bottom', value: '0', kind: 'space', axis: 'vertical' },
-    { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
-    { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-xs', kind: 'space', axis: 'horizontal', size: 'xs' },
     { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-s', kind: 'space', axis: 'horizontal', size: 's' },
     { part: 'chip', label: 'padding.start', token: '--helix-chip-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
     { part: 'chip', label: 'padding.end', token: '--helix-chip-padding-x-m', kind: 'space', axis: 'horizontal', size: 'm' },
-    { part: 'chip', label: 'fontSize', token: '--helix-chip-fontSize-xs', kind: 'typography', meta: 'Body / s / Medium', size: 'xs' },
     { part: 'chip', label: 'fontSize', token: '--helix-chip-fontSize-s', kind: 'typography', meta: 'Body / s / Medium', size: 's' },
     { part: 'chip', label: 'fontSize', token: '--helix-chip-fontSize-m', kind: 'typography', meta: 'Body / s / Medium', size: 'm' },
     { part: 'chip', label: 'fontWeight', token: '--helix-chip-fontWeight', kind: 'typography', meta: 'Body / s / Medium' },

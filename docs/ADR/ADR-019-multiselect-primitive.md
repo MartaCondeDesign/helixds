@@ -20,10 +20,11 @@ the field.**
    tokens (`--helix-select-*` — it is the same field, so it shares Select's tokens deliberately instead
    of duplicating a parallel `multiSelect.*` set that would have to be kept in lockstep), same popup
    (`Menu`), same keyboard model, same form participation (invisible native input for `required`).
-2. **Chips inside, at Chip's `s` size (28px).** The field's outer edge is 32px; 1px border + 1px
-   padding leaves exactly 28px inside, so a chip sits 2px from the field's outer edge on every side.
-   When the chips don't fit on one line the field grows downward (rows 2px apart) — the 32px is a
-   minimum, not a fixed height. Each chip is `dismissible`; its × removes that value.
+2. **Chips inside, at Chip's `s` size (24px).** Centered in the 32px field, a chip sits 4px from the
+   field's outer edge on every side. When the chips don't fit on one line the field grows downward
+   (rows 4px apart) — the 32px is a minimum, not a fixed height. Each chip is `dismissible`; its ×
+   removes that value. *(First built with 28px chips 2px from the edge; that read cramped, so Chip `s`
+   itself became 24px — see ADR-004.)*
 3. **No nested interactive controls.** A `<button>` can't contain the chips' dismiss buttons, so the
    field is a plain container holding the chips plus a `role="combobox"` button that fills the
    remaining space and owns real DOM focus (same as Select's trigger). Clicking anywhere on the empty
@@ -42,5 +43,5 @@ the field.**
 - A visual change to Select's field tokens changes MultiSelect too — intended.
 - The field can be taller than 32px once chips wrap; in a same-row toolbar (same-row-sizing pattern)
   keep it to values that fit on one line, or give it its own row.
-- 28px chips leave a tight 2px margin; if that ever reads cramped, the lever is a smaller Chip size,
-  not a taller field.
+- The chip-to-edge margin is derived, not hand-set: (field height − chip height) / 2. A change to
+  Chip `s` or the field height moves it automatically.

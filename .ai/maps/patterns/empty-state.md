@@ -66,7 +66,7 @@ function EmptyState({
         display:        'flex',
         flexDirection:  'column',
         alignItems:     'center',
-        gap:            'var(--helix-primitive-spacing-4)',
+        gap:            'var(--helix-primitive-spacing-100)',
         padding:        'var(--helix-primitive-spacing-12)',
         textAlign:      'center',
       }}
@@ -77,7 +77,7 @@ function EmptyState({
         </span>
       )}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-2)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
         <h3 style={{
           fontSize:   'var(--helix-primitive-fontSize-xl)',
           fontWeight: 'var(--helix-primitive-fontWeight-semibold)',
@@ -99,7 +99,7 @@ function EmptyState({
       </div>
 
       {(action || secondaryAction) && (
-        <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-3)' }}>
+        <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
           {action && (
             <Button variant="primary" onPress={action.onPress}>{action.label}</Button>
           )}

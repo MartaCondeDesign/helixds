@@ -177,7 +177,7 @@ _No Figma-mappable props._
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` | `variant` | `neutral`, `info`, `success`, `warning`, `danger` |
-| `size` | `'xs' \| 's' \| 'm'` | `VARIANT` | `size` | `xs`, `s`, `m` |
+| `size` | `'s' \| 'm'` | `VARIANT` | `size` | `s`, `m` |
 | `checked` | `boolean` | `BOOLEAN` | `checked` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `label` | `string` | `TEXT` | `label` | — |

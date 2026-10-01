@@ -63,21 +63,19 @@ from the shared `primitive.size.*` scale, just not through `semantic.size`:
 | Component | `size` meaning | Local height mapping |
 |-----------|----------------|----------------------|
 | `Badge`   | padding density | `xs = primitive.size.125` (20px), `s = primitive.size.150` (24px) |
-| `Chip`    | padding density | `xs = semantic.size.s` (24px, added 2026-10-01 for compact rows such as removable filters), `s = primitive.size.175` (28px — also sits 2px inside a 32px field, see ADR-019), `m = primitive.size.200` (32px) |
+| `Chip`    | padding density | `s = semantic.size.s` (24px — was `primitive.size.175` (28px) until 2026-10-01: 28px chips inside a 32px field read cramped, see ADR-019), `m = primitive.size.200` (32px) |
 
 `size` changes horizontal density; some exceptions also map size to local height steps.
 This is a component-level exception, not a new global scale — but it's still a real token, never a raw
 px value with nothing behind it.
 
-**`Badge.s` (24px) and `Chip.m` (32px) happen to land on the exact same px as `semantic.size.s`/`.m`** —
-`primitive.size.150`/`.200` are shared rungs, so the numbers coincide. This is NOT a documented exception —
-`.ai/maps/component-token-exceptions.md` correctly flags both 🚩 (an existing token already has this exact
-value), same as any other coincidental match anywhere else in the audit. It's flagged, not silently hidden
-as ✅, precisely because re-pointing them is a real, live option: pro is one less primitive-direct alias;
-con is coupling those 2 rungs to the Control scale while `Badge.xs`/`Chip.s` (20px/28px, no `semantic.size`
-match at all) would stay primitive-aliased — a mixed-sourcing ladder, some rungs tracking Control-scale
-changes and some not. Left un-acted-on as of 2026-08-23 for that reason, but it's an open 🚩 to revisit, not
-a closed decision — don't add it to `KNOWN_EXCEPTIONS` to make it go away.
+**Chip now aliases the Control scale directly** (`chip.height.s` → `semantic.size.s`, `.m` →
+`semantic.size.m`, as of 2026-10-01), so both its rungs track a Control-scale change. **`Badge.s` (24px)
+still lands on the same px as `semantic.size.s` by coincidence** — it aliases `primitive.size.150`, and
+`.ai/maps/component-token-exceptions.md` flags it 🚩 (an existing token already has this exact value).
+Re-pointing it is a live option (one less primitive-direct alias) weighed against `Badge.xs` (20px, no
+`semantic.size` match) staying primitive — an open 🚩 to revisit, not a closed decision; don't add it to
+`KNOWN_EXCEPTIONS` to make it go away.
 
 **One exception to that exception, added 2026-08-23:** `Chip`'s internal icon/label `gap` is `6px` at every
 size, and stays an unreferenced literal — `component.chip.gap.{s,m}`, no `primitive.*` alias. `6px` doesn't

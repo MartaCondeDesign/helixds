@@ -39,7 +39,7 @@ function ViewToggle({ view, onViewChange }: { view: 'table' | 'cards'; onViewCha
       data-helix-pattern="view-toggle"
       role="group"
       aria-label="View"
-      style={{ display: 'inline-flex', gap: 'var(--helix-primitive-spacing-25)' }}
+      style={{ display: 'inline-flex', gap: 'var(--helix-spacing-2xs)' }}
     >
       <IconButton
         icon={IconTable}

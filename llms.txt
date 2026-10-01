@@ -91,6 +91,7 @@ Every color has a light and a dark value; all text/icon pairs are checked for WC
 - expand-collapse-chevron — chevron on anything that opens/closes
 - form-field-group — a form with 2-6 fields, submit and inline validation
 - form-field-spacing — vertical spacing around a field's label/description/error
+- group-spacing — buttons/chips/badges in a group are 4px apart (spacing-2xs)
 - motion-effects — whether and how to animate with Motion (incl. drag-to-reorder table rows)
 - same-row-sizing — controls on one line share one size
 - search-filter — search field + filter buttons over a list or table

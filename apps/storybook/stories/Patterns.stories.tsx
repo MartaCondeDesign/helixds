@@ -88,7 +88,7 @@ export const EmptyState: Story = {
         </p>
       </div>
 
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
         <Button variant="secondary" icon={IconUpload}>Import</Button>
         <Button variant="primary"   icon={IconPlus}>New project</Button>
       </div>
@@ -123,7 +123,7 @@ export const ActionBarPageHeader: Story = {
           24 projects · 3 shared with you
         </p>
       </div>
-      <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
         <Button variant="secondary" icon={IconUpload}>Import</Button>
         <Button variant="primary"   icon={IconPlus}>New project</Button>
       </div>
@@ -152,7 +152,7 @@ export const ActionBarBatchSelection: Story = {
         <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-medium)', color: 'var(--helix-color-text-primary)' }}>
           {selected} selected
         </span>
-        <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-25)' }}>
+        <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
           <Button variant="ghost" size="s">Archive</Button>
           <Button variant="ghost" size="s">Move to…</Button>
         </div>
@@ -283,13 +283,13 @@ export const SearchAndFilter: Story = {
         {activeFilters.length > 0 && (
           <div
             aria-label="Active filters"
-            style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-50)', flexWrap: 'wrap' }}
+            style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)', flexWrap: 'wrap' }}
           >
             {activeFilters.map(f => (
               <Chip
                 key={f.key}
                 variant="neutral"
-                size="xs"
+                size="s"
                 label={f.label}
                 dismissible
                 onDismiss={() => removeFilter(f.key)}
