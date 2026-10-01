@@ -21,6 +21,13 @@ const withReducedMotion: Decorator = (Story, context) => {
 };
 
 const preview: Preview = {
+  // className is for developers (extra CSS classes on a component's root) — stories use it only to give a
+  // field a fixed width. Kept out of the Controls panel so it isn't mistaken for a design property; the
+  // value set in a story's args still applies.
+  argTypes: {
+    className: { table: { disable: true } },
+  },
+
   globalTypes: {
     motion: {
       name: 'Motion',

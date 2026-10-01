@@ -81,9 +81,11 @@ export function MultiSelect({
 
   const enabledOptions = () => flatOptions.filter(o => !o.disabled);
 
-  const openMenu = () => {
+  // The gray keyboard highlight only starts on the first option when the keyboard opened the menu — a
+  // pointer open starts with nothing highlighted, so no option looks hovered that isn't.
+  const openMenu = (via: 'keyboard' | 'pointer' = 'keyboard') => {
     if (disabled) return;
-    setActiveValue(enabledOptions()[0]?.value);
+    setActiveValue(via === 'keyboard' ? enabledOptions()[0]?.value : undefined);
     setOpen(true);
   };
 
@@ -169,7 +171,7 @@ export function MultiSelect({
     if (disabled || (e.target as HTMLElement).closest('[data-helix-part="multi-select-chip"]')) return;
     if (e.target === triggerRef.current) return; // the button's own onClick handles it
     triggerRef.current?.focus();
-    open ? closeMenu() : openMenu();
+    open ? closeMenu() : openMenu('pointer');
   };
 
   return (
@@ -228,7 +230,7 @@ export function MultiSelect({
           aria-describedby={describedby}
           aria-required={required || undefined}
           aria-activedescendant={open && activeValue ? optionId(menuId, activeValue) : undefined}
-          onClick={() => (open ? closeMenu() : openMenu())}
+          onClick={() => (open ? closeMenu() : openMenu('pointer'))}
           onKeyDown={handleTriggerKeyDown}
         >
           {selectedOptions.length === 0 ? (

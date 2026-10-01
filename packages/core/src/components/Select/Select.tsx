@@ -58,12 +58,14 @@ export function Select({
     triggerRef.current?.focus();
   };
 
-  const openMenu = (initialActive?: string) => {
+  // A pointer open highlights only the selected option (if any), never a fallback first option — the
+  // gray keyboard highlight on an option the pointer isn't on reads as a stray hover.
+  const openMenu = (initialActive?: string, via: 'keyboard' | 'pointer' = 'keyboard') => {
     if (disabled) return;
     // Highlight the selected option if it's a real, enabled one — not just `current ?? first`: a
     // controlled "nothing selected" value of '' isn't nullish, and would open with no highlight at all.
     const selected = flatOptions.find(o => o.value === current && !o.disabled)?.value;
-    setActiveValue(initialActive ?? selected ?? flatOptions.find(o => !o.disabled)?.value);
+    setActiveValue(initialActive ?? selected ?? (via === 'keyboard' ? flatOptions.find(o => !o.disabled)?.value : undefined));
     setOpen(true);
   };
 
@@ -180,7 +182,7 @@ export function Select({
           aria-describedby={describedby}
           aria-required={required || undefined}
           aria-activedescendant={open && activeValue ? optionId(menuId, activeValue) : undefined}
-          onClick={() => (open ? closeMenu() : openMenu())}
+          onClick={() => (open ? closeMenu() : openMenu(undefined, 'pointer'))}
           onKeyDown={handleTriggerKeyDown}
         >
           {/* Own span, not a bare text node — lets a fixed-width trigger (className/min-width set

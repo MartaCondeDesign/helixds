@@ -193,6 +193,22 @@ _No Figma-mappable props._
 - `chip-icon-end`
 - `chip-dismiss`
 
+### ChipGroup (`v0.1.0`, beta)
+
+| Code prop | Code type | Figma kind | Figma property | Values |
+|---|---|---|---|---|
+| `label` | `string` | `TEXT` | `label` | — |
+| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
+| `size` | `'s' \| 'm'` | `VARIANT` | `size` | `s`, `m` |
+| `description` | `string \| undefined` | `TEXT` | `description` | — |
+| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value):
+- `chip-group`
+- `chip-group-legend`
+- `chip-group-options`
+- `chip-group-description`
+
 ### FAB (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
