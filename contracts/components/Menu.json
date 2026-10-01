@@ -31,6 +31,8 @@
     { "name": "anchorRef", "type": "React.RefObject<HTMLElement | null>", "required": true, "description": "The trigger element the menu positions itself against." },
     { "name": "options", "type": "(MenuOption | MenuOptionGroup)[]", "required": true, "description": "Flat options or grouped options: { value, label, disabled? } or { label, options }." },
     { "name": "value", "type": "string | undefined", "description": "Currently selected value, for aria-selected + visual highlight." },
+    { "name": "multiple", "type": "boolean", "default": false, "description": "Multi-selection (ADR-019): aria-multiselectable on the listbox, every value in `values` marked aria-selected. `value` is ignored when set." },
+    { "name": "values", "type": "string[] | undefined", "description": "Selected values when `multiple` is set." },
     { "name": "activeValue", "type": "string | undefined", "description": "Keyboard-highlighted value (not yet selected) — the consumer owns keyboard nav on its trigger and passes this down; Menu renders the highlight and exposes ids for aria-activedescendant." },
     { "name": "onSelect", "type": "(value: string) => void", "required": true, "description": "Fires when an option is clicked." },
     { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }

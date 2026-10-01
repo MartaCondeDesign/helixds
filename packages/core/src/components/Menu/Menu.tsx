@@ -63,7 +63,7 @@ function usePosition(expanded: boolean, anchorRef: React.RefObject<HTMLElement |
   return style;
 }
 
-export function Menu({ id, expanded, anchorRef, options, value, activeValue, onSelect, className }: MenuProps) {
+export function Menu({ id, expanded, anchorRef, options, value, multiple = false, values, activeValue, onSelect, className }: MenuProps) {
   const menuRef = React.useRef<HTMLDivElement>(null);
   const style = usePosition(expanded, anchorRef, menuRef);
 
@@ -81,7 +81,7 @@ export function Menu({ id, expanded, anchorRef, options, value, activeValue, onS
       id={optionId(id, opt.value)}
       data-helix-part="menu-item"
       role="option"
-      aria-selected={opt.value === value}
+      aria-selected={multiple ? (values ?? []).includes(opt.value) : opt.value === value}
       data-active={opt.value === activeValue ? '' : undefined}
       disabled={opt.disabled}
       onClick={() => !opt.disabled && onSelect(opt.value)}
@@ -101,6 +101,7 @@ export function Menu({ id, expanded, anchorRef, options, value, activeValue, onS
       data-helix-part="menu"
       {...(numericOnly ? { 'data-numeric': '' } : {})}
       role="listbox"
+      aria-multiselectable={multiple || undefined}
       style={style}
       className={cn(className)}
     >

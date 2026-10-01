@@ -1305,6 +1305,154 @@
 
 
   /* ════════════════════════════════════════════════════════════════════════
+     MULTI SELECT
+     Contract: contracts/components/MultiSelect.json · ADR-019
+     Tokens:   --helix-select-* (same field as Select, shared on purpose — ADR-019) + Chip's own
+     The field is a container (chips + a combobox button), not a button: the chips' × can't nest
+     inside a <button>. 1px border + 1px padding = Chip s (28px) sits 2px from the outer edge.
+     ════════════════════════════════════════════════════════════════════════ */
+
+  [data-helix-part="multi-select-root"] {
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--helix-select-gap);
+    width:          fit-content;
+    max-width:      100%;
+  }
+  [data-helix-part="multi-select-root"][data-full-width] { width: 100%; }
+
+  [data-helix-part="multi-select-label"] {
+    font-size:   var(--helix-select-text-labelFontSize);
+    font-weight: var(--helix-select-text-labelFontWeight);
+    color:       var(--helix-select-text-label);
+    line-height: var(--helix-primitive-lineHeight-snug);
+  }
+
+  [data-helix-part="multi-select-field"] {
+    position:         relative;
+    display:          flex;
+    flex-wrap:        wrap;
+    align-items:      center;
+    column-gap:       var(--helix-spacing-2xs);
+    row-gap:          var(--helix-spacing-3xs);
+    box-sizing:       border-box;
+    min-height:       var(--helix-select-height);
+    /* 2px from the OUTER edge to the chips, border included: padding = 3xs − border width. The chevron
+       side keeps Select's own trailing room. */
+    padding:          calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin))
+                      var(--helix-primitive-spacing-250)
+                      calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin))
+                      calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thin));
+    background-color: var(--helix-select-fill-default);
+    border:           var(--helix-borderWidth-thin) solid var(--helix-select-border-default);
+    border-radius:    var(--helix-select-radius);
+    cursor:           pointer;
+    transition:
+      border-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
+      box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="multi-select-root"][data-full-width] [data-helix-part="multi-select-field"] { width: 100%; }
+
+  [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
+    border-color: var(--helix-select-border-hover);
+  }
+  /* Focus/open = Select's treatment (thick blue border + glow). The padding shrinks by the extra border
+     width so the chips don't shift by a pixel when the border thickens. */
+  [data-helix-part="multi-select-field"]:has([data-helix-part="multi-select-trigger"]:focus-visible),
+  [data-helix-part="multi-select-field"][data-open] {
+    border-width:   var(--helix-borderWidth-thick);
+    border-color:   var(--helix-select-border-focus);
+    box-shadow:     0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
+    padding-top:    calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
+    padding-bottom: calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
+    padding-left:   calc(var(--helix-spacing-3xs) - var(--helix-borderWidth-thick));
+  }
+  [data-helix-part="multi-select-field"][data-invalid]:not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
+    border-color: var(--helix-select-border-invalid);
+  }
+  [data-helix-part="multi-select-field"][data-disabled] {
+    background-color: var(--helix-select-fill-disabled);
+    border-color:     var(--helix-select-border-disabled);
+    cursor:           not-allowed;
+  }
+
+  [data-helix-part="multi-select-chip"] { display: inline-flex; }
+
+  /* The combobox fills whatever room the chips leave on the line; same height as a chip so a row never
+     grows because of it. With no chips, its text lines up with Select's (12px inside the border). */
+  [data-helix-part="multi-select-trigger"] {
+    appearance:  none;
+    -webkit-appearance: none;
+    flex:        1;
+    min-width:   40px; /* room to click past the last chip — per-component min-width, not tokenized (CLAUDE.md) */
+    height:      calc(var(--helix-select-height) - 2 * var(--helix-spacing-3xs));
+    padding:     0 0 0 calc(var(--helix-primitive-spacing-75) - var(--helix-spacing-3xs) + var(--helix-borderWidth-thin));
+    border:      none;
+    background:  transparent;
+    color:       var(--helix-select-text-value);
+    font-family: inherit;
+    font-size:   var(--helix-select-text-valueFontSize);
+    text-align:  left;
+    cursor:      pointer;
+    outline:     none;
+  }
+  [data-helix-part="multi-select-field"][data-has-value] [data-helix-part="multi-select-trigger"] { padding-left: 0; }
+  [data-helix-part="multi-select-trigger"]:disabled { cursor: not-allowed; color: var(--helix-select-text-disabled); }
+
+  [data-helix-part="multi-select-placeholder"] {
+    display:       block;
+    overflow:      hidden;
+    white-space:   nowrap;
+    text-overflow: ellipsis;
+    color:         var(--helix-select-text-placeholder);
+  }
+
+  [data-helix-part="multi-select-chevron"] {
+    position:         absolute;
+    right:            var(--helix-primitive-spacing-75);
+    top:              50%;
+    transform:        translateY(-50%) scaleY(1);
+    transform-origin: center;
+    color:            var(--helix-select-icon-default);
+    pointer-events:   none;
+    display:          flex;
+    align-items:      center;
+    transition:       transform var(--helix-select-duration-chevron) var(--helix-select-easing-collapse);
+  }
+  [data-helix-part="multi-select-field"][data-open] [data-helix-part="multi-select-chevron"] {
+    transform:  translateY(-50%) scaleY(-1);
+    transition: transform var(--helix-select-duration-chevron) var(--helix-select-easing);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-helix-part="multi-select-chevron"] { transition: none !important; }
+  }
+
+  [data-helix-part="multi-select-native"] {
+    position:       absolute;
+    left:           0;
+    bottom:         0;
+    width:          100%;
+    height:         1px;
+    padding:        0;
+    margin:         0;
+    border-width:   0;
+    opacity:        0;
+    pointer-events: none;
+  }
+
+  [data-helix-part="multi-select-description"] {
+    font-size:   var(--helix-select-text-descriptionFontSize);
+    color:       var(--helix-select-text-description);
+    line-height: var(--helix-primitive-lineHeight-snug);
+  }
+  [data-helix-part="multi-select-error"] {
+    font-size:   var(--helix-select-text-errorFontSize);
+    color:       var(--helix-select-text-error);
+    line-height: var(--helix-primitive-lineHeight-snug);
+  }
+
+
+  /* ════════════════════════════════════════════════════════════════════════
      MENU
      Contract: contracts/components/Menu.json
      Tokens:   --helix-menu-*

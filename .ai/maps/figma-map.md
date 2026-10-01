@@ -268,6 +268,7 @@ _No Figma-mappable props._
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `expanded` | `boolean` | `BOOLEAN` | `expanded` | — |
+| `multiple` | `boolean` | `BOOLEAN` | `multiple` | — |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `menu-item`
@@ -294,6 +295,32 @@ _No Figma-mappable props._
 - `modal-footer`
 - `modal-footer-start`
 - `modal-footer-end`
+
+### MultiSelect (`v0.1.0`, beta)
+
+| Code prop | Code type | Figma kind | Figma property | Values |
+|---|---|---|---|---|
+| `label` | `string` | `TEXT` | `label` | — |
+| `placeholder` | `string \| undefined` | `TEXT` | `placeholder` | — |
+| `description` | `string \| undefined` | `TEXT` | `description` | — |
+| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
+| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `required` | `boolean` | `BOOLEAN` | `required` | — |
+| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
+| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value):
+- `multi-select-chip`
+- `multi-select-root`
+- `multi-select-label`
+- `multi-select-field`
+- `multi-select-trigger`
+- `multi-select-placeholder`
+- `multi-select-chevron`
+- `multi-select-native`
+- `multi-select-description`
+- `multi-select-error`
 
 ### NavItem (`v1.0.0`, stable)
 

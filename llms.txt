@@ -38,6 +38,7 @@ contracts/manifest.json on every commit.
 - Input (core) — Allows users to enter a single line of free-form text.
 - Menu (core) — A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals).
 - Modal (core) — A centered overlay that interrupts the page for a focused task or decision — blocks interaction with the rest of the page until dismissed.
+- MultiSelect (core) — Lets users choose several values from a predefined list, shown as removable chips inside the field.
 - NavItem (core) — A single entry in a persistent navigation list (a SideNav, a tab rail) that links to another view.
 - PageHeader (layout) — Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row.
 - RadioButton (core) — A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g.
