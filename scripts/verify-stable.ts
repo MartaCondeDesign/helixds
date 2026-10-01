@@ -2,8 +2,8 @@
  * Stability check — computes every component's status from 8 automatic criteria + Figma (ADR-018):
  *
  *   draft   — the component exists and works, but at least one of criteria 1–8 fails
- *   beta    — criteria 1–8 all pass; not modeled in Figma yet
- *   stable  — criteria 1–8 all pass AND contracts/figma-sync.json marks it inFigma
+ *   beta    — criteria 1–8 all pass; not in Figma yet, or in Figma but out of date (drift)
+ *   stable  — criteria 1–8 all pass AND it's in Figma AND aligned with code (scripts/figma-drift.ts)
  *
  *   1 contract    a11y section complete, no manifest drift for the component
  *   2 types       contract props present in {Name}.types.ts (verify:types)
@@ -27,6 +27,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync, spawnSync } from 'child_process';
 import { loadPrompts, scorePrompt } from './eval-lib';
+import { figmaCheck, type FigmaCheck } from './figma-drift';
 
 const root = path.resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
@@ -53,7 +54,7 @@ const CRITERIA: Record<CriterionKey, { label: string; description: string }> = {
   motion:   { label: 'Motion',   description: 'Reduced motion — with the OS “reduce motion” setting on, nothing moves: CSS motion is neutralized globally, and any Motion (JS) animation sits inside <MotionConfig reducedMotion="user">.' },
   eval:     { label: 'Eval',     description: 'Eval — an automated test (evals/prompts) checks that an AI agent asked to build something with this component uses it correctly: right props, no anti-synonyms.' },
 };
-const FIGMA = { label: 'Figma', description: 'Modeled in Figma (contracts/figma-sync.json) — the one manual step, done on request. Beta + Figma = stable.' };
+const FIGMA = { label: 'Figma', description: 'In Figma and aligned with code. ✓ aligned · ⚠ in Figma but out of date — tokens, CSS, props or anatomy changed in code since the last sync (scripts/figma-drift.ts) · ✗ not in Figma. The one manual step, done on request. Beta + aligned in Figma = stable.' };
 
 // ── 0. Browser run (criteria 4–6) ────────────────────────────────────────────
 if (!skipBrowser) {
@@ -83,7 +84,7 @@ if (!fs.existsSync(a11yDir) || !fs.existsSync(jestJson)) {
 // ── Shared inputs ────────────────────────────────────────────────────────────
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'contracts/manifest.json'), 'utf-8'));
 const figmaSync = JSON.parse(fs.readFileSync(path.join(root, 'contracts/figma-sync.json'), 'utf-8'));
-const inFigma = new Set<string>(figmaSync.components.filter((c: any) => c.inFigma).map((c: any) => c.name));
+const figmaEntry = new Map<string, any>(figmaSync.components.map((c: any) => [c.name, c]));
 
 type AxeResult = { id: string; title: string; name: string; violations: Record<'light' | 'dark', { rule: string; nodes: number; help: string }[]> };
 const axeResults: AxeResult[] = fs.readdirSync(a11yDir).map(f => JSON.parse(fs.readFileSync(path.join(a11yDir, f), 'utf-8')));
@@ -144,7 +145,7 @@ function requiredKeys(entry: string): { label: string; anyOf: string[] }[] {
 // ── Per-component evaluation ─────────────────────────────────────────────────
 const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
-type Row = { name: string; category: string; previousStatus: string; status: string; inFigma: boolean; checks: Record<CriterionKey, Check> };
+type Row = { name: string; category: string; previousStatus: string; status: string; inFigma: boolean; figma: FigmaCheck; checks: Record<CriterionKey, Check> };
 const rows: Row[] = [];
 
 for (const c of manifest.components) {
@@ -215,9 +216,9 @@ for (const c of manifest.components) {
   checks.eval = { pass: evals.length > 0, details: evals.length ? [] : ['no passing eval imports and checks it'] };
 
   const allPass = Object.values(checks).every(ch => ch.pass);
-  const figma = inFigma.has(name);
-  const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma ? 'stable' : 'beta';
-  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma, checks });
+  const figma = figmaCheck(name, c.contract, figmaEntry.get(name));
+  const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma.state === 'synced' ? 'stable' : 'beta';
+  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma.state !== 'missing', figma, checks });
 }
 
 // ── Report ───────────────────────────────────────────────────────────────────
@@ -227,7 +228,8 @@ console.log(`\n${'Component'.padEnd(18)}${keys.map((_, i) => String(i + 1).padSt
 for (const r of rows) {
   const marks = keys.map(k => (r.checks[k].pass ? '  ✓' : '  ✗')).join('');
   const change = r.previousStatus !== r.status ? `  (was ${r.previousStatus})` : '';
-  console.log(`${r.name.padEnd(18)}${marks}    ${r.inFigma ? '✓' : '✗'}    ${r.status}${change}`);
+  const fig = { synced: '✓', drift: '⚠', missing: '✗' }[r.figma.state];
+  console.log(`${r.name.padEnd(18)}${marks}    ${fig}    ${r.status}${change}`);
 }
 console.log(`\n${keys.map((k, i) => `${i + 1} ${CRITERIA[k].label}`).join(' · ')}`);
 const counts = rows.reduce<Record<string, number>>((acc, r) => ({ ...acc, [r.status]: (acc[r.status] ?? 0) + 1 }), {});
@@ -236,6 +238,7 @@ console.log(`\n${Object.entries(counts).map(([s, n]) => `${s} ${n}`).join(' · '
 if (args.includes('--details')) {
   console.log('');
   for (const r of rows) for (const k of keys) if (!r.checks[k].pass) console.log(`${r.name} · ${CRITERIA[k].label}: ${r.checks[k].details.join('; ')}`);
+  for (const r of rows) if (r.figma.state === 'drift') console.log(`${r.name} · Figma: ${r.figma.details.join('; ')}`);
 }
 
 if (dryRun) {

@@ -66,8 +66,11 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA
-   contrast in light and dark, reduced motion, eval), not in Figma yet · **stable** = beta + in Figma.
-   Figma is the one manual step, done only when asked; `contracts/figma-sync.json` records it.
+   contrast in light and dark, reduced motion, eval), not in Figma yet or out of date there · **stable** =
+   beta + in Figma **and aligned with code**. Figma is the one manual step, done only when asked;
+   `contracts/figma-sync.json` records it — set the entry's `syncedCommit` to the commit you synced against.
+   The Figma column is three-state: ✓ aligned · ⚠ in Figma but tokens/CSS/props/anatomy changed since
+   (`scripts/figma-drift.ts`) · ✗ not in Figma. Changing a stable component drops it to beta until Figma is updated.
 7. **Read the contract before touching a component** — the contract defines what the component IS.
 8. **Figma is reference only** — Helix contracts always win over Figma output.
 9. **Every new or edited text/icon color token must pass WCAG 2.2 AA color contrast** — 4.5:1 for normal

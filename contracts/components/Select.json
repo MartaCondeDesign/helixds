@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Select",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "beta",
 
   "purpose": "Lets users choose a single value from a predefined list.",
 

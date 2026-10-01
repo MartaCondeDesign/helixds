@@ -19,8 +19,8 @@ no keyboard tests anywhere).
 | Status | Meaning |
 |---|---|
 | `draft` | The component exists and works, but at least one of criteria 1–8 fails. |
-| `beta` | Criteria 1–8 all pass: built, in Storybook, tokens applied, accessible, tested. Not in Figma yet. |
-| `stable` | Beta **and** modeled in Figma (`contracts/figma-sync.json` → `inFigma: true`). |
+| `beta` | Criteria 1–8 all pass: built, in Storybook, tokens applied, accessible, tested. Not in Figma yet, or in Figma but out of date. |
+| `stable` | Beta **and** in Figma **and aligned with code** — see "Figma (9)" below. |
 
 (`deprecated` is the one status still set by hand, and the script leaves it alone.)
 
@@ -37,8 +37,22 @@ no keyboard tests anywhere).
 | 7 | **Reduced motion** — any Motion (JS) animation beyond `whileTap` press feedback sits inside `<MotionConfig reducedMotion="user">`; CSS motion is neutralized globally in `globals.css` | static check |
 | 8 | **Eval** — a passing `evals/prompts/*.md` imports the component and checks its usage | `eval-lib` |
 
-**Figma (9) is manual, on request** — never part of the automatic run. Once a component is in Figma and
-`figma-sync.json` records it, the next `verify:stable` promotes it from beta to stable on its own.
+**Figma (9) is manual, on request** — building or updating a component in Figma is never part of the
+automatic run. Whether Figma is still *aligned* is checked automatically, and has three states:
+
+| Mark | State | Meaning |
+|---|---|---|
+| ✓ | `synced` | In Figma, and nothing visual changed in code since the last sync. |
+| ⚠ | `drift` | In Figma, but its `component.*` tokens, the CSS of its anatomy parts, its visual props/types, or its contract's props/anatomy/sizing/states changed in code since the last sync. Needs updating, not building. |
+| ✗ | `missing` | Not in Figma. |
+
+Only `synced` counts toward `stable`: a stable component whose code changes drops back to beta until Figma
+catches up. `scripts/figma-drift.ts` compares the component at its sync point against the working tree —
+the sync point is `syncedCommit` in `contracts/figma-sync.json` (set it to the commit Figma was updated
+against), or, for older entries without one, the last commit on `lastChecked`'s day. Behaviour-only changes
+(`{Name}.tsx` logic, stories, docs, prose in the contract, non-visual props like event handlers or `aria-*`)
+don't count. *(Added 2026-10-01: until then the Figma column was a plain yes/no, so a component kept showing
+stable after its code had moved on — 16 of 19 components in Figma were out of date when this was added.)*
 
 **How it runs:** `pnpm verify:stable` needs Storybook running (`pnpm sb`, or `--url`). It runs the
 Storybook test-runner (`apps/storybook/.storybook/test-runner.ts`: every story's `play`, then axe in light

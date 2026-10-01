@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
-import { IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
+import { IconAlertTriangleFilled, IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
 import { Badge, Icon, Tooltip } from '@helix-ds/core';
 import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
@@ -32,8 +32,8 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
 
 const STATUS_LEGEND: { status: string; description: string }[] = [
   { status: 'draft',      description: 'The component exists and works, but at least one of the 8 automatic criteria still fails (hover a ✗ to see what).' },
-  { status: 'beta',       description: 'All 8 automatic criteria pass — built, in Storybook, tokens applied, accessible and tested in light and dark. Not in Figma yet.' },
-  { status: 'stable',     description: 'Beta, and also modeled in Figma. The Figma step is done on request, then the next pnpm verify:stable promotes it.' },
+  { status: 'beta',       description: 'All 8 automatic criteria pass — built, in Storybook, tokens applied, accessible and tested in light and dark. Not in Figma yet (✗), or in Figma but out of date (⚠).' },
+  { status: 'stable',     description: 'Beta, and in Figma aligned with code (✓). A component falls back to beta as soon as its tokens, CSS, props or anatomy change in code until Figma is updated.' },
   { status: 'deprecated', description: 'Scheduled for removal — do not use in new work; existing usages should migrate off it. The only status set by hand.' },
 ];
 
@@ -57,6 +57,24 @@ function Check({ ok, details = [] }: { ok: boolean; details?: string[] }) {
         decorative={false}
         label={ok ? 'Yes' : `No: ${details.join('; ')}`}
       />
+    </span>
+  );
+}
+
+// Figma column — three states, not two: ✗ is only for "not there"; something that exists but needs
+// updating is a warning, not a failure (scripts/figma-drift.ts decides which).
+const FIGMA_MARK = {
+  synced:  { icon: IconCircleCheckFilled,   color: 'var(--helix-color-icon-success)', label: 'In Figma and aligned with code' },
+  drift:   { icon: IconAlertTriangleFilled, color: 'var(--helix-color-icon-warning)', label: 'In Figma but out of date' },
+  missing: { icon: IconCircleXFilled,       color: 'var(--helix-color-icon-danger)',  label: 'Not in Figma' },
+} as const;
+
+function FigmaMark({ state, details }: { state: keyof typeof FIGMA_MARK; details: string[] }) {
+  const { icon, color, label } = FIGMA_MARK[state];
+  const text = details.length ? `${label}: ${details.join('; ')}` : label;
+  return (
+    <span title={text} style={{ display: 'inline-flex' }}>
+      <Icon icon={icon} size={16} color={color} decorative={false} label={text} />
     </span>
   );
 }
@@ -99,13 +117,13 @@ export const Overview: Story = {
       acc[r.status] = (acc[r.status] ?? 0) + 1;
       return acc;
     }, {});
-    const inFigmaCount = rows.filter(r => r.inFigma).length;
+    const figmaCount = (state: string) => rows.filter(r => r.figma.state === state).length;
 
     return (
       <div>
         <StoryHeader
           title="Status"
-          description={`Status of ${rows.length} components, computed by pnpm verify:stable (ADR-018) from 8 automatic criteria — real checks run in a browser, in light and dark mode, not opinions — plus Figma (${inFigmaCount}/${rows.length} modeled). Hover a ✗ to see what's missing. Last run: ${new Date(stability.generatedAt).toLocaleString()}.`}
+          description={`Status of ${rows.length} components, computed by pnpm verify:stable (ADR-018) from 8 automatic criteria — real checks run in a browser, in light and dark mode, not opinions — plus Figma (${figmaCount('synced')} aligned, ${figmaCount('drift')} out of date, ${figmaCount('missing')} not in Figma). Hover a ✗ or ⚠ to see what's missing or what changed. Last run: ${new Date(stability.generatedAt).toLocaleString()}.`}
         />
 
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', marginBottom: 'var(--helix-spacing-l)' }}>
@@ -146,7 +164,7 @@ export const Overview: Story = {
                 {CRITERIA.map(([key]) => (
                   <td key={key} style={TD_STYLE}><Check ok={r.checks[key].pass} details={r.checks[key].details} /></td>
                 ))}
-                <td style={TD_STYLE}><Check ok={r.inFigma} details={['Not modeled in Figma yet — done on request']} /></td>
+                <td style={TD_STYLE}><FigmaMark state={r.figma.state as keyof typeof FIGMA_MARK} details={r.figma.details} /></td>
               </tr>
             ))}
           </tbody>
