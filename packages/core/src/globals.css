@@ -758,6 +758,13 @@
     padding-right: calc(var(--helix-chip-padding-x-m) + var(--helix-primitive-spacing-150));
   }
 
+  /* xs: 24px — same height as Badge s and the control ladder's s, for compact rows (filter chips). */
+  [data-helix-part="chip"][data-size="xs"] {
+    gap:         var(--helix-chip-gap-xs);
+    height:      var(--helix-chip-height-xs);
+    padding:     0 var(--helix-chip-padding-x-xs);
+    font-size:   var(--helix-chip-fontSize-xs);
+  }
   [data-helix-part="chip"][data-size="s"] {
     gap:         var(--helix-chip-gap-s);
     height:      var(--helix-chip-height-s);
@@ -769,6 +776,9 @@
     height:      var(--helix-chip-height-m);
     padding:     0 var(--helix-chip-padding-x-m);
     font-size:   var(--helix-chip-fontSize-m);
+  }
+  [data-helix-part="chip"][data-size="xs"][data-dismissible="true"] {
+    padding-right: calc(var(--helix-chip-padding-x-xs) + var(--helix-primitive-spacing-150));
   }
   [data-helix-part="chip"][data-size="s"][data-dismissible="true"] {
     padding-right: calc(var(--helix-chip-padding-x-s) + var(--helix-primitive-spacing-150));

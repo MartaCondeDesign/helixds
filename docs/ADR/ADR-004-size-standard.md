@@ -63,7 +63,7 @@ from the shared `primitive.size.*` scale, just not through `semantic.size`:
 | Component | `size` meaning | Local height mapping |
 |-----------|----------------|----------------------|
 | `Badge`   | padding density | `xs = primitive.size.125` (20px), `s = primitive.size.150` (24px) |
-| `Chip`    | padding density | `s = primitive.size.175` (28px), `m = primitive.size.200` (32px) |
+| `Chip`    | padding density | `xs = semantic.size.s` (24px, added 2026-10-01 for compact rows such as removable filters), `s = primitive.size.175` (28px — also sits 2px inside a 32px field, see ADR-019), `m = primitive.size.200` (32px) |
 
 `size` changes horizontal density; some exceptions also map size to local height steps.
 This is a component-level exception, not a new global scale — but it's still a real token, never a raw

@@ -29,7 +29,7 @@ const meta: Meta<typeof Chip> = {
     },
     size: {
       control: 'select',
-      options: ['s', 'm'],
+      options: ['xs', 's', 'm'],
     },
     checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -106,10 +106,15 @@ export const Dismissible: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
+      <Chip size="xs" label="Extra small" />
       <Chip size="s" label="Small" />
       <Chip size="m" label="Medium" />
+      <Chip size="xs" label="Dismissible xs" dismissible onDismiss={() => {}} />
     </div>
   ),
+  parameters: {
+    docs: { description: { story: 'xs 24px (compact rows, e.g. removable filters) · s 28px (default; fits inside a 32px field — MultiSelect) · m 32px.' } },
+  },
 };
 
 export const KeyboardActivation: Story = {

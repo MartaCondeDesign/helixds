@@ -2,7 +2,7 @@ import type * as React from 'react';
 import type { HelixIconComponent } from '../Icon';
 
 export type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
-export type ChipSize = 's' | 'm';
+export type ChipSize = 'xs' | 's' | 'm';
 
 export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'disabled' | 'onClick' | 'size' | 'type'> {
   /** Semantic color variant. Default: 'neutral' */

@@ -289,7 +289,7 @@ export const SearchAndFilter: Story = {
               <Chip
                 key={f.key}
                 variant="neutral"
-                size="s"
+                size="xs"
                 label={f.label}
                 dismissible
                 onDismiss={() => removeFilter(f.key)}
