@@ -35,7 +35,10 @@ export const NavList: Story = {
   ),
 };
 
+// Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the
+// keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardActivation: Story = {
+  tags: ['!dev', '!autodocs'],
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 1, width: 200 }}>
       <NavItem label="Dashboard" href="#dashboard" icon={IconLayoutDashboard} />

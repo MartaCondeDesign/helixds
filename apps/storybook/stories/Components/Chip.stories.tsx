@@ -59,56 +59,62 @@ type Story = StoryObj<typeof Chip>;
 
 const VARIANTS = ['neutral', 'warning', 'info', 'success', 'danger'] as const;
 
+// Every render spreads the story's args, so each control in the panel (checked, disabled, icon,
+// dismissible…) works in every story — only what the story is about (its variants, sizes or labels)
+// is fixed per chip. onDismiss is always wired so the dismissible control has an effect too.
+const ROW = { display: 'flex', gap: 'var(--helix-spacing-2xs)', flexWrap: 'wrap', alignItems: 'center' } as const;
+
+export const Dismissible: Story = {
+  // Default is neutral (gray) via meta.args — dismissible chips are a removable-item pattern (recent
+  // searches, attached files), not primarily a status/variant showcase.
+  args: { dismissible: true },
+  render: args => (
+    <div style={ROW}>
+      <Chip {...args} label="Recent" onDismiss={() => {}} />
+      <Chip {...args} label="Saved" checked={!args.checked} onDismiss={() => {}} />
+    </div>
+  ),
+};
+
 export const Unchecked: Story = {
-  render: ({ size }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
+  args: { checked: false },
+  render: args => (
+    <div style={ROW}>
       {VARIANTS.map(variant => (
-        <Chip key={variant} size={size} variant={variant} label={variant} />
+        <Chip key={variant} {...args} variant={variant} label={variant} onDismiss={() => {}} />
       ))}
     </div>
   ),
 };
 
 export const Checked: Story = {
-  render: ({ size }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
+  args: { checked: true },
+  render: args => (
+    <div style={ROW}>
       {VARIANTS.map(variant => (
-        <Chip key={variant} size={size} variant={variant} label={variant} checked />
+        <Chip key={variant} {...args} variant={variant} label={variant} onDismiss={() => {}} />
       ))}
     </div>
   ),
 };
 
 export const WithIcons: Story = {
-  render: ({ size }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Chip size={size} label="Filter" icon={IconFilter} />
-      <Chip size={size} label="Ready" variant="success" icon={IconCheck} />
-      <Chip size={size} label="Soon" variant="warning" icon={IconClock} />
-      <Chip size={size} label="Rejected" variant="danger" icon={IconX} />
-      <Chip size={size} label="Info" variant="info" icon={IconInfoCircle} />
-    </div>
-  ),
-};
-
-export const Dismissible: Story = {
-  // Default is neutral (gray) via meta.args — dismissible chips are a removable-item pattern (recent
-  // searches, attached files), not primarily a status/variant showcase (see AllVariants for that) — but
-  // the variant control still works here like every other story, it just starts on neutral.
-  render: ({ variant }) => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Chip size="s" variant={variant} label="Recent" dismissible onDismiss={() => {}} />
-      <Chip size="s" variant={variant} label="Saved" checked dismissible onDismiss={() => {}} />
+  render: args => (
+    <div style={ROW}>
+      <Chip {...args} label="Filter" icon={IconFilter} onDismiss={() => {}} />
+      <Chip {...args} label="Ready" variant="success" icon={IconCheck} onDismiss={() => {}} />
+      <Chip {...args} label="Soon" variant="warning" icon={IconClock} onDismiss={() => {}} />
+      <Chip {...args} label="Rejected" variant="danger" icon={IconX} onDismiss={() => {}} />
+      <Chip {...args} label="Info" variant="info" icon={IconInfoCircle} onDismiss={() => {}} />
     </div>
   ),
 };
 
 export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Chip size="s" label="Small" />
-      <Chip size="m" label="Medium" />
-      <Chip size="s" label="Dismissible" dismissible onDismiss={() => {}} />
+  render: args => (
+    <div style={ROW}>
+      <Chip {...args} size="s" label="Small" onDismiss={() => {}} />
+      <Chip {...args} size="m" label="Medium" onDismiss={() => {}} />
     </div>
   ),
   parameters: {
@@ -116,7 +122,10 @@ export const Sizes: Story = {
   },
 };
 
+// Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the
+// keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardActivation: Story = {
+  tags: ['!dev', '!autodocs'],
   args: { label: 'Filter', onPress: fn() },
   play: async ({ args, canvasElement }) => {
     const chip = within(canvasElement).getByRole('button', { name: 'Filter' });

@@ -164,7 +164,10 @@ export const FullWidth: Story = {
   ],
 };
 
+// Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the
+// keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardActivation: Story = {
+  tags: ['!dev', '!autodocs'],
   args: { children: 'Save' },
   play: async ({ args, canvasElement }) => {
     const button = within(canvasElement).getByRole('button', { name: 'Save' });

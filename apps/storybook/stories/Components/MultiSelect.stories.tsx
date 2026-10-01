@@ -47,14 +47,14 @@ export const Default: Story = {};
 export const WithSelection: Story = {
   args: { defaultValue: ['design', 'frontend'] },
   parameters: {
-    docs: { description: { story: 'Selected values sit inside the field as dismissible Chips (28px), 2px from its edge. Each × removes one.' } },
+    docs: { description: { story: 'Selected values sit inside the field as dismissible Chips (24px, size s), 4px from its edge and 4px apart. Each × removes one.' } },
   },
 };
 
 export const Wrapping: Story = {
   args: { defaultValue: ['design', 'research', 'frontend', 'backend', 'writing'] },
   parameters: {
-    docs: { description: { story: 'When the chips don\'t fit on one line the field grows downward — 32px is a minimum, rows sit 2px apart.' } },
+    docs: { description: { story: 'When the chips don\'t fit on one line the field grows downward — 32px is a minimum, rows sit 4px apart.' } },
   },
 };
 

@@ -754,8 +754,10 @@
       box-shadow       var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
 
+  /* Dismissible chips reserve room for the 24px dismiss button: its 4px right offset + its width + a
+     4px gap to the label, minus the chip's own border (padding sits inside it). */
   [data-helix-part="chip"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-chip-padding-x-m) + var(--helix-primitive-spacing-150));
+    padding-right: calc(var(--helix-spacing-2xs) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-chip-border-width));
   }
 
   [data-helix-part="chip"][data-size="s"] {
@@ -770,11 +772,15 @@
     padding:     0 var(--helix-chip-padding-x-m);
     font-size:   var(--helix-chip-fontSize-m);
   }
+  /* 4px from the label to the dismiss circle in both sizes. s subtracts the 2px clip inset, because
+     its visible circle (20px) starts 2px inside the 24px button. */
+  /* s: the button sits flush right (0 offset), so its 20px circle is 2px from the top, bottom and
+     right edges alike. Padding = button + 4px gap to the circle − the 2px clip inset − border. */
   [data-helix-part="chip"][data-size="s"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-chip-padding-x-s) + var(--helix-primitive-spacing-150));
+    padding-right: calc(var(--helix-primitive-spacing-0) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-spacing-3xs) - var(--helix-chip-border-width));
   }
   [data-helix-part="chip"][data-size="m"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-chip-padding-x-m) + var(--helix-primitive-spacing-150));
+    padding-right: calc(var(--helix-spacing-2xs) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-chip-border-width));
   }
 
   [data-helix-part="chip"]:focus-visible {
@@ -1024,9 +1030,10 @@
 
   [data-helix-part="chip-dismiss"] {
     position:       absolute;
-    /* 24px target (WCAG 2.5.8 target-size minimum), 2px from the edge — the icon's center stays where
-       the earlier 20px button at 4px put it (14px from the chip's right edge). */
-    right:          var(--helix-spacing-3xs);
+    /* 24px target (WCAG 2.5.8 target-size minimum), 4px from the right edge — m: its circle is then 4px
+       from the top, bottom and right alike, and the drawn X (~8px inside its button edge) sits ~12px from
+       the border, visually matching the 12px left padding. s overrides this to 0 below. */
+    right:          var(--helix-spacing-2xs);
     top:            50%;
     transform:      translateY(-50%);
     display:        inline-flex;
@@ -1048,8 +1055,17 @@
       color            var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
 
+  /* s chip (24px) only: the hover circle is 20px, not the full 24px target — background clipped to the
+     content box, 2px in from each edge, so it doesn't cover the chip's own border. Hit area (24px,
+     WCAG 2.5.8) and icon size are unchanged. The m chip (28px) keeps the full 24px circle. */
+  [data-helix-part="chip"][data-size="s"] ~ [data-helix-part="chip-dismiss"] {
+    right:           var(--helix-primitive-spacing-0);
+    padding:         var(--helix-spacing-3xs);
+    background-clip: content-box;
+  }
+
   [data-helix-part="chip-dismiss"]:hover:not(:disabled) {
-    background: var(--helix-color-fill-surface-dark);
+    background-color: var(--helix-color-fill-surface-dark);
     color:      var(--helix-color-text-neutral);
   }
 
