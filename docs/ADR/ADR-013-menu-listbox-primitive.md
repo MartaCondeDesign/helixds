@@ -32,13 +32,13 @@ tree needs to render above everything else on the page regardless of any ancesto
 `z-index` stacking context — the same reasoning `Toast` already established (ADR-011), applied here to a
 per-trigger popup instead of a fixed viewport stack.
 
-**Positioning: single-axis flip + cross-axis clamp, adapted from Tooltip's `useAutoPlacement`
-(ADR-009).** Unlike Tooltip's 4-direction placement, a dropdown menu has one strong default (below the
-trigger, left-aligned to it) and one fallback (above the trigger, when there isn't room below) — narrower
-than Tooltip's problem, so the hook is adapted, not reused wholesale: same recalculate-on-mount/resize/scroll
-pattern and the same `EDGE_GUTTER` viewport-collision principle, but only one flip axis (vertical) plus a
-horizontal clamp so the menu never overflows the left/right edge for a trigger sitting near either side of
-the viewport.
+**Positioning: always below + cross-axis clamp, adapted from Tooltip's `useAutoPlacement`
+(ADR-009).** Unlike Tooltip's 4-direction placement, a dropdown menu has one placement: below the
+trigger, left-aligned to it. It never flips above, even when there isn't room below — the page scrolls
+instead (revised 2026-10-01, per design direction: a form field's menu belongs below the field, even if
+that means it runs past the visible area). Same recalculate-on-mount/resize/scroll pattern and
+the same `EDGE_GUTTER` viewport-collision principle as Tooltip, applied only horizontally, so the menu never
+overflows the left/right edge for a trigger sitting near either side of the viewport.
 
 **Select is rebuilt on top of Menu — trigger becomes a real `<button>`, not `<select>`.** The visible
 control is a button styled identically to today's `select-trigger` (same tokens, same anatomy part names

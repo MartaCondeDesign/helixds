@@ -12,8 +12,8 @@ export function optionId(menuId: string, value: string): string {
 }
 
 // Keeps the menu this many px clear of the viewport edge — same principle as Tooltip's own
-// EDGE_GUTTER (ADR-009), narrowed to Menu's single-axis (vertical) flip: opens below the anchor by
-// default, flips above when there isn't room below, with a horizontal clamp so it never overflows
+// EDGE_GUTTER (ADR-009), horizontal clamp only: always opens below the anchor — never flips above,
+// even when there isn't room below (the page scrolls instead) — and is clamped so it never overflows
 // the left/right edge for an anchor sitting near either side of the viewport. See ADR-013.
 const EDGE_GUTTER = 8;
 
@@ -28,10 +28,7 @@ function usePosition(expanded: boolean, anchorRef: React.RefObject<HTMLElement |
     const anchorRect = anchor.getBoundingClientRect();
     const menuRect = menu.getBoundingClientRect();
     const vw = window.innerWidth;
-    const vh = window.innerHeight;
-
-    const fitsBelow = anchorRect.bottom + menuRect.height + EDGE_GUTTER <= vh;
-    const top = fitsBelow ? anchorRect.bottom + 4 : anchorRect.top - menuRect.height - 4;
+    const top = anchorRect.bottom + 4;
 
     const maxLeft = vw - menuRect.width - EDGE_GUTTER;
     const left = Math.min(Math.max(anchorRect.left, EDGE_GUTTER), Math.max(maxLeft, EDGE_GUTTER));
@@ -46,8 +43,7 @@ function usePosition(expanded: boolean, anchorRef: React.RefObject<HTMLElement |
     // Set the real width directly on the DOM node, synchronously, before the first height
     // measurement — width otherwise only lands a render cycle later (via the setStyle below), so
     // the very first recalculate() would measure the menu at its unconstrained natural width,
-    // which can wrap option labels differently and misreport height, occasionally flipping the
-    // open-above/open-below decision incorrectly on first open.
+    // which can wrap option labels differently and misplace it horizontally on first open.
     if (anchor && menu) {
       menu.style.width = `${anchor.getBoundingClientRect().width}px`;
     }

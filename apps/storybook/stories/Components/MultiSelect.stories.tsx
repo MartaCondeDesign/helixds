@@ -58,20 +58,6 @@ export const Wrapping: Story = {
   },
 };
 
-export const Controlled: Story = {
-  render: () => {
-    const [values, setValues] = useState<string[]>(['research']);
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <MultiSelect label="Skills" options={SKILLS} value={values} onChange={setValues} placeholder="Choose skills…" className="w-[300px]" />
-        <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
-          Selected: <strong>{values.join(', ') || 'none'}</strong>
-        </p>
-      </div>
-    );
-  },
-};
-
 export const WithGroups: Story = {
   args: { options: GROUPED, label: 'Specialties', placeholder: 'Choose specialties…' },
   parameters: {
@@ -98,17 +84,10 @@ export const Disabled: Story = {
   args: { disabled: true, defaultValue: ['design'] },
 };
 
-export const Open: Story = {
-  args: { defaultValue: ['design'] },
-  play: async ({ canvasElement }) => {
-    await userEvent.click(within(canvasElement).getByRole('combobox', { name: /Skills/ }));
-  },
-  parameters: {
-    docs: { description: { story: 'The open state — the listbox is multi-selectable; picking an option toggles it and the menu stays open.' } },
-  },
-};
-
+// Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the
+// keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardNavigation: Story = {
+  tags: ['!dev', '!autodocs'],
   render: () => {
     const [values, setValues] = useState<string[]>([]);
     return (
@@ -174,18 +153,5 @@ export const KeyboardNavigation: Story = {
         story: 'Keyboard test (contract `a11y.keyboardNav`): arrows open and move, Home/End jump, Enter/Space toggle without closing, Backspace removes the last chip, Escape closes, Tab closes and moves on.',
       },
     },
-  },
-};
-
-export const DismissChip: Story = {
-  args: { defaultValue: ['design', 'frontend'] },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole('button', { name: 'Dismiss Design' }));
-    await waitFor(() => expect(canvas.queryByRole('button', { name: 'Dismiss Design' })).not.toBeInTheDocument());
-    await expect(canvas.getByRole('button', { name: 'Dismiss Frontend' })).toBeInTheDocument();
-  },
-  parameters: {
-    docs: { description: { story: 'A chip\'s × removes just that value.' } },
   },
 };

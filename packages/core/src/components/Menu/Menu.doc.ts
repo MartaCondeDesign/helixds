@@ -35,7 +35,7 @@ export const doc: ComponentDoc = {
     'options — flat MenuOption[] or grouped MenuOptionGroup[] ({ label, options })',
     'value — selected value, drives aria-selected + the blue highlight',
     'activeValue — keyboard-highlighted value, drives the gray highlight (consumer owns the keyboard handling, e.g. Select)',
-    'Positioning: opens below the anchor, flips above when there\'s no room — adapted from Tooltip\'s flip+clamp (ADR-009), single-axis.',
+    'Positioning: always opens below the anchor, never flips above — horizontal clamp only, adapted from Tooltip\'s clamp (ADR-009).',
     'Not exported as a top-level app-facing pattern yet — currently consumed only by Select internally, per ADR-013\'s scope.',
   ],
   examples: [
