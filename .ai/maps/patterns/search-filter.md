@@ -56,8 +56,8 @@ function SearchFilter({
       data-helix-pattern="search-filter"
       style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}
     >
-      {/* Search + filter controls */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+      {/* Search + filter controls — 4px (spacing-2xs) between the field and its buttons */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }}>
         <Input
           label="Search"
           hideLabel

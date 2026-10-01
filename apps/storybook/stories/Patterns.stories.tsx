@@ -263,7 +263,7 @@ export const SearchAndFilter: Story = {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)', maxWidth: '600px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-50)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }}>
           <Input
             label="Search"
             hideLabel
@@ -320,19 +320,37 @@ function StatCard({
 }: { label: string; value: string; delta?: string; trend?: Trend }) {
   return (
     <Card>
+      {/* Header row: label on the left, delta Badge on the right, both centered on the label's line */}
       <div style={{
-        // semantic.textStyle.label-uppercase — its token description asks for text-transform +
-        // letter-spacing at the call site, so both come from here (letter-spacing from its token).
-        fontFamily:     'var(--helix-textStyle-label-uppercase-fontFamily)',
-        fontSize:       'var(--helix-textStyle-label-uppercase-fontSize)',
-        fontWeight:     'var(--helix-textStyle-label-uppercase-fontWeight)',
-        lineHeight:     'var(--helix-textStyle-label-uppercase-lineHeight)',
-        textTransform:  'uppercase',
-        letterSpacing:  'var(--helix-primitive-letterSpacing-wide)',
-        color:          'var(--helix-color-text-neutral-lightest)',
+        display:        'flex',
+        alignItems:     'center',
+        justifyContent: 'space-between',
+        gap:            'var(--helix-spacing-xs)',
         marginBottom:   'var(--helix-spacing-xs)',
       }}>
-        {label}
+        <div style={{
+          // semantic.textStyle.label-uppercase — its token description asks for text-transform +
+          // letter-spacing at the call site, so both come from here (letter-spacing from its token).
+          fontFamily:     'var(--helix-textStyle-label-uppercase-fontFamily)',
+          fontSize:       'var(--helix-textStyle-label-uppercase-fontSize)',
+          fontWeight:     'var(--helix-textStyle-label-uppercase-fontWeight)',
+          lineHeight:     'var(--helix-textStyle-label-uppercase-lineHeight)',
+          textTransform:  'uppercase',
+          letterSpacing:  'var(--helix-primitive-letterSpacing-wide)',
+          color:          'var(--helix-color-text-neutral-lightest)',
+        }}>
+          {label}
+        </div>
+        {delta && (
+          // The delta is a Badge: success when up, danger when down, neutral with no trend — its icon slot
+          // carries the trend arrow.
+          <Badge
+            variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'neutral'}
+            size="xs"
+            label={delta}
+            {...(trend ? { icon: trend === 'up' ? IconArrowUpRight : IconArrowDownRight } : {})}
+          />
+        )}
       </div>
       <div style={{
         fontFamily:    'var(--helix-textStyle-heading-3xl-bold-fontFamily)',
@@ -342,19 +360,9 @@ function StatCard({
         letterSpacing: 'var(--helix-primitive-letterSpacing-tight)',
         color:         'var(--helix-color-text-neutral)',
         fontVariantNumeric: 'tabular-nums',
-        marginBottom:  'var(--helix-spacing-xs)',
       }}>
         {value}
       </div>
-      {delta && (
-        // The delta is a Badge: success when up, danger when down, neutral with no trend — its icon slot
-        // carries the trend arrow.
-        <Badge
-          variant={trend === 'up' ? 'success' : trend === 'down' ? 'danger' : 'neutral'}
-          label={delta}
-          {...(trend ? { icon: trend === 'up' ? IconArrowUpRight : IconArrowDownRight } : {})}
-        />
-      )}
     </Card>
   );
 }
@@ -370,7 +378,7 @@ export const StatCardPattern: Story = {
       <StatCard label="Members"    value="6"   delta="+2"   trend="up" />
       <StatCard label="Active"     value="4"   delta="+1"   trend="up" />
       <StatCard label="Components" value="103" delta="+14"  trend="up" />
-      <StatCard label="Coverage"   value="89%" delta="-2pp" trend="down" />
+      <StatCard label="Coverage"   value="89%" delta="-2" trend="down" />
     </div>
   ),
   parameters: {
