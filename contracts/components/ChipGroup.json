@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "ChipGroup",
   "version": "0.1.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users turn on any number of filters from a small, visible set, shown as toggle chips.",
 
