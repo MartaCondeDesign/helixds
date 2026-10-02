@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Textarea",
   "version": "1.0.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users enter multi-line free-form text.",
 
