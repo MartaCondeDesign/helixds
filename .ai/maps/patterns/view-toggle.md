@@ -78,4 +78,4 @@ function ViewToggle({ view, onViewChange }: { view: 'table' | 'cards'; onViewCha
 
 - ❌ Building a third, unused "list" view "just in case" — two options is the common case; add a third only
   when a real third display mode exists.
-- ❌ Using `Chip` (`checked`) for this — Chip's purpose is filters/categories, not layout mode switching.
+- ❌ Using `Chip` for this — Chip's purpose is filters/categories, not layout mode switching.

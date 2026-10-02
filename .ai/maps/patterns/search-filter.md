@@ -101,9 +101,8 @@ function SearchFilter({
 ## Rules
 
 1. The search Input must have `label` (use `hideLabel` if visually hidden — still needed for a11y)
-2. Active filter chips use the real `<Chip>` component, unchecked (`dismissible`/`onDismiss`, default
-   look, `variant="neutral"`, smallest size `s` (24px) — not `checked`, whose darker fill is too heavy for a row
-   of removable filters) — not
+2. Active filter chips use the real `<Chip>` component (`dismissible`/`onDismiss`, default
+   look, `variant="neutral"`, smallest size `s` (24px)) — not
    `<Badge>` (not interactive) and not a plain `<Button>` (Chip's whole `purpose` is "a compact selectable
    label for filters, categories, or short choices" — this is precisely that case; an earlier version of
    this doc predated Chip's existence and used Button instead, now corrected)

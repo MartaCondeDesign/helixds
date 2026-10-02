@@ -3,65 +3,94 @@
   "name": "ChipGroup",
   "version": "0.1.0",
   "status": "stable",
-
-  "purpose": "Lets users turn on any number of filters from a small, visible set, shown as toggle chips.",
-
+  "purpose": "Shows a small set of related chips side by side — categories, tags or applied filters — as one labelled group.",
   "neverUseFor": [
-    "A single on/off filter — use one Chip alone instead",
-    "Mutually exclusive choices or a view switch — use SegmentedControl or RadioGroup instead",
-    "Form answers that are submitted and validated — use CheckboxGroup instead",
-    "Large option sets or anything needing search — use MultiSelect instead",
-    "Removable active-filter chips — render dismissible Chips directly, 4px apart (group-spacing.md)"
+    "A single chip — use Chip alone instead",
+    "Choices the user turns on and off — use CheckboxGroup, RadioGroup or SegmentedControl instead",
+    "Values picked from a list — use MultiSelect instead"
   ],
-
   "states": {
-    "intrinsic": ["hover", "focus", "active"],
+    "intrinsic": [
+      "hover",
+      "focus",
+      "active"
+    ],
     "authored": [
-      { "name": "checked", "description": "A filter is on — its chip renders in the checked style.", "aria": "aria-pressed='true' on that chip's button" },
-      { "name": "disabled", "description": "The whole group, or an individual option, is non-interactive.", "aria": "disabled (native HTML attribute) on each affected chip" }
+      {
+        "name": "disabled",
+        "description": "The whole group is non-interactive: every chip disabled.",
+        "aria": "disabled (native HTML attribute) on every chip"
+      }
     ]
   },
-
   "anatomy": [
-    { "part": "chip-group", "element": "fieldset", "description": "Root element — groups the legend and the chips for assistive tech." },
-    { "part": "chip-group-legend", "element": "legend", "description": "Accessible group label. Sits 8px above the chips — see .ai/maps/patterns/form-field-spacing.md. Visually hidden with hideLabel (still read by screen readers)." },
-    { "part": "chip-group-options", "element": "div", "description": "Wrapping row of chips, 4px apart in both directions (.ai/maps/patterns/group-spacing.md). Each option renders a real `Chip`." },
-    { "part": "chip-group-description", "element": "span", "description": "Helper text for the whole group. Sits 8px below the chips.", "optional": true }
+    {
+      "part": "chip-group",
+      "element": "div",
+      "description": "Root — role=\"group\" named by `label` (aria-label), and the wrapping row of chips itself: just the chips side by side, 4px apart in both directions (.ai/maps/patterns/group-spacing.md). No visible header or description — each option renders a real `Chip`."
+    }
   ],
-
   "props": [
-    { "name": "label", "type": "string", "required": true, "description": "Accessible group label, rendered as the fieldset's legend." },
-    { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the legend visually but keeps it for screen readers — for a filter row whose purpose is already clear from context." },
-    { "name": "options", "type": "ChipGroupOption[]", "required": true, "description": "The filters. Each option: { value, label, icon?, disabled? }." },
-    { "name": "value", "type": "string[] | undefined", "description": "Controlled selected values." },
-    { "name": "defaultValue", "type": "string[] | undefined", "description": "Uncontrolled initial values." },
-    { "name": "onChange", "type": "((values: string[]) => void) | undefined", "description": "Selection change handler — receives the full updated set of selected values." },
-    { "name": "size", "type": "'s' | 'm'", "default": "s", "description": "Size of every chip in the group — Chip's own size scale." },
-    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the group." },
-    { "name": "disabled", "type": "boolean", "default": false, "description": "Disables every chip in the group." }
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the group (aria-label on role=\"group\"). Never rendered visibly — the chips stand on their own."
+    },
+    {
+      "name": "options",
+      "type": "ChipGroupOption[]",
+      "required": true,
+      "description": "The chips. Each option: { value, label, icon?, disabled? } — `value` is the React key."
+    },
+    {
+      "name": "size",
+      "type": "'s' | 'm'",
+      "default": "s",
+      "description": "Size of every chip in the group — Chip's own size scale."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "Disables every chip in the group."
+    }
   ],
-
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "s": 24, "m": 32 },
+      "values": {
+        "s": 24,
+        "m": 32
+      },
       "unit": "px",
       "note": "Inherited unchanged from Chip's own size scale (Chip's local density model, not the ADR-004 control ladder)."
     },
     "width": {
       "default": "fill",
-      "note": "The chip row wraps onto more lines when it runs out of width; rows sit 4px apart, same as the chips."
+      "note": "The row wraps onto more lines when it runs out of width; rows sit 4px apart, same as the chips."
     }
   },
-
   "tokenPolicy": {
-    "allowed": ["color.text", "spacing", "textStyle"],
-    "forbidden": ["primitive.color"]
+    "allowed": [
+      "color.text",
+      "spacing",
+      "textStyle"
+    ],
+    "forbidden": [
+      "primitive.color"
+    ]
   },
-
   "a11y": {
-    "role": "group (native fieldset/legend + independent toggle buttons with aria-pressed)",
-    "keyboardNav": ["Tab - moves focus between chips and into/out of the group", "Enter/Space - toggles the focused chip"],
-    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+    "role": "group (role=\"group\" + aria-label holding the chips' own buttons)",
+    "keyboardNav": [
+      "Tab - moves focus between chips and into/out of the group"
+    ],
+    "wcag": [
+      "1.3.1 Info and Relationships",
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "4.1.2 Name Role Value"
+    ]
   }
 }

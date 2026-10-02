@@ -10,7 +10,6 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
     {
       variant = 'neutral',
       size = 's',
-      checked = false,
       disabled = false,
       label,
       icon,
@@ -56,9 +55,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
           data-dismissible={isDismissible ? 'true' : undefined}
           data-variant={variant}
           data-size={size}
-          data-checked={checked ? 'true' : undefined}
           data-disabled={disabled ? 'true' : undefined}
-          aria-pressed={checked}
           disabled={disabled}
           onClick={handleClick}
           {...props}

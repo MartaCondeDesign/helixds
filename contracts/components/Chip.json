@@ -1,25 +1,21 @@
 {
   "$schema": "../component.schema.json",
-  "name":    "Chip",
+  "name": "Chip",
   "version": "1.0.0",
-  "status":  "beta",
-
+  "status": "beta",
   "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
-
   "neverUseFor": [
     "Primary page actions — use Button instead",
     "Long text labels — chips are compact by design",
     "Destructive confirmation flows — use a Button pair instead"
   ],
-
   "states": {
-    "intrinsic": ["hover", "focus", "active"],
+    "intrinsic": [
+      "hover",
+      "focus",
+      "active"
+    ],
     "authored": [
-      {
-        "name": "checked",
-        "description": "The chip is currently checked or active in its group.",
-        "aria": "aria-pressed='true'"
-      },
       {
         "name": "disabled",
         "description": "The chip is not interactive.",
@@ -32,16 +28,43 @@
       }
     ]
   },
-
   "anatomy": [
-    { "part": "chip-shell", "element": "span", "description": "Layout wrapper for the chip and optional dismiss button.", "optional": false },
-    { "part": "chip",       "element": "button", "description": "Root interactive element.", "optional": false },
-    { "part": "chip-icon",  "element": "slot",    "description": "Leading icon slot.", "optional": true },
-    { "part": "chip-label", "element": "span",    "description": "Visible chip label." },
-    { "part": "chip-icon-end", "element": "slot", "description": "Trailing icon slot.", "optional": true },
-    { "part": "chip-dismiss", "element": "button", "description": "Close button that fires onDismiss. Rendered only when dismissible=true and onDismiss is provided.", "optional": true }
+    {
+      "part": "chip-shell",
+      "element": "span",
+      "description": "Layout wrapper for the chip and optional dismiss button.",
+      "optional": false
+    },
+    {
+      "part": "chip",
+      "element": "button",
+      "description": "Root interactive element.",
+      "optional": false
+    },
+    {
+      "part": "chip-icon",
+      "element": "slot",
+      "description": "Leading icon slot.",
+      "optional": true
+    },
+    {
+      "part": "chip-label",
+      "element": "span",
+      "description": "Visible chip label."
+    },
+    {
+      "part": "chip-icon-end",
+      "element": "slot",
+      "description": "Trailing icon slot.",
+      "optional": true
+    },
+    {
+      "part": "chip-dismiss",
+      "element": "button",
+      "description": "Close button that fires onDismiss. Rendered only when dismissible=true and onDismiss is provided.",
+      "optional": true
+    }
   ],
-
   "props": [
     {
       "name": "variant",
@@ -54,12 +77,6 @@
       "type": "'s' | 'm'",
       "default": "s",
       "description": "Horizontal density preset. Chip is a documented exception to the global scale — default is 's', not 'm', a deliberate deviation from ADR-004's general 'm is the default' convention for this component specifically."
-    },
-    {
-      "name": "checked",
-      "type": "boolean",
-      "default": false,
-      "description": "Marks the chip as checked."
     },
     {
       "name": "disabled",
@@ -102,11 +119,13 @@
       "description": "Dismiss handler fired from the close button."
     }
   ],
-
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "s": 24, "m": 32 },
+      "values": {
+        "s": 24,
+        "m": 32
+      },
       "unit": "px",
       "note": "Chip uses a local density model; this does not redefine the global scale. s = 24px (semantic.size.s, was 28px until 2026-10-01): same height as Badge s and the control ladder's s, and it sits 4px inside a 32px field (MultiSelect, ADR-019)."
     },
@@ -118,7 +137,6 @@
       }
     }
   },
-
   "tokenPolicy": {
     "allowed": [
       "color.fill",
@@ -129,12 +147,20 @@
       "fontSize",
       "fontWeight"
     ],
-    "forbidden": ["primitive.color"]
+    "forbidden": [
+      "primitive.color"
+    ]
   },
-
   "a11y": {
     "role": "button",
-    "keyboardNav": ["Enter — activates", "Space — activates"],
-    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+    "keyboardNav": [
+      "Enter — activates",
+      "Space — activates"
+    ],
+    "wcag": [
+      "2.1.1 Keyboard",
+      "2.4.7 Focus Visible",
+      "4.1.2 Name Role Value"
+    ]
   }
 }

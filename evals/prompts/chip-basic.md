@@ -7,25 +7,25 @@ turns: 1
 
 # Prompt
 
-Create a set of toggleable filter chips for a product list — "In stock", "On sale", "New" — using
-Helix DS, where the user can select any combination of them.
+Using Helix DS, show the filters currently applied to a product list — "In stock", "On sale", "New" — as
+chips the user can remove one by one.
 
 # Success criteria
 
 - [ ] Imports `Chip` from `@helix-ds/core`
 - [ ] Uses `label` prop for the chip text (not `children`)
-- [ ] Uses `checked=` for the toggle state (not `active=`, `selected=`)
-- [ ] Uses `onPress` for the toggle handler (not `onClick`)
+- [ ] Makes them removable with `dismissible` (not `removable=`, `closable=`)
+- [ ] Removes a filter through `onDismiss` (not `onClose`, `onRemove`)
 
 # Escape hatches (partial credit)
 
 - Uses `variant="neutral"` explicitly (it's the default, so omitting is also fine)
-- Adds an `icon` for each filter category
+- Spaces the chips `var(--helix-spacing-2xs)` apart (group-spacing.md)
 
 # Invalid patterns (auto-fail)
 
 - `<Chip>In stock</Chip>` — text as children instead of the label prop
-- `active=` or `selected=` as prop names — anti-synonyms for checked
+- `checked=` — Chip has no checked/selected state
 - `onClick=` on Chip — anti-synonym for onPress
 
 # Expected output shape
@@ -34,30 +34,19 @@ Helix DS, where the user can select any combination of them.
 import { useState } from 'react';
 import { Chip } from '@helix-ds/core';
 
-const FILTERS = ['In stock', 'On sale', 'New'];
-
-function ProductFilters() {
-  const [checkedFilters, setCheckedFilters] = useState<Set<string>>(new Set());
-
-  function toggle(filter: string) {
-    setCheckedFilters(prev => {
-      const next = new Set(prev);
-      next.has(filter) ? next.delete(filter) : next.add(filter);
-      return next;
-    });
-  }
-
+function ActiveFilters() {
+  const [filters, setFilters] = useState(['In stock', 'On sale', 'New']);
   return (
-    <>
-      {FILTERS.map(filter => (
+    <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
+      {filters.map(filter => (
         <Chip
           key={filter}
           label={filter}
-          checked={checkedFilters.has(filter)}
-          onPress={() => toggle(filter)}
+          dismissible
+          onDismiss={() => setFilters(prev => prev.filter(f => f !== filter))}
         />
       ))}
-    </>
+    </div>
   );
 }
 ```

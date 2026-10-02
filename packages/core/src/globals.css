@@ -497,6 +497,7 @@
   }
 
   [data-helix-part="input-label"] {
+    font-family: var(--helix-textStyle-body-m-medium-fontFamily); /* the one form label — same as checkbox-group/radio legends */
     font-size:   var(--helix-input-text-labelFontSize);
     font-weight: var(--helix-input-text-labelFontWeight);
     color:       var(--helix-input-text-label);
@@ -815,60 +816,17 @@
   [data-helix-part="chip"][data-variant="neutral"]:active:not(:disabled):not([data-disabled]) {
     background: var(--helix-color-fill-secondary-interactive-hover);
   }
-  /* Checked-chip blend weight toward the saturated fill (the tint gets the rest). 60% in light mode.
-     Dark mode drops it to 40%: there the tint is itself dark (fill-*-light → #166534 etc.), so a 60%
-     blend lands mid-tone and light text only reaches ~3.9–4.0:1 on success/warning. At 40% every
-     variant passes AA (success 4.69, warning 4.64, info 5.37, danger higher). */
-  [data-helix-part="chip"] { --chip-checked-weight: 60%; }
-  :root[data-theme="dark"] [data-helix-part="chip"] { --chip-checked-weight: 40%; }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) [data-helix-part="chip"] { --chip-checked-weight: 40%; }
-  }
-
-  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"] {
-    /* No border when checked — a solid fill reads as one filled shape, not a lighter fill + outline. */
-    background:   var(--helix-color-fill-secondary-interactive-press);
-    color:        var(--helix-color-text-neutral);
-    border-color: transparent;
-  }
-  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:hover:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-border-neutral-dark);
-  }
-  [data-helix-part="chip"][data-variant="neutral"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    background: var(--helix-color-border-neutral-dark);
-  }
-
   [data-helix-part="chip"][data-variant="info"] {
     background:   var(--helix-color-fill-info-light);
     color:        var(--helix-color-text-info);
     border-color: var(--helix-color-border-info);
   }
-  [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
     border-color: var(--helix-color-border-info-dark);
   }
-  [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page));
-  }
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"] {
-    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
-       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
-       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
-       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
-       here) which already use white — those already existed before this pass and sit closer to the AA
-       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
-       is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-info-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-info-light));
-    color:        var(--helix-color-text-neutral);
-    border-color: transparent;
-  }
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    /* Was fill-info-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
-       from the checked rule above, changed there for the same reason), and dark text on that fully
-       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
-       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
-    background: color-mix(in srgb, var(--helix-color-fill-info-interactive-default) 75%, var(--helix-color-fill-info-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="success"] {
@@ -876,32 +834,12 @@
     color:        var(--helix-color-text-success);
     border-color: var(--helix-color-border-success);
   }
-  [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
     border-color: var(--helix-color-border-success-dark);
   }
-  [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page));
-  }
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"] {
-    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
-       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
-       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
-       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
-       here) which already use white — those already existed before this pass and sit closer to the AA
-       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
-       is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-success-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-success-light));
-    color:        var(--helix-color-text-neutral);
-    border-color: transparent;
-  }
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    /* Was fill-success-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
-       from the checked rule above, changed there for the same reason), and dark text on that fully
-       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
-       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
-    background: color-mix(in srgb, var(--helix-color-fill-success-interactive-default) 75%, var(--helix-color-fill-success-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="warning"] {
@@ -909,32 +847,12 @@
     color:        var(--helix-color-text-warning);
     border-color: var(--helix-color-border-warning);
   }
-  [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
     border-color: var(--helix-color-border-warning-dark);
   }
-  [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page));
-  }
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"] {
-    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
-       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
-       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
-       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
-       here) which already use white — those already existed before this pass and sit closer to the AA
-       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
-       is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-warning-light));
-    color:        var(--helix-color-text-neutral);
-    border-color: transparent;
-  }
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    /* Was fill-warning-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
-       from the checked rule above, changed there for the same reason), and dark text on that fully
-       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
-       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
-    background: color-mix(in srgb, var(--helix-color-fill-warning-interactive-default) 75%, var(--helix-color-fill-warning-light) 25%);
   }
 
   [data-helix-part="chip"][data-variant="danger"] {
@@ -942,32 +860,12 @@
     color:        var(--helix-color-text-danger);
     border-color: var(--helix-color-border-danger);
   }
-  [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
     border-color: var(--helix-color-border-danger-dark);
   }
-  [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]):not([data-checked="true"]) {
+  [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page));
-  }
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"] {
-    /* One step from the "active" tint (72% blend, above), not a straight jump to full saturation — a
-       60/40 blend toward the interactive-default fill. Contrast checked by hand: this blend + dark text
-       passes AA comfortably (~7-8:1 across the 4 variants); white text does not (~2-3:1) at this
-       lightness, so text stays dark, unlike the fully-saturated checked:hover/active below (unchanged
-       here) which already use white — those already existed before this pass and sit closer to the AA
-       edge at full saturation; worth a dedicated look if this ever gets audited, not something this pass
-       is silently fixing or leaving worse. */
-    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) var(--chip-checked-weight), var(--helix-color-fill-danger-interactive-light-default));
-    color:        var(--helix-color-text-neutral);
-    border-color: transparent;
-  }
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:hover:not(:disabled):not([data-disabled]),
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"]:active:not(:disabled):not([data-disabled]) {
-    /* Was fill-danger-interactive-hover (full saturation) — text on checked/checked:hover is dark (inherited
-       from the checked rule above, changed there for the same reason), and dark text on that fully
-       saturated background fails AA badly (~3:1). 75% blend (one step past checked's own 60%) keeps dark
-       text passing with real margin (5-6.2:1 across all 4 variants, danger is the tightest at 5.02:1). */
-    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-default) 75%, var(--helix-color-fill-danger-interactive-light-default) 25%);
   }
 
   [data-helix-part="chip-icon"],
@@ -988,41 +886,17 @@
   [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon-end"] {
     color: var(--helix-color-text-info); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="info"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
-       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
-    color: var(--helix-color-icon-neutral);
-  }
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon-end"] {
     color: var(--helix-color-text-success); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
-  }
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="success"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
-       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
-    color: var(--helix-color-icon-neutral);
   }
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon-end"] {
     color: var(--helix-color-text-warning); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
   }
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="warning"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
-       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
-    color: var(--helix-color-icon-neutral);
-  }
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon-end"] {
     color: var(--helix-color-text-danger); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
-  }
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="danger"][data-checked="true"] [data-helix-part="chip-icon-end"] {
-    /* Was icon-inverse (white) — invisible against the blended checked background (light-ish, not full
-       saturation) once the text color was fixed for the same contrast reason. Matches text-neutral. */
-    color: var(--helix-color-icon-neutral);
   }
 
   [data-helix-part="chip-shell"] {
@@ -1046,7 +920,7 @@
     height:         var(--helix-primitive-size-150);
     border-radius:  var(--helix-radius-full);
     border:         none;
-    /* Bare icon at rest — no circular fill until hover, regardless of the chip's own variant/checked
+    /* Bare icon at rest — no circular fill until hover, regardless of the chip's own variant
        background (transparent always reads as "nothing" here, unlike matching the chip's own fill token,
        which only looked invisible by coincidence on some variants). */
     background:     transparent;
@@ -1086,59 +960,15 @@
 
 
   /* ════════════════════════════════════════════════════════════════════════
-     CHIP GROUP — a fieldset of toggle Chips (filters). Composes real Chips, so it
-     only owns the layout around them: legend 8px above the chips, chips 4px apart
-     in both directions (group-spacing.md), description 8px below. Semantic tokens
-     directly — no component tokens of its own.
+     CHIP GROUP — just the chips side by side (no visible header): a wrapping
+     row of real Chips, 4px apart in both directions (group-spacing.md).
+     Semantic token directly — no component tokens of its own.
      ════════════════════════════════════════════════════════════════════════ */
 
   [data-helix-part="chip-group"] {
-    border:  none;
-    padding: 0;
-    margin:  0;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap:     var(--helix-spacing-xs);
-  }
-
-  [data-helix-part="chip-group-legend"] {
-    font-family: var(--helix-textStyle-body-m-medium-fontFamily);
-    font-size:   var(--helix-textStyle-body-m-medium-fontSize);
-    font-weight: var(--helix-textStyle-body-m-medium-fontWeight);
-    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
-    color:       var(--helix-color-text-neutral);
-    /* No margin-bottom: the fieldset's own 8px gap already separates it from the chips (a margin here
-       stacked on top of it, giving 16px). */
-    padding:     0;
-    float:       left;
-    width:       100%;
-  }
-  [data-helix-part="chip-group-legend"] + * { clear: left; }
-
-  /* hideLabel — visually hidden, still the group's accessible name. */
-  [data-helix-part="chip-group-legend"][data-hidden] {
-    position:    absolute;
-    width:       1px;
-    height:      1px;
-    margin:      -1px;
-    overflow:    hidden;
-    clip:        rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  [data-helix-part="chip-group-options"] {
     display:   flex;
     flex-wrap: wrap;
     gap:       var(--helix-spacing-2xs);
-  }
-
-  [data-helix-part="chip-group-description"] {
-    font-family: var(--helix-textStyle-body-s-regular-fontFamily);
-    font-size:   var(--helix-textStyle-body-s-regular-fontSize);
-    font-weight: var(--helix-textStyle-body-s-regular-fontWeight);
-    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
-    color:       var(--helix-color-text-neutral-light);
   }
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1156,6 +986,7 @@
   [data-helix-part="textarea-root"][data-full-width] { width: 100%; }
 
   [data-helix-part="textarea-label"] {
+    font-family: var(--helix-textStyle-body-m-medium-fontFamily); /* the one form label — same as checkbox-group/radio legends */
     font-size:   var(--helix-textarea-text-labelFontSize);
     font-weight: var(--helix-textarea-text-labelFontWeight);
     color:       var(--helix-textarea-text-label);
@@ -1257,6 +1088,7 @@
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
 
   [data-helix-part="select-label"] {
+    font-family: var(--helix-textStyle-body-m-medium-fontFamily); /* the one form label — same as checkbox-group/radio legends */
     font-size:   var(--helix-select-text-labelFontSize);
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
@@ -1397,6 +1229,7 @@
   [data-helix-part="multi-select-root"][data-full-width] { width: 100%; }
 
   [data-helix-part="multi-select-label"] {
+    font-family: var(--helix-textStyle-body-m-medium-fontFamily); /* the one form label — same as checkbox-group/radio legends */
     font-size:   var(--helix-select-text-labelFontSize);
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
@@ -1804,9 +1637,11 @@
     font-family: var(--helix-checkbox-text-legendFontFamily);
     font-size:   var(--helix-checkbox-text-legendFontSize);
     font-weight: var(--helix-checkbox-text-legendFontWeight);
-    line-height: var(--helix-checkbox-text-legendLineHeight);
+    /* Same label as every form field (input-label, select-label, multi-select-label...): body-m-medium,
+       text-neutral, snug line-height. No margin-bottom — the group's own 8px gap already separates it
+       from the options (a margin here stacked on top of it, giving 16px). */
+    line-height: var(--helix-primitive-lineHeight-snug);
     color:       var(--helix-checkbox-text-label);
-    margin-bottom: var(--helix-checkbox-gap);
     padding:     0;
     float:       left;
     width:       100%;
@@ -1856,9 +1691,11 @@
     font-family: var(--helix-radio-text-legendFontFamily);
     font-size:   var(--helix-radio-text-legendFontSize);
     font-weight: var(--helix-radio-text-legendFontWeight);
-    line-height: var(--helix-radio-text-legendLineHeight);
+    /* Same label as every form field (input-label, select-label, multi-select-label...): body-m-medium,
+       text-neutral, snug line-height. No margin-bottom — the group's own 8px gap already separates it
+       from the options (a margin here stacked on top of it, giving 16px). */
+    line-height: var(--helix-primitive-lineHeight-snug);
     color:       var(--helix-radio-text-label);
-    margin-bottom: var(--helix-radio-gap);
     padding:     0;
     float:       left;
     width:       100%;

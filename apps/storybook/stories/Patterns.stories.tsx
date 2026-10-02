@@ -303,7 +303,7 @@ export const SearchAndFilter: Story = {
   parameters: {
     docs: {
       description: {
-        story: '**Pattern: Search + Filter** — active filters are real neutral `<Chip>`s (`dismissible`, not `checked` — the darker checked fill is too heavy here), not a `<Button>` with an X nor a `<Badge>` (not interactive). Try removing a filter with its ×.',
+        story: '**Pattern: Search + Filter** — active filters are real neutral `<Chip>`s (`dismissible`), not a `<Button>` with an X nor a `<Badge>` (not interactive). Try removing a filter with its ×.',
       },
     },
   },

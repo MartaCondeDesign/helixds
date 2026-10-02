@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { expect, userEvent, within } from '@storybook/test';
 import { IconCircleCheck, IconPlayerPause, IconArchive } from '@tabler/icons-react';
 import { ChipGroup, ChipGroupDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
@@ -16,7 +16,7 @@ const meta: Meta<typeof ChipGroup> = {
   component:  ChipGroup,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(ChipGroupDoc),
-  args: { label: 'Status', options: STATUS, size: 's', onChange: fn() },
+  args: { label: 'Status', options: STATUS, size: 's' },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },
   },
@@ -27,18 +27,11 @@ type Story = StoryObj<typeof ChipGroup>;
 
 export const Default: Story = {};
 
-export const Checked: Story = {
-  args: { defaultValue: ['active', 'draft'] },
-  parameters: {
-    docs: { description: { story: 'checked — each filter that is on renders as a checked Chip (`aria-pressed="true"`).' } },
-  },
-};
-
 export const Sizes: Story = {
   render: args => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-l)' }}>
-      <ChipGroup {...args} label="Small" size="s" />
-      <ChipGroup {...args} label="Medium" size="m" />
+      <ChipGroup {...args} size="s" />
+      <ChipGroup {...args} size="m" />
     </div>
   ),
   parameters: {
@@ -56,17 +49,6 @@ export const WithIcons: Story = {
   },
 };
 
-export const WithDescription: Story = {
-  args: { description: 'Show projects in any of these states.' },
-};
-
-export const HiddenLabel: Story = {
-  args: { label: 'Filter by status', hideLabel: true },
-  parameters: {
-    docs: { description: { story: '`hideLabel` hides the legend visually; it stays the group\'s accessible name.' } },
-  },
-};
-
 export const Wrapping: Story = {
   args: {
     label: 'Skills',
@@ -80,39 +62,22 @@ export const Wrapping: Story = {
 };
 
 export const Disabled: Story = {
-  args: {
-    defaultValue: ['active'],
-    options: [...STATUS.slice(0, 3), { value: 'archived', label: 'Archived', disabled: true }],
+  args: { disabled: true },
+  parameters: {
+    docs: { description: { story: '`disabled` — every chip disabled.' } },
   },
-  render: args => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-l)' }}>
-      <ChipGroup {...args} label="One option disabled" />
-      <ChipGroup {...args} label="Whole group disabled" disabled />
-    </div>
-  ),
 };
 
 // Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the
 // keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardNavigation: Story = {
   tags: ['!dev', '!autodocs'],
-  play: async ({ args, canvasElement }) => {
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const active = canvas.getByRole('button', { name: 'Active' });
-    const paused = canvas.getByRole('button', { name: 'Paused' });
-
-    // Tab moves into the group and between chips
+    // Tab moves into the group and from chip to chip
     await userEvent.tab();
-    await expect(active).toHaveFocus();
+    await expect(canvas.getByRole('button', { name: 'Active' })).toHaveFocus();
     await userEvent.tab();
-    await expect(paused).toHaveFocus();
-
-    // Enter and Space each toggle the focused chip
-    await userEvent.keyboard('{Enter}');
-    await expect(paused).toHaveAttribute('aria-pressed', 'true');
-    await expect(args.onChange).toHaveBeenLastCalledWith(['paused']);
-    await userEvent.keyboard('[Space]');
-    await expect(paused).toHaveAttribute('aria-pressed', 'false');
-    await expect(args.onChange).toHaveBeenLastCalledWith([]);
+    await expect(canvas.getByRole('button', { name: 'Paused' })).toHaveFocus();
   },
 };

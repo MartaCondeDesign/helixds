@@ -9,8 +9,6 @@ export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonEle
   variant?: ChipVariant;
   /** Visual size. Default: 's' */
   size?: ChipSize;
-  /** Marks the chip as checked. */
-  checked?: boolean;
   /** Disables interaction. */
   disabled?: boolean;
   /** Visible label. */

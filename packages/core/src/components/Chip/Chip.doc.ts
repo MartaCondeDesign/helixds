@@ -21,9 +21,7 @@ export const doc: ComponentDoc = {
   sizes: ['s', 'm'],
 
   tokens: [
-    // Unchecked-state fills, per variant. `checked` layers a second, independent set of
-    // tokens on top (not modeled here — see contracts/components/Chip.json) — this is the
-    // resting/toggle-off appearance, which is what every story below actually shows by default.
+    // Fills per variant and interaction state. Chip has no checked/selected state.
     { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-surface', kind: 'color', variant: 'neutral' },
     { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-surface-dark', kind: 'color', variant: 'neutral', state: 'hover' },
     { part: 'chip', label: 'fill.neutral', token: '--helix-color-fill-secondary-interactive-default', kind: 'color', variant: 'neutral', state: 'press' },
@@ -86,7 +84,6 @@ export const doc: ComponentDoc = {
   features: [
     'forwardRef — accepts a ref to the underlying <button> element',
     'size — horizontal density preset (documented exception to the global scale)',
-    'checked — communicates active state with aria-pressed',
     'dismissible — optional close button for removable chips',
     'icon / iconEnd — optional icon slots with aria-hidden',
     'onPress — canonical handler',
@@ -98,10 +95,6 @@ export const doc: ComponentDoc = {
     {
       label: 'Neutral',
       code: `<Chip label="All" />`,
-    },
-    {
-      label: 'Selected',
-      code: `<Chip label="Open" checked />`,
     },
     {
       label: 'With icon',

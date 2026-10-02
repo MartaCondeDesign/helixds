@@ -2,6 +2,7 @@ import type { HelixIconComponent } from '../Icon';
 import type { ChipSize } from '../Chip';
 
 export interface ChipGroupOption {
+  /** Stable key for the chip. */
   value:     string;
   label:     string;
   /** Leading icon — a Tabler icon component, passed by reference (e.g. IconFilter). */
@@ -10,22 +11,12 @@ export interface ChipGroupOption {
 }
 
 export interface ChipGroupProps {
-  /** Accessible group label, rendered as the fieldset's legend. */
-  label:         string;
-  /** Hides the legend visually but keeps it for screen readers. */
-  hideLabel?:    boolean;
-  /** The filters. */
-  options:       ChipGroupOption[];
-  /** Controlled selected values. */
-  value?:        string[];
-  /** Uncontrolled initial values. */
-  defaultValue?: string[];
-  /** Receives the full updated set of selected values. */
-  onChange?:     (values: string[]) => void;
+  /** Accessible name of the group (aria-label) — never rendered visibly. */
+  label:     string;
+  /** The chips. */
+  options:   ChipGroupOption[];
   /** Size of every chip in the group. Default: 's' */
-  size?:         ChipSize;
-  /** Helper text shown below the group. */
-  description?:  string;
+  size?:     ChipSize;
   /** Disables every chip in the group. */
-  disabled?:     boolean;
+  disabled?: boolean;
 }

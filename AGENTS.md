@@ -48,7 +48,7 @@ All components import from `@helix-ds/core`. Generated from `contracts/manifest.
 | `Checkbox` | core | Lets users select one or more independent options from a set, or confirm a single binary choice. |
 | `CheckboxGroup` | core | Lets users choose zero or more options from a small, visible set of independent choices. |
 | `Chip` | core | Represents a compact selectable label for filters, categories, or short choices. |
-| `ChipGroup` | core | Lets users turn on any number of filters from a small, visible set, shown as toggle chips. |
+| `ChipGroup` | core | Shows a small set of related chips side by side — categories, tags or applied filters — as one labelled group. |
 | `FAB` | core | A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial. |
 | `Icon` | core | Communicates meaning, action, or status through a recognizable visual symbol. |
 | `IconButton` | core | Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control. |

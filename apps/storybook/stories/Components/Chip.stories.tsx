@@ -31,7 +31,6 @@ const meta: Meta<typeof Chip> = {
       control: 'select',
       options: ['s', 'm'],
     },
-    checked: { control: 'boolean' },
     disabled: { control: 'boolean' },
     dismissible: { control: 'boolean' },
     onDismiss: {
@@ -59,7 +58,7 @@ type Story = StoryObj<typeof Chip>;
 
 const VARIANTS = ['neutral', 'warning', 'info', 'success', 'danger'] as const;
 
-// Every render spreads the story's args, so each control in the panel (checked, disabled, icon,
+// Every render spreads the story's args, so each control in the panel (disabled, icon,
 // dismissible…) works in every story — only what the story is about (its variants, sizes or labels)
 // is fixed per chip. onDismiss is always wired so the dismissible control has an effect too.
 const ROW = { display: 'flex', gap: 'var(--helix-spacing-2xs)', flexWrap: 'wrap', alignItems: 'center' } as const;
@@ -71,24 +70,12 @@ export const Dismissible: Story = {
   render: args => (
     <div style={ROW}>
       <Chip {...args} label="Recent" onDismiss={() => {}} />
-      <Chip {...args} label="Saved" checked={!args.checked} onDismiss={() => {}} />
+      <Chip {...args} label="Saved" onDismiss={() => {}} />
     </div>
   ),
 };
 
-export const Unchecked: Story = {
-  args: { checked: false },
-  render: args => (
-    <div style={ROW}>
-      {VARIANTS.map(variant => (
-        <Chip key={variant} {...args} variant={variant} label={variant} onDismiss={() => {}} />
-      ))}
-    </div>
-  ),
-};
-
-export const Checked: Story = {
-  args: { checked: true },
+export const Variants: Story = {
   render: args => (
     <div style={ROW}>
       {VARIANTS.map(variant => (
