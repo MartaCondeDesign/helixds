@@ -1691,7 +1691,10 @@
   }
 
   /* Checked */
-  [data-helix-part="checkbox-input"]:checked + [data-helix-part="checkbox-control"] {
+  [data-helix-part="checkbox-input"]:checked + [data-helix-part="checkbox-control"],
+  [data-helix-part="checkbox-input"][data-indeterminate] + [data-helix-part="checkbox-control"] {
+    /* Indeterminate fills like checked — without it the box stayed white and its white minus mark was
+       invisible. The disabled rule below still wins (same specificity, later). */
     background:   var(--helix-checkbox-fill-checked);
     border-color: var(--helix-checkbox-border-checked);
   }
@@ -1754,6 +1757,10 @@
     font-weight: var(--helix-checkbox-text-labelFontWeight);
     line-height: var(--helix-checkbox-text-labelLineHeight);
     color:       var(--helix-checkbox-text-label);
+  }
+  /* checkbox-text sets its own color, so the disabled color on checkbox-label above never reached it. */
+  [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-text"] {
+    color: var(--helix-checkbox-text-disabled);
   }
 
   [data-helix-part="checkbox-description"] {
