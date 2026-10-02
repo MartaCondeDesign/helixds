@@ -15,6 +15,41 @@ which are prerequisites, not part of this skill).
 
 **Prerequisite:** `tokens-to-figma` must have run first — Figma variable collections must exist.
 
+## Non-negotiable rules (added 2026-10-02 — every one of these was broken in a real handoff)
+
+Input, Textarea, Chip, Badge and ChipGroup were "synced" with wrong colors, literal and negative spacing,
+spacer frames and no hover/press/focus states. These rules exist so that never ships again. A component is
+not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it as ✓/stable otherwise.
+
+1. **Every state, always.** The set has a `state` VARIANT axis with every value in the contract's
+   `figma.states` (default, hover, press, focus, disabled, invalid… whatever the component has). Hover,
+   press and focus don't exist as props in code (they're CSS pseudo-classes) — they are **figma-only
+   properties** and must be declared in the contract's `figma.properties` with `"figmaOnly": true`
+   (see `contracts/component.schema.json` → `figma`). Designing only "default + disabled" is a failed sync.
+   A `disabled` prop folds into this same `state` axis — not a separate `disabled=true/false` axis.
+2. **Colors come from code, not from reading CSS.** Run `pnpm figma:expected <Name>` (Storybook running):
+   it renders each variant × state in light AND dark and records the real computed colors. Bind each
+   fill/stroke/text to the Theme variable that produces that color. Never a raw hex, never a Primitives
+   variable. A CSS `color-mix(a X%, b)` has no variable: bind the fill to `b` and add a child rectangle
+   named **`state-layer`** (absolute, constraints STRETCH, radius bound) filled with `a` at **layer**
+   opacity X% (a paint-level opacity is lost on instances — layer opacity isn't).
+3. **Spacing is always a bound variable — never a node, never negative.** Every non-zero padding,
+   `itemSpacing`, `counterAxisSpacing` and corner radius is bound to a spacing/radius variable. No empty
+   frame or rectangle used as a spacer. No negative `itemSpacing` to overlap parts. If code needs two
+   different distances on one row (e.g. Chip: 4px gap + 2px on the icon's label side), model the extra one
+   as padding on the part that owns it in code (the `chip-icon` span has the 2px → a `chip-icon` frame with
+   `paddingRight` bound to `spacing/3xs`). If code uses an off-scale value (6px…), fix the code first.
+4. **The border is always there** (`.ai/maps/patterns/border-always.md`). If a layer has a stroke in one
+   variant it has it in all of them, same weight — states only change its color. A "no visible border"
+   state binds the stroke to the fill's own variable.
+5. **Behaviour that changes layout is a VARIANT, not a BOOLEAN.** A Figma boolean only shows/hides a layer;
+   it can't change a padding. If a prop changes spacing (Chip's `dismissible` changes the end padding),
+   it's a VARIANT axis — declared in `figma.properties` with its `codeProp`.
+6. **Lay the set out as a Propstar property table** (Phase 7) — the same output as the
+   [Propstar](https://www.figma.com/community/plugin/1116018586739867857) "Create property table" command.
+7. **Audit before recording.** Phase 6 must return `pass: true`, and its result is recorded in
+   `contracts/figma-sync.json` (`audit: { pass, commit, date, counts }`) next to `syncedCommit`.
+
 ## Files to read BEFORE starting (mandatory, in this order)
 
 | File | What it gives you |
@@ -64,7 +99,7 @@ Figma component properties come in exactly 4 types: `BOOLEAN`, `TEXT`, `INSTANCE
 
 | Prop | Code type | Figma property type | Why |
 |------|-----------|---------------------|-----|
-| `disabled` | `boolean` | `VARIANT` (`disabled=false` / `disabled=true`), not BOOLEAN | BOOLEAN can't express the opacity change (0.5); VARIANT makes the state visible/selectable in the panel — see "Disabled state rule" below |
+| `disabled` | `boolean` | a value of the `state` VARIANT axis (`state=disabled`), not BOOLEAN | BOOLEAN can't express a color/opacity change; folding it into `state` keeps every visual state on one axis — see Phase 2.75 |
 | `icon` / `iconEnd` | icon component reference | falls back to `BOOLEAN`-only if the icon library isn't imported into Figma yet (no `INSTANCE_SWAP` without real icon components to reference) | see "Icon discovery flow" and "Icon slots need BOTH..." below |
 | `onPress`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
 | `required` (when no asterisk rendered) | `boolean` | *(no Figma property — skipped)* | No visual difference in the anatomy |
@@ -126,29 +161,24 @@ Use this map in Phase 2 to create icon slots as INSTANCE nodes with INSTANCE_SWA
 
 ### Phase 1 — Build individual components
 
-Create one Figma COMPONENT per variant+size combination, `disabled=false` only for now — its
-`disabled=true` sibling gets cloned in Phase 2.75, once anatomy and auto-layout exist to clone from.
-Collect every component into one array as you create it (e.g. `allComponents = []`) — Phase 3 needs ALL
-of them, both disabled states included, in a single `combineAsVariants` call.
+Create one Figma COMPONENT per variant × size × state combination (Phase 2.75 lists the states and where
+their colors come from). Collect every component into one array as you create it (e.g.
+`allComponents = []`) — Phase 3 needs ALL of them in a single `combineAsVariants` call.
 
 ```js
 // use_figma: create one component
 const comp = figma.createComponent();
-comp.name = 'variant=primary, size=m, disabled=false'; // EXACT prop=value format, lowercase
+comp.name = 'variant=primary, size=m, state=default'; // EXACT prop=value format, lowercase
 comp.resize(width, height); // use token values from tokens.json component layer
 comp.x = col * (width + gap);
 comp.y = row * (height + gap);
 allComponents.push(comp);
 ```
 
-**Grid layout (position BEFORE combineAsVariants):**
-- Rows = sizes (xs, s, m, l, xl) × disabled states (false/true) — 2 sub-rows per size; the `disabled=true`
-  row is left empty here and filled in by the Phase 2.75 clone
-- Columns = variants (primary, secondary, ghost, danger)
+**Layout:** position doesn't matter at this point — Phase 7 lays the finished set out as a Propstar
+property table. Just keep components from overlapping.
 
-If the component has a `disabled` prop in code, its `disabled=true` state is represented as a **VARIANT**,
-NOT a BOOLEAN — full rule in Phase 2.75. **Never use a BOOLEAN for disabled** — BOOLEAN can't express
-opacity changes; VARIANT makes the state visible and selectable in Figma's panel.
+A `disabled` prop is a value of the `state` VARIANT axis, NOT a BOOLEAN — full rule in Phase 2.75.
 
 ### Phase 2 — Build anatomy layers
 
@@ -404,35 +434,23 @@ Button has no min/max-width in CSS — leave as `null` per contract.
       note. Derive the *correct* style name from `tokens.json` (`component.{name}.fontSize.{size}` →
       `semantic.textStyle.{key}`), not from Figma — `figma-sync.json` only confirms whether Figma matches.
 
-### Phase 2.75 — Disabled state rule (MANDATORY if the component has a `disabled` prop)
+### Phase 2.75 — States (MANDATORY)
 
-Clone each finished `disabled=false` component (anatomy + auto-layout already applied) into its
-`disabled=true` sibling — on the standalone `comp` objects still in `allComponents`, NOT on
-`compSet.children`, since `compSet` doesn't exist until Phase 3. Cloning now, before the single
-`combineAsVariants` call, avoids adding a new variant axis to an already-combined set — exactly the
-scenario Phase 3's CRITICAL warning below identifies as a confirmed cause of set corruption (the
-2026-08-24 incident).
+Build one component per variant × size × **state**, where `state` takes every value in the contract's
+`figma.states` — from scratch, before the single `combineAsVariants` call (adding states to an existing set
+later means rebuilding it; see Phase 3's CRITICAL note). Name format: `…, state=hover`.
 
-- Name format: `variant=primary, size=m, disabled=false` → `variant=primary, size=m, disabled=true`
-- The `disabled=true` clone gets `opacity = 0.5`
-- This matches the code: `[data-helix-part="button"]:disabled { opacity: 0.5 }`
+Each state's look comes from `.ai/figma-expected/{Name}.json` (`pnpm figma:expected <Name>`), never from
+guessing at CSS:
 
-```js
-// use_figma: clone each disabled=false component into its disabled=true sibling, BEFORE combineAsVariants
-const disabledClones = [];
-for (const comp of allComponents) {
-  const clone = comp.clone();
-  clone.name = comp.name.replace('disabled=false', 'disabled=true');
-  clone.opacity = 0.5;
-  clone.x = comp.x;
-  clone.y = comp.y + comp.height + gap; // the disabled=true sub-row from the Phase 1 grid
-  disabledClones.push(clone);
-}
-allComponents.push(...disabledClones);
-```
-
-`allComponents` now holds both disabled states for every variant×size — pass it whole into Phase 3's
-single `combineAsVariants` call below.
+- **hover / press**: the fill/stroke/text the browser computes with the pointer over / pressed on it.
+- **focus**: same colors as default, plus the focus ring — two DROP_SHADOW effects bound to Theme
+  variables: an inner `spread 2` in `fill/page` (the outline offset) and an outer `spread 4` in
+  `border/focus` (the 2px outline). Never a second stroke or an extra frame.
+- **disabled**: exactly what code shows. Since 2026-10-02 most components use real disabled tokens
+  (`fill/disabled`, `text/disabled`, `icon/disabled`, `border/neutral/light`) at opacity 1 — but a
+  component may still use opacity (Chip: its variant colors at 0.72). Read it from the expected file.
+- **invalid** (form fields): border `border/danger`.
 
 ### Phase 3 — Create COMPONENT_SET
 
@@ -576,6 +594,28 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 - Never use `Primitives` collection variables in component fills
 - Collection names have NO system prefix: use `Color`, NOT `Helix / Color`
 
+### Phase 6 — Audit (MANDATORY, blocks the sync)
+
+1. `pnpm figma:expected <Name>` — writes `.ai/figma-expected/<Name>.json` (needs a spec in
+   `scripts/figma/expected-styles.ts`; add one for a new component — use a story with **no `play`
+   function**, a failing play covers the component with Storybook's error overlay).
+2. Run `scripts/figma/audit-component.js` through `use_figma`, with `SET_ID`, `PAGE_ID` and `EXPECTED`
+   (= that JSON) filled in. It checks: (1) colors bound to Theme, (2) spacing/radius bound, no negative gaps,
+   (3) no spacer nodes, (4) every `figma.states` value present, (5) color parity with code in light and dark,
+   (6) the border-always rule.
+3. Fix and re-run until `pass: true`. Then record in `contracts/figma-sync.json`:
+   `"syncedCommit": "<git rev-parse HEAD>", "audit": { "pass": true, "commit": "<same>", "date": "…", "counts": {…} }`.
+   `scripts/figma-drift.ts` refuses ✓ without it.
+
+### Phase 7 — Property table (Propstar layout)
+
+Run `scripts/figma/property-table.js` through `use_figma` (`PAGE_ID`, `SET_ID`, `BOOLEANS` = the boolean
+properties to expand, e.g. `['icon']`). It reproduces Propstar's "Create property table": a `❖ {Name}`
+GRID frame, values of the first variant axis as row labels, the other axes (booleans outermost) as nested
+column headers with brackets, dashed `#9747FF` cells with 24px padding, the real COMPONENT_SET placed over
+the all-booleans-false cells and instances in the rest. Labels are Propstar's purple annotation chrome, not
+design tokens.
+
 ## Output
 
 A single Figma COMPONENT_SET per Helix component, with one COMPONENT per variant×size (and
@@ -587,10 +627,17 @@ collection semantic variable — never a hardcoded hex value.
 
 After building the component:
 
+- [ ] Phase 6 audit returned `pass: true` and is recorded in `figma-sync.json` with `syncedCommit`
+- [ ] `state` axis has every value in the contract's `figma.states`; figma-only properties are declared in
+      the contract's `figma.properties`
+- [ ] No negative `itemSpacing`, no spacer frames, every padding/gap/radius bound to a variable
+- [ ] Every bordered layer has its stroke in every variant, same weight (border-always.md)
+- [ ] The set sits in a Propstar property table (Phase 7)
+
 - [ ] Component name matches code: PascalCase (`Button`, not `button`)
 - [ ] VARIANT property names are lowercase (`variant`, `size`, `disabled`) — match code exactly
 - [ ] VARIANT values are lowercase (`primary`, `xs`, `false`, `true`) — match TypeScript unions exactly
-- [ ] `disabled` is a VARIANT (not BOOLEAN) — `disabled=false` / `disabled=true`, opacity 0.5 on true
+- [ ] `disabled` is a value of the `state` axis (not a BOOLEAN, not its own axis) — colors as in the expected file
 - [ ] BOOLEAN property names match code (`icon`, `iconEnd`, `loading`) — NOT `disabled`
 - [ ] Icon slots have BOTH a BOOLEAN (visibility) and an INSTANCE_SWAP (which icon) property bound to the
       same layer via a single `componentPropertyReferences = { visible: ..., mainComponent: ... }` call —

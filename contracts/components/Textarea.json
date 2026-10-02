@@ -3,55 +3,163 @@
   "name": "Textarea",
   "version": "1.0.0",
   "status": "stable",
-
   "purpose": "Lets users enter multi-line free-form text.",
-
   "neverUseFor": [
     "Single-line text - use Input instead",
     "Option selection - use Select, RadioGroup, or CheckboxGroup",
     "File uploads - use FileInput"
   ],
-
   "states": {
-    "intrinsic": ["hover", "focus", "active"],
+    "intrinsic": [
+      "hover",
+      "focus",
+      "active"
+    ],
     "authored": [
-      { "name": "invalid", "description": "The field value fails validation.", "aria": "aria-invalid='true'" },
-      { "name": "disabled", "description": "The field is non-interactive.", "aria": "disabled (native)" },
-      { "name": "required", "description": "The field must have a value before form submission.", "aria": "aria-required='true'" }
+      {
+        "name": "invalid",
+        "description": "The field value fails validation.",
+        "aria": "aria-invalid='true'"
+      },
+      {
+        "name": "disabled",
+        "description": "The field is non-interactive.",
+        "aria": "disabled (native)"
+      },
+      {
+        "name": "required",
+        "description": "The field must have a value before form submission.",
+        "aria": "aria-required='true'"
+      }
     ]
   },
-
   "anatomy": [
-    { "part": "textarea-root", "element": "div", "description": "Layout wrapper for label, field, and messages." },
-    { "part": "textarea-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md." },
-    { "part": "textarea-wrapper", "element": "div", "description": "Field shell around the native textarea." },
-    { "part": "textarea-field", "element": "textarea", "description": "The native textarea element." },
-    { "part": "textarea-counter", "element": "span", "description": "Live character counter.", "optional": true },
-    { "part": "textarea-description", "element": "span", "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
-    { "part": "textarea-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
+    {
+      "part": "textarea-root",
+      "element": "div",
+      "description": "Layout wrapper for label, field, and messages."
+    },
+    {
+      "part": "textarea-label",
+      "element": "label",
+      "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md."
+    },
+    {
+      "part": "textarea-wrapper",
+      "element": "div",
+      "description": "Field shell around the native textarea."
+    },
+    {
+      "part": "textarea-field",
+      "element": "textarea",
+      "description": "The native textarea element."
+    },
+    {
+      "part": "textarea-counter",
+      "element": "span",
+      "description": "Live character counter.",
+      "optional": true
+    },
+    {
+      "part": "textarea-description",
+      "element": "span",
+      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "optional": true
+    },
+    {
+      "part": "textarea-error",
+      "element": "span",
+      "description": "Error text shown when invalid=true.",
+      "optional": true
+    }
   ],
-
   "props": [
-    { "name": "label", "type": "string", "required": true, "description": "Visible or screen-reader-only label. Required for a11y." },
-    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
-    { "name": "errorMessage", "type": "string | undefined", "description": "Error text shown when invalid=true." },
-    { "name": "invalid", "type": "boolean", "default": false, "description": "Shows error styling and message." },
-    { "name": "disabled", "type": "boolean", "default": false, "description": "Non-interactive state." },
-    { "name": "required", "type": "boolean", "default": false, "description": "Marks field as required." },
-    { "name": "fullWidth", "type": "boolean", "default": false, "description": "Expands to container width." },
-    { "name": "hideLabel", "type": "boolean", "default": false, "description": "Hides the label visually but keeps it accessible." },
-    { "name": "size", "type": "'s' | 'm' | 'l'", "default": "m", "description": "Field size. Uses the shared field scale for density and typography." },
-    { "name": "rows", "type": "number | undefined", "description": "Controls the visible row count." },
-    { "name": "maxLength", "type": "number | undefined", "description": "Maximum number of characters allowed." },
-    { "name": "resize", "type": "'none' | 'vertical' | 'horizontal' | 'both'", "default": "vertical", "description": "Native resize behavior." },
-    { "name": "showCount", "type": "boolean", "default": false, "description": "Shows a live character counter when maxLength is set." },
-    { "name": "onChange", "type": "React.ChangeEventHandler<HTMLTextAreaElement> | undefined", "description": "Value change handler. Also drives the live character counter." }
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible or screen-reader-only label. Required for a11y."
+    },
+    {
+      "name": "description",
+      "type": "string | undefined",
+      "description": "Helper text shown below the field."
+    },
+    {
+      "name": "errorMessage",
+      "type": "string | undefined",
+      "description": "Error text shown when invalid=true."
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows error styling and message."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "Non-interactive state."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": false,
+      "description": "Marks field as required."
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": false,
+      "description": "Expands to container width."
+    },
+    {
+      "name": "hideLabel",
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label visually but keeps it accessible."
+    },
+    {
+      "name": "size",
+      "type": "'s' | 'm' | 'l'",
+      "default": "m",
+      "description": "Field size. Uses the shared field scale for density and typography."
+    },
+    {
+      "name": "rows",
+      "type": "number | undefined",
+      "description": "Controls the visible row count."
+    },
+    {
+      "name": "maxLength",
+      "type": "number | undefined",
+      "description": "Maximum number of characters allowed."
+    },
+    {
+      "name": "resize",
+      "type": "'none' | 'vertical' | 'horizontal' | 'both'",
+      "default": "vertical",
+      "description": "Native resize behavior."
+    },
+    {
+      "name": "showCount",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a live character counter when maxLength is set."
+    },
+    {
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLTextAreaElement> | undefined",
+      "description": "Value change handler. Also drives the live character counter."
+    }
   ],
-
   "sizing": {
     "height": {
       "mode": "rows-driven",
-      "values": { "min": 32 },
+      "values": {
+        "min": 32
+      },
       "unit": "px",
       "note": "component.textarea.height aliases semantic.size.m (32px) and is applied as min-height on textarea-field — a floor, not a per-size ladder like Input/Select. `size` itself only changes font-size (s: --helix-primitive-fontSize-s, m: base/default, l: --helix-primitive-fontSize-m); the visible height above the floor is controlled by the native `rows` attribute and `resize`."
     },
@@ -64,15 +172,55 @@
       }
     }
   },
-
   "tokenPolicy": {
-    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize"],
-    "forbidden": ["primitive.color"]
+    "allowed": [
+      "color.fill",
+      "color.text",
+      "color.border",
+      "spacing",
+      "radius",
+      "fontSize"
+    ],
+    "forbidden": [
+      "primitive.color"
+    ]
   },
-
   "a11y": {
     "role": "textbox (implicit)",
-    "keyboardNav": ["Tab - focuses field", "Escape - blurs field"],
-    "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions"]
+    "keyboardNav": [
+      "Tab - focuses field",
+      "Escape - blurs field"
+    ],
+    "wcag": [
+      "1.3.1 Info and Relationships",
+      "1.4.3 Contrast (AA)",
+      "2.4.7 Focus Visible",
+      "3.3.1 Error Identification",
+      "3.3.2 Labels or Instructions"
+    ]
+  },
+  "figma": {
+    "states": [
+      "default",
+      "hover",
+      "focus",
+      "invalid",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "hover",
+          "focus",
+          "invalid",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+      }
+    ]
   }
 }

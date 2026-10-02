@@ -1,59 +1,179 @@
 {
   "$schema": "../component.schema.json",
-  "name":    "Input",
+  "name": "Input",
   "version": "1.0.0",
-  "status":  "stable",
-
+  "status": "stable",
   "purpose": "Allows users to enter a single line of free-form text.",
-
   "neverUseFor": [
     "Multi-line text — use Textarea instead",
     "File uploads — use FileInput",
     "Date/time entry — use DatePicker"
   ],
-
   "states": {
-    "intrinsic": ["hover", "focus", "active", "placeholder-shown"],
+    "intrinsic": [
+      "hover",
+      "focus",
+      "active",
+      "placeholder-shown"
+    ],
     "authored": [
-      { "name": "invalid", "description": "The field value fails validation. Shows error styling and message, and plays a one-time shake when it transitions from valid to invalid (not on initial mount, and not repeatedly while it stays invalid) — disabled automatically under prefers-reduced-motion.", "aria": "aria-invalid='true'" },
-      { "name": "disabled", "description": "The field is non-interactive.", "aria": "disabled (native)" },
-      { "name": "required", "description": "The field must have a value before form submission.", "aria": "aria-required='true'" },
-      { "name": "loading", "description": "An async operation is checking this field's value (e.g. username availability check).", "aria": "aria-busy='true'" }
+      {
+        "name": "invalid",
+        "description": "The field value fails validation. Shows error styling and message, and plays a one-time shake when it transitions from valid to invalid (not on initial mount, and not repeatedly while it stays invalid) — disabled automatically under prefers-reduced-motion.",
+        "aria": "aria-invalid='true'"
+      },
+      {
+        "name": "disabled",
+        "description": "The field is non-interactive.",
+        "aria": "disabled (native)"
+      },
+      {
+        "name": "required",
+        "description": "The field must have a value before form submission.",
+        "aria": "aria-required='true'"
+      },
+      {
+        "name": "loading",
+        "description": "An async operation is checking this field's value (e.g. username availability check).",
+        "aria": "aria-busy='true'"
+      }
     ]
   },
-
   "anatomy": [
-    { "part": "input-root",        "element": "div",   "description": "Layout wrapper — provides relative positioning for icon slots." },
-    { "part": "input-label",       "element": "label", "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
-    { "part": "input-wrapper",     "element": "div",   "description": "Wraps the leading icon, native field, and trailing icon; carries invalid/disabled/loading data attributes." },
-    { "part": "input-icon",        "element": "slot",  "description": "Leading icon.", "optional": true },
-    { "part": "input-field",       "element": "input", "description": "The native <input> element." },
-    { "part": "input-icon-end",    "element": "slot",  "description": "Trailing icon or action.", "optional": true },
-    { "part": "input-description", "element": "p",     "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
-    { "part": "input-error",       "element": "p",     "description": "Error message shown when invalid=true.", "optional": true }
+    {
+      "part": "input-root",
+      "element": "div",
+      "description": "Layout wrapper — provides relative positioning for icon slots."
+    },
+    {
+      "part": "input-label",
+      "element": "label",
+      "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md.",
+      "optional": true
+    },
+    {
+      "part": "input-wrapper",
+      "element": "div",
+      "description": "Wraps the leading icon, native field, and trailing icon; carries invalid/disabled/loading data attributes."
+    },
+    {
+      "part": "input-icon",
+      "element": "slot",
+      "description": "Leading icon.",
+      "optional": true
+    },
+    {
+      "part": "input-field",
+      "element": "input",
+      "description": "The native <input> element."
+    },
+    {
+      "part": "input-icon-end",
+      "element": "slot",
+      "description": "Trailing icon or action.",
+      "optional": true
+    },
+    {
+      "part": "input-description",
+      "element": "p",
+      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "optional": true
+    },
+    {
+      "part": "input-error",
+      "element": "p",
+      "description": "Error message shown when invalid=true.",
+      "optional": true
+    }
   ],
-
   "props": [
-    { "name": "label",       "type": "string",    "required": true,  "description": "Visible or screen-reader-only label. Required for a11y." },
-    { "name": "hideLabel",   "type": "boolean",   "default": false,  "description": "Hides the label visually while keeping it announced by screen readers." },
-    { "name": "size",        "type": "'s' | 'm' | 'l'", "default": "m", "description": "Visual size." },
-    { "name": "invalid",     "type": "boolean",   "default": false,  "description": "Shows error state and errorMessage." },
-    { "name": "disabled",    "type": "boolean",   "default": false,  "description": "Non-interactive state." },
-    { "name": "required",    "type": "boolean",   "default": false,  "description": "Marks field as required." },
-    { "name": "loading",     "type": "boolean",   "default": false,  "description": "Async validation in progress." },
-    { "name": "icon",        "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18)." },
-    { "name": "iconEnd",     "type": "TablerIcon | undefined", "description": "Trailing icon. Same field-size-derived sizing as icon." },
-    { "name": "description", "type": "string | undefined", "description": "Helper text shown below the field." },
-    { "name": "errorMessage","type": "string | undefined", "description": "Error text shown when invalid=true." },
-    { "name": "invalidAttempt", "type": "number | undefined", "description": "Bump on each failed validation attempt to retrigger the error shake even while invalid stays true (e.g. a resubmit with the same bad value) — a plain invalid false→true edge only fires once per outage." },
-    { "name": "fullWidth",   "type": "boolean",   "default": false,  "description": "Expands to container width." },
-    { "name": "onChange",    "type": "React.ChangeEventHandler<HTMLInputElement> | undefined", "description": "Value change handler." }
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible or screen-reader-only label. Required for a11y."
+    },
+    {
+      "name": "hideLabel",
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label visually while keeping it announced by screen readers."
+    },
+    {
+      "name": "size",
+      "type": "'s' | 'm' | 'l'",
+      "default": "m",
+      "description": "Visual size."
+    },
+    {
+      "name": "invalid",
+      "type": "boolean",
+      "default": false,
+      "description": "Shows error state and errorMessage."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": false,
+      "description": "Non-interactive state."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": false,
+      "description": "Marks field as required."
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "default": false,
+      "description": "Async validation in progress."
+    },
+    {
+      "name": "icon",
+      "type": "TablerIcon | undefined",
+      "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18)."
+    },
+    {
+      "name": "iconEnd",
+      "type": "TablerIcon | undefined",
+      "description": "Trailing icon. Same field-size-derived sizing as icon."
+    },
+    {
+      "name": "description",
+      "type": "string | undefined",
+      "description": "Helper text shown below the field."
+    },
+    {
+      "name": "errorMessage",
+      "type": "string | undefined",
+      "description": "Error text shown when invalid=true."
+    },
+    {
+      "name": "invalidAttempt",
+      "type": "number | undefined",
+      "description": "Bump on each failed validation attempt to retrigger the error shake even while invalid stays true (e.g. a resubmit with the same bad value) — a plain invalid false→true edge only fires once per outage."
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "default": false,
+      "description": "Expands to container width."
+    },
+    {
+      "name": "onChange",
+      "type": "React.ChangeEventHandler<HTMLInputElement> | undefined",
+      "description": "Value change handler."
+    }
   ],
-
   "sizing": {
     "height": {
       "mode": "fixed",
-      "values": { "s": 24, "m": 32, "l": 40 },
+      "values": {
+        "s": 24,
+        "m": 32,
+        "l": 40
+      },
       "unit": "px",
       "note": "Shared field scale. Keep these values aligned with Select and Textarea density docs."
     },
@@ -66,15 +186,55 @@
       }
     }
   },
-
   "tokenPolicy": {
-    "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "fontSize"],
-    "forbidden": ["primitive.color"]
+    "allowed": [
+      "color.fill",
+      "color.text",
+      "color.border",
+      "spacing",
+      "radius",
+      "fontSize"
+    ],
+    "forbidden": [
+      "primitive.color"
+    ]
   },
-
   "a11y": {
     "role": "textbox (implicit)",
-    "keyboardNav": ["Tab — focuses field", "Escape — blurs field"],
-    "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.4.7 Focus Visible", "3.3.1 Error Identification", "3.3.2 Labels or Instructions"]
+    "keyboardNav": [
+      "Tab — focuses field",
+      "Escape — blurs field"
+    ],
+    "wcag": [
+      "1.3.1 Info and Relationships",
+      "1.4.3 Contrast (AA)",
+      "2.4.7 Focus Visible",
+      "3.3.1 Error Identification",
+      "3.3.2 Labels or Instructions"
+    ]
+  },
+  "figma": {
+    "states": [
+      "default",
+      "hover",
+      "focus",
+      "invalid",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "hover",
+          "focus",
+          "invalid",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+      }
+    ]
   }
 }

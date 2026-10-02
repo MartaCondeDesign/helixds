@@ -13,8 +13,9 @@
  *
  * Behaviour-only changes ({Name}.tsx logic, stories, docs) don't count: they don't change what Figma shows.
  *
- *   synced   in Figma, nothing visual changed since         ✓
- *   drift    in Figma, but something visual changed since   ⚠  (lists what)
+ *   synced   in Figma, audited, nothing visual changed since  ✓
+ *   drift    in Figma, but not audited, or something visual
+ *            changed since                                    ⚠  (lists what)
  *   missing  not in Figma                                    ✗
  */
 import fs from 'fs';
@@ -91,6 +92,12 @@ function baselineRev(entry: any): string | null {
 
 export function figmaCheck(name: string, contractPath: string, figmaEntry: any | undefined): FigmaCheck {
   if (!figmaEntry?.inFigma) return { state: 'missing', details: ['Not in Figma yet — done on request'] };
+  // Harness (2026-10-02): "in Figma" is not enough — the Figma set must have passed
+  // scripts/figma/audit-component.js (bound colors, bound spacing, no spacer nodes, every state of the
+  // contract's figma.states, color parity with code in light and dark) at the commit it was synced against.
+  const audit = figmaEntry.audit;
+  if (!audit?.pass) return { state: 'drift', details: ['Not audited — run scripts/figma/audit-component.js and record the passing result in figma-sync.json (components-to-figma.md, Phase 6)'] };
+  if (figmaEntry.syncedCommit && audit.commit !== figmaEntry.syncedCommit) return { state: 'drift', details: [`Audit is for ${String(audit.commit).slice(0, 7)}, not the synced commit ${String(figmaEntry.syncedCommit).slice(0, 7)} — re-run the audit`] };
   const rev = baselineRev(figmaEntry);
   const syncedAt = figmaEntry.syncedCommit ? `commit ${String(figmaEntry.syncedCommit).slice(0, 7)}` : figmaEntry.lastChecked;
   if (!rev) return { state: 'drift', details: ['No sync point recorded in figma-sync.json — re-check it against code'], syncedAt };

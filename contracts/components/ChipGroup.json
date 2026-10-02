@@ -92,5 +92,23 @@
       "2.4.7 Focus Visible",
       "4.1.2 Name Role Value"
     ]
+  },
+  "figma": {
+    "states": [
+      "default",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. The group itself has no hover/press/focus — those belong to each Chip instance (swap the instance's own state). disabled is the `disabled` prop."
+      }
+    ]
   }
 }

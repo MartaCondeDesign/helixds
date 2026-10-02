@@ -162,5 +162,39 @@
       "2.4.7 Focus Visible",
       "4.1.2 Name Role Value"
     ]
+  },
+  "figma": {
+    "states": [
+      "default",
+      "hover",
+      "press",
+      "focus",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "hover",
+          "press",
+          "focus",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. hover/press/focus are CSS pseudo-classes in code (:hover, :active, :focus-visible); disabled is the `disabled` prop, folded into this axis so every visual state sits on one row."
+      },
+      {
+        "name": "dismissible",
+        "type": "VARIANT",
+        "values": [
+          "false",
+          "true"
+        ],
+        "codeProp": "dismissible",
+        "description": "A boolean in code, a VARIANT in Figma: it changes the chip's end padding (12px without the dismiss button, 0/4px with it), which a Figma boolean can't."
+      }
+    ]
   }
 }

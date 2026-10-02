@@ -54,6 +54,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      "this floats" when it doesn't. `component.input.shadow.focus` is a different concept (a focus-ring
      glow) and isn't covered by this rule.
 
+   - **Border always:** a component with a border has it in every variant and state, same width — states
+     change only its color (`.ai/maps/patterns/border-always.md`), in code and in Figma.
+
    Token names live in `.ai/maps/prop-map.md`.
 4. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
 5. **Prop vocabulary** — canonical names in `.ai/maps/prop-map.md`. Anti-synonyms are invalid.
@@ -71,6 +74,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    `contracts/figma-sync.json` records it — set the entry's `syncedCommit` to the commit you synced against.
    The Figma column is three-state: ✓ aligned · ⚠ in Figma but tokens/CSS/props/anatomy changed since
    (`scripts/figma-drift.ts`) · ✗ not in Figma. Changing a stable component drops it to beta until Figma is updated.
+   ✓ also requires a passing **Figma audit** recorded in `figma-sync.json` (`scripts/figma/audit-component.js`:
+   every state, colors bound and matching code in light/dark, spacing bound, no spacer nodes, border always) —
+   see `.ai/skills/components-to-figma.md` → "Non-negotiable rules" and Phase 6.
 7. **Read the contract before touching a component** — the contract defines what the component IS.
 8. **Figma is reference only** — Helix contracts always win over Figma output.
 9. **Every new or edited text/icon color token must pass WCAG 2.2 AA color contrast** — 4.5:1 for normal
