@@ -120,16 +120,17 @@ const darkOverrides: Record<string, string> = {
   // surface — fails AA for normal text. #8391a7 (between slate 400 and 500): 5.59:1 page, 4.58:1 surface.
   '--helix-color-text-neutral-lightest': '#8391a7',
   '--helix-color-text-disabled':         '#475569',
-  '--helix-color-text-inverse':          '#0f172a',
-  '--helix-color-text-primary':          '#60a5fa',
+  // text/icon-inverse: no dark entry — they are white on saturated brand fills (and Tooltip's fill.inverse),
+  // which keep the same hex in both themes, so the white stays white too (it used to flip to #0f172a and
+  // fail contrast on every primary/danger Button in dark mode once components followed the semantic layer).
+  '--helix-color-text-primary':          '#93c5fd', // blue-300: #60a5fa only reached 4.07:1 on fill-primary-interactive-light-default (selected NavItem)
   '--helix-color-text-link':       '#60a5fa',
   '--helix-color-text-link-hover': '#93c5fd',
   '--helix-color-icon-neutral':     '#f1f5f9',
   '--helix-color-icon-neutral-light':    '#94a3b8',
   '--helix-color-icon-neutral-lightest': '#64748b',
   '--helix-color-icon-disabled':         '#475569',
-  '--helix-color-icon-inverse':          '#0f172a',
-  '--helix-color-icon-primary':          '#60a5fa',
+  '--helix-color-icon-primary':          '#93c5fd', // same step as text-primary
   '--helix-color-border-neutral':        '#334155',
   '--helix-color-border-neutral-dark':   '#475569',
   '--helix-color-border-neutral-light':  '#1e293b',
@@ -446,20 +447,17 @@ const darkOverrides: Record<string, string> = {
   // separate dark check. Not a coverage gap — a deliberate, common dark-mode convention.
 };
 
-// ─── Dark mode inheritance for component tokens ──────────────────────────────
+// ─── Dark mode for component tokens: always the semantic token's dark value ───
 //
-// Component tokens are inlined at build time (no var() chaining), so a component color that aliases a
-// semantic color with a dark value used to keep its LIGHT hex in dark mode unless someone remembered to
-// add it to darkOverrides by hand — 28 had been missed (every disabled token, Toast's status icons, the
-// secondary Button border...). Now each one inherits its semantic token's dark value automatically.
-// An explicit darkOverrides entry still wins. KEEP_LIGHT_IN_DARK lists the deliberate exceptions: white
-// text/icons on saturated brand fills, which stay identical in both themes (see the note above).
-const KEEP_LIGHT_IN_DARK = new Set([
-  '--helix-button-text-primary', '--helix-button-text-danger',
-  '--helix-button-icon-primary', '--helix-button-icon-danger',
-  '--helix-fab-icon', '--helix-tooltip-text',
-]);
-(function inheritComponentDark(node: Tree, path: string[]) {
+// Rule (2026-10-02): the semantic layer pairs every light color with its dark color, so a component color
+// that aliases a semantic color is that semantic color in BOTH themes — no per-component dark values. Hand-
+// written component entries in darkOverrides used to win here (34 diverged from their semantic token, and
+// 28 more had no dark value at all), which is why Figma — bound to the semantic variables — could never
+// match code in dark mode. Now every component color that aliases a semantic color gets exactly the
+// semantic token's dark value (or none, if the semantic token has none), and any hand-written entry for it
+// is ignored. If a component needs a different dark color, it must alias a different semantic token.
+const componentDarkReport: string[] = [];
+(function followSemanticDark(node: Tree, path: string[]) {
   for (const [key, child] of Object.entries(node)) {
     if (key.startsWith('$')) continue;
     const c = child as TokenNode & Tree;
@@ -468,10 +466,13 @@ const KEEP_LIGHT_IN_DARK = new Set([
       if (!m) continue;
       const comp = `--helix-${[...path, key].join('-')}`;
       const sem = `--helix-color-${m[1]}-${m[2]}`;
-      if (darkOverrides[sem] && !(comp in darkOverrides) && !KEEP_LIGHT_IN_DARK.has(comp)) darkOverrides[comp] = darkOverrides[sem]!;
-    } else if (c && typeof c === 'object') inheritComponentDark(c, [...path, key]);
+      const semDark = darkOverrides[sem];
+      if (comp in darkOverrides && darkOverrides[comp] !== semDark) componentDarkReport.push(`${comp}: ${darkOverrides[comp]} -> ${semDark ?? '(same as light)'}`);
+      if (semDark) darkOverrides[comp] = semDark; else delete darkOverrides[comp];
+    } else if (c && typeof c === 'object') followSemanticDark(c, [...path, key]);
   }
 })(tokens['component'] as Tree, []);
+if (process.env.HELIX_DARK_REPORT) console.log(componentDarkReport.join('\n'));
 
 // ─── Responsive typography (mobile fontSize override) ─────────────────────────
 //

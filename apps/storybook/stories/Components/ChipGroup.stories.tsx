@@ -27,18 +27,6 @@ type Story = StoryObj<typeof ChipGroup>;
 
 export const Default: Story = {};
 
-export const Sizes: Story = {
-  render: args => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-l)' }}>
-      <ChipGroup {...args} size="s" />
-      <ChipGroup {...args} size="m" />
-    </div>
-  ),
-  parameters: {
-    docs: { description: { story: 's 24px (default) · m 32px — Chip\'s own sizes, applied to every chip in the group.' } },
-  },
-};
-
 export const WithIcons: Story = {
   args: {
     options: [

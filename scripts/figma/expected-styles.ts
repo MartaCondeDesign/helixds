@@ -17,7 +17,7 @@ import path from 'path';
 import { chromium, type Page } from 'playwright';
 
 type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid';
-type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean };
+type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean };
 type Spec = {
   story: string;                              // a story rendering exactly one instance from its args
   axes: Record<string, string[]>;             // Figma variant axes (besides state) -> values
@@ -28,29 +28,32 @@ type Spec = {
   scope?: (v: Record<string, string>) => string; // when the story renders several instances: CSS selector of the one to measure
 };
 
+// Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
+// component, and every pointer state (hover/press) silently measures the overlay instead.
 const SPECS: Record<string, Spec> = {
   Chip: {
-    story: 'components-chip--keyboard-activation',
-    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'], checked: ['false', 'true'], dismissible: ['false'] },
+    story: 'components-chip--variants',
+    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'], dismissible: ['false'] },
     states: ['default', 'hover', 'press', 'focus', 'disabled'],
-    args: (v, s) => ({ label: 'Label', variant: v.variant!, size: v.size!, checked: v.checked === 'true', disabled: s === 'disabled' }),
+    args: (v, s) => ({ size: v.size!, dismissible: v.dismissible === 'true', disabled: s === 'disabled' }),
     parts: { '(root)': { part: 'chip', fill: true, stroke: true }, 'chip-label': { part: 'chip-label', text: true } },
     target: 'chip',
+    scope: v => `[data-helix-part="chip"][data-variant="${v.variant}"]`,
   },
   Input: {
-    story: 'components-input--keyboard-focus',
+    story: 'components-input--default',
     axes: { size: ['m'] },
     states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
     args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'input-wrapper', fill: true, stroke: true }, 'input-field': { part: 'input-field', text: true } },
+    parts: { '(root)': { part: 'input-wrapper', fill: true, stroke: true }, 'input-field': { part: 'input-field', placeholder: true } },
     target: 'input-field',
   },
   Textarea: {
-    story: 'components-textarea--keyboard-focus',
+    story: 'components-textarea--default',
     axes: { size: ['m'] },
     states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
     args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'textarea-wrapper', fill: true, stroke: true }, 'textarea-field': { part: 'textarea-field', text: true } },
+    parts: { '(root)': { part: 'textarea-wrapper', fill: true, stroke: true }, 'textarea-field': { part: 'textarea-field', placeholder: true } },
     target: 'textarea-field',
   },
   Badge: {
@@ -58,9 +61,9 @@ const SPECS: Record<string, Spec> = {
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
     states: ['default'],
     args: () => ({}),
-    scope: v => `[data-helix-part="badge"][data-variant="${v.variant}"]`,
     parts: { '(root)': { part: 'badge', fill: true, stroke: true }, 'badge-label': { part: 'badge-label', text: true } },
     target: 'badge',
+    scope: v => `[data-helix-part="badge"][data-variant="${v.variant}"]`,
   },
 };
 
@@ -96,6 +99,7 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';
       if (p.text) out[layer]!.fill = cs.color; // a Figma TEXT layer's fill is its text color
+      if (p.placeholder) out[layer]!.fill = getComputedStyle(el, '::placeholder').color; // the Figma layer shows placeholder text
     }
     return out;
   }, { parts: spec.parts, scope });

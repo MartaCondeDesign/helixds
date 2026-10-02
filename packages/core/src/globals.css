@@ -823,7 +823,7 @@
   }
   [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-info-dark);
+    border-color: var(--helix-color-border-info); /* was border-info-dark, which no longer exists — the browser fell back to currentColor */
   }
   [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page));
@@ -836,7 +836,7 @@
   }
   [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-success-dark);
+    border-color: var(--helix-color-border-success); /* was border-success-dark, which no longer exists — the browser fell back to currentColor */
   }
   [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page));
@@ -849,7 +849,7 @@
   }
   [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-warning-dark);
+    border-color: var(--helix-color-border-warning); /* was border-warning-dark, which no longer exists — the browser fell back to currentColor */
   }
   [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page));
@@ -862,7 +862,7 @@
   }
   [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]) {
     background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-danger-dark);
+    border-color: var(--helix-color-border-danger); /* was border-danger-dark, which no longer exists — the browser fell back to currentColor */
   }
   [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]) {
     background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page));

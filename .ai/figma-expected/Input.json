@@ -15,16 +15,16 @@
           "stroke": "#e2e8f0"
         },
         "input-field": {
-          "fill": "#0f172a"
+          "fill": "#64748b"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#1e293b",
+          "fill": "#0f172a",
           "stroke": "#334155"
         },
         "input-field": {
-          "fill": "#f1f5f9"
+          "fill": "#8391a7"
         }
       }
     },
@@ -32,19 +32,19 @@
       "light": {
         "(root)": {
           "fill": "#ffffff",
-          "stroke": "#e2e8f0"
+          "stroke": "#94a3b8"
         },
         "input-field": {
-          "fill": "#0f172a"
+          "fill": "#64748b"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#1e293b",
-          "stroke": "#334155"
+          "fill": "#0f172a",
+          "stroke": "#475569"
         },
         "input-field": {
-          "fill": "#f1f5f9"
+          "fill": "#8391a7"
         }
       }
     },
@@ -55,16 +55,16 @@
           "stroke": "#3b82f6"
         },
         "input-field": {
-          "fill": "#0f172a"
+          "fill": "#64748b"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#1e293b",
+          "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
         "input-field": {
-          "fill": "#f1f5f9"
+          "fill": "#8391a7"
         }
       }
     },
@@ -75,16 +75,16 @@
           "stroke": "#dc2626"
         },
         "input-field": {
-          "fill": "#0f172a"
+          "fill": "#64748b"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#1e293b",
+          "fill": "#0f172a",
           "stroke": "#f87171"
         },
         "input-field": {
-          "fill": "#f1f5f9"
+          "fill": "#8391a7"
         }
       }
     },
@@ -95,16 +95,16 @@
           "stroke": "#f1f5f9"
         },
         "input-field": {
-          "fill": "#94a3b8"
+          "fill": "#64748b"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#0f172a",
-          "stroke": "#f1f5f9"
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
         },
         "input-field": {
-          "fill": "#475569"
+          "fill": "#8391a7"
         }
       }
     }
