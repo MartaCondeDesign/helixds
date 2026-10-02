@@ -97,6 +97,7 @@ _No Figma-mappable props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `badge`
+- `badge-content`
 - `badge-icon`
 - `badge-label`
 

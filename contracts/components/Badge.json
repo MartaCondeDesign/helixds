@@ -20,6 +20,11 @@
       "description": "Root element. Always inline."
     },
     {
+      "part": "badge-content",
+      "element": "span",
+      "description": "Wraps the icon and label: 4px between them, plus 2px of side padding — together with the root's own padding that gives 6px (xs) / 10px (s) from scale tokens only."
+    },
+    {
       "part": "badge-icon",
       "element": "slot",
       "description": "Leading icon. Tabler icon at 12px.",

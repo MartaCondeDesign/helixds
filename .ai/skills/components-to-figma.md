@@ -38,7 +38,9 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    frame or rectangle used as a spacer. No negative `itemSpacing` to overlap parts. If code needs two
    different distances on one row (e.g. Chip: 4px gap + 2px on the icon's label side), model the extra one
    as padding on the part that owns it in code (the `chip-icon` span has the 2px → a `chip-icon` frame with
-   `paddingRight` bound to `spacing/3xs`). If code uses an off-scale value (6px…), fix the code first.
+   `paddingRight` bound to `spacing/3xs`). An off-scale distance (6px, 10px…) is split into scale tokens across
+   nested auto-layouts — in code first, then mirrored in Figma (Badge: 6px = root `spacing/2xs` 4px +
+   `badge-content` `spacing/3xs` 2px). Never a literal, never a variable outside the scale.
 4. **The border is always there** (`.ai/maps/patterns/border-always.md`). If a layer has a stroke in one
    variant it has it in all of them, same weight — states only change its color. A "no visible border"
    state binds the stroke to the fill's own variable.

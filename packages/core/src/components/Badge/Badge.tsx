@@ -31,12 +31,16 @@ const Badge = ({ variant = 'neutral', size = 's', label, icon, className }: Badg
         data-size={size}
         className={cn(className)}
       >
-      {icon && (
-        <span data-helix-part="badge-icon">
-          <Icon icon={icon} size={12} />
-        </span>
-      )}
-      <span data-helix-part="badge-label">{label}</span>
+      {/* badge-content carries 2px of the side padding (spacing-3xs) so the total — 6px xs / 10px s — is
+          built from scale tokens only (4+2, 8+2), never an off-scale literal. */}
+      <span data-helix-part="badge-content">
+        {icon && (
+          <span data-helix-part="badge-icon">
+            <Icon icon={icon} size={12} />
+          </span>
+        )}
+        <span data-helix-part="badge-label">{label}</span>
+      </span>
     </span>
   );
 };

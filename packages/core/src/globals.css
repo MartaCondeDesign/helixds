@@ -653,7 +653,6 @@
     display:       inline-flex;
     align-items:   center;
     box-sizing:    border-box;
-    gap:           var(--helix-primitive-spacing-25);
     border-radius: var(--helix-badge-radius);
     height:        var(--helix-badge-height-s);
     font-family:   var(--helix-badge-fontFamily);
@@ -664,12 +663,21 @@
     border:        1px solid transparent;
   }
 
+  /* Side padding = badge padding + badge-content's 2px: xs 4+2 = 6px, s 8+2 = 10px — scale tokens only,
+     split across two nested boxes instead of an off-scale literal. No vertical padding: the height is
+     fixed and the content centered. */
   [data-helix-part="badge"][data-size="xs"] {
-    padding: 2px 6px;
+    padding: 0 var(--helix-spacing-2xs);
     height:  var(--helix-badge-height-xs);
   }
   [data-helix-part="badge"][data-size="s"] {
-    padding: 3px 10px;
+    padding: 0 var(--helix-spacing-xs);
+  }
+  [data-helix-part="badge-content"] {
+    display:     inline-flex;
+    align-items: center;
+    gap:         var(--helix-spacing-2xs);
+    padding:     0 var(--helix-spacing-3xs);
   }
 
   [data-helix-part="badge"][data-variant="neutral"] {

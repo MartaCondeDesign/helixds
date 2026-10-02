@@ -38,6 +38,10 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    - **Border-radius:** always a `--helix-*` token. No exceptions.
    - **Spacing/padding:** always a token, **except** values above `128px` (`primitive.spacing.32`,
      the top of the scale) — those have no token and are legitimately hardcoded px.
+     **An off-scale distance (6px, 10px…) is never hardcoded:** split it into scale tokens across nested
+     boxes — e.g. Badge's 6px side padding = 4px on the root (`spacing-2xs`) + 2px on an inner
+     `badge-content` wrapper (`spacing-3xs`); Chip's 6px icon gap = 4px gap + 2px padding on `chip-icon`.
+     Same structure in Figma: a nested auto-layout with each part bound to its spacing variable.
    - **Groups:** elements of the same kind one after another (buttons, icon buttons, chips, badges) are
      `var(--helix-spacing-2xs)` (4px) apart — wider only between different groups. See
      `.ai/maps/patterns/group-spacing.md`.
