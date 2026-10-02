@@ -34,12 +34,13 @@ type Spec = {
 const SPECS: Record<string, Spec> = {
   Chip: {
     story: 'components-chip--variants',
-    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'], dismissible: ['false'] },
+    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
     states: ['default', 'hover', 'press', 'focus', 'disabled'],
-    args: (v, s) => ({ size: v.size!, dismissible: v.dismissible === 'true', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'chip', fill: true, stroke: true }, 'chip-label': { part: 'chip-label', text: true } },
+    args: (v, s) => ({ size: v.size!, disabled: s === 'disabled' }),
+    // the pill is chip-shell (Figma's root); hover/press/focus go to the chip button inside it
+    parts: { '(root)': { part: 'chip-shell', fill: true, stroke: true }, 'chip-label': { part: 'chip-label', text: true } },
     target: 'chip',
-    scope: v => `[data-helix-part="chip"][data-variant="${v.variant}"]`,
+    scope: v => `[data-helix-part="chip-shell"][data-variant="${v.variant}"]`,
   },
   Input: {
     story: 'components-input--default',
@@ -82,7 +83,10 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
   const scope = spec.scope ? spec.scope(v) : null;
   await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
   await page.mouse.move(0, 0);
-  const target = (scope ? page.locator(scope).first() : page.locator(`[data-helix-part="${spec.target}"]`).first());
+  const scoped = scope ? page.locator(scope).first() : null;
+  const target = !scoped ? page.locator(`[data-helix-part="${spec.target}"]`).first()
+    : (await scoped.evaluate((el, t) => el.matches(`[data-helix-part="${t}"]`), spec.target)) ? scoped
+    : scoped.locator(`[data-helix-part="${spec.target}"]`).first(); // e.g. the chip button inside chip-shell
   if (state === 'hover' || state === 'press') {
     const box = await target.boundingBox(); // a real pointer move — locator.hover() can stall on Storybook's own overlays
     if (box) await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);

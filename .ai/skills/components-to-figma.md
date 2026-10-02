@@ -44,9 +44,13 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
 4. **The border is always there** (`.ai/maps/patterns/border-always.md`). If a layer has a stroke in one
    variant it has it in all of them, same weight — states only change its color. A "no visible border"
    state binds the stroke to the fill's own variable.
-5. **Behaviour that changes layout is a VARIANT, not a BOOLEAN.** A Figma boolean only shows/hides a layer;
-   it can't change a padding. If a prop changes spacing (Chip's `dismissible` changes the end padding),
-   it's a VARIANT axis — declared in `figma.properties` with its `codeProp`.
+5. **Show/hide parts are BOOLEANs, never VARIANTs** (`.ai/maps/patterns/show-hide-parts.md`). An optional
+   part that only appears/disappears (icon, iconEnd, dismiss ×, description…) is a BOOLEAN property on the
+   part's visibility, named like the code prop — that keeps the variant count down (Chip: 100 → 50). This
+   only works because the component is built (in code first) so the part carries its own spacing and the
+   container's paddings never change with it. If code switches a padding with the prop, fix the code first.
+   A VARIANT only when the part also changes something else's color/size/state — documented in the
+   contract's `figma.properties`.
 6. **Lay the set out as a Propstar property table** (Phase 7) — the same output as the
    [Propstar](https://www.figma.com/community/plugin/1116018586739867857) "Create property table" command.
 7. **Plugin-API traps that produce wrong colors silently** (all hit on 2026-10-02):

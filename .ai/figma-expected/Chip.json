@@ -8,7 +8,7 @@
     "disabled"
   ],
   "colors": {
-    "variant=neutral, size=s, dismissible=false, state=default": {
+    "variant=neutral, size=s, state=default": {
       "light": {
         "(root)": {
           "fill": "#f8fafc",
@@ -28,7 +28,7 @@
         }
       }
     },
-    "variant=neutral, size=s, dismissible=false, state=hover": {
+    "variant=neutral, size=s, state=hover": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
@@ -48,7 +48,7 @@
         }
       }
     },
-    "variant=neutral, size=s, dismissible=false, state=press": {
+    "variant=neutral, size=s, state=press": {
       "light": {
         "(root)": {
           "fill": "#e2e8f0",
@@ -68,7 +68,7 @@
         }
       }
     },
-    "variant=neutral, size=s, dismissible=false, state=focus": {
+    "variant=neutral, size=s, state=focus": {
       "light": {
         "(root)": {
           "fill": "#f8fafc",
@@ -88,7 +88,7 @@
         }
       }
     },
-    "variant=neutral, size=s, dismissible=false, state=disabled": {
+    "variant=neutral, size=s, state=disabled": {
       "light": {
         "(root)": {
           "fill": "#f8fafc",
@@ -108,7 +108,7 @@
         }
       }
     },
-    "variant=info, size=s, dismissible=false, state=default": {
+    "variant=info, size=s, state=default": {
       "light": {
         "(root)": {
           "fill": "#f0f9ff",
@@ -128,7 +128,7 @@
         }
       }
     },
-    "variant=info, size=s, dismissible=false, state=hover": {
+    "variant=info, size=s, state=hover": {
       "light": {
         "(root)": {
           "fill": "#f2faff",
@@ -148,7 +148,7 @@
         }
       }
     },
-    "variant=info, size=s, dismissible=false, state=press": {
+    "variant=info, size=s, state=press": {
       "light": {
         "(root)": {
           "fill": "#f4fbff",
@@ -168,7 +168,7 @@
         }
       }
     },
-    "variant=info, size=s, dismissible=false, state=focus": {
+    "variant=info, size=s, state=focus": {
       "light": {
         "(root)": {
           "fill": "#f0f9ff",
@@ -188,7 +188,7 @@
         }
       }
     },
-    "variant=info, size=s, dismissible=false, state=disabled": {
+    "variant=info, size=s, state=disabled": {
       "light": {
         "(root)": {
           "fill": "#f0f9ff",
@@ -208,7 +208,7 @@
         }
       }
     },
-    "variant=success, size=s, dismissible=false, state=default": {
+    "variant=success, size=s, state=default": {
       "light": {
         "(root)": {
           "fill": "#f0fdf4",
@@ -228,7 +228,7 @@
         }
       }
     },
-    "variant=success, size=s, dismissible=false, state=hover": {
+    "variant=success, size=s, state=hover": {
       "light": {
         "(root)": {
           "fill": "#f2fdf6",
@@ -248,7 +248,7 @@
         }
       }
     },
-    "variant=success, size=s, dismissible=false, state=press": {
+    "variant=success, size=s, state=press": {
       "light": {
         "(root)": {
           "fill": "#f4fef7",
@@ -268,7 +268,7 @@
         }
       }
     },
-    "variant=success, size=s, dismissible=false, state=focus": {
+    "variant=success, size=s, state=focus": {
       "light": {
         "(root)": {
           "fill": "#f0fdf4",
@@ -288,7 +288,7 @@
         }
       }
     },
-    "variant=success, size=s, dismissible=false, state=disabled": {
+    "variant=success, size=s, state=disabled": {
       "light": {
         "(root)": {
           "fill": "#f0fdf4",
@@ -308,7 +308,7 @@
         }
       }
     },
-    "variant=warning, size=s, dismissible=false, state=default": {
+    "variant=warning, size=s, state=default": {
       "light": {
         "(root)": {
           "fill": "#fffbeb",
@@ -328,7 +328,7 @@
         }
       }
     },
-    "variant=warning, size=s, dismissible=false, state=hover": {
+    "variant=warning, size=s, state=hover": {
       "light": {
         "(root)": {
           "fill": "#fffcee",
@@ -348,7 +348,7 @@
         }
       }
     },
-    "variant=warning, size=s, dismissible=false, state=press": {
+    "variant=warning, size=s, state=press": {
       "light": {
         "(root)": {
           "fill": "#fffcf1",
@@ -368,7 +368,7 @@
         }
       }
     },
-    "variant=warning, size=s, dismissible=false, state=focus": {
+    "variant=warning, size=s, state=focus": {
       "light": {
         "(root)": {
           "fill": "#fffbeb",
@@ -388,7 +388,7 @@
         }
       }
     },
-    "variant=warning, size=s, dismissible=false, state=disabled": {
+    "variant=warning, size=s, state=disabled": {
       "light": {
         "(root)": {
           "fill": "#fffbeb",
@@ -408,7 +408,7 @@
         }
       }
     },
-    "variant=danger, size=s, dismissible=false, state=default": {
+    "variant=danger, size=s, state=default": {
       "light": {
         "(root)": {
           "fill": "#fff1f2",
@@ -428,7 +428,7 @@
         }
       }
     },
-    "variant=danger, size=s, dismissible=false, state=hover": {
+    "variant=danger, size=s, state=hover": {
       "light": {
         "(root)": {
           "fill": "#fff3f4",
@@ -448,7 +448,7 @@
         }
       }
     },
-    "variant=danger, size=s, dismissible=false, state=press": {
+    "variant=danger, size=s, state=press": {
       "light": {
         "(root)": {
           "fill": "#fff5f6",
@@ -468,7 +468,7 @@
         }
       }
     },
-    "variant=danger, size=s, dismissible=false, state=focus": {
+    "variant=danger, size=s, state=focus": {
       "light": {
         "(root)": {
           "fill": "#fff1f2",
@@ -488,7 +488,7 @@
         }
       }
     },
-    "variant=danger, size=s, dismissible=false, state=disabled": {
+    "variant=danger, size=s, state=disabled": {
       "light": {
         "(root)": {
           "fill": "#fff1f2",

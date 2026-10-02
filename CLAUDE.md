@@ -58,6 +58,9 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      "this floats" when it doesn't. `component.input.shadow.focus` is a different concept (a focus-ring
      glow) and isn't covered by this rule.
 
+   - **Show/hide parts:** an optional part that only appears/disappears (icon, iconEnd, dismiss ×…) is a
+     boolean prop that carries its own spacing — toggling it never changes the container's paddings — and a
+     BOOLEAN property in Figma, not a VARIANT (`.ai/maps/patterns/show-hide-parts.md`).
    - **Border always:** a component with a border has it in every variant and state, same width — states
      change only its color (`.ai/maps/patterns/border-always.md`), in code and in Figma.
 

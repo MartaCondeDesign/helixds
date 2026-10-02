@@ -32,13 +32,13 @@
     {
       "part": "chip-shell",
       "element": "span",
-      "description": "Layout wrapper for the chip and optional dismiss button.",
+      "description": "The pill: fill, 1px border, radius, height and the 12px padding on both ends — the same whatever it contains. Holds the chip button and, when dismissible, the dismiss button, both in normal flow.",
       "optional": false
     },
     {
       "part": "chip",
       "element": "button",
-      "description": "Root interactive element.",
+      "description": "Transparent button holding the icons and label; its ::after stretches over the whole pill so the full chip is clickable.",
       "optional": false
     },
     {
@@ -61,7 +61,7 @@
     {
       "part": "chip-dismiss",
       "element": "button",
-      "description": "Close button that fires onDismiss. Rendered only when dismissible=true and onDismiss is provided.",
+      "description": "Close button after chip-icon-end, in the row: 2px on the label side (spacing-3xs) + the 12px ×. Its round hover (20px s / 24px m) is a pseudo-element that takes no space. Rendered only when dismissible=true and onDismiss is provided.",
       "optional": true
     }
   ],
@@ -187,13 +187,9 @@
       },
       {
         "name": "dismissible",
-        "type": "VARIANT",
-        "values": [
-          "false",
-          "true"
-        ],
+        "type": "BOOLEAN",
         "codeProp": "dismissible",
-        "description": "A boolean in code, a VARIANT in Figma: it changes the chip's end padding (12px without the dismiss button, 0/4px with it), which a Figma boolean can't."
+        "description": "Show/hide part (show-hide-parts.md): toggles the chip-dismiss layer. The × carries its own 2px on the label side; the chip keeps 12px on both ends either way."
       }
     ]
   }

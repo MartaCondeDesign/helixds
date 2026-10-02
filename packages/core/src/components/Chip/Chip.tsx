@@ -40,6 +40,9 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
       <MotionConfig reducedMotion="user">
       <motion.span
         data-helix-part="chip-shell"
+        data-variant={variant}
+        data-size={size}
+        data-disabled={disabled ? 'true' : undefined}
         data-dismissible={isDismissible ? 'true' : undefined}
         className={cn(className)}
         animate={isDismissing ? { opacity: 0, scale: 0.85 } : { opacity: 1, scale: 1 }}

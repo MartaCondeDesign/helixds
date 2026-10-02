@@ -732,15 +732,22 @@
      Tokens:   --helix-chip-*  (component layer)
      ════════════════════════════════════════════════════════════════════════ */
 
-  [data-helix-part="chip"] {
+  /* The pill lives on chip-shell, with the same 12px padding on both sides whatever it contains: the
+     icons and the dismiss button are plain show/hide parts that bring their own spacing (2px on the label
+     side, spacing-3xs), so toggling any of them never changes a padding — the same structure Figma uses,
+     where icon / iconEnd / dismissible are BOOLEAN properties (.ai/maps/patterns/show-hide-parts.md).
+     The chip button itself is transparent; its ::after stretches over the whole pill so the full chip is
+     still clickable, and the dismiss button sits above it. Hover/press follow the chip button, not the
+     shell, so pointing at the × shows only the ×'s own round hover. */
+  [data-helix-part="chip-shell"] {
+    position:       relative;
     display:        inline-flex;
     align-items:    center;
-    justify-content: center;
     box-sizing:     border-box;
     gap:            var(--helix-chip-gap-m);
     height:         var(--helix-chip-height-m);
     padding:        0 var(--helix-chip-padding-x-m);
-    border-radius:   var(--helix-chip-radius);
+    border-radius:  var(--helix-chip-radius);
     border:         var(--helix-chip-border-width) solid var(--helix-color-border-neutral);
     background:     var(--helix-color-fill-surface);
     color:          var(--helix-color-text-neutral);
@@ -749,128 +756,115 @@
     line-height:    1;
     white-space:    nowrap;
     user-select:    none;
-    text-decoration: none;
-    outline:        none;
-    -webkit-appearance: none;
-    appearance:     none;
-    cursor:         pointer;
     transition:
       background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       border-color     var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
-      color            var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
-      box-shadow       var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+      color            var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="chip-shell"][data-size="s"] {
+    gap:       var(--helix-chip-gap-s);
+    height:    var(--helix-chip-height-s);
+    padding:   0 var(--helix-chip-padding-x-s);
+    font-size: var(--helix-chip-fontSize-s);
+  }
+  [data-helix-part="chip-shell"][data-size="m"] {
+    gap:       var(--helix-chip-gap-m);
+    height:    var(--helix-chip-height-m);
+    padding:   0 var(--helix-chip-padding-x-m);
+    font-size: var(--helix-chip-fontSize-m);
   }
 
-  /* Dismissible chips reserve room for the 24px dismiss button: its 4px right offset + its width + a
-     4px gap to the label, minus the chip's own border (padding sits inside it). */
-  [data-helix-part="chip"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-spacing-2xs) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-chip-border-width));
+  [data-helix-part="chip"] {
+    display:     inline-flex;
+    align-items: center;
+    gap:         inherit;
+    height:      100%;
+    padding:     0;
+    margin:      0;
+    border:      none;
+    background:  transparent;
+    color:       inherit;
+    font:        inherit;
+    line-height: inherit;
+    text-decoration: none;
+    outline:     none;
+    -webkit-appearance: none;
+    appearance:  none;
+    cursor:      pointer;
   }
-
-  [data-helix-part="chip"][data-size="s"] {
-    gap:         var(--helix-chip-gap-s);
-    height:      var(--helix-chip-height-s);
-    padding:     0 var(--helix-chip-padding-x-s);
-    font-size:   var(--helix-chip-fontSize-s);
+  [data-helix-part="chip"]::after {
+    content:       '';
+    position:      absolute;
+    inset:         0;
+    border-radius: var(--helix-chip-radius);
   }
-  [data-helix-part="chip"][data-size="m"] {
-    gap:         var(--helix-chip-gap-m);
-    height:      var(--helix-chip-height-m);
-    padding:     0 var(--helix-chip-padding-x-m);
-    font-size:   var(--helix-chip-fontSize-m);
-  }
-  /* 4px from the label to the dismiss circle in both sizes. s subtracts the 2px clip inset, because
-     its visible circle (20px) starts 2px inside the 24px button. */
-  /* s: the button sits flush right (0 offset), so its 20px circle is 2px from the top, bottom and
-     right edges alike. Padding = button + 4px gap to the circle − the 2px clip inset − border. */
-  [data-helix-part="chip"][data-size="s"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-primitive-spacing-0) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-spacing-3xs) - var(--helix-chip-border-width));
-  }
-  [data-helix-part="chip"][data-size="m"][data-dismissible="true"] {
-    padding-right: calc(var(--helix-spacing-2xs) + var(--helix-primitive-size-150) + var(--helix-spacing-2xs) - var(--helix-chip-border-width));
-  }
-
-  [data-helix-part="chip"]:focus-visible {
+  [data-helix-part="chip-shell"]:has([data-helix-part="chip"]:focus-visible) {
     outline:        2px solid var(--helix-color-border-focus);
     outline-offset: 2px;
   }
 
-  [data-helix-part="chip"]:disabled,
-  [data-helix-part="chip"][data-disabled] {
-    background:    var(--helix-color-fill-disabled);
-    color:         var(--helix-color-text-disabled);
-    border-color:  var(--helix-color-border-neutral-light);
-    cursor:        not-allowed;
-    opacity:       0.72;
-    pointer-events: none;
+  /* Disabled keeps the variant's colors at 0.72 opacity (as before the restructure). */
+  [data-helix-part="chip-shell"][data-disabled] {
+    opacity: 0.72;
+    cursor:  not-allowed;
   }
+  [data-helix-part="chip"]:disabled { cursor: not-allowed; }
 
-  /* One gray step per state, using the same fill.secondary-interactive-{default,hover,press} ladder
-     Button/IconButton's secondary variant already uses (gray.50 -> .100 -> .200 -> .300 -> .400) — not a
-     dramatic jump between any two adjacent states. Contrast against the dark text token stays comfortably
-     above AA (12:1 at gray.300, 6.97:1 at gray.400) all the way down the ladder, so text color never needs
-     to invert. */
-  [data-helix-part="chip"][data-variant="neutral"] {
+  /* One gray step per state on the neutral variant (fill.secondary-interactive-* ladder). */
+  [data-helix-part="chip-shell"][data-variant="neutral"] {
     background:   var(--helix-color-fill-surface);
     color:        var(--helix-color-text-neutral);
     border-color: var(--helix-color-border-neutral);
   }
-  [data-helix-part="chip"][data-variant="neutral"]:hover:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="neutral"]:not([data-disabled]):has([data-helix-part="chip"]:hover) {
     background:   var(--helix-color-fill-secondary-interactive-default);
     border-color: var(--helix-color-border-neutral-dark);
   }
-  [data-helix-part="chip"][data-variant="neutral"]:active:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="neutral"]:not([data-disabled]):has([data-helix-part="chip"]:active) {
     background: var(--helix-color-fill-secondary-interactive-hover);
   }
-  [data-helix-part="chip"][data-variant="info"] {
+  [data-helix-part="chip-shell"][data-variant="info"] {
     background:   var(--helix-color-fill-info-light);
     color:        var(--helix-color-text-info);
     border-color: var(--helix-color-border-info);
   }
-  [data-helix-part="chip"][data-variant="info"]:hover:not(:disabled):not([data-disabled]) {
-    background:   color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-info); /* was border-info-dark, which no longer exists — the browser fell back to currentColor */
+  [data-helix-part="chip-shell"][data-variant="info"]:not([data-disabled]):has([data-helix-part="chip"]:hover) {
+    background: color-mix(in srgb, var(--helix-color-fill-info-light) 84%, var(--helix-color-fill-page));
   }
-  [data-helix-part="chip"][data-variant="info"]:active:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="info"]:not([data-disabled]):has([data-helix-part="chip"]:active) {
     background: color-mix(in srgb, var(--helix-color-fill-info-light) 72%, var(--helix-color-fill-page));
   }
-
-  [data-helix-part="chip"][data-variant="success"] {
+  [data-helix-part="chip-shell"][data-variant="success"] {
     background:   var(--helix-color-fill-success-light);
     color:        var(--helix-color-text-success);
     border-color: var(--helix-color-border-success);
   }
-  [data-helix-part="chip"][data-variant="success"]:hover:not(:disabled):not([data-disabled]) {
-    background:   color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-success); /* was border-success-dark, which no longer exists — the browser fell back to currentColor */
+  [data-helix-part="chip-shell"][data-variant="success"]:not([data-disabled]):has([data-helix-part="chip"]:hover) {
+    background: color-mix(in srgb, var(--helix-color-fill-success-light) 84%, var(--helix-color-fill-page));
   }
-  [data-helix-part="chip"][data-variant="success"]:active:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="success"]:not([data-disabled]):has([data-helix-part="chip"]:active) {
     background: color-mix(in srgb, var(--helix-color-fill-success-light) 72%, var(--helix-color-fill-page));
   }
-
-  [data-helix-part="chip"][data-variant="warning"] {
+  [data-helix-part="chip-shell"][data-variant="warning"] {
     background:   var(--helix-color-fill-warning-light);
     color:        var(--helix-color-text-warning);
     border-color: var(--helix-color-border-warning);
   }
-  [data-helix-part="chip"][data-variant="warning"]:hover:not(:disabled):not([data-disabled]) {
-    background:   color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-warning); /* was border-warning-dark, which no longer exists — the browser fell back to currentColor */
+  [data-helix-part="chip-shell"][data-variant="warning"]:not([data-disabled]):has([data-helix-part="chip"]:hover) {
+    background: color-mix(in srgb, var(--helix-color-fill-warning-light) 84%, var(--helix-color-fill-page));
   }
-  [data-helix-part="chip"][data-variant="warning"]:active:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="warning"]:not([data-disabled]):has([data-helix-part="chip"]:active) {
     background: color-mix(in srgb, var(--helix-color-fill-warning-light) 72%, var(--helix-color-fill-page));
   }
-
-  [data-helix-part="chip"][data-variant="danger"] {
+  [data-helix-part="chip-shell"][data-variant="danger"] {
     background:   var(--helix-color-fill-danger-interactive-light-default);
     color:        var(--helix-color-text-danger);
     border-color: var(--helix-color-border-danger);
   }
-  [data-helix-part="chip"][data-variant="danger"]:hover:not(:disabled):not([data-disabled]) {
-    background:   color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
-    border-color: var(--helix-color-border-danger); /* was border-danger-dark, which no longer exists — the browser fell back to currentColor */
+  [data-helix-part="chip-shell"][data-variant="danger"]:not([data-disabled]):has([data-helix-part="chip"]:hover) {
+    background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 84%, var(--helix-color-fill-page));
   }
-  [data-helix-part="chip"][data-variant="danger"]:active:not(:disabled):not([data-disabled]) {
+  [data-helix-part="chip-shell"][data-variant="danger"]:not([data-disabled]):has([data-helix-part="chip"]:active) {
     background: color-mix(in srgb, var(--helix-color-fill-danger-interactive-light-default) 72%, var(--helix-color-fill-page));
   }
 
@@ -883,87 +877,75 @@
   /* 4px chip gap + 2px here = 6px icon-to-label, built only from scale tokens (spacing-2xs + spacing-3xs). */
   [data-helix-part="chip-icon"]     { padding-right: var(--helix-spacing-3xs); }
   [data-helix-part="chip-icon-end"] { padding-left:  var(--helix-spacing-3xs); }
-  /* Icon color per variant — icon tokens only, never inherited from chip text */
-  [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon-end"] {
+  /* Icon color per variant — icon tokens on neutral; on a colored tint an icon matches its label's text tone. */
+  [data-helix-part="chip-shell"][data-variant="neutral"] :is([data-helix-part="chip-icon"], [data-helix-part="chip-icon-end"]) {
     color: var(--helix-color-icon-neutral);
   }
-  [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="info"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-text-info); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
+  [data-helix-part="chip-shell"][data-variant="info"] :is([data-helix-part="chip-icon"], [data-helix-part="chip-icon-end"]) {
+    color: var(--helix-color-text-info);
   }
-  [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="success"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-text-success); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
+  [data-helix-part="chip-shell"][data-variant="success"] :is([data-helix-part="chip-icon"], [data-helix-part="chip-icon-end"]) {
+    color: var(--helix-color-text-success);
   }
-  [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="warning"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-text-warning); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
+  [data-helix-part="chip-shell"][data-variant="warning"] :is([data-helix-part="chip-icon"], [data-helix-part="chip-icon-end"]) {
+    color: var(--helix-color-text-warning);
   }
-  [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon"],
-  [data-helix-part="chip"][data-variant="danger"] [data-helix-part="chip-icon-end"] {
-    color: var(--helix-color-text-danger); /* matches the label: an icon on a colored tint uses the text tone (see build.ts) */
+  [data-helix-part="chip-shell"][data-variant="danger"] :is([data-helix-part="chip-icon"], [data-helix-part="chip-icon-end"]) {
+    color: var(--helix-color-text-danger);
   }
 
-  [data-helix-part="chip-shell"] {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-  }
-
+  /* Dismiss: a show/hide part in the row, exactly like chip-icon-end — it takes 2px (spacing-3xs) + the 12px ×
+     of layout, and the chip keeps its own 12px end padding after it. The button box itself is a 24px square
+     centered on the × (WCAG 2.5.8 target size): 6px padding each side, pulled back with negative margins
+     (−4px left, −6px right) so the extra size takes no layout space. Its round hover/focus surface (20px on
+     s, 24px on m) is ::before, centered on the ×. */
   [data-helix-part="chip-dismiss"] {
-    position:       absolute;
-    /* 24px target (WCAG 2.5.8 target-size minimum), 4px from the right edge — m: its circle is then 4px
-       from the top, bottom and right alike, and the drawn X (~8px inside its button edge) sits ~12px from
-       the border, visually matching the 12px left padding. s overrides this to 0 below. */
-    right:          var(--helix-spacing-2xs);
-    top:            50%;
-    transform:      translateY(-50%);
-    display:        inline-flex;
-    align-items:    center;
+    position:        relative;
+    z-index:         1;
+    display:         inline-flex;
+    align-items:     center;
     justify-content: center;
-    width:          var(--helix-primitive-size-150);
-    height:         var(--helix-primitive-size-150);
-    border-radius:  var(--helix-radius-full);
-    border:         none;
-    /* Bare icon at rest — no circular fill until hover, regardless of the chip's own variant
-       background (transparent always reads as "nothing" here, unlike matching the chip's own fill token,
-       which only looked invisible by coincidence on some variants). */
-    background:     transparent;
-    color:          var(--helix-color-text-neutral-light);
-    cursor:         pointer;
-    flex-shrink:    0;
-    transition:
-      background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
-      color            var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
+    flex-shrink:     0;
+    box-sizing:      border-box;
+    height:          var(--helix-primitive-size-150);
+    padding:         0 calc(var(--helix-spacing-2xs) + var(--helix-spacing-3xs));
+    margin:          0 calc(-1 * (var(--helix-spacing-2xs) + var(--helix-spacing-3xs))) 0 calc(-1 * var(--helix-spacing-2xs));
+    border:          none;
+    background:      none;
+    color:           var(--helix-color-text-neutral-light);
+    cursor:          pointer;
+    outline:         none;
+    -webkit-appearance: none;
+    appearance:      none;
   }
-
-  /* s chip (24px) only: the hover circle is 20px, not the full 24px target — background clipped to the
-     content box, 2px in from each edge, so it doesn't cover the chip's own border. Hit area (24px,
-     WCAG 2.5.8) and icon size are unchanged. The m chip (28px) keeps the full 24px circle. */
-  [data-helix-part="chip"][data-size="s"] ~ [data-helix-part="chip-dismiss"] {
-    right:           var(--helix-primitive-spacing-0);
-    padding:         var(--helix-spacing-3xs);
-    background-clip: content-box;
+  [data-helix-part="chip-dismiss"]::before {
+    content:       '';
+    position:      absolute;
+    z-index:       -1;
+    top:           50%;
+    left:          50%;
+    transform:     translate(-50%, -50%);
+    width:         var(--helix-primitive-size-150);
+    height:        var(--helix-primitive-size-150);
+    border-radius: var(--helix-radius-full);
+    background:    transparent;
+    transition:    background-color var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-
-  [data-helix-part="chip-dismiss"]:hover:not(:disabled) {
-    background-color: var(--helix-color-fill-surface-dark);
-    color:      var(--helix-color-text-neutral);
+  [data-helix-part="chip-shell"][data-size="s"] [data-helix-part="chip-dismiss"]::before {
+    width:  var(--helix-primitive-size-125);
+    height: var(--helix-primitive-size-125);
   }
-
-  [data-helix-part="chip-dismiss"]:focus-visible {
+  [data-helix-part="chip-dismiss"]:hover:not(:disabled) { color: var(--helix-color-text-neutral); }
+  [data-helix-part="chip-dismiss"]:hover:not(:disabled)::before { background-color: var(--helix-color-fill-surface-dark); }
+  [data-helix-part="chip-dismiss"]:focus-visible::before {
     outline:        2px solid var(--helix-color-border-focus);
     outline-offset: 2px;
   }
-
-  /* Real disabled color, not opacity — .ai/maps/patterns/disabled-state.md. Semantic directly,
-     matching this element's own rest-state color above (also semantic, not a component token). */
+  /* Real disabled color, not opacity — .ai/maps/patterns/disabled-state.md. */
   [data-helix-part="chip-dismiss"]:disabled {
     cursor: not-allowed;
     color:  var(--helix-color-text-disabled);
   }
-
 
   /* ════════════════════════════════════════════════════════════════════════
      CHIP GROUP — just the chips side by side (no visible header): a wrapping
