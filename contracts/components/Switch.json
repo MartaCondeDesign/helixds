@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Switch",
   "version": "0.1.1",
-  "status": "stable",
+  "status": "beta",
 
   "purpose": "Lets users toggle a single setting on or off, with the change taking effect immediately.",
 
