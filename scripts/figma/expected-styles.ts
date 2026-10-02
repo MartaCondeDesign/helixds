@@ -26,6 +26,7 @@ type Spec = {
   parts: Record<string, PartSpec>;
   target: string;                             // the data-helix-part that receives hover/press/focus
   scope?: (v: Record<string, string>) => string; // when the story renders several instances: CSS selector of the one to measure
+  storyFor?: Partial<Record<State, string>>;       // a different story for a state whose prop the main story won't take from the URL
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -55,6 +56,7 @@ const SPECS: Record<string, Spec> = {
     args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
     parts: { '(root)': { part: 'textarea-wrapper', fill: true, stroke: true }, 'textarea-field': { part: 'textarea-field', placeholder: true } },
     target: 'textarea-field',
+    storyFor: { disabled: 'components-textarea--disabled' }, // the Default story ignores a URL `disabled` arg
   },
   Badge: {
     story: 'components-badge--all-variants',
@@ -118,7 +120,7 @@ async function main() {
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   for (const v of combos) for (const state of spec.states) {
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');
-    await page.goto(`${url}/iframe.html?viewMode=story&id=${spec.story}&args=${encodeURIComponent(args)}`);
+    await page.goto(`${url}/iframe.html?viewMode=story&id=${spec.storyFor?.[state] ?? spec.story}&args=${encodeURIComponent(args)}`);
     await page.waitForSelector(spec.scope ? spec.scope(v) : `[data-helix-part="${spec.target}"]`, { state: 'attached' });
     const variantName = [...Object.entries(v).map(([k, x]) => `${k}=${x}`), ...(spec.states.length > 1 ? [`state=${state}`] : [])].join(', ');
     colors[variantName] = { light: await measure(page, spec, v, state, 'light'), dark: await measure(page, spec, v, state, 'dark') };

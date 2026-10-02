@@ -49,7 +49,18 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    it's a VARIANT axis — declared in `figma.properties` with its `codeProp`.
 6. **Lay the set out as a Propstar property table** (Phase 7) — the same output as the
    [Propstar](https://www.figma.com/community/plugin/1116018586739867857) "Create property table" command.
-7. **Audit before recording.** Phase 6 must return `pass: true`, and its result is recorded in
+7. **Plugin-API traps that produce wrong colors silently** (all hit on 2026-10-02):
+   - **Fallback color.** A bound paint still carries a plain `color`, and Figma paints *that* in some
+     renders (main components edited by script showed solid black while instances looked right). Always
+     build a bound paint with `color` = the variable's resolved light value, never `{r:0,g:0,b:0}`:
+     `const val = v.resolveForConsumer(node).value; setBoundVariableForPaint({ type: 'SOLID', color: { r: val.r, g: val.g, b: val.b } }, 'color', v)`.
+   - **Paint opacity is ignored on a bound paint** (the variable's alpha wins) — model a CSS `color-mix`
+     with a `state-layer` child and LAYER opacity (rule 2), never a second fill at 16%.
+   - **A shadow's `spread` only renders on a frame with `clipsContent = true`** — focus rings built from
+     spread shadows need it on every variant.
+   - **An absolute `state-layer` with STRETCH constraints doesn't follow the variant's own hug-resize** —
+     resize it to the final variant size after text styles are applied (instances then stretch fine).
+8. **Audit before recording.** Phase 6 must return `pass: true`, and its result is recorded in
    `contracts/figma-sync.json` (`audit: { pass, commit, date, counts }`) next to `syncedCommit`.
 
 ## Files to read BEFORE starting (mandatory, in this order)

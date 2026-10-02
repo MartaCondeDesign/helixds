@@ -16,6 +16,8 @@
  *                browser), the resolved fill/stroke/text color of each listed part matches code in light
  *                AND dark mode (±5 per 0–255 channel). A root fill is compared as its COMPOSITE: the root's
  *                own fill with any `state-layer` child (the Figma stand-in for a CSS color-mix) blended on top.
+ *   7 fallback   every bound paint's plain `color` (what Figma falls back to in some renders) equals the
+ *                variable's resolved value — a black fallback made edited main components render black
  *   6 border     a layer that has a border in one variant has it in every variant, at the same weight —
  *                a border never appears/disappears between states, only its color changes (otherwise the
  *                component changes size; see .ai/maps/patterns/border-always.md)
@@ -32,7 +34,7 @@ const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -44,6 +46,8 @@ function checkPaints(variant, node, key) {
     if (!id) { issues.colors.push(`${where(variant, node)}: ${key} is a raw color, not a variable`); continue; }
     const coll = colById[varById[id]?.variableCollectionId]?.name;
     if (coll !== 'Theme') issues.colors.push(`${where(variant, node)}: ${key} bound to ${coll}:${varById[id]?.name} — must be a Theme variable`);
+    const r = varById[id]?.resolveForConsumer(node)?.value;
+    if (r && [r.r - p.color.r, r.g - p.color.g, r.b - p.color.b].some(d => Math.abs(d) > 0.02)) issues.fallback.push(`${where(variant, node)}: ${key} fallback color differs from the variable's value — rebuild the paint with color = resolved value`);
   }
 }
 const SPACING_KEYS = ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'itemSpacing', 'counterAxisSpacing'];
