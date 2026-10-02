@@ -976,6 +976,9 @@
     align-items: center;
     flex-shrink: 0;
   }
+  /* 4px chip gap + 2px here = 6px icon-to-label, built only from scale tokens (spacing-2xs + spacing-3xs). */
+  [data-helix-part="chip-icon"]     { padding-right: var(--helix-spacing-3xs); }
+  [data-helix-part="chip-icon-end"] { padding-left:  var(--helix-spacing-3xs); }
   /* Icon color per variant — icon tokens only, never inherited from chip text */
   [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon"],
   [data-helix-part="chip"][data-variant="neutral"] [data-helix-part="chip-icon-end"] {

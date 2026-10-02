@@ -172,7 +172,7 @@ _No Figma-mappable props._
 - `checkbox-group-description`
 - `checkbox-group-error`
 
-### Chip (`v1.0.0`, stable)
+### Chip (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

@@ -2,7 +2,7 @@
   "name": "helix-ds",
   "private": true,
   "version": "0.1.0",
-  "description": "Helix Design System — AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
+  "description": "Helix Design System \u2014 AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
   "license": "MIT",
   "packageManager": "pnpm@9.0.0",
   "engines": {
@@ -17,7 +17,7 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
-    "verify:tokens":   "tsx scripts/verify-token-naming.ts",
+    "verify:tokens": "tsx scripts/verify-token-naming.ts",
     "verify:props": "tsx scripts/prop-map-check.ts",
     "verify:icons": "tsx scripts/verify-icon-usage.ts",
     "verify:types": "tsx scripts/verify-types.ts",
@@ -36,11 +36,13 @@
     "eval:generate": "tsx scripts/eval-generate.ts",
     "eval:report": "tsx scripts/eval-report.ts",
     "setup:ai": "node scripts/setup-ai.mjs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "husky": "^9.1.7",
+    "playwright": "1.63.0",
     "tsx": "^4.0.0",
     "typescript": "^5.5.0"
   }

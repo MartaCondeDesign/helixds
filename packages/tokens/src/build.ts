@@ -446,6 +446,33 @@ const darkOverrides: Record<string, string> = {
   // separate dark check. Not a coverage gap — a deliberate, common dark-mode convention.
 };
 
+// ─── Dark mode inheritance for component tokens ──────────────────────────────
+//
+// Component tokens are inlined at build time (no var() chaining), so a component color that aliases a
+// semantic color with a dark value used to keep its LIGHT hex in dark mode unless someone remembered to
+// add it to darkOverrides by hand — 28 had been missed (every disabled token, Toast's status icons, the
+// secondary Button border...). Now each one inherits its semantic token's dark value automatically.
+// An explicit darkOverrides entry still wins. KEEP_LIGHT_IN_DARK lists the deliberate exceptions: white
+// text/icons on saturated brand fills, which stay identical in both themes (see the note above).
+const KEEP_LIGHT_IN_DARK = new Set([
+  '--helix-button-text-primary', '--helix-button-text-danger',
+  '--helix-button-icon-primary', '--helix-button-icon-danger',
+  '--helix-fab-icon', '--helix-tooltip-text',
+]);
+(function inheritComponentDark(node: Tree, path: string[]) {
+  for (const [key, child] of Object.entries(node)) {
+    if (key.startsWith('$')) continue;
+    const c = child as TokenNode & Tree;
+    if (c && typeof c === 'object' && '$value' in c) {
+      const m = typeof c.$value === 'string' ? c.$value.match(/^\{semantic\.color\.([a-z]+)\.([a-z0-9-]+)\}$/) : null;
+      if (!m) continue;
+      const comp = `--helix-${[...path, key].join('-')}`;
+      const sem = `--helix-color-${m[1]}-${m[2]}`;
+      if (darkOverrides[sem] && !(comp in darkOverrides) && !KEEP_LIGHT_IN_DARK.has(comp)) darkOverrides[comp] = darkOverrides[sem]!;
+    } else if (c && typeof c === 'object') inheritComponentDark(c, [...path, key]);
+  }
+})(tokens['component'] as Tree, []);
+
 // ─── Responsive typography (mobile fontSize override) ─────────────────────────
 //
 // primitive.fontSize.* is the desktop/tablet size (unchanged, no media query needed since
