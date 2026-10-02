@@ -34,9 +34,22 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Badge\") — variant x size grid (5 variants x xs/s), matching BadgeVariant/BadgeSize exactly. Fill, text, border, radius (full), height, icon-label gap bound to real Figma variables; label typography uses the real \"Caption / Semibold\" Figma text style (not a loose fontSize binding), matching component.badge.fontSize/fontWeight -> semantic.textStyle.caption-semibold. Not modeled: the icon slot (component.badge.icon.* unverifiable, same caveat as Button). STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:2) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'label' wired to badge-label (10/10 variants). Still missing: BOOLEAN 'icon' — no icon-slot layer built yet. PHASE 4b 2026-08-24: added badge-icon anatomy (Clock icon instance, hidden by default) directly to the existing 10 children — WITHOUT re-combining (see combineAsVariantsCorruptionRule) — then wired a BOOLEAN 'icon' property. Property order: label, icon (Boolean/Text group), variant, size (Variant group). RESYNCED 2026-10-02: borders -> border/{variant}/light (decorative tone, new Theme vars), danger text -> text/danger (was primitive red/700), icons re-created at 12px/1.3 bound to icon/{variant} (icon/neutral/light for neutral).",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Badge\") — variant x size grid (5 variants x xs/s), matching BadgeVariant/BadgeSize exactly. Fill, text, border, radius (full), height, icon-label gap bound to real Figma variables; label typography uses the real \"Caption / Semibold\" Figma text style (not a loose fontSize binding), matching component.badge.fontSize/fontWeight -> semantic.textStyle.caption-semibold. Not modeled: the icon slot (component.badge.icon.* unverifiable, same caveat as Button). STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:2) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'label' wired to badge-label (10/10 variants). Still missing: BOOLEAN 'icon' — no icon-slot layer built yet. PHASE 4b 2026-08-24: added badge-icon anatomy (Clock icon instance, hidden by default) directly to the existing 10 children — WITHOUT re-combining (see combineAsVariantsCorruptionRule) — then wired a BOOLEAN 'icon' property. Property order: label, icon (Boolean/Text group), variant, size (Variant group). RESYNCED 2026-10-02: borders -> border/{variant}/light (decorative tone, new Theme vars), danger text -> text/danger (was primitive red/700), icons re-created at 12px/1.3 bound to icon/{variant} (icon/neutral/light for neutral). RESYNCED + AUDITED 2026-10-02: root padding bound (spacing/2xs xs, spacing/xs s; 0 vertical), new badge-content auto-layout (spacing/3xs sides, spacing/2xs gap) holding badge-icon + badge-label — 6px/10px built from scale tokens like code. Audit passed incl. color parity light+dark. Non-interactive: no state axis.",
       "compSetId": "303:2",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "syncedCommit": "2506b5c1566a91f52ed58a9e7ca72d3b29a2f033",
+      "audit": {
+        "pass": true,
+        "commit": "2506b5c1566a91f52ed58a9e7ca72d3b29a2f033",
+        "date": "2026-10-02",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0
+        }
+      }
     },
     {
       "name": "Button",

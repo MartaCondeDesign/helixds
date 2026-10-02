@@ -536,7 +536,6 @@
     border-color: var(--helix-input-border-hover);
   }
   [data-helix-part="input-wrapper"]:focus-within:not([data-invalid]) {
-    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-input-border-focus);
     box-shadow:   var(--helix-input-shadow-focus);
   }
@@ -544,7 +543,6 @@
     border-color: var(--helix-input-border-invalid);
   }
   [data-helix-part="input-wrapper"][data-invalid]:focus-within {
-    border-width: var(--helix-borderWidth-thick);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-input-border-invalid) 20%, transparent);
   }
 
@@ -1016,7 +1014,6 @@
     border-color: var(--helix-textarea-border-hover);
   }
   [data-helix-part="textarea-wrapper"]:focus-within:not([data-invalid]) {
-    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-textarea-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-focus) 20%, transparent);
   }
@@ -1024,7 +1021,6 @@
     border-color: var(--helix-textarea-border-invalid);
   }
   [data-helix-part="textarea-wrapper"][data-invalid]:focus-within {
-    border-width: var(--helix-borderWidth-thick);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-invalid) 20%, transparent);
   }
   [data-helix-part="textarea-wrapper"][data-disabled] {
@@ -1170,7 +1166,6 @@
      rather than the open state getting a weaker one-off. */
   [data-helix-part="select-trigger"]:focus-visible,
   [data-helix-part="select-trigger"][aria-expanded="true"] {
-    border-width: var(--helix-borderWidth-thick);
     border-color: var(--helix-select-border-focus);
     box-shadow:   0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
   }
@@ -1272,16 +1267,12 @@
   [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
     border-color: var(--helix-select-border-hover);
   }
-  /* Focus/open = Select's treatment (thick blue border + glow). The padding shrinks by the extra border
-     width so the chips don't shift by a pixel when the border thickens. */
+  /* Focus/open = Select's treatment (blue border + glow). The border keeps its width — only its color
+     changes (border-always.md) — so the chips never shift and no padding compensation is needed. */
   [data-helix-part="multi-select-field"]:has([data-helix-part="multi-select-trigger"]:focus-visible),
   [data-helix-part="multi-select-field"][data-open] {
-    border-width:   var(--helix-borderWidth-thick);
     border-color:   var(--helix-select-border-focus);
     box-shadow:     0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent);
-    padding-top:    calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
-    padding-bottom: calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
-    padding-left:   calc((var(--helix-select-height) - var(--helix-chip-height-s)) / 2 - var(--helix-borderWidth-thick));
   }
   [data-helix-part="multi-select-field"][data-invalid]:not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
     border-color: var(--helix-select-border-invalid);
@@ -1549,7 +1540,6 @@
 
   /* Focus-visible ring */
   [data-helix-part="checkbox-input"]:focus-visible + [data-helix-part="checkbox-control"] {
-    border-width:   var(--helix-borderWidth-thick);
     outline:        2px solid var(--helix-checkbox-border-focus);
     outline-offset: 2px;
   }
@@ -1778,7 +1768,6 @@
     border-color: var(--helix-radio-fill-checked-hover);
   }
   [data-helix-part="radio-input"]:focus-visible + [data-helix-part="radio-control"] {
-    border-width:   var(--helix-borderWidth-thick);
     outline:        2px solid var(--helix-radio-border-focus);
     outline-offset: 2px;
   }
