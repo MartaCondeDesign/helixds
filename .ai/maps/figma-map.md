@@ -131,7 +131,20 @@ _No Figma-mappable props._
 - `card-header`
 - `card-body`
 
-### Checkbox (`v0.1.0`, stable)
+### Chart (`v1.0.0`, beta)
+
+| Code prop | Code type | Figma kind | Figma property | Values |
+|---|---|---|---|---|
+| `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` | `variant` | `line`, `area`, `bar`, `stacked-bar`, `donut`, `timeline` |
+| `label` | `string` | `TEXT` | `label` | — |
+| `description` | `string \| undefined` | `TEXT` | `description` | — |
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value):
+- `chart-root`
+- `chart-canvas`
+- `chart-data`
+
+### Checkbox (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -382,7 +395,7 @@ _No Figma-mappable props._
 - `radio-item-description`
 - `radio-item-error`
 
-### RadioGroup (`v0.1.0`, stable)
+### RadioGroup (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

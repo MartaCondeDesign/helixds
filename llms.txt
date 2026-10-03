@@ -29,6 +29,7 @@ contracts/manifest.json on every commit.
 - Badge (core) — Communicates status, category labels, or counts in a compact, high-contrast capsule.
 - Button (core) — Triggers an action or navigates to a destination when pressed by the user.
 - Card (core) — Groups related content in a visually distinct, flat surface — a dashboard widget, a settings group, a gallery tile.
+- Chart (core) — Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events.
 - Checkbox (core) — Lets users select one or more independent options from a set, or confirm a single binary choice.
 - CheckboxGroup (core) — Lets users choose zero or more options from a small, visible set of independent choices.
 - Chip (core) — Represents a compact selectable label for filters, categories, or short choices.

@@ -2,7 +2,7 @@
   "name": "helix-ds",
   "private": true,
   "version": "0.1.0",
-  "description": "Helix Design System \u2014 AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
+  "description": "Helix Design System — AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
   "license": "MIT",
   "packageManager": "pnpm@9.0.0",
   "engines": {
@@ -22,9 +22,13 @@
     "verify:icons": "tsx scripts/verify-icon-usage.ts",
     "verify:types": "tsx scripts/verify-types.ts",
     "verify:stable": "tsx scripts/verify-stable.ts",
+    "verify:governance": "tsx scripts/verify-governance.ts",
+    "lint": "eslint apps",
+    "test:lint-hook": "node --test scripts/claude-lint-hook.test.mjs",
     "report:paints": "tsx scripts/report-paints.ts",
     "lint:ai": "tsx scripts/lint-ai.ts",
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",
+    "audit:token-usage": "tsx scripts/audit-token-usage.ts",
     "docs:manifest": "tsx scripts/generate-component-manifest.ts",
     "docs:changelog": "tsx scripts/generate-changelog.ts",
     "docs:figma-map": "tsx scripts/docs-figma-map.ts",
@@ -37,15 +41,21 @@
     "eval:generate": "tsx scripts/eval-generate.ts",
     "eval:report": "tsx scripts/eval-report.ts",
     "eval:review": "tsx scripts/eval-review.ts",
+    "eval:judge": "tsx scripts/eval-review.ts --traces --judge",
+    "eval:trace": "tsx scripts/log-trace.ts",
+    "quality": "tsx scripts/quality-cli.ts",
     "setup:ai": "node scripts/setup-ai.mjs",
     "prepare": "husky",
     "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },
   "devDependencies": {
+    "@helix-ds/eslint-plugin": "workspace:^",
     "@types/node": "^20.0.0",
+    "eslint": "^9",
     "husky": "^9.1.7",
     "playwright": "1.63.0",
     "tsx": "^4.0.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.71.0"
   }
 }

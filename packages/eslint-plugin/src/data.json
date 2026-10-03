@@ -1,0 +1,782 @@
+{
+  "antiSynonyms": {
+    "type": "variant",
+    "kind": "variant",
+    "mode": "variant",
+    "scale": "size",
+    "sz": "size",
+    "fontWeight": "weight",
+    "isLoading": "loading",
+    "pending": "loading",
+    "isDisabled": "disabled",
+    "readonly": "disabled",
+    "active": "current",
+    "isActive": "current",
+    "selected": "current",
+    "isExpanded": "expanded",
+    "open": "expanded",
+    "isOpen": "expanded",
+    "isChecked": "checked",
+    "hasError": "invalid",
+    "isError": "invalid",
+    "error": "invalid",
+    "isRequired": "required",
+    "onClick": "onPress",
+    "onTap": "onPress",
+    "onAction": "onPress",
+    "onValueChange": "onChange",
+    "onUpdate": "onChange",
+    "onFocused": "onFocus",
+    "onBlurred": "onBlur",
+    "onClose": "onDismiss",
+    "onCancel": "onDismiss",
+    "title": "label",
+    "name": "label",
+    "text": "label",
+    "subtitle": "description",
+    "hint": "description",
+    "helper": "description",
+    "hintText": "placeholder",
+    "ghostText": "placeholder",
+    "leftIcon": "icon",
+    "startIcon": "icon",
+    "leadingIcon": "icon",
+    "rightIcon": "iconEnd",
+    "endIcon": "iconEnd",
+    "trailingIcon": "iconEnd",
+    "content": "children",
+    "body": "children",
+    "slot": "children",
+    "block": "fullWidth",
+    "fluid": "fullWidth",
+    "stretch": "fullWidth",
+    "textAlign": "align",
+    "justifyContent": "align"
+  },
+  "valueSynonyms": {
+    "variant": {
+      "error": "danger",
+      "destructive": "danger",
+      "delete": "danger",
+      "positive": "success",
+      "ok": "success",
+      "valid": "success",
+      "caution": "warning",
+      "alert": "warning",
+      "information": "info",
+      "tip": "info",
+      "note": "info",
+      "default": "neutral",
+      "muted": "neutral",
+      "subtle": "neutral"
+    },
+    "size": {
+      "xsmall": "xs",
+      "extra-small": "xs",
+      "tiny": "xs",
+      "sm": "s",
+      "small": "s",
+      "md": "m",
+      "medium": "m",
+      "base": "m",
+      "default": "m",
+      "lg": "l",
+      "large": "l",
+      "xlarge": "xl",
+      "extra-large": "xl",
+      "xxl": "2xl"
+    }
+  },
+  "props": {
+    "Accordion": [
+      "label",
+      "children",
+      "expanded",
+      "defaultExpanded",
+      "onExpandedChange",
+      "disabled",
+      "className"
+    ],
+    "AppShell": [
+      "sidenav",
+      "topbar",
+      "children",
+      "className"
+    ],
+    "Avatar": [
+      "label",
+      "src",
+      "size",
+      "className"
+    ],
+    "AvatarGroup": [
+      "avatars",
+      "max",
+      "size",
+      "className"
+    ],
+    "Badge": [
+      "variant",
+      "size",
+      "icon",
+      "label"
+    ],
+    "Button": [
+      "variant",
+      "size",
+      "loading",
+      "disabled",
+      "icon",
+      "iconEnd",
+      "fullWidth",
+      "onPress"
+    ],
+    "Card": [
+      "header",
+      "children",
+      "padding",
+      "className"
+    ],
+    "Chart": [
+      "variant",
+      "categories",
+      "series",
+      "label",
+      "description",
+      "height"
+    ],
+    "Checkbox": [
+      "label",
+      "description",
+      "errorMessage",
+      "checked",
+      "defaultChecked",
+      "onChange",
+      "disabled",
+      "required",
+      "invalid",
+      "indeterminate",
+      "id",
+      "name",
+      "value"
+    ],
+    "CheckboxGroup": [
+      "label",
+      "options",
+      "value",
+      "defaultValue",
+      "onChange",
+      "orientation",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "name"
+    ],
+    "Chip": [
+      "variant",
+      "size",
+      "disabled",
+      "label",
+      "icon",
+      "iconEnd",
+      "onPress",
+      "dismissible",
+      "onDismiss"
+    ],
+    "ChipGroup": [
+      "label",
+      "options",
+      "size",
+      "disabled"
+    ],
+    "FAB": [
+      "icon",
+      "label",
+      "actions",
+      "expanded",
+      "defaultExpanded",
+      "onExpandedChange",
+      "disabled",
+      "onPress",
+      "className"
+    ],
+    "Icon": [
+      "icon",
+      "size",
+      "stroke",
+      "color",
+      "label",
+      "decorative"
+    ],
+    "IconButton": [
+      "icon",
+      "label",
+      "variant",
+      "size",
+      "loading",
+      "disabled",
+      "onPress",
+      "className"
+    ],
+    "Input": [
+      "label",
+      "hideLabel",
+      "size",
+      "invalid",
+      "disabled",
+      "required",
+      "loading",
+      "icon",
+      "iconEnd",
+      "description",
+      "errorMessage",
+      "invalidAttempt",
+      "fullWidth",
+      "onChange"
+    ],
+    "Menu": [
+      "id",
+      "expanded",
+      "anchorRef",
+      "options",
+      "value",
+      "multiple",
+      "values",
+      "activeValue",
+      "onSelect",
+      "className"
+    ],
+    "Modal": [
+      "label",
+      "children",
+      "expanded",
+      "onDismiss",
+      "showCloseButton",
+      "closeOnBackdropClick",
+      "primaryActionLabel",
+      "onPrimaryAction",
+      "secondaryActionLabel",
+      "onSecondaryAction",
+      "tertiaryActionLabel",
+      "onTertiaryAction",
+      "className"
+    ],
+    "MultiSelect": [
+      "label",
+      "options",
+      "value",
+      "defaultValue",
+      "onChange",
+      "placeholder",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "fullWidth",
+      "hideLabel",
+      "id",
+      "name",
+      "className"
+    ],
+    "NavItem": [
+      "label",
+      "href",
+      "icon",
+      "current"
+    ],
+    "PageHeader": [
+      "label",
+      "description",
+      "level",
+      "actions"
+    ],
+    "RadioButton": [
+      "label",
+      "name",
+      "value",
+      "checked",
+      "defaultChecked",
+      "onChange",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "className"
+    ],
+    "RadioGroup": [
+      "label",
+      "options",
+      "value",
+      "defaultValue",
+      "onChange",
+      "orientation",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "name"
+    ],
+    "SegmentedControl": [
+      "label",
+      "options",
+      "value",
+      "defaultValue",
+      "onChange",
+      "disabled",
+      "name"
+    ],
+    "Select": [
+      "label",
+      "options",
+      "value",
+      "defaultValue",
+      "onChange",
+      "placeholder",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "fullWidth",
+      "hideLabel",
+      "id",
+      "name",
+      "className"
+    ],
+    "SideNav": [
+      "brand",
+      "children",
+      "footer",
+      "className"
+    ],
+    "SidePanel": [
+      "label",
+      "children",
+      "expanded",
+      "onDismiss",
+      "showCloseButton",
+      "closeOnBackdropClick",
+      "placement",
+      "className"
+    ],
+    "Switch": [
+      "label",
+      "hideLabel",
+      "description",
+      "checked",
+      "defaultChecked",
+      "onChange",
+      "disabled",
+      "size",
+      "id",
+      "name"
+    ],
+    "Table": [
+      "children",
+      "className"
+    ],
+    "Textarea": [
+      "label",
+      "description",
+      "errorMessage",
+      "invalid",
+      "disabled",
+      "required",
+      "fullWidth",
+      "hideLabel",
+      "size",
+      "rows",
+      "maxLength",
+      "resize",
+      "showCount",
+      "onChange"
+    ],
+    "Toast": [
+      "className"
+    ],
+    "Tooltip": [
+      "label",
+      "children",
+      "placement",
+      "expanded"
+    ],
+    "TopBar": [
+      "start",
+      "end",
+      "className"
+    ]
+  },
+  "colors": {
+    "#ffffff": [
+      "--helix-color-fill-page",
+      "--helix-color-text-inverse",
+      "--helix-color-icon-inverse"
+    ],
+    "#f8fafc": [
+      "--helix-color-fill-surface"
+    ],
+    "#f1f5f9": [
+      "--helix-color-fill-surface-dark",
+      "--helix-color-fill-disabled",
+      "--helix-color-fill-secondary-interactive-default",
+      "--helix-color-border-neutral-light"
+    ],
+    "#0f172a": [
+      "--helix-color-fill-overlay",
+      "--helix-color-fill-inverse",
+      "--helix-color-text-neutral",
+      "--helix-color-icon-neutral"
+    ],
+    "#3b82f6": [
+      "--helix-color-fill-primary",
+      "--helix-color-border-focus"
+    ],
+    "#93c5fd": [
+      "--helix-color-fill-primary-light"
+    ],
+    "#2563eb": [
+      "--helix-color-fill-primary-interactive-default",
+      "--helix-color-text-primary",
+      "--helix-color-text-link",
+      "--helix-color-icon-primary",
+      "--helix-color-chart-series-1"
+    ],
+    "#1d4ed8": [
+      "--helix-color-fill-primary-interactive-hover",
+      "--helix-color-text-link-hover"
+    ],
+    "#1e40af": [
+      "--helix-color-fill-primary-interactive-press"
+    ],
+    "#eff6ff": [
+      "--helix-color-fill-primary-interactive-light-default"
+    ],
+    "#dbeafe": [
+      "--helix-color-fill-primary-interactive-light-hover"
+    ],
+    "#e2e8f0": [
+      "--helix-color-fill-secondary-interactive-hover",
+      "--helix-color-border-neutral"
+    ],
+    "#cbd5e1": [
+      "--helix-color-fill-secondary-interactive-press"
+    ],
+    "#dc2626": [
+      "--helix-color-fill-danger-interactive-default",
+      "--helix-color-icon-danger",
+      "--helix-color-border-danger",
+      "--helix-color-chart-series-4"
+    ],
+    "#b91c1c": [
+      "--helix-color-fill-danger-interactive-hover",
+      "--helix-color-text-danger"
+    ],
+    "#991b1b": [
+      "--helix-color-fill-danger-interactive-press"
+    ],
+    "#fff1f2": [
+      "--helix-color-fill-danger-interactive-light-default"
+    ],
+    "#ffe4e6": [
+      "--helix-color-fill-danger-interactive-light-hover"
+    ],
+    "#16a34a": [
+      "--helix-color-fill-success-interactive-default",
+      "--helix-color-border-success",
+      "--helix-color-chart-series-3"
+    ],
+    "#15803d": [
+      "--helix-color-fill-success-interactive-hover",
+      "--helix-color-text-success",
+      "--helix-color-icon-success"
+    ],
+    "#f0fdf4": [
+      "--helix-color-fill-success-light"
+    ],
+    "#d97706": [
+      "--helix-color-fill-warning-interactive-default",
+      "--helix-color-border-warning",
+      "--helix-color-chart-series-2"
+    ],
+    "#b45309": [
+      "--helix-color-fill-warning-interactive-hover",
+      "--helix-color-text-warning",
+      "--helix-color-icon-warning"
+    ],
+    "#fffbeb": [
+      "--helix-color-fill-warning-light"
+    ],
+    "#0284c7": [
+      "--helix-color-fill-info-interactive-default",
+      "--helix-color-border-info"
+    ],
+    "#0369a1": [
+      "--helix-color-fill-info-interactive-hover",
+      "--helix-color-text-info",
+      "--helix-color-icon-info",
+      "--helix-color-chart-series-5"
+    ],
+    "#f0f9ff": [
+      "--helix-color-fill-info-light"
+    ],
+    "#64748b": [
+      "--helix-color-fill-secondary-interactive-dark-default",
+      "--helix-color-text-neutral-lightest"
+    ],
+    "#475569": [
+      "--helix-color-fill-secondary-interactive-dark-hover",
+      "--helix-color-text-neutral-light",
+      "--helix-color-icon-neutral-light"
+    ],
+    "#94a3b8": [
+      "--helix-color-text-disabled",
+      "--helix-color-icon-disabled",
+      "--helix-color-border-neutral-dark"
+    ],
+    "#fecdd3": [
+      "--helix-color-border-danger-light"
+    ],
+    "#bbf7d0": [
+      "--helix-color-border-success-light"
+    ],
+    "#bae6fd": [
+      "--helix-color-border-info-light"
+    ],
+    "#fde68a": [
+      "--helix-color-border-warning-light"
+    ],
+    "#334155": [
+      "--helix-color-border-inverse"
+    ]
+  },
+  "primitives": {
+    "blue-50": "#eff6ff",
+    "blue-100": "#dbeafe",
+    "blue-200": "#bfdbfe",
+    "blue-300": "#93c5fd",
+    "blue-400": "#60a5fa",
+    "blue-500": "#3b82f6",
+    "blue-600": "#2563eb",
+    "blue-700": "#1d4ed8",
+    "blue-800": "#1e40af",
+    "blue-900": "#1e3a8a",
+    "gray-0": "#ffffff",
+    "gray-50": "#f8fafc",
+    "gray-100": "#f1f5f9",
+    "gray-200": "#e2e8f0",
+    "gray-300": "#cbd5e1",
+    "gray-400": "#94a3b8",
+    "gray-500": "#64748b",
+    "gray-600": "#475569",
+    "gray-700": "#334155",
+    "gray-800": "#1e293b",
+    "gray-900": "#0f172a",
+    "green-50": "#f0fdf4",
+    "green-100": "#dcfce7",
+    "green-200": "#bbf7d0",
+    "green-300": "#86efac",
+    "green-400": "#4ade80",
+    "green-500": "#22c55e",
+    "green-600": "#16a34a",
+    "green-700": "#15803d",
+    "green-800": "#166534",
+    "green-900": "#14532d",
+    "orange-50": "#fffbeb",
+    "orange-100": "#fef3c7",
+    "orange-200": "#fde68a",
+    "orange-300": "#fcd34d",
+    "orange-400": "#fbbf24",
+    "orange-500": "#f59e0b",
+    "orange-600": "#d97706",
+    "orange-700": "#b45309",
+    "orange-800": "#92400e",
+    "orange-900": "#78350f",
+    "red-50": "#fff1f2",
+    "red-100": "#ffe4e6",
+    "red-200": "#fecdd3",
+    "red-300": "#fca5a5",
+    "red-400": "#f87171",
+    "red-500": "#ef4444",
+    "red-600": "#dc2626",
+    "red-700": "#b91c1c",
+    "red-800": "#991b1b",
+    "red-900": "#7f1d1d",
+    "turquoise-50": "#f0f9ff",
+    "turquoise-100": "#e0f2fe",
+    "turquoise-200": "#bae6fd",
+    "turquoise-300": "#7dd3fc",
+    "turquoise-400": "#38bdf8",
+    "turquoise-500": "#0ea5e9",
+    "turquoise-600": "#0284c7",
+    "turquoise-700": "#0369a1",
+    "turquoise-800": "#075985",
+    "turquoise-900": "#0c4a6e"
+  },
+  "coreExports": [
+    "Accordion",
+    "AccordionDoc",
+    "AccordionProps",
+    "AppShell",
+    "AppShellDoc",
+    "AppShellProps",
+    "Avatar",
+    "AvatarDoc",
+    "AvatarGroup",
+    "AvatarGroupDoc",
+    "AvatarGroupProps",
+    "AvatarGroupSize",
+    "AvatarProps",
+    "AvatarSize",
+    "BADGE_ICON_BY_VARIANT",
+    "Badge",
+    "BadgeDoc",
+    "BadgeProps",
+    "BadgeSize",
+    "BadgeVariant",
+    "Button",
+    "ButtonDoc",
+    "ButtonProps",
+    "ButtonSize",
+    "ButtonVariant",
+    "Card",
+    "CardDoc",
+    "CardPadding",
+    "CardProps",
+    "Chart",
+    "ChartDoc",
+    "ChartProps",
+    "ChartSeries",
+    "ChartVariant",
+    "Checkbox",
+    "CheckboxDoc",
+    "CheckboxGroup",
+    "CheckboxGroupDoc",
+    "CheckboxGroupOrientation",
+    "CheckboxGroupProps",
+    "CheckboxOption",
+    "CheckboxProps",
+    "Chip",
+    "ChipDoc",
+    "ChipGroup",
+    "ChipGroupDoc",
+    "ChipGroupOption",
+    "ChipGroupProps",
+    "ChipProps",
+    "ChipSize",
+    "ChipVariant",
+    "ComponentDoc",
+    "FAB",
+    "FABAction",
+    "FABDoc",
+    "FABProps",
+    "HelixIconComponent",
+    "ICON_STROKE_PX_BY_SIZE",
+    "Icon",
+    "IconAdapterConfig",
+    "IconButton",
+    "IconButtonDoc",
+    "IconButtonProps",
+    "IconButtonSize",
+    "IconButtonVariant",
+    "IconDoc",
+    "IconProps",
+    "IconSize",
+    "Input",
+    "InputDoc",
+    "InputProps",
+    "InputSize",
+    "Menu",
+    "MenuDoc",
+    "MenuOption",
+    "MenuOptionGroup",
+    "MenuProps",
+    "Modal",
+    "ModalDoc",
+    "ModalProps",
+    "MultiSelect",
+    "MultiSelectDoc",
+    "MultiSelectOption",
+    "MultiSelectOptionGroup",
+    "MultiSelectProps",
+    "NavItem",
+    "NavItemDoc",
+    "NavItemProps",
+    "PageHeader",
+    "PageHeaderDoc",
+    "PageHeaderLevel",
+    "PageHeaderProps",
+    "RadioButton",
+    "RadioButtonDoc",
+    "RadioButtonProps",
+    "RadioGroup",
+    "RadioGroupDoc",
+    "RadioGroupProps",
+    "RadioOption",
+    "RadioOrientation",
+    "SegmentedControl",
+    "SegmentedControlDoc",
+    "SegmentedControlOption",
+    "SegmentedControlProps",
+    "Select",
+    "SelectDoc",
+    "SelectOption",
+    "SelectOptionGroup",
+    "SelectProps",
+    "SideNav",
+    "SideNavDoc",
+    "SideNavProps",
+    "SidePanel",
+    "SidePanelDoc",
+    "SidePanelProps",
+    "Switch",
+    "SwitchDoc",
+    "SwitchProps",
+    "SwitchSize",
+    "Table",
+    "TableBody",
+    "TableCell",
+    "TableCellProps",
+    "TableDoc",
+    "TableHead",
+    "TableHeaderCell",
+    "TableHeaderCellProps",
+    "TableProps",
+    "TableRow",
+    "TableRowProps",
+    "TableSectionProps",
+    "Textarea",
+    "TextareaDoc",
+    "TextareaProps",
+    "TextareaResize",
+    "TextareaSize",
+    "Toast",
+    "ToastDoc",
+    "ToastOptions",
+    "ToastProps",
+    "ToastRecord",
+    "ToastVariant",
+    "Tooltip",
+    "TooltipDoc",
+    "TooltipPlacement",
+    "TooltipProps",
+    "TopBar",
+    "TopBarDoc",
+    "TopBarProps",
+    "cn",
+    "createIconAdapter",
+    "iconStrokeForSize",
+    "toast"
+  ],
+  "packages": [
+    "@helix-ds/core",
+    "@helix-ds/eslint-plugin",
+    "@helix-ds/storybook-addon-tokens",
+    "@helix-ds/tokens",
+    "@helix-ds/wc"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@helix-ds/eslint-plugin",
+  "version": "0.1.0",
+  "description": "Real-time lint rules for Helix DS — canonical props, semantic color tokens and Helix components over native controls",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": ["src"],
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "test": "node --test test/*.test.js"
+  },
+  "peerDependencies": {
+    "eslint": ">=9.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}

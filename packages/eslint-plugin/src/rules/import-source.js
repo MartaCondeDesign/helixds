@@ -1,0 +1,42 @@
+/**
+ * helix/import-source — Helix components come from @helix-ds/core, nowhere else.
+ *
+ *   import { Button } from '@helix/react';   → '@helix-ds/core'
+ *
+ * Auto-fixed when every imported name really is an @helix-ds/core export; otherwise only reported (the
+ * import may also name things Helix doesn't have — fixing the path would just move the error).
+ */
+import data from '../data.json' with { type: 'json' };
+import { HELIX_SOURCE, isLookalikeSource } from '../helix-imports.js';
+
+const EXPORTS = new Set(data.coreExports);
+
+export default {
+  meta: {
+    type: 'problem',
+    docs: { description: 'Import Helix components from @helix-ds/core, not a look-alike package path' },
+    fixable: 'code',
+    schema: [],
+    messages: {
+      source: "`{{source}}` is not a Helix package — Helix components come from '@helix-ds/core'.",
+      unknown: "`{{source}}` is not a Helix package, and @helix-ds/core has no {{names}} — check `pnpm helix components`.",
+    },
+  },
+  create(context) {
+    return {
+      ImportDeclaration(node) {
+        const source = node.source.value;
+        if (!isLookalikeSource(source)) return;
+        const named = node.specifiers.filter(s => s.type === 'ImportSpecifier').map(s => s.imported.name);
+        const missing = named.filter(name => !EXPORTS.has(name));
+        const quote = node.source.raw[0];
+        context.report({
+          node: node.source,
+          messageId: missing.length ? 'unknown' : 'source',
+          data: { source, names: missing.map(n => `\`${n}\``).join(', ') },
+          fix: missing.length ? null : fixer => fixer.replaceText(node.source, `${quote}${HELIX_SOURCE}${quote}`),
+        });
+      },
+    };
+  },
+};

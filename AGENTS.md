@@ -18,6 +18,14 @@ Icons are [Tabler Icons](https://tabler.io/icons) (`@tabler/icons-react`, a peer
 always rendered through core's `Icon` component or a component's `icon` prop — never as a raw
 `<IconXxx />` tag.
 
+## Data Analytics
+
+For metrics and data visualisation, use Helix's `Chart` component. It is the only supported chart renderer
+and is branded through Apache ECharts using Helix semantic tokens. Never import ECharts directly, pass raw
+ECharts options, or introduce another chart library. Choose `variant="line"`, `"bar"`, `"stacked-bar"`,
+`"donut"`, or `"timeline"` based on the reader's question; compose charts with Helix `Card`, `Table`,
+`Badge`, and `Tooltip` rather than recreating those UI pieces inside a chart.
+
 ## Setup (required, once)
 
 ```tsx
@@ -45,6 +53,7 @@ All components import from `@helix-ds/core`. Generated from `contracts/manifest.
 | `Badge` | core | Communicates status, category labels, or counts in a compact, high-contrast capsule. |
 | `Button` | core | Triggers an action or navigates to a destination when pressed by the user. |
 | `Card` | core | Groups related content in a visually distinct, flat surface — a dashboard widget, a settings group, a gallery tile. |
+| `Chart` | core | Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events. |
 | `Checkbox` | core | Lets users select one or more independent options from a set, or confirm a single binary choice. |
 | `CheckboxGroup` | core | Lets users choose zero or more options from a small, visible set of independent choices. |
 | `Chip` | core | Represents a compact selectable label for filters, categories, or short choices. |
@@ -102,6 +111,14 @@ import { tokens } from '@helix-ds/tokens';
 tokens.color.fill.primary; // '#1d4ed8'
 ```
 
+## Lint while you write
+
+`@helix-ds/eslint-plugin` catches the mistakes agents make most — an invented import path
+(`@helix/react` → `@helix-ds/core`), anti-synonym props and values (`onClick` → `onPress`,
+`size="md"` → `size="m"`), raw colors (`#1d4ed8` → the semantic token with that color) and native
+controls (`<button>` → `Button`). Run `pnpm lint` (or `npx eslint --fix <file>`) after writing UI code;
+the editor shows the same warnings live. See `packages/eslint-plugin/README.md`.
+
 ## Props vocabulary
 
 Use the canonical prop names below. Anti-synonyms are rejected by CI.
@@ -116,8 +133,24 @@ Use the canonical prop names below. Anti-synonyms are rejected by CI.
 | `current`   | `active`   | Navigation selected state      |
 | `onPress`   | `onClick`  | Primary action handler         |
 | `label`     | `title`, `name` | Accessible text          |
-| `icon`      | `leftIcon`, `startIcon` | Icon placement   |
-| `iconEnd`   | `rightIcon`, `endIcon`  | Trailing icon    |
+## Agent Readiness & Governance (Can it? Should it? May it?)
+
+When an AI agent makes design or implementation decisions using Helix, it must validate three levels of readiness:
+
+1. **Can it? (Mechanical Readiness)**:
+   - Does the generated code compile and use valid tokens (`var(--helix-color-...)`)?
+   - Are canonical props (`onPress`, `variant`, `expanded`) used according to component contracts?
+   - Query Helix via CLI (`pnpm helix component <Name>`) or contracts to fetch machine-readable props and types.
+
+2. **Should it? (Design Judgment Readiness)**:
+   - Does the usage respect `neverUseFor` anti-patterns documented in the component contract?
+   - Does it preserve accessibility contracts (WCAG AA, focus trapping, aria semantics)?
+   - Are responsive constraints and layout components (`AppShell`, `TopBar`, `SideNav`) respected?
+
+3. **May it? (Authority & Governance Readiness)**:
+   - **Consuming apps**: Agents MAY use core Helix components and create local custom components flagged with `// [CUSTOM] reason`.
+   - **Boundary Enforcement**: Agents MAY NOT alter shared token CSS variables directly (`style={{ color: '#xxx' }}`), override internal padding/height tokens, or redefine component prop contracts.
+   - **Escalation**: If a requested UI pattern cannot be achieved with existing Helix components or local composition, the agent MUST flag it for human review or file a request for Helix DS.
 
 ## AI context installation
 
@@ -137,6 +170,14 @@ pnpm helix pattern empty-state --json
 Use `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`
 when several lookups are needed. If no shell is available, consult `contracts/manifest.json`, the
 specific component contract, and `.ai/maps/` directly.
+
+When no Helix component covers what you need, scaffold the custom one instead of writing it from
+scratch — it comes with the `// [CUSTOM] reason:` header, semantic tokens, an accessible base and a
+Storybook story whose `play` function is its first test:
+
+```bash
+pnpm helix scaffold:custom UsageMeter --reason "Helix has no meter component" --dir src/custom/UsageMeter
+```
 
 To install Helix AI context in your project:
 
