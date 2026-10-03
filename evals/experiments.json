@@ -10,5 +10,25 @@
     "description": "Current repo state, unchanged — the reference every variant is compared against.",
     "createdAt": "2026-10-03T09:15:54.508Z",
     "commit": "dc7c205-dirty"
+  },
+  {
+    "id": "agents-isolated",
+    "description": "AGENTS.md as context, run from an empty dir (no repo access)",
+    "createdAt": "2026-10-03T09:17:41.035Z",
+    "commit": "802a561-dirty"
+  },
+  {
+    "id": "no-context",
+    "description": "No Helix guide and no repo access — what the model knows on its own",
+    "hypothesis": "Without AGENTS.md the agent invents props (anti-synonyms) far more often",
+    "createdAt": "2026-10-03T09:18:06.619Z",
+    "commit": "802a561-dirty"
+  },
+  {
+    "id": "chip-rule",
+    "description": "AGENTS.md copy: Chip described without 'selectable' + a 'Chip is removed, never selected' rule (dismissible/onDismiss)",
+    "hypothesis": "Agents add checked= because AGENTS.md calls Chip a 'selectable label'",
+    "createdAt": "2026-10-03T09:19:06.285Z",
+    "commit": "802a561-dirty"
   }
 ]
