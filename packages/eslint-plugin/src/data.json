@@ -775,6 +775,7 @@
   "packages": [
     "@helix-ds/core",
     "@helix-ds/eslint-plugin",
+    "@helix-ds/mcp",
     "@helix-ds/storybook-addon-tokens",
     "@helix-ds/tokens",
     "@helix-ds/wc"

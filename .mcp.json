@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "helix": {
+      "command": "pnpm",
+      "args": ["-s", "helix:mcp"]
+    }
+  }
+}

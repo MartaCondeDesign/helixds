@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /** CLI for agents and people querying the Helix design system. Every query is read-only; only scaffold:custom writes. */
-import { getComponent, getPattern, getToken, listComponents, search } from './helix-query-lib.ts';
+import { getComponent, getPattern, getToken, listComponents, search, searchTokens } from './helix-query-lib.ts';
 import { scaffoldCustom } from './scaffold-custom.ts';
 import { dashboard } from './helix-dashboard.ts';
 
@@ -26,6 +26,7 @@ Commands:
   components [--status draft|beta|stable]  List components
   component <Name>                         Get an exact component contract
   token <dot.path>                         Get a semantic token
+  tokens <concept>                         Find tokens by what they're for ("danger background")
   pattern <name>                           Get a documented composition pattern
   search <query>                           Search components, patterns, and semantic tokens
   batch --command "component Button"       Run multiple read-only queries
@@ -46,6 +47,7 @@ function run(commandArgs: string[]): Result {
   if (!argument) return { error: `Missing argument for '${command}'.` };
   if (command === 'component') return getComponent(argument) ?? { error: `Component '${argument}' was not found.` };
   if (command === 'token') return getToken(argument) ?? { error: `Token '${argument}' was not found.` };
+  if (command === 'tokens') return searchTokens(argument);
   if (command === 'pattern') return getPattern(argument) ?? { error: `Pattern '${argument}' was not found.` };
   if (command === 'search') return search(argument);
   return { error: `Unknown command '${command}'.` };
@@ -55,6 +57,11 @@ function format(result: Result): string {
   if (result.error) return `Error: ${result.error}`;
   if ('components' in result) return (result.components as Array<{ name: string; status: string; purpose: string }>)
     .map(component => `${component.name} (${component.status}) — ${component.purpose}`).join('\n');
+  if ('concepts' in result) {
+    const found = result as ReturnType<typeof searchTokens>;
+    const lines = found.results.map(t => `${t.usage.padEnd(52)} ${t.light} / ${t.dark}${t.description ? ` — ${t.description}` : ''}`);
+    return [found.note, found.ignored.length ? `(ignored: ${found.ignored.join(', ')})` : null, ...lines].filter(Boolean).join('\n') || 'No results.';
+  }
   if ('results' in result) return (result.results as Array<Record<string, unknown>>).map(item =>
     item.kind === 'component' ? `${item.name} (${item.status}) — ${item.purpose}` :
     item.kind === 'token' ? `${item.path} = ${item.value}` : `${item.name} — ${item.source}`).join('\n') || 'No results.';

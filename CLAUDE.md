@@ -122,6 +122,10 @@ pnpm lint                   @helix-ds/eslint-plugin over apps/ — wrong import 
                             Claude Code runs it on every file it edits (.claude/settings.json →
                             scripts/claude-lint-hook.mjs) and gets the problems back to fix in the same turn
 pnpm test:lint-hook         test that Claude Code lint hook
+pnpm helix:mcp              @helix-ds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
+                            helix_search_tokens, helix_validate_snippet, helix_list_components,
+                            helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
+pnpm helix tokens <concept> find tokens by what they're for ("danger background") — same search as the MCP tool
 pnpm helix dashboard        AI-readiness view: health score, the 5 signals behind it (readiness, Figma,
                             eval pass rate, rule compliance, governance coverage), gaps and data freshness —
                             read-only; `pnpm quality snapshot` records it for Storybook's Metrics page

@@ -1,8 +1,8 @@
 /**
  * Read-only query layer for Helix's agent context.
  *
- * Keep data access here, independent of the terminal interface: a future MCP
- * server can call these same functions without duplicating search or ranking.
+ * Keep data access here, independent of the interface: the terminal CLI (scripts/helix-cli.ts) and the
+ * MCP server (packages/mcp) both call these same functions — no duplicated search or ranking.
  */
 import fs from 'fs';
 import path from 'path';
@@ -132,4 +132,94 @@ export function search(query: string) {
     .map(({ path: tokenPath, token }) => ({ kind: 'token', path: tokenPath.replace(/^semantic\./, ''), value: token.$value, type: token.$type }));
 
   return { query, results: [...componentMatches, ...patternMatches, ...tokenMatches] };
+}
+
+// ── Token search by concept ──────────────────────────────────────────────────
+// People and agents describe a token by what it's for ("danger background", "hover border"); token paths use
+// Helix's own grammar (fill.danger-interactive-default). Each concept maps the everyday words to the path
+// segment that carries that meaning, so the search can bridge the two vocabularies.
+const CONCEPTS: Record<string, string[]> = {
+  fill: ['background', 'bg', 'fill', 'surface', 'backdrop'],
+  text: ['text', 'foreground', 'fg', 'copy', 'font'],
+  icon: ['icon', 'glyph'],
+  border: ['border', 'outline', 'stroke', 'divider', 'separator'],
+  danger: ['danger', 'error', 'destructive', 'delete', 'invalid', 'negative'],
+  success: ['success', 'positive', 'ok', 'valid', 'confirm'],
+  warning: ['warning', 'caution', 'alert'],
+  info: ['info', 'informational', 'note', 'tip'],
+  primary: ['primary', 'brand', 'accent'],
+  secondary: ['secondary'],
+  neutral: ['neutral', 'gray', 'grey', 'muted', 'body'],
+  hover: ['hover', 'hovered'],
+  press: ['press', 'pressed', 'active'],
+  disabled: ['disabled', 'inactive'],
+  focus: ['focus', 'focused', 'ring'],
+  light: ['light', 'subtle', 'tint', 'soft', 'lighter'],
+  dark: ['dark', 'strong', 'darker'],
+  page: ['page', 'canvas', 'app'],
+  inverse: ['inverse', 'inverted', 'on'],
+  link: ['link', 'anchor'],
+  chart: ['chart', 'series', 'graph', 'visualization', 'dataviz'],
+  spacing: ['spacing', 'space', 'gap', 'padding', 'margin'],
+  radius: ['radius', 'corner', 'corners', 'rounded', 'rounding'],
+  shadow: ['shadow', 'elevation'],
+  duration: ['duration', 'speed', 'timing'],
+  easing: ['easing', 'curve'],
+};
+const CONCEPT_OF = new Map(Object.entries(CONCEPTS).flatMap(([segment, words]) => words.map(word => [word, segment] as const)));
+
+/** Resolved light and dark values of every CSS variable, read from the built helix.css. */
+function cssValues() {
+  const css = fs.readFileSync(path.join(root, 'packages/tokens/dist/helix.css'), 'utf8');
+  const darkStart = css.indexOf(':root[data-theme="dark"]');
+  const darkEnd = css.indexOf('}', darkStart);
+  const decls = (chunk: string) => new Map([...chunk.matchAll(/(--helix-[\w-]+):\s*([^;]+);/g)].map(m => [m[1]!, m[2]!.trim()]));
+  return { light: decls(css.slice(0, darkStart)), dark: decls(css.slice(darkStart, darkEnd)) };
+}
+
+export function searchTokens(query: string, limit = 8) {
+  const words = normalized(query).split(' ').filter(Boolean);
+  const { light, dark } = cssValues();
+  const semantic = flattenTokens(readJson<Record<string, unknown>>('packages/tokens/src/tokens.json'))
+    .filter(entry => entry.path.startsWith('semantic.') && entry.token.$type !== 'typography');
+  // Words that name no part of any token path ("button", "card") can't narrow the search — report them
+  // as ignored instead of letting them block every match.
+  const known = new Set(semantic.flatMap(entry => entry.path.replace(/^semantic\./, '').split(/[.-]/)));
+  const candidates = [...new Set(words.map(word => CONCEPT_OF.get(word) ?? word))];
+  const concepts = candidates.filter(concept => known.has(concept));
+  const ignored = words.filter(word => !known.has(CONCEPT_OF.get(word) ?? word));
+
+  const ranked = semantic
+    .map(entry => {
+      const tokenPath = entry.path.replace(/^semantic\./, '');
+      const segments = new Set(tokenPath.split(/[.-]/));
+      const matched = concepts.filter(concept => segments.has(concept));
+      const description = normalized(entry.token.$description ?? '');
+      const descriptionHits = words.filter(word => description.includes(word)).length;
+      const cssVariable = `--helix-${tokenPath.replace(/\./g, '-')}`;
+      return {
+        path: tokenPath,
+        cssVariable,
+        usage: `var(${cssVariable})`,
+        type: entry.token.$type,
+        description: entry.token.$description ?? null,
+        light: light.get(cssVariable) ?? null,
+        dark: dark.get(cssVariable) ?? light.get(cssVariable) ?? null,
+        matched,
+        // Concepts in the path count most; a description mention breaks ties; shorter paths are the base tone.
+        score: matched.length * 10 + descriptionHits - segments.size * 0.1,
+      };
+    })
+    .filter(result => result.matched.length > 0)
+    .sort((a, b) => b.score - a.score || a.path.localeCompare(b.path));
+
+  const complete = ranked.filter(result => result.matched.length === concepts.length);
+  return {
+    query,
+    concepts,
+    ignored,
+    note: !concepts.length ? 'None of these words names a token role, surface or state — try e.g. "danger background", "subtle text", "focus border".'
+      : complete.length ? null : `No token matches all of [${concepts.join(', ')}] — these are the closest partial matches.`,
+    results: (complete.length ? complete : ranked).slice(0, limit).map(({ score: _score, ...rest }) => rest),
+  };
 }

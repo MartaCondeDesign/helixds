@@ -154,6 +154,17 @@ When an AI agent makes design or implementation decisions using Helix, it must v
 
 ## AI context installation
 
+## Helix MCP tools (preferred when your client supports MCP)
+
+The repo registers a `helix` MCP server (`.mcp.json`, `pnpm helix:mcp`). Use its tools instead of reading
+files or shelling out:
+
+1. `helix_list_components` — check Helix has the component before building anything.
+2. `helix_get_contract` — exact props, accessibility and governance for the component you're using.
+3. `helix_search_tokens` — the token for a concept ("danger background", "subtle text"); never hardcode.
+4. `helix_validate_snippet` — run your JSX through it before writing the file; apply `fixedCode`, then
+   fix what's left in `remainingAfterFix`.
+
 ## Querying Helix from a terminal
 
 When an agent has shell access, use the read-only CLI to discover the exact Helix guidance needed
