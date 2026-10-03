@@ -82,10 +82,24 @@
       "figmaNodeId": "326:20",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content.",
-      "compSetId": "326:20",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content. REBUILT 2026-10-03: padding (default/none) VARIANT x header BOOLEAN; 340px wide (story width), fill/page, border/neutral, radius/l, Heading / l / Bold header, Body / m / Regular body. Code restructured in the same pass so the header is a real show/hide part: the 24px top padding moved from header/body onto card-root, header 0 24 8 24, body 0 24 24 24 (padding=none: root 0, header keeps 24 top, body 0) — geometry measured identical before/after in all four combos. Audit passed; Propstar table 430:818.",
+      "compSetId": "429:28",
+      "syncedCommit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
+      "audit": {
+        "pass": true,
+        "commit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Checkbox",
