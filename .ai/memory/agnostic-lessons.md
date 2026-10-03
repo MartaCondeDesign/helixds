@@ -76,3 +76,12 @@ inside contracts. Fixing names first produces cleaner contract output.
 padding at 0, and the audit still passes (an unbound 0 isn't "hardcoded"). Not every code token has a
 Figma variable with the same name (`spacing/component-xl` doesn't exist in Figma; its value is
 `spacing/l`). Look variables up with a helper that throws on a miss, and check a screenshot.
+
+---
+
+## Figma: images go through `upload_assets`, not the Plugin API
+
+**Lesson:** `figma.createImageAsync` isn't available inside `use_figma`. Create the target layers
+(rectangles) first, then call the Figma MCP `upload_assets` tool with their `nodeIds` and POST the image
+bytes to each returned URL — the image lands as the layer's fill. Keep the source files in the repo
+(e.g. `apps/storybook/public/avatars`) so code and Figma use the same pictures.
