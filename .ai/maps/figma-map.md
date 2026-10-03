@@ -131,7 +131,7 @@ _No Figma-mappable props._
 - `card-header`
 - `card-body`
 
-### Checkbox (`v0.1.0`, beta)
+### Checkbox (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -382,7 +382,7 @@ _No Figma-mappable props._
 - `radio-item-description`
 - `radio-item-error`
 
-### RadioGroup (`v0.1.0`, beta)
+### RadioGroup (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -420,7 +420,7 @@ _No Figma-mappable props._
 - `segmented-control-pill`
 - `segmented-control-item-label`
 
-### Select (`v1.0.0`, beta)
+### Select (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

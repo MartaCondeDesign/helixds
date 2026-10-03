@@ -93,10 +93,24 @@
       "figmaNodeId": "295:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Checkbox\") — unchecked/checked/indeterminate x disabled, plus a separate invalid cell (6 total), matching Checkbox's checked/indeterminate/disabled/invalid props. Fill, border, radius, size bound to real variables against component.checkbox.*; the check/minus mark uses real \"CircleCheck\"/\"Minus\" instances from the Icons page recolored to icon/inverse, matching component.checkbox.icon.color. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:33) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: this page originally modeled ONLY checkbox-control (the box) with no label — real Checkbox always has a required `label` prop. Added a checkbox-text layer to all 6 variants and wired a TEXT property 'label' to it (6/6). Grid reflowed after the rows grew wider. Reviewed 2026-08-24: `required` has no visual difference in this component's anatomy (no asterisk rendered) — nothing further to add. ICON FIX 2026-08-25: the checked-state indicator was originally the plain \"Check\" icon (just a checkmark stroke, low visual weight against the small 20px box) — swapped to \"CircleCheck\" (a filled-circle-outline check) on both checked-state variants for better visibility, per explicit feedback. indeterminate keeps \"Minus\". REBUILT 2026-10-02 from scratch (old set had the box and label merged into one frame): checkbox-root > checkbox-label > [checkbox-control 16px, radius/s, 1px border; checkbox-indicator Check/Minus 12px/1.5 icon/inverse] + checkbox-text 'Body / m / Regular', 8px gap. state (unchecked/checked/indeterminate) x disabled, plus unchecked invalid (7). Disabled: fill/disabled, border text/disabled, icon/disabled, text/disabled. Indeterminate filled like checked — this exposed a code bug (it rendered as an empty box) fixed in the same pass, as was the disabled label never dimming.",
-      "compSetId": "379:41",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Checkbox\") — unchecked/checked/indeterminate x disabled, plus a separate invalid cell (6 total), matching Checkbox's checked/indeterminate/disabled/invalid props. Fill, border, radius, size bound to real variables against component.checkbox.*; the check/minus mark uses real \"CircleCheck\"/\"Minus\" instances from the Icons page recolored to icon/inverse, matching component.checkbox.icon.color. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:33) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: this page originally modeled ONLY checkbox-control (the box) with no label — real Checkbox always has a required `label` prop. Added a checkbox-text layer to all 6 variants and wired a TEXT property 'label' to it (6/6). Grid reflowed after the rows grew wider. Reviewed 2026-08-24: `required` has no visual difference in this component's anatomy (no asterisk rendered) — nothing further to add. ICON FIX 2026-08-25: the checked-state indicator was originally the plain \"Check\" icon (just a checkmark stroke, low visual weight against the small 20px box) — swapped to \"CircleCheck\" (a filled-circle-outline check) on both checked-state variants for better visibility, per explicit feedback. indeterminate keeps \"Minus\". REBUILT 2026-10-02 from scratch (old set had the box and label merged into one frame): checkbox-root > checkbox-label > [checkbox-control 16px, radius/s, 1px border; checkbox-indicator Check/Minus 12px/1.5 icon/inverse] + checkbox-text 'Body / m / Regular', 8px gap. state (unchecked/checked/indeterminate) x disabled, plus unchecked invalid (7). Disabled: fill/disabled, border text/disabled, icon/disabled, text/disabled. Indeterminate filled like checked — this exposed a code bug (it rendered as an empty box) fixed in the same pass, as was the disabled label never dimming. REBUILT 2026-10-03 as checked (unchecked/checked/indeterminate) x state (default/hover/focus/invalid/disabled), 15 variants, colors from .ai/figma-expected/Checkbox.json; audit passed; Propstar table 424:895. Found and fixed in code: indeterminate hover border used the unchecked hover rule.",
+      "compSetId": "424:86",
+      "syncedCommit": "c620576b728ef10010f1473dc2d72197f319013c",
+      "audit": {
+        "pass": true,
+        "commit": "c620576b728ef10010f1473dc2d72197f319013c",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Chip",
@@ -232,10 +246,24 @@
       "figmaNodeId": "297:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"RadioGroup\") — a single radio control (the option-level unit RadioGroup renders per RadioOption): unchecked/checked x disabled, plus invalid (5 total). Fill, border, dot color, size bound to real variables against component.radio.*. Not modeled: the group-level layout (orientation, multiple options) — only the individual radio control's states. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:35) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap — only radio-control (the circle) existed, no label. Added a radio-item-label layer to all 5 variants and wired a TEXT property 'label' (5/5). Grid reflowed. Reviewed 2026-08-24: `description` (per-option secondary text) not built — same class of gap as Switch. The bigger structural gap remains unchanged: this models one radio option, not the full group (label/options/orientation). REBUILT 2026-10-02 from scratch (old set merged control and label): radio-item > [radio-control 16px circle, 1px border, radio-dot 6px] + radio-item-label 'Body / m / Regular', 8px gap. Disabled: fill/disabled, border text/disabled, dot icon/disabled, label text/disabled. Still models one option, not the group.",
-      "compSetId": "387:19",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"RadioGroup\") — a single radio control (the option-level unit RadioGroup renders per RadioOption): unchecked/checked x disabled, plus invalid (5 total). Fill, border, dot color, size bound to real variables against component.radio.*. Not modeled: the group-level layout (orientation, multiple options) — only the individual radio control's states. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:35) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap — only radio-control (the circle) existed, no label. Added a radio-item-label layer to all 5 variants and wired a TEXT property 'label' (5/5). Grid reflowed. Reviewed 2026-08-24: `description` (per-option secondary text) not built — same class of gap as Switch. The bigger structural gap remains unchanged: this models one radio option, not the full group (label/options/orientation). REBUILT 2026-10-02 from scratch (old set merged control and label): radio-item > [radio-control 16px circle, 1px border, radio-dot 6px] + radio-item-label 'Body / m / Regular', 8px gap. Disabled: fill/disabled, border text/disabled, dot icon/disabled, label text/disabled. Still models one option, not the group. REBUILT 2026-10-03 as checked (unchecked/checked) x state (default/hover/focus/invalid/disabled), 10 variants, colors from .ai/figma-expected/RadioGroup.json; audit passed; Propstar table 426:2. Still one option, not the group.",
+      "compSetId": "425:699",
+      "syncedCommit": "c620576b728ef10010f1473dc2d72197f319013c",
+      "audit": {
+        "pass": true,
+        "commit": "c620576b728ef10010f1473dc2d72197f319013c",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Select",
@@ -243,10 +271,24 @@
       "figmaNodeId": "299:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Select\") — size s/m/l x default/invalid/disabled (9 total), matching SelectSize and invalid/disabled props. Fill, border, icon color, text color, height, radius bound to real variables against component.select.*; trailing icon is a real \"ChevronDown\" instance from the Icons page. Not modeled: focus/hover states, option list/dropdown. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:55) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to select-trigger (9/9). Reviewed 2026-08-24: value (TEXT) + size/state (VARIANT) cover everything visually representable in a closed-state mockup — the open dropdown/option list isn't modeled (out of scope for a static component grid). REBUILT 2026-10-02: Select has no size prop anymore (one 32px size), so the size axis couldn't be removed in place — rebuilt as state=default/invalid/disabled. Trigger 32px (size/m), 12px padding both sides, 12px label-to-chevron, select-trigger-label 'Body / m / Regular' in the placeholder color, select-chevron 16px icon/neutral/light.",
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Select\") — size s/m/l x default/invalid/disabled (9 total), matching SelectSize and invalid/disabled props. Fill, border, icon color, text color, height, radius bound to real variables against component.select.*; trailing icon is a real \"ChevronDown\" instance from the Icons page. Not modeled: focus/hover states, option list/dropdown. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:55) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to select-trigger (9/9). Reviewed 2026-08-24: value (TEXT) + size/state (VARIANT) cover everything visually representable in a closed-state mockup — the open dropdown/option list isn't modeled (out of scope for a static component grid). REBUILT 2026-10-02: Select has no size prop anymore (one 32px size), so the size axis couldn't be removed in place — rebuilt as state=default/invalid/disabled. Trigger 32px (size/m), 12px padding both sides, 12px label-to-chevron, select-trigger-label 'Body / m / Regular' in the placeholder color, select-chevron 16px icon/neutral/light. REBUILT 2026-10-03 with a figma-only state axis (default/hover/focus/open/invalid/disabled), colors auto-matched to Theme vars from .ai/figma-expected/Select.json (light+dark), focus/open ring as bound spread shadows; audit passed; Propstar table 423:711.",
       "compSetId": "390:23",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "syncedCommit": "c620576b728ef10010f1473dc2d72197f319013c",
+      "audit": {
+        "pass": true,
+        "commit": "c620576b728ef10010f1473dc2d72197f319013c",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "SideNav",

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Checkbox",
   "version": "0.1.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users select one or more independent options from a set, or confirm a single binary choice.",
 
