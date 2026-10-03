@@ -26,6 +26,9 @@ const config: StorybookConfig = {
     options: {},
   },
 
+  // Local sample assets (e.g. public/avatars — Pexels portraits), served at the Storybook root.
+  staticDirs: ['../public'],
+
   viteFinal: async (config) => {
     config.plugins ??= [];
     config.plugins.push(tailwindcss());

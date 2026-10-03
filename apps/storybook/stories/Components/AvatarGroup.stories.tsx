@@ -3,11 +3,11 @@ import { AvatarGroup, AvatarGroupDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const PEOPLE_WITH_PHOTOS = [
-  { label: 'Ana García',  src: 'https://i.pravatar.cc/64?u=ana' },
-  { label: 'Pau Torres',  src: 'https://i.pravatar.cc/64?u=pau' },
-  { label: 'Marta Conde', src: 'https://i.pravatar.cc/64?u=marta' },
-  { label: 'Jordi Puig',  src: 'https://i.pravatar.cc/64?u=jordi' },
-  { label: 'Sara Navarro', src: 'https://i.pravatar.cc/64?u=sara' },
+  { label: 'Ana García',  src: 'avatars/ana.jpg' },
+  { label: 'Pau Torres',  src: 'avatars/pau.jpg' },
+  { label: 'Marta Conde', src: 'avatars/marta.jpg' },
+  { label: 'Jordi Puig',  src: 'avatars/jordi.jpg' },
+  { label: 'Sara Navarro', src: 'avatars/sara.jpg' },
 ];
 
 const PEOPLE_INITIALS = [

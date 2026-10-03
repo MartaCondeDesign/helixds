@@ -34,7 +34,7 @@ export const Sizes: Story = {
 };
 
 export const WithImage: Story = {
-  args: { label: 'Pau Torres', src: 'https://i.pravatar.cc/64?u=pau' },
+  args: { label: 'Pau Torres', src: 'avatars/pau.jpg' },
 };
 
 export const BrokenImageFallsBackToInitials: Story = {
