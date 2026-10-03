@@ -113,6 +113,11 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-fill-secondary-interactive-default': '#1e293b',
   '--helix-color-fill-secondary-interactive-hover':   '#334155',
   '--helix-color-fill-secondary-interactive-press':   '#475569',
+  // Unchecked Switch track: must keep 3:1 against the dark page AND let the white thumb keep 3:1 on it.
+  // gray-500 does both (3.75 / 4.76); the hover goes LIGHTER in dark like the other secondary fills —
+  // #8391a7 (= text-neutral-lightest dark): 5.59 page / 3.19 thumb. gray-400 would drop the thumb to 2.56.
+  '--helix-color-fill-secondary-interactive-dark-default': '#64748b',
+  '--helix-color-fill-secondary-interactive-dark-hover':   '#8391a7',
   '--helix-color-fill-disabled':         '#1e293b',
   '--helix-color-text-neutral':     '#f1f5f9',
   '--helix-color-text-neutral-light':    '#94a3b8',

@@ -1864,6 +1864,9 @@
     width:  var(--helix-switch-width-m);
     height: var(--helix-switch-height-m);
   }
+  [data-helix-part="switch-track"][aria-checked="false"]:hover:not(:disabled) {
+    background: var(--helix-switch-track-fill-off-hover);
+  }
   [data-helix-part="switch-track"][aria-checked="true"] {
     background: var(--helix-switch-track-fill-on);
   }

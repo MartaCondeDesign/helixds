@@ -70,7 +70,7 @@
     "properties": [
       { "name": "checked", "type": "VARIANT", "values": ["unchecked", "checked"], "codeProp": "checked", "description": "Thumb on the left (unchecked) or right (checked); the track takes the on fill." },
       { "name": "size", "type": "VARIANT", "values": ["s", "m"], "codeProp": "size" },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "disabled"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code (hover only changes a checked track); disabled is the `disabled` prop." },
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "disabled"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code (hover darkens the track: off-hover unchecked, on-hover checked); disabled is the `disabled` prop." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part (show-hide-parts.md): the helper line under the row. It carries its own left padding (track width + 12px = spacing/250 on s, spacing/300 on m), so the row never moves." },
       { "name": "description text", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }

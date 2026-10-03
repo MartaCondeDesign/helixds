@@ -10,7 +10,7 @@
     "checked=unchecked, state=default": {
       "light": {
         "switch-track": {
-          "fill": "#f1f5f9"
+          "fill": "#64748b"
         },
         "switch-thumb": {
           "fill": "#ffffff"
@@ -21,7 +21,7 @@
       },
       "dark": {
         "switch-track": {
-          "fill": "#1e293b"
+          "fill": "#64748b"
         },
         "switch-thumb": {
           "fill": "#ffffff"
@@ -34,7 +34,7 @@
     "checked=unchecked, state=hover": {
       "light": {
         "switch-track": {
-          "fill": "#f1f5f9"
+          "fill": "#475569"
         },
         "switch-thumb": {
           "fill": "#ffffff"
@@ -45,7 +45,7 @@
       },
       "dark": {
         "switch-track": {
-          "fill": "#1e293b"
+          "fill": "#8391a7"
         },
         "switch-thumb": {
           "fill": "#ffffff"
@@ -58,7 +58,7 @@
     "checked=unchecked, state=focus": {
       "light": {
         "switch-track": {
-          "fill": "#f1f5f9"
+          "fill": "#64748b"
         },
         "switch-thumb": {
           "fill": "#ffffff"
@@ -69,7 +69,7 @@
       },
       "dark": {
         "switch-track": {
-          "fill": "#1e293b"
+          "fill": "#64748b"
         },
         "switch-thumb": {
           "fill": "#ffffff"
