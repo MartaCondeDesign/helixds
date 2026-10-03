@@ -2457,19 +2457,21 @@
     gap:              var(--helix-primitive-spacing-100);
   }
 
+  /* level 1 = "Heading / 2xl / Bold", level 2 = "Heading / xl / Bold" — the text styles, as in Figma */
   [data-helix-part="page-header-title"] {
-    margin:        0;
-    color:         var(--helix-pageHeader-title-color);
-    line-height:   var(--helix-primitive-lineHeight-tight);
-    letter-spacing: -0.02em;
+    margin:      0;
+    color:       var(--helix-pageHeader-title-color);
+    font-family: var(--helix-textStyle-heading-2xl-bold-fontFamily);
   }
-  [data-helix-part="page-header-title"][data-level="1"] { font-size: var(--helix-pageHeader-title-fontSize-1); font-weight: var(--helix-pageHeader-title-fontWeight-1); }
-  [data-helix-part="page-header-title"][data-level="2"] { font-size: var(--helix-pageHeader-title-fontSize-2); font-weight: var(--helix-pageHeader-title-fontWeight-2); }
+  [data-helix-part="page-header-title"][data-level="1"] { font-size: var(--helix-pageHeader-title-fontSize-1); font-weight: var(--helix-pageHeader-title-fontWeight-1); line-height: var(--helix-textStyle-heading-2xl-bold-lineHeight); }
+  [data-helix-part="page-header-title"][data-level="2"] { font-size: var(--helix-pageHeader-title-fontSize-2); font-weight: var(--helix-pageHeader-title-fontWeight-2); line-height: var(--helix-textStyle-heading-xl-bold-lineHeight); }
 
   [data-helix-part="page-header-description"] {
     margin:      var(--helix-primitive-spacing-25) 0 0;
+    font-family: var(--helix-textStyle-body-s-regular-fontFamily); /* "Body / s / Regular" */
     font-size:   var(--helix-pageHeader-description-fontSize);
     font-weight: var(--helix-pageHeader-description-fontWeight);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
     color:       var(--helix-pageHeader-description-color);
   }
 

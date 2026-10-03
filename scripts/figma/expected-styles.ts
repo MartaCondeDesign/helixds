@@ -170,6 +170,14 @@ const SPECS: Record<string, Spec> = {
     parts: { '(root)': { part: 'avatar-root', fill: true }, 'avatar-initials': { part: 'avatar-initials', text: true } },
     target: 'avatar-root',
   },
+  PageHeader: {
+    story: 'layout-pageheader--default',
+    axes: { level: ['1', '2'] },
+    states: ['default'],
+    args: v => ({ level: Number(v.level) as unknown as string }),
+    parts: { 'page-header-title': { part: 'page-header-title', text: true }, 'page-header-description': { part: 'page-header-description', text: true } },
+    target: 'page-header-root',
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
