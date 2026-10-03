@@ -23,9 +23,24 @@
       "figmaNodeId": "292:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-08-24",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Avatar\") — size s/m/l, matching AvatarSize exactly. Fill, text color, width/height (24/32/40) bound to real variables; initials label uses \"Caption / Semibold\" (s/m) and \"Body / m / Semibold\" (l), matching component.avatar.fontSize/fontWeight. Not modeled: the image (src) path — only the initials fallback. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:4) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'initials' wired to avatar-initials (3/3 variants) — code's real prop is `label` (full name), initials are derived, so this is a content stand-in, not a literal 1:1 prop mirror. Still missing: an image-vs-initials INSTANCE_SWAP or BOOLEAN — no `src` path modeled. Reviewed 2026-08-24: no further props to add — `src` (image) has no meaningful token-driven representation, and `initials` (TEXT) + `size` (VARIANT) cover everything else visually representable.",
-      "compSetId": "303:4"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Avatar\") — size s/m/l, matching AvatarSize exactly. Fill, text color, width/height (24/32/40) bound to real variables; initials label uses \"Caption / Semibold\" (s/m) and \"Body / m / Semibold\" (l), matching component.avatar.fontSize/fontWeight. Not modeled: the image (src) path — only the initials fallback. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:4) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'initials' wired to avatar-initials (3/3 variants) — code's real prop is `label` (full name), initials are derived, so this is a content stand-in, not a literal 1:1 prop mirror. Still missing: an image-vs-initials INSTANCE_SWAP or BOOLEAN — no `src` path modeled. Reviewed 2026-08-24: no further props to add — `src` (image) has no meaningful token-driven representation, and `initials` (TEXT) + `size` (VARIANT) cover everything else visually representable. UPDATED IN PLACE 2026-10-03 (kept the set so SideNav/TopBar instances stay linked): size s/m/l, fill/primary/interactive/light/default + text/primary verified light+dark against .ai/figma-expected/Avatar.json, radius/full bound, Caption / Semibold (s, m) and Body / m / Semibold (l) text styles; audit passed; Propstar table 433:15. Photo (src) not modeled — createImageAsync isn't available in this Plugin API.",
+      "compSetId": "303:4",
+      "syncedCommit": "c2225edffb40af590af24699d0e0d11245845c63",
+      "audit": {
+        "pass": true,
+        "commit": "c2225edffb40af590af24699d0e0d11245845c63",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Badge",

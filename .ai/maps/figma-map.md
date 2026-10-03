@@ -63,7 +63,7 @@ _No Figma-mappable props._
 - `app-shell-content`
 - `app-shell-main`
 
-### Avatar (`v1.0.0`, beta)
+### Avatar (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
