@@ -444,7 +444,7 @@ _No Figma-mappable props._
 - `select-description`
 - `select-error`
 
-### SideNav (`v1.0.0`, beta)
+### SideNav (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 

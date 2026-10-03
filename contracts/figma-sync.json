@@ -354,10 +354,24 @@
       "figmaNodeId": "332:4",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-25 on its own Figma page (\"SideNav\") — a single static composition: side-nav-brand (logo box + \"Helix\" text) + side-nav-items (4 real NavItem INSTANCES, reusing the actual NavItem component built earlier — not redrawn) + side-nav-footer (avatar stub + name). No variant/size prop of its own. Fill, border, width (224px literal, matches the hardcoded value in component.sideNav.width) bound to real variables against component.sideNav.*. RESYNCED 2026-10-02: right border removed (code dropped it).",
-      "compSetId": null,
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"SideNav\") — a single static composition: side-nav-brand (logo box + \"Helix\" text) + side-nav-items (4 real NavItem INSTANCES, reusing the actual NavItem component built earlier — not redrawn) + side-nav-footer (avatar stub + name). No variant/size prop of its own. Fill, border, width (224px literal, matches the hardcoded value in component.sideNav.width) bound to real variables against component.sideNav.*. RESYNCED 2026-10-02: right border removed (code dropped it). REBUILT IN PLACE 2026-10-03 (same component, so AppShell's instance follows): 224x480, 12px top/bottom (spacing/s), no side padding; brand BOOLEAN = side-nav-brand (12px bottom) > brand-content (8/12 padding, 28px logo box fill/primary/interactive/light/default + Bolt icon icon/primary, 'Helix DS' Heading / m / Bold); side-nav-items 4px gap (spacing/2xs), 0/8 padding, fills the height (old version used a spacer frame and 16/12 padding); footer BOOLEAN = 8px outer padding > footer-content (top border border/neutral/light, 8px padding, Avatar m + name Body / s / Medium + role Body / s / Regular text/neutral/lightest). Brand 56 / footer 69 px, same as code. Audit passed (colors, spacing, fallbacks); no variant axis, so no property table.",
+      "compSetId": "332:4",
+      "syncedCommit": "d9aae51950c7687799fe22ccd85cf702a256cb61",
+      "audit": {
+        "pass": true,
+        "commit": "d9aae51950c7687799fe22ccd85cf702a256cb61",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Switch",
