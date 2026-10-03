@@ -10,9 +10,9 @@
  *                    other variant axis in order; non-leaf levels get a "Bracket" under their label
  *     cells          "Instance" frames, 24px padding, centered content, 1px dashed #9747FF border;
  *                    cells holding an instance also get a 3% #9747FF fill
- *   The real COMPONENT_SET sits absolutely positioned over the cells where every boolean is false — its
- *   variants are moved so each one is centered in its own cell. Every other cell holds an INSTANCE of the
- *   matching variant with those booleans set to true.
+ *   The real COMPONENT_SET sits absolutely positioned over the cells where every boolean has its default
+ *   value — its variants are moved so each one is centered in its own cell. Every other cell holds an
+ *   INSTANCE of the matching variant with those booleans flipped.
  *   Labels: Inter Medium 12, #9747FF (Propstar's own annotation color — documentation chrome, not part of
  *   the component, so it isn't bound to a design token).
  */
@@ -32,7 +32,9 @@ const [rowAxis, ...colAxes] = axes;
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 // Column tuples: boolean combinations (outermost) x remaining variant axes
-const boolCombos = boolKeys.reduce((acc, k) => acc.flatMap(a => [{ ...a, [k]: false }, { ...a, [k]: true }]), [{}]);
+// each boolean's default value comes first — the real set sits over those cells
+const boolCombos = boolKeys.reduce((acc, k) => acc.flatMap(a => [{ ...a, [k]: defs[k].defaultValue }, { ...a, [k]: !defs[k].defaultValue }]), [{}]);
+const isDefault = col => boolKeys.every(k => col.bools[k] === defs[k].defaultValue);
 const variantCombos = colAxes.reduce((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}]);
 const columns = boolCombos.flatMap(b => variantCombos.map(v => ({ bools: b, variant: v })));
 const variantOf = (rowVal, v) => set.children.find(c => {
@@ -41,7 +43,7 @@ const variantOf = (rowVal, v) => set.children.find(c => {
 });
 
 // Cell sizes: content + 2 x 24px padding, measured with the column's booleans on (a shown part grows the cell)
-const measure = (comp, bools) => { if (!Object.values(bools).some(Boolean)) return [comp.width, comp.height]; const i = comp.createInstance(); i.setProperties(bools); const r = [i.width, i.height]; i.remove(); return r; };
+const measure = (comp, bools) => { if (isDefault({ bools })) return [comp.width, comp.height]; const i = comp.createInstance(); i.setProperties(bools); const r = [i.width, i.height]; i.remove(); return r; };
 const colW = columns.map(col => Math.max(...rowAxis[1].map(r => { const c = variantOf(r, col.variant); return c ? measure(c, col.bools)[0] : 0; })) + 48);
 const rowH = rowAxis[1].map(r => Math.max(...columns.map(col => { const c = variantOf(r, col.variant); return c ? measure(c, col.bools)[1] : 0; })) + 48);
 
@@ -106,7 +108,6 @@ levels.forEach((lvl, li) => {
 });
 
 // Cells
-const isDefault = col => Object.values(col.bools).every(b => b === false);
 const instances = [];
 rowAxis[1].forEach((rowVal, ri) => columns.forEach((col, ci) => {
   const cell = figma.createAutoLayout('HORIZONTAL', { name: 'Instance' });

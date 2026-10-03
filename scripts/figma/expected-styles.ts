@@ -148,6 +148,20 @@ const SPECS: Record<string, Spec> = {
     },
     target: 'card-root',
   },
+  NavItem: {
+    story: 'components-navitem--default',
+    axes: { current: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ current: v.current === 'true' }),
+    // current's fill is on nav-item-indicator (the sliding motion.span); Figma puts it on the root
+    parts: {
+      '(root)': { part: 'nav-item', fill: true },
+      'nav-item-indicator': { part: 'nav-item-indicator', fill: true },
+      'nav-item-icon': { part: 'nav-item-icon', text: true },
+      'nav-item-label': { part: 'nav-item-label', text: true },
+    },
+    target: 'nav-item',
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
