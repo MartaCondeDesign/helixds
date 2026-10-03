@@ -86,7 +86,8 @@ const strokeByLayer = {};
 for (const variant of set.children) {
   const visit = n => {
     const key = n === variant ? '(root)' : n.name;
-    const has = Array.isArray(n.strokes) && n.strokes.some(p => p.visible !== false);
+    // a hidden stroke still counts as a border: code's transparent border keeps the size (border-always.md)
+    const has = Array.isArray(n.strokes) && n.strokes.length > 0;
     (strokeByLayer[key] ??= []).push(has ? `${n.strokeWeight}` : 'none');
     if ('children' in n && n.type !== 'INSTANCE') n.children.forEach(visit);
   };

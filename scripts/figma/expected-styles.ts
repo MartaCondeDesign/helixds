@@ -59,6 +59,22 @@ const SPECS: Record<string, Spec> = {
     target: 'textarea-field',
     storyFor: { disabled: 'components-textarea--disabled' }, // the Default story ignores a URL `disabled` arg
   },
+  Button: {
+    story: 'components-button--full-width',
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
+    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
+    args: (v, s) => ({ children: 'Label', variant: v.variant!, size: v.size!, fullWidth: false, disabled: s === 'disabled', loading: s === 'loading' }),
+    parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'text': { part: 'button-label', text: true } },
+    target: 'button',
+  },
+  IconButton: {
+    story: 'components-iconbutton--primary',
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
+    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
+    args: (v, s) => ({ variant: v.variant!, size: v.size!, disabled: s === 'disabled', loading: s === 'loading' }),
+    parts: { '(root)': { part: 'icon-button', fill: true, stroke: true } },
+    target: 'icon-button',
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
