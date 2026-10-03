@@ -51,5 +51,14 @@
   "a11y": {
     "role": "img (implicit via <img>) when src is set; presentation otherwise — the accessible name comes from the alt/name, never announced twice",
     "wcag": ["1.1.1 Non-text Content"]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
+      { "name": "initials", "type": "TEXT", "codeProp": "label", "description": "The first letter of `label` — code derives it, Figma takes it typed." }
+    ],
+    "notModeled": "The photo (`src`): the Figma Plugin API available here can't create image fills, so only the initials fallback is in Figma."
   }
 }

@@ -162,6 +162,14 @@ const SPECS: Record<string, Spec> = {
     },
     target: 'nav-item',
   },
+  Avatar: {
+    story: 'components-avatar--default',
+    axes: { size: ['s', 'm', 'l'] },
+    states: ['default'],
+    args: v => ({ size: v.size }),
+    parts: { '(root)': { part: 'avatar-root', fill: true }, 'avatar-initials': { part: 'avatar-initials', text: true } },
+    target: 'avatar-root',
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
