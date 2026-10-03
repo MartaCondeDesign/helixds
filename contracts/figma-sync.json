@@ -12,10 +12,24 @@
       "figmaNodeId": "334:4",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances.",
-      "compSetId": null,
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances. UPDATED IN PLACE 2026-10-03: layers renamed to the code anatomy (app-shell-right-col -> app-shell-content, app-shell-content -> app-shell-main), main gets its 24px padding (spacing/l, was 0 with a centered placeholder), root fill/page bound; sample content is now a PageHeader + Card instance. SideNav/TopBar instances follow their rebuilt components. Audit passed (colors, spacing, fallbacks).",
+      "compSetId": "334:4",
+      "syncedCommit": "fed7988440cca8532034fc22a0c9cde556d014cb",
+      "audit": {
+        "pass": true,
+        "commit": "fed7988440cca8532034fc22a0c9cde556d014cb",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Avatar",
