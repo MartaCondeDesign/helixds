@@ -555,7 +555,7 @@ _No Figma-mappable props._
 - `tooltip-root`
 - `tooltip-content`
 
-### TopBar (`v1.0.0`, beta)
+### TopBar (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 

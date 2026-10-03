@@ -453,9 +453,24 @@
       "figmaNodeId": "333:4",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-08-25",
-      "notes": "Built 2026-08-25 on its own Figma page (\"TopBar\") — a single static composition: topbar-start holds a real Input instance (size=m default), topbar-end holds two real ghost/m IconButton instances — reusing the actual components, not redrawn. No variant/size prop of its own. Fill, border, height (semantic.size.2xl = 56px) bound to real variables against component.topBar.*.",
-      "compSetId": null
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"TopBar\") — a single static composition: topbar-start holds a real Input instance (size=m default), topbar-end holds two real ghost/m IconButton instances — reusing the actual components, not redrawn. No variant/size prop of its own. Fill, border, height (semantic.size.2xl = 56px) bound to real variables against component.topBar.*. UPDATED IN PLACE 2026-10-03 (AppShell's instance follows): padding 0/16 -> 0/24 (spacing/l, code's spacing-150), gap 0 -> 12 (spacing/s), end gap 8 -> 4 (spacing/2xs, code's component-xs), border bottom only (border/neutral/light), start slot 320px (max-width), Bell/Help icons like the story; start/end BOOLEANs. The TopBar and AppShell stories had the search Input at size s next to m IconButtons — fixed to m (same-row-sizing.md). Audit passed; no variant axis, so no property table.",
+      "compSetId": "333:4",
+      "syncedCommit": "689bcb60308ee52cc959637d1301c22a98433986",
+      "audit": {
+        "pass": true,
+        "commit": "689bcb60308ee52cc959637d1301c22a98433986",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     }
   ],
   "contractDiscoveredLate2026-08-24": ".ai/skills/components-to-figma.md (+ tokens-to-figma.md, icons-to-figma.md) is the actual process contract for building a Helix component in Figma — mandatory combineAsVariants into one COMPONENT_SET, anatomy layer names must match data-helix-part, Phase 2.5 auto-layout (HUG width by default, FIXED height, counterAxisAlignItems=CENTER). These files were not read before building Badge/Chip/Avatar/IconButton/Checkbox/Switch/RadioGroup/Input/Select/Textarea this session, which is why they shipped as loose components with inconsistent alignment and clipped doc text — all 10 were retroactively fixed (see each entry's own STRUCTURAL FIX note). Read these three files FIRST, in full, before building any further Figma component — they are not linked from CLAUDE.md, so they're easy to miss.",
