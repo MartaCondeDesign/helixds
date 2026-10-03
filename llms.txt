@@ -107,6 +107,14 @@ Every color has a light and a dark value; all text/icon pairs are checked for WC
 
 ## AI context
 
+### Terminal queries
+
+When a shell is available, prefer the read-only Helix CLI for focused discovery over loading many
+source files: `pnpm helix search "<need>" --json`, `pnpm helix component <Name> --json`,
+`pnpm helix token <semantic.path> --json`, or `pnpm helix pattern <name> --json`. Run multiple
+lookups as `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`.
+The CLI derives results from the same contracts, tokens, and maps; it is not a second source of truth.
+
 - CLAUDE.md (root + per package) — rules for agents working ON Helix
 - AGENTS.md — guide for agents building apps WITH Helix
 - .ai/ — maps (prop-map, patterns, figma-map, token exceptions), skills, agents, memory — see .ai/README.md

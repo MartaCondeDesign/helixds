@@ -121,6 +121,23 @@ Use the canonical prop names below. Anti-synonyms are rejected by CI.
 
 ## AI context installation
 
+## Querying Helix from a terminal
+
+When an agent has shell access, use the read-only CLI to discover the exact Helix guidance needed
+instead of searching source files broadly. It reads the same contracts, tokens, and patterns used by
+the design system — it does not maintain a second copy of the documentation.
+
+```bash
+pnpm helix search "confirmation dialog" --json
+pnpm helix component Modal --json
+pnpm helix token color.fill.primary-interactive-default --json
+pnpm helix pattern empty-state --json
+```
+
+Use `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`
+when several lookups are needed. If no shell is available, consult `contracts/manifest.json`, the
+specific component contract, and `.ai/maps/` directly.
+
 To install Helix AI context in your project:
 
 From a clone of the Helix repo:

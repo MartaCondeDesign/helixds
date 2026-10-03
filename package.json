@@ -30,6 +30,7 @@
     "docs:figma-map": "tsx scripts/docs-figma-map.ts",
     "docs:readme": "tsx scripts/generate-readme-stats.ts",
     "contract": "tsx scripts/contract-cli.ts",
+    "helix": "tsx scripts/helix-cli.ts",
     "generate:types": "tsx scripts/generate-types.ts",
     "token:add": "tsx scripts/token-cli.ts",
     "eval:run": "tsx scripts/eval-run.ts",

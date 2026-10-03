@@ -33,6 +33,13 @@ and `launch.json`), not a link.
 Generated files are never hand-edited — each one names the command that regenerates it
 (`docs:token-exceptions`, `docs:figma-map` and `docs:changelog` run automatically on commit).
 
+## Querying context from an agent
+
+`pnpm helix` is a read-only terminal interface over these sources. Use it for focused component,
+token, pattern, and full-text discovery (`pnpm helix search "empty table" --json`) rather than
+loading unrelated reference files. The query functions in `scripts/helix-query-lib.ts` are separate
+from the CLI so a future MCP interface can reuse the exact same results.
+
 ## Rules vs skills vs memory
 
 | Type   | Where                  | When loaded   | What it is                                  |
