@@ -2502,7 +2502,7 @@
     font-weight:    var(--helix-table-header-fontWeight);
     color:          var(--helix-table-header-color);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--helix-primitive-letterSpacing-wide); /* "Label / Uppercase" + case/spacing at the call site */
     white-space:    nowrap;
     border-bottom:  1px solid var(--helix-table-header-border);
   }
