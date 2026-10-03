@@ -472,7 +472,7 @@ _No Figma-mappable props._
 - `side-panel-close`
 - `side-panel-body`
 
-### Switch (`v0.1.1`, beta)
+### Switch (`v0.1.1`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

@@ -307,10 +307,24 @@
       "figmaNodeId": "296:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Switch\") — on/off x size s/m x disabled (8 total), matching SwitchSize and checked/disabled props. Track fill, thumb fill, track height, thumb size all bound to real variables against component.switch.*; width (28/36px) is a hardcoded literal in code too, so a literal in Figma is a match, not a gap. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:34) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap as Checkbox — only switch-track existed, no label. Rebuilt each of the 8 variants as a row (track + switch-label) since the track uses absolute positioning for the thumb and can't itself be an auto-layout parent holding a label; added TEXT property 'label' wired to all 8. Grid reflowed. Reviewed 2026-08-24: `description` (secondary text below label) not built — real but low-value gap, not added this pass. RESYNCED 2026-10-02: track-to-label gap 12px (spacing/75, was 8); disabled label text/disabled at opacity 1.",
-      "compSetId": "303:34",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Switch\") — on/off x size s/m x disabled (8 total), matching SwitchSize and checked/disabled props. Track fill, thumb fill, track height, thumb size all bound to real variables against component.switch.*; width (28/36px) is a hardcoded literal in code too, so a literal in Figma is a match, not a gap. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:34) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap as Checkbox — only switch-track existed, no label. Rebuilt each of the 8 variants as a row (track + switch-label) since the track uses absolute positioning for the thumb and can't itself be an auto-layout parent holding a label; added TEXT property 'label' wired to all 8. Grid reflowed. Reviewed 2026-08-24: `description` (secondary text below label) not built — real but low-value gap, not added this pass. RESYNCED 2026-10-02: track-to-label gap 12px (spacing/75, was 8); disabled label text/disabled at opacity 1. REBUILT 2026-10-03 as checked (unchecked/checked) x size (s/m) x state (default/hover/focus/disabled), 16 variants; track is auto-layout with 2px (spacing/3xs) padding and the thumb aligned MIN/MAX; description is a BOOLEAN with its own left padding (spacing/250 s, spacing/300 m); colors from .ai/figma-expected/Switch.json; audit passed; Propstar table 428:532. Code: label/description now use the body-s-regular text style (line-height 1.5, was snug 1.35) so code and Figma share one style.",
+      "compSetId": "428:114",
+      "syncedCommit": "a4e1cb6bb9b2b1cc10e9ea057786b14a0c05503a",
+      "audit": {
+        "pass": true,
+        "commit": "a4e1cb6bb9b2b1cc10e9ea057786b14a0c05503a",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Table",
