@@ -46,5 +46,14 @@
   "a11y": {
     "role": "navigation (implicit from <nav>)",
     "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "brand", "type": "BOOLEAN", "codeProp": "brand", "description": "Show/hide part: the brand row carries its own 12px bottom (code's margin-bottom), so hiding it leaves the items where the root's 12px top puts them." },
+      { "name": "footer", "type": "BOOLEAN", "codeProp": "footer", "description": "Show/hide part: 8px margin + top border + 8px padding all live on the footer." }
+    ],
+    "structure": "No variants — a single component: side-nav-brand > brand-content, side-nav-items (NavItem instances, fills the height), side-nav-footer > footer-content (Avatar instance + name/role)."
   }
 }
