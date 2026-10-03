@@ -65,7 +65,7 @@ export const Default: Story = {
         }
         topbar={
           <TopBar
-            start={<Input label="Search" hideLabel icon={IconSearch} placeholder="Search…" size="s" />}
+            start={<Input label="Search" hideLabel icon={IconSearch} placeholder="Search…" />}
             end={<IconButton variant="ghost" size="m" icon={IconBell} label="Notifications" />}
           />
         }
