@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "NavItem",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "A single entry in a persistent navigation list (a SideNav, a tab rail) that links to another view.",
 

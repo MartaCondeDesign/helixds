@@ -239,10 +239,24 @@
       "figmaNodeId": "327:12",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-25 on its own Figma page (\"NavItem\") — current true/false, matching the `current` prop. Fill, text, icon color, radius bound to real variables against component.navItem.*; icon is a real \"Home\" instance from the Icons page. Property: label (TEXT). REVIEWED 2026-10-02: code moved the current-state fill onto an animated nav-item-indicator layer (same token, same look) — no visual change, nothing to update.",
-      "compSetId": "327:12",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"NavItem\") — current true/false, matching the `current` prop. Fill, text, icon color, radius bound to real variables against component.navItem.*; icon is a real \"Home\" instance from the Icons page. Property: label (TEXT). REVIEWED 2026-10-02: code moved the current-state fill onto an animated nav-item-indicator layer (same token, same look) — no visual change, nothing to update. REBUILT 2026-10-03 as current (false/true) x state (default/hover/focus), 6 variants; icon BOOLEAN (default true) + icon swap INSTANCE_SWAP; padding 8/12 (spacing/xs, spacing/s), gap spacing/xs, radius/m, Body / s / Medium; current fill on the root (code: sliding indicator); colors from .ai/figma-expected/NavItem.json; audit passed; Propstar table 432:897. SideNav's 4 NavItem instances swapped onto the new set (labels kept) before the old set 327:12 was deleted.",
+      "compSetId": "432:28",
+      "syncedCommit": "94221a942030c166549585f2245c9ca1d1be0904",
+      "audit": {
+        "pass": true,
+        "commit": "94221a942030c166549585f2245c9ca1d1be0904",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "PageHeader",
