@@ -387,13 +387,27 @@
     {
       "name": "Table",
       "inFigma": true,
-      "figmaNodeId": "330:4",
+      "figmaNodeId": "437:21",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-25 on its own Figma page (\"Table\") — a single static composition (header row + 3 data rows), not a variant grid: Table/TableHead/TableBody/TableRow/TableHeaderCell/TableCell have no variant or size prop in code, so there's no axis to model as Variant properties. Header text uses \"Caption / Semibold\" + text/neutral/lightest; cell text uses \"Body / s / Regular\" + text/neutral; row divider bound to border/neutral/light — matches component.table.* exactly. REVIEWED 2026-10-02: only drag-to-reorder/hover CSS changed — no resting visual change.",
-      "compSetId": null,
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Table\") — a single static composition (header row + 3 data rows), not a variant grid: Table/TableHead/TableBody/TableRow/TableHeaderCell/TableCell have no variant or size prop in code, so there's no axis to model as Variant properties. Header text uses \"Caption / Semibold\" + text/neutral/lightest; cell text uses \"Body / s / Regular\" + text/neutral; row divider bound to border/neutral/light — matches component.table.* exactly. REVIEWED 2026-10-02: only drag-to-reorder/hover CSS changed — no resting visual change. REBUILT 2026-10-03: TableHeaderCell (437:2, 8/16 padding, Label / Uppercase + UPPER + 5% letter-spacing, text/neutral/lightest, bottom border border/neutral/light), TableCell (437:4, 12/16 padding, Body / s / Regular, text/neutral), TableRow set (437:20, state default/hover, hover fill/secondary/interactive/default, bottom border), Table composition (437:21) — last row without border like code. Old rows were 34px tall (cell padding 8 instead of 12) — now 43 (code 42.5). Colors measured in Storybook light+dark; audit passed; TableRow property table 437:88. Code: header letter-spacing 0.05em -> var(--helix-primitive-letterSpacing-wide).",
+      "compSetId": "437:20",
+      "syncedCommit": "f29e71a6a7a327ac0c01b489029e6154db196372",
+      "audit": {
+        "pass": true,
+        "commit": "f29e71a6a7a327ac0c01b489029e6154db196372",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Textarea",

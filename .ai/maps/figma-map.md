@@ -492,7 +492,7 @@ _No Figma-mappable props._
 - `switch-label`
 - `switch-description`
 
-### Table (`v1.0.0`, beta)
+### Table (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 
