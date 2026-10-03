@@ -14,7 +14,7 @@ and `launch.json`), not a link.
 │   ├── patterns/*.md                   documented compositions (stat-card, same-row-sizing, search-filter…)
 │   ├── component-token-exceptions.md   GENERATED — component tokens that skip the semantic layer, and why
 │   ├── figma-map.md                    GENERATED — every prop → Figma property, plus anatomy layer names
-│   └── changelog.json                  GENERATED — every commit, shown in Storybook's Changelog page
+│   └── changelog.json                  GENERATED, git-ignored — every commit, shown in Storybook's Changelog page
 ├── skills/              ← step-by-step procedures, loaded on demand
 │   ├── ds-component-creator.md         create a new component end-to-end
 │   ├── ds-a11y-checker.md              accessibility audit of a component
@@ -31,7 +31,8 @@ and `launch.json`), not a link.
 ```
 
 Generated files are never hand-edited — each one names the command that regenerates it
-(`docs:token-exceptions`, `docs:figma-map` and `docs:changelog` run automatically on commit).
+(`docs:token-exceptions` and `docs:figma-map` run automatically on commit; `changelog.json` is git-ignored
+and rebuilt from `git log` after every commit and when Storybook starts).
 
 ## Querying context from an agent
 

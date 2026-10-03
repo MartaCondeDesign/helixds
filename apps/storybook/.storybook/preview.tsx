@@ -45,9 +45,21 @@ const preview: Preview = {
 
   parameters: {
     options: {
-      // Sidebar order: Getting Started → Data (Metrics, Status) → Changelog → Foundation → Icons → Components → Patterns → Pages
-      storySort: {
-        order: ['Getting Started', 'Data', 'Changelog', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages'],
+      // Top-level sections in this fixed order; inside Components and Layout, components are ALPHABETICAL —
+      // the same order as their Figma pages (rule: CLAUDE.md → "Alphabetical component order"). Stories
+      // inside one component keep their file order (Default first). Storybook serializes this function,
+      // so it must stay self-contained plain JavaScript (no outside references, no TS annotations).
+      // @ts-expect-error -- untyped on purpose: Storybook evaluates this source as plain JS when indexing
+      storySort: (a, b) => {
+        const sections = ['Getting Started', 'Data', 'Changelog', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages', 'Layout'];
+        const section = a.title.split('/')[0];
+        const ia = sections.indexOf(section);
+        const ib = sections.indexOf(b.title.split('/')[0]);
+        const ra = ia === -1 ? sections.length : ia;
+        const rb = ib === -1 ? sections.length : ib;
+        if (ra !== rb) return ra - rb;
+        if (a.title === b.title || (section !== 'Components' && section !== 'Layout')) return 0;
+        return a.title.localeCompare(b.title, 'en', { sensitivity: 'base' });
       },
     },
     // Background is driven by the theme switcher via CSS vars (--helix-color-fill-page).

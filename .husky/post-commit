@@ -1,14 +1,3 @@
-pnpm docs:changelog
-
-# Auto-commit the regenerated changelog so it's never a manual follow-up step.
-# Guard against infinite recursion: this commit itself runs post-commit again, and by then the
-# changelog needs to include *this* commit's own hash too — which would trigger another commit,
-# forever. Skip when HEAD is already a "Regenerate changelog" commit; the one-entry lag that
-# leaves behind resolves itself on the very next real commit.
-if ! git diff --quiet -- .ai/maps/changelog.json; then
-  last_subject=$(git log -1 --pretty=%s)
-  if [ "$last_subject" != "Regenerate changelog" ]; then
-    git add .ai/maps/changelog.json
-    git commit -m "Regenerate changelog"
-  fi
-fi
+# Keep Storybook's Changelog page current. .ai/maps/changelog.json is generated from `git log` and
+# ignored by git, so this only rewrites the file — it never creates a commit.
+pnpm -s docs:changelog

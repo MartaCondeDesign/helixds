@@ -25,7 +25,12 @@ const TEXT_PROP_NAMES = new Set([
 // Prop names that are icon slots → BOOLEAN (visibility of an icon instance layer)
 const ICON_PROP_NAMES = new Set(['icon', 'iconEnd', 'iconStart']);
 
-type FigmaKind = 'VARIANT' | 'BOOLEAN' | 'TEXT' | 'ICON_SLOT';
+type FigmaKind = 'VARIANT' | 'BOOLEAN' | 'TEXT' | 'ICON_SLOT' | 'OPTIONAL_TEXT';
+
+// Optional text that is always there when the component renders, so it's content, not a show/hide part.
+const ALWAYS_SHOWN_TEXT = new Set(['placeholder']);
+// Prop → the data-helix-part suffix that renders it, when it isn't just the prop in kebab-case.
+const PART_SUFFIX: Record<string, string> = { errorMessage: 'error' };
 
 interface PropRow {
   name: string;
@@ -50,7 +55,7 @@ interface Contract {
   props?: Prop[];
 }
 
-function inferFigmaKind(propName: string, codeType: string): FigmaKind | null {
+function inferFigmaKind(propName: string, codeType: string, required = false, anatomyParts: string[] = []): FigmaKind | null {
   // Skip: event handlers, refs, complex React types
   if (
     codeType.includes('EventHandler') ||
@@ -80,9 +85,15 @@ function inferFigmaKind(propName: string, codeType: string): FigmaKind | null {
     if (segments.every(s => /^'[^']+'$/.test(s))) return 'VARIANT';
   }
 
-  // Label-like string props → TEXT
+  // Label-like string props → TEXT. An OPTIONAL one is a show/hide part (show-hide-parts.md): passing it
+  // shows the part, leaving it out hides it — so in Figma it's a BOOLEAN named like the prop (visibility)
+  // plus a TEXT "<prop> text" (content), the same pairing icons use (BOOLEAN + INSTANCE_SWAP).
   if (TEXT_PROP_NAMES.has(propName) && (codeType === 'string' || codeType.startsWith('string'))) {
-    return 'TEXT';
+    const optional = !required || codeType.includes('undefined');
+    // Only a VISIBLE part counts — Icon's `label` and Chart's `description` are aria-only text, no layer.
+    const partSuffix = PART_SUFFIX[propName] ?? propName.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
+    const visible = anatomyParts.some(part => part.endsWith('-' + partSuffix));
+    return optional && visible && !ALWAYS_SHOWN_TEXT.has(propName) ? 'OPTIONAL_TEXT' : 'TEXT';
   }
 
   return null;
@@ -135,7 +146,8 @@ authority; if the two ever disagree, the skill wins and this generator needs fix
 | \`'a' \\| 'b'\` (string union) | \`VARIANT\` | Values exactly as in code — \`variant=primary\`, never \`Variant=Primary\` |
 | \`boolean\` | \`BOOLEAN\` | Except \`disabled\` ↓ |
 | \`disabled\` | \`VARIANT\` (\`false\` / \`true\`) | A BOOLEAN can't express the disabled visual change (skill: "Disabled state rule") |
-| Label-like \`string\` | \`TEXT\` | \`children\`, \`label\`, \`description\`, \`placeholder\`, \`errorMessage\`… |
+| Required label-like \`string\` | \`TEXT\` | \`label\`, \`children\`, and \`placeholder\` (always shown when empty) |
+| Optional label-like \`string\` | \`BOOLEAN\` + \`TEXT\` | A show/hide part (\`description\`, \`errorMessage\`…): BOOLEAN \`description\` on the part's visibility + TEXT \`description text\` for its content. Code stays implicit — passing the prop shows the part (show-hide-parts.md) |
 | Icon component (\`icon\`, \`iconEnd\`) | \`BOOLEAN\` + \`INSTANCE_SWAP\` | Both bound to the same icon layer; BOOLEAN-only fallback if the icon library isn't in Figma yet |
 | Event handlers, refs, callbacks, arrays/objects | — | Not expressed in Figma |
 
@@ -166,15 +178,17 @@ function run() {
 
     const rows: PropRow[] = [];
 
+    const parts = extractAnatomyParts(contract.name);
     for (const prop of contract.props) {
-      const kind = inferFigmaKind(prop.name, prop.type ?? '');
+      const kind = inferFigmaKind(prop.name, prop.type ?? '', prop.required === true, parts);
       if (!kind) continue;
 
       rows.push({
         name:         prop.name,
         codeType:     prop.type ?? '',
         figmaKind:    kind,
-        figmaProperty: prop.name,
+        // rendered inside backticks: an optional part lists both properties, `description` + `description text`
+        figmaProperty: kind === 'OPTIONAL_TEXT' ? `${prop.name}\` + \`${prop.name} text` : prop.name,
         values:       kind === 'VARIANT' ? variantValues(prop.name, prop.type ?? '') : '—',
       });
     }
@@ -184,7 +198,9 @@ function run() {
     if (rows.length === 0 && anatomyParts.length === 0) continue;
 
     const kindLabel = (r: PropRow) =>
-      r.figmaKind === 'ICON_SLOT' ? '`BOOLEAN` + `INSTANCE_SWAP`' : `\`${r.figmaKind}\``;
+      r.figmaKind === 'ICON_SLOT' ? '`BOOLEAN` + `INSTANCE_SWAP`'
+        : r.figmaKind === 'OPTIONAL_TEXT' ? '`BOOLEAN` + `TEXT`'
+        : `\`${r.figmaKind}\``;
 
     const propSection = rows.length > 0
       ? `| Code prop | Code type | Figma kind | Figma property | Values |\n` +

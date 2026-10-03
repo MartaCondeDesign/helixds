@@ -38,6 +38,14 @@ component is **built so that showing or hiding the part never changes any other 
    (e.g. `loading` replacing the label and dimming the button) — then it's a VARIANT, and the contract's
    `figma.properties` says why.
 
+## Code stays implicit (decided 2026-10-03)
+
+The boolean doesn't need its own prop in code. An icon slot is shown by passing `icon`; an optional text
+part (`description`, `errorMessage`…) is shown by passing its text. Figma mirrors that with two properties
+on the same layer: a BOOLEAN named exactly like the prop (`description`) for visibility and a TEXT
+`description text` for the content — the same pairing as `icon` + `icon swap`. `.ai/maps/figma-map.md` marks
+these rows as `BOOLEAN` + `TEXT`; a component whose Figma set lacks one of them is out of date.
+
 ## Checklist when building a component
 
 - [ ] Every optional part is a boolean prop in code

@@ -52,7 +52,10 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    A VARIANT only when the part also changes something else's color/size/state — documented in the
    contract's `figma.properties`.
 6. **Lay the set out as a Propstar property table** (Phase 7) — the same output as the
-   [Propstar](https://www.figma.com/community/plugin/1116018586739867857) "Create property table" command.
+   [Propstar](https://www.figma.com/community/plugin/1116018586739867857) "Create property table" command,
+   **with `BOOLEANS = []`**: the table shows the real COMPONENT_SET only. Expanding a boolean puts a column of
+   instance copies next to the set, which reads as extra variants (cleaned off every page 2026-10-03 after it
+   confused exactly that way) — booleans are shown by toggling them in the properties panel.
 7. **Plugin-API traps that produce wrong colors silently** (all hit on 2026-10-02):
    - **Fallback color.** A bound paint still carries a plain `color`, and Figma paints *that* in some
      renders (main components edited by script showed solid black while instances looked right). Always
@@ -66,6 +69,11 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
      resize it to the final variant size after text styles are applied (instances then stretch fine).
 8. **Audit before recording.** Phase 6 must return `pass: true`, and its result is recorded in
    `contracts/figma-sync.json` (`audit: { pass, commit, date, counts }`) next to `syncedCommit`.
+9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
+   components A→Z after `Icons`, layout components A→Z after the last `-` separator — the same order as
+   Storybook's sidebar (root `CLAUDE.md` rule 11). On the page, the doc frame holding the title, description
+   and `❖` table has **no fill** (transparent, never white) and is at least as wide as its widest text, so the
+   description is never clipped.
 
 ## Files to read BEFORE starting (mandatory, in this order)
 
@@ -631,8 +639,8 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 
 ### Phase 7 — Property table (Propstar layout)
 
-Run `scripts/figma/property-table.js` through `use_figma` (`PAGE_ID`, `SET_ID`, `BOOLEANS` = the boolean
-properties to expand, e.g. `['icon']`). It reproduces Propstar's "Create property table": a `❖ {Name}`
+Run `scripts/figma/property-table.js` through `use_figma` (`PAGE_ID`, `SET_ID`, `BOOLEANS` = `[]` — see rule
+6: no boolean expansion, the table shows only the real set). It reproduces Propstar's "Create property table": a `❖ {Name}`
 GRID frame, values of the first variant axis as row labels, the other axes (booleans outermost) as nested
 column headers with brackets, dashed `#9747FF` cells with 24px padding, the real COMPONENT_SET placed over
 the all-booleans-false cells and instances in the rest. Labels are Propstar's purple annotation chrome, not

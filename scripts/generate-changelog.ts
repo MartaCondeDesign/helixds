@@ -3,9 +3,11 @@
  * Storybook's Changelog story (apps/storybook/stories/Changelog.stories.tsx) imports this file
  * directly to render an always-current "what changed" page inside Storybook itself.
  *
- * This file is GENERATED — do not hand-edit it. Run: pnpm docs:changelog (or let the post-commit
- * hook do it — see .husky/post-commit). There is nothing to curate: every commit on the current
- * branch shows up automatically the next time this runs.
+ * The output is GENERATED and not tracked by git (.gitignore) — it is derived from `git log`, so storing
+ * it would only add a "Regenerate changelog" commit after every real one (that's what the old post-commit
+ * hook did: 108 of the first 273 commits). It is rebuilt instead on `pnpm install`, when Storybook starts
+ * or builds, and after every commit (.husky/post-commit — regenerates only, never commits), so the page
+ * is always current. Run by hand: pnpm docs:changelog.
  *
  * Each commit also gets a `bump` classification (major/minor/patch — always one of the three, no
  * fallback "other" bucket) — a KEYWORD HEURISTIC on the commit subject, not a real semver signal.
@@ -82,6 +84,8 @@ if (raw.length > 0) {
   for (const line of raw.split('\n')) {
     const [hash, date, subject, author] = line.split('\x1f');
     if (!hash || !date || !subject) continue;
+    // Bookkeeping commits from the old auto-commit hook — not changes anyone made.
+    if (subject.startsWith('Regenerate changelog')) continue;
     if (!byDate.has(date)) {
       byDate.set(date, []);
       days.push({ date, commits: byDate.get(date)! });

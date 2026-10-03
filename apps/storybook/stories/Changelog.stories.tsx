@@ -77,7 +77,7 @@ function ChangelogPage() {
     <div>
       <StoryHeader
         title="Changelog"
-        description={`Generated from ${changelog.commitCount} commits across ${changelog.days.length} day${changelog.days.length === 1 ? '' : 's'} on this branch. Regenerate with \`pnpm docs:changelog\` — a post-commit hook also runs it automatically, so this stays close to current without you having to remember it.`}
+        description={`Generated from ${changelog.commitCount} commits across ${changelog.days.length} day${changelog.days.length === 1 ? '' : 's'} on this branch. Rebuilt from git automatically after every commit, so it is always current.`}
       />
 
       <p style={{

@@ -104,6 +104,15 @@ Scope: `@helix-ds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    trend arrows, validation icons). Coloring an icon with `text-danger` makes it read washed-out pink next
    to every other dark-mode error icon. Exception: an icon sitting *on a colored tint* matches its label's
    `text-*` tone (Badge's `badge-icon-*`, Chip's CSS).
+11. **Alphabetical component order — Storybook and Figma match.** Components are listed alphabetically
+   (English, case-insensitive) in Storybook's Components and Layout sections (`storySort` in
+   `apps/storybook/.storybook/preview.tsx`) **and** as Figma pages: `Cover · - · Icons · - ·` every core
+   component A→Z `· - ·` every layout component A→Z. A new component's Figma page is inserted at its
+   alphabetical position, never appended at the end. Stories inside one component keep their file order.
+12. **A Figma component page shows the component once.** The doc frame (title + description) has no fill
+   (transparent) and is wide enough that its text is never clipped; the Propstar table holds only the real
+   COMPONENT_SET — boolean properties are toggled in the properties panel, never expanded into columns of
+   instance copies (they read as extra variants). Details: `.ai/skills/components-to-figma.md`, rules 6 and 9.
 
 ## Workflow commands
 
@@ -139,7 +148,7 @@ pnpm helix scaffold:custom <Name> --reason "<why>" [--dir <path>]
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
-pnpm docs:changelog         regenerate .ai/maps/changelog.json from `git log`, shown in Storybook's Changelog page
+pnpm docs:changelog         regenerate .ai/maps/changelog.json (git-ignored) from `git log`, shown in Storybook's Changelog page
 pnpm docs:readme            sync component counts in README.md + the component lists in AGENTS.md and llms.txt
                             with contracts/manifest.json (auto-runs in pre-commit)
 pnpm report:paints          CSS paint audit report
@@ -188,9 +197,10 @@ component, run `pnpm docs:manifest` first — the README script trusts `contract
   doesn't use conventional-commit prefixes, so there's no real semver signal to parse — treat the tag as a
   rough read, not authoritative; nothing here is published, so no real version number depends on it
   anyway). Rendered in Storybook's own "Changelog" page (`apps/storybook/stories/Changelog.stories.tsx`) —
-  no separate CHANGELOG.md, no manual curation. `.husky/post-commit` runs `pnpm docs:changelog`
-  automatically after every commit, so this normally doesn't need a manual regenerate — run it by hand
-  only if you want it to catch up mid-session without committing first.
+  no separate CHANGELOG.md, no manual curation. **Not tracked by git** (it's derived from `git log`):
+  rebuilt on `pnpm install`, when Storybook starts or builds, and by `.husky/post-commit` after every
+  commit — which only rewrites the file, never commits. Never re-add a hook that commits it: that's what
+  produced a "Regenerate changelog" commit after every real one (108 of the first 273).
 - `contracts/component.schema.json`    — JSON schema for component contracts
 - `contracts/token-naming.schema.json` — JSON schema for the semantic token key grammar
   (`{role}[-interactive][-modifier][-state]`) — validates key structure/vocabulary only, not the

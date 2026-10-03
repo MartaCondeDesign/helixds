@@ -10,8 +10,8 @@ story shows up there as a `drift` entry instead of silently going unnoticed.
 
 **`Changelog.stories.tsx`** (top-level, sidebar position right after "Getting Started" — see `preview.ts`'s `storySort`)
 renders `.ai/maps/changelog.json`, generated from `git log` by `pnpm docs:changelog`. It is the project's
-only changelog — there is no separate `CHANGELOG.md` to keep in sync. Regenerate it (from the repo root)
-when you want the page to reflect commits made since its last run.
+only changelog — there is no separate `CHANGELOG.md` to keep in sync. The file is git-ignored and rebuilt
+automatically (on `pnpm install`, `dev`/`build` here, and after every commit), so the page is always current.
 
 **`Status.stories.tsx`** (top-level, right after Changelog) renders `contracts/stability.json` — every
 component's computed status (draft/beta/stable, ADR-018) with one ✓/✗ column per automatic criterion

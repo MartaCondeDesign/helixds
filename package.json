@@ -46,7 +46,7 @@
     "eval:trace": "tsx scripts/log-trace.ts",
     "quality": "tsx scripts/quality-cli.ts",
     "setup:ai": "node scripts/setup-ai.mjs",
-    "prepare": "husky",
+    "prepare": "husky && tsx scripts/generate-changelog.ts",
     "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },
   "devDependencies": {

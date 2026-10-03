@@ -16,7 +16,8 @@ authority; if the two ever disagree, the skill wins and this generator needs fix
 | `'a' \| 'b'` (string union) | `VARIANT` | Values exactly as in code — `variant=primary`, never `Variant=Primary` |
 | `boolean` | `BOOLEAN` | Except `disabled` ↓ |
 | `disabled` | `VARIANT` (`false` / `true`) | A BOOLEAN can't express the disabled visual change (skill: "Disabled state rule") |
-| Label-like `string` | `TEXT` | `children`, `label`, `description`, `placeholder`, `errorMessage`… |
+| Required label-like `string` | `TEXT` | `label`, `children`, and `placeholder` (always shown when empty) |
+| Optional label-like `string` | `BOOLEAN` + `TEXT` | A show/hide part (`description`, `errorMessage`…): BOOLEAN `description` on the part's visibility + TEXT `description text` for its content. Code stays implicit — passing the prop shows the part (show-hide-parts.md) |
 | Icon component (`icon`, `iconEnd`) | `BOOLEAN` + `INSTANCE_SWAP` | Both bound to the same icon layer; BOOLEAN-only fallback if the icon library isn't in Figma yet |
 | Event handlers, refs, callbacks, arrays/objects | — | Not expressed in Figma |
 
@@ -144,13 +145,13 @@ _No Figma-mappable props._
 - `chart-canvas`
 - `chart-data`
 
-### Checkbox (`v0.1.0`, beta)
+### Checkbox (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
 | `defaultChecked` | `boolean \| undefined` | `BOOLEAN` | `defaultChecked` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
@@ -173,8 +174,8 @@ _No Figma-mappable props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` | `orientation` | `vertical`, `horizontal` |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
@@ -273,8 +274,8 @@ _No Figma-mappable props._
 | `loading` | `boolean` | `BOOLEAN` | `loading` | — |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
@@ -326,8 +327,8 @@ _No Figma-mappable props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
 | `placeholder` | `string \| undefined` | `TEXT` | `placeholder` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
@@ -365,7 +366,7 @@ _No Figma-mappable props._
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `page-header-root`
@@ -380,8 +381,8 @@ _No Figma-mappable props._
 | `label` | `string` | `TEXT` | `label` | — |
 | `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
 | `defaultChecked` | `boolean` | `BOOLEAN` | `defaultChecked` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
@@ -395,14 +396,14 @@ _No Figma-mappable props._
 - `radio-item-description`
 - `radio-item-error`
 
-### RadioGroup (`v0.1.0`, beta)
+### RadioGroup (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` | `orientation` | `vertical`, `horizontal` |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
@@ -439,8 +440,8 @@ _No Figma-mappable props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
 | `placeholder` | `string \| undefined` | `TEXT` | `placeholder` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
@@ -491,7 +492,7 @@ _No Figma-mappable props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
 | `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
 | `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
 | `defaultChecked` | `boolean \| undefined` | `BOOLEAN` | `defaultChecked` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
@@ -522,8 +523,8 @@ _No Figma-mappable props._
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
-| `errorMessage` | `string \| undefined` | `TEXT` | `errorMessage` | — |
+| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |

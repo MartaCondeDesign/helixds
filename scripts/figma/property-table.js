@@ -18,7 +18,8 @@
  */
 const PAGE_ID = '__PAGE_ID__';
 const SET_ID = '__SET_ID__';
-const BOOLEANS = __BOOLEANS__; // e.g. ['icon'] — boolean component properties to expand into column groups
+const BOOLEANS = __BOOLEANS__; // Helix: always [] — booleans are toggled in the properties panel, never expanded into
+                               // columns of instance copies (they read as extra variants; components-to-figma.md rule 6)
 
 const PURPLE = { r: 151 / 255, g: 71 / 255, b: 1 };
 const page = await figma.getNodeByIdAsync(PAGE_ID);
