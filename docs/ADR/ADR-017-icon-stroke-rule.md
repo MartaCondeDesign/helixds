@@ -73,5 +73,9 @@ and docs/contract/Figma skill still saying "always 1.5").
 - **Negative:** Figma icon masters (24×24) were built at `stroke-width = 1.5`; under this rule the 24px
   master is 1.8. They stay out of sync until the next `icons-to-figma` pass (the skill already uses
   the new value).
+  **Resolved 2026-10-03:** all 161 masters set to 1.8, and every icon instance inside a component
+  carries the real px for its display size as a `strokeWeight` override (Button 16→1.5, Badge 12→1.3,
+  Chip 14→1.4 / 12→1.3, IconButton 14/16/18/20, Input/Select 16/18, NavItem 16, Checkbox mark 1.5 —
+  Badge and Chip had been inheriting 1.5 from the masters, heavier than code).
 - **Neutral:** `<helix-icon>` (Web Components, ADR-015) can't import `@helix-ds/core`, so it keeps a
   copy of the px table — keep it in sync when the table changes.

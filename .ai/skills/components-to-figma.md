@@ -205,7 +205,7 @@ For each component, add internal layers matching the `data-helix-part` structure
 
 Icon slots (`*-icon`, `*-icon-end`) must have their stroke color bound to the correct token **before** being nested inside the COMPONENT.
 
-**Plugin API limitation**: once an INSTANCE is inside a COMPONENT node, its children become inaccessible (`instance.children` returns `[]`). You MUST set the stroke override while the instance is still a page-level node.
+**Plugin API limitation**: once an INSTANCE is inside a COMPONENT node, its children become inaccessible (`instance.children` returns `[]`) **while it, or any ancestor, is hidden** — to edit an existing hidden slot later, set `visible = true` on it and its hidden ancestors, edit, then hide them again (the BOOLEAN binding survives). You MUST set the stroke override while the instance is still a page-level node.
 
 **Pattern — set stroke + size BEFORE nesting, set property refs AFTER:**
 ```js
@@ -236,6 +236,11 @@ if (vec?.type === 'VECTOR') {
   const bound = figma.variables.setBoundVariableForPaint(base, 'color', colorVar);
   vec.strokes = [bound];
   vec.fills = [];
+  // Stroke WEIGHT = the ADR-017 real px for this display size (a resize never scales strokeWeight,
+  // and the 24px master is 1.8): 12→1.3 · 14→1.4 · 16→1.5 · 18→1.5 · 20→1.7 · 24→1.8 · 28→2.0 ·
+  // 32→2.2 · 36→2.4 · 40→2.8 (ICON_STROKE_PX_BY_SIZE in Icon/iconStroke.ts). Only exception:
+  // Checkbox's mark, 1.5 at 12px (ADR-017 §5).
+  vec.strokeWeight = 1.5; // ICON_SLOT_SIZE 16
 }
 
 newInst.name = 'button-icon';
