@@ -24,6 +24,8 @@ type Contract = {
   name: string;
   purpose: string;
   neverUseFor?: string[];
+  rationale?: string;
+  governance?: { mayExtendLocally?: string[]; mustEscalateToDS?: string[] };
   states?: Record<string, unknown>;
   props?: Array<{ name: string; type: string; required?: boolean; default?: unknown; description: string }>;
   tokenPolicy?: { allowed?: string[]; forbidden?: string[] };
@@ -63,6 +65,8 @@ export function getComponent(name: string) {
     ...entry,
     props: contract.props ?? [],
     neverUseFor: contract.neverUseFor ?? [],
+    rationale: contract.rationale ?? null,
+    governance: contract.governance ?? null,
     states: contract.states ?? {},
     tokenPolicy: contract.tokenPolicy ?? {},
     accessibility: contract.a11y ?? {},

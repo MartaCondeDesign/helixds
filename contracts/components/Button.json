@@ -12,6 +12,20 @@
     "Submitting a form implicitly — always set type='submit' explicitly"
   ],
 
+  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Compose with custom tooltips or popover wrappers in product apps",
+      "Pass custom aria-label or data-testid attributes"
+    ],
+    "mustEscalateToDS": [
+      "Adding new global variants (e.g. 'compact', 'outline-primary')",
+      "Overriding internal padding tokens or height tokens directly",
+      "Introducing new size rungs (e.g. 'xs' or 'xl')"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus", "active"],
     "authored": [

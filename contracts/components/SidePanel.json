@@ -12,6 +12,20 @@
     "Primary navigation — use SideNav instead"
   ],
 
+  "rationale": "SidePanel uses native <dialog> and showModal() like Modal (ADR-010), so focus trapping, Escape and top-layer stacking come from the browser. It's anchored full-height to the right edge at a fixed 400px width for secondary tasks that still block the page, and has no radius because it meets the viewport edge.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Compose forms, details or filters inside the body",
+      "Choose the title and footer actions"
+    ],
+    "mustEscalateToDS": [
+      "Changing the 400px width or anchoring side",
+      "Replacing <dialog> or making it non-modal",
+      "Overriding focus-trap or backdrop behavior"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": [
@@ -52,5 +66,16 @@
     "role": "dialog (implicit via native <dialog>)",
     "keyboardNav": ["Escape — dismisses (native <dialog> cancel event, redirected through onDismiss per ADR-010)", "Tab — cycles focus, trapped inside the panel (native)"],
     "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value"]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "placement", "type": "VARIANT", "values": ["right", "bottom"], "codeProp": "placement", "description": "right: 400px (sidePanel.width), full height, shadow / xl. bottom: full width, max 80vh, shadowBottom." },
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "content", "type": "TEXT", "codeProp": "children" },
+      { "name": "showCloseButton", "type": "BOOLEAN", "codeProp": "showCloseButton" }
+    ],
+    "structure": "Same header as Modal (24px top/left, 72px clear of the close button as 16 + 40 + 16 nested tokens, Heading / l / Bold), body 24px padding, IconButton ghost l close 16px from the corner. shadowBottom is a literal in tokens.json (rgba values, no semantic shadow casts upward) — drawn as raw drop shadows in Figma."
   }
 }

@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   loadPrompts, scorePrompt, runGlobalChecks, gitCommit, newRunId, argValue, outputsDir, type ScoreResult,
-} from './eval-lib';
+} from './eval-lib.ts';
 
 const args = process.argv.slice(2);
 const promptFilter = argValue(args, '--prompt');

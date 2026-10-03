@@ -15,7 +15,6 @@ export const doc: ComponentDoc = {
   tokens: [
     { part: 'icon-root', label: 'color.neutral', token: '--helix-color-icon-neutral', kind: 'color' },
     { part: 'icon-root', label: 'color.neutral-light', token: '--helix-color-icon-neutral-light', kind: 'color' },
-    { part: 'icon-root', label: 'color.neutral-lightest', token: '--helix-color-icon-neutral-lightest', kind: 'color' },
     { part: 'icon-root', label: 'color.disabled', token: '--helix-color-icon-disabled', kind: 'color' },
     { part: 'icon-root', label: 'color.inverse', token: '--helix-color-icon-inverse', kind: 'color' },
     { part: 'icon-root', label: 'color.primary', token: '--helix-color-icon-primary', kind: 'color' },

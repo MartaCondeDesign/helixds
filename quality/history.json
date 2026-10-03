@@ -1,0 +1,18 @@
+[
+  {
+    "date": "2026-10-03",
+    "score": 0.7350326469110999,
+    "evalPassRate": 0.6298342541436464,
+    "tokens": 762,
+    "components": {
+      "draft": 0,
+      "beta": 15,
+      "stable": 18
+    },
+    "figma": {
+      "synced": 18,
+      "stale": 2,
+      "missing": 13
+    }
+  }
+]

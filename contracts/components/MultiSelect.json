@@ -12,6 +12,20 @@
     "Free-form tags the user types - use Input"
   ],
 
+  "rationale": "MultiSelect is a select-only combobox on a <button> plus a Menu listbox with aria-multiselectable (ADR-013, ADR-019). Chosen values appear as removable Chip s, centered 4px inside a 32px minimum field that grows downward as chips wrap — the same height as Select so both sit on one scale.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Provide the options, label and helper text",
+      "Control the selected values from product logic"
+    ],
+    "mustEscalateToDS": [
+      "Adding free-text tag entry or search",
+      "Changing the chip size, field height or wrapping behavior",
+      "Replacing the combobox/listbox pattern"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [
@@ -86,5 +100,15 @@
       "Tab - move focus (closes the menu first)"
     ],
     "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": ["default", "hover", "focus", "open", "invalid", "disabled"],
+    "properties": [
+      { "name": "value", "type": "VARIANT", "values": ["empty", "selected"], "codeProp": "value", "description": "empty = placeholder (Select's geometry: 12px inside the border); selected = dismissible Chip s instances, wrapping, 4px from the outer edge." },
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "open", "invalid", "disabled"], "figmaOnly": true, "description": "Same treatment as Select — colors, focus/open glow (shadow / focus) and chevron copied from the audited Select set." },
+      { "name": "placeholder", "type": "TEXT", "codeProp": "placeholder" }
+    ],
+    "structure": "The field only, like Select. selected: the chip padding in code is (32 − 24)/2 − 1px border = 3px — off the scale — so Figma uses 4px padding (spacing/2xs) with the border drawn over it (strokesIncludedInLayout off): chips land 4px from the outer edge, exactly like code. The chevron is absolute, 12px inside the border, like code's position: absolute; right: 12px."
   }
 }

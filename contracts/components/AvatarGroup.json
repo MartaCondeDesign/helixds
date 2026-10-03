@@ -12,6 +12,20 @@
     "Decorative clusters not tied to real people/entities on the record"
   ],
 
+  "rationale": "AvatarGroup collapses several people tied to one record into a compact overlapping stack with a '+N' overflow, so tables and cards stay scannable. Every child is an Avatar at the group's size, so heights stay on the same semantic.size rungs; names are exposed through per-avatar Tooltips and a labelled group rather than extra focus stops.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose how many avatars are visible before collapsing into '+N'",
+      "Link the '+N' count or the group to a full roster view at the usage site"
+    ],
+    "mustEscalateToDS": [
+      "Changing the overlap distance, ring border or overflow treatment",
+      "Making individual avatars focusable or interactive",
+      "Mixing avatar sizes inside one group"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": []
@@ -56,5 +70,15 @@
       "Each avatar is wrapped in Tooltip (see contracts/components/Tooltip.json), showing that person's name on hover — mouse only, since individual avatars carry no tabindex/focus behavior (keyboardNav stays []).",
       "The '+N' overflow indicator is also wrapped in Tooltip, listing the hidden names (comma-separated) — no longer presentational-only."
     ]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
+      { "name": "overflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
+      { "name": "overflow count", "type": "TEXT", "codeProp": "max", "description": "The +N text." }
+    ],
+    "structure": "Avatar instances in avatar-group-item rings (2px, fill/page). The 8px overlap (avatarGroup.overlap) is modeled without a negative gap: every item after the first sits in a slot 8px narrower than itself, offset 8px left, so it paints over the previous one and the group's width matches code (m, 3 avatars: 92px). The hover lift is a motion effect, not modeled."
   }
 }

@@ -9,6 +9,20 @@
     "Choices the user turns on and off — use CheckboxGroup, RadioGroup or SegmentedControl instead",
     "Values picked from a list — use MultiSelect instead"
   ],
+
+  "rationale": "ChipGroup lays related chips out as one labelled group (role='group' + aria-label), with chips 4px apart and wrapping rows 4px apart, following the group-spacing pattern. It inherits Chip's size scale unchanged, so a group never introduces its own density.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose which chips render and their order",
+      "Provide the group's accessible label"
+    ],
+    "mustEscalateToDS": [
+      "Changing the 4px gap between chips or rows",
+      "Adding selection semantics (use CheckboxGroup/RadioGroup/SegmentedControl)",
+      "Adding overflow/collapse behavior to the row"
+    ]
+  },
   "states": {
     "intrinsic": [
       "hover",

@@ -9,6 +9,20 @@
     "Option selection - use Select, RadioGroup, or CheckboxGroup",
     "File uploads - use FileInput"
   ],
+
+  "rationale": "Textarea wraps a native <textarea> with a 32px min-height floor (semantic.size.m) instead of a height ladder, because its height is driven by rows. `size` only changes font size, keeping it aligned with Input and Select in the same form.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose rows, label, placeholder and helper text",
+      "Add validation and character counts through the documented props"
+    ],
+    "mustEscalateToDS": [
+      "Adding a fixed height ladder or new sizes",
+      "Adding rich-text formatting",
+      "Changing border, focus-ring or error tokens"
+    ]
+  },
   "states": {
     "intrinsic": [
       "hover",

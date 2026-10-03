@@ -26,6 +26,7 @@ chips the user can remove one by one.
 
 - `<Chip>In stock</Chip>` — text as children instead of the label prop
 - `checked=` — Chip has no checked/selected state
+- `<ChipGroup` — invents props: ChipGroup's options have no dismissible/onDismiss, so its chips can't be removed
 - `onClick=` on Chip — anti-synonym for onPress
 
 # Expected output shape

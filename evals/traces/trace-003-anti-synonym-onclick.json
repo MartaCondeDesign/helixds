@@ -1,0 +1,18 @@
+{
+  "id": "trace-003-anti-synonym-onclick",
+  "timestamp": "2026-10-03T19:41:00.000Z",
+  "source": "developer-interactive",
+  "appName": "settings-app",
+  "prompt": "Build a save settings button that shows a spinner while saving.",
+  "generatedCode": "import { Button } from '@helix-ds/core';\n\nexport function SaveSettings({ onSave, loading }: { onSave: () => void; loading: boolean }) {\n  return (\n    <Button variant=\"primary\" isLoading={loading} onClick={onSave}>\n      Save Settings\n    </Button>\n  );\n}",
+  "errorDetails": [
+    "Failed prop-map-check — Used anti-synonyms: isLoading (must be loading) and onClick (must be onPress)"
+  ],
+  "governanceAnalysis": {
+    "canIt": false,
+    "shouldIt": true,
+    "mayIt": true,
+    "violationCategory": "prop-map-anti-synonym",
+    "recommendedFix": "Replace isLoading with loading, and onClick with onPress."
+  }
+}

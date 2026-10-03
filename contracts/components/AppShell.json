@@ -11,6 +11,21 @@
     "Auth/marketing pages with no persistent nav — a page with no SideNav should just render its content directly, not force an empty shell"
   ],
 
+  "rationale": "AppShell exists so no page hand-writes `display: flex; min-height: 100vh` again: it fixes one composition of SideNav, TopBar and a single scrollable <main>, which guarantees exactly one main landmark per page (WCAG 2.4.1 Bypass Blocks) and a consistent scroll container across every product screen.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose which SideNav entries and TopBar actions a product renders",
+      "Compose any page content inside the main slot",
+      "Omit the shell entirely on auth/marketing pages with no persistent nav"
+    ],
+    "mustEscalateToDS": [
+      "Adding new shell regions (e.g. a right rail or a footer bar)",
+      "Changing which element scrolls or rendering more than one <main>",
+      "Nesting AppShell inside another layout or page"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

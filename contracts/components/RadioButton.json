@@ -12,6 +12,20 @@
     "Anything needing search or many options — use Select instead"
   ],
 
+  "rationale": "RadioButton is the exact native radio option RadioGroup renders, exposed on its own only for custom layouts that still share a `name`. It keeps the same fixed 16px control as Checkbox; for a normal set of options RadioGroup should be used because it adds fieldset/legend for free.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Place a single radio inside a custom layout sharing `name`",
+      "Write the label per usage"
+    ],
+    "mustEscalateToDS": [
+      "Adding a size prop or new control sizes",
+      "Replacing the native radio input",
+      "Building full option sets by hand instead of using RadioGroup"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus", "active"],
     "authored": [
@@ -66,5 +80,19 @@
     "role": "radio (native input type=radio)",
     "keyboardNav": ["Space — selects it", "Tab — moves focus to/from it"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": ["default", "hover", "focus", "invalid", "disabled"],
+    "properties": [
+      { "name": "checked", "type": "VARIANT", "values": ["unchecked", "checked"], "codeProp": "checked" },
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "invalid", "disabled"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props." },
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: a line in radio-item-content (4px gap only between shown lines)." },
+      { "name": "description text", "type": "TEXT", "codeProp": "description" },
+      { "name": "errorMessage", "type": "BOOLEAN", "codeProp": "errorMessage", "description": "Show/hide part: the error line. Code shows it instead of the description — turn description off when it's on." },
+      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+    ],
+    "structure": "radio-item > radio-control-box (21px = lineHeight/m, the circle centered on the label's first line — code's token-derived margin-top) + radio-item-content (label, description, error)."
   }
 }

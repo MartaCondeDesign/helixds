@@ -28,6 +28,7 @@ export { Modal }     from './components/Modal';
 export { SidePanel } from './components/SidePanel';
 export { Toast, toast } from './components/Toast';
 export { SegmentedControl } from './components/SegmentedControl';
+export { Chart } from './components/Chart';
 
 // Layout
 export { TopBar }     from './layout/TopBar';
@@ -64,6 +65,7 @@ export { doc as ModalDoc }      from './components/Modal/Modal.doc';
 export { doc as SidePanelDoc }  from './components/SidePanel/SidePanel.doc';
 export { doc as ToastDoc }      from './components/Toast/Toast.doc';
 export { doc as SegmentedControlDoc } from './components/SegmentedControl/SegmentedControl.doc';
+export { doc as ChartDoc }      from './components/Chart/Chart.doc';
 export { doc as TopBarDoc }     from './layout/TopBar/TopBar.doc';
 export { doc as SideNavDoc }    from './layout/SideNav/SideNav.doc';
 export { doc as AppShellDoc }   from './layout/AppShell/AppShell.doc';
@@ -104,6 +106,7 @@ export type { ModalProps }                                           from './com
 export type { SidePanelProps }                                       from './components/SidePanel';
 export type { ToastProps, ToastVariant, ToastRecord, ToastOptions } from './components/Toast';
 export type { SegmentedControlProps, SegmentedControlOption }        from './components/SegmentedControl';
+export type { ChartProps, ChartSeries, ChartVariant }                from './components/Chart';
 export type { TopBarProps }                                          from './layout/TopBar';
 export type { SideNavProps }                                         from './layout/SideNav';
 export type { AppShellProps }                                        from './layout/AppShell';

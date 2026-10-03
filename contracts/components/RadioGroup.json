@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "RadioGroup",
   "version": "0.1.0",
-  "status": "stable",
+  "status": "beta",
 
   "purpose": "Lets users choose exactly one option from a small, visible set of mutually exclusive choices.",
 
@@ -11,6 +11,20 @@
     "Large option sets or anything needing search — use Select instead",
     "Multiple simultaneous selections — use a Checkbox group instead"
   ],
+
+  "rationale": "RadioGroup uses native fieldset/legend and radio inputs so arrow-key selection and the group label are handled by the browser. Like Checkbox it has one fixed 16px control outside the ADR-004 field scale, and it is for small visible sets — larger ones belong in Select.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Define the options, legend and helper text",
+      "Choose vertical or horizontal arrangement from the documented props"
+    ],
+    "mustEscalateToDS": [
+      "Replacing native radios or the fieldset/legend wrapper",
+      "Adding sizes or card-style option variants",
+      "Changing option spacing tokens"
+    ]
+  },
 
   "states": {
     "intrinsic": ["hover", "focus", "active"],

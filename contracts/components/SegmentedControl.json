@@ -12,6 +12,20 @@
     "More than ~5 options, or options with long labels — use RadioGroup or Select instead"
   ],
 
+  "rationale": "SegmentedControl is a hand-rolled radiogroup with roving tabindex (ADR-012) because no native element renders a segmented button set. It has one fixed size, semantic.size.s (24px), and switches modes with no associated panel — that's the line that separates it from tabs.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose up to ~5 short options and the selected value",
+      "Use icons inside options per usage"
+    ],
+    "mustEscalateToDS": [
+      "Adding sizes or more than ~5 options",
+      "Using it for routing or tab panels",
+      "Changing the keyboard model or indicator motion"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [
@@ -56,5 +70,15 @@
     "role": "radiogroup (hand-rolled — root is a plain div, options are buttons, not native inputs; see ADR-012)",
     "keyboardNav": ["Arrow keys — move selection between options (roving tabindex, hand-rolled)", "Space/Enter — selects the focused option", "Tab — moves focus into and out of the group (only the checked option is in the tab order)"],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": ["default", "hover", "focus", "disabled"],
+    "properties": [
+      { "name": "checked", "type": "VARIANT", "values": ["false", "true"], "codeProp": "value", "description": "On SegmentedControlItem: the option whose value equals the group's `value`. Checked = the pill (fill/page) — in code a sliding motion.span." },
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "disabled"], "figmaOnly": true, "description": "On SegmentedControlItem: hover/focus are CSS; disabled is the option's or the group's `disabled`. On SegmentedControl: default / disabled (the group prop)." },
+      { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
+    ],
+    "structure": "SegmentedControlItem set (checked × state) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled), 4px padding and gap, radius full."
   }
 }

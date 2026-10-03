@@ -7,7 +7,7 @@ import { StoryHeader } from './_shared/StoryHeader';
 import stability from '../../../contracts/stability.json';
 
 const meta: Meta = {
-  title: 'Status',
+  title: 'Data/Status',
   tags: ['autodocs'],
   parameters: {
     layout: 'padded',

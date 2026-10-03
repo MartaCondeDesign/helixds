@@ -145,22 +145,25 @@ function sum(items: ErrorTally[]) {
 }
 
 function compareView(a: string, b: string) {
-  const ra = byVariant.get(a);
-  const rb = byVariant.get(b);
+  let ra = byVariant.get(a);
+  let rb = byVariant.get(b);
   if (!ra || !rb) {
     console.error(`Need runs for both "${a}" and "${b}". Known: ${[...byVariant.keys()].join(', ')}`);
     process.exit(1);
   }
   const rate = (rs: LoadedRun[]) => rs.filter(r => r.passed).length / rs.length;
-  console.log(`\n⚖️  "${b}" vs "${a}" (baseline)\n`);
+  const pa = groupBy(ra, r => r.promptId);
+  const pb = groupBy(rb, r => r.promptId);
+  const shared = [...pa.keys()].filter(id => pb.has(id)).sort();
+  // Only compare like with like: totals are computed over the prompts BOTH variants ran.
+  ra = ra.filter(r => pb.has(r.promptId));
+  rb = rb.filter(r => pa.has(r.promptId));
+  console.log(`\n⚖️  "${b}" vs "${a}" (baseline) — over the ${shared.length} prompt(s) both ran\n`);
   evalHealth();
   const fmt = (rs: LoadedRun[]) => `${rs.filter(r => r.passed).length}/${rs.length}`.padStart(6) + ' ' + pct(rs.filter(r => r.passed).length, rs.length);
   console.log(`\nOverall pass rate: ${a} ${fmt(ra).trim()}  →  ${b} ${fmt(rb).trim()}   (${delta(rate(rb) - rate(ra))})`);
 
-  console.log('\nPer prompt (only prompts both variants ran):');
-  const pa = groupBy(ra, r => r.promptId);
-  const pb = groupBy(rb, r => r.promptId);
-  const shared = [...pa.keys()].filter(id => pb.has(id)).sort();
+  console.log('\nPer prompt:');
   let better = 0, worse = 0;
   for (const id of shared) {
     const d = rate(pb.get(id)!) - rate(pa.get(id)!);

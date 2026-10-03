@@ -12,6 +12,19 @@
     "Non-tabular free-form content — Table is for genuinely row/column data, not a generic layout grid"
   ],
 
+  "rationale": "Table renders native <table> tags to ensure tabular WCAG accessibility semantics (th scope, caption, tr/td navigation). Rows expand 100% edge-to-edge inside their parent container.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Compose custom cell renderers using Helix Badge, Avatar, or IconButton",
+      "Implement client-side or server-side pagination controls below the Table"
+    ],
+    "mustEscalateToDS": [
+      "Modifying internal row padding or border tokens",
+      "Replacing native HTML <table> with flex/grid div rows"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover (row)"],
     "authored": []

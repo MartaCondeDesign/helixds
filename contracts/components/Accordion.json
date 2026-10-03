@@ -12,6 +12,21 @@
     "Hiding required/critical content the user must always see"
   ],
 
+  "rationale": "Accordion is built on native <details>/<summary> (ADR-001) so toggling, keyboard activation and the expanded state are announced by the browser with no hand-rolled ARIA. The panel animates through a CSS grid row transition instead of JS height measurement, and the open/close timing is fixed by ADR-016 so every disclosure in the system feels the same.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Compose any Helix content (forms, lists, Tables) inside the panel",
+      "Stack several Accordions to build an FAQ or settings list",
+      "Control the open state from product logic via the documented props"
+    ],
+    "mustEscalateToDS": [
+      "Replacing <details>/<summary> with a div + button disclosure",
+      "Changing the open/close animation timing or easing (ADR-016)",
+      "Adding exclusive 'only one open' group behavior or new visual variants"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [
@@ -53,5 +68,16 @@
     "role": "native <details>/<summary> disclosure — no hand-rolled role needed",
     "keyboardNav": ["Enter / Space on the header — toggles (native <summary> behavior)"],
     "wcag": ["4.1.2 Name, Role, Value", "2.1.1 Keyboard"]
+  },
+
+  "figma": {
+    "states": ["default", "focus", "disabled"],
+    "properties": [
+      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded", "description": "Shows the panel; the chevron flips (scaleY(-1) in code)." },
+      { "name": "state", "type": "VARIANT", "values": ["default", "focus", "disabled"], "figmaOnly": true, "description": "focus = the header's focus ring (global :focus-visible); disabled = the `disabled` prop — fill/disabled, border/neutral/light, text/disabled, icon/disabled on the header (the open panel's content keeps its color, like code). No hover style exists in code." },
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "content", "type": "TEXT", "codeProp": "children" }
+    ],
+    "structure": "Bordered box (radius/l, border in the layout) > accordion-header (12/16 padding, Body / m / Medium, 16px ChevronDown) + accordion-panel-inner (0/16/12, Body / m / Regular)."
   }
 }

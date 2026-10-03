@@ -12,6 +12,20 @@
     "Long-form help text or instructions — keep it to a short phrase; use a Popover or inline description for anything longer"
   ],
 
+  "rationale": "Tooltip is a read-only text label shown on hover or focus and linked through aria-describedby (ADR-008), with auto-placement handled by ADR-009 and a 240px max width. It's one of the floating surfaces allowed a shadow (ADR-005), and it can never be the only way to learn required information.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Write the label text and choose a preferred placement",
+      "Wrap icon-only controls and avatars"
+    ],
+    "mustEscalateToDS": [
+      "Putting interactive content (links, buttons) inside a tooltip",
+      "Changing max width, delays or the placement engine",
+      "Using Tooltip for long-form help or critical information"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [
@@ -51,5 +65,13 @@
     "role": "tooltip (on tooltip-content), referenced from the trigger via aria-describedby",
     "keyboardNav": ["Tab — focuses the trigger, showing the tooltip", "Escape — dismisses while the trigger is focused"],
     "wcag": ["1.4.13 Content on Hover or Focus", "4.1.2 Name, Role, Value"]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "label", "type": "TEXT", "codeProp": "label" }
+    ],
+    "structure": "The bubble only (tooltip-content): fill/inverse, text/inverse Caption / Regular, 4/8 padding, radius/s, shadow / s, max-width 240 (wraps). No arrow, no placement variant — it looks the same on every side; placement is runtime (ADR-009)."
   }
 }

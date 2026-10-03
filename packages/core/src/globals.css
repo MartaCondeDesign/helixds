@@ -67,6 +67,8 @@
 /* ─── Component layer ────────────────────────────────────────────────────── */
 
 @layer components {
+  [data-helix-part="chart-root"] { position: relative; font-family: var(--helix-textStyle-body-s-regular-fontFamily); }
+  [data-helix-part="chart-data"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
   /* Storybook Docs preview block only: keep the prose light, darken the live example. */
   :root[data-theme="dark"] .docs-story {
@@ -426,8 +428,11 @@
   [data-helix-part="fab-root"]:active:not(:disabled) {
     background-color: var(--helix-fab-fill-press);
   }
+  /* Real disabled colors, not opacity — .ai/maps/patterns/disabled-state.md */
   [data-helix-part="fab-root"]:disabled {
-    opacity:        0.5;
+    background-color: var(--helix-fab-fill-disabled);
+    color:          var(--helix-fab-icon-disabled);
+    box-shadow:     none;
     cursor:         not-allowed;
     pointer-events: none;
   }
@@ -470,7 +475,10 @@
     -webkit-appearance: none;
   }
   [data-helix-part="fab-action"]:disabled {
-    opacity:        0.5;
+    background-color: var(--helix-fab-action-fill-disabled);
+    border-color:   var(--helix-fab-action-border-disabled);
+    color:          var(--helix-fab-action-icon-disabled);
+    box-shadow:     none;
     cursor:         not-allowed;
     pointer-events: none;
   }
@@ -1495,7 +1503,9 @@
     display:     flex;
     align-items: center;
     justify-content: center;
-    margin-top:  1px;
+    /* Centered on the label's first line, derived from tokens (14px × 1.5 = 21px line → 2.5px), not a
+       raw 1px: Figma draws it as a 21px-tall box with the control centered. */
+    margin-top:  calc((var(--helix-checkbox-text-labelFontSize) * var(--helix-checkbox-text-labelLineHeight) - var(--helix-checkbox-size)) / 2);
     transition:
       background-color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
       border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
@@ -1732,7 +1742,8 @@
     display:      flex;
     align-items:  center;
     justify-content: center;
-    margin-top:   1px;
+    /* Centered on the label's first line, derived from tokens (see checkbox-control). */
+    margin-top:   calc((var(--helix-radio-text-labelFontSize) * var(--helix-radio-text-labelLineHeight) - var(--helix-radio-size)) / 2);
     transition:
       background-color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
       border-color     var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base),
@@ -2097,9 +2108,10 @@
     border-radius: var(--helix-tooltip-radius);
     box-shadow:    var(--helix-tooltip-shadow);
     padding:       var(--helix-tooltip-padding-y) var(--helix-tooltip-padding-x);
+    font-family:   var(--helix-textStyle-caption-regular-fontFamily); /* "Caption / Regular" in Figma */
     font-size:     var(--helix-tooltip-fontSize);
     font-weight:   var(--helix-tooltip-fontWeight);
-    line-height:   1.4;
+    line-height:   var(--helix-textStyle-caption-regular-lineHeight);
     /* pre-line, not normal: AvatarGroup's overflow tooltip joins hidden names with '\n' so each
        renders on its own line — normal whitespace still collapses/wraps as usual. */
     white-space:    pre-line;
@@ -2214,6 +2226,16 @@
   }
   [data-helix-part="accordion-header"][aria-disabled="true"] {
     cursor: not-allowed;
+    color:  var(--helix-accordion-text-disabled);
+  }
+  /* Real disabled colors, not just a cursor — .ai/maps/patterns/disabled-state.md. Before this the
+     disabled accordion looked exactly like an enabled one. */
+  [data-helix-part="accordion-root"]:has(> [data-helix-part="accordion-header"][aria-disabled="true"]) {
+    background-color: var(--helix-accordion-fill-disabled);
+    border-color:     var(--helix-accordion-border-disabled);
+  }
+  [data-helix-part="accordion-header"][aria-disabled="true"] [data-helix-part="accordion-chevron"] {
+    color: var(--helix-accordion-chevron-disabled);
   }
 
   /* Keyed off data-state (open/closing/closed), not the native [open] attribute — [open] stays true
@@ -2317,8 +2339,10 @@
   }
   [data-helix-part="modal-title"] {
     margin:      0;
+    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma */
     font-size:   var(--helix-modal-titleFontSize);
     font-weight: var(--helix-modal-titleFontWeight);
+    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
   }
   [data-helix-part="modal-close"] {
     position: absolute;
@@ -2432,8 +2456,10 @@
   }
   [data-helix-part="side-panel-title"] {
     margin:      0;
+    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma, like Modal's */
     font-size:   var(--helix-sidePanel-titleFontSize);
     font-weight: var(--helix-sidePanel-titleFontWeight);
+    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
   }
   [data-helix-part="side-panel-close"] {
     position: absolute;
@@ -2681,6 +2707,12 @@
   [data-helix-part="segmented-control-item"]:not([aria-checked="true"]):not(:disabled):hover [data-helix-part="segmented-control-item-label"] {
     color: var(--helix-segmentedControl-text-checked);
   }
+  /* After the checked rule on purpose (same specificity): a disabled option reads as disabled whether
+     it's one option or the whole group, checked or not — before, a disabled option looked exactly like
+     an enabled one and a disabled group kept its checked label at full color. */
+  [data-helix-part="segmented-control-item"]:disabled [data-helix-part="segmented-control-item-label"] {
+    color: var(--helix-segmentedControl-text-disabled);
+  }
 
   @media (prefers-reduced-motion: reduce) {
     [data-helix-part="segmented-control-pill"] { transition: none !important; }
@@ -2827,10 +2859,12 @@
 
   [data-helix-part="toast-icon"] {
     flex-shrink: 0;
-    margin-top: 1px;
+    display: flex; /* top-aligned with the title, no raw nudge — Figma draws the same */
     width: var(--helix-toast-iconSize);
     height: var(--helix-toast-iconSize);
   }
+  /* flex, not the span's default inline: an inline wrapper added a 25px line box around the 24px button */
+  [data-helix-part="toast-close"] { display: flex; flex-shrink: 0; }
   [data-helix-part="toast-content"] { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   [data-helix-part="toast-title"] {
     font-size: var(--helix-primitive-fontSize-s);
@@ -2840,7 +2874,7 @@
   [data-helix-part="toast-description"] {
     font-size: var(--helix-primitive-fontSize-s);
     color: var(--helix-toast-textDescription);
-    margin-top: 2px;
+    margin-top: var(--helix-spacing-3xs);
   }
 
   /* Depth grows DOWNWARD (positive translateY), not upward — the viewport is pinned to the top of the

@@ -12,6 +12,20 @@
     "Repeated inside a scrollable list — PageHeader is a page-level element, used once per view"
   ],
 
+  "rationale": "PageHeader gives every view the same title, description and trailing-actions row so pages are predictable to scan (2.4.6 Headings and Labels). It's the destination, not the trail, and is used once per view — card titles and breadcrumbs are separate concerns.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Write the title and description per page",
+      "Put any Helix Buttons/IconButtons in the actions slot"
+    ],
+    "mustEscalateToDS": [
+      "Adding breadcrumbs, tabs or new regions into PageHeader",
+      "Changing the title type scale or spacing tokens",
+      "Using PageHeader inside Cards or repeated in lists"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

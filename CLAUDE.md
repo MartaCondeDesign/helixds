@@ -115,10 +115,23 @@ pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-fil
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
                             ADR-018 — needs Storybook running; --details lists what's missing
+pnpm lint                   @helix-ds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
+                            raw colors, native controls (also live in the editor via eslint.config.mjs).
+                            After editing prop-map.md, a contract, tokens.json or core's index.ts, run
+                            `pnpm --filter @helix-ds/eslint-plugin build:data` (its tests fail while stale).
+                            Claude Code runs it on every file it edits (.claude/settings.json →
+                            scripts/claude-lint-hook.mjs) and gets the problems back to fix in the same turn
+pnpm test:lint-hook         test that Claude Code lint hook
+pnpm helix dashboard        AI-readiness view: health score, the 5 signals behind it (readiness, Figma,
+                            eval pass rate, rule compliance, governance coverage), gaps and data freshness —
+                            read-only; `pnpm quality snapshot` records it for Storybook's Metrics page
 pnpm verify:types           check every contract's props are present in its {Name}.types.ts
                             (the actual contract-vs-implementation check, for prop types specifically)
 pnpm verify:props           check prop names against prop-map
 pnpm verify:icons           check every Tabler icon renders through the Icon component
+pnpm helix scaffold:custom <Name> --reason "<why>" [--dir <path>]
+                            scaffold a local [CUSTOM] component for a consuming app (governance header,
+                            semantic tokens, accessible base, story with a play test) — refuses Helix names and overwrites
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component

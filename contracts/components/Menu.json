@@ -11,6 +11,20 @@
     "Content that isn't a flat or single-level-grouped list of choices — this is a listbox, not a generic popover"
   ],
 
+  "rationale": "Menu is the hand-rolled, portaled listbox (ADR-013) that Select and MultiSelect use instead of a native <select> popup, so options can be styled with tokens and rendered in the top layer. Rows are semantic.size.m (32px) to match field triggers, and keyboard handling lives in the consumer's trigger so one primitive serves every future popup list.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Supply options and groups through the documented props",
+      "Build new DS popup lists (Combobox, context menu) on top of Menu"
+    ],
+    "mustEscalateToDS": [
+      "Using Menu as a generic popover or a menubar",
+      "Changing row height, portaling or anchoring behavior",
+      "Adding nested submenus"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [
@@ -61,5 +75,14 @@
     "role": "listbox (hand-rolled — see ADR-013)",
     "keyboardNav": ["Handled by the consumer's trigger, not Menu itself — Menu is presentational plus click-to-select. See Select's own contract for the actual Arrow/Home/End/typeahead handling."],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": ["default", "hover", "selected", "disabled"],
+    "properties": [
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "selected", "disabled"], "figmaOnly": true, "description": "On MenuItem: hover also covers the keyboard-active option ([data-active]); selected = aria-selected (fill/primary light, text/primary, Body / m / Medium); disabled = text/disabled." },
+      { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
+    ],
+    "structure": "MenuItem set composed into a Menu component: 1px border/neutral (in the layout), 4px top/bottom padding, radius/m, shadow / m, 240px (menu.width). Groups: menu-group (4px sides) > menu-group-label (Label / Uppercase, 12/12/4 padding; 12px top only on the first group = 16 − the menu's 4) + options 2px apart; menu-group-divider edge to edge with 8px above and 16px below. Measured identical to code (Grouped story, 223px tall)."
   }
 }

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design system quality snapshot",
+  "description": "Portable, aggregate-only evidence for a design-system quality report. Never include raw conversations, customer data, or generated source code.",
+  "type": "object",
+  "required": ["generatedAt", "components", "tokens", "evals", "changes"],
+  "properties": {
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "components": { "type": "object", "required": ["total", "byStatus"], "properties": { "total": { "type": "number" }, "byStatus": { "type": "object", "additionalProperties": { "type": "number" } } } },
+    "figma": { "type": "object", "additionalProperties": { "type": "number" } },
+    "tokens": { "type": "object", "required": ["defined"], "properties": { "defined": { "type": "number" } } },
+    "healthScore": { "type": ["number", "null"] },
+    "evals": { "type": "object", "required": ["generations", "passRate", "promptsCovered", "globalChecks"], "properties": { "generations": { "type": "number" }, "passRate": { "type": ["number", "null"] }, "promptsCovered": { "type": "number" }, "globalChecks": { "type": "array" } } },
+    "governance": { "type": "object", "description": "Decision coverage: contracts that state rationale, neverUseFor and governance boundaries.", "properties": { "total": { "type": "number" }, "complete": { "type": "number" }, "rate": { "type": ["number", "null"] }, "incomplete": { "type": "array", "items": { "type": "string" } } } },
+    "weekly": { "type": "object" },
+    "changes": { "type": "array" }
+  }
+}

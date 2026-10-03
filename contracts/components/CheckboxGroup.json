@@ -12,6 +12,20 @@
     "Large option sets or anything needing search — use a multi-select instead"
   ],
 
+  "rationale": "CheckboxGroup renders a native fieldset/legend around independent Checkbox inputs, so the group label is announced for free (1.3.1). It inherits Checkbox's single 16px control unchanged and is meant for small visible sets; anything large or searchable belongs in MultiSelect.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Define the options, legend and helper text per usage",
+      "Choose a vertical or horizontal arrangement from the documented props"
+    ],
+    "mustEscalateToDS": [
+      "Replacing fieldset/legend with non-semantic wrappers",
+      "Adding search, select-all or other large-set behaviors",
+      "Changing the spacing between options"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus", "active"],
     "authored": [
@@ -65,5 +79,20 @@
     "role": "group (native fieldset/legend + independent checkbox inputs)",
     "keyboardNav": ["Tab — moves focus between options and into/out of the group", "Space — toggles the focused option"],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": ["default", "invalid", "disabled"],
+    "properties": [
+      { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
+      { "name": "state", "type": "VARIANT", "values": ["default", "invalid", "disabled"], "figmaOnly": true, "description": "The group's invalid/disabled props, passed down to every option (hover/focus live on each Checkbox)." },
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "required", "type": "BOOLEAN", "codeProp": "required", "description": "Shows the danger * after the legend (2px apart)." },
+      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: indented 24px (16px box + 8px) to line up with the option text." },
+      { "name": "description text", "type": "TEXT", "codeProp": "description" },
+      { "name": "errorMessage", "type": "BOOLEAN", "codeProp": "errorMessage", "description": "Show/hide part: same indent; code shows it instead of the description." },
+      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+    ],
+    "structure": "checkbox-group (8px gap) > checkbox-group-legend, checkbox-group-options (12px gap, real Checkbox instances), description, error. Options are a fixed sample of three — options[] has no Figma property."
   }
 }

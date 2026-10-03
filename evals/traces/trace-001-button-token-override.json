@@ -1,0 +1,20 @@
+{
+  "id": "trace-001-button-token-override",
+  "timestamp": "2026-10-03T19:40:00.000Z",
+  "source": "consumer-ci-failure",
+  "appName": "billing-dashboard",
+  "prompt": "Create a compact action button inside a dense table row for exporting invoices.",
+  "generatedCode": "import { Button } from '@helix-ds/core';\n\nexport function ExportButton({ onExport }: { onExport: () => void }) {\n  return (\n    <button \n      style={{ height: '18px', backgroundColor: '#1d4ed8', color: '#fff', borderRadius: '4px' }}\n      onClick={onExport}\n    >\n      Export\n    </button>\n  );\n}",
+  "errorDetails": [
+    "Failed verify:tokens — Hardcoded CSS values (#1d4ed8, 18px) instead of Helix semantic tokens",
+    "Failed prop-map-check — Used raw HTML <button> and onClick instead of Helix Button and onPress",
+    "Failed governance check — Attempted to redefine button primitives inline without // [CUSTOM] tag"
+  ],
+  "governanceAnalysis": {
+    "canIt": false,
+    "shouldIt": false,
+    "mayIt": false,
+    "violationCategory": "primitive-bypass",
+    "recommendedFix": "Use <Button variant=\"secondary\" size=\"s\" onPress={onExport}>Export</Button>"
+  }
+}

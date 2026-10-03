@@ -30,5 +30,12 @@
     "hypothesis": "Agents add checked= because AGENTS.md calls Chip a 'selectable label'",
     "createdAt": "2026-10-03T09:19:06.285Z",
     "commit": "802a561-dirty"
+  },
+  {
+    "id": "agents-props",
+    "description": "AGENTS.md copy + a props block per component generated from the contracts via helix-query-lib (the pnpm helix CLI)",
+    "hypothesis": "Outside the repo agents invent props because AGENTS.md doesn't list them",
+    "createdAt": "2026-10-03T14:19:30.983Z",
+    "commit": "9fe5def-dirty"
   }
 ]

@@ -19,7 +19,7 @@ type Story = StoryObj;
 type ColorToken = { $value: string; $type: string; $description?: string };
 type ColorGroup = Record<string, ColorToken>;
 const semanticColor = tokensJson.semantic.color as unknown as {
-  fill: ColorGroup; text: ColorGroup; icon: ColorGroup; border: ColorGroup;
+  fill: ColorGroup; text: ColorGroup; icon: ColorGroup; border: ColorGroup; chart: ColorGroup;
 };
 
 function primitiveRef(value: string): string {
@@ -61,12 +61,14 @@ function ThemeToggle({ children }: { children: (theme: 'light' | 'dark', hexes: 
 
 // ── Swatch preview (small, per row) ──────────────────────────────────────
 
-function SwatchPreview({ kind, varName }: { kind: 'fill' | 'text' | 'icon' | 'border'; varName: string }) {
+type ColorKind = 'fill' | 'text' | 'icon' | 'border' | 'chart';
+
+function SwatchPreview({ kind, varName }: { kind: ColorKind; varName: string }) {
   const box: React.CSSProperties = {
     width: 32, height: 32, borderRadius: 6, flexShrink: 0,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   };
-  if (kind === 'fill') {
+  if (kind === 'fill' || kind === 'chart') {
     return <div style={{ ...box, background: `var(${varName})`, border: '1px solid var(--helix-color-border-neutral-light)' }} />;
   }
   if (kind === 'border') {
@@ -101,7 +103,7 @@ const tdStyle: React.CSSProperties = {
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
 
-function ColorTable({ kind, tokens, hexes }: { kind: 'fill' | 'text' | 'icon' | 'border'; tokens: ColorGroup; hexes: Record<string, string> }) {
+function ColorTable({ kind, tokens, hexes }: { kind: ColorKind; tokens: ColorGroup; hexes: Record<string, string> }) {
   return (
     <table style={{
       width: '100%', borderCollapse: 'collapse', marginTop: 24, marginBottom: 36,
@@ -160,6 +162,8 @@ export const Color: Story = {
           <ColorTable kind="icon" tokens={semanticColor.icon} hexes={hexes} />
           <SectionHead title="Border" />
           <ColorTable kind="border" tokens={semanticColor.border} hexes={hexes} />
+          <SectionHead title="Chart" />
+          <ColorTable kind="chart" tokens={semanticColor.chart} hexes={hexes} />
         </div>
       )}</ThemeToggle>
     </div>

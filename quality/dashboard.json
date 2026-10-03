@@ -1,0 +1,198 @@
+{
+  "generatedAt": "2026-10-03T20:16:14.256Z",
+  "sources": {
+    "stabilityGeneratedAt": "2026-10-03T20:15:34.807Z",
+    "evalRuns": 181,
+    "lastEvalRunAt": "2026-10-03T14:20:54.056Z",
+    "weeklyEvalRuns": 181,
+    "improvementRecords": 0,
+    "unscoredComponents": []
+  },
+  "components": {
+    "total": 33,
+    "byStatus": {
+      "draft": 0,
+      "beta": 15,
+      "stable": 18
+    },
+    "failedCriteria": [
+      {
+        "id": "contract",
+        "label": "Contract",
+        "failed": 0
+      },
+      {
+        "id": "types",
+        "label": "Types",
+        "failed": 0
+      },
+      {
+        "id": "tokens",
+        "label": "Tokens",
+        "failed": 0
+      },
+      {
+        "id": "stories",
+        "label": "Stories",
+        "failed": 0
+      },
+      {
+        "id": "keyboard",
+        "label": "Keyboard",
+        "failed": 0
+      },
+      {
+        "id": "contrast",
+        "label": "Contrast",
+        "failed": 0
+      },
+      {
+        "id": "motion",
+        "label": "Motion",
+        "failed": 0
+      },
+      {
+        "id": "eval",
+        "label": "Eval",
+        "failed": 0
+      }
+    ]
+  },
+  "figma": {
+    "synced": 18,
+    "stale": 2,
+    "missing": 13
+  },
+  "tokens": {
+    "defined": 762
+  },
+  "evals": {
+    "generations": 181,
+    "passRate": 0.6298342541436464,
+    "promptsCovered": 30,
+    "globalChecks": [
+      {
+        "id": "hardcoded-color",
+        "label": "Hardcoded color (#hex, rgb(), hsl())",
+        "failed": 0,
+        "rate": 0
+      },
+      {
+        "id": "hardcoded-size",
+        "label": "Hardcoded px/rem value",
+        "failed": 3,
+        "rate": 0.016574585635359115
+      },
+      {
+        "id": "inline-style",
+        "label": "Inline style={{…}}",
+        "failed": 25,
+        "rate": 0.13812154696132597
+      },
+      {
+        "id": "raw-icon",
+        "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
+        "failed": 0,
+        "rate": 0
+      },
+      {
+        "id": "icon-element-prop",
+        "label": "icon={<IconXxx />} instead of icon={IconXxx}",
+        "failed": 2,
+        "rate": 0.011049723756906077
+      },
+      {
+        "id": "on-click",
+        "label": "onClick instead of onPress",
+        "failed": 12,
+        "rate": 0.06629834254143646
+      },
+      {
+        "id": "raw-div",
+        "label": "<div> instead of a Helix layout component",
+        "failed": 23,
+        "rate": 0.1270718232044199
+      },
+      {
+        "id": "raw-native-control",
+        "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
+        "failed": 1,
+        "rate": 0.0055248618784530384
+      }
+    ]
+  },
+  "governance": {
+    "total": 33,
+    "complete": 33,
+    "rate": 1,
+    "incomplete": []
+  },
+  "healthScore": 0.7350326469110999,
+  "healthScoreBreakdown": {
+    "componentReadiness": 0.5454545454545454,
+    "figmaAlignment": 0.5454545454545454,
+    "agentReliability": 0.6298342541436464,
+    "ruleCompliance": 0.9544198895027624,
+    "governanceCoverage": 1
+  },
+  "weekly": {
+    "from": "2026-09-26",
+    "to": "2026-10-03",
+    "evals": {
+      "generations": 181,
+      "passRate": 0.6298342541436464,
+      "promptsCovered": 30,
+      "globalChecks": [
+        {
+          "id": "hardcoded-color",
+          "label": "Hardcoded color (#hex, rgb(), hsl())",
+          "failed": 0,
+          "rate": 0
+        },
+        {
+          "id": "hardcoded-size",
+          "label": "Hardcoded px/rem value",
+          "failed": 3,
+          "rate": 0.016574585635359115
+        },
+        {
+          "id": "inline-style",
+          "label": "Inline style={{…}}",
+          "failed": 25,
+          "rate": 0.13812154696132597
+        },
+        {
+          "id": "raw-icon",
+          "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
+          "failed": 0,
+          "rate": 0
+        },
+        {
+          "id": "icon-element-prop",
+          "label": "icon={<IconXxx />} instead of icon={IconXxx}",
+          "failed": 2,
+          "rate": 0.011049723756906077
+        },
+        {
+          "id": "on-click",
+          "label": "onClick instead of onPress",
+          "failed": 12,
+          "rate": 0.06629834254143646
+        },
+        {
+          "id": "raw-div",
+          "label": "<div> instead of a Helix layout component",
+          "failed": 23,
+          "rate": 0.1270718232044199
+        },
+        {
+          "id": "raw-native-control",
+          "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
+          "failed": 1,
+          "rate": 0.0055248618784530384
+        }
+      ]
+    }
+  },
+  "changes": []
+}

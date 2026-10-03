@@ -1,0 +1,20 @@
+{
+  "id": "trace-002-missing-custom-annotation",
+  "timestamp": "2026-10-03T19:40:30.000Z",
+  "source": "agent-execution",
+  "appName": "analytics-portal",
+  "prompt": "Create a custom filter dropdown for selecting date ranges with preset shortcuts.",
+  "generatedCode": "import React from 'react';\n\nexport function DateRangePresets({ onSelect }: { onSelect: (preset: string) => void }) {\n  return (\n    <div className=\"flex gap-2 p-2 bg-gray-100 rounded\">\n      <button onClick={() => onSelect('7d')}>Last 7 days</button>\n      <button onClick={() => onSelect('30d')}>Last 30 days</button>\n    </div>\n  );\n}",
+  "errorDetails": [
+    "Failed component-inventory check — Created custom component without checking Helix Select/SegmentedControl first",
+    "Failed governance check — Custom component lacks mandatory '// [CUSTOM] reason' header comment",
+    "Failed token-usage check — Used Tailwind primitives (bg-gray-100) instead of var(--helix-color-fill-secondary)"
+  ],
+  "governanceAnalysis": {
+    "canIt": false,
+    "shouldIt": false,
+    "mayIt": false,
+    "violationCategory": "missing-custom-annotation",
+    "recommendedFix": "Use Helix SegmentedControl or add '// [CUSTOM] Specific date preset bar' comment with Helix tokens."
+  }
+}

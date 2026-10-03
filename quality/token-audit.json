@@ -1,0 +1,216 @@
+{
+  "generatedAt": "2026-10-03T20:16:14.238Z",
+  "commit": "9fe5def",
+  "totals": {
+    "tokenRefs": 20,
+    "hardcodedColors": 0,
+    "hardcodedDimensions": 81,
+    "componentsWithGaps": 20,
+    "coverage": 0.19801980198019803
+  },
+  "components": [
+    {
+      "component": "Accordion",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0
+    },
+    {
+      "component": "Avatar",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "AvatarGroup",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "Badge",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 13,
+      "coverage": 0
+    },
+    {
+      "component": "Button",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 7,
+      "coverage": 0
+    },
+    {
+      "component": "Card",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0
+    },
+    {
+      "component": "Chart",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "Checkbox",
+      "tokenRefs": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0.3333333333333333
+    },
+    {
+      "component": "CheckboxGroup",
+      "tokenRefs": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": 1
+    },
+    {
+      "component": "Chip",
+      "tokenRefs": 16,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": 1
+    },
+    {
+      "component": "ChipGroup",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "coverage": 0
+    },
+    {
+      "component": "FAB",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 5,
+      "coverage": 0
+    },
+    {
+      "component": "Icon",
+      "tokenRefs": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 9,
+      "coverage": 0.1
+    },
+    {
+      "component": "IconButton",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 4,
+      "coverage": 0
+    },
+    {
+      "component": "Input",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 4,
+      "coverage": 0
+    },
+    {
+      "component": "Menu",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 3,
+      "coverage": 0
+    },
+    {
+      "component": "Modal",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 5,
+      "coverage": 0
+    },
+    {
+      "component": "MultiSelect",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 6,
+      "coverage": 0
+    },
+    {
+      "component": "NavItem",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0
+    },
+    {
+      "component": "RadioButton",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "RadioGroup",
+      "tokenRefs": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "coverage": 0.5
+    },
+    {
+      "component": "SegmentedControl",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "Select",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 7,
+      "coverage": 0
+    },
+    {
+      "component": "SidePanel",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0
+    },
+    {
+      "component": "Switch",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 3,
+      "coverage": 0
+    },
+    {
+      "component": "Table",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    },
+    {
+      "component": "Textarea",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "coverage": 0
+    },
+    {
+      "component": "Toast",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "coverage": 0
+    },
+    {
+      "component": "Tooltip",
+      "tokenRefs": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "coverage": null
+    }
+  ]
+}

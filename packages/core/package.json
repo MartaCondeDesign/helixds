@@ -2,34 +2,41 @@
   "name": "@helix-ds/core",
   "version": "0.1.0",
   "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
-  "main":    "./dist/index.js",
-  "module":  "./dist/index.js",
-  "types":   "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".":            { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
     "./globals.css": "./src/globals.css"
   },
-  "files": ["dist", "src/globals.css"],
+  "files": [
+    "dist",
+    "src/globals.css"
+  ],
   "scripts": {
-    "build":     "tsc --project tsconfig.json",
-    "dev":       "tsc --watch --project tsconfig.json",
+    "build": "tsc --project tsconfig.json",
+    "dev": "tsc --watch --project tsconfig.json",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react":     ">=19.0.0",
+    "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },
   "dependencies": {
-    "@helix-ds/tokens":      "workspace:*",
-    "@tabler/icons-react":   "^3.0.0",
+    "@helix-ds/tokens": "workspace:*",
+    "@tabler/icons-react": "^3.0.0",
     "class-variance-authority": "^0.7.0",
-    "clsx":                  "^2.1.0",
-    "motion":                "13.2.0",
-    "tailwind-merge":        "^2.5.0"
+    "clsx": "^2.1.0",
+    "echarts": "^6.1.0",
+    "motion": "13.2.0",
+    "tailwind-merge": "^2.5.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript":   "*"
+    "typescript": "*"
   }
 }

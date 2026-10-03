@@ -9,6 +9,20 @@
     "Long text labels — chips are compact by design",
     "Destructive confirmation flows — use a Button pair instead"
   ],
+
+  "rationale": "Chip uses a local density model (s 24px / m 32px) instead of the control ladder so a Chip s sits exactly 4px inside a 32px field like MultiSelect (ADR-019). Its off-scale 6px icon gap is split into 4px + 2px scale tokens, and it renders as a real button so Enter/Space activation is native.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the label, icon and dismiss behavior per usage",
+      "Wire selection or removal to product state"
+    ],
+    "mustEscalateToDS": [
+      "New chip sizes or changes to the 24/32px heights",
+      "New color variants or overriding spacing tokens",
+      "Using Chip for primary actions or destructive confirmations"
+    ]
+  },
   "states": {
     "intrinsic": [
       "hover",

@@ -12,6 +12,20 @@
     "Scrollable content — TopBar is fixed chrome, never part of the scrolling main area"
   ],
 
+  "rationale": "TopBar is fixed chrome at 56px — past the ADR-004 control scale's 48px top rung, so it aliases the next primitive rung and is documented in component-token-exceptions.md. It hosts search, global actions and the current user, never the page title or the primary navigation.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the search, quick actions and user menu content",
+      "Compose Helix IconButtons and Avatars in its slots"
+    ],
+    "mustEscalateToDS": [
+      "Changing the 56px height or making it scroll",
+      "Moving primary navigation or the page title into TopBar",
+      "Adding new regions or background tokens"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

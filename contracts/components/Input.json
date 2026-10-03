@@ -9,6 +9,21 @@
     "File uploads — use FileInput",
     "Date/time entry — use DatePicker"
   ],
+
+  "rationale": "Input wraps a native <input> and sits on the shared field scale (24/32/40px) so it aligns with Select and Textarea in any form. Label, helper and error text are wired through the component so 3.3.1 and 3.3.2 hold by default, and width is hug or fill — never a tokenized fixed width.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the input type, label, placeholder and helper text",
+      "Add product validation and error messages through the documented props",
+      "Set fill/hug width for the layout"
+    ],
+    "mustEscalateToDS": [
+      "New sizes or off-scale heights",
+      "Changing border, focus-ring or error tokens",
+      "Adding multi-line, date or file behaviors to Input"
+    ]
+  },
   "states": {
     "intrinsic": [
       "hover",

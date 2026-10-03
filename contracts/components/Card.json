@@ -12,6 +12,20 @@
     "Page-level layout structure — use AppShell for the page shell; Card is a content container, not a layout primitive"
   ],
 
+  "rationale": "Card is a flat content container: per ADR-005 it never uses shadow, because a shadow reads as 'this floats' and Card sits inline in the page. Its width is decided by the consumer's layout, and it groups content without implying a landmark, so it composes into dashboards and settings without competing with Modal or AppShell.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Compose any Helix content in the header and body slots",
+      "Lay Cards out in product-defined grids or flex rows"
+    ],
+    "mustEscalateToDS": [
+      "Adding box-shadow or elevation to Card or anything composed from it",
+      "New padding/radius variants or overriding the border tokens",
+      "Using Card as a dialog surface or page shell"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

@@ -12,6 +12,20 @@
     "Anything the user needs to refer back to later — Toast auto-dismisses and doesn't persist"
   ],
 
+  "rationale": "Toast is triggered imperatively (toast.success('Saved')) instead of rendered conditionally (ADR-011), so feedback can be raised from anywhere. Toasts stack top-right at a fixed 340px width in an aria-live='polite' region, and focus inside a toast pauses auto-dismiss — which is why it's never used for anything the user must act on.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Write the message and pick the documented tone (success, error, ...)",
+      "Raise toasts from any product event through the imperative toast API"
+    ],
+    "mustEscalateToDS": [
+      "Changing the position, width or stacking behavior",
+      "Using Toast for blocking decisions or form validation",
+      "Adding action buttons, custom durations or persistent toasts"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover"],
     "authored": []
@@ -50,5 +64,16 @@
       "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?) — the description may also be passed Sonner-style as { description }), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own. Calling toast.* with no <Toast /> mounted logs a console warning (nothing would be shown).",
       "Stacking depth (max 3 visible) and hover-to-spread use real measured pixel heights (offsetHeight), not percentage-based transforms — a percentage approach was tried and broken in the pre-implementation preview by two toasts of different heights; see ADR-011."
     ]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "variant", "type": "VARIANT", "values": ["neutral", "info", "success", "warning", "danger"], "codeProp": "variant", "description": "Sets the filled icon (InfoCircleFilled, CircleCheckFilled, AlertTriangleFilled, AlertHexagonFilled — added to the Icons page) and its color, toast.icon.{variant}." },
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 2px top (spacing/3xs)." },
+      { "name": "description text", "type": "TEXT", "codeProp": "description" }
+    ],
+    "structure": "One toast: 340px, 16px padding, 12px gap, radius/l, fill/page, shadow / xl; filled icon 24px; title 12/18 bold (no text style — bound to fontSize/s, fontWeight/bold, lineHeight/s); description Body / s / Regular; IconButton ghost s (X) to dismiss. Stacking, peek and spread are runtime motion, not modeled."
   }
 }

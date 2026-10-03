@@ -13,7 +13,7 @@ Our signup form needs the user to tell us which country they live in — Spain, 
 
 # Success criteria
 
-- [ ] Imports `Select` from `@helix-ds/core`
+- [ ] Imports from `@helix-ds/core` and uses (any of `Select`, `RadioGroup`) — with only 3 options a radio group is a fair choice, and both share the props below
 - [ ] Passes `options` as the list of choices (not `items` or `choices`)
 - [ ] Uses `onChange` for value updates
 - [ ] Uses `invalid` prop for the error state (not `hasError` or `isError`)

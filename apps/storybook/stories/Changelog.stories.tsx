@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useMemo, useState } from 'react';
 import { IconSearch, IconCalendar } from '@tabler/icons-react';
-import { Badge, Chip, Input, Select } from '@helix-ds/core';
-import type { BadgeVariant, ChipVariant } from '@helix-ds/core';
+import { Badge, Input, MultiSelect, Select } from '@helix-ds/core';
+import type { BadgeVariant } from '@helix-ds/core';
 import { StoryHeader } from './_shared/StoryHeader';
 import changelog from '../../../.ai/maps/changelog.json';
 
@@ -24,10 +24,9 @@ type Story = StoryObj;
 
 type Bump = 'major' | 'minor' | 'patch';
 
-// Badge and Chip share the same variant enum (neutral/info/success/warning/danger), so one
-// variant per bump drives both: Badge for the static per-commit label, Chip for the
-// toggleable filter (Chip is the interactive/selectable one — Badge never is).
-const BUMP_META: Record<Bump, { label: string; variant: BadgeVariant & ChipVariant }> = {
+// Badge variant for each bump's per-commit label. The bump filter is a MultiSelect — Chip has no
+// selected state (see Chip.json), so it can't be a toggleable filter.
+const BUMP_META: Record<Bump, { label: string; variant: BadgeVariant }> = {
   major: { label: 'Major', variant: 'danger' },
   minor: { label: 'Minor', variant: 'warning' },
   patch: { label: 'Patch', variant: 'info' },
@@ -44,7 +43,7 @@ function formatDate(iso: string): string {
 
 function ChangelogPage() {
   const [query, setQuery] = useState('');
-  const [bumpFilter, setBumpFilter] = useState<Record<Bump, boolean>>({ major: true, minor: true, patch: true });
+  const [bumpFilter, setBumpFilter] = useState<string[]>([]);
   const [dateFilter, setDateFilter] = useState(''); // '' = all dates, native <input type="date"> semantics
   const [authorFilter, setAuthorFilter] = useState(ALL_AUTHORS);
 
@@ -65,7 +64,7 @@ function ChangelogPage() {
     .map(day => ({
       ...day,
       commits: day.commits.filter(c =>
-        bumpFilter[c.bump as Bump]
+        (bumpFilter.length === 0 || bumpFilter.includes(c.bump))
         && (authorFilter === ALL_AUTHORS || c.author === authorFilter)
         && (q === '' || c.subject.toLowerCase().includes(q) || c.hash.includes(q)),
       ),
@@ -87,13 +86,11 @@ function ChangelogPage() {
         color: 'var(--helix-color-text-neutral-lightest)',
       }}>
         Major/Minor/Patch is a keyword guess from the commit message, not a real semver signal —
-        this repo doesn't use conventional-commit prefixes. Click a chip below to filter by it.
+        this repo doesn't use conventional-commit prefixes. Filter by it with the change-type menu below.
       </p>
 
-      {/* Outer row: two groups (filters / chips) pushed to opposite edges via space-between,
-          with `gap` acting as the guaranteed minimum distance between them — once the container
-          gets too narrow to keep 16px between the groups, flexWrap drops chips to their own row
-          instead of shrinking that gap further. */}
+      {/* Filter bar: search, date, contributor and change type in one row, separated from the
+          commit list by a bottom border. */}
       <div style={{
         display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--helix-spacing-m)', flexWrap: 'wrap',
         marginBottom: 'var(--helix-spacing-xl)', paddingBottom: 'var(--helix-spacing-m)',
@@ -144,19 +141,18 @@ function ChangelogPage() {
               onChange={setAuthorFilter}
             />
           </div>
-        </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
-          {(Object.keys(BUMP_META) as Bump[]).map(bump => (
-            <Chip
-              key={bump}
-              variant={BUMP_META[bump].variant}
-              label={`${BUMP_META[bump].label} ${changelog.bumpCounts[bump]}`}
-              checked={bumpFilter[bump]}
-              size="m"
-              onPress={() => setBumpFilter(prev => ({ ...prev, [bump]: !prev[bump] }))}
+          <div style={{ width: 240 }}>
+            <MultiSelect
+              label="Change type"
+              hideLabel
+              placeholder="All change types"
+              options={(Object.keys(BUMP_META) as Bump[]).map(bump => ({ value: bump, label: `${BUMP_META[bump].label} (${changelog.bumpCounts[bump]})` }))}
+              value={bumpFilter}
+              onChange={setBumpFilter}
+              fullWidth
             />
-          ))}
+          </div>
         </div>
       </div>
 

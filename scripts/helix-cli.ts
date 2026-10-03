@@ -1,9 +1,21 @@
 #!/usr/bin/env tsx
-/** Read-only CLI for agents and people querying the Helix design system. */
+/** CLI for agents and people querying the Helix design system. Every query is read-only; only scaffold:custom writes. */
 import { getComponent, getPattern, getToken, listComponents, search } from './helix-query-lib.ts';
+import { scaffoldCustom } from './scaffold-custom.ts';
+import { dashboard } from './helix-dashboard.ts';
 
 type Result = { error?: string; [key: string]: unknown };
 const args = process.argv.slice(2);
+
+if (args[0] === 'scaffold:custom') {
+  scaffoldCustom(args.slice(1));
+  process.exit(0);
+}
+
+if (args[0] === 'dashboard') {
+  dashboard(args.slice(1));
+  process.exit(0);
+}
 const json = args.includes('--json');
 const cleaned = args.filter(arg => arg !== '--json');
 
@@ -16,7 +28,10 @@ Commands:
   token <dot.path>                         Get a semantic token
   pattern <name>                           Get a documented composition pattern
   search <query>                           Search components, patterns, and semantic tokens
-  batch --command "component Button"       Run multiple read-only queries`);
+  batch --command "component Button"       Run multiple read-only queries
+  dashboard                                AI-readiness score, its signals, gaps and data freshness
+  scaffold:custom <Name> --reason "<why>" [--dir <path>]
+                                           Create a local [CUSTOM] component (writes files)`);
   process.exit(1);
 }
 
@@ -44,9 +59,27 @@ function format(result: Result): string {
     item.kind === 'component' ? `${item.name} (${item.status}) — ${item.purpose}` :
     item.kind === 'token' ? `${item.path} = ${item.value}` : `${item.name} — ${item.source}`).join('\n') || 'No results.';
   if ('props' in result) {
-    const component = result as { name: string; purpose: string; props: Array<{ name: string; type: string; required?: boolean; description: string }> };
+    const component = result as {
+      name: string;
+      purpose: string;
+      rationale?: string | null;
+      governance?: { mayExtendLocally?: string[]; mustEscalateToDS?: string[] } | null;
+      props: Array<{ name: string; type: string; required?: boolean; description: string }>;
+    };
     const props = component.props.map(prop => `  ${prop.name}${prop.required ? '' : '?'}: ${prop.type} — ${prop.description}`).join('\n');
-    return `${component.name} — ${component.purpose}\nProps:\n${props || '  None documented.'}`;
+    let out = `${component.name} — ${component.purpose}\nProps:\n${props || '  None documented.'}`;
+    if (component.rationale) {
+      out += `\nRationale:\n  ${component.rationale}`;
+    }
+    if (component.governance) {
+      if (component.governance.mayExtendLocally?.length) {
+        out += `\nGovernance (May extend locally):\n` + component.governance.mayExtendLocally.map(rule => `  ✓ ${rule}`).join('\n');
+      }
+      if (component.governance.mustEscalateToDS?.length) {
+        out += `\nGovernance (Must escalate to DS):\n` + component.governance.mustEscalateToDS.map(rule => `  ! ${rule}`).join('\n');
+      }
+    }
+    return out;
   }
   if ('cssVariable' in result) return `${result.path} = ${JSON.stringify(result.value)} (${result.cssVariable})`;
   if ('guidance' in result) return String(result.guidance);

@@ -1,0 +1,28 @@
+{
+  "$schema": "../component.schema.json",
+  "name": "Chart",
+  "version": "1.0.0",
+  "status": "beta",
+  "purpose": "Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events.",
+  "neverUseFor": ["Raw ECharts options or a product-specific chart renderer", "Precise audit values without an accompanying Table", "More than six donut categories"],
+
+  "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the chart type and data series from the documented props",
+      "Pair a Chart with a Table for precise audit values",
+      "Compose Charts inside Cards to build dashboards"
+    ],
+    "mustEscalateToDS": [
+      "Passing raw engine options or a product-specific renderer",
+      "Adding new chart types or series colors outside the token palette",
+      "Removing the accessible data table"
+    ]
+  },
+  "states": { "intrinsic": [], "authored": [] },
+  "anatomy": [{ "part": "chart-root", "element": "div", "description": "Token-branded chart container." }, { "part": "chart-canvas", "element": "div", "description": "Apache ECharts canvas with accessible name." }, { "part": "chart-data", "element": "table", "description": "Visually hidden source-data table for non-visual access." }],
+  "props": [{ "name": "variant", "type": "'line' | 'area' | 'bar' | 'stacked-bar' | 'donut' | 'timeline'", "required": true, "description": "Metric relationship to visualize." }, { "name": "categories", "type": "string[]", "required": true, "description": "Ordered labels." }, { "name": "series", "type": "ChartSeries[]", "required": true, "description": "Named numeric series." }, { "name": "label", "type": "string", "required": true, "description": "Accessible chart name." }, { "name": "description", "type": "string | undefined", "description": "Optional accessible takeaway." }, { "name": "height", "type": "number | undefined", "description": "Chart drawing height." }],
+  "tokenPolicy": { "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "shadow", "textStyle"], "forbidden": ["primitive.color"] },
+  "a11y": { "role": "img with labelled data table", "wcag": ["1.1.1 Non-text Content", "1.4.1 Use of Color", "1.4.3 Contrast (AA)"] }
+}

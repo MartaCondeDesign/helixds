@@ -12,6 +12,20 @@
     "A single standalone link inside body text — use a plain <a>, styled separately"
   ],
 
+  "rationale": "NavItem is a native <a href> so links behave like links — middle-click, open in new tab, correct link role — instead of a button that navigates. It's the only allowed entry inside SideNav, and its active-state motion follows the shared motion engine (ADR-007).",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the label, icon, href and active state",
+      "Set target/rel explicitly for external links"
+    ],
+    "mustEscalateToDS": [
+      "Using NavItem to trigger actions instead of navigating",
+      "Adding new visual variants or nested/expandable items",
+      "Changing the active-state indicator or its motion"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [

@@ -43,6 +43,26 @@
       },
       "description": "Anti-patterns: what this component must never be used for."
     },
+    "rationale": {
+      "type": "string",
+      "description": "Architectural rationale: why key decisions, constraints, or trade-offs were made."
+    },
+    "governance": {
+      "type": "object",
+      "description": "Decision authority boundaries: what agents/consumers may extend locally vs what must escalate to Helix DS.",
+      "properties": {
+        "mayExtendLocally": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Permitted local customizations using // [CUSTOM] reason."
+        },
+        "mustEscalateToDS": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Changes that alter shared contracts and must escalate to a Helix DS proposal/ADR."
+        }
+      }
+    },
     "states": {
       "type": "object",
       "properties": {

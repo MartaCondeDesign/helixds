@@ -12,6 +12,20 @@
     "Animated icons — Tabler outline icons are static; wrap in a motion component if animation is needed"
   ],
 
+  "rationale": "Every Tabler icon renders through Icon so size, stroke, color and aria-hidden are decided once instead of at each call site, which is how components drifted before. Stroke is derived from size by the stroke rule (ADR-017), the icon set is swappable (ADR-014), and Icon is always supplemental to text — accessibility lives at the usage site.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Pick any Tabler icon component reference for a given usage",
+      "Choose a size from the documented scale and an icon-* color token"
+    ],
+    "mustEscalateToDS": [
+      "Passing stroke to change icon weight (edit ICON_STROKE_PX_BY_SIZE instead)",
+      "Rendering a raw <IconXxx> outside the Icon component",
+      "Adding new sizes, custom SVG sets or animated icons"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

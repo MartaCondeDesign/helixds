@@ -45,9 +45,9 @@ const preview: Preview = {
 
   parameters: {
     options: {
-      // Sidebar order: Getting Started → Changelog → Status → Foundation → Icons → Components → Patterns → Pages
+      // Sidebar order: Getting Started → Data (Metrics, Status) → Changelog → Foundation → Icons → Components → Patterns → Pages
       storySort: {
-        order: ['Getting Started', 'Changelog', 'Status', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages'],
+        order: ['Getting Started', 'Data', 'Changelog', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages'],
       },
     },
     // Background is driven by the theme switcher via CSS vars (--helix-color-fill-page).

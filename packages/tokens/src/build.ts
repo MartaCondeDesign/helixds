@@ -133,7 +133,6 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-text-link-hover': '#93c5fd',
   '--helix-color-icon-neutral':     '#f1f5f9',
   '--helix-color-icon-neutral-light':    '#94a3b8',
-  '--helix-color-icon-neutral-lightest': '#64748b',
   '--helix-color-icon-disabled':         '#475569',
   '--helix-color-icon-primary':          '#93c5fd', // same step as text-primary
   '--helix-color-border-neutral':        '#334155',
@@ -316,6 +315,14 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-icon-success': '#16a34a',
   '--helix-color-icon-warning': '#d97706',
   '--helix-color-icon-danger':  '#ef4444',
+  // semantic — chart series: one step lighter per hue than light mode so every series keeps >=3:1
+  // (non-text, WCAG 1.4.11) on page / surface: 7.02/5.75, 8.31/6.81, 7.83/6.42, 6.45/5.29, 10.71/8.77.
+  // turquoise goes to 300, not 400, to stay clearly apart from blue-400 (ΔE 31).
+  '--helix-color-chart-series-1': '#60a5fa', // blue-400
+  '--helix-color-chart-series-2': '#f59e0b', // orange-500
+  '--helix-color-chart-series-3': '#22c55e', // green-500
+  '--helix-color-chart-series-4': '#f87171', // red-400
+  '--helix-color-chart-series-5': '#7dd3fc', // turquoise-300
 
   '--helix-iconButton-fill-secondary-default': '#1e293b',
   '--helix-iconButton-fill-secondary-hover':   '#334155',

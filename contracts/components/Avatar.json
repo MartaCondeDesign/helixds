@@ -12,6 +12,20 @@
     "Large hero imagery — Avatar is capped at the field/control size scale, never a feature image"
   ],
 
+  "rationale": "Avatar reuses the field scale's semantic.size.{s,m,l} rungs (24/32/40px) instead of a local scale, so it lines up with Inputs, table rows and nav footers without per-use tweaks. It is always a circle and carries identity only — never state — so the accessible name comes from alt/name exactly once and status stays the job of Badge/StatusDot.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Supply any image source or initials fallback per product",
+      "Wrap an Avatar in a Tooltip or link at the usage site"
+    ],
+    "mustEscalateToDS": [
+      "Adding new sizes beyond s/m/l or non-circular shapes",
+      "Overlaying status indicators or borders onto the Avatar itself",
+      "Using Avatar for logos or hero imagery"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

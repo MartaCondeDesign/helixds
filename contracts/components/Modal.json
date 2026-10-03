@@ -12,6 +12,19 @@
     "Simple confirmations that don't need to block the whole page — consider inline UI first"
   ],
 
+  "rationale": "Modal relies on native HTML <dialog> and showModal() (ADR-010) to guarantee focus trapping, Escape key handling, and top-layer browser stacking without custom z-index hacks.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Custom body content composition with forms or step flows",
+      "Custom footer button alignment"
+    ],
+    "mustEscalateToDS": [
+      "Overriding focus-trap or backdrop z-index mechanics",
+      "Replacing native <dialog> with custom absolute divs"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": [
@@ -63,5 +76,18 @@
     "notes": [
       "showCloseButton=false with no footer action leaves the modal with no on-screen dismiss affordance — the component logs a dev-only console.warn in that case (Escape and closeOnBackdropClick, when enabled, still work)."
     ]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      { "name": "content", "type": "TEXT", "codeProp": "children" },
+      { "name": "showCloseButton", "type": "BOOLEAN", "codeProp": "showCloseButton" },
+      { "name": "tertiaryAction", "type": "BOOLEAN", "codeProp": "tertiaryActionLabel", "description": "Ghost Button on the footer's left (rendered when the label is set)." },
+      { "name": "secondaryAction", "type": "BOOLEAN", "codeProp": "secondaryActionLabel" },
+      { "name": "primaryAction", "type": "BOOLEAN", "codeProp": "primaryActionLabel" }
+    ],
+    "structure": "The open dialog (no backdrop): 560px, min-height 400, radius/xl, shadow / xl, fill/page. The header's 72px right padding (closeInset × 2 + the 40px close button, a calc in code) is three nested tokens: 16 (spacing/m) + 40 (spacing/250) + 16 (spacing/m). Close = IconButton ghost l, absolute 16px from the top/right. Footer: Button m instances, 4px apart. Measured identical to code."
   }
 }

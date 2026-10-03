@@ -102,10 +102,18 @@ export function extractCodeBlock(text: string): string {
 interface ClassifiedSpans {
   required: string[]; // must be present
   forbidden: string[]; // must be absent
+  anyOf?: string[]; // at least one must be present
   checkable: boolean;
 }
 
 function classifySpans(line: string): ClassifiedSpans {
+  // "(any of `A`, `B`)" — alternatives: at least one must be present; the rest of the line is parsed as usual
+  const anyOfMatch = line.match(/\(any of[^)]*\)/i);
+  if (anyOfMatch) {
+    const anyOf = [...anyOfMatch[0].matchAll(/`([^`]+)`/g)].map(m => m[1]);
+    return { ...classifySpans(line.replace(anyOfMatch[0], '')), anyOf, checkable: true };
+  }
+
   const allSpans = [...line.matchAll(/`([^`]+)`/g)].map(m => m[1]);
   if (allSpans.length === 0) return { required: [], forbidden: [], checkable: false };
 
@@ -155,11 +163,12 @@ function matchesSpan(code: string, span: string): boolean {
 }
 
 function scoreSuccessCriterion(line: string, code: string): CriterionResult {
-  const { required, forbidden, checkable } = classifySpans(line);
+  const { required, forbidden, anyOf, checkable } = classifySpans(line);
   if (!checkable) return { text: line, pass: null };
   const requiredOk = required.every(s => matchesSpan(code, s));
   const forbiddenOk = forbidden.every(s => !matchesSpan(code, s));
-  return { text: line, pass: requiredOk && forbiddenOk };
+  const anyOfOk = !anyOf || anyOf.some(s => matchesSpan(code, s));
+  return { text: line, pass: requiredOk && forbiddenOk && anyOfOk };
 }
 
 function scoreInvalidPattern(line: string, code: string): CriterionResult {

@@ -12,6 +12,20 @@
     "Large option catalogs with search - use Combobox"
   ],
 
+  "rationale": "Select is a select-only combobox on a <button> plus the Menu listbox (ADR-013) instead of a native <select>, so the popup can be styled with tokens. It has one fixed 32px height (semantic.size.m) on purpose, so the trigger and its 32px Menu rows read as one aligned scale.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Provide the options, label, placeholder and helper text",
+      "Control the value and validation from product logic"
+    ],
+    "mustEscalateToDS": [
+      "Adding a size prop or new heights",
+      "Adding search or multi-select (use Combobox/MultiSelect)",
+      "Replacing the combobox/listbox keyboard model"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus"],
     "authored": [

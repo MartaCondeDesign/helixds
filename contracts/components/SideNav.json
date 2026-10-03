@@ -12,6 +12,20 @@
     "Anything other than NavItem as its direct nav entries — don't put a Button or a plain <a> among the items"
   ],
 
+  "rationale": "SideNav is the persistent <nav> rail of the app shell with a fixed 224px chrome width — a standalone dimension documented in component-token-exceptions.md. It accepts only NavItems as entries so every app's navigation shares the same link semantics and active styling.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the brand mark, NavItems and footer content",
+      "Group NavItems into product-specific sections"
+    ],
+    "mustEscalateToDS": [
+      "Changing the 224px width or adding a collapsed/mini mode",
+      "Putting Buttons or plain links among the nav entries",
+      "Adding nested multi-level navigation"
+    ]
+  },
+
   "states": {
     "intrinsic": [],
     "authored": []

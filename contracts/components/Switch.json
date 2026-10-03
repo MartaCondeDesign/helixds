@@ -12,6 +12,20 @@
     "Navigation between two views — use Tabs instead"
   ],
 
+  "rationale": "Switch is for settings that apply immediately, exposed with role='switch' so assistive tech announces on/off rather than checked. Track and thumb dimensions are fixed per size (s 16px / m 20px track) by dedicated tokens, not consumer-configurable, so every toggle in the product looks and moves the same.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Write the label and choose size s or m",
+      "Wire the change to product state"
+    ],
+    "mustEscalateToDS": [
+      "Adding sizes or changing track/thumb dimensions",
+      "Using Switch for choices that need confirmation before taking effect",
+      "Changing the thumb motion or color tokens"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus", "active"],
     "authored": [

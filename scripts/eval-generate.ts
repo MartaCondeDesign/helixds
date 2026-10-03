@@ -78,10 +78,24 @@ function generate(promptText: string): Promise<string> {
     child.on('error', err => { clearTimeout(timer); reject(err); });
     child.on('close', code => {
       clearTimeout(timer);
-      if (code !== 0) reject(new Error(`claude exited with code ${code}: ${stderr}`));
+      if (code !== 0) reject(new Error(`claude exited with code ${code}: ${(stderr || stdout).trim().slice(0, 300)}`));
       else resolve(stdout);
     });
   });
+}
+
+// Usage/rate limits surface as a non-zero exit — wait and retry instead of losing the generation.
+async function generateWithRetry(promptText: string, attempts = 3): Promise<string> {
+  for (let i = 1; ; i++) {
+    try {
+      return await generate(promptText);
+    } catch (err) {
+      if (i >= attempts) throw err;
+      const waitS = 30 * i;
+      console.error(`   ↻ retry ${i}/${attempts - 1} in ${waitS}s — ${(err as Error).message}`);
+      await new Promise(r => setTimeout(r, waitS * 1000));
+    }
+  }
 }
 
 function reportOne(result: ScoreResult, rep: number) {
@@ -111,7 +125,7 @@ async function worker() {
   while (jobs.length > 0) {
     const { prompt: p, rep } = jobs.shift()!;
     try {
-      const code = extractCodeBlock(await generate(p.prompt));
+      const code = extractCodeBlock(await generateWithRetry(p.prompt));
       fs.writeFileSync(path.join(candidatesDir, `${p.id}-${rep}.tsx`), code);
 
       const result = scorePrompt(p, code);

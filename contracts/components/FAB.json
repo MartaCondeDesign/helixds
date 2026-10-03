@@ -13,6 +13,20 @@
     "Anything other than the single most important action in the current view — a second FAB on the same screen competes with itself"
   ],
 
+  "rationale": "FAB is a single prominent floating shortcut: it reuses semantic.size.xl (48px) as its one 'm' rung per ADR-004 and is one of the few surfaces allowed a shadow because it genuinely floats (ADR-005). It must never be the only path to an action, and the speed-dial is capped at 1-3 related actions.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the icon, accessible label and 1-3 speed-dial actions",
+      "Decide which views show a FAB"
+    ],
+    "mustEscalateToDS": [
+      "Adding sizes, extended (text) FABs or more than three actions",
+      "Making FAB the only way to reach an action",
+      "Adding toggle/pressed state or changing its position model"
+    ]
+  },
+
   "states": {
     "intrinsic": ["hover", "focus", "active"],
     "authored": [
@@ -78,5 +92,14 @@
       "1.4.3 Contrast (AA)",
       "2.1.1 Keyboard"
     ]
+  },
+
+  "figma": {
+    "states": ["default", "hover", "press", "focus", "disabled"],
+    "properties": [
+      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded", "description": "true = the speed dial open: actions stacked above the trigger, 8px apart (code's baseOffset/step), the trigger icon turned 45°. Only state=default exists for it — a disabled FAB can't open." },
+      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "press", "focus", "disabled"], "figmaOnly": true, "description": "hover/press/focus are CSS; disabled = the `disabled` prop — fill/disabled + icon/disabled, no shadow (no opacity)." }
+    ],
+    "structure": "fab-root 48px (size/xl, radius/full, fill/primary, shadow / m, 20px icon) and fab-action 36px (fill/page, 1px border/neutral in the layout, shadow / s, 16px icon). Icons are swapped per instance (icon / actions[].icon)."
   }
 }

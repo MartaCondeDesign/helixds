@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-10-03T20:16:14.238Z",
+  "commit": "9fe5def",
+  "components": {
+    "Accordion": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0
+    },
+    "Avatar": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "AvatarGroup": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "Badge": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 13,
+      "tokenCoverage": 0
+    },
+    "Button": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 7,
+      "tokenCoverage": 0
+    },
+    "Card": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0
+    },
+    "Chart": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "Checkbox": {
+      "tokenReferences": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0.3333333333333333
+    },
+    "CheckboxGroup": {
+      "tokenReferences": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": 1
+    },
+    "Chip": {
+      "tokenReferences": 16,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": 1
+    },
+    "ChipGroup": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "tokenCoverage": 0
+    },
+    "FAB": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 5,
+      "tokenCoverage": 0
+    },
+    "Icon": {
+      "tokenReferences": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 9,
+      "tokenCoverage": 0.1
+    },
+    "IconButton": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 4,
+      "tokenCoverage": 0
+    },
+    "Input": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 4,
+      "tokenCoverage": 0
+    },
+    "Menu": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 3,
+      "tokenCoverage": 0
+    },
+    "Modal": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 5,
+      "tokenCoverage": 0
+    },
+    "MultiSelect": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 6,
+      "tokenCoverage": 0
+    },
+    "NavItem": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0
+    },
+    "RadioButton": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "RadioGroup": {
+      "tokenReferences": 1,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "tokenCoverage": 0.5
+    },
+    "SegmentedControl": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "Select": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 7,
+      "tokenCoverage": 0
+    },
+    "SidePanel": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0
+    },
+    "Switch": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 3,
+      "tokenCoverage": 0
+    },
+    "Table": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    },
+    "Textarea": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 2,
+      "tokenCoverage": 0
+    },
+    "Toast": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 1,
+      "tokenCoverage": 0
+    },
+    "Tooltip": {
+      "tokenReferences": 0,
+      "hardcodedColors": 0,
+      "hardcodedDimensions": 0,
+      "tokenCoverage": null
+    }
+  }
+}

@@ -9,6 +9,20 @@
     "The primary CTA of a view — a labelled Button reads with more intent and is easier to scan for",
     "A toggle/pressed state (e.g. bold/italic in a toolbar) — that needs aria-pressed and a distinct on/off visual, neither of which IconButton models; compose a dedicated toggle control instead"
   ],
+
+  "rationale": "IconButton shares Button's exact height scale (ADR-004) by aliasing the same semantic.size rungs, so an icon-only action always lines up with a labelled Button beside it. Because there is no visible text, the accessible label is required by the type system (4.1.2), and it's limited to universally recognizable icons.",
+
+  "governance": {
+    "mayExtendLocally": [
+      "Choose the icon, label and variant per usage",
+      "Wrap it in a Tooltip that repeats the label"
+    ],
+    "mustEscalateToDS": [
+      "Making the label optional or new sizes outside s/m/l",
+      "Adding toggle/pressed state",
+      "Overriding padding, radius or color tokens"
+    ]
+  },
   "states": {
     "intrinsic": ["hover", "focus", "active", "disabled"],
     "authored": ["loading"]
