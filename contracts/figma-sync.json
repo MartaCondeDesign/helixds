@@ -279,9 +279,24 @@
       "figmaNodeId": "328:26",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-08-25",
-      "notes": "Built 2026-08-25 on its own Figma page (\"PageHeader\") — level 1/2 x actions true/false (4 total), matching PageHeaderLevel and the optional `actions` prop. Title uses \"Heading / 2xl / Bold\" (level 1, 32px) vs \"Heading / xl / Bold\" (level 2, 24px) real text styles — verified via API (fontSize 32 vs 24, distinct textStyleId), not just eyeballed off a screenshot. Description uses \"Body / s / Regular\". Actions slot is a stubbed action-button shape (not a real Button instance — out of scope to nest a full component here) shown only on actions=true. Properties: label (TEXT, title) and description (TEXT).",
-      "compSetId": "328:26"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-25 on its own Figma page (\"PageHeader\") — level 1/2 x actions true/false (4 total), matching PageHeaderLevel and the optional `actions` prop. Title uses \"Heading / 2xl / Bold\" (level 1, 32px) vs \"Heading / xl / Bold\" (level 2, 24px) real text styles — verified via API (fontSize 32 vs 24, distinct textStyleId), not just eyeballed off a screenshot. Description uses \"Body / s / Regular\". Actions slot is a stubbed action-button shape (not a real Button instance — out of scope to nest a full component here) shown only on actions=true. Properties: label (TEXT, title) and description (TEXT). REBUILT 2026-10-03: level (1/2) VARIANT x description BOOLEAN (default true, own 4px top) x actions BOOLEAN (primary Button instance as placeholder, 8px gap); 720px wide; title Heading / 2xl|xl / Bold text/neutral, description Body / s / Regular text/neutral/light; audit passed; Propstar table 435:226. Code changed in the same pass so title/description use the same text styles (line-height 1.2 -> 1.35, dropped the raw -0.02em letter-spacing; description line-height 1.5).",
+      "compSetId": "435:24",
+      "syncedCommit": "17a55e464b75383d8bfa49abf2359ea10b31cdc6",
+      "audit": {
+        "pass": true,
+        "commit": "17a55e464b75383d8bfa49abf2359ea10b31cdc6",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "RadioGroup",

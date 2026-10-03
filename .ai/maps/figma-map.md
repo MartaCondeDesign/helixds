@@ -347,7 +347,7 @@ _No Figma-mappable props._
 - `nav-item-icon`
 - `nav-item-label`
 
-### PageHeader (`v1.0.0`, beta)
+### PageHeader (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
