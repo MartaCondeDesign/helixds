@@ -120,7 +120,7 @@ _No Figma-mappable props._
 - `button-label`
 - `button-icon-end`
 
-### Card (`v1.0.0`, beta)
+### Card (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
