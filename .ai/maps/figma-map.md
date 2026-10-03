@@ -221,7 +221,7 @@ _No Figma-mappable props._
 - `fab-actions`
 - `fab-action`
 
-### Icon (`v1.0.0`, beta)
+### Icon (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

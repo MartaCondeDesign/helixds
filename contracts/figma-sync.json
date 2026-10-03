@@ -209,9 +209,24 @@
       "figmaNodeId": "35:2",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Pre-existing \"Icons\" page (not built this session) — a full Tabler icon library, one component per icon, named by the Tabler name with the \"Icon\" prefix stripped (e.g. \"Plus\" for IconPlus). This IS the Figma equivalent of the Icon wrapper component; no separate size/stroke grid was built since Icon.tsx's size/stroke/color are just instance-level overrides (resize + stroke color), demonstrated in practice by every icon usage across Badge/Button/IconButton. tokensMatch left null: color/stroke overrides are checked per-consumer (e.g. IconButton's own entry), not on the library page itself. REVIEWED 2026-10-02: Icon's contract/types changed (size scale) but the Icons page is the library itself — nothing to update. AUDITED 2026-10-03: 161 icon components, all 24x24, stroke bound to icon/neutral (Theme), no fill — but strokeWeight is 1.5 on every master, not the 1.8 icons-to-figma.md sets for the 24px master. 1.5 is the ADR-017 value for 16/18px, which is what every component instance uses (Button/IconButton/NavItem inherit it, no override), so switching masters to 1.8 would thicken all of them. Pending a decision before recording a passing audit.",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Pre-existing \"Icons\" page (not built this session) — a full Tabler icon library, one component per icon, named by the Tabler name with the \"Icon\" prefix stripped (e.g. \"Plus\" for IconPlus). This IS the Figma equivalent of the Icon wrapper component; no separate size/stroke grid was built since Icon.tsx's size/stroke/color are just instance-level overrides (resize + stroke color), demonstrated in practice by every icon usage across Badge/Button/IconButton. tokensMatch left null: color/stroke overrides are checked per-consumer (e.g. IconButton's own entry), not on the library page itself. REVIEWED 2026-10-02: Icon's contract/types changed (size scale) but the Icons page is the library itself — nothing to update. AUDITED 2026-10-03: 161 icon components, all 24x24, stroke bound to icon/neutral (Theme), no fill — but strokeWeight is 1.5 on every master, not the 1.8 icons-to-figma.md sets for the 24px master. 1.5 is the ADR-017 value for 16/18px, which is what every component instance uses (Button/IconButton/NavItem inherit it, no override), so switching masters to 1.8 would thicken all of them. Pending a decision before recording a passing audit. ",
+      "syncedCommit": "6df4ed847ece099cd270b1a51904b06ca8c46713",
+      "compSetId": "35:2",
+      "audit": {
+        "pass": true,
+        "commit": "6df4ed847ece099cd270b1a51904b06ca8c46713",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "IconButton",
