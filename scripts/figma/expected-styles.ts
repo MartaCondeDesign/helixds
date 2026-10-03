@@ -119,6 +119,23 @@ const SPECS: Record<string, Spec> = {
       return { story: 'components-radiogroup--default', scope: nth(i) };
     },
   },
+  Switch: {
+    story: 'components-switch--default',
+    axes: { checked: ['unchecked', 'checked'] },
+    states: ['default', 'hover', 'focus', 'disabled'],
+    args: () => ({}),
+    parts: {
+      'switch-track': { part: 'switch-track', fill: true },
+      'switch-thumb': { part: 'switch-thumb', fill: true },
+      'switch-label': { part: 'switch-label', text: true },
+    },
+    target: 'switch-track',
+    // Default = unchecked, Checked = checked (both one switch, render-controlled) · Disabled = off, on
+    locate: (v, state) => {
+      if (state === 'disabled') return { story: 'components-switch--disabled', scope: `[data-helix-part="switch-root"]:nth-of-type(${v.checked === 'checked' ? 2 : 1})` };
+      return { story: v.checked === 'checked' ? 'components-switch--checked' : 'components-switch--default', scope: '[data-helix-part="switch-root"]' };
+    },
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },

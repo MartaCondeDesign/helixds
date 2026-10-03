@@ -40,9 +40,10 @@ const variantOf = (rowVal, v) => set.children.find(c => {
   return vp[rowAxis[0]] === rowVal && Object.entries(v).every(([k, x]) => vp[k] === x);
 });
 
-// Cell sizes: content + 2 x 24px padding
-const colW = columns.map(col => Math.max(...rowAxis[1].map(r => variantOf(r, col.variant)?.width ?? 0)) + 48);
-const rowH = rowAxis[1].map(r => Math.max(...variantCombos.map(v => variantOf(r, v)?.height ?? 0)) + 48);
+// Cell sizes: content + 2 x 24px padding, measured with the column's booleans on (a shown part grows the cell)
+const measure = (comp, bools) => { if (!Object.values(bools).some(Boolean)) return [comp.width, comp.height]; const i = comp.createInstance(); i.setProperties(bools); const r = [i.width, i.height]; i.remove(); return r; };
+const colW = columns.map(col => Math.max(...rowAxis[1].map(r => { const c = variantOf(r, col.variant); return c ? measure(c, col.bools)[0] : 0; })) + 48);
+const rowH = rowAxis[1].map(r => Math.max(...columns.map(col => { const c = variantOf(r, col.variant); return c ? measure(c, col.bools)[1] : 0; })) + 48);
 
 // Header levels
 const levels = [...boolKeys.map(k => ({ kind: 'bool', key: k })), ...colAxes.map(([k]) => ({ kind: 'variant', key: k }))];

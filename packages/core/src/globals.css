@@ -1900,9 +1900,10 @@
   }
 
   [data-helix-part="switch-label"] {
-    font-size:   var(--helix-primitive-fontSize-s);
+    font-family: var(--helix-textStyle-body-s-regular-fontFamily); /* "Body / s / Regular" in Figma */
+    font-size:   var(--helix-textStyle-body-s-regular-fontSize);
     color:       var(--helix-switch-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
     cursor:      pointer;
   }
   /* Real disabled color, not opacity — .ai/maps/patterns/disabled-state.md */
@@ -1913,9 +1914,10 @@
   }
 
   [data-helix-part="switch-description"] {
-    font-size:    var(--helix-primitive-fontSize-s);
+    font-family:  var(--helix-textStyle-body-s-regular-fontFamily);
+    font-size:    var(--helix-textStyle-body-s-regular-fontSize);
     color:        var(--helix-switch-text-description);
-    line-height:  var(--helix-primitive-lineHeight-snug);
+    line-height:  var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="switch-root"][data-size="s"] [data-helix-part="switch-description"] {
     padding-left: calc(var(--helix-switch-width-s) + var(--helix-primitive-spacing-75));
