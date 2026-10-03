@@ -16,7 +16,7 @@ import fs from 'fs';
 import path from 'path';
 import { chromium, type Page } from 'playwright';
 
-type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid';
+type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid' | 'loading' | 'open' | 'checked' | 'indeterminate';
 type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean };
 type Spec = {
   story: string;                              // a story rendering exactly one instance from its args
@@ -27,6 +27,8 @@ type Spec = {
   target: string;                             // the data-helix-part that receives hover/press/focus
   scope?: (v: Record<string, string>) => string; // when the story renders several instances: CSS selector of the one to measure
   storyFor?: Partial<Record<State, string>>;       // a different story for a state whose prop the main story won't take from the URL
+  focusTarget?: string;                            // data-helix-part that takes keyboard focus, when it isn't `target` (e.g. Checkbox's hidden input)
+  locate?: (v: Record<string, string>, state: State) => { story: string; scope: string } | null; // full control over where each combo lives (null = not shown in any story, skipped)
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -75,6 +77,48 @@ const SPECS: Record<string, Spec> = {
     parts: { '(root)': { part: 'icon-button', fill: true, stroke: true } },
     target: 'icon-button',
   },
+  Select: {
+    story: 'components-select--default',
+    axes: {},
+    states: ['default', 'hover', 'focus', 'open', 'invalid', 'disabled'],
+    args: (v, s) => ({ label: 'Role', placeholder: 'Choose a role…', invalid: s === 'invalid', disabled: s === 'disabled' }),
+    parts: { '(root)': { part: 'select-trigger', fill: true, stroke: true }, 'select-trigger-label': { part: 'select-trigger-label', text: true } },
+    target: 'select-trigger',
+  },
+  Checkbox: {
+    story: 'components-checkbox--all-types',
+    axes: { checked: ['unchecked', 'checked', 'indeterminate'] },
+    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
+    args: () => ({}),
+    parts: { 'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true }, 'checkbox-text': { part: 'checkbox-text', text: true } },
+    target: 'checkbox-label',
+    focusTarget: 'checkbox-input',
+    // All Types = unchecked, checked, indeterminate · Disabled = unchecked, checked · Invalid = unchecked
+    locate: (v, state) => {
+      const nth = (n: number) => `[data-helix-part="checkbox-root"]:nth-of-type(${n})`;
+      const i = ['unchecked', 'checked', 'indeterminate'].indexOf(v.checked!) + 1;
+      if (state === 'disabled') return i <= 2 ? { story: 'components-checkbox--disabled', scope: nth(i) } : null;
+      if (state === 'invalid') return i === 1 ? { story: 'components-checkbox--invalid', scope: nth(1) } : null;
+      return { story: 'components-checkbox--all-types', scope: nth(i) };
+    },
+  },
+  RadioGroup: {
+    story: 'components-radiogroup--default',
+    axes: { checked: ['unchecked', 'checked'] },
+    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
+    args: () => ({}),
+    parts: { 'radio-control': { part: 'radio-control', fill: true, stroke: true }, 'radio-item-label': { part: 'radio-item-label', text: true } },
+    target: 'radio-item',
+    focusTarget: 'radio-input',
+    // Default/Invalid/Disabled stories: the 1st option is unchecked, the 2nd checked (Default/Disabled)
+    locate: (v, state) => {
+      const nth = (n: number) => `[data-helix-part="radio-item"]:nth-of-type(${n})`;
+      const i = v.checked === 'checked' ? 2 : 1;
+      if (state === 'disabled') return { story: 'components-radiogroup--disabled', scope: nth(i) };
+      if (state === 'invalid') return v.checked === 'unchecked' ? { story: 'components-radiogroup--invalid', scope: nth(1) } : null;
+      return { story: 'components-radiogroup--default', scope: nth(i) };
+    },
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
@@ -108,7 +152,8 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
     if (box) await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   }
   if (state === 'press') await page.mouse.down();
-  if (state === 'focus') { await page.keyboard.press('Shift'); await target.focus(); }
+  if (state === 'focus') { await page.keyboard.press('Shift'); await (spec.focusTarget ? (scoped ?? page).locator(`[data-helix-part="${spec.focusTarget}"]`).first() : target).focus(); }
+  if (state === 'open') { await page.keyboard.press('Escape'); await target.click(); } // e.g. Select: a real click opens the menu (closed first — the other theme's pass left it open)
   await page.waitForTimeout(350); // let CSS transitions finish
   const raw = await page.evaluate(({ parts, scope }) => {
     const root: ParentNode = (scope && document.querySelector(scope)?.parentElement) || document;
@@ -139,11 +184,16 @@ async function main() {
   const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}]);
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   for (const v of combos) for (const state of spec.states) {
+    const loc = spec.locate ? spec.locate(v, state) : undefined;
+    if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');
-    await page.goto(`${url}/iframe.html?viewMode=story&id=${spec.storyFor?.[state] ?? spec.story}&args=${encodeURIComponent(args)}`);
-    await page.waitForSelector(spec.scope ? spec.scope(v) : `[data-helix-part="${spec.target}"]`, { state: 'attached' });
+    const storyId = loc?.story ?? spec.storyFor?.[state] ?? spec.story;
+    await page.goto(`${url}/iframe.html?viewMode=story&id=${storyId}&args=${encodeURIComponent(loc ? '' : args)}`);
+    const scopeSel = loc?.scope ?? (spec.scope ? spec.scope(v) : null);
+    const vScoped = loc ? { ...spec, scope: () => loc.scope } : spec;
+    await page.waitForSelector(scopeSel ?? `[data-helix-part="${spec.target}"]`, { state: 'attached' });
     const variantName = [...Object.entries(v).map(([k, x]) => `${k}=${x}`), ...(spec.states.length > 1 ? [`state=${state}`] : [])].join(', ');
-    colors[variantName] = { light: await measure(page, spec, v, state, 'light'), dark: await measure(page, spec, v, state, 'dark') };
+    colors[variantName] = { light: await measure(page, vScoped, v, state, 'light'), dark: await measure(page, vScoped, v, state, 'dark') };
   }
   await browser.close();
   const out = path.resolve(__dirname, '../../.ai/figma-expected', `${name}.json`);

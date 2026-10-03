@@ -79,5 +79,32 @@
     "role": "combobox on the <button> trigger (WAI-ARIA select-only combobox) + hand-rolled listbox popup (Menu) — see ADR-013. Not a native <select>.",
     "keyboardNav": ["Arrow Up/Down - opens the menu, or moves the highlighted option while open", "Home/End - jump to first/last enabled option while open", "Enter/Space - open the menu, or confirm the highlighted option while open", "Escape - close without changing the selection", "Tab - move focus (closes the menu first)"],
     "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": [
+      "default",
+      "hover",
+      "focus",
+      "open",
+      "invalid",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "hover",
+          "focus",
+          "open",
+          "invalid",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code, open is the menu-open state (aria-expanded); invalid and disabled are the `invalid`/`disabled` props."
+      }
+    ]
   }
 }

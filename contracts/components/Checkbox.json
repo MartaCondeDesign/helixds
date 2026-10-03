@@ -70,5 +70,41 @@
     "role": "checkbox (native input)",
     "keyboardNav": ["Space — toggles checked state", "Tab — moves focus"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+  },
+
+  "figma": {
+    "states": [
+      "default",
+      "hover",
+      "focus",
+      "invalid",
+      "disabled"
+    ],
+    "properties": [
+      {
+        "name": "checked",
+        "type": "VARIANT",
+        "values": [
+          "unchecked",
+          "checked",
+          "indeterminate"
+        ],
+        "codeProp": "checked",
+        "description": "Mirrors `checked` + `indeterminate`: indeterminate fills like checked with a minus mark."
+      },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": [
+          "default",
+          "hover",
+          "focus",
+          "invalid",
+          "disabled"
+        ],
+        "figmaOnly": true,
+        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+      }
+    ]
   }
 }

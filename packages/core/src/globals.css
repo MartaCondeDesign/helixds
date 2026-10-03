@@ -1503,7 +1503,7 @@
   }
 
   /* Hover — input not checked */
-  [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:not(:checked):not(:disabled) + [data-helix-part="checkbox-control"] {
+  [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:not(:checked):not([data-indeterminate]):not(:disabled) + [data-helix-part="checkbox-control"] {
     border-color: var(--helix-checkbox-border-hover);
   }
 
@@ -1515,7 +1515,8 @@
     background:   var(--helix-checkbox-fill-checked);
     border-color: var(--helix-checkbox-border-checked);
   }
-  [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:checked:not(:disabled) + [data-helix-part="checkbox-control"] {
+  /* Indeterminate hovers like checked (it is filled like checked) — it used to get the unchecked gray border. */
+  [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:is(:checked, [data-indeterminate]):not(:disabled) + [data-helix-part="checkbox-control"] {
     background:   var(--helix-checkbox-fill-checked-hover);
     border-color: var(--helix-checkbox-fill-checked-hover);
   }
