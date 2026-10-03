@@ -57,10 +57,24 @@
       "figmaNodeId": "30:2",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "16 stale xs/xl size variants (across variant x disabled) removed 2026-08-23 — Figma now matches ButtonSize = 's'|'m'|'l' exactly. Fill/text/border/radius/height/padding-x verified via get_variable_defs against component.button.*. Label typography retrofitted 2026-08-24 to use real Figma text styles instead of loose fontSize/lineHeight bindings: \"Caption / Semibold\" for s/m, \"Body / m / Semibold\" for l (that style didn't exist in Figma until this session — created it, see the file-level typographyGap note). Not verifiable from Figma: component.button.icon.* (no icon instances in the symbols) and border.focus (no focus-state variant). Checked 2026-08-24: already a proper COMPONENT_SET with correct button-label anatomy naming from an earlier session — no restructuring needed, unlike the 10 components above. PHASE 4 2026-08-24: added TEXT property 'label' wired to button-label (24/24 variants). Still missing (needs new anatomy first, not just a property): BOOLEAN loading/icon/iconEnd, BOOLEAN fullWidth — no spinner or icon-slot layers exist yet to wire visibility to.REBUILT FROM SCRATCH 2026-08-24 (twice — first attempt tried to add button-icon/button-icon-end/button-spinner anatomy by extracting children from the existing COMPONENT_SET onto the page then calling combineAsVariants AGAIN, which corrupted it into the same 'Component set for node has existing errors' state as Chip's first failure, even though .name was never touched this time — see combineAsVariantsCorruptionRule below for the real root cause). Deleted and rebuilt clean in one pass: 24 variants (variant x size x disabled), with button-spinner/button-icon/button-icon-end as real hidden-by-default anatomy layers (Reload icon as the spinner stand-in, Plus for icon slots). Properties in Storybook order: label (TEXT), loading (BOOLEAN), icon (BOOLEAN), iconEnd (BOOLEAN), then variant/size/disabled (VARIANT). fullWidth still not represented — no meaningful single-component way to demo 100%-of-container width without a container context. RESYNCED 2026-10-02: secondary fill -> fill/page; l padding 16px (spacing/100, was 20); button-label is now a frame (the <span>) holding the text, with 4px padding on l (spacing/25), 0 otherwise; disabled = fill/disabled + border/neutral/light + text/disabled + icon/disabled, opacity 1 (was 0.5 opacity). Icons re-created pre-colored at 16px/1.5.",
-      "compSetId": "320:200",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "16 stale xs/xl size variants (across variant x disabled) removed 2026-08-23 — Figma now matches ButtonSize = 's'|'m'|'l' exactly. Fill/text/border/radius/height/padding-x verified via get_variable_defs against component.button.*. Label typography retrofitted 2026-08-24 to use real Figma text styles instead of loose fontSize/lineHeight bindings: \"Caption / Semibold\" for s/m, \"Body / m / Semibold\" for l (that style didn't exist in Figma until this session — created it, see the file-level typographyGap note). Not verifiable from Figma: component.button.icon.* (no icon instances in the symbols) and border.focus (no focus-state variant). Checked 2026-08-24: already a proper COMPONENT_SET with correct button-label anatomy naming from an earlier session — no restructuring needed, unlike the 10 components above. PHASE 4 2026-08-24: added TEXT property 'label' wired to button-label (24/24 variants). Still missing (needs new anatomy first, not just a property): BOOLEAN loading/icon/iconEnd, BOOLEAN fullWidth — no spinner or icon-slot layers exist yet to wire visibility to.REBUILT FROM SCRATCH 2026-08-24 (twice — first attempt tried to add button-icon/button-icon-end/button-spinner anatomy by extracting children from the existing COMPONENT_SET onto the page then calling combineAsVariants AGAIN, which corrupted it into the same 'Component set for node has existing errors' state as Chip's first failure, even though .name was never touched this time — see combineAsVariantsCorruptionRule below for the real root cause). Deleted and rebuilt clean in one pass: 24 variants (variant x size x disabled), with button-spinner/button-icon/button-icon-end as real hidden-by-default anatomy layers (Reload icon as the spinner stand-in, Plus for icon slots). Properties in Storybook order: label (TEXT), loading (BOOLEAN), icon (BOOLEAN), iconEnd (BOOLEAN), then variant/size/disabled (VARIANT). fullWidth still not represented — no meaningful single-component way to demo 100%-of-container width without a container context. RESYNCED 2026-10-02: secondary fill -> fill/page; l padding 16px (spacing/100, was 20); button-label is now a frame (the <span>) holding the text, with 4px padding on l (spacing/25), 0 otherwise; disabled = fill/disabled + border/neutral/light + text/disabled + icon/disabled, opacity 1 (was 0.5 opacity). Icons re-created pre-colored at 16px/1.5. REBUILT + AUDITED 2026-10-03: variant × size × state (default/hover/press/focus/disabled/loading) = 72 variants; every color auto-matched to the Theme variable whose light AND dark values equal code's computed colors (none unmatched). icon/iconEnd BOOLEAN show/hide; loading swaps the leading icon for the spinner and drops iconEnd, as in code. Ghost keeps a hidden 1px stroke (border-always). Focus = spread shadows (border/focus 4, fill/page 2). Known differences: code's focus also has a faint 20% blue box-shadow in the 2px gap (Figma shows the page color there); ghost focus gets a fill/page fill because Figma casts no shadow from an empty frame. Propstar table.",
+      "compSetId": "417:482",
+      "syncedCommit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+      "audit": {
+        "pass": true,
+        "commit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Card",
@@ -148,10 +162,24 @@
       "figmaNodeId": "293:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Built 2026-08-24 on its own Figma page (\"IconButton\") — variant x size x disabled grid (4 variants x s/m/l x true/false), matching IconButtonVariant/IconButtonSize exactly. Fill, border, radius, width/height bound to real variables, same values as component.button.* (IconButton reuses Button's fill scale). Icon shown as a real instance of the \"Plus\" icon from the Icons page (35:2), resized to 16/18/20px per size (matching ICON_SIZE_BY_BUTTON_SIZE in IconButton.tsx) and recolored per variant via the instance's vector stroke, bound to icon/inverse or icon/neutral matching component.iconButton.icon.*. Disabled modeled as 50% opacity, matching the CSS rule exactly. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:29) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added INSTANCE_SWAP property 'icon' wired to all 24 variants, with all 161 Icons-page components as swappable options (was hardcoded to 'Plus' before). Still missing: BOOLEAN 'loading' — no spinner layer built yet. PHASE 4b 2026-08-24: added icon-button-spinner anatomy (Reload icon, hidden by default) directly to the existing 24 children, wired a BOOLEAN 'loading' property. Property order: icon (INSTANCE_SWAP), loading (BOOLEAN), then variant/size/disabled (VARIANT). RESYNCED 2026-10-02: disabled = fill/disabled + border/neutral/light + icon/disabled at opacity 1 (was 0.5 opacity); icons re-created pre-colored, INSTANCE_SWAP refs kept.",
-      "compSetId": "303:29",
-      "syncedCommit": "74b0be94695789bf520d305aac09831d4aae0a93"
+      "lastChecked": "2026-10-03",
+      "notes": "Built 2026-08-24 on its own Figma page (\"IconButton\") — variant x size x disabled grid (4 variants x s/m/l x true/false), matching IconButtonVariant/IconButtonSize exactly. Fill, border, radius, width/height bound to real variables, same values as component.button.* (IconButton reuses Button's fill scale). Icon shown as a real instance of the \"Plus\" icon from the Icons page (35:2), resized to 16/18/20px per size (matching ICON_SIZE_BY_BUTTON_SIZE in IconButton.tsx) and recolored per variant via the instance's vector stroke, bound to icon/inverse or icon/neutral matching component.iconButton.icon.*. Disabled modeled as 50% opacity, matching the CSS rule exactly. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:29) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added INSTANCE_SWAP property 'icon' wired to all 24 variants, with all 161 Icons-page components as swappable options (was hardcoded to 'Plus' before). Still missing: BOOLEAN 'loading' — no spinner layer built yet. PHASE 4b 2026-08-24: added icon-button-spinner anatomy (Reload icon, hidden by default) directly to the existing 24 children, wired a BOOLEAN 'loading' property. Property order: icon (INSTANCE_SWAP), loading (BOOLEAN), then variant/size/disabled (VARIANT). RESYNCED 2026-10-02: disabled = fill/disabled + border/neutral/light + icon/disabled at opacity 1 (was 0.5 opacity); icons re-created pre-colored, INSTANCE_SWAP refs kept. REBUILT + AUDITED 2026-10-03: variant × size × state = 72 variants, colors auto-matched like Button; icon INSTANCE_SWAP, 16/18/20px at 1.5/1.5/1.7; loading = spinner. TopBar's two instances swapped to the new set (variant=ghost, size=m, state=default) keeping their icons. Propstar table.",
+      "compSetId": "419:242",
+      "syncedCommit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+      "audit": {
+        "pass": true,
+        "commit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+        "date": "2026-10-03",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0
+        }
+      }
     },
     {
       "name": "Input",
