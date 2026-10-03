@@ -6,6 +6,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { spawnSync } from 'child_process';
 
 export interface EvalPrompt {
   id: string;
@@ -36,10 +37,13 @@ export interface ScoreResult {
 
 const promptsDir = path.resolve(import.meta.dirname, '../evals/prompts');
 
+/** filterId: one prompt id, or several comma-separated. */
 export function loadPrompts(filterId?: string): EvalPrompt[] {
   const files = fs.readdirSync(promptsDir).filter(f => f.endsWith('.md'));
   const prompts = files.map(f => parsePromptFile(path.join(promptsDir, f)));
-  return filterId ? prompts.filter(p => p.id === filterId) : prompts;
+  if (!filterId) return prompts;
+  const ids = new Set(filterId.split(',').map(s => s.trim()));
+  return prompts.filter(p => ids.has(p.id));
 }
 
 function parsePromptFile(filePath: string): EvalPrompt {
@@ -200,3 +204,171 @@ export function scorePrompt(prompt: EvalPrompt, code: string): ScoreResult {
   };
 }
 
+
+// ── Global checks ────────────────────────────────────────────────────────────
+// Code assertions applied to every candidate regardless of prompt — the "What agents should NOT do"
+// rules from AGENTS.md. Reported as their own error-rate metrics; they don't change a prompt's score,
+// so scores stay comparable with runs recorded before these checks existed.
+
+export interface GlobalCheck {
+  id: string;
+  description: string;
+  pattern: RegExp;
+}
+
+export const GLOBAL_CHECKS: GlobalCheck[] = [
+  { id: 'hardcoded-color', description: 'Hardcoded color (#hex, rgb(), hsl())', pattern: /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(/ },
+  { id: 'hardcoded-size', description: 'Hardcoded px/rem value', pattern: /\b\d+(\.\d+)?(px|rem)\b/ },
+  { id: 'inline-style', description: 'Inline style={{…}}', pattern: /style=\{\{/ },
+  { id: 'raw-icon', description: 'Raw <IconXxx> tag instead of the Icon component / icon prop', pattern: /<Icon(?!Button\b)[A-Z]\w*/ },
+  { id: 'icon-element-prop', description: 'icon={<IconXxx />} instead of icon={IconXxx}', pattern: /icon(End)?=\{</ },
+  { id: 'on-click', description: 'onClick instead of onPress', pattern: /\bonClick=/ },
+  { id: 'raw-div', description: '<div> instead of a Helix layout component', pattern: /<div\b/ },
+  { id: 'raw-native-control', description: 'Native <button>/<input>/<select>/<textarea> instead of the Helix component', pattern: /<(button|input|select|textarea)\b/ },
+];
+
+export function runGlobalChecks(code: string): Record<string, boolean> {
+  // true = the check FAILED (the bad pattern is present)
+  return Object.fromEntries(GLOBAL_CHECKS.map(c => [c.id, c.pattern.test(code)]));
+}
+
+/** Rough error category for a failed criterion, used to group failures in eval:report / eval:review. */
+export function categorizeFailure(text: string, kind: 'success' | 'invalid'): string {
+  const t = text.toLowerCase();
+  if (/anti-synonym|anti-sinónimo|\(not `/.test(t)) return 'anti-synonym';
+  if (/invent|doesn't exist|does not exist|hand-built|instead of/.test(t)) return 'invented-or-bypassed';
+  if (/hardcode|hex|color|style=/.test(t)) return 'hardcoded-value';
+  if (/import/.test(t)) return 'wrong-import';
+  if (/slot|children|start=|end=/.test(t)) return 'wrong-slot-or-composition';
+  return kind === 'invalid' ? 'invalid-pattern' : 'missing-required';
+}
+
+// ── Run records ──────────────────────────────────────────────────────────────
+
+export const outputsDir = path.resolve(import.meta.dirname, '../evals/outputs');
+export const experimentsFile = path.resolve(import.meta.dirname, '../evals/experiments.json');
+
+export type RunSource = 'self-test' | 'manual-input' | 'claude-cli';
+
+export interface RunMeta {
+  runId: string; // one per eval:generate / eval:run invocation
+  variant: string; // experiment id (evals/experiments.json)
+  model: string;
+  rep: number; // repetition index within the run (0-based)
+  timestamp: number;
+  commit: string; // git sha the run was generated against (+"-dirty" if uncommitted changes)
+  context?: string; // what system context the agent got (e.g. "AGENTS.md")
+  cwd?: 'repo' | 'isolated';
+}
+
+export interface StoredRun extends ScoreResult, Partial<RunMeta> {
+  source: RunSource;
+  generatedCode: string;
+  globalChecks?: Record<string, boolean>;
+}
+
+export type LoadedRun = Omit<StoredRun, keyof RunMeta> & RunMeta & {
+  file: string;
+  legacy: boolean; // recorded before run metadata existed — meta was inferred
+};
+
+export function gitCommit(at?: number): string {
+  const opts = { encoding: 'utf-8' as const, cwd: path.resolve(import.meta.dirname, '..') };
+  if (at !== undefined) {
+    const r = spawnSync('git', ['rev-list', '-1', `--before=${Math.floor(at / 1000)}`, 'HEAD'], opts);
+    return r.stdout.trim().slice(0, 7) || 'unknown';
+  }
+  const sha = spawnSync('git', ['rev-parse', '--short', 'HEAD'], opts).stdout.trim();
+  const dirty = spawnSync('git', ['status', '--porcelain', '--', 'AGENTS.md', 'llms.txt', 'contracts', '.ai', 'packages', 'evals/prompts'], opts).stdout.trim();
+  return dirty ? `${sha}-dirty` : sha;
+}
+
+/**
+ * Loads every stored run. Runs recorded before run metadata existed get it inferred:
+ * variant "legacy", runId grouped by source + 15-min gaps, commit from `git rev-list --before`.
+ */
+export function loadRuns(opts: { includeSelfTests?: boolean } = {}): LoadedRun[] {
+  if (!fs.existsSync(outputsDir)) return [];
+  const files = fs.readdirSync(outputsDir).filter(f => f.endsWith('.json')).sort();
+  const raw: (StoredRun & { file: string; ts: number })[] = [];
+  for (const f of files) {
+    const run = JSON.parse(fs.readFileSync(path.join(outputsDir, f), 'utf-8')) as StoredRun;
+    if (run.source === 'self-test' && !opts.includeSelfTests) continue;
+    const ts = run.timestamp ?? Number(f.match(/-(\d+)\.json$/)?.[1] ?? 0);
+    raw.push({ ...run, file: f, ts });
+  }
+
+  const legacyGroups = new Map<string, { last: number; runId: string }>();
+  const commitCache = new Map<string, string>();
+  const repCounter = new Map<string, number>();
+
+  return raw
+    .sort((a, b) => a.ts - b.ts)
+    .map(run => {
+      if (run.runId) {
+        return { ...run, globalChecks: run.globalChecks ?? runGlobalChecks(run.generatedCode), legacy: false } as LoadedRun;
+      }
+      const group = legacyGroups.get(run.source);
+      let runId: string;
+      if (group && run.ts - group.last < 15 * 60_000) {
+        runId = group.runId;
+      } else {
+        runId = `legacy-${run.source}-${new Date(run.ts).toISOString().slice(0, 16)}`;
+      }
+      legacyGroups.set(run.source, { last: run.ts, runId });
+      if (!commitCache.has(runId)) commitCache.set(runId, gitCommit(run.ts));
+      const repKey = `${runId}:${run.promptId}`;
+      const rep = repCounter.get(repKey) ?? 0;
+      repCounter.set(repKey, rep + 1);
+      return {
+        ...run,
+        runId,
+        variant: run.source === 'manual-input' ? 'legacy-manual' : 'legacy',
+        model: run.source === 'manual-input' ? 'manual' : 'default',
+        rep,
+        timestamp: run.ts,
+        commit: commitCache.get(runId)!,
+        context: run.source === 'claude-cli' ? 'AGENTS.md' : 'unknown',
+        cwd: 'repo',
+        globalChecks: runGlobalChecks(run.generatedCode),
+        legacy: true,
+      } as LoadedRun;
+    });
+}
+
+// ── Experiments registry ─────────────────────────────────────────────────────
+
+export interface Experiment {
+  id: string;
+  description: string;
+  hypothesis?: string;
+  createdAt: string;
+  commit: string;
+}
+
+export function loadExperiments(): Experiment[] {
+  if (!fs.existsSync(experimentsFile)) return [];
+  return JSON.parse(fs.readFileSync(experimentsFile, 'utf-8')) as Experiment[];
+}
+
+export function registerExperiment(id: string, description?: string, hypothesis?: string): Experiment {
+  const all = loadExperiments();
+  const existing = all.find(e => e.id === id);
+  if (existing) return existing;
+  if (!description) {
+    throw new Error(`Experiment "${id}" isn't in evals/experiments.json yet — pass --note "<what changed>" to register it.`);
+  }
+  const exp: Experiment = { id, description, hypothesis, createdAt: new Date().toISOString(), commit: gitCommit() };
+  all.push(exp);
+  fs.writeFileSync(experimentsFile, JSON.stringify(all, null, 2) + '\n');
+  return exp;
+}
+
+export function newRunId(): string {
+  return new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+}
+
+export function argValue(args: string[], flag: string): string | undefined {
+  const i = args.indexOf(flag);
+  return i !== -1 ? args[i + 1] : undefined;
+}

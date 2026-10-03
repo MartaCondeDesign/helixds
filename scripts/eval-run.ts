@@ -1,19 +1,23 @@
 /**
  * Scores eval prompts (evals/prompts/*.md) against code — no API calls, free to run.
- * Default: scores each prompt's own "Expected output shape" (the harness self-check).
+ * Default: scores each prompt's own "Expected output shape" (the harness self-check) — this checks the
+ * EVAL, not the design system, so it isn't saved to evals/outputs/ unless you pass --save.
  * --input <file>: scores a code file you paste in by hand (e.g. output from another
- * tool) against one prompt's criteria — pass --prompt <id> to pick which one.
- * Run: pnpm eval:run [--prompt <id>] [--input <file>]
+ * tool) against one prompt's criteria — pass --prompt <id> to pick which one. Always saved, tagged with
+ * --variant (default "manual") so eval:report can count it.
+ * Run: pnpm eval:run [--prompt <id>] [--input <file> [--variant <id>]] [--save]
  */
 import fs from 'fs';
 import path from 'path';
-import { loadPrompts, scorePrompt, type ScoreResult } from './eval-lib';
+import {
+  loadPrompts, scorePrompt, runGlobalChecks, gitCommit, newRunId, argValue, outputsDir, type ScoreResult,
+} from './eval-lib';
 
 const args = process.argv.slice(2);
-const promptIdx = args.indexOf('--prompt');
-const promptFilter = promptIdx !== -1 ? args[promptIdx + 1] : undefined;
-const inputIdx = args.indexOf('--input');
-const inputFile = inputIdx !== -1 ? args[inputIdx + 1] : undefined;
+const promptFilter = argValue(args, '--prompt');
+const inputFile = argValue(args, '--input');
+const variant = argValue(args, '--variant') ?? 'manual';
+const save = args.includes('--save');
 
 if (inputFile && !promptFilter) {
   console.error('--input requires --prompt <id> to pick which prompt to score against.');
@@ -26,7 +30,6 @@ if (prompts.length === 0) {
   process.exit(1);
 }
 
-const outputsDir = path.resolve(import.meta.dirname, '../evals/outputs');
 fs.mkdirSync(outputsDir, { recursive: true });
 
 function report(result: ScoreResult) {
@@ -41,11 +44,13 @@ function report(result: ScoreResult) {
     if (r.pass === false) console.log(`   ⚠️  INVALID PATTERN TRIGGERED: ${r.text}`);
   }
   if (result.unchecked > 0) {
-    console.log(`   (${result.unchecked} criteria not mechanically checkable — needs manual review)`);
+    console.log(`   (${result.unchecked} criteria not mechanically checkable — covered by the global checks in eval:report)`);
   }
 }
 
 const results: ScoreResult[] = [];
+const runId = newRunId();
+const commit = inputFile || save ? gitCommit() : '';
 
 for (const p of prompts) {
   const code = inputFile ? fs.readFileSync(inputFile, 'utf-8') : p.expectedOutput;
@@ -53,10 +58,19 @@ for (const p of prompts) {
   results.push(result);
   report(result);
 
-  fs.writeFileSync(
-    path.join(outputsDir, `${p.id}-${Date.now()}.json`),
-    JSON.stringify({ ...result, source: inputFile ? 'manual-input' : 'self-test', generatedCode: code }, null, 2),
-  );
+  if (inputFile || save) {
+    const timestamp = Date.now();
+    fs.writeFileSync(
+      path.join(outputsDir, `${p.id}-${timestamp}.json`),
+      JSON.stringify({
+        ...result,
+        runId, variant: inputFile ? variant : 'self-test', model: inputFile ? 'manual' : 'reference', rep: 0, timestamp, commit,
+        source: inputFile ? 'manual-input' : 'self-test',
+        globalChecks: runGlobalChecks(code),
+        generatedCode: code,
+      }, null, 2),
+    );
+  }
 }
 
 const passedCount = results.filter(r => r.passed).length;

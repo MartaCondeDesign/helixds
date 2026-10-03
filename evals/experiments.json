@@ -1,0 +1,14 @@
+[
+  {
+    "id": "legacy",
+    "description": "eval:generate runs from before run metadata existed (Sept 2026): 1 run per prompt, default model, AGENTS.md as context, run from the repo.",
+    "createdAt": "2026-09-29T10:00:00.000Z",
+    "commit": "inferred-per-run"
+  },
+  {
+    "id": "baseline",
+    "description": "Current repo state, unchanged — the reference every variant is compared against.",
+    "createdAt": "2026-10-03T09:15:54.508Z",
+    "commit": "dc7c205-dirty"
+  }
+]

@@ -58,7 +58,7 @@
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
       { "name": "initials", "type": "TEXT", "codeProp": "label", "description": "The first letter of `label` — code derives it, Figma takes it typed." },
-      { "name": "src", "type": "BOOLEAN", "codeProp": "src", "description": "Shows avatar-image (an image fill covering the circle) over the initials — code renders one or the other. Swap the photo per instance with the image fill; the sample photos are the Pexels portraits in apps/storybook/public/avatars (same files as Storybook), also laid out on the Avatar page." }
+      { "name": "src", "type": "BOOLEAN", "codeProp": "src", "description": "Shows avatar-image (an image fill covering the circle) over the initials — code renders one or the other. Swap the photo per instance with the image fill. The photo is one of the Pexels portraits in apps/storybook/public/avatars (flat-color backgrounds) — it lives only inside the component, not as loose images on the canvas." }
     ]
   }
 }

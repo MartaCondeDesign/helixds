@@ -25,7 +25,10 @@ shrank). One border, always there, keeps every state the exact same size.
   `border-color` to the same color as the fill (or `transparent`) — never `border: none` / `border-width: 0`.
   (Resetting the native border of an inner element — the `<input>` inside Input's wrapper, a bare icon
   button — is not a state change and is fine.)
-- **Figma:** every variant of the component carries the stroke, same weight, same alignment. A state with
+- **Figma:** every variant of the component carries the stroke, same weight, same alignment. The stroke **counts in the auto layout**
+  (`strokesIncludedInLayout = true`, "Include stroke in layout") — code is `border-box`, so the 1px border
+  sits between the edge and the padding; without it the Figma component is 2px narrower and its content
+  1px closer to the edge. A state with
   "no visible border" binds the stroke to the same Theme variable as the fill underneath — the stroke is
   still there, so the frame keeps its size.
 - **Checked by:** `scripts/figma/audit-component.js` (check 6, `border`) — fails when a layer has a stroke

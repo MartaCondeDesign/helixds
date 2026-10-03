@@ -21,6 +21,7 @@
  *   6 border     a layer that has a border in one variant has it in every variant, at the same weight —
  *                a border never appears/disappears between states, only its color changes (otherwise the
  *                component changes size; see .ai/maps/patterns/border-always.md)
+ *                — and the border counts in the auto layout (strokesIncludedInLayout), like CSS border-box
  */
 const SET_ID = '__SET_ID__';
 const PAGE_ID = '__PAGE_ID__';
@@ -89,6 +90,11 @@ for (const variant of set.children) {
     // a hidden stroke still counts as a border: code's transparent border keeps the size (border-always.md)
     const has = Array.isArray(n.strokes) && n.strokes.length > 0;
     (strokeByLayer[key] ??= []).push(has ? `${n.strokeWeight}` : 'none');
+    // code is border-box: the border takes space (1 border + padding = the distance to the content). An
+    // auto-layout frame whose stroke sits outside the layout is 2px narrower and its content 1px closer to
+    // the edge than in code — Badge, Input and Textarea had exactly this.
+    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false)
+      issues.border.push(`${where(variant, n)}: border not included in the auto layout — set strokesIncludedInLayout = true (CSS border-box)`);
     if ('children' in n && n.type !== 'INSTANCE') n.children.forEach(visit);
   };
   visit(variant);

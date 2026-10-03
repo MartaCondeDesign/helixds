@@ -9,39 +9,98 @@ Measures whether an AI agent can use Helix DS correctly.
 3. **Token usage** — does the agent use `--helix-*` tokens, not hardcoded values?
 4. **No invention** — does the agent hallucinate components or props that don't exist?
 
-## Running evals
+## The eval loop
 
-No paid API, no billing setup — nothing here costs money beyond usage you already have:
+Built on the loop from Teresa Torres' *AI Evals: A Hands-On Guide for Product Teams*: an LLM doesn't give the
+same answer twice, so one passing answer proves nothing — we measure **how often** the agent gets it right,
+read what it got wrong, change one thing, and compare against a baseline.
+
+| Step | Command |
+|------|---------|
+| 0. Check the evals themselves | `pnpm eval:run` — every prompt's reference answer must score 100% (runs in pre-commit) |
+| 1. Collect a baseline | `pnpm eval:generate --runs 5` (variant `baseline` by default) |
+| 2. Error analysis | `pnpm eval:review --variant baseline` → write it up in `evals/error-analysis.md` |
+| 3. See error rates | `pnpm eval:report --variant baseline` |
+| 4. Run an experiment | change one thing (prop-map, a contract, AGENTS.md…), then `pnpm eval:generate --runs 5 --variant <id> --note "<what changed>"` |
+| 5. Compare | `pnpm eval:report --compare baseline <id>` |
+
+No paid API, no billing setup: `eval:generate` shells out to the `claude` CLI you already have
+(`claude -p`), under your Claude Code plan. It's real usage of that plan, though — each generation is a
+full agent turn. 32 prompts × 5 runs = 160 turns. Use `--prompt a,b,c` to rerun only what you're working on.
+
+### `eval:generate`
 
 ```bash
-pnpm eval:run                          # score every prompt's own reference code (harness self-check)
-pnpm eval:run --prompt button-basic    # just one prompt
-pnpm eval:run --prompt button-basic --input path/to/code.tsx   # score code you generated
-                                                                 # elsewhere (another tool, a manual
-                                                                 # chat session) against that prompt
-pnpm eval:generate                     # auto: ask the Claude Code CLI (`claude -p`) to solve each
-                                        # prompt, then score the answer — see below
-pnpm eval:generate --prompt button-basic --model sonnet
-pnpm eval:report                       # summarize past runs from evals/outputs/
+pnpm eval:generate                                   # every prompt once, variant "baseline"
+pnpm eval:generate --runs 5                          # each prompt 5 times → a pass RATE per prompt
+pnpm eval:generate --prompt toast-basic,chip-basic --runs 5
+pnpm eval:generate --runs 5 --variant toast-docs --note "Toast mount rule moved to the top of AGENTS.md" \
+                   --hypothesis "agents miss <Toast /> because the rule is buried"
+pnpm eval:generate --model sonnet                    # change the model (another experiment lever)
+pnpm eval:generate --context none --isolated         # no Helix guide and no access to this repo
+pnpm eval:generate --context llms.txt --isolated     # only llms.txt as the guide
+pnpm eval:generate --concurrency 5                   # parallel generations (default 3)
 ```
 
-Results go to `evals/outputs/` (gitignored) as one JSON file per run.
+- `--variant` names the experiment. A new name must come with `--note`; it's recorded in
+  `evals/experiments.json` with the git commit, so you can always see what each variant tested.
+- `--context` picks the guide the agent gets as its system prompt (default `AGENTS.md`).
+- `--isolated` runs `claude` from an empty temp dir so it can't read CLAUDE.md, contracts or `.ai/` from
+  this repo. Without it (the default, how every earlier run was made) the agent can also browse the repo.
+- Mutating tools (`Edit`, `Write`, `NotebookEdit`, `Bash`, `Agent`, `Artifact`) are disallowed on the
+  sub-invocation, so it can only answer with code.
+- Every generation is saved to `evals/outputs/` (gitignored) with its variant, model, commit, context,
+  repetition and the code itself; the code also goes to `evals/outputs/candidates/<runId>/<prompt>-<rep>.tsx`.
 
-### `eval:generate` — automatic, no separate API key
+### `eval:report`
 
-Shells out to the `claude` CLI already installed on your machine (`claude -p "<prompt>"`), so it runs
-under your existing Claude Code session/plan — not a pay-per-token API key. Mutating tools (`Edit`,
-`Write`, `NotebookEdit`, `Bash`, `Agent`, `Artifact`) are disallowed on that sub-invocation, so it can
-only answer with code, never touch files in this repo. The candidate code is saved to
-`evals/outputs/candidates/<id>.tsx` and scored the same way as everything else here.
+```bash
+pnpm eval:report                          # one line per variant: generations, pass rate, avg score
+pnpm eval:report --variant baseline       # per-prompt pass rates, errors by category, global checks
+pnpm eval:report --compare baseline toast-docs   # per prompt, per error category, per global check
+pnpm eval:report --stored                 # use the score saved at run time instead of re-scoring
+```
 
-This is real usage of your Claude Code plan, not literally free — each prompt is a full agent turn,
-same cost as asking me directly. `eval:run --input` (manual copy-paste) has zero marginal cost;
-`eval:generate` trades that for not having to copy-paste yourself.
+- **Self-tests are excluded.** They check the eval, not the design system; the report prints them as a
+  single "Eval health" line.
+- **Every run is re-scored from its stored code with the current criteria.** That way, fixing a badly
+  phrased criterion also fixes old runs. When the old and new scoring differ, the overview says so.
+- **Runs from before this existed** show up as variant `legacy` (`eval:generate`) and `legacy-manual`
+  (`eval:run --input`). Their commit is inferred from the date, and they have 1 run per prompt.
+- **Errors by category** groups every failed criterion (anti-synonym, invented-or-bypassed,
+  hardcoded-value, wrong-import, wrong-slot-or-composition…) and counts how often each happened.
+- **Global checks** are code assertions run on every generation, taken from AGENTS.md's "don't" rules:
+  hardcoded colors/px, inline `style`, raw `<IconXxx>`, `icon={<…/>}`, `onClick`, `<div>`, native
+  controls. They're reported as their own rates and never change a prompt's score. Add one in
+  `GLOBAL_CHECKS` (`scripts/eval-lib.ts`).
 
-To actually test whether an agent uses Helix correctly by hand: open `evals/prompts/button-basic.md`,
-copy the `# Prompt` text into a chat with the agent you want to check, save its answer to a file,
-then run `pnpm eval:run --prompt button-basic --input <that file>`.
+### `eval:review`
+
+```bash
+pnpm eval:review --variant baseline                  # every failing generation + the code it wrote
+pnpm eval:review --variant baseline --prompt toast-basic --no-code
+```
+
+This is the error-analysis step: read the answers before fixing anything, and log what you see in
+`evals/error-analysis.md` (annotate → categorize → prioritize → experiments).
+
+### `eval:run` — scoring by hand
+
+```bash
+pnpm eval:run                          # self-check every prompt's reference answer (not saved; --save to keep)
+pnpm eval:run --prompt button-basic --input path/to/code.tsx [--variant cursor]
+```
+
+Use `--input` to score an answer you got from another tool or a manual chat: copy the `# Prompt` text,
+save the agent's answer to a file, and score it. It's saved under `--variant` (default `manual`), so it
+counts in `eval:report`.
+
+### Guided vs unguided prompts
+
+Most prompts say "using Helix DS" and many name the component. `*-unguided` prompts (category
+`component-selection-unguided`) share their `*-basic` twin's criteria but describe only the need, the way
+a real user would. Comparing the two pass rates shows how much the agent depends on being told which
+component to use.
 
 ## Prompt format
 
@@ -79,8 +138,9 @@ code — gets treated as another forbidden pattern and false-fails. Either wrap 
 
 ## Interpreting results
 
-A prompt scores low → check which criteria failed → add a memory entry to
-`.ai/memory/agnostic-lessons.md` with the correction → re-run.
+A prompt passes 2/5 → `eval:review` it → log the pattern in `evals/error-analysis.md` → form a hypothesis
+→ change one thing → rerun it as a new `--variant` → `eval:report --compare`. Keep the change only if it
+helps without making other prompts worse. Then add the lesson to `.ai/memory/agnostic-lessons.md`.
 
 The vibe-test score is a leading indicator of DS quality: if agents can't use it correctly,
 developers probably can't either.
