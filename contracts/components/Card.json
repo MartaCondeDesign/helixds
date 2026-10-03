@@ -45,5 +45,15 @@
   "a11y": {
     "role": "group (implicit — no explicit role unless the card represents a distinct landmark region)",
     "wcag": ["1.4.3 Contrast (AA)"]
+  },
+
+  "figma": {
+    "states": ["default"],
+    "properties": [
+      { "name": "padding", "type": "VARIANT", "values": ["default", "none"], "codeProp": "padding", "description": "none: the body goes edge to edge (root has no top padding; a header keeps its own 24px top)." },
+      { "name": "header", "type": "BOOLEAN", "codeProp": "header", "description": "Show/hide part (show-hide-parts.md): the title row. With padding=default the 24px top lives on the root, the header carries only its 8px bottom, so toggling it never moves the body." },
+      { "name": "header text", "type": "TEXT", "codeProp": "header" },
+      { "name": "content", "type": "TEXT", "codeProp": "children" }
+    ]
   }
 }

@@ -136,6 +136,18 @@ const SPECS: Record<string, Spec> = {
       return { story: v.checked === 'checked' ? 'components-switch--checked' : 'components-switch--default', scope: '[data-helix-part="switch-root"]' };
     },
   },
+  Card: {
+    story: 'components-card--default',
+    axes: { padding: ['default', 'none'] },
+    states: ['default'],
+    args: v => ({ padding: v.padding, showHeader: true }),
+    parts: {
+      '(root)': { part: 'card-root', fill: true, stroke: true },
+      'card-header': { part: 'card-header', text: true },
+      'card-body': { part: 'card-body', text: true },
+    },
+    target: 'card-root',
+  },
   Badge: {
     story: 'components-badge--all-variants',
     axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },

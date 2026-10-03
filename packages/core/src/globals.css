@@ -1938,11 +1938,16 @@
     border:           1px solid var(--helix-card-border);
     border-radius:    var(--helix-card-radius);
     overflow:         hidden;
+    /* Each part carries its own spacing (.ai/maps/patterns/show-hide-parts.md): the 24px top lives on
+       the root, so showing/hiding the header never changes the body's padding. */
+    padding-top:      var(--helix-card-padding);
+  }
+  [data-helix-part="card-root"][data-padding="none"] {
+    padding-top: 0;
   }
 
   [data-helix-part="card-header"] {
-    padding:        var(--helix-card-padding);
-    padding-bottom: var(--helix-card-header-paddingBottom);
+    padding:        0 var(--helix-card-padding) var(--helix-card-header-paddingBottom);
     font-family:    var(--helix-card-header-fontFamily);
     font-size:      var(--helix-card-header-fontSize);
     font-weight:    var(--helix-card-header-fontWeight);
@@ -1951,17 +1956,16 @@
   }
 
   [data-helix-part="card-body"] {
-    padding:     var(--helix-card-padding);
+    padding:     0 var(--helix-card-padding) var(--helix-card-padding);
     font-family: var(--helix-textStyle-body-m-regular-fontFamily);
     font-size: var(--helix-textStyle-body-m-regular-fontSize);
     font-weight: var(--helix-textStyle-body-m-regular-fontWeight);
     line-height: var(--helix-textStyle-body-m-regular-lineHeight);
     color:       var(--helix-color-text-neutral);
   }
-  /* With a header, the header's own padding-bottom is the 8px gap to the body (contract) — so the
-     body drops its top padding only then. Without a header it keeps the full 24px, like the bottom. */
-  [data-helix-part="card-header"] + [data-helix-part="card-body"] {
-    padding-top: 0;
+  /* padding="none": the body goes edge to edge; a header keeps its own 24px top instead of the root's. */
+  [data-helix-part="card-root"][data-padding="none"] [data-helix-part="card-header"] {
+    padding-top: var(--helix-card-padding);
   }
   [data-helix-part="card-root"][data-padding="none"] [data-helix-part="card-body"] {
     padding: 0;

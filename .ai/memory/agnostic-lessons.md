@@ -67,3 +67,12 @@ string `"true"` or `undefined` (not boolean `true`/`false`):
 
 **Lesson:** Run `verify:props` before `verify:contract`. Prop violations produce noisy errors
 inside contracts. Fixing names first produces cleaner contract output.
+
+---
+
+## Figma: look up variables with a guard
+
+**Lesson:** `node.setBoundVariable('paddingTop', undefined)` doesn't throw — it silently leaves the
+padding at 0, and the audit still passes (an unbound 0 isn't "hardcoded"). Not every code token has a
+Figma variable with the same name (`spacing/component-xl` doesn't exist in Figma; its value is
+`spacing/l`). Look variables up with a helper that throws on a miss, and check a screenshot.
