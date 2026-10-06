@@ -68,6 +68,29 @@
 
 @layer components {
   [data-helix-part="chart-root"] { position: relative; font-family: var(--helix-textStyle-body-s-regular-fontFamily); }
+  /* Legend: a square swatch + name per series. With 2+ series each entry is a ghost-style toggle button
+     (same semantic fills as Button ghost); a single series is a static label with no hover. */
+  [data-helix-part="chart-legend"] { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--helix-spacing-2xs); margin-top: var(--helix-spacing-xs); }
+  [data-helix-part="chart-legend-item"] {
+    display: inline-flex; align-items: center; gap: var(--helix-spacing-xs);
+    padding: var(--helix-spacing-2xs) var(--helix-spacing-xs);
+    border: 1px solid transparent; border-radius: var(--helix-radius-m);
+    background-color: transparent; color: var(--helix-color-text-neutral-light);
+    font: inherit; font-size: var(--helix-textStyle-body-s-regular-fontSize); line-height: var(--helix-textStyle-body-s-regular-lineHeight);
+  }
+  button[data-helix-part="chart-legend-item"] { cursor: pointer; }
+  /* Text goes to text-neutral on hover/press: text-neutral-light on the dark-mode press fill is 4.04:1. */
+  button[data-helix-part="chart-legend-item"]:hover { background-color: var(--helix-color-fill-secondary-interactive-default); color: var(--helix-color-text-neutral); }
+  button[data-helix-part="chart-legend-item"]:active { background-color: var(--helix-color-fill-secondary-interactive-hover); color: var(--helix-color-text-neutral); }
+  /* A hidden series: only its name goes gray (text-disabled) — the swatch keeps its color and shape.
+     Stays gray on hover too, so the off state never looks like it flipped back on. */
+  button[data-helix-part="chart-legend-item"][aria-pressed="false"],
+  button[data-helix-part="chart-legend-item"][aria-pressed="false"]:hover,
+  button[data-helix-part="chart-legend-item"][aria-pressed="false"]:active { color: var(--helix-color-text-disabled); }
+  [data-helix-part="chart-legend-swatch"] {
+    flex: none; width: var(--helix-spacing-s); height: var(--helix-spacing-s);
+    border-radius: var(--helix-radius-xs); background-color: var(--chart-swatch);
+  }
   [data-helix-part="chart-data"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
   /* Storybook Docs preview block only: keep the prose light, darken the live example. */
@@ -596,6 +619,9 @@
     color:            var(--helix-input-text-value);
     font-family:      inherit;
     font-size:        var(--helix-input-text-valueFontSize-m);
+    /* Own weight, never inherited — an Input placed in a bold context (a Card header) rendered its
+       value bold. Value text is always regular, like every other field. */
+    font-weight:      var(--helix-textStyle-body-m-regular-fontWeight);
     padding:          0 var(--helix-primitive-spacing-75);
     min-width:        0;
     /* Fills the wrapper's own height (see input-wrapper) — not an independent
@@ -1453,6 +1479,17 @@
     color:  var(--helix-menu-item-text-disabled);
     cursor: not-allowed;
   }
+  /* labelEnd: secondary text on the end edge — muted, tabular figures so values line up down the list.
+     A selected option's labelEnd takes the selected color; a disabled one, the disabled color. */
+  [data-helix-part="menu-item-label"] { flex: 1; min-width: 0; }
+  [data-helix-part="menu-item-label-end"] {
+    flex: none; margin-inline-start: var(--helix-spacing-m);
+    color: var(--helix-color-text-neutral-light);
+    font-weight: var(--helix-textStyle-body-s-regular-fontWeight);
+    font-variant-numeric: tabular-nums;
+  }
+  [data-helix-part="menu-item"][aria-selected="true"] [data-helix-part="menu-item-label-end"],
+  [data-helix-part="menu-item"]:disabled [data-helix-part="menu-item-label-end"] { color: inherit; }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -2706,6 +2743,29 @@
   [data-helix-part="segmented-control-item"][aria-checked="true"] [data-helix-part="segmented-control-item-label"],
   [data-helix-part="segmented-control-item"]:not([aria-checked="true"]):not(:disabled):hover [data-helix-part="segmented-control-item-label"] {
     color: var(--helix-segmentedControl-text-checked);
+  }
+
+  /* Icon-only option: the icon takes the label's colors; the label stays as the accessible name, hidden.
+     Side padding drops to spacing-xs (8px) so the segment is close to square at the 24px height. */
+  [data-helix-part="segmented-control-item"][data-icon-only] {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0 var(--helix-spacing-xs);
+  }
+  [data-helix-part="segmented-control-item-icon"] {
+    position: relative; z-index: 1; display: inline-flex;
+    color: var(--helix-segmentedControl-text-default);
+    transition: color var(--helix-primitive-duration-fast) var(--helix-primitive-easing-base);
+  }
+  [data-helix-part="segmented-control-item"][aria-checked="true"] [data-helix-part="segmented-control-item-icon"],
+  [data-helix-part="segmented-control-item"]:not([aria-checked="true"]):not(:disabled):hover [data-helix-part="segmented-control-item-icon"] {
+    color: var(--helix-segmentedControl-text-checked);
+  }
+  [data-helix-part="segmented-control-root"][data-disabled] [data-helix-part="segmented-control-item-icon"] {
+    color: var(--helix-segmentedControl-text-disabled);
+  }
+  [data-helix-part="segmented-control-item"][data-icon-only] [data-helix-part="segmented-control-item-label"] {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
   }
   /* After the checked rule on purpose (same specificity): a disabled option reads as disabled whether
      it's one option or the whole group, checked or not — before, a disabled option looked exactly like

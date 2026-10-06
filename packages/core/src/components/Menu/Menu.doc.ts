@@ -33,6 +33,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'options — flat MenuOption[] or grouped MenuOptionGroup[] ({ label, options })',
+    'labelEnd — optional per-option secondary text on the end edge (menu-item-label-end), muted, tabular figures',
     'value — selected value, drives aria-selected + the blue highlight',
     'activeValue — keyboard-highlighted value, drives the gray highlight (consumer owns the keyboard handling, e.g. Select)',
     'Positioning: always opens below the anchor, never flips above — horizontal clamp only, adapted from Tooltip\'s clamp (ADR-009).',

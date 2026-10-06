@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { motion, MotionConfig } from 'motion/react';
 import { cn } from '../../lib/utils';
+import { Icon } from '../Icon';
 import { SPRING_SNAPPY } from '../../lib/motionPresets';
 import type { SegmentedControlProps } from './SegmentedControl.types';
 
@@ -86,6 +87,7 @@ export function SegmentedControl({
             tabIndex={isChecked ? 0 : -1}
             disabled={isDisabled}
             data-helix-part="segmented-control-item"
+            {...(opt.icon ? { 'data-icon-only': '' } : {})}
             onClick={() => select(opt.value)}
             onKeyDown={e => handleKeyDown(e, index)}
           >
@@ -97,6 +99,12 @@ export function SegmentedControl({
                 transition={SPRING_SNAPPY}
               />
             )}
+            {opt.icon && (
+              <span data-helix-part="segmented-control-item-icon">
+                <Icon icon={opt.icon} size={16} />
+              </span>
+            )}
+            {/* Icon-only options keep the label as their accessible name — visually hidden, not dropped. */}
             <span data-helix-part="segmented-control-item-label">{opt.label}</span>
           </button>
         );

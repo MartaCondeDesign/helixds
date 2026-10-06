@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "SegmentedControl",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "beta",
 
   "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
@@ -36,12 +36,13 @@
   "anatomy": [
     { "part": "segmented-control-root", "element": "div", "description": "Root element. `role=\"radiogroup\"`." },
     { "part": "segmented-control-pill", "element": "span", "description": "The sliding highlight behind the checked option. Purely decorative — `aria-hidden`." },
-    { "part": "segmented-control-item", "element": "button", "description": "One option. `role=\"radio\"`, `aria-checked`, roving `tabIndex`." }
+    { "part": "segmented-control-item", "element": "button", "description": "One option. `role=\"radio\"`, `aria-checked`, roving `tabIndex`." },
+    { "part": "segmented-control-item-icon", "element": "span", "description": "Optional icon of an icon-only option, rendered through Icon (decorative — the option's label is its accessible name). Takes the label's default/checked/hover colors." }
   ],
 
   "props": [
     { "name": "label", "type": "string", "required": true, "description": "Accessible name for the group (`aria-label` on the root — this control has no visible legend)." },
-    { "name": "options", "type": "SegmentedControlOption[]", "required": true, "description": "The list of choices. Each option: { value, label, disabled? }." },
+    { "name": "options", "type": "SegmentedControlOption[]", "required": true, "description": "The list of choices. Each option: { value, label, icon?, disabled? }. With `icon` (a Tabler icon component, rendered through Icon) the option is icon-only: `label` stays as its accessible name (visually hidden)." },
     { "name": "value", "type": "string | undefined", "description": "Controlled selected value." },
     { "name": "defaultValue", "type": "string | undefined", "description": "Uncontrolled initial value." },
     { "name": "onChange", "type": "((value: string) => void) | undefined", "description": "Selection change handler." },

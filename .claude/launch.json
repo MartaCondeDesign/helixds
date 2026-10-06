@@ -9,6 +9,18 @@
         "dev"
       ],
       "port": 6006
+    },
+    {
+      "name": "proof",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "proof:serve"
+      ],
+      "port": 6007,
+      "autoPort": true,
+      "env": {
+        "PROOF_NO_OPEN": "1"
+      }
     }
   ]
 }

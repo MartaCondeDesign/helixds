@@ -102,7 +102,7 @@ _No Figma-mappable props._
 - `badge-icon`
 - `badge-label`
 
-### Button (`v1.0.0`, stable)
+### Button (`v1.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ _No Figma-mappable props._
 - `card-header`
 - `card-body`
 
-### Chart (`v1.0.0`, beta)
+### Chart (`v1.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -143,6 +143,9 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `chart-root`
 - `chart-canvas`
+- `chart-legend`
+- `chart-legend-swatch`
+- `chart-legend-item`
 - `chart-data`
 
 ### Checkbox (`v0.1.0`, stable)
@@ -288,7 +291,7 @@ _No Figma-mappable props._
 - `input-description`
 - `input-error`
 
-### Menu (`v0.1.0`, beta)
+### Menu (`v0.2.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -297,6 +300,8 @@ _No Figma-mappable props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `menu-item`
+- `menu-item-label`
+- `menu-item-label-end`
 - `menu`
 - `menu-group-divider`
 - `menu-group-label`
@@ -421,7 +426,7 @@ _No Figma-mappable props._
 - `radio-description`
 - `radio-error`
 
-### SegmentedControl (`v0.1.0`, beta)
+### SegmentedControl (`v0.2.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -432,9 +437,10 @@ _No Figma-mappable props._
 - `segmented-control-root`
 - `segmented-control-item`
 - `segmented-control-pill`
+- `segmented-control-item-icon`
 - `segmented-control-item-label`
 
-### Select (`v1.0.0`, stable)
+### Select (`v1.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

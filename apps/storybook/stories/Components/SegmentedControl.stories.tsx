@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
+import { IconChartBar, IconTable } from '@tabler/icons-react';
 import { SegmentedControl, SegmentedControlDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -57,6 +58,22 @@ export const WithDisabledOption: Story = {
   },
   parameters: {
     docs: { description: { story: 'Individual options can be disabled while the group remains interactive.' } },
+  },
+};
+
+// Icon-only options: the label is still required — it's each option's accessible name.
+export const IconOnly: Story = {
+  args: {
+    label: 'View',
+    options: [
+      { value: 'chart', label: 'Chart view', icon: IconChartBar },
+      { value: 'table', label: 'Table view', icon: IconTable },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByRole('radio', { name: 'Chart view' })).toBeChecked();
+    await expect(canvas.getByRole('radio', { name: 'Table view' })).not.toBeChecked();
   },
 };
 

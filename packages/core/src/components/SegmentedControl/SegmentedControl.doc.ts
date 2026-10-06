@@ -29,7 +29,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'label — required, becomes the group\'s accessible name',
-    'options — array of { value, label, disabled? }',
+    'options — array of { value, label, icon?, disabled? }; an option with icon is icon-only, its label kept as its accessible name',
     'value / defaultValue — controlled or uncontrolled selection',
     'onChange — selection change handler',
     'disabled — disables the whole group; individual options can also disable themselves',

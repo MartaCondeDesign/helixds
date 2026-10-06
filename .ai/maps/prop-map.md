@@ -14,7 +14,7 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 
 | ✅ Canonical | ❌ Anti-synonyms                   | Notes                                              |
 |-------------|----------------------------------|---------------------------------------------------|
-| `loading`   | `isLoading`, `pending`           | Authored loading state                            |
+| `loading`   | `isLoading`, `pending`, `isPending`, `busy` | Authored loading state                  |
 | `disabled`  | `isDisabled`, `readonly`         | Native + authored disabled state                  |
 | `current`   | `active`, `isActive`, `selected` | Navigation/tab current item                       |
 | `expanded`  | `isExpanded`, `open`, `isOpen`   | Disclosure open state                             |
@@ -51,6 +51,7 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 | `placeholder`| `hintText`, `ghostText`        | Empty-state hint text                             |
 | `icon`      | `leftIcon`, `startIcon`, `leadingIcon`  | Leading icon — a Tabler icon component passed by reference (e.g. `IconPlus`), not a pre-instantiated element or string |
 | `iconEnd`   | `rightIcon`, `endIcon`, `trailingIcon`  | Trailing icon — same reference convention as `icon`  |
+| `labelEnd`  | `meta`, `suffix`, `trailingText`, `rightText`, `secondaryText` | Short secondary text aligned to the end of an option (a value, a count, a percentage) — same `End` convention as `iconEnd` |
 | `children`  | `content`, `body`, `slot`        | React children slot                               |
 
 ## Width + alignment

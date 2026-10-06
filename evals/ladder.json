@@ -1,0 +1,12 @@
+{
+  "$comment": "The context ladder: every level every eval task is run at. Each level gives the agent ONE source of Helix knowledge and nothing else (no AGENTS.md under the MCP or the lint loop), so each one's effect is measured on its own; full repo is everything together. Single source for `pnpm eval:ladder` (what to generate), Proof (proof.config.mjs) and Storybook's Data/Eval Gallery (rows). `flags` are eval:generate flags; `explain` is the plain-language tooltip the galleries show next to the level.",
+  "runs": 5,
+  "levels": [
+    { "variant": "no-context", "label": "bare", "detail": "No Helix guide, no repo", "explain": "Nothing about Helix: no guide, no files, no tools. Shows what the model already knows on its own — usually it invents package and prop names.", "flags": ["--context", "none", "--isolated"] },
+    { "variant": "llms-txt", "label": "llms.txt", "detail": "Only llms.txt — no repo", "explain": "Only llms.txt, the short summary of Helix published for AI tools. Tests whether a summary alone is enough to build with Helix.", "flags": ["--context", "llms.txt", "--isolated"] },
+    { "variant": "agents-isolated", "label": "agents-md", "detail": "Only AGENTS.md — no repo", "explain": "Only AGENTS.md, Helix's full guide for coding agents (components, props, tokens, rules) — no repo, no tools.", "flags": ["--isolated"] },
+    { "variant": "mcp", "label": "mcp", "detail": "Only the Helix MCP tools — no guide, no repo", "explain": "No guide — only the Helix MCP tools: while it works, the agent can look up component contracts, search tokens and check its own code.", "flags": ["--context", "none", "--isolated", "--mcp"] },
+    { "variant": "lint-loop", "label": "lint loop", "detail": "Only its Helix lint problems, sent back to fix — no guide, no repo", "explain": "No guide — the agent answers, Helix's lint rules check the code, and the problems go back to it to fix (up to 2 rounds).", "flags": ["--context", "none", "--isolated", "--lint-loop"] },
+    { "variant": "baseline", "label": "full repo", "detail": "Everything together: AGENTS.md and the whole Helix repo", "explain": "The agent works inside the whole Helix repository: AGENTS.md, contracts, docs and source — the most context it can get.", "flags": [] }
+  ]
+}

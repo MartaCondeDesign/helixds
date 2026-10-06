@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "Select",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "stable",
 
   "purpose": "Lets users choose a single value from a predefined list.",
@@ -49,7 +49,7 @@
 
   "props": [
     { "name": "label", "type": "string", "required": true, "description": "Visible or screen-reader-only label. Required for a11y." },
-    { "name": "options", "type": "(SelectOption | SelectOptionGroup)[]", "required": true, "description": "List of options and grouped options." },
+    { "name": "options", "type": "(SelectOption | SelectOptionGroup)[]", "required": true, "description": "List of options and grouped options. Each option: { value, label, labelEnd?, disabled? } — labelEnd is short secondary text (a value, count or percentage) shown at the end of the option in the list; the trigger shows only the label." },
     { "name": "value", "type": "string | undefined", "description": "Controlled selected value." },
     { "name": "defaultValue", "type": "string | undefined", "description": "Uncontrolled initial value." },
     { "name": "onChange", "type": "(value: string) => void | undefined", "description": "Value change handler." },

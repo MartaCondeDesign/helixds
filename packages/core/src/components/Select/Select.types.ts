@@ -1,6 +1,8 @@
 export interface SelectOption {
   value:     string;
   label:     string;
+  /** Short secondary text aligned to the end of the option in the list — a value, count or percentage. */
+  labelEnd?: string;
   disabled?: boolean;
 }
 

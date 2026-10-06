@@ -19,4 +19,6 @@ export interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   fullWidth?: boolean;
   /** Primary action handler. `onClick` is an anti-synonym (see prop-map.md) and is intentionally omitted. */
   onPress?: React.MouseEventHandler<HTMLButtonElement>;
+  /** The button's text. Button has no `label` prop — its text is children; icon-only actions use IconButton. */
+  children?: React.ReactNode;
 }

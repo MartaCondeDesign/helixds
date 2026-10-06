@@ -75,6 +75,28 @@ export const WithGroups: Story = {
   },
 };
 
+// labelEnd: short secondary text on the end edge of each option — values line up down the list.
+export const WithLabelEnd: Story = {
+  args: {
+    label: 'Task',
+    options: [
+      { value: 'button-basic', label: 'button-basic', labelEnd: '81%' },
+      { value: 'chip-basic', label: 'chip-basic', labelEnd: '58%' },
+      { value: 'card-basic', label: 'card-basic', labelEnd: '–' },
+    ],
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('combobox', { name: /Task/ }));
+    const option = await within(document.body).findByRole('option', { name: /chip-basic/ });
+    await expect(option).toHaveTextContent('58%');
+    await expect(option.querySelector('[data-helix-part="menu-item-label-end"]')).not.toBeNull();
+  },
+  parameters: {
+    docs: { description: { story: 'Each option can carry a `labelEnd` — a value, count or percentage on its end edge. The trigger shows only the label.' } },
+  },
+};
+
 export const WithDescription: Story = {
   args: { description: 'Used to assign permissions on this workspace.' },
 };

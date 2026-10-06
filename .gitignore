@@ -16,3 +16,6 @@ apps/storybook/.test-results/
 packages/helix-storybook-addon-tokens/
 .pnpm-store/
 .ai/maps/changelog.json
+apps/storybook/eval-gallery/
+evals/proof/
+apps/storybook/.proof/

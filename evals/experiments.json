@@ -37,5 +37,23 @@
     "hypothesis": "Outside the repo agents invent props because AGENTS.md doesn't list them",
     "createdAt": "2026-10-03T14:19:30.983Z",
     "commit": "9fe5def-dirty"
+  },
+  {
+    "id": "llms-txt",
+    "description": "llms.txt — Only llms.txt — no repo",
+    "createdAt": "2026-10-06T17:14:14.478Z",
+    "commit": "7318daf-dirty"
+  },
+  {
+    "id": "mcp",
+    "description": "mcp — Only the Helix MCP tools — no guide, no repo",
+    "createdAt": "2026-10-06T17:14:17.036Z",
+    "commit": "7318daf-dirty"
+  },
+  {
+    "id": "lint-loop",
+    "description": "lint loop — Only its Helix lint problems, sent back to fix — no guide, no repo",
+    "createdAt": "2026-10-06T18:25:36.446Z",
+    "commit": "7318daf-dirty"
   }
 ]

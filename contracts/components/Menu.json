@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "Menu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "beta",
 
   "purpose": "A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals).",
@@ -36,14 +36,15 @@
     { "part": "menu", "element": "div", "description": "Root popup surface. `role=\"listbox\"`. Portaled to document.body." },
     { "part": "menu-group-divider", "element": "div", "description": "Full-width divider before a group, except the first one (nothing above it to separate from). `role=\"separator\"`. Bleeds edge-to-edge past the menu's own padding.", "optional": true },
     { "part": "menu-group-label", "element": "div", "description": "Non-interactive label for a group of options. Uses semantic.textStyle.label-uppercase, no added letter-spacing.", "optional": true },
-    { "part": "menu-item", "element": "button", "description": "One selectable option. `role=\"option\"`, `aria-selected`." }
+    { "part": "menu-item", "element": "button", "description": "One selectable option. `role=\"option\"`, `aria-selected`." },
+    { "part": "menu-item-label-end", "element": "span", "description": "Optional labelEnd: short secondary text on the option's end edge, muted, tabular figures. Takes the selected/disabled color with its option.", "optional": true }
   ],
 
   "props": [
     { "name": "id", "type": "string", "required": true, "description": "Listbox element id, referenced by the consumer's trigger via aria-controls/aria-activedescendant." },
     { "name": "expanded", "type": "boolean", "required": true, "description": "Whether the menu is rendered." },
     { "name": "anchorRef", "type": "React.RefObject<HTMLElement | null>", "required": true, "description": "The trigger element the menu positions itself against." },
-    { "name": "options", "type": "(MenuOption | MenuOptionGroup)[]", "required": true, "description": "Flat options or grouped options: { value, label, disabled? } or { label, options }." },
+    { "name": "options", "type": "(MenuOption | MenuOptionGroup)[]", "required": true, "description": "Flat options or grouped options: { value, label, labelEnd?, disabled? } or { label, options }. labelEnd renders on the option's end edge (menu-item-label-end)." },
     { "name": "value", "type": "string | undefined", "description": "Currently selected value, for aria-selected + visual highlight." },
     { "name": "multiple", "type": "boolean", "default": false, "description": "Multi-selection (ADR-019): aria-multiselectable on the listbox, every value in `values` marked aria-selected. `value` is ignored when set." },
     { "name": "values", "type": "string[] | undefined", "description": "Selected values when `multiple` is set." },

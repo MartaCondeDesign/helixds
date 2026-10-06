@@ -157,6 +157,28 @@ tester.run('no-raw-control', plugin.rules['no-raw-control'], {
   ],
 });
 
+tester.run('unknown-prop', plugin.rules['unknown-prop'], {
+  valid: [
+    helix + '<Button variant="primary" loading={saving} onPress={save}>Save</Button>',
+    helix + '<Button id="save" aria-busy={saving} data-testid="save" onMouseEnter={hover}>Save</Button>',  // HTML passthrough
+    helix + '<Button isLoading>Save</Button>',          // anti-synonym — prop-vocabulary reports and fixes it
+    helix + '<Card>…</Card>',
+    '<Button isPending />',                             // not imported from Helix
+  ],
+  invalid: [
+    {
+      // What an agent with no guide wrote in the evals: a prop from another library.
+      code: helix + '<Button wobble>Save</Button>',
+      errors: [{ messageId: 'unknown', data: { prop: 'wobble', component: 'Button', props: 'variant, size, loading, disabled, icon, iconEnd, fullWidth, onPress, children' } }],
+    },
+    {
+      // Button takes its text as children — the message says so instead of listing props.
+      code: helix + '<Button label="Save" onPress={save} />',
+      errors: [{ messageId: 'children' }],
+    },
+  ],
+});
+
 describe('data.json', () => {
   it('is up to date with prop-map.md, the contracts and tokens.json', () => {
     const file = fileURLToPath(new URL('../src/data.json', import.meta.url));

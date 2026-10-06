@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import { Chart, ChartDoc } from '@helix-ds/core';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
@@ -57,6 +58,36 @@ export const Bar: Story = {
       { name: '2025', data: [18, 21, 19, 24, 27, 25] },
       { name: '2026', data: [22, 24, 23, 28, 33, 30] },
     ],
+  },
+};
+
+// Keyboard: Tab reaches each legend toggle, Space/Enter hides and shows its series (contract a11y.keyboardNav).
+export const LegendToggle: Story = {
+  args: Bar.args,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const first = canvas.getByRole('button', { name: '2025' });
+    const second = canvas.getByRole('button', { name: '2026' });
+
+    await userEvent.tab();
+    await expect(first).toHaveFocus();
+    await expect(first).toHaveAttribute('aria-pressed', 'true');
+
+    await userEvent.keyboard(' ');
+    await expect(first).toHaveAttribute('aria-pressed', 'false');
+    await userEvent.keyboard('{Enter}');
+    await expect(first).toHaveAttribute('aria-pressed', 'true');
+
+    await userEvent.tab();
+    await expect(second).toHaveFocus();
+  },
+};
+
+// One series: the legend is a plain label — nothing to toggle, so no button and no hover.
+export const SingleSeriesLegend: Story = {
+  args: Area.args,
+  play: async ({ canvasElement }) => {
+    await expect(within(canvasElement).queryByRole('button')).toBeNull();
   },
 };
 

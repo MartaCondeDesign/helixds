@@ -28,6 +28,27 @@ No paid API, no billing setup: `eval:generate` shells out to the `claude` CLI yo
 (`claude -p`), under your Claude Code plan. It's real usage of that plan, though — each generation is a
 full agent turn. 32 prompts × 5 runs = 160 turns. Use `--prompt a,b,c` to rerun only what you're working on.
 
+### `eval:ladder` — the context ladder
+
+`evals/ladder.json` lists the context levels every task is run at: bare, llms.txt, AGENTS.md, MCP,
+lint loop — each the agent's *only* source of Helix knowledge, never stacked, so each one's effect is
+measured alone — and the full repo, everything together. Every answer records the tokens it cost (`usage`).
+
+**Measuring is manual.** Each measurement is a *round*: fresh answers for the levels and tasks you pick,
+recorded in `evals/rounds.json` with date and commit. Start one from Proof's **Run evals** button (`eg`) —
+it shows the answer count and estimated tokens before running — or from the terminal:
+
+```bash
+pnpm eval:ladder --round                                  # free dry run: answers and est. tokens
+pnpm eval:ladder --round --prompt button-basic --runs 1 --yes   # one task, every level
+pnpm eval:ladder --round --runs 1 --yes                   # every task, every level
+pnpm eval:ladder                                          # without --round: only fill what's missing
+```
+
+A round is what you compare: Storybook → Data → Metrics → *Agent Context Ladder* charts pass rate per
+level, round after round (after `pnpm quality snapshot`, which the button runs for you). Proof and
+Storybook → Data → Eval Gallery show each task × level's latest round.
+
 ### `eval:generate`
 
 ```bash

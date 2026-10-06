@@ -8,6 +8,8 @@
     "fontWeight": "weight",
     "isLoading": "loading",
     "pending": "loading",
+    "isPending": "loading",
+    "busy": "loading",
     "isDisabled": "disabled",
     "readonly": "disabled",
     "active": "current",
@@ -44,6 +46,11 @@
     "rightIcon": "iconEnd",
     "endIcon": "iconEnd",
     "trailingIcon": "iconEnd",
+    "meta": "labelEnd",
+    "suffix": "labelEnd",
+    "trailingText": "labelEnd",
+    "rightText": "labelEnd",
+    "secondaryText": "labelEnd",
     "content": "children",
     "body": "children",
     "slot": "children",
@@ -129,7 +136,8 @@
       "icon",
       "iconEnd",
       "fullWidth",
-      "onPress"
+      "onPress",
+      "children"
     ],
     "Card": [
       "header",
@@ -526,7 +534,8 @@
     ],
     "#64748b": [
       "--helix-color-fill-secondary-interactive-dark-default",
-      "--helix-color-text-neutral-lightest"
+      "--helix-color-text-neutral-lightest",
+      "--helix-color-chart-series-6"
     ],
     "#475569": [
       "--helix-color-fill-secondary-interactive-dark-hover",
@@ -776,6 +785,7 @@
     "@helix-ds/core",
     "@helix-ds/eslint-plugin",
     "@helix-ds/mcp",
+    "@helix-ds/proof",
     "@helix-ds/storybook-addon-tokens",
     "@helix-ds/tokens",
     "@helix-ds/wc"

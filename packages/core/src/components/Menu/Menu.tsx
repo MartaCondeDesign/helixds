@@ -86,7 +86,12 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
       // otherwise steal it).
       onMouseDown={e => e.preventDefault()}
     >
-      {opt.label}
+      {opt.labelEnd === undefined ? opt.label : (
+        <>
+          <span data-helix-part="menu-item-label">{opt.label}</span>
+          <span data-helix-part="menu-item-label-end">{opt.labelEnd}</span>
+        </>
+      )}
     </button>
   );
 

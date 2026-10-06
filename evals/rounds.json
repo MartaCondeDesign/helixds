@@ -1,0 +1,40 @@
+[
+  {
+    "id": "2026-10-06T18-24",
+    "date": "2026-10-06T18:26:20.156Z",
+    "commit": "7318daf-dirty",
+    "runs": 5,
+    "tasks": [
+      "button-basic"
+    ],
+    "levels": [
+      {
+        "variant": "llms-txt",
+        "label": "llms.txt",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 63750.6,
+        "totalTokens": 318753
+      },
+      {
+        "variant": "mcp",
+        "label": "mcp",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 89664.2,
+        "totalTokens": 448321
+      },
+      {
+        "variant": "lint-loop",
+        "label": "lint loop",
+        "answers": 5,
+        "passRate": 0,
+        "meanScore": 0.8,
+        "tokensPerAnswer": 106842.6,
+        "totalTokens": 534213
+      }
+    ]
+  }
+]

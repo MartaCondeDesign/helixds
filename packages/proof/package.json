@@ -1,0 +1,22 @@
+{
+  "name": "@helix-ds/proof",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proof — see what the agents actually built. Turns saved coding-agent answers into one shareable proof.html — every answer rendered, screenshotted and laid out per context level and rep next to its score. Design-system agnostic: everything system-specific lives in proof.config.mjs",
+  "type": "module",
+  "bin": { "proof": "./src/cli.ts" },
+  "scripts": {
+    "start": "tsx src/cli.ts",
+    "test": "node --test --import tsx test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axe-core": "^4.10.0",
+    "playwright": "1.63.0",
+    "vite": "^5.4.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0"
+  }
+}

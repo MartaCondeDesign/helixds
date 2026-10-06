@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { GLOBAL_CHECKS, loadRuns, loadPrompts, scorePrompt, type LoadedRun } from './eval-lib.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
@@ -67,6 +68,118 @@ function evalSummary(runs: LoadedRun[]) {
   };
 }
 
+type Ladder = { levels: Array<{ variant: string; label: string; detail: string }> };
+
+/** Per context level (evals/ladder.json): how agents do with that much guidance, and what it costs. */
+function ladderSummary(runs: LoadedRun[]) {
+  const ladder = readJson<Ladder>('evals/ladder.json', { levels: [] });
+  const prompts = new Map(loadPrompts().map(prompt => [prompt.id, prompt]));
+  return ladder.levels.map(level => {
+    const levelRuns = runs.filter(run => run.variant === level.variant).map(run => {
+      const prompt = prompts.get(run.promptId);
+      return prompt ? { ...run, ...scorePrompt(prompt, run.generatedCode) } : run;
+    });
+    const measured = levelRuns.filter(run => run.usage?.totalTokens);
+    const totalTokens = measured.reduce((sum, run) => sum + (run.usage?.totalTokens ?? 0), 0);
+    return {
+      variant: level.variant,
+      label: level.label,
+      detail: level.detail,
+      answers: levelRuns.length,
+      tasks: new Set(levelRuns.map(run => run.promptId)).size,
+      passRate: levelRuns.length ? levelRuns.filter(run => run.passed).length / levelRuns.length : null,
+      meanScore: levelRuns.length ? levelRuns.reduce((sum, run) => sum + run.score, 0) / levelRuns.length : null,
+      tokensPerAnswer: measured.length ? totalTokens / measured.length : null,
+      totalTokens: measured.length ? totalTokens : null,
+    };
+  });
+}
+
+type RoundEntry = { id: string; date: string; commit: string; levels: Array<{ variant: string; label: string }> };
+
+/** Commit subjects between two rounds' commits (oldest first). A "-dirty" commit also had uncommitted edits. */
+function commitsBetween(from: string, to: string): string[] {
+  const [a, b] = [from.replace(/-dirty$/, ''), to.replace(/-dirty$/, '')];
+  if (!a || !b || a === b || a === 'unknown' || b === 'unknown') return [];
+  try {
+    return execFileSync('git', ['log', '--reverse', '--format=%s', `${a}..${b}`], { cwd: root, encoding: 'utf8' }).split('\n')
+      // The old post-commit hook's automatic changelog commits aren't changes to the system.
+      .filter(subject => subject && subject !== 'Regenerate changelog');
+  } catch { return []; }
+}
+
+/**
+ * Improvement history, with nothing to fill in by hand: every eval round compared with the one before it.
+ * What changed = the commits between their two commits (plus a flag for uncommitted edits); the effect =
+ * each level's pass rate and mean score, on the tasks both rounds ran, so a round on fewer tasks doesn't
+ * read as a drop.
+ */
+function roundImprovements(runs: LoadedRun[]) {
+  const rounds = readJson<RoundEntry[]>('evals/rounds.json', []);
+  const prompts = new Map(loadPrompts().map(prompt => [prompt.id, prompt]));
+  const byRound = new Map<string, LoadedRun[]>();
+  for (const run of runs) {
+    const round = (run as LoadedRun & { round?: string }).round;
+    if (round) byRound.set(round, [...(byRound.get(round) ?? []), run]);
+  }
+  const stats = (rs: LoadedRun[]) => {
+    if (!rs.length) return null;
+    const scored = rs.map(run => { const prompt = prompts.get(run.promptId); return prompt ? scorePrompt(prompt, run.generatedCode) : run; });
+    return { answers: rs.length, passRate: scored.filter(run => run.passed).length / rs.length, meanScore: scored.reduce((sum, run) => sum + run.score, 0) / rs.length };
+  };
+  return rounds.slice(1).map((round, i) => {
+    const previous = rounds[i];
+    const now = byRound.get(round.id) ?? [];
+    const before = byRound.get(previous.id) ?? [];
+    const common = new Set(now.map(run => run.promptId).filter(task => before.some(run => run.promptId === task)));
+    const levels = round.levels.map(level => {
+      const after = stats(now.filter(run => run.variant === level.variant && common.has(run.promptId)));
+      const prior = stats(before.filter(run => run.variant === level.variant && common.has(run.promptId)));
+      return { variant: level.variant, label: level.label, before: prior, after };
+    }).filter(level => level.before && level.after);
+    const deltas = levels.map(level => level.after!.meanScore - level.before!.meanScore);
+    const meanDelta = deltas.length ? deltas.reduce((sum, d) => sum + d, 0) / deltas.length : null;
+    return {
+      id: round.id,
+      date: round.date,
+      previous: previous.id,
+      commit: round.commit,
+      commits: commitsBetween(previous.commit, round.commit),
+      uncommitted: round.commit.endsWith('-dirty'),
+      tasksCompared: common.size,
+      levels,
+      // Mean score is 0–1: two points either way is noise between rounds, not a trend.
+      verdict: meanDelta === null ? 'not comparable' : meanDelta > 0.02 ? 'better' : meanDelta < -0.02 ? 'worse' : 'same',
+      meanDelta,
+    };
+  }).reverse();
+}
+
+/** Per day × context level: answers, their summed score, how many passed, which tasks, and tokens — Metrics
+ * sums these over a day, a month or all time and divides, so a period's mean weighs every answer equally. */
+function ladderDaily(runs: LoadedRun[]) {
+  const levels = new Set(readJson<Ladder>('evals/ladder.json', { levels: [] }).levels.map(level => level.variant));
+  const prompts = new Map(loadPrompts().map(prompt => [prompt.id, prompt]));
+  const days = new Map<string, { date: string; variant: string; answers: number; scoreSum: number; passed: number; tasks: string[]; tokenSum: number; measured: number }>();
+  for (const run of runs) {
+    if (!levels.has(run.variant)) continue;
+    const prompt = prompts.get(run.promptId);
+    const scored = prompt ? scorePrompt(prompt, run.generatedCode) : run;
+    // Local calendar day — an eval run at 01:00 in Madrid belongs to that day, not the previous UTC one.
+    const at = new Date(run.timestamp);
+    const date = `${at.getFullYear()}-${String(at.getMonth() + 1).padStart(2, '0')}-${String(at.getDate()).padStart(2, '0')}`;
+    const key = `${date}|${run.variant}`;
+    const day = days.get(key) ?? { date, variant: run.variant, answers: 0, scoreSum: 0, passed: 0, tasks: [], tokenSum: 0, measured: 0 };
+    day.answers++;
+    day.scoreSum += scored.score;
+    if (scored.passed) day.passed++;
+    if (!day.tasks.includes(run.promptId)) day.tasks.push(run.promptId);
+    if (run.usage?.totalTokens) { day.tokenSum += run.usage.totalTokens; day.measured++; }
+    days.set(key, day);
+  }
+  return [...days.values()].sort((a, b) => a.date.localeCompare(b.date));
+}
+
 export interface GovernanceEntry { name: string; status: string; hasNeverUseFor: boolean; hasRationale: boolean; hasGovernance: boolean; }
 
 /** Decision coverage: does every contract tell an agent why the component exists, when not to use it, and what it may change locally? */
@@ -115,7 +228,8 @@ export function createHelixSnapshot(now = new Date()) {
   const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
   const weeklyRuns = allRuns.filter(run => run.timestamp >= weekAgo);
 
-  const evals = evalSummary(allRuns);
+  // Rounds: each `pnpm eval:ladder --round` (Proof's "Run evals" button) — per level, over time.
+  const evals = { ...evalSummary(allRuns), ladder: ladderSummary(allRuns), daily: ladderDaily(allRuns), improvements: roundImprovements(allRuns), rounds: readJson<unknown[]>('evals/rounds.json', []) };
   const ruleCompliance = evals.globalChecks.length ? evals.globalChecks.reduce((sum, check) => sum + (1 - (check.rate ?? 0)), 0) / evals.globalChecks.length : null;
   const governance = governanceCoverage();
   // Components the manifest knows about but verify:stable hasn't scored yet — their status is unknown,

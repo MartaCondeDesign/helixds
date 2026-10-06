@@ -54,6 +54,7 @@ export const doc: ComponentDoc = {
     'Button trigger + Helix-styled Menu popup (ADR-013) — no native OS dropdown chrome, matches Helix\'s own visual language',
     'One fixed size, deliberately — no size prop. 32px (semantic.size.m), the same height Menu items and Input/Textarea\'s own default use, so nothing needs picking.',
     'fullWidth — stretches to container width',
+    'labelEnd on an option — short secondary text (a value, count or percentage) on the end edge of that option in the list; the trigger shows only the label',
     'className — set a fixed width so the trigger never visibly resizes as a shorter/longer option is selected (it truncates with an ellipsis instead of growing)',
     'placeholder option — optional prompt before selection',
     'option groups — supports grouped option sets',

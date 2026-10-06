@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface MenuOption {
   value:     string;
   label:     string;
+  /** Short secondary text aligned to the end of the option — a value, count or percentage. */
+  labelEnd?: string;
   disabled?: boolean;
 }
 
