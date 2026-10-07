@@ -13,7 +13,6 @@
     "@helixds/storybook-addon-tokens": "workspace:*",
     "@helixds/tokens": "workspace:*",
     "@tabler/icons-react": "^3.0.0",
-    "gsap": "3.15.0",
     "motion": "13.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

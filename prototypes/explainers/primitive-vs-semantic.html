@@ -28,7 +28,7 @@
         <text class="col-head mono muted head" x="350" y="22">SEMANTIC</text>
         <text class="col-head mono muted head" x="690" y="22">COMPONENT</text>
 
-        <!-- Wires: drawn by GSAP DrawSVG (ADR-024) -->
+        <!-- Wires: drawn by Motion (ADR-024) -->
         <path class="wire" data-stroke id="w-blue"  d="M172 70  C262 70  262 95  348 95" />
         <path class="wire" data-stroke id="w-gray"  d="M172 170 C262 170 262 195 348 195" />
         <path class="wire wire--new" data-stroke id="w-green" d="M172 120 C262 120 262 95 348 95" />
@@ -67,9 +67,6 @@
 </main>
 
 <script src="../../packages/core/node_modules/motion/dist/motion.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/CustomEase.min.js"></script>
 <script src="explainer.js"></script>
 <script>
   const { M, color, drawn } = Explainer;

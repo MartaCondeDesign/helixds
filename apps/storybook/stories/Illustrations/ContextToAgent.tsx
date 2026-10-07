@@ -32,13 +32,12 @@ const card: Card = {
     b.pop(q('#cta-folder'), t);
     t += M.emphasis + M.hold * 0.6;
 
-    // 2 · It opens into its files; one by one they fall and land on the floor
+    // 2 · It opens into its files; one by one they fall and land in a row
     b.add(q('#cta-folder'), { opacity: [1, 0], scale: [1, 0.8] }, t, M.exit, M.eExit);
-    b.draw(q('#cta-floor'), t);
     const drop = 0.75, gap = 0.45;
     files.forEach((el, i) => {
       const at = t + 0.15 + i * gap;
-      const fall = FLOOR_Y - FILE.h - FOLDER.y; // from the folder's height to the floor
+      const fall = FLOOR_Y - FILE.h - FOLDER.y; // from the folder's height to where it lands
       b.add(el, { opacity: [0, 1] }, at, 0.15, 'linear');
       b.add(el, { x: [FOLDER.cx - FILES[i].cx, 0] }, at, drop * 0.7, M.eEnter);
       // Fall, then a small bounce on landing.
@@ -49,7 +48,6 @@ const card: Card = {
     // 3 · They merge into one context
     files.forEach((el, i) => b.add(el, { x: [0, PILE_CX - FILES[i].cx], scale: [1, 0.7], opacity: [1, 0] }, t + i * 0.08, M.enter, M.eExit));
     b.pop(merged, t + M.enter * 0.8);
-    b.undraw(q('#cta-floor'), t + M.enter * 0.8);
     t += M.enter + M.emphasis + M.hold * 0.5;
 
     // 4 · Down the pipe to the agent
@@ -77,7 +75,7 @@ const card: Card = {
   still(q) {
     show([...q.all('.cta-file'), q('#cta-agent'), q('#cta-agent-name'), q('#cta-output'), ...q.all('.cta-out-line'), ...q.all('.mark')]);
     untransform(q.all('.mark'));
-    drawn([q('#cta-floor'), q('#cta-pipe'), q('#cta-pipe-core'), q('#cta-out-wire')]);
+    drawn([q('#cta-pipe'), q('#cta-pipe-core'), q('#cta-out-wire')]);
   },
 };
 
@@ -91,7 +89,6 @@ export function ContextToAgent() {
       viewBox="0 0 560 250"
       label="A design system opens into well-ordered files — tokens, AGENTS.md, a component contract, an ADR. They merge into one context, travel through a pipe to an agent, and the agent's output comes back with every check passed: design system, metrics, accessibility."
     >
-      <path id="cta-floor" className="wire" data-stroke d={`M12 ${FLOOR_Y} H296`} />
       {/* The pipe: a wide dark stroke with a page-colored core drawn over it reads as a hollow tube */}
       <path id="cta-pipe" data-stroke d={PIPE} fill="none"
         style={{ stroke: 'var(--helix-color-border-neutral-dark)', strokeWidth: 14, strokeLinecap: 'round' }} />

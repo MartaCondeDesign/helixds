@@ -24,6 +24,47 @@
 }
 .illustration svg { display: block; width: 100%; height: auto; overflow: visible; }
 
+.motion-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--helix-spacing-l);
+}
+
+.motion-comparison-card {
+  border: 1px solid var(--helix-color-border-neutral-light);
+  border-radius: var(--helix-radius-m);
+  padding: var(--helix-spacing-l);
+  background: var(--helix-color-fill-page);
+}
+
+.motion-comparison-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--helix-spacing-2xs);
+  margin-bottom: var(--helix-spacing-m);
+  color: var(--helix-color-text-neutral);
+}
+
+.motion-comparison-heading span,
+.motion-comparison-card p {
+  margin: 0;
+  color: var(--helix-color-text-neutral-light);
+  font-size: var(--helix-textStyle-body-s-regular-fontSize);
+}
+
+.comparison-node { fill: var(--helix-color-fill-primary); }
+
+.comparison-stroke {
+  fill: none;
+  stroke: var(--helix-color-text-primary);
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+@media (max-width: 700px) {
+  .motion-comparison { grid-template-columns: 1fr; }
+}
+
 /* Shared drawing vocabulary */
 .illustration .ink    { fill: var(--helix-color-text-neutral); }
 .illustration .muted  { fill: var(--helix-color-text-neutral-light); }
@@ -52,3 +93,30 @@
 .illustration .on-warning { fill: var(--helix-color-text-warning); }
 .illustration .on-danger  { fill: var(--helix-color-text-danger); }
 .illustration .on-info    { fill: var(--helix-color-text-info); }
+
+/* Concept tiles — the minimal, one-shape-per-idea style (motion.dev's feature grid as visual reference). */
+.illustration--bare { border: 0; border-radius: 0; padding: 0; background: none; max-width: none; }
+.concept-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  max-width: 960px;
+  border-top: 1px solid var(--helix-color-border-neutral-light);
+  border-left: 1px solid var(--helix-color-border-neutral-light);
+}
+.concept-tile {
+  border-right: 1px solid var(--helix-color-border-neutral-light);
+  border-bottom: 1px solid var(--helix-color-border-neutral-light);
+  padding: var(--helix-spacing-l);
+  background: var(--helix-color-fill-page);
+}
+.concept-tile:nth-child(even) { background: var(--helix-color-fill-surface); }
+.concept-tile-index {
+  margin: var(--helix-spacing-m) 0 var(--helix-spacing-2xs);
+  font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--helix-color-text-neutral-light);
+}
+.concept-tile h2 { margin: 0 0 var(--helix-spacing-2xs); font-size: 18px; font-weight: 600; color: var(--helix-color-text-neutral); }
+.concept-tile p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--helix-color-text-neutral-light); }
+.illustration .shape  { fill: var(--helix-color-fill-primary); }
+.illustration .track  { fill: none; stroke: var(--helix-color-border-neutral-light); stroke-width: 6; }
+.illustration .ring   { fill: none; stroke: var(--helix-color-fill-primary); stroke-width: 6; stroke-linecap: round; }

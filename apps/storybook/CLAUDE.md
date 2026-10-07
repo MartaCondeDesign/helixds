@@ -158,8 +158,7 @@ see [ADR-024](../../docs/ADR/ADR-024-illustration-motion.md). Each illustration 
   The story itself still opens with a `StoryHeader`, like every story.
 - **Timing comes from `--helix-illustration-motion-*`** (`illustrations.css`), never from the component
   `duration`/`easing` tokens. Colors are Helix tokens as everywhere else.
-- **Motion animates, GSAP only draws strokes** (`b.draw` / `b.undraw`); Motion is the single clock.
-  Never import `gsap` outside this folder.
+- **Motion animates every effect**, including SVG strokes (`b.draw` / `b.undraw`); it is the single clock.
 - **Never real component names in a "list of components"** — use ghost bars (`.bar`), like the Status
   Health illustration.
 - `still()` is what reduced motion shows (OS setting or the toolbar's "Motion: reduced"): the finished

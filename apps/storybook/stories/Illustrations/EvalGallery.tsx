@@ -69,7 +69,7 @@ const card: Card = {
   },
 };
 
-// Viewfinder corners around the button (strokes → GSAP).
+// Viewfinder corners around the button (strokes, drawn by the runtime with Motion).
 const corners = ['M200 92 V76 H216', 'M344 76 H360 V92', 'M360 138 V154 H344', 'M216 154 H200 V138'];
 
 export function EvalGallery() {

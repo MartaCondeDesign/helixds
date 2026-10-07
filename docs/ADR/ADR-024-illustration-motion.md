@@ -1,4 +1,4 @@
-# ADR-024 — Illustration motion: own tokens, Motion for effects, GSAP for strokes
+# ADR-024 — Illustration motion: own tokens, Motion for everything
 
 **Date:** 2026-10-07
 **Status:** Accepted — extends [ADR-007](ADR-007-motion-engine.md) (does not change it for components)
@@ -21,10 +21,11 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
 
 1. Reusing `semantic.duration.*` / `semantic.easing.*` would blur both scales — a 2.2s "hold" has no place
    next to a 120ms hover, and tuning one would silently change the other.
-2. Motion animates SVG strokes only through raw `stroke-dashoffset`, and writes it as an attribute while
-   transforms go to inline style — the first prototype's connector lines never drew because a reset had
-   used the other channel. GSAP's DrawSVG plugin is built for exactly this (`drawSVG: '0%' → '100%'`,
-   partial segments, retracting toward either end) and handles it in one line.
+2. Drawing SVG strokes needed care: Motion writes some properties as SVG attributes and others as inline
+   style, and the first prototype's connector lines never drew because a reset had used the other channel.
+   GSAP's DrawSVG was tried for strokes and then dropped: one engine is simpler, and GSAP's license isn't
+   OSI open source. The runtime now draws strokes with Motion itself, through an explicit
+   `stroke-dasharray` / `stroke-dashoffset` in px measured from the path's own length.
 
 ## Decision
 
@@ -33,21 +34,17 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
    (`prototypes/explainers/illustration-motion.tokens.json`, CSS vars `--helix-illustration-motion-*`).
    Illustrations read only these; components never read them, and illustrations never read
    `semantic.duration.*` / `semantic.easing.*`.
-2. **Engines, by job:**
-   - **Motion** — every effect in an illustration (opacity, scale, move, recolor, shape morph via
-     `attrX`/`attrY`/`width`/`height`/`rx`) and the **single clock** of the timeline.
-   - **GSAP + DrawSVG** — **only** for drawing / undrawing SVG strokes in illustrations.
-   - The two are combined, not run side by side: GSAP's timeline stays paused and Motion drives it
-     (`motionValue` → `gsapTimeline.time(v)`), so pause, seek, loop and off-screen pausing stay one control.
-     Implemented once in `prototypes/explainers/explainer.js` (`b.draw()` / `b.undraw()`).
-3. **Boundary: GSAP never enters `packages/core`.** GSAP is free but ships under Webflow's own license,
-   not an OSI open-source license (GitHub reports no SPDX license for `greensock/GSAP`); Motion is MIT.
-   Keeping GSAP to illustrations means the component library stays 100% MIT for anyone adopting Helix.
-   Components keep using Motion only, as ADR-007 says.
-4. An illustration is **only the animation**: no title, caption or Pause button inside the box, on a
+2. **One engine: Motion** — every effect in an illustration (opacity, scale, move, recolor, shape morph via
+   `attrX`/`attrY`/`width`/`height`/`rx`) **and SVG strokes**, on a single timeline that is also the clock
+   for looping, seeking and off-screen pausing.
+   - Strokes go through the runtime's `b.draw()` / `b.undraw()` (and `drawn()` for the still picture),
+     which set `stroke-dasharray` to the path's `getTotalLength()` and animate `stroke-dashoffset` in px.
+     Never animate a stroke by hand with `pathLength` or a unitless dashoffset.
+   - Same engine as components (ADR-007), so Helix has a single animation dependency, MIT-licensed.
+3. An illustration is **only the animation**: no title, caption or Pause button inside the box, on a
    plain `fill.page` background. The runtime still honors `prefers-reduced-motion` (shows the finished
    picture, no animation) and pauses when the illustration is off-screen. Captions and a Pause button
-   remain optional hooks in the runtime (`.cap`, `.explainer-toggle`), off by default.
+   remain optional hooks in the prototype runtime (`.cap`, `.explainer-toggle`), off by default.
    **Accessibility trade-off:** a loop longer than 5s that plays next to other content needs a way to
    pause it (WCAG 2.2.2). Without a button in the box, the page or medium that hosts the illustration
    owns that — e.g. a video/GIF player's own controls, or turning the optional toggle back on when it's
@@ -55,12 +52,10 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
 
 ## Consequences
 
-- One more dependency for illustrations (GSAP core + DrawSVG + CustomEase, loaded only on pages that draw
-  strokes). CustomEase lets GSAP use the same cubic-bezier token values as Motion.
-- A stroke animation written with Motion (`strokeDashoffset`/`pathLength`) in an illustration is a
-  violation of this rule; so is any `gsap` import under `packages/`.
-- Illustrations live in Storybook's **Assets → Illustrations** section (next to Assets → Icons) (`apps/storybook/stories/Illustrations/`,
-  shared runtime `runtime.ts`); GSAP is a dependency of `apps/storybook` only. `illustration.motion.*`
+- No extra dependency: illustrations use the `motion` package Storybook and core already have.
+- A stroke animated outside `b.draw()` / `b.undraw()` in an illustration is a violation of this rule.
+- Illustrations live in Storybook's **Assets → Illustrations** section (next to Assets → Icons)
+  (`apps/storybook/stories/Illustrations/`, shared runtime `runtime.ts`). `illustration.motion.*`
   is defined there as CSS custom properties (`illustrations.css`) for now; when the family settles it moves
   into `tokens.json` as its own top-level family (not under `semantic`), and `pnpm docs:token-exceptions`
   applies to it like any other. `prototypes/explainers/` holds the first standalone experiments.

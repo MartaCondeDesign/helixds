@@ -16,11 +16,13 @@ const isReduced = () =>
   document.documentElement.classList.contains('sb-reduced-motion');
 
 /** One explainer illustration: just the animation, in a plain box. */
-export function Illustration({ card, label, viewBox, children }: {
+export function Illustration({ card, label, viewBox, bare = false, children }: {
   card: Card;
   /** What the whole animation shows, for screen readers. */
   label: string;
   viewBox: string;
+  /** No box of its own — for illustrations placed inside another frame (e.g. a concept tile). */
+  bare?: boolean;
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -32,7 +34,7 @@ export function Illustration({ card, label, viewBox, children }: {
   }, [card, reduced]);
 
   return (
-    <div ref={ref} className="illustration">
+    <div ref={ref} className={bare ? 'illustration illustration--bare' : 'illustration'}>
       <svg viewBox={viewBox} role="img" aria-label={label}>
         <g className="art">{children}</g>
       </svg>

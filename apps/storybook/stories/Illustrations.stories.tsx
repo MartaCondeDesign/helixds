@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ReactNode } from 'react';
 import { StoryHeader } from './_shared/StoryHeader';
+import { ConceptTiles as ConceptTilesArt } from './Illustrations/ConceptTiles';
 import { ComponentContract as ComponentContractArt } from './Illustrations/ComponentContract';
 import { AgentsMd as AgentsMdArt } from './Illustrations/AgentsMd';
 import { ContextToAgent as ContextToAgentArt } from './Illustrations/ContextToAgent';
@@ -9,8 +10,9 @@ import { EvalGallery as EvalGalleryArt } from './Illustrations/EvalGallery';
 import { StatusHealth as StatusHealthArt } from './Illustrations/StatusHealth';
 
 // Animated explainers for design-system concepts (ADR-024). Each one is only the animation — no title or
-// caption inside the box. Timing comes from the illustration.motion.* tokens; Motion animates, GSAP
-// draws strokes. With reduced motion (OS setting or the toolbar toggle) they show the finished picture.
+// caption inside the box. Timing comes from the illustration.motion.* tokens; Motion animates every
+// effect, including SVG strokes. With reduced motion (OS setting or the toolbar toggle) they show the
+// finished picture.
 const meta: Meta = {
   title: 'Assets/Illustrations',
   parameters: { layout: 'padded' },
@@ -26,6 +28,12 @@ const page = (title: string, description: string, illustration: ReactNode): Stor
     </div>
   ),
 });
+
+export const ConceptTiles = page(
+  'Concept Tiles',
+  'The minimal style: one shape per idea in a short loop, with its name and one line underneath — token, contract, eval and context.',
+  <ConceptTilesArt />,
+);
 
 export const ComponentContract = page(
   'Component Contract',
