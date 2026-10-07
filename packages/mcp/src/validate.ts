@@ -1,6 +1,6 @@
 /**
  * Validates a JSX/TSX snippet before an agent writes it to disk:
- *   - problems   @helix/eslint-plugin rules (wrong import path, anti-synonym props, raw colors, native
+ *   - problems   @helixds/eslint-plugin rules (wrong import path, anti-synonym props, raw colors, native
  *                controls), each with its fix or suggestions
  *   - fixedCode  the snippet with every safe auto-fix applied (null when nothing changed)
  *   - advisories the eval suite's global checks the linter doesn't cover (raw <div> layout, raw Tabler
@@ -8,7 +8,7 @@
  */
 import { ESLint, type Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
-import helix from '@helix/eslint-plugin';
+import helix from '@helixds/eslint-plugin';
 import { GLOBAL_CHECKS } from '../../../scripts/eval-lib.ts';
 
 // Already reported (with fixes) by the lint rules above — don't say the same thing twice.

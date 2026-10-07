@@ -1,4 +1,4 @@
-// Helix DS — @helix/react
+// Helix DS — @helixds/react
 // Components
 export { Button }     from './components/Button';
 export { IconButton } from './components/IconButton';

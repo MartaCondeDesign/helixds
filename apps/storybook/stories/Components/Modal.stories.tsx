@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Modal, ModalDoc, Button } from '@helix/react';
+import { Modal, ModalDoc, Button } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Modal> = {

@@ -44,10 +44,14 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
    not an OSI open-source license (GitHub reports no SPDX license for `greensock/GSAP`); Motion is MIT.
    Keeping GSAP to illustrations means the component library stays 100% MIT for anyone adopting Helix.
    Components keep using Motion only, as ADR-007 says.
-4. Everything ADR-007 and ADR-018 require of motion still applies to illustrations: honor
-   `prefers-reduced-motion` (show the finished picture, no animation), and — because they loop for longer
-   than 5s — a visible Pause control (WCAG 2.2.2). The shared runtime provides both, plus pausing when
-   the illustration is off-screen.
+4. An illustration is **only the animation**: no title, caption or Pause button inside the box, on a
+   plain `fill.page` background. The runtime still honors `prefers-reduced-motion` (shows the finished
+   picture, no animation) and pauses when the illustration is off-screen. Captions and a Pause button
+   remain optional hooks in the runtime (`.cap`, `.explainer-toggle`), off by default.
+   **Accessibility trade-off:** a loop longer than 5s that plays next to other content needs a way to
+   pause it (WCAG 2.2.2). Without a button in the box, the page or medium that hosts the illustration
+   owns that — e.g. a video/GIF player's own controls, or turning the optional toggle back on when it's
+   embedded in a docs page.
 
 ## Consequences
 
@@ -55,6 +59,8 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
   strokes). CustomEase lets GSAP use the same cubic-bezier token values as Motion.
 - A stroke animation written with Motion (`strokeDashoffset`/`pathLength`) in an illustration is a
   violation of this rule; so is any `gsap` import under `packages/`.
-- `illustration.motion.*` lives in the prototype folder for now. When explainers move into Storybook or
-  their own package, the tokens move into `tokens.json` as their own top-level family (not under
-  `semantic`), and `pnpm docs:token-exceptions` applies to them like any other.
+- Illustrations live in Storybook's **Illustrations** section (`apps/storybook/stories/Illustrations/`,
+  shared runtime `runtime.ts`); GSAP is a dependency of `apps/storybook` only. `illustration.motion.*`
+  is defined there as CSS custom properties (`illustrations.css`) for now; when the family settles it moves
+  into `tokens.json` as its own top-level family (not under `semantic`), and `pnpm docs:token-exceptions`
+  applies to it like any other. `prototypes/explainers/` holds the first standalone experiments.

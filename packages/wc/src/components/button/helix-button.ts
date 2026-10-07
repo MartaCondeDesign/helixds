@@ -5,7 +5,7 @@ export type HelixButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type HelixButtonSize = 's' | 'm' | 'l';
 
 /**
- * `<helix-button>` — pilot Web Components equivalent of `@helix/react`'s `Button` (ADR-015).
+ * `<helix-button>` — pilot Web Components equivalent of `@helixds/react`'s `Button` (ADR-015).
  * CSS ported from `globals.css`'s `[data-helix-part="button"]` block into `static styles`.
  *
  * The React version's press-scale feedback comes from the `motion` library (ADR-007), a React-only

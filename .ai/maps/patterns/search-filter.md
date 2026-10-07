@@ -26,7 +26,7 @@ when: "Filtering a list or table with a search field + optional filter buttons."
 
 ```tsx
 import { useState } from 'react';
-import { Input, Button, Chip } from '@helix/react';
+import { Input, Button, Chip } from '@helixds/react';
 import { IconSearch } from '@tabler/icons-react';
 // icon/iconEnd take the Tabler icon component by reference — never a pre-instantiated
 // element like `icon={<IconSearch size={16} />}` — see root CLAUDE.md rule 2.

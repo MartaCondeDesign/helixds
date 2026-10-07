@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
-import { Checkbox, CheckboxDoc } from '@helix/react';
+import { Checkbox, CheckboxDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Checkbox> = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Badge, Button, Card, Chart, IconButton, Input, SegmentedControl, Table, TableCell, TableHead, TableHeaderCell } from '@helix/react';
+import { Badge, Button, Card, Chart, IconButton, Input, SegmentedControl, Table, TableCell, TableHead, TableHeaderCell } from '@helixds/react';
 import rawSnapshot from '../../../quality/dashboard.json';
 import history from '../../../quality/history.json';
 import rawChangelog from '../../../.ai/maps/changelog.json';

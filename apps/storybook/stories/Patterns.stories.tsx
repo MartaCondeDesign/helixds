@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Button, Input, Badge, Card, Chip } from '@helix/react';
+import { Button, Input, Badge, Card, Chip } from '@helixds/react';
 import {
   IconPlus,
   IconUpload,

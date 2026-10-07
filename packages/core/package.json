@@ -1,5 +1,5 @@
 {
-  "name": "@helix/react",
+  "name": "@helixds/react",
   "version": "0.1.0",
   "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
   "main": "./dist/index.js",
@@ -26,7 +26,7 @@
     "react-dom": ">=19.0.0"
   },
   "dependencies": {
-    "@helix/tokens": "workspace:*",
+    "@helixds/tokens": "workspace:*",
     "@tabler/icons-react": "^3.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",

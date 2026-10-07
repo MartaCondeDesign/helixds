@@ -1,4 +1,4 @@
-# @helix/mcp
+# @helixds/mcp
 
 Helix as native tools for AI agents, over the Model Context Protocol — instead of shelling out to
 `pnpm helix …` or reading Markdown.
@@ -14,7 +14,7 @@ Helix as native tools for AI agents, over the Model Context Protocol — instead
 | `helix_get_pattern` | A documented composition pattern (`group-spacing`, `show-hide-parts`…) |
 
 All tools are read-only. They read the same sources as the CLI (`scripts/helix-query-lib.ts`) and the linter
-(`@helix/eslint-plugin`), so there is no second copy of the documentation to drift.
+(`@helixds/eslint-plugin`), so there is no second copy of the documentation to drift.
 
 ## Use it
 
@@ -42,7 +42,7 @@ instead of inventing one.
 ## Test
 
 ```bash
-pnpm --filter @helix/mcp test
+pnpm --filter @helixds/mcp test
 ```
 
 Starts the real server over stdio and calls every tool with the official MCP client.

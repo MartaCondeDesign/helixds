@@ -40,7 +40,7 @@ if (!fs.existsSync(tracesDir)) {
 
 // Perform simple governance diagnosis
 const canIt = !/#[0-9a-fA-F]{3,8}/.test(generatedCode) && !['onClick', 'isLoading', 'isDisabled'].some(syn => generatedCode.includes(syn));
-const shouldIt = !/<button[\s>]/.test(generatedCode) || generatedCode.includes('@helix/react');
+const shouldIt = !/<button[\s>]/.test(generatedCode) || generatedCode.includes('@helixds/react');
 const mayIt = !generatedCode.includes('// [CUSTOM]') || /\/\/\s*\[CUSTOM\]\s+\w+/.test(generatedCode);
 
 const traceRecord = {

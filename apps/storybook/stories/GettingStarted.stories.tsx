@@ -174,9 +174,9 @@ export const Overview: Story = {
           </thead>
           <tbody>
             {[
-              ['Token', '`packages/tokens/src/tokens.json`', '`pnpm --filter @helix/tokens build` and `pnpm verify:tokens`'],
-              ['Core component', '`packages/core/src/components/<Name>/...`', '`pnpm --filter @helix/react build`, `pnpm verify:contract`, `pnpm verify:props`'],
-              ['Storybook docs', '`apps/storybook/stories/**/*.stories.tsx`', '`pnpm sb` and `pnpm --filter @helix/storybook build`'],
+              ['Token', '`packages/tokens/src/tokens.json`', '`pnpm --filter @helixds/tokens build` and `pnpm verify:tokens`'],
+              ['Core component', '`packages/core/src/components/<Name>/...`', '`pnpm --filter @helixds/react build`, `pnpm verify:contract`, `pnpm verify:props`'],
+              ['Storybook docs', '`apps/storybook/stories/**/*.stories.tsx`', '`pnpm sb` and `pnpm --filter @helixds/storybook build`'],
               ['New component', '`pnpm contract <ComponentName>`', 'Fill the generated contract and the matching eval prompt stub'],
               ['Prop vocabulary', '`.ai/maps/prop-map.md`', '`pnpm verify:props`'],
             ].map(([change, edit, verify]) => (

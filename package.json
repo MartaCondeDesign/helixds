@@ -1,5 +1,5 @@
 {
-  "name": "helix-ds",
+  "name": "helixds",
   "private": true,
   "version": "0.1.0",
   "description": "Helix Design System — AI-ready, built on native HTML elements + Tailwind v4 + Tabler Icons",
@@ -55,7 +55,7 @@
     "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },
   "devDependencies": {
-    "@helix/eslint-plugin": "workspace:^",
+    "@helixds/eslint-plugin": "workspace:^",
     "@types/node": "^20.0.0",
     "eslint": "^9",
     "husky": "^9.1.7",

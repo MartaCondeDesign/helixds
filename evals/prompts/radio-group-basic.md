@@ -12,7 +12,7 @@ A plan must be chosen before the form submits.
 
 # Success criteria
 
-- [ ] Imports `RadioGroup` from `@helix/react`
+- [ ] Imports `RadioGroup` from `@helixds/react`
 - [ ] Uses `label=` for the heading
 - [ ] Passes the plans as `options=` with `value` and `label`
 - [ ] Holds the choice via `value=` and `onChange=`
@@ -31,7 +31,7 @@ A plan must be chosen before the form submits.
 
 ```tsx
 import { useState } from 'react';
-import { RadioGroup } from '@helix/react';
+import { RadioGroup } from '@helixds/react';
 
 const PLANS = [
   { value: 'free', label: 'Free' },

@@ -182,7 +182,7 @@ fs.writeFileSync(tokensPath, lines.join('\n'));
 console.log(`✅ Added '${dotPath}'`);
 console.log(`\nNext:`);
 console.log(`  1. git diff packages/tokens/src/tokens.json — confirm only the new line(s) changed`);
-console.log(`  2. pnpm --filter @helix/tokens build`);
+console.log(`  2. pnpm --filter @helixds/tokens build`);
 console.log(`  3. pnpm verify:tokens   # confirm the whole file is still clean`);
 console.log(`  4. Sync to Figma: .ai/skills/tokens-to-figma.md → "Entry C — single token addition"`);
 console.log(`  5. Add it to apps/storybook/stories/Foundation.stories.tsx (ColorSemantic story)`);

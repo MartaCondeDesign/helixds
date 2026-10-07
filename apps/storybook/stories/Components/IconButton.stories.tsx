@@ -8,7 +8,7 @@ import {
   IconPencil,
   IconSettings,
 } from '@tabler/icons-react';
-import { IconButton, IconButtonDoc } from '@helix/react';
+import { IconButton, IconButtonDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof IconButton> = {

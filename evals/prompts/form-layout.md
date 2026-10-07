@@ -15,7 +15,7 @@ Build a login form using Helix DS with:
 
 # Success criteria
 
-- [ ] Uses `Input` from `@helix/react` for both fields
+- [ ] Uses `Input` from `@helixds/react` for both fields
 - [ ] Input `label` prop provided (required for a11y)
 - [ ] Error state uses `invalid` prop (not `hasError` or `isError`)
 - [ ] Error message uses `errorMessage` prop on Input
@@ -37,7 +37,7 @@ Build a login form using Helix DS with:
 # Expected output shape
 
 ```tsx
-import { Input, Button, Badge } from '@helix/react';
+import { Input, Button, Badge } from '@helixds/react';
 
 function LoginForm() {
   const [email, setEmail] = useState('');

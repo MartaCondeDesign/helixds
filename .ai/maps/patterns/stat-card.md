@@ -31,7 +31,7 @@ expecting an import.
 ## Code
 
 ```tsx
-import { Card, Badge } from '@helix/react';
+import { Card, Badge } from '@helixds/react';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
 
 type Trend = 'up' | 'down';

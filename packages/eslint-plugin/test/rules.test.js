@@ -13,7 +13,7 @@ RuleTester.itOnly = it.only;
 const tester = new RuleTester({
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module', parserOptions: { ecmaFeatures: { jsx: true } } },
 });
-const helix = "import { Button, Badge, Card, Input } from '@helix/react';\n";
+const helix = "import { Button, Badge, Card, Input } from '@helixds/react';\n";
 
 tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
   valid: [
@@ -36,13 +36,13 @@ tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
       errors: [{ messageId: 'prop' }],
     },
     {
-      code: "import * as Helix from '@helix/react';\n<Helix.Button onPress={save} />",
-      output: "import * as Helix from '@helix/react';\n<Helix.Button onClick={save} />",
+      code: "import * as Helix from '@helixds/react';\n<Helix.Button onPress={save} />",
+      output: "import * as Helix from '@helixds/react';\n<Helix.Button onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
-      code: "import { Button as B } from '@helix/react';\n<B onPress={save} />",
-      output: "import { Button as B } from '@helix/react';\n<B onClick={save} />",
+      code: "import { Button as B } from '@helixds/react';\n<B onPress={save} />",
+      output: "import { Button as B } from '@helixds/react';\n<B onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
@@ -53,8 +53,8 @@ tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
     },
     {
       // A look-alike import is still checked as Helix (import-source reports the path itself).
-      code: "import { Button } from '@helix/react';\n<Button onPress={save} />",
-      output: "import { Button } from '@helix/react';\n<Button onClick={save} />",
+      code: "import { Button } from '@helixds/react';\n<Button onPress={save} />",
+      output: "import { Button } from '@helixds/react';\n<Button onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
@@ -72,29 +72,35 @@ tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
 
 tester.run('import-source', plugin.rules['import-source'], {
   valid: [
-    "import { Button } from '@helix/react';",
-    "import { tokens } from '@helix/tokens';",
-    "import helix from '@helix/eslint-plugin';",
-    "import '@helix/react/globals.css';",
-    "import '@helix/wc';",
+    "import { Button } from '@helixds/react';",
+    "import { tokens } from '@helixds/tokens';",
+    "import helix from '@helixds/eslint-plugin';",
+    "import '@helixds/react/globals.css';",
+    "import '@helixds/wc';",
     "import { Button } from './helix/button';",
   ],
   invalid: [
     {
       // Helix's former package name (ADR-023) is now a look-alike — fixed to the new one.
       code: "import { Button, toast } from '@helix-ds/core';",
-      output: "import { Button, toast } from '@helix/react';",
+      output: "import { Button, toast } from '@helixds/react';",
+      errors: [{ messageId: 'source' }],
+    },
+    {
+      // The package `bare` agents guess most (ADR-023) — a look-alike, fixed to the real one.
+      code: "import { Button } from '@helix/react';",
+      output: "import { Button } from '@helixds/react';",
       errors: [{ messageId: 'source' }],
     },
     {
       code: 'import { Button } from "helix-ds";',
-      output: 'import { Button } from "@helix/react";',
+      output: 'import { Button } from "@helixds/react";',
       errors: [{ messageId: 'source' }],
     },
     {
-      code: "import { Button, Spinner } from '@helix/components';",
+      code: "import { Button, Spinner } from '@helixds/components';",
       output: null,
-      errors: [{ messageId: 'unknown', data: { source: '@helix/components', names: '`Spinner`' } }],
+      errors: [{ messageId: 'unknown', data: { source: '@helixds/components', names: '`Spinner`' } }],
     },
   ],
 });

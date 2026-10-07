@@ -12,7 +12,7 @@ chips the user can remove one by one.
 
 # Success criteria
 
-- [ ] Imports `Chip` from `@helix/react`
+- [ ] Imports `Chip` from `@helixds/react`
 - [ ] Uses `label` prop for the chip text (not `children`)
 - [ ] Makes them removable with `dismissible` (not `removable=`, `closable=`)
 - [ ] Removes a filter through `onDismiss` (not `onClose`, `onRemove`)
@@ -33,7 +33,7 @@ chips the user can remove one by one.
 
 ```tsx
 import { useState } from 'react';
-import { Chip } from '@helix/react';
+import { Chip } from '@helixds/react';
 
 function ActiveFilters() {
   const [filters, setFilters] = useState(['In stock', 'On sale', 'New']);

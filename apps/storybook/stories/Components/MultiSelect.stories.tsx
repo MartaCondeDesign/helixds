@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
-import { MultiSelect, MultiSelectDoc } from '@helix/react';
+import { MultiSelect, MultiSelectDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const SKILLS = [

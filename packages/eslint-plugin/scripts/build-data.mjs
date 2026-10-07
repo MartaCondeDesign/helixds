@@ -8,10 +8,10 @@
  *   props          contracts/components/*.json    every Helix component's documented props
  *   colors         packages/tokens/src/tokens.json  light-mode hex → semantic color CSS variables
  *   primitives     packages/tokens/src/tokens.json  "blue-600" → hex, to map Tailwind palette classes
- *   coreExports    packages/core/src/index.ts      every name @helix/react really exports (values + types)
- *   packages       packages/<dir>/package.json     the real @helix/* package names
+ *   coreExports    packages/core/src/index.ts      every name @helixds/react really exports (values + types)
+ *   packages       packages/<dir>/package.json     the real @helixds/* package names
  *
- * Run: pnpm --filter @helix/eslint-plugin build:data  (the test suite fails if data.json is stale)
+ * Run: pnpm --filter @helixds/eslint-plugin build:data  (the test suite fails if data.json is stale)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -83,7 +83,7 @@ for (const [surface, group] of Object.entries(tokens.semantic.color)) {
   }
 }
 
-// ── @helix/react exports ──────────────────────────────────────────────────
+// ── @helixds/react exports ──────────────────────────────────────────────────
 const coreExports = new Set();
 for (const m of read('packages/core/src/index.ts').matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)) {
   for (const spec of m[1].split(',')) {
@@ -92,12 +92,12 @@ for (const m of read('packages/core/src/index.ts').matchAll(/export\s+(?:type\s+
   }
 }
 
-// ── real @helix packages ─────────────────────────────────────────────────
+// ── real @helixds packages ─────────────────────────────────────────────────
 const packages = fs.readdirSync(path.join(root, 'packages'))
   .map(dir => path.join(root, 'packages', dir, 'package.json'))
   .filter(file => fs.existsSync(file))
   .map(file => JSON.parse(fs.readFileSync(file, 'utf8')).name)
-  .filter(name => name?.startsWith('@helix/'))
+  .filter(name => name?.startsWith('@helixds/'))
   .sort();
 
 const data = { antiSynonyms, valueSynonyms, props, colors, primitives, coreExports: [...coreExports].sort(), packages };

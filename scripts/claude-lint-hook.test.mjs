@@ -32,7 +32,7 @@ describe('claude-lint-hook', () => {
   });
 
   it('stays silent once the file is fixed', () => {
-    fs.writeFileSync(tmp, "import { Button } from '@helix/react';\nexport const Save = () => <Button onClick={() => {}}>Save</Button>;\n");
+    fs.writeFileSync(tmp, "import { Button } from '@helixds/react';\nexport const Save = () => <Button onClick={() => {}}>Save</Button>;\n");
     assert.equal(runHook(tmp, 'Edit'), null);
   });
 

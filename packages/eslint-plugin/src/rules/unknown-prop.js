@@ -7,7 +7,7 @@
  * The contract is the source of truth: a prop is valid if the component's contract lists it, or if it's a
  * standard HTML/React attribute every Helix component passes through to its element (id, aria-*, data-*,
  * DOM events…). prop-vocabulary already reports — and fixes — known anti-synonyms (`isPending` → `isLoading`),
- * so those are skipped here instead of reported twice. Only on components imported from @helix/react.
+ * so those are skipped here instead of reported twice. Only on components imported from @helixds/react.
  */
 import data from '../data.json' with { type: 'json' };
 import { helixImports } from '../helix-imports.js';

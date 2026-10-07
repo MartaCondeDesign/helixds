@@ -52,7 +52,7 @@ export function runLLMJudge(code: string, promptText: string): JudgeResult {
   // 2. Should it? (UX & Accessibility & Anti-patterns)
   const isCustom = code.includes('// [CUSTOM]');
   const usesRawButtons = /<button[\s>]/.test(code);
-  if (usesRawButtons && !code.includes('@helix/react')) {
+  if (usesRawButtons && !code.includes('@helixds/react')) {
     shouldIt = false;
     reasoning.push('Design judgment failure: Renders raw <button> without checking Helix <Button> component contract.');
   }

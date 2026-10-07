@@ -45,7 +45,7 @@ when: "A form with 2-6 fields, a submit action, and optional inline validation."
 
 ```tsx
 import { useState } from 'react';
-import { Input, Button, Badge } from '@helix/react';
+import { Input, Button, Badge } from '@helixds/react';
 import { IconMail, IconLock } from '@tabler/icons-react';
 
 function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: string }) => Promise<void> }) {

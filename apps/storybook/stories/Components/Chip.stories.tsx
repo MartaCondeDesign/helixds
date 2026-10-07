@@ -8,7 +8,7 @@ import {
   IconX,
   IconInfoCircle,
 } from '@tabler/icons-react';
-import { Chip, ChipDoc } from '@helix/react';
+import { Chip, ChipDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Chip> = {

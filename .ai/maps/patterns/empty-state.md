@@ -43,7 +43,7 @@ when: "The view has no data to display — first use, zero results, or filtered 
 ## Code
 
 ```tsx
-import { Button } from '@helix/react';
+import { Button } from '@helixds/react';
 import { IconFolderOpen } from '@tabler/icons-react';
 
 function EmptyState({

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
-import { CheckboxGroup, CheckboxGroupDoc } from '@helix/react';
+import { CheckboxGroup, CheckboxGroupDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const NOTIFICATION_OPTIONS = [

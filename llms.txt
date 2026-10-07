@@ -5,19 +5,19 @@
 
 ## Quick reference
 
-- Scope: @helix · Token prefix: --helix- · Data attribute prefix: data-helix-
+- Scope: @helixds · Token prefix: --helix- · Data attribute prefix: data-helix-
 - Prop vocabulary (canonical names + anti-synonyms): .ai/maps/prop-map.md
 - Rules for agents building with Helix: AGENTS.md
 
 ## Packages
 
-- @helix/react    — every component, plus globals.css (import '@helix/react/globals.css')
-- @helix/tokens  — tokens as CSS custom properties (import '@helix/tokens/helix.css') + TS constants
+- @helixds/react    — every component, plus globals.css (import '@helixds/react/globals.css')
+- @helixds/tokens  — tokens as CSS custom properties (import '@helixds/tokens/helix.css') + TS constants
 - Icons: @tabler/icons-react, always rendered through core's Icon component or a component's icon prop
 
 ## Components
 
-All import from '@helix/react'. Status (draft/beta/stable) is computed — contracts/stability.json
+All import from '@helixds/react'. Status (draft/beta/stable) is computed — contracts/stability.json
 (ADR-018). Full spec per component: contracts/components/{Name}.json. This list is generated from
 contracts/manifest.json on every commit.
 
@@ -104,7 +104,7 @@ Every color has a light and a dark value; all text/icon pairs are checked for WC
 ## Storybook
 
 - apps/storybook — Storybook 8 (React + Vite); stories in apps/storybook/stories/ (Components/, Layout/, Foundation/, Pages/)
-- dev server: pnpm --filter @helix/storybook dev (port 6006) · Status page = live quality table
+- dev server: pnpm --filter @helixds/storybook dev (port 6006) · Status page = live quality table
 
 ## AI context
 

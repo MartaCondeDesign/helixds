@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 import { IconLayoutDashboard, IconUsers, IconSettings } from '@tabler/icons-react';
-import { NavItem, NavItemDoc } from '@helix/react';
+import { NavItem, NavItemDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof NavItem> = {

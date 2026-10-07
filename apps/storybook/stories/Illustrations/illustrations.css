@@ -1,0 +1,54 @@
+/* Illustration motion tokens (ADR-024) — illustrations only, never components.
+   Mirrors prototypes/explainers/illustration-motion.tokens.json until the family moves into tokens.json. */
+:root {
+  --helix-illustration-motion-duration-enter: 450ms;
+  --helix-illustration-motion-duration-exit: 300ms;
+  --helix-illustration-motion-duration-emphasis: 500ms;
+  --helix-illustration-motion-duration-draw: 700ms;
+  --helix-illustration-motion-duration-recolor: 600ms;
+  --helix-illustration-motion-stagger: 120ms;
+  --helix-illustration-motion-hold: 2200ms;
+  --helix-illustration-motion-easing-enter: cubic-bezier(0.23, 1, 0.32, 1);
+  --helix-illustration-motion-easing-exit: cubic-bezier(0.77, 0, 0.175, 1);
+  --helix-illustration-motion-easing-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --helix-illustration-motion-easing-draw: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* The box: animation only, on the page fill. */
+.illustration {
+  background: var(--helix-color-fill-page);
+  border: 1px solid var(--helix-color-border-neutral-light);
+  border-radius: var(--helix-radius-l);
+  padding: var(--helix-spacing-l);
+  max-width: 960px;
+}
+.illustration svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Shared drawing vocabulary */
+.illustration .ink    { fill: var(--helix-color-text-neutral); }
+.illustration .muted  { fill: var(--helix-color-text-neutral-light); }
+.illustration .accent { fill: var(--helix-color-text-primary); }
+.illustration .mono   { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.illustration .sans   { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+.illustration .sheet  { fill: var(--helix-color-fill-page); stroke: var(--helix-color-border-neutral-dark); stroke-width: 1; }
+.illustration .rule   { stroke: var(--helix-color-border-neutral-light); stroke-width: 1; }
+.illustration .bar    { fill: var(--helix-color-border-neutral-light); }
+.illustration .wire   { fill: none; stroke: var(--helix-color-text-neutral-light); stroke-width: 1.5; }
+.illustration .pivot      { transform-box: fill-box; transform-origin: center; }
+.illustration .pivot-left { transform-box: fill-box; transform-origin: left center; }
+
+/* Check / cross marks — status icons use icon-* (CLAUDE.md rule 10) */
+.illustration .ok    { fill: var(--helix-color-icon-success); }
+.illustration .fail  { fill: var(--helix-color-icon-danger); }
+.illustration .empty { fill: none; stroke: var(--helix-color-border-neutral-dark); stroke-width: 1; }
+.illustration .glyph { fill: none; stroke: var(--helix-primitive-color-gray-0); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Tinted score / status chips — text on a tint uses text-* (rule 10's exception) */
+.illustration .tint-success { fill: var(--helix-color-fill-success-light); }
+.illustration .tint-warning { fill: var(--helix-color-fill-warning-light); }
+.illustration .tint-danger  { fill: var(--helix-color-fill-danger-interactive-light-default); }
+.illustration .tint-info    { fill: var(--helix-color-fill-info-light); }
+.illustration .on-success { fill: var(--helix-color-text-success); }
+.illustration .on-warning { fill: var(--helix-color-text-warning); }
+.illustration .on-danger  { fill: var(--helix-color-text-danger); }
+.illustration .on-info    { fill: var(--helix-color-text-info); }

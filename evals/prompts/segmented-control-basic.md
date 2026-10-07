@@ -12,7 +12,7 @@ active at a time and changing it updates the chart right away.
 
 # Success criteria
 
-- [ ] Imports `SegmentedControl` from `@helix/react`
+- [ ] Imports `SegmentedControl` from `@helixds/react`
 - [ ] Names the group with `label=` for screen readers
 - [ ] Passes the periods as `options=` with `value` and `label`
 - [ ] Holds the active period via `value=` and `onChange=` (not `onValueChange=`)
@@ -30,7 +30,7 @@ active at a time and changing it updates the chart right away.
 
 ```tsx
 import { useState } from 'react';
-import { SegmentedControl } from '@helix/react';
+import { SegmentedControl } from '@helixds/react';
 
 const PERIODS = [
   { value: 'day', label: 'Day' },

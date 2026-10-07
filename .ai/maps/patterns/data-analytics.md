@@ -1,6 +1,6 @@
 # Data Analytics
 
-Use `Chart` from `@helix/react`; it is the only approved renderer and applies the Helix ECharts theme.
+Use `Chart` from `@helixds/react`; it is the only approved renderer and applies the Helix ECharts theme.
 
 - `line`: trend across ordered dates or sequence.
 - `bar`: discrete-category comparison.

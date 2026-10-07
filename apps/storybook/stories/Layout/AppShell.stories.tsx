@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { IconLayoutDashboard, IconUsers, IconSettings, IconSearch, IconBell, IconBolt } from '@tabler/icons-react';
 import {
   AppShell, AppShellDoc, SideNav, TopBar, NavItem, Avatar, Input, IconButton, PageHeader, Icon,
-} from '@helix/react';
+} from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof AppShell> = {

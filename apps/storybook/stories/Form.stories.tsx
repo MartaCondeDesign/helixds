@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import {
   Button, Input, Textarea, Select, Checkbox, RadioGroup, Switch, Badge,
-} from '@helix/react';
+} from '@helixds/react';
 import {
   IconBolt, IconShieldCheck, IconUsers, IconCheck, IconArrowRight,
   IconMail, IconLock, IconBuilding, IconUser,

@@ -1,5 +1,5 @@
 // End-to-end: starts the real server over stdio and talks to it with the official MCP client — the same way
-// Claude Code or Cursor do. Run: pnpm --filter @helix/mcp test
+// Claude Code or Cursor do. Run: pnpm --filter @helixds/mcp test
 import { after, before, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
@@ -19,7 +19,7 @@ before(async () => {
 });
 after(() => client.close());
 
-describe('@helix/mcp', () => {
+describe('@helixds/mcp', () => {
   it('lists the five tools, all read-only', async () => {
     const { tools } = await client.listTools();
     assert.deepEqual(tools.map(t => t.name).sort(), ['helix_get_contract', 'helix_get_pattern', 'helix_list_components', 'helix_search_tokens', 'helix_validate_snippet']);
@@ -66,14 +66,14 @@ describe('@helix/mcp', () => {
     const { data } = await call('helix_validate_snippet', { code });
     assert.equal(data.valid, false);
     assert.deepEqual(data.problems.map((p: { rule: string }) => p.rule).sort(), ['helix/import-source', 'helix/no-raw-color', 'helix/prop-vocabulary']);
-    assert.match(data.fixedCode, /from '@helix\/react'/);
+    assert.match(data.fixedCode, /from '@helixds\/react'/);
     assert.match(data.fixedCode, /onClick=\{save\}/);
     assert.equal(data.remainingAfterFix.length, 1); // the raw color needs a human/agent choice of token
     assert.ok(data.advisories.some((a: { check: string }) => a.check === 'raw-div'));
   });
 
   it('helix_validate_snippet passes clean Helix code', async () => {
-    const { data } = await call('helix_validate_snippet', { code: "import { Button } from '@helix/react';\nexport const Save = () => <Button onClick={save}>Save</Button>;\n" });
+    const { data } = await call('helix_validate_snippet', { code: "import { Button } from '@helixds/react';\nexport const Save = () => <Button onClick={save}>Save</Button>;\n" });
     assert.equal(data.valid, true);
     assert.equal(data.fixedCode, null);
   });

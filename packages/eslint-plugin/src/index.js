@@ -1,9 +1,9 @@
 /**
- * @helix/eslint-plugin — flags Helix usage mistakes while the code is being written, in the editor,
+ * @helixds/eslint-plugin — flags Helix usage mistakes while the code is being written, in the editor,
  * instead of after the fact in CI or an eval run.
  *
  *   // eslint.config.js
- *   import helix from '@helix/eslint-plugin';
+ *   import helix from '@helixds/eslint-plugin';
  *   export default [helix.configs.recommended];
  */
 import propVocabulary from './rules/prop-vocabulary.js';
@@ -13,7 +13,7 @@ import importSource from './rules/import-source.js';
 import unknownProp from './rules/unknown-prop.js';
 
 const plugin = {
-  meta: { name: '@helix/eslint-plugin', version: '0.1.0' },
+  meta: { name: '@helixds/eslint-plugin', version: '0.1.0' },
   rules: {
     'import-source': importSource,
     'prop-vocabulary': propVocabulary,

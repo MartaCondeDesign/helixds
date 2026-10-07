@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 import { IconPlus, IconUserPlus, IconDownload, IconPencil } from '@tabler/icons-react';
-import { FAB, FABDoc } from '@helix/react';
+import { FAB, FABDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof FAB> = {

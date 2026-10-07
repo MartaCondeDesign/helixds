@@ -33,8 +33,8 @@
   },
   {
     "date": "2026-10-07",
-    "score": 0.6458106966075093,
-    "evalPassRate": 0.09561752988047809,
+    "score": 0.6266871906314138,
+    "evalPassRate": 0,
     "tokens": 763,
     "components": {
       "draft": 0,

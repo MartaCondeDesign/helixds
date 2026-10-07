@@ -146,3 +146,21 @@ component `inFigma: true`, and disappears just as automatically if that ever fli
 `StoryHeader` (`_shared/StoryHeader.tsx`) also accepts an optional `figmaUrl` prop for the same link,
 rendered next to the title on the Canvas view — pass it (via the same `figma-sync.json` lookup) on any
 story that builds its own custom header instead of going through `createComponentDocsParameters`.
+
+## Illustrations
+
+`Illustrations.stories.tsx` (last sidebar section) holds animated explainers for design-system concepts —
+see [ADR-024](../../docs/ADR/ADR-024-illustration-motion.md). Each illustration is a file in
+`stories/Illustrations/` that exports a component built on `<Illustration card={…}>`: an SVG plus a `Card`
+(`reset` / `script` / `still`) run by `runtime.ts`. Rules:
+
+- **Only the animation in the box** — no title, caption or button inside it, on a `fill.page` background.
+  The story itself still opens with a `StoryHeader`, like every story.
+- **Timing comes from `--helix-illustration-motion-*`** (`illustrations.css`), never from the component
+  `duration`/`easing` tokens. Colors are Helix tokens as everywhere else.
+- **Motion animates, GSAP only draws strokes** (`b.draw` / `b.undraw`); Motion is the single clock.
+  Never import `gsap` outside this folder.
+- **Never real component names in a "list of components"** — use ghost bars (`.bar`), like the Status
+  Health illustration.
+- `still()` is what reduced motion shows (OS setting or the toolbar's "Motion: reduced"): the finished
+  picture, not a blank box.

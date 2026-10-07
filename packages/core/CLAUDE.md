@@ -1,4 +1,4 @@
-# @helix/react — Agent Context
+# @helixds/react — Agent Context
 
 ## What this package contains
 

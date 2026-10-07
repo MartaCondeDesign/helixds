@@ -30,7 +30,7 @@ use case needs the same grouped-exclusive-choice behavior, not for one view swit
 
 ```tsx
 import { useState } from 'react';
-import { IconButton } from '@helix/react';
+import { IconButton } from '@helixds/react';
 import { IconTable, IconLayoutGrid } from '@tabler/icons-react';
 
 function ViewToggle({ view, onViewChange }: { view: 'table' | 'cards'; onViewChange: (v: 'table' | 'cards') => void }) {

@@ -1,5 +1,5 @@
 {
-  "name": "@helix/tokens",
+  "name": "@helixds/tokens",
   "version": "0.1.0",
   "description": "Helix Design System tokens — DTCG source → CSS custom properties + TypeScript constants",
   "main":    "./dist/index.ts",

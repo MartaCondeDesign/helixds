@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { IconTrash } from '@tabler/icons-react';
-import { Tooltip, TooltipDoc, IconButton, Avatar } from '@helix/react';
+import { Tooltip, TooltipDoc, IconButton, Avatar } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Tooltip> = {

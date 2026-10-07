@@ -11,8 +11,8 @@ predictable token structure, and machine-readable documentation.
 
 | Package               | Purpose                              | Install                         |
 |-----------------------|--------------------------------------|----------------------------------|
-| `@helix/react`      | All UI components                    | `pnpm add @helix/react`       |
-| `@helix/tokens`    | CSS tokens + TypeScript constants    | `pnpm add @helix/tokens`     |
+| `@helixds/react`      | All UI components                    | `pnpm add @helixds/react`       |
+| `@helixds/tokens`    | CSS tokens + TypeScript constants    | `pnpm add @helixds/tokens`     |
 
 Icons are [Tabler Icons](https://tabler.io/icons) (`@tabler/icons-react`, a peer dependency of core),
 always rendered through core's `Icon` component or a component's `icon` prop — never as a raw
@@ -30,8 +30,8 @@ ECharts options, or introduce another chart library. Choose `variant="line"`, `"
 
 ```tsx
 // app/layout.tsx or main.tsx
-import '@helix/tokens/helix.css';   // CSS custom properties
-import '@helix/react/globals.css';   // Tailwind base + component styles
+import '@helixds/tokens/helix.css';   // CSS custom properties
+import '@helixds/react/globals.css';   // Tailwind base + component styles
 ```
 
 ## Component inventory
@@ -40,7 +40,7 @@ Every component's current status (draft / beta / stable) is **computed**, not li
 Storybook → **Status**, or `contracts/stability.json` (`pnpm verify:stable`, ADR-018). draft = exists and
 works; beta = passes all 8 automatic quality criteria; stable = beta + modeled in Figma.
 
-All components import from `@helix/react`. Generated from `contracts/manifest.json` on every commit
+All components import from `@helixds/react`. Generated from `contracts/manifest.json` on every commit
 (`pnpm docs:readme`) — do not edit the table by hand.
 
 <!-- helix:component-inventory:start -->
@@ -84,7 +84,7 @@ All components import from `@helix/react`. Generated from `contracts/manifest.js
 ## Component hierarchy (enforce this order)
 
 ```
-1. Helix core (@helix/react)  ← always check first
+1. Helix core (@helixds/react)  ← always check first
 2. Custom component             ← add comment: // [CUSTOM] reason
 ```
 
@@ -107,14 +107,14 @@ background: blue-600;
 
 TypeScript constants are also available:
 ```ts
-import { tokens } from '@helix/tokens';
+import { tokens } from '@helixds/tokens';
 tokens.color.fill.primary; // '#1d4ed8'
 ```
 
 ## Lint while you write
 
-`@helix/eslint-plugin` catches the mistakes agents make most — an invented import path
-(`@helix/react` → `@helix/react`), anti-synonym props and values (`onPress` → `onClick`,
+`@helixds/eslint-plugin` catches the mistakes agents make most — an invented import path
+(`@helixds/react` → `@helixds/react`), anti-synonym props and values (`onPress` → `onClick`,
 `size="md"` → `size="m"`), raw colors (`#1d4ed8` → the semantic token with that color) and native
 controls (`<button>` → `Button`). Run `pnpm lint` (or `npx eslint --fix <file>`) after writing UI code;
 the editor shows the same warnings live. See `packages/eslint-plugin/README.md`.

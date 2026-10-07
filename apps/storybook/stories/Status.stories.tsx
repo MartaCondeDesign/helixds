@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
 import { IconAlertTriangleFilled, IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
-import { Badge, Icon, Tooltip } from '@helix/react';
-import type { BadgeVariant } from '@helix/react';
+import { Badge, Icon, Tooltip } from '@helixds/react';
+import type { BadgeVariant } from '@helixds/react';
 import { StoryHeader } from './_shared/StoryHeader';
 import stability from '../../../contracts/stability.json';
 

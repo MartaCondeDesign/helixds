@@ -29,7 +29,7 @@ export default {
     docs: { description: 'Use Helix components instead of plain native controls, or mark the file // [CUSTOM] reason: …' },
     schema: [],
     messages: {
-      raw: '<{{tag}}> has a Helix equivalent — use {{helix}} from @helix/react. If you really need a custom control, start the file with `// [CUSTOM] reason: <why Helix doesn\'t cover it>` (pnpm helix scaffold:custom).',
+      raw: '<{{tag}}> has a Helix equivalent — use {{helix}} from @helixds/react. If you really need a custom control, start the file with `// [CUSTOM] reason: <why Helix doesn\'t cover it>` (pnpm helix scaffold:custom).',
       noReason: '`[CUSTOM]` needs a reason: `// [CUSTOM] reason: <why Helix doesn\'t cover it>`.',
     },
   },

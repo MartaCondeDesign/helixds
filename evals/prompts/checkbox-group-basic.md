@@ -12,7 +12,7 @@ digest — any number of them, under the heading "Notify me about".
 
 # Success criteria
 
-- [ ] Imports `CheckboxGroup` from `@helix/react`
+- [ ] Imports `CheckboxGroup` from `@helixds/react`
 - [ ] Uses `label=` for the group heading (not `legend=`, `title=`)
 - [ ] Passes the choices as `options=` with `value` and `label`
 - [ ] Holds the selection as an array via `value=` and `onChange=`
@@ -30,7 +30,7 @@ digest — any number of them, under the heading "Notify me about".
 
 ```tsx
 import { useState } from 'react';
-import { CheckboxGroup } from '@helix/react';
+import { CheckboxGroup } from '@helixds/react';
 
 const OPTIONS = [
   { value: 'comments', label: 'Comments' },

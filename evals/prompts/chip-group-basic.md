@@ -12,7 +12,7 @@ should announce the row as "Tags".
 
 # Success criteria
 
-- [ ] Imports `ChipGroup` from `@helix/react`
+- [ ] Imports `ChipGroup` from `@helixds/react`
 - [ ] Names the group with `label=` (not `legend=`, `title=`, `aria-label=`)
 - [ ] Passes the tags as `options=` with `value` and `label`
 
@@ -28,7 +28,7 @@ should announce the row as "Tags".
 # Expected output shape
 
 ```tsx
-import { ChipGroup } from '@helix/react';
+import { ChipGroup } from '@helixds/react';
 
 const TAGS = [
   { value: 'design', label: 'Design' },

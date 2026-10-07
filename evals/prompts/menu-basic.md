@@ -13,7 +13,7 @@ Button labelled "Sort by", so a regular form Select doesn't fit.
 
 # Success criteria
 
-- [ ] Imports `Menu` from `@helix/react`
+- [ ] Imports `Menu` from `@helixds/react`
 - [ ] Opens and closes it with `expanded=` (not `open=`, `isOpen=`)
 - [ ] Positions it against the trigger with `anchorRef=`
 - [ ] Handles the choice with Menu's own `onSelect=`
@@ -34,7 +34,7 @@ Button labelled "Sort by", so a regular form Select doesn't fit.
 
 ```tsx
 import { useId, useRef, useState } from 'react';
-import { Button, Menu } from '@helix/react';
+import { Button, Menu } from '@helixds/react';
 import { IconArrowsSort } from '@tabler/icons-react';
 
 const SORT_OPTIONS = [

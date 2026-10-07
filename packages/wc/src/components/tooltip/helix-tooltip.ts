@@ -7,7 +7,7 @@ const EDGE_GUTTER = 8;
 let idCounter = 0;
 
 /**
- * `<helix-tooltip>` — pilot Web Components equivalent of `@helix/react`'s `Tooltip` (ADR-008/009,
+ * `<helix-tooltip>` — pilot Web Components equivalent of `@helixds/react`'s `Tooltip` (ADR-008/009,
  * ported per ADR-015). The hardest of the four piloted components: no native HTML equivalent, and a
  * real Shadow DOM accessibility problem to solve, not just a styling port.
  *

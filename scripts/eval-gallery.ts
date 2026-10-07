@@ -21,7 +21,7 @@ type Output = {
 
 // What went wrong with one answer, in words: a made-up import first (nothing else matters if it can't
 // build), then each success criterion it missed and each invalid pattern it used.
-// Package names are left out on purpose: "@helix/react" and "@helix/design-system" are the same problem,
+// Package names are left out on purpose: "@helixds/react" and "@helixds/design-system" are the same problem,
 // and the row status counts problems, not spellings. Code backticks are dropped for plain reading.
 const plain = (text: string) => text.replace(/`/g, '');
 const issuesOf = (out: Output, unresolved: string | undefined, missing?: string) => [
@@ -31,11 +31,11 @@ const issuesOf = (out: Output, unresolved: string | undefined, missing?: string)
   ...(out.invalidResults ?? []).filter(r => r.pass === false).map(r => `Used: ${plain(r.text.split(' — ')[0])}`),
 ];
 
-// Everything @helix/react really exports (generated from core's index.ts) — an answer importing a name
+// Everything @helixds/react really exports (generated from core's index.ts) — an answer importing a name
 // that isn't there (an agent's made-up `HxTopBar`) fails to build, same as in a real app.
 const coreExports = new Set<string>(JSON.parse(readFileSync(path.join(root, 'packages/eslint-plugin/src/data.json'), 'utf8')).coreExports);
 const missingExport = (code: string) => {
-  for (const m of code.matchAll(/import\s*\{([^}]*)\}\s*from\s*['"]@helix\/react['"]/g)) {
+  for (const m of code.matchAll(/import\s*\{([^}]*)\}\s*from\s*['"]@helixds\/react['"]/g)) {
     const names = m[1].split(',').map(n => n.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]).filter(Boolean);
     const missing = names.find(n => !coreExports.has(n));
     if (missing) return missing;
@@ -44,7 +44,7 @@ const missingExport = (code: string) => {
 };
 
 const resolvable = (spec: string) =>
-  /^(react|react-dom)(\/|$)/.test(spec) || /^@helix\/(react|tokens)(\/|$)/.test(spec) || spec === '@tabler/icons-react';
+  /^(react|react-dom)(\/|$)/.test(spec) || /^@helixds\/(react|tokens)(\/|$)/.test(spec) || spec === '@tabler/icons-react';
 
 rmSync(galleryDir, { recursive: true, force: true });
 mkdirSync(cellsDir, { recursive: true });
@@ -66,11 +66,11 @@ for (const { file, out } of outputs) {
   if ((out.round ?? '') !== (latestRound.get(`${out.promptId}|${out.variant}`) ?? '')) continue;
   const id = file.replace(/\.json$/, '');
   const code = out.generatedCode?.trim() ? out.generatedCode : 'export {};\n';
-  // An import Storybook can't resolve (an agent inventing "@helix/design-system") would raise Vite's
+  // An import Storybook can't resolve (an agent inventing "@helixds/design-system") would raise Vite's
   // error overlay over the whole page — record it as the cell's build failure instead.
   const unresolved = [...code.matchAll(/from\s+['"]([^'"]+)['"]/g)].map(m => m[1]).find(spec => !resolvable(spec));
   const missing = unresolved ? undefined : missingExport(code);
-  const buildError = unresolved ? `Cannot resolve "${unresolved}"` : missing ? `"@helix/react" has no export "${missing}"` : null;
+  const buildError = unresolved ? `Cannot resolve "${unresolved}"` : missing ? `"@helixds/react" has no export "${missing}"` : null;
   writeFileSync(path.join(cellsDir, `${id}.tsx`), buildError ? `export const __buildError = ${JSON.stringify(buildError)};\n` : code);
   cells.push({
     id, promptId: out.promptId, variant: out.variant,

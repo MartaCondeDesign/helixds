@@ -6,7 +6,7 @@ import {
   AppShell, SideNav, NavItem, TopBar, PageHeader, Card, Avatar, Icon, Select, FAB,
   Table, TableHead, TableHeaderCell, TableCell,
   Button, IconButton, Input, Badge,
-} from '@helix/react';
+} from '@helixds/react';
 import {
   IconBell, IconSearch, IconBolt,
   IconDownload, IconPlus, IconDots, IconHelp,

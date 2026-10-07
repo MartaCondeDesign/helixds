@@ -12,7 +12,7 @@ avatars, showing at most 3 and collapsing the rest into a "+N" count.
 
 # Success criteria
 
-- [ ] Imports `AvatarGroup` from `@helix/react`
+- [ ] Imports `AvatarGroup` from `@helixds/react`
 - [ ] Passes the people through the `avatars=` prop (not `users=`, `members=`, `items=`)
 - [ ] Each entry gives the person's name as `label:`
 - [ ] Uses `max={3}` to collapse the overflow into "+N"
@@ -31,7 +31,7 @@ avatars, showing at most 3 and collapsing the rest into a "+N" count.
 # Expected output shape
 
 ```tsx
-import { AvatarGroup } from '@helix/react';
+import { AvatarGroup } from '@helixds/react';
 
 type Member = { fullName: string; photoUrl?: string };
 

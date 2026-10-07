@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
-import { Chart, ChartDoc } from '@helix/react';
+import { Chart, ChartDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];

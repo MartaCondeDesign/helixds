@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Claude Code PostToolUse hook (.claude/settings.json, on Edit|Write): lints the file Claude just wrote
- * with @helix/eslint-plugin and, if it breaks a Helix rule, hands the problems back to Claude so it fixes
+ * with @helixds/eslint-plugin and, if it breaks a Helix rule, hands the problems back to Claude so it fixes
  * them in the same turn — the agent equivalent of the editor's live warnings.
  *
  * Reads the hook payload on stdin. Lints only what eslint.config.mjs covers (apps/**, JS/TS); anything

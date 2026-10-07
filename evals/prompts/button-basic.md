@@ -12,12 +12,12 @@ The button should be a primary variant, medium size, and show a spinner while sa
 
 # Success criteria
 
-- [ ] Imports `Button` from `@helix/react`
+- [ ] Imports `Button` from `@helixds/react`
 - [ ] Uses `variant="primary"` (not `type="primary"`)
 - [ ] Passes a boolean to Button's `isLoading=` prop (not a `loading=` prop)
 - [ ] Does NOT pass `onPress` — uses `onClick` instead
 - [ ] Does NOT hardcode any colors or sizes
-- [ ] Does NOT import `@helix/tokens/helix.css` in the component (goes in app entry)
+- [ ] Does NOT import `@helixds/tokens/helix.css` in the component (goes in app entry)
 
 # Escape hatches (partial credit)
 
@@ -35,7 +35,7 @@ The button should be a primary variant, medium size, and show a spinner while sa
 # Expected output shape
 
 ```tsx
-import { Button } from '@helix/react';
+import { Button } from '@helixds/react';
 
 function SaveButton({ onSave, isSaving }: { onSave: () => void; isSaving: boolean }) {
   return (

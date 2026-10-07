@@ -12,7 +12,7 @@ dropdown under the label "Skills", with the chosen ones visible in the field.
 
 # Success criteria
 
-- [ ] Imports `MultiSelect` from `@helix/react`
+- [ ] Imports `MultiSelect` from `@helixds/react`
 - [ ] Uses `label=` for the field label (not `title=`)
 - [ ] Passes the choices as `options=` with `value` and `label`
 - [ ] Holds the selection as an array via `value=` and `onChange=`
@@ -32,7 +32,7 @@ dropdown under the label "Skills", with the chosen ones visible in the field.
 
 ```tsx
 import { useState } from 'react';
-import { MultiSelect } from '@helix/react';
+import { MultiSelect } from '@helixds/react';
 
 const SKILLS = [
   { value: 'design', label: 'Design' },

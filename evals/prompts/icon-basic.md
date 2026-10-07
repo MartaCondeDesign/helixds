@@ -12,7 +12,7 @@ a notice. The text already says everything, so the icon is purely visual.
 
 # Success criteria
 
-- [ ] Imports `Icon` from `@helix/react`
+- [ ] Imports `Icon` from `@helixds/react`
 - [ ] Passes the Tabler icon by reference with `icon={IconAlertTriangle}` (not `icon={<`)
 - [ ] Sets a size from the scale with `size={16}`
 - [ ] Colors it with a Helix icon token: `var(--helix-color-icon-`
@@ -30,7 +30,7 @@ a notice. The text already says everything, so the icon is purely visual.
 # Expected output shape
 
 ```tsx
-import { Icon } from '@helix/react';
+import { Icon } from '@helixds/react';
 import { IconAlertTriangle } from '@tabler/icons-react';
 
 function TrialNotice() {

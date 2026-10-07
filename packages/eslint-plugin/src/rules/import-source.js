@@ -1,10 +1,10 @@
 /**
- * helix/import-source — Helix components come from @helix/react, nowhere else.
+ * helix/import-source — Helix components come from @helixds/react, nowhere else.
  *
- *   import { Button } from '@helix/design-system';   → '@helix/react'
- *   import { Button } from '@helix-ds/core';         → '@helix/react'   (Helix's former name, ADR-023)
+ *   import { Button } from '@helix/react';     → '@helixds/react'   (what `bare` agents guess most)
+ *   import { Button } from '@helix-ds/core';   → '@helixds/react'   (Helix's former name, ADR-023)
  *
- * Auto-fixed when every imported name really is an @helix/react export; otherwise only reported (the
+ * Auto-fixed when every imported name really is an @helixds/react export; otherwise only reported (the
  * import may also name things Helix doesn't have — fixing the path would just move the error).
  */
 import data from '../data.json' with { type: 'json' };
@@ -15,12 +15,12 @@ const EXPORTS = new Set(data.coreExports);
 export default {
   meta: {
     type: 'problem',
-    docs: { description: 'Import Helix components from @helix/react, not a look-alike package path' },
+    docs: { description: 'Import Helix components from @helixds/react, not a look-alike package path' },
     fixable: 'code',
     schema: [],
     messages: {
-      source: "`{{source}}` is not a Helix package — Helix components come from '@helix/react'.",
-      unknown: "`{{source}}` is not a Helix package, and @helix/react has no {{names}} — check `pnpm helix components`.",
+      source: "`{{source}}` is not a Helix package — Helix components come from '@helixds/react'.",
+      unknown: "`{{source}}` is not a Helix package, and @helixds/react has no {{names}} — check `pnpm helix components`.",
     },
   },
   create(context) {

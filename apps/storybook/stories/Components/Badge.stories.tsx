@@ -6,7 +6,7 @@ import {
   IconInfoCircle,
   IconClock,
 } from '@tabler/icons-react';
-import { Badge, BadgeDoc } from '@helix/react';
+import { Badge, BadgeDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Badge> = {

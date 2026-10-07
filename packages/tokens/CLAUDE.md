@@ -1,4 +1,4 @@
-# @helix/tokens — Agent Context
+# @helixds/tokens — Agent Context
 
 ## What this package does
 
@@ -52,7 +52,7 @@ role, which is exactly what the naming overhaul (below) was fixing.
    produces a multi-thousand-line diff for a one-line change.
    The same `$description` text is the SSOT for Figma variable `.description` and Storybook token copy:
    do not author a second explanation elsewhere.
-3. Run `pnpm --filter @helix/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
+3. Run `pnpm --filter @helixds/tokens build` — regenerates `dist/helix.css` and `dist/index.ts`.
 4. Run `pnpm verify:tokens` — confirms the whole file is still clean, not just the new key.
    **For a color token specifically, also check WCAG AA contrast against its paired fill by hand** —
    `verify:tokens` checks naming, not contrast, and a token that looks fine next to a same-hue sibling
@@ -460,7 +460,7 @@ custom property at all — the naming vocabulary is shared, the storage mechanis
   exactly the "re-implemented at every call site and drifts" problem the `Icon` wrapper rule (root
   `CLAUDE.md` rule 2) already solves for icons, just for spring physics instead.
   - Where a JS-only value happens to coincide with a real duration token, derive it from
-    `@helix/tokens`'s generated `tokens` export instead of retyping the literal — see
+    `@helixds/tokens`'s generated `tokens` export instead of retyping the literal — see
     `motionPresets.ts`'s `FAB_COLLAPSE_TRANSITION` (300ms, same value as `semantic.duration.slower`,
     read via `tokens.semantic.duration.slower` rather than hardcoded as `0.3`). A value with no
     matching token (FAB's other two transitions, both bespoke-tuned) stays a literal — forcing it onto

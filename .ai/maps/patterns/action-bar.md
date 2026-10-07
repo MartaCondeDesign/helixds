@@ -40,7 +40,7 @@ Batch actions (appears when rows are selected):
 ## Code
 
 ```tsx
-import { Button } from '@helix/react';
+import { Button } from '@helixds/react';
 import { IconPlus, IconUpload, IconTrash } from '@tabler/icons-react';
 
 /* Page header action bar */

@@ -8,7 +8,7 @@ importers:
 
   .:
     devDependencies:
-      '@helix/eslint-plugin':
+      '@helixds/eslint-plugin':
         specifier: workspace:^
         version: link:packages/eslint-plugin
       '@types/node':
@@ -35,18 +35,21 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@helix/react':
+      '@helixds/react':
         specifier: workspace:*
         version: link:../../packages/core
-      '@helix/storybook-addon-tokens':
+      '@helixds/storybook-addon-tokens':
         specifier: workspace:*
         version: link:../../packages/storybook-addon-tokens
-      '@helix/tokens':
+      '@helixds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       '@tabler/icons-react':
         specifier: ^3.0.0
         version: 3.46.0(react@19.2.8)
+      gsap:
+        specifier: 3.15.0
+        version: 3.15.0
       motion:
         specifier: 13.2.0
         version: 13.2.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -111,10 +114,10 @@ importers:
 
   apps/wc-sandbox:
     dependencies:
-      '@helix/tokens':
+      '@helixds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@helix/wc':
+      '@helixds/wc':
         specifier: workspace:*
         version: link:../../packages/wc
     devDependencies:
@@ -127,7 +130,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@helix/tokens':
+      '@helixds/tokens':
         specifier: workspace:*
         version: link:../tokens
       '@tabler/icons-react':
@@ -188,7 +191,7 @@ importers:
 
   packages/mcp:
     dependencies:
-      '@helix/eslint-plugin':
+      '@helixds/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
       '@modelcontextprotocol/sdk':
@@ -253,7 +256,7 @@ importers:
 
   packages/wc:
     dependencies:
-      '@helix/tokens':
+      '@helixds/tokens':
         specifier: workspace:*
         version: link:../tokens
       lit:
@@ -2909,6 +2912,9 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  gsap@3.15.0:
+    resolution: {integrity: sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==}
 
   has-flag@3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
@@ -7213,6 +7219,8 @@ snapshots:
   gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
+
+  gsap@3.15.0: {}
 
   has-flag@3.0.0: {}
 

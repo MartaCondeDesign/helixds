@@ -11,19 +11,19 @@ export default {
   name: 'Helix',
   outputs: 'evals/outputs',
   out: 'evals/proof',
-  // Storybook already renders Helix: react, @helix/*, Tailwind all resolve from its node_modules.
+  // Storybook already renders Helix: react, @helixds/*, Tailwind all resolve from its node_modules.
   app: 'apps/storybook',
-  css: ['@helix/tokens/helix.css', '@helix/react/globals.css'],
+  css: ['@helixds/tokens/helix.css', '@helixds/react/globals.css'],
   // Opens on button-basic — the reference task every level is compared on first.
   defaultTask: 'button-basic',
   tasks: readdirSync(path.join(here, 'evals/prompts')).filter(f => f.endsWith('.md')).map(f => f.replace(/\.md$/, '')),
-  // Every name @helix/react really exports — generated from core's index.ts for the lint plugin.
-  exports: { '@helix/react': JSON.parse(readFileSync(path.join(here, 'packages/eslint-plugin/src/data.json'), 'utf-8')).coreExports },
-  imports: ['react', 'react-dom', '@helix/react', '@helix/tokens', '@tabler/icons-react'],
+  // Every name @helixds/react really exports — generated from core's index.ts for the lint plugin.
+  exports: { '@helixds/react': JSON.parse(readFileSync(path.join(here, 'packages/eslint-plugin/src/data.json'), 'utf-8')).coreExports },
+  imports: ['react', 'react-dom', '@helixds/react', '@helixds/tokens', '@tabler/icons-react'],
   vite: async ({ importFromApp }) => ({
     plugins: [(await importFromApp('@tailwindcss/vite')).default()],
     // Same as Storybook: render against source, so dist/ needn't be built.
-    resolve: { alias: [{ find: /^@helix\/react$/, replacement: path.resolve(here, 'packages/core/src/index.ts') }] },
+    resolve: { alias: [{ find: /^@helixds\/react$/, replacement: path.resolve(here, 'packages/core/src/index.ts') }] },
   }),
   htmlAttributes: { 'data-theme': 'light' },
   // Rows, in order. A level's row shows its eval:ladder command until it has answers for the task.

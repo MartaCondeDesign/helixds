@@ -12,7 +12,7 @@ Using Helix DS, after the user saves their profile, briefly confirm "Profile sav
 
 # Success criteria
 
-- [ ] Imports `Toast` from `@helix/react` and renders `<Toast />` once
+- [ ] Imports `Toast` from `@helixds/react` and renders `<Toast />` once
 - [ ] Fires the notification with `toast.success(` (not `toast.show(`, `toast(`)
 - [ ] Passes the detail `Your changes are live.` as the second argument (a string, or { description })
 
@@ -28,7 +28,7 @@ Using Helix DS, after the user saves their profile, briefly confirm "Profile sav
 # Expected output shape
 
 ```tsx
-import { Toast, Button, toast } from '@helix/react';
+import { Toast, Button, toast } from '@helixds/react';
 
 function SaveProfile({ onSave }: { onSave: () => Promise<void> }) {
   return (

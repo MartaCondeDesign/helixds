@@ -7,7 +7,7 @@ import {
   IconSearch,
   IconSend,
 } from '@tabler/icons-react';
-import { Button, ButtonDoc } from '@helix/react';
+import { Button, ButtonDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Button> = {

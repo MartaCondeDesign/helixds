@@ -12,7 +12,7 @@ icon that deletes the file. There's no room for a text label.
 
 # Success criteria
 
-- [ ] Imports `IconButton` from `@helix/react`
+- [ ] Imports `IconButton` from `@helixds/react`
 - [ ] Passes the icon by reference with `icon={IconTrash}` (not `icon={<`)
 - [ ] Uses `label` prop for the accessible name (not `aria-label`, `title`)
 - [ ] Uses `onClick` for the handler (not `onPress`)
@@ -31,7 +31,7 @@ icon that deletes the file. There's no room for a text label.
 # Expected output shape
 
 ```tsx
-import { IconButton } from '@helix/react';
+import { IconButton } from '@helixds/react';
 import { IconTrash } from '@tabler/icons-react';
 
 function FileRowActions({ fileName, onDelete }: { fileName: string; onDelete: () => void }) {

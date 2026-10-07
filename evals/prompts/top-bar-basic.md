@@ -12,7 +12,7 @@ icon-only buttons on the right.
 
 # Success criteria
 
-- [ ] Imports `TopBar` from `@helix/react`
+- [ ] Imports `TopBar` from `@helixds/react`
 - [ ] Puts the search in the `start=` slot (not `left=`)
 - [ ] Puts the icon buttons in the `end=` slot (not `right=`)
 - [ ] Uses `Input` with `icon={IconSearch}` for the search
@@ -32,7 +32,7 @@ icon-only buttons on the right.
 # Expected output shape
 
 ```tsx
-import { TopBar, Input, IconButton } from '@helix/react';
+import { TopBar, Input, IconButton } from '@helixds/react';
 import { IconSearch, IconBell, IconHelp } from '@tabler/icons-react';
 
 function AppTopBar({ query, onQueryChange }: { query: string; onQueryChange: (q: string) => void }) {

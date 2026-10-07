@@ -782,12 +782,12 @@
     "toast"
   ],
   "packages": [
-    "@helix/eslint-plugin",
-    "@helix/mcp",
-    "@helix/proof",
-    "@helix/react",
-    "@helix/storybook-addon-tokens",
-    "@helix/tokens",
-    "@helix/wc"
+    "@helixds/eslint-plugin",
+    "@helixds/mcp",
+    "@helixds/proof",
+    "@helixds/react",
+    "@helixds/storybook-addon-tokens",
+    "@helixds/tokens",
+    "@helixds/wc"
   ]
 }

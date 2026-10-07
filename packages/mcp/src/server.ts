@@ -1,10 +1,10 @@
 #!/usr/bin/env tsx
 /**
- * @helix/mcp — Helix as native tools for AI agents (Claude Code, Cursor, …) over the Model Context
+ * @helixds/mcp — Helix as native tools for AI agents (Claude Code, Cursor, …) over the Model Context
  * Protocol, instead of shelling out to `pnpm helix …` or reading Markdown.
  *
  * Every tool reads the same sources as the CLI (scripts/helix-query-lib.ts) and the linter
- * (@helix/eslint-plugin) — no second copy of the documentation. Start: `pnpm helix:mcp` (stdio).
+ * (@helixds/eslint-plugin) — no second copy of the documentation. Start: `pnpm helix:mcp` (stdio).
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -52,7 +52,7 @@ server.registerTool('helix_search_tokens', {
 
 server.registerTool('helix_validate_snippet', {
   title: 'Validate a JSX snippet against Helix',
-  description: 'Check JSX/TSX before writing it to a file: wrong import paths (@helix/react → @helix/react), anti-synonym props (onPress → onClick), raw colors, native controls, plus layout/icon/inline-style advisories. Returns each problem, a fixedCode with the safe fixes applied, and what is left to fix by hand.',
+  description: 'Check JSX/TSX before writing it to a file: wrong import paths (@helixds/react → @helixds/react), anti-synonym props (onPress → onClick), raw colors, native controls, plus layout/icon/inline-style advisories. Returns each problem, a fixedCode with the safe fixes applied, and what is left to fix by hand.',
   inputSchema: { code: z.string().describe('The JSX/TSX code to check (a full module or a fragment with its imports)') },
   annotations: readOnly,
 }, async ({ code }) => json(await validateSnippet(code)));

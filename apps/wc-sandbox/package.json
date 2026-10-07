@@ -1,8 +1,8 @@
 {
-  "name": "@helix/wc-sandbox",
+  "name": "@helixds/wc-sandbox",
   "version": "0.1.0",
   "private": true,
-  "description": "Plain HTML/Vite harness for the @helix/wc pilot (ADR-015) — no framework, exercises the 4 piloted custom elements outside Storybook's React setup.",
+  "description": "Plain HTML/Vite harness for the @helixds/wc pilot (ADR-015) — no framework, exercises the 4 piloted custom elements outside Storybook's React setup.",
   "type": "module",
   "scripts": {
     "dev":   "vite --port 4300",
@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@helix/tokens": "workspace:*",
-    "@helix/wc":     "workspace:*"
+    "@helixds/tokens": "workspace:*",
+    "@helixds/wc":     "workspace:*"
   },
   "devDependencies": {
     "typescript": "*",

@@ -13,12 +13,12 @@ In my app's profile form, the user needs a way to save their changes. While the 
 
 # Success criteria
 
-- [ ] Imports `Button` from `@helix/react`
+- [ ] Imports `Button` from `@helixds/react`
 - [ ] Does NOT set the style through `type="primary"` (variant is optional here — primary is the default)
 - [ ] Passes a boolean to Button's `isLoading=` prop (not a `loading=` prop)
 - [ ] Does NOT pass `onPress` — uses `onClick` instead
 - [ ] Does NOT hardcode any colors or sizes
-- [ ] Does NOT import `@helix/tokens/helix.css` in the component (goes in app entry)
+- [ ] Does NOT import `@helixds/tokens/helix.css` in the component (goes in app entry)
 
 # Escape hatches (partial credit)
 
@@ -36,7 +36,7 @@ In my app's profile form, the user needs a way to save their changes. While the 
 # Expected output shape
 
 ```tsx
-import { Button } from '@helix/react';
+import { Button } from '@helixds/react';
 
 function SaveButton({ onSave, isSaving }: { onSave: () => void; isSaving: boolean }) {
   return (

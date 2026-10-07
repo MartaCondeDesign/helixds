@@ -108,13 +108,13 @@ const exceptionsMd = fs.readFileSync(path.join(root, '.ai/maps/component-token-e
 const autoTable = exceptionsMd.slice(exceptionsMd.indexOf('<!-- AUTO:ASCII_TABLE -->'), exceptionsMd.indexOf('<!-- /AUTO -->'));
 const openTokenRows = autoTable.split('\n').filter(l => /🆕|🚩/.test(l) && l.startsWith('|'));
 
-// Eval coverage: components imported from @helix/react by a passing prompt's reference output
+// Eval coverage: components imported from @helixds/react by a passing prompt's reference output
 // AND named in backticks in its success criteria.
 const evalCoverage = new Map<string, string[]>();
 for (const p of loadPrompts()) {
   const result = scorePrompt(p, p.expectedOutput);
   if (!result.passed) continue;
-  const imported = [...p.expectedOutput.matchAll(/import\s*\{([^}]+)\}\s*from\s*'@helix\/react'/g)]
+  const imported = [...p.expectedOutput.matchAll(/import\s*\{([^}]+)\}\s*from\s*'@helixds\/react'/g)]
     .flatMap(m => m[1]!.split(',').map(s => s.trim()).filter(Boolean));
   const criteria = p.successCriteria.join(' ');
   for (const name of imported) {

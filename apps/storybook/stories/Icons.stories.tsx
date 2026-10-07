@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState, useMemo } from 'react';
-import { iconStrokeForSize } from '@helix/react';
+import { iconStrokeForSize } from '@helixds/react';
 
 import {
   IconAccessible, IconActivity, IconAdjustments, IconAlarm,
@@ -218,7 +218,7 @@ export const Browse: Story = {
 **@tabler/icons-react** — curated set of the most-used icons. Click to copy the import name.
 
 \`\`\`tsx
-import { Icon } from '@helix/react';
+import { Icon } from '@helixds/react';
 import { IconBolt } from '@tabler/icons-react';
 <Icon icon={IconBolt} size={20} /> // stroke comes from the ADR-017 rule
 \`\`\`

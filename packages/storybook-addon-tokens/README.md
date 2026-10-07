@@ -7,7 +7,7 @@ preview canvas — see `CONTRACT.md` for the full data contract and hover-behavi
 ## Install in a Storybook project
 
 ```bash
-pnpm add -D @helix/storybook-addon-tokens
+pnpm add -D @helixds/storybook-addon-tokens
 ```
 
 Register the addon by its package name in `.storybook/main.ts`:
@@ -16,13 +16,13 @@ Register the addon by its package name in `.storybook/main.ts`:
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
-  addons: ['@helix/storybook-addon-tokens'],
+  addons: ['@helixds/storybook-addon-tokens'],
 };
 
 export default config;
 ```
 
-The addon does not require `@helix/tokens`. Token names and values come from each
+The addon does not require `@helixds/tokens`. Token names and values come from each
 story's `parameters.helixTokens` data, so it can be used with any design-token system.
 
 ```ts

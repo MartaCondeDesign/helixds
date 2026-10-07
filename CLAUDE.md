@@ -1,7 +1,7 @@
 # Helix DS — Agent Contract
 
 Helix is an AI-ready design system built on native HTML elements, Tailwind CSS v4, and Tabler Icons.
-Scope: `@helix`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
+Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 
 ## Stack
 
@@ -124,14 +124,14 @@ pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-fil
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
                             ADR-018 — needs Storybook running; --details lists what's missing
-pnpm lint                   @helix/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
+pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
                             raw colors, native controls (also live in the editor via eslint.config.mjs).
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
-                            `pnpm --filter @helix/eslint-plugin build:data` (its tests fail while stale).
+                            `pnpm --filter @helixds/eslint-plugin build:data` (its tests fail while stale).
                             Claude Code runs it on every file it edits (.claude/settings.json →
                             scripts/claude-lint-hook.mjs) and gets the problems back to fix in the same turn
 pnpm test:lint-hook         test that Claude Code lint hook
-pnpm helix:mcp              @helix/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
+pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
 pnpm helix tokens <concept> find tokens by what they're for ("danger background") — same search as the MCP tool
@@ -221,11 +221,11 @@ component, run `pnpm docs:manifest` first — the README script trusts `contract
 ## Storybook
 
 Stories live co-located with components in `packages/core/src/components/`. Pattern stories in `apps/storybook/stories/`.
-Dev server: `pnpm --filter @helix/storybook dev` (http://localhost:6006).
+Dev server: `pnpm --filter @helixds/storybook dev` (http://localhost:6006).
 
 ## What NOT to do
 
 - Don't define colors in `:root` — tokens are defined in `packages/tokens/src/tokens.json`
-- Don't import from `@helix/tokens` using `..` relative paths from inside packages/core
+- Don't import from `@helixds/tokens` using `..` relative paths from inside packages/core
 - Don't write hover styles as JS props — use `data-*` attributes and CSS
 - Don't list yourself as co-author on commits (no Co-Authored-By trailers)

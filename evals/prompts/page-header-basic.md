@@ -12,7 +12,7 @@ members and their access.", and an "Invite member" primary button on the right.
 
 # Success criteria
 
-- [ ] Imports `PageHeader` from `@helix/react`
+- [ ] Imports `PageHeader` from `@helixds/react`
 - [ ] Uses `label="Team"` for the title (not `title=`, `heading=`)
 - [ ] Uses `description=` for the supporting line (not `subtitle=`, `hint=`)
 - [ ] Puts the button in the `actions=` slot
@@ -30,7 +30,7 @@ members and their access.", and an "Invite member" primary button on the right.
 # Expected output shape
 
 ```tsx
-import { PageHeader, Button } from '@helix/react';
+import { PageHeader, Button } from '@helixds/react';
 import { IconPlus } from '@tabler/icons-react';
 
 function TeamHeader({ onInvite }: { onInvite: () => void }) {

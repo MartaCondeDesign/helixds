@@ -98,7 +98,7 @@ TODO: a natural-language task an agent would ask for that should use ${name}.
 
 # Success criteria
 
-- [ ] Imports \`${name}\` from \`@helix/react\`
+- [ ] Imports \`${name}\` from \`@helixds/react\`
 - [ ] TODO: canonical prop usage, taken from \`contracts/components/${name}.json\` once it's filled in
 
 # Escape hatches (partial credit)

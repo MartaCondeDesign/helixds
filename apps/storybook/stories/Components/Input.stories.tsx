@@ -8,7 +8,7 @@ import {
   IconUser,
   IconEye,
 } from '@tabler/icons-react';
-import { Input, Button, Badge, InputDoc } from '@helix/react';
+import { Input, Button, Badge, InputDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Input> = {

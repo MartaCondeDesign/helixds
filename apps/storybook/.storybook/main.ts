@@ -18,7 +18,7 @@ const config: StorybookConfig = {
     // itself match that short-circuit falls through to being probed as a preset instead
     // and silently contributes nothing. The bare name is the only form that makes the
     // resolver auto-discover BOTH the "./manager" and "./preview" exports below.
-    '@helix/storybook-addon-tokens',
+    '@helixds/storybook-addon-tokens',
   ],
 
   framework: {
@@ -40,8 +40,8 @@ const config: StorybookConfig = {
     config.server ??= {};
     config.server.fs = { strict: false };
 
-    // Resolve the bare "@helix/react" import to TypeScript source so dist/
-    // build is not required. Regex ensures subpaths like @helix/react/globals.css
+    // Resolve the bare "@helixds/react" import to TypeScript source so dist/
+    // build is not required. Regex ensures subpaths like @helixds/react/globals.css
     // still resolve through the package's own exports map (which points to src/).
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
     const srcIndex  = path.resolve(__dirname, '../../../packages/core/src/index.ts');
@@ -50,7 +50,7 @@ const config: StorybookConfig = {
     const aliasArray = Array.isArray(existingAlias) ? existingAlias : [];
     config.resolve.alias = [
       ...aliasArray,
-      { find: /^@helix\/react$/, replacement: srcIndex },
+      { find: /^@helixds\/react$/, replacement: srcIndex },
     ];
 
     // Force automatic JSX transform for all files including @fs-served packages/core files.

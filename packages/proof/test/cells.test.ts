@@ -7,7 +7,7 @@ import { missingExport, readCells, unresolvedImport } from '../src/cells.ts';
 
 const allowed = ['react', '@acme/ui'];
 
-describe('@helix/proof cells', () => {
+describe('@helixds/proof cells', () => {
   it('accepts allowed packages, their subpaths and relative imports', () => {
     const code = `import { useState } from 'react';\nimport { createRoot } from 'react-dom/client';`;
     assert.equal(unresolvedImport(code, [...allowed, 'react-dom']), null);

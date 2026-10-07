@@ -12,7 +12,7 @@ related actions: new document, new folder, and upload file.
 
 # Success criteria
 
-- [ ] Imports `FAB` from `@helix/react`
+- [ ] Imports `FAB` from `@helixds/react`
 - [ ] Passes the trigger icon by reference with `icon={Icon` (not `icon={<`)
 - [ ] Uses `label` prop for the trigger's accessible name (not `aria-label`, `title`)
 - [ ] Uses the `actions` prop for the speed-dial items (not `items`, `options`)
@@ -32,7 +32,7 @@ related actions: new document, new folder, and upload file.
 # Expected output shape
 
 ```tsx
-import { FAB } from '@helix/react';
+import { FAB } from '@helixds/react';
 import { IconPlus, IconFileText, IconFolderPlus, IconUpload } from '@tabler/icons-react';
 
 function DocumentsCreateFAB({

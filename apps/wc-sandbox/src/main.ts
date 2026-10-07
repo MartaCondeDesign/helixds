@@ -1,5 +1,5 @@
-import '@helix/tokens/helix.css';
-import '@helix/wc';
+import '@helixds/tokens/helix.css';
+import '@helixds/wc';
 
 // Plain native click listener — no framework, no custom event plumbing. The shadow-internal
 // <button>'s click is a composed UIEvent, so it bubbles out through helix-button as-is.

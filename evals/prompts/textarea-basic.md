@@ -12,7 +12,7 @@ character counter.
 
 # Success criteria
 
-- [ ] Imports `Textarea` from `@helix/react`
+- [ ] Imports `Textarea` from `@helixds/react`
 - [ ] Uses `maxLength` to cap the length
 - [ ] Uses `showCount` to display the live counter (not a custom counter element)
 - [ ] Provides a `label` prop (required for a11y)
@@ -31,7 +31,7 @@ character counter.
 
 ```tsx
 import { useState } from 'react';
-import { Textarea } from '@helix/react';
+import { Textarea } from '@helixds/react';
 
 function BioField() {
   const [bio, setBio] = useState('');
