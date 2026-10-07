@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primitive vs Semantic</title>
+<link rel="stylesheet" href="../../packages/tokens/dist/helix.css">
+<link rel="stylesheet" href="explainer.css">
+<style>
+  main { max-width: 960px; margin: 0 auto; padding: 48px 16px 64px; }
+  .col-head { font-size: 12px; letter-spacing: 0.12em; }
+  .label { font-size: 15px; }
+  .swatch, .dot { stroke: var(--helix-color-border-neutral-dark); stroke-width: 1; }
+  .pill { fill: var(--helix-color-fill-page); stroke: var(--helix-color-border-neutral-dark); stroke-width: 1; }
+  .wire { fill: none; stroke: var(--helix-color-text-neutral-light); stroke-width: 1.5; }
+  .wire--new { stroke: var(--helix-primitive-color-green-700); stroke-width: 2; }
+  .ring { fill: none; stroke: var(--helix-primitive-color-green-700); stroke-width: 2; }
+  .btn-label { font-size: 18px; font-weight: 600; fill: var(--helix-primitive-color-gray-0); }
+</style>
+</head>
+<body>
+<main>
+  <div class="explainer" id="tokens">
+    <svg viewBox="0 0 900 250" role="img"
+         aria-label="Four primitive colors. Two semantic tokens, fill.primary and text.inverse, point to blue.600 and gray.0. A button reads only the semantic tokens. Re-pointing fill.primary to green.700 recolors the button without touching it.">
+      <g class="art">
+        <text class="col-head mono muted head" x="40"  y="22">PRIMITIVE</text>
+        <text class="col-head mono muted head" x="350" y="22">SEMANTIC</text>
+        <text class="col-head mono muted head" x="690" y="22">COMPONENT</text>
+
+        <!-- Wires: drawn by GSAP DrawSVG (ADR-024) -->
+        <path class="wire" data-stroke id="w-blue"  d="M172 70  C262 70  262 95  348 95" />
+        <path class="wire" data-stroke id="w-gray"  d="M172 170 C262 170 262 195 348 195" />
+        <path class="wire wire--new" data-stroke id="w-green" d="M172 120 C262 120 262 95 348 95" />
+        <path class="wire" data-stroke id="w-btn-fill" d="M582 95  C636 95  636 140 688 140" />
+        <path class="wire" data-stroke id="w-btn-text" d="M582 195 C636 195 636 158 688 158" />
+
+        <rect class="ring" id="ring" x="34" y="100" width="40" height="40" rx="10" />
+        <rect class="swatch pivot" x="40" y="56"  width="28" height="28" rx="6" style="fill: var(--helix-primitive-color-blue-600)" />
+        <rect class="swatch pivot" x="40" y="106" width="28" height="28" rx="6" style="fill: var(--helix-primitive-color-green-700)" />
+        <rect class="swatch pivot" x="40" y="156" width="28" height="28" rx="6" style="fill: var(--helix-primitive-color-gray-0)" />
+        <rect class="swatch pivot" x="40" y="206" width="28" height="28" rx="6" style="fill: var(--helix-primitive-color-gray-900)" />
+        <text class="label mono ink prim-label" x="80" y="75">blue.600</text>
+        <text class="label mono ink prim-label" x="80" y="125">green.700</text>
+        <text class="label mono ink prim-label" x="80" y="175">gray.0</text>
+        <text class="label mono ink prim-label" x="80" y="225">gray.900</text>
+
+        <g class="sem">
+          <rect class="pill" x="350" y="75" width="230" height="40" rx="20" />
+          <circle class="dot" id="dot-fill" cx="374" cy="95" r="8" />
+          <text class="label mono ink" x="392" y="100">fill.primary</text>
+        </g>
+        <g class="sem">
+          <rect class="pill" x="350" y="175" width="230" height="40" rx="20" />
+          <circle class="dot" cx="374" cy="195" r="8" style="fill: var(--helix-primitive-color-gray-0)" />
+          <text class="label mono ink" x="392" y="200">text.inverse</text>
+        </g>
+
+        <g class="pivot" id="btn">
+          <rect id="btn-bg" x="690" y="125" width="150" height="48" rx="8" />
+          <text class="btn-label" x="765" y="155" text-anchor="middle">Save</text>
+        </g>
+        <text class="label mono muted head" x="765" y="200" text-anchor="middle">Button</text>
+      </g>
+    </svg>
+  </div>
+</main>
+
+<script src="../../packages/core/node_modules/motion/dist/motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/CustomEase.min.js"></script>
+<script src="explainer.js"></script>
+<script>
+  const { M, color, drawn } = Explainer;
+  const hide = (els) => [].concat(els).forEach((el) => (el.style.opacity = 0));
+  const show = (els) => [].concat(els).forEach((el) => (el.style.opacity = 1));
+  const BLUE = color('--helix-primitive-color-blue-600'), GREEN = color('--helix-primitive-color-green-700');
+
+  Explainer.mount(document.getElementById('tokens'), {
+    reset(q) {
+      hide([...q.all('.head'), ...q.all('.prim-label'), ...q.all('.sem'), q('#btn'), q('#ring')]);
+      q.all('.swatch').forEach((el) => (el.style.transform = 'scale(0)'));
+      // Motion writes fill as an attribute, so reset it as one.
+      q('#btn-bg').setAttribute('fill', BLUE);
+      q('#dot-fill').setAttribute('fill', BLUE);
+    },
+    script(b, q) {
+      const S = M.stagger, heads = q.all('.head'), w = (id) => q('#' + id);
+
+      // 1 · Primitives
+      let t = 0.3;
+      b.enter(heads[0], t);
+      q.all('.swatch').forEach((el, i) => b.add(el, { scale: [0, 1] }, t + i * S, M.emphasis, M.eEmphasis));
+      q.all('.prim-label').forEach((el, i) => b.enter(el, t + 0.15 + i * S));
+      t += 3 * S + M.emphasis + M.hold;
+
+      // 2 · Semantics point to primitives
+      b.enter(heads[1], t);
+      q.all('.sem').forEach((el, i) => b.add(el, { opacity: [0, 1], x: [-12, 0] }, t + i * S, M.enter, M.eEnter));
+      b.draw(w('w-blue'), t + M.enter);
+      b.draw(w('w-gray'), t + M.enter + S);
+      t += M.enter + S + M.draw + M.hold;
+
+      // 3 · The component reads only semantics
+      b.enter(heads[2], t); b.enter(heads[3], t);
+      b.add(q('#btn'), { opacity: [0, 1], scale: [0.6, 1] }, t, M.emphasis, M.eEmphasis);
+      b.draw(w('w-btn-fill'), t + M.emphasis * 0.6);
+      b.draw(w('w-btn-text'), t + M.emphasis * 0.6 + S);
+      t += M.emphasis + S + M.draw + M.hold;
+
+      // 4 · Re-point fill.primary: blue.600 → green.700
+      b.enter(q('#ring'), t);
+      t += M.enter;
+      b.undraw(w('w-blue'), t);
+      b.draw(w('w-green'), t + 0.2);
+      t += 0.2 + M.draw * 0.7;
+      b.add(q('#dot-fill'), { fill: [BLUE, GREEN] }, t, M.recolor, M.eExit);
+      b.add(q('#btn-bg'), { fill: [BLUE, GREEN] }, t + S, M.recolor, M.eExit);
+      b.add(q('#btn'), { scale: [1, 1.06, 1] }, t + S, M.emphasis, M.eExit);
+      b.exit(q('#ring'), t + M.recolor + 0.4);
+      return t + M.recolor + M.hold * 1.3;
+    },
+    still(q) {
+      show([...q.all('.head'), ...q.all('.prim-label'), ...q.all('.sem'), q('#btn')]);
+      q.all('.swatch').forEach((el) => (el.style.transform = 'none'));
+      drawn(['#w-blue', '#w-gray', '#w-btn-fill', '#w-btn-text'].map(q));
+    },
+  });
+</script>
+</body>
+</html>

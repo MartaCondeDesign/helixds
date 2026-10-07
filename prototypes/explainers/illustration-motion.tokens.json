@@ -1,0 +1,22 @@
+{
+  "$description": "PROPOSAL (proof of concept) — motion tokens for explainer illustrations only. Kept apart from primitive/semantic duration+easing, which belong to components (80–300ms UI feedback). Illustration motion is storytelling: slower, choreographed in scenes, looping. A component must never read these; an illustration must never read the component ones.",
+  "illustration": {
+    "motion": {
+      "duration": {
+        "enter":    { "$value": "450ms", "$type": "duration", "$description": "An element appears (fade + small move)" },
+        "exit":     { "$value": "300ms", "$type": "duration", "$description": "An element leaves — always shorter than enter" },
+        "emphasis": { "$value": "500ms", "$type": "duration", "$description": "A pop with overshoot — the thing to look at" },
+        "draw":     { "$value": "700ms", "$type": "duration", "$description": "A connector line draws from A to B" },
+        "recolor":  { "$value": "600ms", "$type": "duration", "$description": "A fill changes color in place" }
+      },
+      "stagger":    { "$value": "120ms",  "$type": "duration", "$description": "Delay between siblings entering one after another" },
+      "hold":       { "$value": "2200ms", "$type": "duration", "$description": "How long a finished scene stays still so it can be read" },
+      "easing": {
+        "enter":    { "$value": [0.23, 1, 0.32, 1],    "$type": "cubicBezier", "$description": "Fast start, soft landing" },
+        "exit":     { "$value": [0.77, 0, 0.175, 1],   "$type": "cubicBezier", "$description": "Symmetric in-out for leaving and transitions" },
+        "emphasis": { "$value": [0.34, 1.56, 0.64, 1], "$type": "cubicBezier", "$description": "Overshoot — reserve for the one element each scene is about" },
+        "draw":     { "$value": [0.65, 0, 0.35, 1],    "$type": "cubicBezier", "$description": "Even in-out so a line reads as travelling" }
+      }
+    }
+  }
+}
