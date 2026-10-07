@@ -149,7 +149,7 @@ story that builds its own custom header instead of going through `createComponen
 
 ## Illustrations
 
-`Illustrations.stories.tsx` (last sidebar section) holds animated explainers for design-system concepts —
+`Illustrations.stories.tsx` (sidebar: **Assets → Illustrations**, next to Assets → Icons) holds animated explainers for design-system concepts —
 see [ADR-024](../../docs/ADR/ADR-024-illustration-motion.md). Each illustration is a file in
 `stories/Illustrations/` that exports a component built on `<Illustration card={…}>`: an SVG plus a `Card`
 (`reset` / `script` / `still`) run by `runtime.ts`. Rules:

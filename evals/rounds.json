@@ -148,5 +148,70 @@
         "totalTokens": 384209
       }
     ]
+  },
+  {
+    "id": "2026-10-07T10-40-10",
+    "date": "2026-10-07T10:44:52.065Z",
+    "commit": "e5e900b",
+    "runs": 5,
+    "tasks": [
+      "button-basic"
+    ],
+    "levels": [
+      {
+        "variant": "no-context",
+        "label": "bare",
+        "answers": 5,
+        "passRate": 0,
+        "meanScore": 0.6,
+        "tokensPerAnswer": 54569.2,
+        "totalTokens": 272846
+      },
+      {
+        "variant": "llms-txt",
+        "label": "llms.txt",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 44105.8,
+        "totalTokens": 220529
+      },
+      {
+        "variant": "agents-isolated",
+        "label": "agents-md",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 51934.6,
+        "totalTokens": 259673
+      },
+      {
+        "variant": "mcp",
+        "label": "mcp",
+        "answers": 5,
+        "passRate": 1.0,
+        "meanScore": 1.0,
+        "tokensPerAnswer": 91312.8,
+        "totalTokens": 456564
+      },
+      {
+        "variant": "lint-loop",
+        "label": "lint loop",
+        "answers": 5,
+        "passRate": 0.8,
+        "meanScore": 0.96,
+        "tokensPerAnswer": 127784,
+        "totalTokens": 638920
+      },
+      {
+        "variant": "baseline",
+        "label": "full repo",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 70844,
+        "totalTokens": 354220
+      }
+    ]
   }
 ]

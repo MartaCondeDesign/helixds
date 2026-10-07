@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ReactNode } from 'react';
 import { StoryHeader } from './_shared/StoryHeader';
-import { PrimitiveVsSemantic as PrimitiveVsSemanticArt } from './Illustrations/PrimitiveVsSemantic';
 import { ComponentContract as ComponentContractArt } from './Illustrations/ComponentContract';
 import { AgentsMd as AgentsMdArt } from './Illustrations/AgentsMd';
 import { ContextToAgent as ContextToAgentArt } from './Illustrations/ContextToAgent';
@@ -13,7 +12,7 @@ import { StatusHealth as StatusHealthArt } from './Illustrations/StatusHealth';
 // caption inside the box. Timing comes from the illustration.motion.* tokens; Motion animates, GSAP
 // draws strokes. With reduced motion (OS setting or the toolbar toggle) they show the finished picture.
 const meta: Meta = {
-  title: 'Illustrations',
+  title: 'Assets/Illustrations',
   parameters: { layout: 'padded' },
 };
 export default meta;
@@ -27,12 +26,6 @@ const page = (title: string, description: string, illustration: ReactNode): Stor
     </div>
   ),
 });
-
-export const PrimitiveVsSemantic = page(
-  'Primitive vs Semantic',
-  'Primitives are raw values, semantics give them a role, components only read semantics — so re-pointing one semantic token restyles every component that uses it.',
-  <PrimitiveVsSemanticArt />,
-);
 
 export const ComponentContract = page(
   'Component Contract',

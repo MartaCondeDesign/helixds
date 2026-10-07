@@ -51,7 +51,7 @@ const preview: Preview = {
       // so it must stay self-contained plain JavaScript (no outside references, no TS annotations).
       // @ts-expect-error -- untyped on purpose: Storybook evaluates this source as plain JS when indexing
       storySort: (a, b) => {
-        const sections = ['Getting Started', 'Data', 'Changelog', 'Foundation', 'Icons', 'Components', 'Patterns', 'Pages', 'Layout', 'Illustrations'];
+        const sections = ['Getting Started', 'Data', 'Changelog', 'Foundation', 'Assets', 'Components', 'Patterns', 'Pages', 'Layout'];
         const section = a.title.split('/')[0];
         const ia = sections.indexOf(section);
         const ib = sections.indexOf(b.title.split('/')[0]);

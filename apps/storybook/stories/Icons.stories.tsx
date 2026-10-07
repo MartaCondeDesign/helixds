@@ -99,7 +99,7 @@ const ICONS: [string, IconComponent][] = [
 ];
 
 const meta: Meta = {
-  title: 'Icons',
+  title: 'Assets/Icons',
   parameters: { layout: 'padded' },
 };
 

@@ -59,7 +59,7 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
   strokes). CustomEase lets GSAP use the same cubic-bezier token values as Motion.
 - A stroke animation written with Motion (`strokeDashoffset`/`pathLength`) in an illustration is a
   violation of this rule; so is any `gsap` import under `packages/`.
-- Illustrations live in Storybook's **Illustrations** section (`apps/storybook/stories/Illustrations/`,
+- Illustrations live in Storybook's **Assets → Illustrations** section (next to Assets → Icons) (`apps/storybook/stories/Illustrations/`,
   shared runtime `runtime.ts`); GSAP is a dependency of `apps/storybook` only. `illustration.motion.*`
   is defined there as CSS custom properties (`illustrations.css`) for now; when the family settles it moves
   into `tokens.json` as its own top-level family (not under `semantic`), and `pnpm docs:token-exceptions`
