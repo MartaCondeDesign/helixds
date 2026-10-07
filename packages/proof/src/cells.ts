@@ -60,16 +60,30 @@ export function unresolvedImport(code: string, allowed: string[]): string | null
 // Package names left out on purpose: two made-up names are the same problem, and the status line counts
 // problems, not spellings. Code backticks dropped for plain reading.
 const plain = (text: string) => text.replace(/`/g, '');
-function issuesOf(answer: Answer, unresolved: string | null) {
+function issuesOf(answer: Answer, unresolved: string | null, missing: { pkg: string; name: string } | null) {
   if (answer.issues) return answer.issues;
   return [
     ...(unresolved ? ["Imports a package that doesn't exist"] : []),
+    ...(missing ? ["Imports a component that doesn't exist"] : []),
     ...(answer.successResults ?? []).filter(r => r.pass === false).map(r => `Missed: ${plain(r.text)}`),
     ...(answer.invalidResults ?? []).filter(r => r.pass === false).map(r => `Used: ${plain(r.text.split(' — ')[0])}`),
   ];
 }
 
-export function readCells(outputsDir: string, allowed: string[]): Cell[] {
+/** The first named import an answer takes from a package that the package doesn't export, if any. */
+export function missingExport(code: string, exportsByPackage: Record<string, string[]>): { pkg: string; name: string } | null {
+  for (const [pkg, names] of Object.entries(exportsByPackage)) {
+    const known = new Set(names);
+    const escaped = pkg.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+    for (const m of code.matchAll(new RegExp(`import\\s*\\{([^}]*)\\}\\s*from\\s*['"]${escaped}['"]`, 'g'))) {
+      const name = m[1].split(',').map(n => n.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]).find(n => n && !known.has(n));
+      if (name) return { pkg, name };
+    }
+  }
+  return null;
+}
+
+export function readCells(outputsDir: string, allowed: string[], exportsByPackage: Record<string, string[]> = {}): Cell[] {
   const cells: (Cell & { batch: string })[] = [];
   for (const file of readdirSync(outputsDir).filter(f => f.endsWith('.json')).sort()) {
     const answer = JSON.parse(readFileSync(path.join(outputsDir, file), 'utf8')) as Answer;
@@ -77,6 +91,7 @@ export function readCells(outputsDir: string, allowed: string[]): Cell[] {
     if (!answer.variant || !answer.promptId) continue;
     const code = answer.generatedCode?.trim() ?? '';
     const unresolved = code ? unresolvedImport(code, allowed) : null;
+    const missing = code && !unresolved ? missingExport(code, exportsByPackage) : null;
     cells.push({
       id: file.replace(/\.json$/, '').replace(/[^\w-]/g, '_'),
       task: answer.promptId,
@@ -86,9 +101,9 @@ export function readCells(outputsDir: string, allowed: string[]): Cell[] {
       passed: answer.passed,
       model: answer.model ?? null,
       tokens: answer.usage?.totalTokens ?? null,
-      issues: issuesOf(answer, unresolved),
+      issues: issuesOf(answer, unresolved, missing),
       code,
-      buildError: !code ? 'No code in the answer' : unresolved ? `Cannot resolve "${unresolved}"` : null,
+      buildError: !code ? 'No code in the answer' : unresolved ? `Cannot resolve "${unresolved}"` : missing ? `"${missing.pkg}" has no export "${missing.name}"` : null,
       batch: answer.round ?? '',
     });
   }

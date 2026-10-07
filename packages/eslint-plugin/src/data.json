@@ -6,10 +6,10 @@
     "scale": "size",
     "sz": "size",
     "fontWeight": "weight",
-    "isLoading": "loading",
-    "pending": "loading",
-    "isPending": "loading",
-    "busy": "loading",
+    "loading": "isLoading",
+    "pending": "isLoading",
+    "isPending": "isLoading",
+    "busy": "isLoading",
     "isDisabled": "disabled",
     "readonly": "disabled",
     "active": "current",
@@ -23,9 +23,9 @@
     "isError": "invalid",
     "error": "invalid",
     "isRequired": "required",
-    "onClick": "onPress",
-    "onTap": "onPress",
-    "onAction": "onPress",
+    "onPress": "onClick",
+    "onTap": "onClick",
+    "onAction": "onClick",
     "onValueChange": "onChange",
     "onUpdate": "onChange",
     "onFocused": "onFocus",
@@ -131,12 +131,12 @@
     "Button": [
       "variant",
       "size",
-      "loading",
+      "isLoading",
       "disabled",
       "icon",
       "iconEnd",
       "fullWidth",
-      "onPress",
+      "onClick",
       "children"
     ],
     "Card": [
@@ -189,7 +189,7 @@
       "label",
       "icon",
       "iconEnd",
-      "onPress",
+      "onClick",
       "dismissible",
       "onDismiss"
     ],
@@ -207,7 +207,7 @@
       "defaultExpanded",
       "onExpandedChange",
       "disabled",
-      "onPress",
+      "onClick",
       "className"
     ],
     "Icon": [
@@ -223,9 +223,9 @@
       "label",
       "variant",
       "size",
-      "loading",
+      "isLoading",
       "disabled",
-      "onPress",
+      "onClick",
       "className"
     ],
     "Input": [
@@ -235,7 +235,7 @@
       "invalid",
       "disabled",
       "required",
-      "loading",
+      "isLoading",
       "icon",
       "iconEnd",
       "description",
@@ -782,12 +782,12 @@
     "toast"
   ],
   "packages": [
-    "@helix-ds/core",
-    "@helix-ds/eslint-plugin",
-    "@helix-ds/mcp",
-    "@helix-ds/proof",
-    "@helix-ds/storybook-addon-tokens",
-    "@helix-ds/tokens",
-    "@helix-ds/wc"
+    "@helix/eslint-plugin",
+    "@helix/mcp",
+    "@helix/proof",
+    "@helix/react",
+    "@helix/storybook-addon-tokens",
+    "@helix/tokens",
+    "@helix/wc"
   ]
 }

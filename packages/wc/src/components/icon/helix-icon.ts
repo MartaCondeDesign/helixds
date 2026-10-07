@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-// Copy of @helix-ds/core's ICON_STROKE_PX_BY_SIZE (ADR-017) — this package can't import core.
+// Copy of @helix/react's ICON_STROKE_PX_BY_SIZE (ADR-017) — this package can't import core.
 // Real on-screen line width in px per icon size; keep in sync when that table changes.
 const STROKE_PX_BY_SIZE: Record<number, number> = {
   12: 1.3, 14: 1.4, 16: 1.5, 18: 1.6, 20: 1.7, 24: 1.8, 28: 2.0, 32: 2.2, 36: 2.4, 40: 2.8,
@@ -11,7 +11,7 @@ const STROKE_PX_BY_SIZE: Record<number, number> = {
 const strokeForSize = (size: number) => ((STROKE_PX_BY_SIZE[size] ?? 1.5) * 24) / size;
 
 /**
- * `<helix-icon>` — pilot Web Components equivalent of `@helix-ds/core`'s `Icon` (ADR-015).
+ * `<helix-icon>` — pilot Web Components equivalent of `@helix/react`'s `Icon` (ADR-015).
  *
  * Interop is deliberately different from the React version's `HelixIconComponent`/`createIconAdapter`
  * (ADR-014): a Custom Element has no way to receive a live component reference as an attribute, so

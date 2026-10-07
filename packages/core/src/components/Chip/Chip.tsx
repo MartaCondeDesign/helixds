@@ -15,7 +15,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
       icon,
       iconEnd,
       className,
-      onPress,
+      onClick,
       dismissible = false,
       onDismiss,
       ...props
@@ -30,7 +30,7 @@ const Chip = React.forwardRef<HTMLButtonElement, ChipProps>(
     const [isDismissing, setIsDismissing] = React.useState(false);
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = e => {
-      onPress?.(e);
+      onClick?.(e);
     };
 
     // `scale` (in animate below) is Motion's own animation-target key — a verify:props false positive,

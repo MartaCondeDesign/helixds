@@ -1,13 +1,13 @@
 /**
  * helix/unknown-prop — a prop a Helix component doesn't have (contracts/components/*.json).
  *
- *   <Button isPending={saving}>      → not a Button prop (its loading state is `loading`)
+ *   <Button wobble>                  → not a Button prop
  *   <Button label="Save" />          → not a Button prop — Button's text goes in children
  *
  * The contract is the source of truth: a prop is valid if the component's contract lists it, or if it's a
  * standard HTML/React attribute every Helix component passes through to its element (id, aria-*, data-*,
- * DOM events…). prop-vocabulary already reports — and fixes — known anti-synonyms (`isLoading` → `loading`),
- * so those are skipped here instead of reported twice. Only on components imported from @helix-ds/core.
+ * DOM events…). prop-vocabulary already reports — and fixes — known anti-synonyms (`isPending` → `isLoading`),
+ * so those are skipped here instead of reported twice. Only on components imported from @helix/react.
  */
 import data from '../data.json' with { type: 'json' };
 import { helixImports } from '../helix-imports.js';

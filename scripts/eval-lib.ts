@@ -231,7 +231,7 @@ export const GLOBAL_CHECKS: GlobalCheck[] = [
   { id: 'inline-style', description: 'Inline style={{…}}', pattern: /style=\{\{/ },
   { id: 'raw-icon', description: 'Raw <IconXxx> tag instead of the Icon component / icon prop', pattern: /<Icon(?!Button\b)[A-Z]\w*/ },
   { id: 'icon-element-prop', description: 'icon={<IconXxx />} instead of icon={IconXxx}', pattern: /icon(End)?=\{</ },
-  { id: 'on-click', description: 'onClick instead of onPress', pattern: /\bonClick=/ },
+  { id: 'on-press', description: 'onPress instead of onClick', pattern: /\bonPress=/ },
   { id: 'raw-div', description: '<div> instead of a Helix layout component', pattern: /<div\b/ },
   { id: 'raw-native-control', description: 'Native <button>/<input>/<select>/<textarea> instead of the Helix component', pattern: /<(button|input|select|textarea)\b/ },
 ];

@@ -1,7 +1,7 @@
 /* Helix DS — global styles. Import once in your app entry. */
 
 @import "tailwindcss";
-@import "@helix-ds/tokens/helix.css";
+@import "@helix/tokens/helix.css";
 
 /* ─── Tailwind v4 theme — expose Helix tokens as Tailwind utilities ─────────
    Note: @theme values must be raw values, not var() references.
@@ -585,7 +585,7 @@
      Values are real tokens now (component.input.shake.* in tokens.json,
      documented as an exception in component-token-exceptions.md) — no
      longer declared locally here, `--helix-input-shake-*` comes from
-     @helix-ds/tokens/helix.css like every other component token. */
+     @helix/tokens/helix.css like every other component token. */
   [data-helix-part="input-wrapper"][data-shaking="true"] {
     animation: helix-input-shake calc(
         var(--helix-input-shake-dur-a) * 2 + var(--helix-input-shake-dur-b) * 2

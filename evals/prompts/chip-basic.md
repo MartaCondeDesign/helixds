@@ -12,7 +12,7 @@ chips the user can remove one by one.
 
 # Success criteria
 
-- [ ] Imports `Chip` from `@helix-ds/core`
+- [ ] Imports `Chip` from `@helix/react`
 - [ ] Uses `label` prop for the chip text (not `children`)
 - [ ] Makes them removable with `dismissible` (not `removable=`, `closable=`)
 - [ ] Removes a filter through `onDismiss` (not `onClose`, `onRemove`)
@@ -27,13 +27,13 @@ chips the user can remove one by one.
 - `<Chip>In stock</Chip>` — text as children instead of the label prop
 - `checked=` — Chip has no checked/selected state
 - `<ChipGroup` — invents props: ChipGroup's options have no dismissible/onDismiss, so its chips can't be removed
-- `onClick=` on Chip — anti-synonym for onPress
+- `onPress=` on Chip — anti-synonym for onClick
 
 # Expected output shape
 
 ```tsx
 import { useState } from 'react';
-import { Chip } from '@helix-ds/core';
+import { Chip } from '@helix/react';
 
 function ActiveFilters() {
   const [filters, setFilters] = useState(['In stock', 'On sale', 'New']);

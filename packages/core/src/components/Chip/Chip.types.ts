@@ -4,7 +4,7 @@ import type { HelixIconComponent } from '../Icon';
 export type ChipVariant = 'neutral' | 'info' | 'success' | 'warning' | 'danger';
 export type ChipSize = 's' | 'm';
 
-export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'disabled' | 'onClick' | 'size' | 'type'> {
+export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'disabled' | 'size' | 'type'> {
   /** Semantic color variant. Default: 'neutral' */
   variant?: ChipVariant;
   /** Visual size. Default: 's' */
@@ -17,8 +17,8 @@ export interface ChipProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonEle
   icon?: HelixIconComponent;
   /** Trailing icon. Same fixed size as `icon`. */
   iconEnd?: HelixIconComponent;
-  /** Primary press handler. */
-  onPress?: React.MouseEventHandler<HTMLButtonElement>;
+  /** Primary press handler — React's own `onClick` (ADR-022). */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   /** Shows a close button for removing the chip. */
   dismissible?: boolean;
   /** Dismiss handler fired from the close button. */

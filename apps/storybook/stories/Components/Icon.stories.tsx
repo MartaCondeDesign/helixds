@@ -6,7 +6,7 @@ import {
   IconSearch,
   IconArrowRight,
 } from '@tabler/icons-react';
-import { Icon, IconDoc, createIconAdapter } from '@helix-ds/core';
+import { Icon, IconDoc, createIconAdapter } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 // Stand-in for a foreign icon set whose prop dialect differs from Tabler's — `strokeWidth`

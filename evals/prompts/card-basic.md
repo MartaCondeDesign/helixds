@@ -12,7 +12,7 @@ Using Helix DS, put the "Recent invoices" table inside a card on a dashboard. Th
 
 # Success criteria
 
-- [ ] Imports `Card` from `@helix-ds/core`
+- [ ] Imports `Card` from `@helix/react`
 - [ ] Puts the title in the `header=` slot (not `title=`)
 - [ ] Removes the body padding for the edge-to-edge table with `padding="none"`
 - [ ] Does NOT add elevation with `boxShadow` or `shadow` — Card is flat (ADR-005), `Card` alone is enough
@@ -29,7 +29,7 @@ Using Helix DS, put the "Recent invoices" table inside a card on a dashboard. Th
 # Expected output shape
 
 ```tsx
-import { Card, Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helix-ds/core';
+import { Card, Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helix/react';
 
 type Invoice = { id: string; customer: string; amount: string };
 

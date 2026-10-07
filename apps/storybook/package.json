@@ -1,5 +1,5 @@
 {
-  "name": "@helix-ds/storybook",
+  "name": "@helix/storybook",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -9,9 +9,9 @@
     "test-storybook": "test-storybook"
   },
   "dependencies": {
-    "@helix-ds/core": "workspace:*",
-    "@helix-ds/storybook-addon-tokens": "workspace:*",
-    "@helix-ds/tokens": "workspace:*",
+    "@helix/react": "workspace:*",
+    "@helix/storybook-addon-tokens": "workspace:*",
+    "@helix/tokens": "workspace:*",
     "@tabler/icons-react": "^3.0.0",
     "motion": "13.2.0",
     "react": "^19.0.0",

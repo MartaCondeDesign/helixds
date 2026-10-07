@@ -38,7 +38,7 @@ const SidePanel = ({
         // prop name here would silently detach every IconButton CSS rule, hover included.
         <span data-helix-part="side-panel-close">
           {/* Largest available IconButton size (40px button / 20px icon) — same flagged limitation as Modal. */}
-          <IconButton icon={IconX} label="Close" size="l" variant="ghost" onPress={onDismiss} />
+          <IconButton icon={IconX} label="Close" size="l" variant="ghost" onClick={onDismiss} />
         </span>
       )}
       <div data-helix-part="side-panel-body">{children}</div>

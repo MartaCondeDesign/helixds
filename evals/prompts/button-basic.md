@@ -12,12 +12,12 @@ The button should be a primary variant, medium size, and show a spinner while sa
 
 # Success criteria
 
-- [ ] Imports `Button` from `@helix-ds/core`
+- [ ] Imports `Button` from `@helix/react`
 - [ ] Uses `variant="primary"` (not `type="primary"`)
-- [ ] Passes a boolean to Button's `loading=` prop (not an `isLoading=` prop)
-- [ ] Does NOT pass `onClick` — uses `onPress` instead
+- [ ] Passes a boolean to Button's `isLoading=` prop (not a `loading=` prop)
+- [ ] Does NOT pass `onPress` — uses `onClick` instead
 - [ ] Does NOT hardcode any colors or sizes
-- [ ] Does NOT import `@helix-ds/tokens/helix.css` in the component (goes in app entry)
+- [ ] Does NOT import `@helix/tokens/helix.css` in the component (goes in app entry)
 
 # Escape hatches (partial credit)
 
@@ -27,22 +27,22 @@ The button should be a primary variant, medium size, and show a spinner while sa
 # Invalid patterns (auto-fail)
 
 - `type="primary"` or `kind="primary"` — anti-synonym
-- `isLoading={true}` — anti-synonym
-- `onClick={handleSave}` — anti-synonym
+- `loading={true}` — anti-synonym
+- `onPress={handleSave}` — anti-synonym
 - `style={{ color: '#1d4ed8' }}` — hardcoded value
 - Inventing a `ButtonSpinner` component that doesn't exist in Helix
 
 # Expected output shape
 
 ```tsx
-import { Button } from '@helix-ds/core';
+import { Button } from '@helix/react';
 
 function SaveButton({ onSave, isSaving }: { onSave: () => void; isSaving: boolean }) {
   return (
     <Button
       variant="primary"
-      loading={isSaving}
-      onPress={onSave}
+      isLoading={isSaving}
+      onClick={onSave}
     >
       Save changes
     </Button>

@@ -12,7 +12,7 @@ have no photo yet, so those should fall back to their initials.
 
 # Success criteria
 
-- [ ] Imports `Avatar` from `@helix-ds/core`
+- [ ] Imports `Avatar` from `@helix/react`
 - [ ] Passes the person's full name with `label=` (not `name=`, `alt=`, `title=`)
 - [ ] Passes the photo URL with `src=` (not `image=`, `url=`)
 - [ ] Does NOT compute initials by hand with `initials=` or `.split(' ')` — Avatar derives them from `label`
@@ -29,7 +29,7 @@ have no photo yet, so those should fall back to their initials.
 # Expected output shape
 
 ```tsx
-import { Avatar } from '@helix-ds/core';
+import { Avatar } from '@helix/react';
 
 type Member = { id: string; fullName: string; photoUrl?: string };
 

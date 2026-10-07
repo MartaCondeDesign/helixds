@@ -40,7 +40,7 @@ Batch actions (appears when rows are selected):
 ## Code
 
 ```tsx
-import { Button } from '@helix-ds/core';
+import { Button } from '@helix/react';
 import { IconPlus, IconUpload, IconTrash } from '@tabler/icons-react';
 
 /* Page header action bar */
@@ -50,10 +50,10 @@ function PageActions({ onNew, onImport }: { onNew: () => void; onImport: () => v
       data-helix-pattern="action-bar"
       style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }} // button group: 4px (group-spacing.md)
     >
-      <Button variant="secondary" icon={IconUpload} onPress={onImport}>
+      <Button variant="secondary" icon={IconUpload} onClick={onImport}>
         Import
       </Button>
-      <Button variant="primary" icon={IconPlus} onPress={onNew}>
+      <Button variant="primary" icon={IconPlus} onClick={onNew}>
         New project
       </Button>
     </div>
@@ -88,8 +88,8 @@ function BatchActions({
       </span>
 
       <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
-        <Button variant="ghost" onPress={onArchive}>Archive</Button>
-        <Button variant="ghost" onPress={onMove}>Move to…</Button>
+        <Button variant="ghost" onClick={onArchive}>Archive</Button>
+        <Button variant="ghost" onClick={onMove}>Move to…</Button>
       </div>
 
       {/* Danger is separated by a larger gap */}
@@ -97,7 +97,7 @@ function BatchActions({
         <Button
           variant="danger"
           icon={IconTrash}
-          onPress={onDelete}
+          onClick={onDelete}
         >
           Delete
         </Button>

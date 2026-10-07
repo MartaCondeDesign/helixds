@@ -16,7 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       hideLabel  = false,
       size       = 'm',
       invalid    = false,
-      loading    = false,
+      isLoading    = false,
       fullWidth  = false,
       icon,
       iconEnd,
@@ -81,7 +81,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           data-size={size}
           data-invalid={invalid ? 'true' : undefined}
           data-disabled={disabled ? 'true' : undefined}
-          data-loading={loading ? 'true' : undefined}
+          data-loading={isLoading ? 'true' : undefined}
           onAnimationEnd={() => wrapperRef.current?.removeAttribute('data-shaking')}
         >
           {icon && (
@@ -95,10 +95,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={uid}
             data-helix-part="input-field"
             data-size={size}
-            disabled={disabled || loading}
+            disabled={disabled || isLoading}
             aria-invalid={invalid ? 'true' : undefined}
             aria-required={props.required ? 'true' : undefined}
-            aria-busy={loading ? 'true' : undefined}
+            aria-busy={isLoading ? 'true' : undefined}
             aria-describedby={describedBy}
             {...props}
             onKeyDown={e => {

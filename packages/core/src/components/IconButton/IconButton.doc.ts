@@ -57,9 +57,9 @@ export const doc: ComponentDoc = {
   features: [
     'forwardRef — accepts a ref to the underlying <button> element',
     "size — same height tokens/scale as Button: s=24px, m=32px (default), l=40px; width always equals height",
-    'loading — shows spinner in place of the icon, disables interaction, sets aria-busy',
+    'isLoading — shows spinner in place of the icon, disables interaction, sets aria-busy',
     'icon — a single required Tabler icon slot, sized relative to the button (s→16, m→18, l→20)',
-    'onPress — canonical handler (wraps onClick)',
+    'onClick — canonical handler (React\'s own; onClick is an anti-synonym, ADR-022)',
   ],
 
   examples: [
@@ -77,7 +77,7 @@ export const doc: ComponentDoc = {
     },
     {
       label: 'Loading state',
-      code: `<IconButton icon={IconRefresh} label="Refresh" loading />`,
+      code: `<IconButton icon={IconRefresh} label="Refresh" isLoading />`,
     },
   ],
 };

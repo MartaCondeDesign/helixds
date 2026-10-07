@@ -31,10 +31,10 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       label,
       variant = 'ghost',
       size    = 'm',
-      loading = false,
+      isLoading = false,
       className,
       disabled,
-      onPress,
+      onClick,
       // Not forwarded to motion.button — same reason as Button (ADR-007): Motion's HTMLMotionProps
       // redefines these native names for its own gesture/animation system.
       style: _style,
@@ -48,7 +48,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
     },
     ref,
   ) => {
-    const isDisabled = disabled || loading;
+    const isDisabled = disabled || isLoading;
 
     // `scale` (in whileTap below) is Motion's own animation-target key — a verify:props false positive,
     // same category as Button.tsx's whileTap.
@@ -58,17 +58,17 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         data-helix-part="icon-button"
         data-variant={variant}
         data-size={size}
-        data-loading={loading ? 'true' : undefined}
+        data-loading={isLoading ? 'true' : undefined}
         disabled={isDisabled}
-        aria-busy={loading ? 'true' : undefined}
+        aria-busy={isLoading ? 'true' : undefined}
         aria-label={label}
         className={cn(className)}
-        onClick={onPress}
+        onClick={onClick}
         transition={{ duration: 0.1 }}
         {...(isDisabled ? {} : { whileTap: { scale: PRESS_SCALE_COMPACT } })}
         {...props}
       >
-        {loading ? <Spinner /> : <Icon icon={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />}
+        {isLoading ? <Spinner /> : <Icon icon={icon} size={ICON_SIZE_BY_BUTTON_SIZE[size]} />}
       </motion.button>
     );
   },

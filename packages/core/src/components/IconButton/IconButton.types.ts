@@ -4,7 +4,7 @@ import type { HelixIconComponent } from '../Icon';
 export type IconButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type IconButtonSize    = 's' | 'm' | 'l';
 
-export interface IconButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
+export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** The icon to render, passed by reference (e.g. IconTrash), not pre-instantiated. */
   icon: HelixIconComponent;
   /** Accessible name — required, since there's no visible text to describe the button. Rendered as aria-label. */
@@ -14,7 +14,7 @@ export interface IconButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
   /** Physical size — same scale and height tokens as Button. Width always equals height (square). Default: 'm' */
   size?: IconButtonSize;
   /** Async action in progress — shows a spinner in place of the icon, disables interaction. */
-  loading?: boolean;
-  /** Primary action handler. `onClick` is an anti-synonym (see prop-map.md) and is intentionally omitted. */
-  onPress?: React.MouseEventHandler<HTMLButtonElement>;
+  isLoading?: boolean;
+  /** Primary action handler — React's own `onClick` (ADR-022). `onPress` is an anti-synonym. */
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

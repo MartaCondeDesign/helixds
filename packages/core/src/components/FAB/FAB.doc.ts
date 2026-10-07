@@ -42,7 +42,7 @@ export const doc: ComponentDoc = {
   examples: [
     {
       label: 'Plain FAB, no speed-dial',
-      code: `<FAB icon={IconPlus} label="Add" onPress={() => {}} />`,
+      code: `<FAB icon={IconPlus} label="Add" onClick={() => {}} />`,
     },
     {
       label: 'Speed-dial with 2 actions',
@@ -50,8 +50,8 @@ export const doc: ComponentDoc = {
   icon={IconPlus}
   label="Add"
   actions={[
-    { icon: IconUserPlus, label: 'Add member', onPress: () => {} },
-    { icon: IconDownload, label: 'Export', onPress: () => {} },
+    { icon: IconUserPlus, label: 'Add member', onClick: () => {} },
+    { icon: IconDownload, label: 'Export', onClick: () => {} },
   ]}
 />`,
     },

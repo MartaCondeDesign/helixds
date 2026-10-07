@@ -1,12 +1,12 @@
 /**
  * helix/prop-vocabulary — anti-synonym props and values on Helix components (`.ai/maps/prop-map.md`).
  *
- *   <Button onClick={save}>        → onPress
+ *   <Button onPress={save}>        → onClick
  *   <Badge variant="error" />      → variant="danger"
  *   <Button size="sm">             → size="s"
  *
- * Only on components imported from @helix-ds/core, and only when that component actually documents the
- * canonical prop — so `onClick` on a Card (which has no onPress) is left alone. A few anti-synonyms are
+ * Only on components imported from @helix/react, and only when that component actually documents the
+ * canonical prop — so `onPress` on a Card (which has no onClick prop) is left alone. A few anti-synonyms are
  * also real HTML attributes Helix components pass through (`<Button type="submit">`, `<Input name="email">`);
  * those are never reported.
  */

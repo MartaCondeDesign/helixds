@@ -7,7 +7,7 @@
  *   semantic.color.fill.primary-interactive-default → --helix-color-fill-primary-interactive-default
  *   component.button.fill.primary-default → --helix-button-fill-primary-default
  *
- * Run: pnpm --filter @helix-ds/tokens build
+ * Run: pnpm --filter @helix/tokens build
  */
 import fs from 'fs';
 import path from 'path';
@@ -532,7 +532,7 @@ const sections = {
 const css = `/* ============================================================
    Helix DS — Generated design tokens
    Source: packages/tokens/src/tokens.json
-   DO NOT EDIT — run pnpm --filter @helix-ds/tokens build
+   DO NOT EDIT — run pnpm --filter @helix/tokens build
    ============================================================ */
 
 /* ── Primitive tokens (raw scale) ───────────────────────────── */
@@ -613,7 +613,7 @@ function buildTs(obj: Tree, root: Tree, indent = 1): string[] {
 
 const ts = [
   '// Helix DS — generated token constants',
-  '// DO NOT EDIT — run pnpm --filter @helix-ds/tokens build',
+  '// DO NOT EDIT — run pnpm --filter @helix/tokens build',
   '',
   '/** Raw token values, typed as const. Use CSS vars at runtime instead. */',
   'export const tokens = {',

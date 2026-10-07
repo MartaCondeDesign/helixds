@@ -1,5 +1,5 @@
 {
-  "name": "@helix-ds/mcp",
+  "name": "@helix/mcp",
   "version": "0.1.0",
   "private": true,
   "description": "MCP server that gives AI agents native Helix tools \u2014 component contracts, token search by concept, and snippet validation",
@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@helix-ds/eslint-plugin": "workspace:^",
+    "@helix/eslint-plugin": "workspace:^",
     "@modelcontextprotocol/sdk": "^1.32.0",
     "eslint": "^9",
     "typescript-eslint": "^8.71.0",

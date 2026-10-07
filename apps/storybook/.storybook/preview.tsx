@@ -3,9 +3,9 @@ import type { Preview, Decorator } from '@storybook/react';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
 
 // 1. Load Helix tokens (CSS custom properties)
-import '@helix-ds/tokens/helix.css';
+import '@helix/tokens/helix.css';
 // 2. Load Helix component CSS (globals.css with Tailwind + component styles)
-import '@helix-ds/core/globals.css';
+import '@helix/react/globals.css';
 // 3. Storybook-only "Reduced motion" toolbar control — see withReducedMotion below.
 import './reduced-motion.css';
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useRef, useState } from 'react';
-import { Menu, MenuDoc } from '@helix-ds/core';
+import { Menu, MenuDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const FRUITS = [

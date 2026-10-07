@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconSearch, IconBell, IconHelp } from '@tabler/icons-react';
-import { TopBar, TopBarDoc, Input, IconButton } from '@helix-ds/core';
+import { TopBar, TopBarDoc, Input, IconButton } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof TopBar> = {

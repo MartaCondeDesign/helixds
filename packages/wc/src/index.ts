@@ -1,8 +1,8 @@
 /**
- * @helix-ds/wc — Web Components pilot (ADR-015). Registers the four piloted custom elements:
- * <helix-icon>, <helix-badge>, <helix-button>, <helix-tooltip>. Not a full port of @helix-ds/core.
+ * @helix/wc — Web Components pilot (ADR-015). Registers the four piloted custom elements:
+ * <helix-icon>, <helix-badge>, <helix-button>, <helix-tooltip>. Not a full port of @helix/react.
  *
- * Consumers must load `@helix-ds/tokens/helix.css` on the page once — custom properties inherit
+ * Consumers must load `@helix/tokens/helix.css` on the page once — custom properties inherit
  * through Shadow DOM, so no per-component token wiring is needed.
  */
 export { HelixIcon } from './components/icon/helix-icon';

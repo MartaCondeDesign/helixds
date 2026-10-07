@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
 import { IconChartBar, IconTable } from '@tabler/icons-react';
-import { SegmentedControl, SegmentedControlDoc } from '@helix-ds/core';
+import { SegmentedControl, SegmentedControlDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const MODE_OPTIONS = [

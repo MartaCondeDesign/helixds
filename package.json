@@ -46,6 +46,7 @@
     "proof": "tsx packages/proof/src/cli.ts",
     "proof:serve": "tsx packages/proof/src/cli.ts --serve --no-build",
     "eval:ladder": "tsx scripts/eval-ladder.ts",
+    "eval:rescore": "tsx scripts/eval-rescore.ts",
     "eval:judge": "tsx scripts/eval-review.ts --traces --judge",
     "eval:trace": "tsx scripts/log-trace.ts",
     "quality": "tsx scripts/quality-cli.ts",
@@ -54,7 +55,7 @@
     "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },
   "devDependencies": {
-    "@helix-ds/eslint-plugin": "workspace:^",
+    "@helix/eslint-plugin": "workspace:^",
     "@types/node": "^20.0.0",
     "eslint": "^9",
     "husky": "^9.1.7",

@@ -54,7 +54,7 @@ const Modal = ({
         <span data-helix-part="modal-close">
           {/* Largest available IconButton size (40px button / 20px icon) — there's no IconButton
               size that reaches a 32px icon today; see the conversation this shipped from. */}
-          <IconButton icon={IconX} label="Close" size="l" variant="ghost" onPress={onDismiss} />
+          <IconButton icon={IconX} label="Close" size="l" variant="ghost" onClick={onDismiss} />
         </span>
       )}
       <div data-helix-part="modal-body">{children}</div>
@@ -64,15 +64,15 @@ const Modal = ({
             {tertiaryActionLabel && (
               // "Tertiary" maps to Button's `ghost` variant — Helix's Button has no separate
               // `tertiary` variant token today.
-              <Button variant="ghost" onPress={() => onTertiaryAction?.()}>{tertiaryActionLabel}</Button>
+              <Button variant="ghost" onClick={() => onTertiaryAction?.()}>{tertiaryActionLabel}</Button>
             )}
           </div>
           <div data-helix-part="modal-footer-end">
             {secondaryActionLabel && (
-              <Button variant="secondary" onPress={() => onSecondaryAction?.()}>{secondaryActionLabel}</Button>
+              <Button variant="secondary" onClick={() => onSecondaryAction?.()}>{secondaryActionLabel}</Button>
             )}
             {primaryActionLabel && (
-              <Button variant="primary" onPress={() => onPrimaryAction?.()}>{primaryActionLabel}</Button>
+              <Button variant="primary" onClick={() => onPrimaryAction?.()}>{primaryActionLabel}</Button>
             )}
           </div>
         </div>

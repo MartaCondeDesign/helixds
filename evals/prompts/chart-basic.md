@@ -12,7 +12,7 @@ Using Helix DS, build a dashboard card that shows how weekly sign-ups evolved fr
 
 # Success criteria
 
-- [ ] Imports `Chart` from `@helix-ds/core`
+- [ ] Imports `Chart` from `@helix/react`
 - [ ] Shows a trend with a line-type chart (any of `variant="line"`, `variant="area"`)
 - [ ] Gives the chart its accessible name with `label=` (not `title=`, `aria-label=`)
 - [ ] Passes the axis labels as `categories=` and the values as `series=`
@@ -28,12 +28,12 @@ Using Helix DS, build a dashboard card that shows how weekly sign-ups evolved fr
 - `echarts` — imports the charting engine directly instead of the Helix Chart
 - `option=` — raw engine options; Chart only takes its documented props
 - `recharts` — a different chart library outside Helix
-- `onClick=` — anti-synonym for onPress
+- `onPress=` — anti-synonym for onClick
 
 # Expected output shape
 
 ```tsx
-import { Card, Chart } from '@helix-ds/core';
+import { Card, Chart } from '@helix/react';
 
 function WeeklySignups() {
   return (

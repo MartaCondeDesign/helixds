@@ -1,4 +1,4 @@
-# @helix-ds/core — Agent Context
+# @helix/react — Agent Context
 
 ## What this package contains
 

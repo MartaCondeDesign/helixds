@@ -78,12 +78,8 @@ const rootAnatomy = (contract.anatomy ?? []).find(a => a.element !== 'slot');
 const nativeTag = rootAnatomy?.element && NATIVE_ELEMENT_MAP[rootAnatomy.element] ? rootAnatomy.element : null;
 const native = nativeTag ? NATIVE_ELEMENT_MAP[nativeTag]! : null;
 
-const hasOnPress = props.some(p => p.name === 'onPress');
-const extendsClause = native
-  ? hasOnPress
-    ? `extends Omit<React.${native.attrs}<${native.el}>, 'onClick'>`
-    : `extends React.${native.attrs}<${native.el}>`
-  : null;
+// The action handler is React's own onClick (ADR-022), so the native attributes are extended as they are.
+const extendsClause = native ? `extends React.${native.attrs}<${native.el}>` : null;
 
 // ── Build type aliases + interface fields ───────────────────────────────────
 const pascal = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -100,7 +96,7 @@ for (const prop of props) {
   const optionalMark = required ? '' : '?';
 
   // Strip a trailing "| undefined" from the contract type — optionality is already
-  // expressed by the `?`, matching how onPress/icon/iconEnd are typed in Button.types.ts.
+  // expressed by the `?`, matching how onClick/icon/iconEnd are typed in Button.types.ts.
   let tsType = prop.type.replace(/\s*\|\s*undefined\s*$/, '').trim();
 
   if (tsType.includes('TablerIcon')) usesTablerIcon = true;

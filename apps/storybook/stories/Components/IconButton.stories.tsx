@@ -8,7 +8,7 @@ import {
   IconPencil,
   IconSettings,
 } from '@tabler/icons-react';
-import { IconButton, IconButtonDoc } from '@helix-ds/core';
+import { IconButton, IconButtonDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof IconButton> = {
@@ -21,7 +21,7 @@ const meta: Meta<typeof IconButton> = {
     label:   'Delete item',
     variant: 'ghost',
     size:    'm',
-    onPress: fn(),
+    onClick: fn(),
   },
   argTypes: {
     variant: {
@@ -51,7 +51,7 @@ const meta: Meta<typeof IconButton> = {
       control: 'text',
       description: 'Required accessible name — rendered as `aria-label`, since there is no visible text.',
     },
-    loading: {
+    isLoading: {
       control: 'boolean',
       description: 'Shows a spinner in place of the icon and disables interaction. Sets `aria-busy="true"` automatically.',
     },
@@ -92,11 +92,11 @@ export const Sizes: Story = {
 };
 
 export const Loading: Story = {
-  args: { loading: true, icon: IconRefresh, label: 'Refresh' },
+  args: { isLoading: true, icon: IconRefresh, label: 'Refresh' },
   parameters: {
     docs: {
       description: {
-        story: '`loading` shows a spinner and sets `aria-busy="true"`. The button becomes non-interactive.',
+        story: '`isLoading` shows a spinner and sets `aria-busy="true"`. The button becomes non-interactive.',
       },
     },
   },
@@ -114,7 +114,7 @@ export const AllVariants: Story = {
         {variants.map(variant => (
           <div key={variant} style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
             <IconButton variant={variant} icon={IconSettings} label={`${variant} default`} />
-            <IconButton variant={variant} icon={IconSettings} label={`${variant} loading`} loading />
+            <IconButton variant={variant} icon={IconSettings} label={`${variant} loading`} isLoading />
             <IconButton variant={variant} icon={IconSettings} label={`${variant} disabled`} disabled />
           </div>
         ))}
@@ -139,10 +139,10 @@ export const KeyboardActivation: Story = {
     await expect(button).toHaveFocus();
 
     await userEvent.keyboard('{Enter}');
-    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
 
     await userEvent.keyboard('[Space]');
-    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
   },
   parameters: {
     docs: {

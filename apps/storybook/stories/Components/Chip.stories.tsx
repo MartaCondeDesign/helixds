@@ -8,7 +8,7 @@ import {
   IconX,
   IconInfoCircle,
 } from '@tabler/icons-react';
-import { Chip, ChipDoc } from '@helix-ds/core';
+import { Chip, ChipDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Chip> = {
@@ -20,7 +20,7 @@ const meta: Meta<typeof Chip> = {
     label: 'Chip',
     variant: 'neutral',
     size: 's',
-    onPress: () => {},
+    onClick: () => {},
   },
   argTypes: {
     variant: {
@@ -113,7 +113,7 @@ export const Sizes: Story = {
 // keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardActivation: Story = {
   tags: ['!dev', '!autodocs'],
-  args: { label: 'Filter', onPress: fn() },
+  args: { label: 'Filter', onClick: fn() },
   play: async ({ args, canvasElement }) => {
     const chip = within(canvasElement).getByRole('button', { name: 'Filter' });
 
@@ -122,9 +122,9 @@ export const KeyboardActivation: Story = {
 
     // Enter and Space each activate it
     await userEvent.keyboard('{Enter}');
-    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
     await userEvent.keyboard('[Space]');
-    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
   },
   parameters: {
     docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Enter and Space each activate the focused chip.' } },

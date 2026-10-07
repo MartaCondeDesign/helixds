@@ -7,7 +7,7 @@ import {
   IconSearch,
   IconSend,
 } from '@tabler/icons-react';
-import { Button, ButtonDoc } from '@helix-ds/core';
+import { Button, ButtonDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Button> = {
@@ -19,7 +19,7 @@ const meta: Meta<typeof Button> = {
     children: 'Button',
     variant:  'primary',
     size:     'm',
-    onPress:  fn(),
+    onClick:  fn(),
   },
   argTypes: {
     variant: {
@@ -32,7 +32,7 @@ const meta: Meta<typeof Button> = {
       options: ['s', 'm', 'l'],
       description: "Physical size: s → 24px, m → 32px (default — use unless there's a specific reason to deviate), l → 40px.",
     },
-    loading: {
+    isLoading: {
       control: 'boolean',
       description: 'Shows a spinner and disables interaction. Sets `aria-busy="true"` automatically.',
     },
@@ -87,16 +87,16 @@ export const AllVariants: Story = {
 export const Loading: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary" loading>Saving…</Button>
-      <Button variant="secondary" loading>Saving…</Button>
-      <Button variant="ghost" loading>Saving…</Button>
-      <Button variant="danger" loading>Saving…</Button>
+      <Button variant="primary" isLoading>Saving…</Button>
+      <Button variant="secondary" isLoading>Saving…</Button>
+      <Button variant="ghost" isLoading>Saving…</Button>
+      <Button variant="danger" isLoading>Saving…</Button>
     </div>
   ),
   parameters: {
     docs: {
       description: {
-        story: '`loading` shows a spinner and sets `aria-busy="true"` — each variant keeps its own color, it never grays out.',
+        story: '`isLoading` shows a spinner and sets `aria-busy="true"` — each variant keeps its own color, it never grays out.',
       },
     },
   },
@@ -176,10 +176,10 @@ export const KeyboardActivation: Story = {
     await expect(button).toHaveFocus();
 
     await userEvent.keyboard('{Enter}');
-    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
 
     await userEvent.keyboard('[Space]');
-    await expect(args.onPress).toHaveBeenCalledTimes(2);
+    await expect(args.onClick).toHaveBeenCalledTimes(2);
   },
   parameters: {
     docs: {

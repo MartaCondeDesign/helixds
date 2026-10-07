@@ -1,4 +1,4 @@
-import type { ComponentDoc } from '@helix-ds/core';
+import type { ComponentDoc } from '@helix/react';
 import figmaSync from '../../../../contracts/figma-sync.json';
 
 // Every Components/* and Layout/* story must show a link to its Figma component — see

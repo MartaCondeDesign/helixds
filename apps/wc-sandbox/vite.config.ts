@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
-// Workspace-linked packages (@helix-ds/tokens, @helix-ds/wc) resolve to sibling dist/ folders
+// Workspace-linked packages (@helix/tokens, @helix/wc) resolve to sibling dist/ folders
 // outside this app's own directory — Vite's default fs.allow blocks that. Explicitly allow-listing
 // the repo root still 403s here: macOS/APFS returns this path's "Documentación" segment in a
 // different Unicode normalization form (NFD) than the browser's request URL decodes it to (NFC),

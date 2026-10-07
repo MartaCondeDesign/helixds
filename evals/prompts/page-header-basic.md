@@ -12,7 +12,7 @@ members and their access.", and an "Invite member" primary button on the right.
 
 # Success criteria
 
-- [ ] Imports `PageHeader` from `@helix-ds/core`
+- [ ] Imports `PageHeader` from `@helix/react`
 - [ ] Uses `label="Team"` for the title (not `title=`, `heading=`)
 - [ ] Uses `description=` for the supporting line (not `subtitle=`, `hint=`)
 - [ ] Puts the button in the `actions=` slot
@@ -25,12 +25,12 @@ members and their access.", and an "Invite member" primary button on the right.
 # Invalid patterns (auto-fail)
 
 - `<h1` — a hand-built heading instead of PageHeader
-- `onClick=` — anti-synonym for onPress
+- `onPress=` — anti-synonym for onClick
 
 # Expected output shape
 
 ```tsx
-import { PageHeader, Button } from '@helix-ds/core';
+import { PageHeader, Button } from '@helix/react';
 import { IconPlus } from '@tabler/icons-react';
 
 function TeamHeader({ onInvite }: { onInvite: () => void }) {
@@ -38,7 +38,7 @@ function TeamHeader({ onInvite }: { onInvite: () => void }) {
     <PageHeader
       label="Team"
       description="Manage members and their access."
-      actions={<Button variant="primary" icon={IconPlus} onPress={onInvite}>Invite member</Button>}
+      actions={<Button variant="primary" icon={IconPlus} onClick={onInvite}>Invite member</Button>}
     />
   );
 }

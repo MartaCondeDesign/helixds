@@ -103,7 +103,7 @@ which only matters here, for the Figma conversion.
 | Variant / enum    | `prop?: 'a' \| 'b' \| 'c'` (union type)                         | `variant`, `size`                               |
 | Text / string     | `prop?: string`, or `children?: React.ReactNode` (label-only)  | `label`, `placeholder`, `children`              |
 | Icon reference    | `prop?: TablerIcon` — component reference, never a pre-instantiated element or string | `icon`, `iconEnd` |
-| Event handler     | `prop?: (event) => void`                                       | `onPress`, `onChange`, `onFocus`, `onBlur`, `onDismiss` |
+| Event handler     | `prop?: (event) => void`                                       | `onClick`, `onChange`, `onFocus`, `onBlur`, `onDismiss` |
 | Nested content    | `children?: React.ReactNode` holding another component         | e.g. a `Card`'s body                            |
 
 ### Step 2 — code shape → Figma property type
@@ -126,7 +126,7 @@ Figma component properties come in exactly 4 types: `BOOLEAN`, `TEXT`, `INSTANCE
 |------|-----------|---------------------|-----|
 | `disabled` | `boolean` | a value of the `state` VARIANT axis (`state=disabled`), not BOOLEAN | BOOLEAN can't express a color/opacity change; folding it into `state` keeps every visual state on one axis — see Phase 2.75 |
 | `icon` / `iconEnd` | icon component reference | falls back to `BOOLEAN`-only if the icon library isn't imported into Figma yet (no `INSTANCE_SWAP` without real icon components to reference) | see "Icon discovery flow" and "Icon slots need BOTH..." below |
-| `onPress`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
+| `onClick`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
 | `required` (when no asterisk rendered) | `boolean` | *(no Figma property — skipped)* | No visual difference in the anatomy |
 
 **Naming rule:** prop name in Figma = prop name in code. Lowercase. No capitalization changes.
@@ -526,7 +526,7 @@ matching Storybook exactly (`variant, size, checked, disabled, icon, iconEnd, di
 **not achievable** on this platform — don't attempt it. What IS controllable, and should always be done:
 (1) order the segments in each component's name string (`variant=X, size=Y, checked=Z`) to match
 Storybook's Variant-prop order; (2) call `addComponentProperty` for Boolean/Text/InstanceSwap props in
-Storybook's order too. Skip props with no Figma equivalent: JS event handlers (`onPress`, `onChange`,
+Storybook's order too. Skip props with no Figma equivalent: JS event handlers (`onClick`, `onChange`,
 `onDismiss`) and behavioral props with no visual difference in the anatomy (e.g. `required` when no
 asterisk is rendered). Never add a Boolean/Text/InstanceSwap property before its anatomy layer exists —
 a property wired to nothing is worse than no property, since it looks complete in the panel but does

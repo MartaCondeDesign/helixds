@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { AvatarGroup, AvatarGroupDoc } from '@helix-ds/core';
+import { AvatarGroup, AvatarGroupDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const PEOPLE_WITH_PHOTOS = [

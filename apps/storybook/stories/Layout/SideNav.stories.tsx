@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {
   IconLayoutDashboard, IconComponents, IconPalette, IconUsers, IconCode, IconSettings, IconBolt,
 } from '@tabler/icons-react';
-import { SideNav, SideNavDoc, NavItem, Avatar, Icon } from '@helix-ds/core';
+import { SideNav, SideNavDoc, NavItem, Avatar, Icon } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof SideNav> = {

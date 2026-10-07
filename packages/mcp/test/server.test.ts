@@ -1,5 +1,5 @@
 // End-to-end: starts the real server over stdio and talks to it with the official MCP client — the same way
-// Claude Code or Cursor do. Run: pnpm --filter @helix-ds/mcp test
+// Claude Code or Cursor do. Run: pnpm --filter @helix/mcp test
 import { after, before, describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
@@ -19,7 +19,7 @@ before(async () => {
 });
 after(() => client.close());
 
-describe('@helix-ds/mcp', () => {
+describe('@helix/mcp', () => {
   it('lists the five tools, all read-only', async () => {
     const { tools } = await client.listTools();
     assert.deepEqual(tools.map(t => t.name).sort(), ['helix_get_contract', 'helix_get_pattern', 'helix_list_components', 'helix_search_tokens', 'helix_validate_snippet']);
@@ -29,7 +29,7 @@ describe('@helix-ds/mcp', () => {
   it('helix_get_contract returns props, a11y, rationale and governance', async () => {
     const { data } = await call('helix_get_contract', { name: 'button' });
     assert.equal(data.name, 'Button');
-    assert.ok(data.props.some((p: { name: string }) => p.name === 'onPress'));
+    assert.ok(data.props.some((p: { name: string }) => p.name === 'onClick'));
     assert.ok(data.accessibility.role);
     assert.ok(data.rationale);
     assert.ok(data.governance.mustEscalateToDS.length);
@@ -62,24 +62,24 @@ describe('@helix-ds/mcp', () => {
   });
 
   it('helix_validate_snippet reports problems and returns the fixed code', async () => {
-    const code = "import { Button } from '@helix/react';\nexport const Save = () => <div><Button onClick={save} style={{ color: '#1d4ed8' }}>Save</Button></div>;\n";
+    const code = "import { Button } from '@helix-ds/core';\nexport const Save = () => <div><Button onPress={save} style={{ color: '#1d4ed8' }}>Save</Button></div>;\n";
     const { data } = await call('helix_validate_snippet', { code });
     assert.equal(data.valid, false);
     assert.deepEqual(data.problems.map((p: { rule: string }) => p.rule).sort(), ['helix/import-source', 'helix/no-raw-color', 'helix/prop-vocabulary']);
-    assert.match(data.fixedCode, /from '@helix-ds\/core'/);
-    assert.match(data.fixedCode, /onPress=\{save\}/);
+    assert.match(data.fixedCode, /from '@helix\/react'/);
+    assert.match(data.fixedCode, /onClick=\{save\}/);
     assert.equal(data.remainingAfterFix.length, 1); // the raw color needs a human/agent choice of token
     assert.ok(data.advisories.some((a: { check: string }) => a.check === 'raw-div'));
   });
 
   it('helix_validate_snippet passes clean Helix code', async () => {
-    const { data } = await call('helix_validate_snippet', { code: "import { Button } from '@helix-ds/core';\nexport const Save = () => <Button onPress={save}>Save</Button>;\n" });
+    const { data } = await call('helix_validate_snippet', { code: "import { Button } from '@helix/react';\nexport const Save = () => <Button onClick={save}>Save</Button>;\n" });
     assert.equal(data.valid, true);
     assert.equal(data.fixedCode, null);
   });
 
   it('helix_validate_snippet reports a syntax error instead of crashing', async () => {
-    const { data } = await call('helix_validate_snippet', { code: '<Button onPress={' });
+    const { data } = await call('helix_validate_snippet', { code: '<Button onClick={' });
     assert.equal(data.valid, false);
     assert.ok(data.parseError);
   });

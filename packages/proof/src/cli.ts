@@ -34,7 +34,7 @@ if (values.serve && values['no-build']) {
 }
 
 async function build() {
-  let cells = readCells(config.outputsDir, config.imports);
+  let cells = readCells(config.outputsDir, config.imports, config.exports);
   // Listed variants are the context levels every task is run at; a one-off experiment on a few tasks
   // (anything not listed) would leave holes in the comparison, so it's left out.
   if (config.variants) cells = cells.filter(c => c.variant in config.variants!);

@@ -8,7 +8,7 @@ importers:
 
   .:
     devDependencies:
-      '@helix-ds/eslint-plugin':
+      '@helix/eslint-plugin':
         specifier: workspace:^
         version: link:packages/eslint-plugin
       '@types/node':
@@ -35,13 +35,13 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@helix-ds/core':
+      '@helix/react':
         specifier: workspace:*
         version: link:../../packages/core
-      '@helix-ds/storybook-addon-tokens':
+      '@helix/storybook-addon-tokens':
         specifier: workspace:*
         version: link:../../packages/storybook-addon-tokens
-      '@helix-ds/tokens':
+      '@helix/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
       '@tabler/icons-react':
@@ -111,10 +111,10 @@ importers:
 
   apps/wc-sandbox:
     dependencies:
-      '@helix-ds/tokens':
+      '@helix/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
-      '@helix-ds/wc':
+      '@helix/wc':
         specifier: workspace:*
         version: link:../../packages/wc
     devDependencies:
@@ -127,7 +127,7 @@ importers:
 
   packages/core:
     dependencies:
-      '@helix-ds/tokens':
+      '@helix/tokens':
         specifier: workspace:*
         version: link:../tokens
       '@tabler/icons-react':
@@ -188,7 +188,7 @@ importers:
 
   packages/mcp:
     dependencies:
-      '@helix-ds/eslint-plugin':
+      '@helix/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
       '@modelcontextprotocol/sdk':
@@ -253,7 +253,7 @@ importers:
 
   packages/wc:
     dependencies:
-      '@helix-ds/tokens':
+      '@helix/tokens':
         specifier: workspace:*
         version: link:../tokens
       lit:

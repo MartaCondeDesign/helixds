@@ -8,7 +8,7 @@ import {
   IconUser,
   IconEye,
 } from '@tabler/icons-react';
-import { Input, Button, Badge, InputDoc } from '@helix-ds/core';
+import { Input, Button, Badge, InputDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Input> = {
@@ -31,7 +31,7 @@ const meta: Meta<typeof Input> = {
     invalid:   { control: 'boolean' },
     disabled:  { control: 'boolean' },
     required:  { control: 'boolean' },
-    loading:   { control: 'boolean' },
+    isLoading:   { control: 'boolean' },
     fullWidth: { control: 'boolean' },
     hideLabel: { control: 'boolean' },
     icon:      { table: { disable: true } },
@@ -185,7 +185,7 @@ export const LoginFormPattern: Story = {
           value={password} onChange={e => setPassword(e.target.value)} fullWidth
         />
 
-        <Button variant="primary" type="submit" loading={isLoading} fullWidth>
+        <Button variant="primary" type="submit" isLoading={isLoading} fullWidth>
           Sign in
         </Button>
       </form>

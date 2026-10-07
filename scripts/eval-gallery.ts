@@ -24,14 +24,27 @@ type Output = {
 // Package names are left out on purpose: "@helix/react" and "@helix/design-system" are the same problem,
 // and the row status counts problems, not spellings. Code backticks are dropped for plain reading.
 const plain = (text: string) => text.replace(/`/g, '');
-const issuesOf = (out: Output, unresolved: string | undefined) => [
+const issuesOf = (out: Output, unresolved: string | undefined, missing?: string) => [
   ...(unresolved ? ["Imports a package that doesn't exist"] : []),
+  ...(missing ? ["Imports a component Helix doesn't have"] : []),
   ...(out.successResults ?? []).filter(r => r.pass === false).map(r => `Missed: ${plain(r.text)}`),
   ...(out.invalidResults ?? []).filter(r => r.pass === false).map(r => `Used: ${plain(r.text.split(' — ')[0])}`),
 ];
 
+// Everything @helix/react really exports (generated from core's index.ts) — an answer importing a name
+// that isn't there (an agent's made-up `HxTopBar`) fails to build, same as in a real app.
+const coreExports = new Set<string>(JSON.parse(readFileSync(path.join(root, 'packages/eslint-plugin/src/data.json'), 'utf8')).coreExports);
+const missingExport = (code: string) => {
+  for (const m of code.matchAll(/import\s*\{([^}]*)\}\s*from\s*['"]@helix\/react['"]/g)) {
+    const names = m[1].split(',').map(n => n.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]).filter(Boolean);
+    const missing = names.find(n => !coreExports.has(n));
+    if (missing) return missing;
+  }
+  return undefined;
+};
+
 const resolvable = (spec: string) =>
-  /^(react|react-dom)(\/|$)/.test(spec) || /^@helix-ds\/(core|tokens)(\/|$)/.test(spec) || spec === '@tabler/icons-react';
+  /^(react|react-dom)(\/|$)/.test(spec) || /^@helix\/(react|tokens)(\/|$)/.test(spec) || spec === '@tabler/icons-react';
 
 rmSync(galleryDir, { recursive: true, force: true });
 mkdirSync(cellsDir, { recursive: true });
@@ -56,15 +69,15 @@ for (const { file, out } of outputs) {
   // An import Storybook can't resolve (an agent inventing "@helix/design-system") would raise Vite's
   // error overlay over the whole page — record it as the cell's build failure instead.
   const unresolved = [...code.matchAll(/from\s+['"]([^'"]+)['"]/g)].map(m => m[1]).find(spec => !resolvable(spec));
-  writeFileSync(path.join(cellsDir, `${id}.tsx`), unresolved
-    ? `export const __buildError = ${JSON.stringify(`Cannot resolve "${unresolved}"`)};\n`
-    : code);
+  const missing = unresolved ? undefined : missingExport(code);
+  const buildError = unresolved ? `Cannot resolve "${unresolved}"` : missing ? `"@helix/react" has no export "${missing}"` : null;
+  writeFileSync(path.join(cellsDir, `${id}.tsx`), buildError ? `export const __buildError = ${JSON.stringify(buildError)};\n` : code);
   cells.push({
     id, promptId: out.promptId, variant: out.variant,
     context: out.context && out.context.length > 40 ? path.basename(out.context) : out.context ?? null,
     rep: out.rep ?? null, model: out.model ?? null, score: out.score, passed: out.passed,
     tokens: out.usage?.totalTokens ?? null,
-    issues: issuesOf(out, unresolved),
+    issues: issuesOf(out, unresolved, missing),
     timestamp: out.timestamp ?? out.runId ?? null,
   });
 }

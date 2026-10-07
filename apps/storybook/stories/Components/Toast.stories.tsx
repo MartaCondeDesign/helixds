@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
-import { Toast, ToastDoc, Button, toast } from '@helix-ds/core';
+import { Toast, ToastDoc, Button, toast } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Toast> = {
@@ -17,11 +17,11 @@ export const Default: Story = {
   render: () => (
     <>
       <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', flexWrap: 'wrap' }}>
-        <Button variant="secondary" onPress={() => toast.neutral('Draft saved', 'Your changes were saved automatically.')}>Neutral</Button>
-        <Button variant="secondary" onPress={() => toast.info('Update available', 'A new version is ready — refresh to update.')}>Info</Button>
-        <Button variant="secondary" onPress={() => toast.success('Published', 'Your changes are now live.')}>Success</Button>
-        <Button variant="secondary" onPress={() => toast.warning('Session expiring', 'You’ll be signed out in 5 minutes.')}>Warning</Button>
-        <Button variant="secondary" onPress={() => toast.danger('Connection lost', 'Could not reach the server — check your network.')}>Danger</Button>
+        <Button variant="secondary" onClick={() => toast.neutral('Draft saved', 'Your changes were saved automatically.')}>Neutral</Button>
+        <Button variant="secondary" onClick={() => toast.info('Update available', 'A new version is ready — refresh to update.')}>Info</Button>
+        <Button variant="secondary" onClick={() => toast.success('Published', 'Your changes are now live.')}>Success</Button>
+        <Button variant="secondary" onClick={() => toast.warning('Session expiring', 'You’ll be signed out in 5 minutes.')}>Warning</Button>
+        <Button variant="secondary" onClick={() => toast.danger('Connection lost', 'Could not reach the server — check your network.')}>Danger</Button>
       </div>
       <Toast />
     </>
@@ -34,7 +34,7 @@ export const Default: Story = {
 export const KeyboardReach: Story = {
   render: () => (
     <>
-      <Button variant="secondary" onPress={() => toast.success('Published', 'Your changes are now live.')}>Show toast</Button>
+      <Button variant="secondary" onClick={() => toast.success('Published', 'Your changes are now live.')}>Show toast</Button>
       <Toast />
     </>
   ),

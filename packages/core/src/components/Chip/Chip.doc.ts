@@ -6,7 +6,7 @@ export const doc: ComponentDoc = {
   purpose: 'Represents a compact selectable label for filters, categories, or short choices.',
   contract: 'contracts/components/Chip.json',
   a11y: [
-    'Use `onPress` for selection and `onDismiss` for removal; they are separate actions.',
+    'Use `onClick` for selection and `onDismiss` for removal; they are separate actions.',
     'Keep the label concise and descriptive. The dismiss control must remain reachable with the keyboard.',
   ],
 
@@ -86,7 +86,7 @@ export const doc: ComponentDoc = {
     'size — horizontal density preset (documented exception to the global scale)',
     'dismissible — optional close button for removable chips',
     'icon / iconEnd — optional icon slots with aria-hidden',
-    'onPress — canonical handler',
+    'onClick — canonical handler (React\'s own; onClick is an anti-synonym, ADR-022)',
     'onDismiss — close button handler; fires after a Motion fade+scale exit finishes (ADR-007), not on click itself, so the consumer removes it from their list exactly as it goes invisible — see .ai/maps/patterns/motion-effects.md',
     'disabled — native button disabled state',
   ],

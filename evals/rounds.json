@@ -36,5 +36,61 @@
         "totalTokens": 534213
       }
     ]
+  },
+  {
+    "id": "2026-10-06T18-53",
+    "date": "2026-10-06T18:55:59.990Z",
+    "commit": "5189f47-dirty",
+    "runs": 5,
+    "tasks": [
+      "button-basic"
+    ],
+    "levels": [
+      {
+        "variant": "llms-txt",
+        "label": "llms.txt",
+        "answers": 5,
+        "passRate": 1.0,
+        "meanScore": 1.0,
+        "tokensPerAnswer": 49052.6,
+        "totalTokens": 245263
+      },
+      {
+        "variant": "agents-isolated",
+        "label": "agents-md",
+        "answers": 5,
+        "passRate": 0.8,
+        "meanScore": 0.96,
+        "tokensPerAnswer": 52103,
+        "totalTokens": 260515
+      },
+      {
+        "variant": "mcp",
+        "label": "mcp",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 89818.8,
+        "totalTokens": 449094
+      },
+      {
+        "variant": "lint-loop",
+        "label": "lint loop",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 127679.4,
+        "totalTokens": 638397
+      },
+      {
+        "variant": "baseline",
+        "label": "full repo",
+        "answers": 5,
+        "passRate": 1,
+        "meanScore": 1,
+        "tokensPerAnswer": 71628,
+        "totalTokens": 358140
+      }
+    ]
   }
 ]

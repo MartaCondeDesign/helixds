@@ -13,7 +13,7 @@ the right, and the page content — a "Team" page header — in the main area.
 
 # Success criteria
 
-- [ ] Imports `AppShell` from `@helix-ds/core`
+- [ ] Imports `AppShell` from `@helix/react`
 - [ ] Passes a `SideNav` through the `sidenav=` slot (not `sidebar=`)
 - [ ] Passes a `TopBar` through the `topbar=` slot (not `header=`)
 - [ ] Puts the page content as AppShell's children, starting with `PageHeader`
@@ -33,7 +33,7 @@ the right, and the page content — a "Team" page header — in the main area.
 # Expected output shape
 
 ```tsx
-import { AppShell, SideNav, NavItem, TopBar, Input, IconButton, PageHeader } from '@helix-ds/core';
+import { AppShell, SideNav, NavItem, TopBar, Input, IconButton, PageHeader } from '@helix/react';
 import { IconLayoutDashboard, IconUsers, IconSearch, IconBell } from '@tabler/icons-react';
 
 function AdminFrame() {

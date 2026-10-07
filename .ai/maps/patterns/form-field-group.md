@@ -45,7 +45,7 @@ when: "A form with 2-6 fields, a submit action, and optional inline validation."
 
 ```tsx
 import { useState } from 'react';
-import { Input, Button, Badge } from '@helix-ds/core';
+import { Input, Button, Badge } from '@helix/react';
 import { IconMail, IconLock } from '@tabler/icons-react';
 
 function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: string }) => Promise<void> }) {
@@ -108,8 +108,8 @@ function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: s
       />
 
       <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)', justifyContent: 'flex-end' }}>
-        <Button variant="secondary" type="button" onPress={() => {}}>Cancel</Button>
-        <Button variant="primary" type="submit" loading={isLoading}>Sign in</Button>
+        <Button variant="secondary" type="button" onClick={() => {}}>Cancel</Button>
+        <Button variant="primary" type="submit" isLoading={loading}>Sign in</Button>
       </div>
     </form>
   );
@@ -123,14 +123,14 @@ function LoginForm({ onSubmit }: { onSubmit: (data: { email: string; password: s
 3. Form-level errors → `Badge variant="danger"` at top
 4. Field-level errors → `errorMessage` prop on Input with `invalid` state
 5. Always use `required` + `aria-required` via the Input's `required` prop
-6. Never disable the submit button to prevent submission — use `loading` + server validation
+6. Never disable the submit button to prevent submission — use `isLoading` + server validation
 
 ## Anti-patterns
 
 - ❌ `<input className="border border-red-500" />` — use `<Input invalid errorMessage="..." />`
 - ❌ Generic `<div style={{ color: 'red' }}>Error</div>` — use `<Badge variant="danger" />`
-- ❌ `isLoading` prop — use `loading`
-- ❌ `onClick` on Button — use `onPress`
+- ❌ `loading` prop — use `isLoading`
+- ❌ `onPress` on Button — use `onClick`
 - ❌ `type="primary"` — use `variant="primary"`
 
 ## Tokens used

@@ -13,7 +13,7 @@ pinned to the bottom.
 
 # Success criteria
 
-- [ ] Imports `SideNav` from `@helix-ds/core`
+- [ ] Imports `SideNav` from `@helix/react`
 - [ ] Puts the product name in the `brand=` slot (not `logo=`, `header=`)
 - [ ] Puts the signed-in user in the `footer=` slot
 - [ ] Uses `NavItem` with a `label` and an `href` for each link
@@ -29,12 +29,12 @@ pinned to the bottom.
 
 - `<nav` — a hand-built nav instead of SideNav
 - `<a href` — raw links instead of NavItem
-- `onClick=` — anti-synonym for onPress; navigation goes through href
+- `onPress=` — anti-synonym for onClick; navigation goes through href
 
 # Expected output shape
 
 ```tsx
-import { SideNav, NavItem, Avatar } from '@helix-ds/core';
+import { SideNav, NavItem, Avatar } from '@helix/react';
 import { IconLayoutDashboard, IconUsers, IconSettings } from '@tabler/icons-react';
 
 function AppSideNav() {

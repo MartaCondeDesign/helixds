@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Modal, ModalDoc, Button } from '@helix-ds/core';
+import { Modal, ModalDoc, Button } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Modal> = {
@@ -25,7 +25,7 @@ export const Default: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button variant="primary" onPress={() => setOpen(true)}>Open Modal</Button>
+        <Button variant="primary" onClick={() => setOpen(true)}>Open Modal</Button>
         <Modal
           {...args}
           expanded={open}
@@ -47,7 +47,7 @@ export const WithFooterActions: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button variant="primary" onPress={() => setOpen(true)}>Open Modal</Button>
+        <Button variant="primary" onClick={() => setOpen(true)}>Open Modal</Button>
         <Modal
           {...args}
           expanded={open}
@@ -71,7 +71,7 @@ export const WithTertiaryAction: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button variant="primary" onPress={() => setOpen(true)}>Open Modal</Button>
+        <Button variant="primary" onClick={() => setOpen(true)}>Open Modal</Button>
         <Modal
           {...args}
           expanded={open}
@@ -100,7 +100,7 @@ export const WithoutCloseButton: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button variant="primary" onPress={() => setOpen(true)}>Open Modal</Button>
+        <Button variant="primary" onClick={() => setOpen(true)}>Open Modal</Button>
         <Modal
           {...args}
           expanded={open}
@@ -124,7 +124,7 @@ export const KeyboardDismiss: Story = {
     const [open, setOpen] = useState(false);
     return (
       <>
-        <Button variant="primary" onPress={() => setOpen(true)}>Open Modal</Button>
+        <Button variant="primary" onClick={() => setOpen(true)}>Open Modal</Button>
         <Modal
           {...args}
           expanded={open}

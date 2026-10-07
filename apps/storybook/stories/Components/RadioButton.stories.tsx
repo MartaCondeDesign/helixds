@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
-import { RadioButton, RadioButtonDoc } from '@helix-ds/core';
+import { RadioButton, RadioButtonDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof RadioButton> = {

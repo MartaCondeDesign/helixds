@@ -28,7 +28,7 @@ Or follow the `ds-component-creator` skill manually: `.ai/skills/ds-component-cr
 ## Token contribution
 
 1. Edit `packages/tokens/src/tokens.json` (DTCG format)
-2. Run `pnpm --filter @helix-ds/tokens build` → regenerates `dist/helix.css` and `dist/index.ts`
+2. Run `pnpm --filter @helix/tokens build` → regenerates `dist/helix.css` and `dist/index.ts`
 3. Semantic alias tokens (color.fill.*) must reference primitive tokens, not raw values
 4. Update `packages/tokens/CLAUDE.md` if a new token category is introduced
 

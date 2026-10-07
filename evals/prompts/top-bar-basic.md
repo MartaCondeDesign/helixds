@@ -12,7 +12,7 @@ icon-only buttons on the right.
 
 # Success criteria
 
-- [ ] Imports `TopBar` from `@helix-ds/core`
+- [ ] Imports `TopBar` from `@helix/react`
 - [ ] Puts the search in the `start=` slot (not `left=`)
 - [ ] Puts the icon buttons in the `end=` slot (not `right=`)
 - [ ] Uses `Input` with `icon={IconSearch}` for the search
@@ -27,12 +27,12 @@ icon-only buttons on the right.
 
 - `<header` — a hand-built bar instead of TopBar
 - `<IconBell` — a Tabler icon rendered directly instead of through the icon prop
-- `onClick=` — anti-synonym for onPress
+- `onPress=` — anti-synonym for onClick
 
 # Expected output shape
 
 ```tsx
-import { TopBar, Input, IconButton } from '@helix-ds/core';
+import { TopBar, Input, IconButton } from '@helix/react';
 import { IconSearch, IconBell, IconHelp } from '@tabler/icons-react';
 
 function AppTopBar({ query, onQueryChange }: { query: string; onQueryChange: (q: string) => void }) {

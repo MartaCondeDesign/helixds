@@ -67,7 +67,7 @@ export const doc: ComponentDoc = {
     'size — shared field scale: s=32px, m=36px, l=40px',
     'invalid / errorMessage — validation state and helper copy',
     'icon / iconEnd — leading and trailing adornments',
-    'loading — async validation state',
+    'isLoading — async validation state',
     'fullWidth — expands to container width',
   ],
   examples: [

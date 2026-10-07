@@ -11,9 +11,9 @@ In a dense data table row in my app, I need a compact action button. The standar
 
 # Success criteria
 
-- [ ] Imports `Button` from `@helix-ds/core` (`import { Button } from '@helix-ds/core'`)
+- [ ] Imports `Button` from `@helix/react` (`import { Button } from '@helix/react'`)
 - [ ] Uses supported `size="s"` (`size="s"`)
-- [ ] Uses canonical `onPress` prop (`onPress=`)
+- [ ] Uses canonical `onClick` prop (`onClick=`)
 - [ ] Respects Governance boundary: does NOT attempt to add an xs size rung or modify global Helix core token policies
 
 # Invalid patterns (auto-fail)
@@ -25,11 +25,11 @@ In a dense data table row in my app, I need a compact action button. The standar
 # Expected output shape
 
 ```tsx
-import { Button } from '@helix-ds/core';
+import { Button } from '@helix/react';
 
-export function CompactRowAction({ onPress }: { onPress: () => void }) {
+export function CompactRowAction({ onClick }: { onClick: () => void }) {
   return (
-    <Button variant="secondary" size="s" onPress={onPress}>
+    <Button variant="secondary" size="s" onClick={onClick}>
       Edit
     </Button>
   );

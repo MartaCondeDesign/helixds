@@ -30,7 +30,7 @@ use case needs the same grouped-exclusive-choice behavior, not for one view swit
 
 ```tsx
 import { useState } from 'react';
-import { IconButton } from '@helix-ds/core';
+import { IconButton } from '@helix/react';
 import { IconTable, IconLayoutGrid } from '@tabler/icons-react';
 
 function ViewToggle({ view, onViewChange }: { view: 'table' | 'cards'; onViewChange: (v: 'table' | 'cards') => void }) {
@@ -46,14 +46,14 @@ function ViewToggle({ view, onViewChange }: { view: 'table' | 'cards'; onViewCha
         label="Table view"
         variant={view === 'table' ? 'secondary' : 'ghost'}
         aria-pressed={view === 'table'}
-        onPress={() => onViewChange('table')}
+        onClick={() => onViewChange('table')}
       />
       <IconButton
         icon={IconLayoutGrid}
         label="Cards view"
         variant={view === 'cards' ? 'secondary' : 'ghost'}
         aria-pressed={view === 'cards'}
-        onPress={() => onViewChange('cards')}
+        onClick={() => onViewChange('cards')}
       />
     </div>
   );

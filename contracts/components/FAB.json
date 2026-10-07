@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "FAB",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "status": "beta",
 
   "purpose": "A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial.",
@@ -53,12 +53,12 @@
   "props": [
     { "name": "icon", "type": "TablerIcon", "required": true, "description": "The trigger's icon, passed by reference (e.g. IconPlus), not pre-instantiated.", "usage": "icon={IconPlus}" },
     { "name": "label", "type": "string", "required": true, "description": "Accessible name for the trigger — there is no visible text, so this is required, rendered as aria-label." },
-    { "name": "actions", "type": "Array<{ icon: TablerIcon; label: string; onPress: () => void }>", "description": "The speed-dial actions revealed when expanded. Omit for a plain single-action FAB with no speed-dial at all." },
+    { "name": "actions", "type": "Array<{ icon: TablerIcon; label: string; onClick: () => void }>", "description": "The speed-dial actions revealed when expanded. Omit for a plain single-action FAB with no speed-dial at all." },
     { "name": "expanded", "type": "boolean | undefined", "description": "Controlled expanded state. Omit `actions` to skip the speed-dial entirely rather than passing expanded with nothing to reveal." },
     { "name": "defaultExpanded", "type": "boolean", "default": false, "description": "Uncontrolled initial expanded state." },
     { "name": "onExpandedChange", "type": "((expanded: boolean) => void) | undefined", "description": "Fired when the speed-dial opens or closes (trigger press, action press, or outside click)." },
     { "name": "disabled", "type": "boolean", "default": false, "description": "Disables interaction." },
-    { "name": "onPress", "type": "React.MouseEventHandler<HTMLButtonElement> | undefined", "description": "Trigger press handler — fires whether or not `actions` is set. When `actions` is set, pressing the trigger also toggles `expanded`." },
+    { "name": "onClick", "type": "React.MouseEventHandler<HTMLButtonElement> | undefined", "description": "Trigger press handler — fires whether or not `actions` is set. When `actions` is set, pressing the trigger also toggles `expanded`." },
     { "name": "className", "type": "string | undefined", "description": "Additional className for the root. Positioning (fixed/absolute + inset) is the consumer's responsibility — FAB does not position itself." }
   ],
 

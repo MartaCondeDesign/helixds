@@ -55,7 +55,7 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
       onExpandedChange,
       disabled = false,
       className,
-      onPress,
+      onClick,
       // Native ButtonHTMLAttributes passthrough (style, onDrag, ...) isn't spread onto the trigger —
       // Motion's own `HTMLMotionProps` redefines several of those names (style, onDrag, onAnimationStart,
       // ...) with incompatible signatures for its own gesture/animation system, and FAB's contract never
@@ -116,7 +116,7 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
     }, [expanded]);
 
     const handleTriggerPress: React.MouseEventHandler<HTMLButtonElement> = e => {
-      onPress?.(e);
+      onClick?.(e);
       if (hasActions) setExpanded(!expanded);
     };
 
@@ -168,7 +168,7 @@ const FAB = React.forwardRef<HTMLButtonElement, FABProps>(
                       aria-label={action.label}
                       disabled={disabled}
                       onClick={() => {
-                        action.onPress();
+                        action.onClick();
                         setExpanded(false);
                       }}
                       style={{ position: 'absolute', bottom: center, right: center }}

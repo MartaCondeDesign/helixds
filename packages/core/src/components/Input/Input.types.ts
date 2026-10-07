@@ -15,7 +15,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   /** Marks field as required. */
   required?: boolean;
   /** Async validation in progress. */
-  loading?: boolean;
+  isLoading?: boolean;
   /** Leading icon — a Tabler icon component, passed by reference (e.g. IconSearch). Size follows the field's own `size` (s=16, m=16, l=18). */
   icon?: HelixIconComponent;
   /** Trailing icon. Same size-derived sizing as `icon`. */

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 import { IconPlus, IconUserPlus, IconDownload, IconPencil } from '@tabler/icons-react';
-import { FAB, FABDoc } from '@helix-ds/core';
+import { FAB, FABDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof FAB> = {
@@ -12,7 +12,7 @@ const meta: Meta<typeof FAB> = {
   args: {
     icon:  IconPlus,
     label: 'Add',
-    onPress: fn(),
+    onClick: fn(),
   },
   argTypes: {
     icon: {
@@ -43,15 +43,15 @@ export const Default: Story = {
     </div>
   ),
   parameters: {
-    docs: { description: { story: 'A plain FAB with no speed-dial — `onPress` fires directly.' } },
+    docs: { description: { story: 'A plain FAB with no speed-dial — `onClick` fires directly.' } },
   },
 };
 
 export const SpeedDial: Story = {
   args: {
     actions: [
-      { icon: IconUserPlus, label: 'Add member', onPress: fn() },
-      { icon: IconDownload, label: 'Export', onPress: fn() },
+      { icon: IconUserPlus, label: 'Add member', onClick: fn() },
+      { icon: IconDownload, label: 'Export', onClick: fn() },
     ],
   },
   render: args => (
@@ -77,8 +77,8 @@ export const Expanded: Story = {
   args: {
     defaultExpanded: true,
     actions: [
-      { icon: IconUserPlus, label: 'Add member', onPress: fn() },
-      { icon: IconDownload, label: 'Export', onPress: fn() },
+      { icon: IconUserPlus, label: 'Add member', onClick: fn() },
+      { icon: IconDownload, label: 'Export', onClick: fn() },
     ],
   },
   render: args => (
@@ -111,8 +111,8 @@ export const Disabled: Story = {
 export const KeyboardSpeedDial: Story = {
   args: {
     actions: [
-      { icon: IconUserPlus, label: 'Add member', onPress: fn() },
-      { icon: IconDownload, label: 'Export', onPress: fn() },
+      { icon: IconUserPlus, label: 'Add member', onClick: fn() },
+      { icon: IconDownload, label: 'Export', onClick: fn() },
     ],
   },
   render: args => (
@@ -131,7 +131,7 @@ export const KeyboardSpeedDial: Story = {
 
     // Enter opens the speed-dial
     await userEvent.keyboard('{Enter}');
-    await expect(args.onPress).toHaveBeenCalledTimes(1);
+    await expect(args.onClick).toHaveBeenCalledTimes(1);
     await expect(trigger).toHaveAttribute('aria-expanded', 'true');
 
     // Tab moves through the revealed actions in visual order: nearest to the trigger first

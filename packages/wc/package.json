@@ -1,5 +1,5 @@
 {
-  "name": "@helix-ds/wc",
+  "name": "@helix/wc",
   "version": "0.1.0",
   "description": "Helix DS — Web Components pilot (Lit + Shadow DOM). See ADR-015. Icon, Badge, Button, Tooltip only — not a full port.",
   "type": "module",
@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@helix-ds/tokens": "workspace:*",
+    "@helix/tokens": "workspace:*",
     "lit": "^3.2.0"
   },
   "devDependencies": {

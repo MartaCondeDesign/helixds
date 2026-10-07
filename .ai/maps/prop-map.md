@@ -14,7 +14,7 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 
 | ✅ Canonical | ❌ Anti-synonyms                   | Notes                                              |
 |-------------|----------------------------------|---------------------------------------------------|
-| `loading`   | `isLoading`, `pending`, `isPending`, `busy` | Authored loading state                  |
+| `isLoading` | `loading`, `pending`, `isPending`, `busy` | Authored loading state — `is`-prefixed, the name agents reach for (ADR-022) |
 | `disabled`  | `isDisabled`, `readonly`         | Native + authored disabled state                  |
 | `current`   | `active`, `isActive`, `selected` | Navigation/tab current item                       |
 | `expanded`  | `isExpanded`, `open`, `isOpen`   | Disclosure open state                             |
@@ -36,7 +36,7 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 
 | ✅ Canonical | ❌ Anti-synonyms                   | Notes                                              |
 |-------------|----------------------------------|---------------------------------------------------|
-| `onPress`   | `onClick`, `onTap`, `onAction`   | Primary action (keyboard + pointer unified)       |
+| `onClick`   | `onPress`, `onTap`, `onAction`   | Primary action — React's own handler, the name agents reach for (ADR-022) |
 | `onChange`  | `onValueChange`, `onUpdate`      | Value change handler                              |
 | `onFocus`   | `onFocused`                      | Focus event                                       |
 | `onBlur`    | `onBlurred`                      | Blur event                                        |

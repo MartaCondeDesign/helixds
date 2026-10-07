@@ -11,8 +11,8 @@ predictable token structure, and machine-readable documentation.
 
 | Package               | Purpose                              | Install                         |
 |-----------------------|--------------------------------------|----------------------------------|
-| `@helix-ds/core`      | All UI components                    | `pnpm add @helix-ds/core`       |
-| `@helix-ds/tokens`    | CSS tokens + TypeScript constants    | `pnpm add @helix-ds/tokens`     |
+| `@helix/react`      | All UI components                    | `pnpm add @helix/react`       |
+| `@helix/tokens`    | CSS tokens + TypeScript constants    | `pnpm add @helix/tokens`     |
 
 Icons are [Tabler Icons](https://tabler.io/icons) (`@tabler/icons-react`, a peer dependency of core),
 always rendered through core's `Icon` component or a component's `icon` prop — never as a raw
@@ -30,8 +30,8 @@ ECharts options, or introduce another chart library. Choose `variant="line"`, `"
 
 ```tsx
 // app/layout.tsx or main.tsx
-import '@helix-ds/tokens/helix.css';   // CSS custom properties
-import '@helix-ds/core/globals.css';   // Tailwind base + component styles
+import '@helix/tokens/helix.css';   // CSS custom properties
+import '@helix/react/globals.css';   // Tailwind base + component styles
 ```
 
 ## Component inventory
@@ -40,7 +40,7 @@ Every component's current status (draft / beta / stable) is **computed**, not li
 Storybook → **Status**, or `contracts/stability.json` (`pnpm verify:stable`, ADR-018). draft = exists and
 works; beta = passes all 8 automatic quality criteria; stable = beta + modeled in Figma.
 
-All components import from `@helix-ds/core`. Generated from `contracts/manifest.json` on every commit
+All components import from `@helix/react`. Generated from `contracts/manifest.json` on every commit
 (`pnpm docs:readme`) — do not edit the table by hand.
 
 <!-- helix:component-inventory:start -->
@@ -84,7 +84,7 @@ All components import from `@helix-ds/core`. Generated from `contracts/manifest.
 ## Component hierarchy (enforce this order)
 
 ```
-1. Helix core (@helix-ds/core)  ← always check first
+1. Helix core (@helix/react)  ← always check first
 2. Custom component             ← add comment: // [CUSTOM] reason
 ```
 
@@ -107,14 +107,14 @@ background: blue-600;
 
 TypeScript constants are also available:
 ```ts
-import { tokens } from '@helix-ds/tokens';
+import { tokens } from '@helix/tokens';
 tokens.color.fill.primary; // '#1d4ed8'
 ```
 
 ## Lint while you write
 
-`@helix-ds/eslint-plugin` catches the mistakes agents make most — an invented import path
-(`@helix/react` → `@helix-ds/core`), anti-synonym props and values (`onClick` → `onPress`,
+`@helix/eslint-plugin` catches the mistakes agents make most — an invented import path
+(`@helix/react` → `@helix/react`), anti-synonym props and values (`onPress` → `onClick`,
 `size="md"` → `size="m"`), raw colors (`#1d4ed8` → the semantic token with that color) and native
 controls (`<button>` → `Button`). Run `pnpm lint` (or `npx eslint --fix <file>`) after writing UI code;
 the editor shows the same warnings live. See `packages/eslint-plugin/README.md`.
@@ -127,11 +127,11 @@ Use the canonical prop names below. Anti-synonyms are rejected by CI.
 |-------------|------------|--------------------------------|
 | `variant`   | `type`     | Visual style selector          |
 | `size`      | `scale`    | `xs s m l xl`                  |
-| `loading`   | `isLoading`| Boolean authored state         |
+| `isLoading`   | `loading`| Boolean authored state         |
 | `disabled`  | `isDisabled`| Boolean authored state        |
 | `danger`    | `error`    | Destructive variant name       |
 | `current`   | `active`   | Navigation selected state      |
-| `onPress`   | `onClick`  | Primary action handler         |
+| `onClick`   | `onPress`  | Primary action handler         |
 | `label`     | `title`, `name` | Accessible text          |
 ## Agent Readiness & Governance (Can it? Should it? May it?)
 
@@ -139,7 +139,7 @@ When an AI agent makes design or implementation decisions using Helix, it must v
 
 1. **Can it? (Mechanical Readiness)**:
    - Does the generated code compile and use valid tokens (`var(--helix-color-...)`)?
-   - Are canonical props (`onPress`, `variant`, `expanded`) used according to component contracts?
+   - Are canonical props (`onClick`, `variant`, `expanded`) used according to component contracts?
    - Query Helix via CLI (`pnpm helix component <Name>`) or contracts to fetch machine-readable props and types.
 
 2. **Should it? (Design Judgment Readiness)**:
@@ -213,7 +213,7 @@ These came up when an agent was asked to build with Helix without reading the co
   notification; with no `<Toast />` nothing appears (Helix logs a console warning). Signature:
   `toast.success(label, description?)` — the description can also be `{ description }`.
 - **TopBar's slots are `start` and `end`** — not `search`/`actions`, not `left`/`right`.
-- **Canonical prop names only** — `onPress` (not `onClick`), `expanded` (not `open`/`isOpen`),
+- **Canonical prop names only** — `onClick` (not `onPress`), `expanded` (not `open`/`isOpen`),
   `label` (not `title`/`name`), `checked` (not `active`/`selected`), `current` (not `active`). Full list:
   `.ai/maps/prop-map.md`.
 - **Icons by reference** — `icon={IconPlus}`, never `icon={<IconPlus />}`, never a raw `<IconPlus />`.
@@ -222,5 +222,5 @@ These came up when an agent was asked to build with Helix without reading the co
 
 - Use `style={{ color: '#xxx' }}` — always use token CSS variables
 - Create a `<div>` grid without importing a Helix layout component first
-- Use `onClick` — prefer `onPress` (prop-map canonical)
+- Use `onPress` — prefer `onClick` (prop-map canonical)
 - Use Figma prop names directly — they may not match Helix contracts

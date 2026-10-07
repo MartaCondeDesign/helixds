@@ -91,7 +91,8 @@ if (!allMeasured.length && totalAnswers) {
 if (!totalAnswers) { console.log('Nothing to generate.'); process.exit(0); }
 if (!go) { console.log('\nDry run — nothing generated. Add --yes to generate.'); process.exit(0); }
 
-const roundId = isRound ? new Date().toISOString().slice(0, 16).replace(':', '-') : null;
+// To the second: two rounds started in the same minute (a stopped one, then its rerun) must not share an id.
+const roundId = isRound ? new Date().toISOString().slice(0, 19).replace(/:/g, '-') : null;
 for (const { level, needed } of plan) {
   // eval:generate takes one --runs per call: group the tasks by how many answers each needs.
   const byCount = new Map<number, string[]>();

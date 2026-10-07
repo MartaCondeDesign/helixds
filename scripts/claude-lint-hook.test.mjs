@@ -23,16 +23,16 @@ after(() => fs.rmSync(tmp, { force: true }));
 
 describe('claude-lint-hook', () => {
   it('blocks with every Helix problem in a file Claude wrote', () => {
-    fs.writeFileSync(tmp, "import { Button } from '@helix/react';\nexport const Save = () => <Button onClick={() => {}} style={{ color: '#1d4ed8' }}>Save</Button>;\n");
+    fs.writeFileSync(tmp, "import { Button } from '@helix-ds/core';\nexport const Save = () => <Button onPress={() => {}} style={{ color: '#1d4ed8' }}>Save</Button>;\n");
     const result = runHook(tmp);
     assert.equal(result.decision, 'block');
     assert.match(result.reason, /helix\/import-source/);
-    assert.match(result.reason, /helix\/prop-vocabulary .*onPress/);
+    assert.match(result.reason, /helix\/prop-vocabulary .*onClick/);
     assert.match(result.reason, /helix\/no-raw-color .*--helix-color-fill-primary-interactive-hover/);
   });
 
   it('stays silent once the file is fixed', () => {
-    fs.writeFileSync(tmp, "import { Button } from '@helix-ds/core';\nexport const Save = () => <Button onPress={() => {}}>Save</Button>;\n");
+    fs.writeFileSync(tmp, "import { Button } from '@helix/react';\nexport const Save = () => <Button onClick={() => {}}>Save</Button>;\n");
     assert.equal(runHook(tmp, 'Edit'), null);
   });
 

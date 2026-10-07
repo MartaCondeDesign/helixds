@@ -43,7 +43,7 @@ when: "The view has no data to display — first use, zero results, or filtered 
 ## Code
 
 ```tsx
-import { Button } from '@helix-ds/core';
+import { Button } from '@helix/react';
 import { IconFolderOpen } from '@tabler/icons-react';
 
 function EmptyState({
@@ -56,8 +56,8 @@ function EmptyState({
   icon?: React.ReactNode;
   title: string;
   description?: string;
-  action?: { label: string; onPress: () => void };
-  secondaryAction?: { label: string; onPress: () => void };
+  action?: { label: string; onClick: () => void };
+  secondaryAction?: { label: string; onClick: () => void };
 }) {
   return (
     <div
@@ -101,10 +101,10 @@ function EmptyState({
       {(action || secondaryAction) && (
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
           {action && (
-            <Button variant="primary" onPress={action.onPress}>{action.label}</Button>
+            <Button variant="primary" onClick={action.onClick}>{action.label}</Button>
           )}
           {secondaryAction && (
-            <Button variant="secondary" onPress={secondaryAction.onPress}>
+            <Button variant="secondary" onClick={secondaryAction.onClick}>
               {secondaryAction.label}
             </Button>
           )}

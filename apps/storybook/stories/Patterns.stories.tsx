@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Button, Input, Badge, Card, Chip } from '@helix-ds/core';
+import { Button, Input, Badge, Card, Chip } from '@helix/react';
 import {
   IconPlus,
   IconUpload,
@@ -274,7 +274,7 @@ export const SearchAndFilter: Story = {
             fullWidth
           />
           {activeFilters.length > 0 && (
-            <Button variant="secondary" size="m" onPress={() => setActiveFilters([])}>
+            <Button variant="secondary" size="m" onClick={() => setActiveFilters([])}>
               Clear
             </Button>
           )}

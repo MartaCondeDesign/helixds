@@ -27,14 +27,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     {
       variant   = 'primary',
       size      = 'm',
-      loading   = false,
+      isLoading   = false,
       icon,
       iconEnd,
       fullWidth = false,
       className,
       disabled,
       children,
-      onPress,
+      onClick,
       // Not forwarded to motion.button: Motion's HTMLMotionProps redefines these native names (style,
       // onDrag and its siblings) with incompatible signatures for its own gesture/animation system —
       // same reason FAB (ADR-007) doesn't spread them either. Everything else in ...props still passes
@@ -50,7 +50,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const isDisabled = disabled || loading;
+    const isDisabled = disabled || isLoading;
 
     return (
       <motion.button
@@ -58,12 +58,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         data-helix-part="button"
         data-variant={variant}
         data-size={size}
-        data-loading={loading ? 'true' : undefined}
+        data-loading={isLoading ? 'true' : undefined}
         data-full-width={fullWidth ? 'true' : undefined}
         disabled={isDisabled}
-        aria-busy={loading ? 'true' : undefined}
+        aria-busy={isLoading ? 'true' : undefined}
         className={cn(className)}
-        onClick={onPress}
+        onClick={onClick}
         // Subtle press feedback — Motion, not CSS, so it composes with the loading/disabled states via
         // the same isDisabled check rather than fighting a :active pseudo-class. See ADR-007 /
         // .ai/maps/patterns/motion-effects.md.
@@ -71,7 +71,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...(isDisabled ? {} : { whileTap: { scale: PRESS_SCALE_DEFAULT } })}
         {...props}
       >
-        {loading ? (
+        {isLoading ? (
           <Spinner />
         ) : icon ? (
           <span data-helix-part="button-icon">
@@ -83,7 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span data-helix-part="button-label">{children}</span>
         )}
 
-        {!loading && iconEnd && (
+        {!isLoading && iconEnd && (
           <span data-helix-part="button-icon-end">
             <Icon icon={iconEnd} size={16} />
           </span>

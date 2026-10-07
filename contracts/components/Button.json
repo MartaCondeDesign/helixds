@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name":    "Button",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "status":  "stable",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
@@ -64,7 +64,7 @@
       "description": "Physical size of the button. Affects padding, font size, and icon size. 'm' is the default and the size used absent a specific reason to deviate — xs/xl were removed 2026-08-23 (too narrow a use case to justify a 5-rung scale)."
     },
     {
-      "name": "loading",
+      "name": "isLoading",
       "type": "boolean",
       "default": false,
       "description": "When true, shows a spinner and disables interaction."
@@ -96,7 +96,7 @@
       "description": "When true, the button expands to 100% of its container width."
     },
     {
-      "name": "onPress",
+      "name": "onClick",
       "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
       "description": "Click/press handler."
     },

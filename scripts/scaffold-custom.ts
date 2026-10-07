@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Scaffolds a local custom component — one that lives in a consuming app, outside @helix-ds/core —
+ * Scaffolds a local custom component — one that lives in a consuming app, outside @helix/react —
  * with the governance header, semantic Helix tokens and an accessible base already in place.
  * Writes files, so it lives apart from the read-only helix-cli.ts, which only routes to it.
  *
@@ -35,7 +35,7 @@ export function scaffoldCustom(args: string[]) {
 
   // Component hierarchy (AGENTS.md): Helix core first, custom second.
   const existing = listComponents().find(component => component.name.toLowerCase() === name.toLowerCase());
-  if (existing) fail(`Helix already has '${existing.name}' (${existing.status}) — use it from @helix-ds/core instead of a custom copy.`);
+  if (existing) fail(`Helix already has '${existing.name}' (${existing.status}) — use it from @helix/react instead of a custom copy.`);
 
   const dir = path.resolve(callerCwd, argValue(args, '--dir') ?? path.join('src/custom', name));
   const files = scaffoldFiles(name, reason);
@@ -61,8 +61,8 @@ function scaffoldFiles(name: string, reason: string): Record<string, string> {
   const singleLineReason = reason.replace(/\s+/g, ' ');
   return {
     [`${name}.tsx`]: `// [CUSTOM] reason: ${singleLineReason}
-// Local to this app, outside @helix-ds/core. Keep it on semantic --helix-* tokens (${name}.module.css) and
-// canonical prop names (onPress, label, disabled…). If other apps need it too, request it from Helix DS.
+// Local to this app, outside @helix/react. Keep it on semantic --helix-* tokens (${name}.module.css) and
+// canonical prop names (onClick, label, disabled…). If other apps need it too, request it from Helix DS.
 import * as React from 'react';
 import styles from './${name}.module.css';
 

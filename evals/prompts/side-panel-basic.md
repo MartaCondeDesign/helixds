@@ -12,7 +12,7 @@ presses a "Filters" button, and can be dismissed.
 
 # Success criteria
 
-- [ ] Imports `SidePanel` from `@helix-ds/core`
+- [ ] Imports `SidePanel` from `@helix/react`
 - [ ] Opens it with `expanded=` (not `open=`, `isOpen=`)
 - [ ] Closes it through `onDismiss=` (not `onClose=`)
 - [ ] Uses `label=` for the panel title (not `title=`)
@@ -30,14 +30,14 @@ presses a "Filters" button, and can be dismissed.
 
 ```tsx
 import { useState } from 'react';
-import { SidePanel, Button } from '@helix-ds/core';
+import { SidePanel, Button } from '@helix/react';
 import { IconFilter } from '@tabler/icons-react';
 
 function FiltersPanel() {
   const [expanded, setExpanded] = useState(false);
   return (
     <>
-      <Button variant="secondary" icon={IconFilter} onPress={() => setExpanded(true)}>Filters</Button>
+      <Button variant="secondary" icon={IconFilter} onClick={() => setExpanded(true)}>Filters</Button>
       <SidePanel label="Edit filters" expanded={expanded} onDismiss={() => setExpanded(false)} placement="right">
         Filter builder content goes here.
       </SidePanel>

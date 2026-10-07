@@ -18,7 +18,7 @@ const componentsDir = path.join(root, 'packages/core/src/components');
 const layoutDir     = path.join(root, 'packages/core/src/layout');
 
 // Same allowlist as generate-types.ts — keep the two in sync. Native DOM event handlers
-// (onChange/onBlur/onFocus) are included here — unlike onClick->onPress, these are NOT
+// (onChange/onBlur/onFocus) are included here — like onClick (ADR-022), these are NOT
 // renamed by Helix (onChange is itself the canonical name per prop-map.md) and come
 // straight from the extends clause on form-element components (Input, Textarea, Select).
 const NATIVE_PASSTHROUGH = new Set([

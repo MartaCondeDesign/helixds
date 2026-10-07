@@ -12,7 +12,7 @@ Using Helix DS, add an "Email notifications" setting that turns on or off immedi
 
 # Success criteria
 
-- [ ] Imports `Switch` from `@helix-ds/core`
+- [ ] Imports `Switch` from `@helix/react`
 - [ ] Uses `label=` for the visible text
 - [ ] Controls it with `checked=` and `onChange=` (not `isChecked=`)
 
@@ -29,7 +29,7 @@ Using Helix DS, add an "Email notifications" setting that turns on or off immedi
 
 ```tsx
 import { useState } from 'react';
-import { Switch } from '@helix-ds/core';
+import { Switch } from '@helix/react';
 
 function EmailNotificationsSetting() {
   const [enabled, setEnabled] = useState(true);

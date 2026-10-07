@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useMemo, useState } from 'react';
 import { IconSearch, IconCalendar } from '@tabler/icons-react';
-import { Badge, Input, MultiSelect, Select } from '@helix-ds/core';
-import type { BadgeVariant } from '@helix-ds/core';
+import { Badge, Input, MultiSelect, Select } from '@helix/react';
+import type { BadgeVariant } from '@helix/react';
 import { StoryHeader } from './_shared/StoryHeader';
 import changelog from '../../../.ai/maps/changelog.json';
 

@@ -102,13 +102,13 @@ _No Figma-mappable props._
 - `badge-icon`
 - `badge-label`
 
-### Button (`v1.1.0`, stable)
+### Button (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` | `variant` | `primary`, `secondary`, `ghost`, `danger` |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `loading` | `boolean` | `BOOLEAN` | `loading` | — |
+| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
@@ -190,7 +190,7 @@ _No Figma-mappable props._
 - `checkbox-group-description`
 - `checkbox-group-error`
 
-### Chip (`v1.0.0`, stable)
+### Chip (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -221,7 +221,7 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `chip-group`
 
-### FAB (`v0.1.0`, beta)
+### FAB (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -249,7 +249,7 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `icon-root`
 
-### IconButton (`v1.0.0`, stable)
+### IconButton (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -257,14 +257,14 @@ _No Figma-mappable props._
 | `label` | `string` | `TEXT` | `label` | — |
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` | `variant` | `primary`, `secondary`, `ghost`, `danger` |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `loading` | `boolean` | `BOOLEAN` | `loading` | — |
+| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `icon-button-spinner`
 - `icon-button`
 
-### Input (`v1.0.0`, stable)
+### Input (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -274,7 +274,7 @@ _No Figma-mappable props._
 | `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
 | `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
 | `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `loading` | `boolean` | `BOOLEAN` | `loading` | — |
+| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
 | `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |

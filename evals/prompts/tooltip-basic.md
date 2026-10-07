@@ -12,7 +12,7 @@ user hovers or focuses it.
 
 # Success criteria
 
-- [ ] Imports `Tooltip` from `@helix-ds/core`
+- [ ] Imports `Tooltip` from `@helix/react`
 - [ ] Uses `label` prop for the tooltip text (not `content`, `title`, `text`)
 - [ ] Wraps the trigger directly as its child: `<Tooltip` around `<IconButton`
 - [ ] The wrapped IconButton keeps its own `label` accessible name
@@ -30,13 +30,13 @@ user hovers or focuses it.
 # Expected output shape
 
 ```tsx
-import { Tooltip, IconButton } from '@helix-ds/core';
+import { Tooltip, IconButton } from '@helix/react';
 import { IconArchive } from '@tabler/icons-react';
 
 function ArchiveAction({ onArchive }: { onArchive: () => void }) {
   return (
     <Tooltip label="Archive" placement="bottom">
-      <IconButton icon={IconArchive} label="Archive" onPress={onArchive} />
+      <IconButton icon={IconArchive} label="Archive" onClick={onArchive} />
     </Tooltip>
   );
 }

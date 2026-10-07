@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Badge, Button, Card, Chart, IconButton, Input, SegmentedControl, Table, TableCell, TableHead, TableHeaderCell } from '@helix-ds/core';
+import { Badge, Button, Card, Chart, IconButton, Input, SegmentedControl, Table, TableCell, TableHead, TableHeaderCell } from '@helix/react';
 import rawSnapshot from '../../../quality/dashboard.json';
 import history from '../../../quality/history.json';
 import rawChangelog from '../../../.ai/maps/changelog.json';
@@ -44,7 +44,7 @@ const riskLabel: Record<string, string> = {
   'raw-div': 'Layout manual sin componentes Helix',
   'raw-icon': 'Icono sin el componente Icon de Helix',
   'icon-element-prop': 'Icono pasado de forma incorrecta',
-  'on-click': 'Usó onClick en vez de onPress',
+  'on-press': 'Usó onClick en vez de onClick',
   'raw-native-control': 'Control HTML nativo en vez de componente Helix',
 };
 const localDateKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
@@ -159,7 +159,7 @@ function DataAnalyticsPage() {
         <Metric label="Design tokens" value={snapshot.tokens.defined} detail="Tokens indexed in this snapshot" />
       </div>
 
-      <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}><span>Explore Metrics</span>{(detail === 'components' || detail === 'figma') && <Button size="s" variant="secondary" onPress={() => window.top?.location.assign('/?path=/story/data-status--overview')}>View more</Button>}</div>}>
+      <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}><span>Explore Metrics</span>{(detail === 'components' || detail === 'figma') && <Button size="s" variant="secondary" onClick={() => window.top?.location.assign('/?path=/story/data-status--overview')}>View more</Button>}</div>}>
         <SegmentedControl label="Metric detail" value={detail} onChange={setDetail} options={[{ value: 'components', label: 'Components' }, { value: 'figma', label: 'Figma' }, { value: 'agents', label: 'Agents' }, { value: 'tokens', label: 'Tokens' }]} />
         {detail === 'components' ? <Chart variant="bar" label="Component status over time" description="Daily percentage of components in Draft, Beta, and Stable status across the rolling 30-day window." height={240} categories={recentMetricHistory.map(point => point.label)} series={[{ name: 'Draft', data: recentMetricHistory.map(point => point.components ? Math.round(((point.components.draft ?? 0) / snapshot.components.total) * 100) : null) }, { name: 'Beta', data: recentMetricHistory.map(point => point.components ? Math.round(((point.components.beta ?? 0) / snapshot.components.total) * 100) : null) }, { name: 'Stable', data: recentMetricHistory.map(point => point.components ? Math.round(((point.components.stable ?? 0) / snapshot.components.total) * 100) : null) }]} />
           : detail === 'figma' ? <Chart variant="bar" label="Figma alignment over time" description="Daily percentage of components aligned, out of date, or not modelled in Figma across the rolling 30-day window." height={240} categories={recentMetricHistory.map(point => point.label)} series={[{ name: 'Aligned', data: recentMetricHistory.map(point => point.figma ? Math.round(((point.figma.synced ?? 0) / snapshot.components.total) * 100) : null) }, { name: 'Out of date', data: recentMetricHistory.map(point => point.figma ? Math.round(((point.figma.stale ?? 0) / snapshot.components.total) * 100) : null) }, { name: 'Not modelled', data: recentMetricHistory.map(point => point.figma ? Math.round(((point.figma.missing ?? 0) / snapshot.components.total) * 100) : null) }]} />
@@ -243,7 +243,7 @@ function EvalResults({ levels, days, rounds }: { levels: LadderLevel[]; days: La
   const periodRounds = rounds.filter(round => !shown || round.date.startsWith(shown));
 
   return (
-    <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)', flexWrap: 'wrap' }}><span>Eval Results</span><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}><Button size="m" variant="secondary" disabled={!date} onPress={() => setDate('')}>All time</Button><EvalDatePicker value={date} onChange={setDate} onPreview={setPreview} dataDates={dates} min={dates[0] ?? today} max={today} /><SegmentedControl label="Eval results view" value={view} onChange={setView} options={[{ value: 'chart', label: 'Chart view', icon: IconChartBar }, { value: 'table', label: 'Table view', icon: IconTable }]} /></div></div>}>
+    <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)', flexWrap: 'wrap' }}><span>Eval Results</span><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}><Button size="m" variant="secondary" disabled={!date} onClick={() => setDate('')}>All time</Button><EvalDatePicker value={date} onChange={setDate} onPreview={setPreview} dataDates={dates} min={dates[0] ?? today} max={today} /><SegmentedControl label="Eval results view" value={view} onChange={setView} options={[{ value: 'chart', label: 'Chart view', icon: IconChartBar }, { value: 'table', label: 'Table view', icon: IconTable }]} /></div></div>}>
       {preview && <p style={{ margin: 0, color: 'var(--helix-color-text-neutral-light)' }}>Previewing {periodName} — click the day to keep it.</p>}
       {empty && <p style={{ margin: 0, color: 'var(--helix-color-text-neutral-light)' }}>No evals were run on {periodName}. Pick another date, or All time.</p>}
       {view === 'chart' ? (
@@ -354,9 +354,9 @@ function EvalDatePicker({ value, onChange, onPreview, dataDates, min, max }: { v
           // Own regular weight: the panel sits inside the Card header, whose title weight would otherwise cascade.
           style={{ position: 'absolute', zIndex: 10, top: 'calc(100% + var(--helix-spacing-2xs))', right: 0, display: 'grid', fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)', gap: 'var(--helix-spacing-xs)', padding: 'var(--helix-spacing-s)', background: 'var(--helix-color-fill-page)', border: '1px solid var(--helix-color-border-neutral)', borderRadius: 'var(--helix-radius-l)', boxShadow: 'var(--helix-shadow-m)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--helix-spacing-xs)' }}>
-            <IconButton icon={IconChevronLeft} label="Previous month" variant="ghost" size="s" disabled={`${month}-01` <= min.slice(0, 7) + '-01'} onPress={() => shiftMonth(-1)} />
+            <IconButton icon={IconChevronLeft} label="Previous month" variant="ghost" size="s" disabled={`${month}-01` <= min.slice(0, 7) + '-01'} onClick={() => shiftMonth(-1)} />
             <span aria-live="polite" style={{ fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)', fontWeight: 'var(--helix-textStyle-body-s-regular-fontWeight)', color: 'var(--helix-color-text-neutral)' }}>{new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' }).format(first)}</span>
-            <IconButton icon={IconChevronRight} label="Next month" variant="ghost" size="s" disabled={month >= max.slice(0, 7)} onPress={() => shiftMonth(1)} />
+            <IconButton icon={IconChevronRight} label="Next month" variant="ghost" size="s" disabled={month >= max.slice(0, 7)} onClick={() => shiftMonth(1)} />
           </div>
           <div ref={grid} role="group" aria-label="Days" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, var(--helix-spacing-xl))', gap: 'var(--helix-spacing-3xs)', fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)' }}>
             {weekdays.map(day => <span key={day} aria-hidden="true" style={{ textAlign: 'center', color: 'var(--helix-color-text-neutral-light)' }}>{day}</span>)}
@@ -370,7 +370,7 @@ function EvalDatePicker({ value, onChange, onPreview, dataDates, min, max }: { v
                 aria-pressed={iso === value}
                 onMouseEnter={() => onPreview(iso)} onFocus={() => onPreview(iso)}
                 onKeyDown={event => { if (keys[event.key]) { event.preventDefault(); move(iso, keys[event.key]); } }}
-                onPress={() => choose(iso)}>
+                onClick={() => choose(iso)}>
                 <span style={{ display: 'grid', justifyItems: 'center', lineHeight: 1 }}>
                   {fromIso(iso).getDate()}
                   <span aria-hidden="true" style={{ width: 'var(--helix-spacing-2xs)', height: 'var(--helix-spacing-2xs)', borderRadius: 'var(--helix-radius-full)', background: withData.has(iso) ? 'currentColor' : 'transparent' }} />

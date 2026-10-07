@@ -6,7 +6,7 @@ import {
   AppShell, SideNav, NavItem, TopBar, PageHeader, Card, Avatar, Icon, Select, FAB,
   Table, TableHead, TableHeaderCell, TableCell,
   Button, IconButton, Input, Badge,
-} from '@helix-ds/core';
+} from '@helix/react';
 import {
   IconBell, IconSearch, IconBolt,
   IconDownload, IconPlus, IconDots, IconHelp,
@@ -307,14 +307,14 @@ function DashboardPage() {
               label="Table view"
               variant={view === 'table' ? 'secondary' : 'ghost'}
               aria-pressed={view === 'table'}
-              onPress={() => setView('table')}
+              onClick={() => setView('table')}
             />
             <IconButton
               icon={IconLayoutGrid}
               label="Cards view"
               variant={view === 'cards' ? 'secondary' : 'ghost'}
               aria-pressed={view === 'cards'}
-              onPress={() => setView('cards')}
+              onClick={() => setView('cards')}
             />
           </div>
         </div>
@@ -371,8 +371,8 @@ function DashboardPage() {
           icon={IconUserPlus}
           label="Add"
           actions={[
-            { icon: IconUserPlus, label: 'Invite member', onPress: () => {} },
-            { icon: IconDownload, label: 'Export list', onPress: () => {} },
+            { icon: IconUserPlus, label: 'Invite member', onClick: () => {} },
+            { icon: IconDownload, label: 'Export list', onClick: () => {} },
           ]}
         />
       </div>

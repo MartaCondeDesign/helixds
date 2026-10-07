@@ -6,7 +6,7 @@ export const doc: ComponentDoc = {
   purpose:  'Triggers an action or navigates to a destination when pressed.',
   contract: 'contracts/components/Button.json',
   a11y: [
-    'Use `onPress` for actions. For navigation, use a real `<a>` styled separately — Button always renders a `<button>`.',
+    'Use `onClick` for actions. For navigation, use a real `<a>` styled separately — Button always renders a `<button>`.',
     'Keep the label descriptive; icon-only buttons need an accessible name.',
   ],
 
@@ -74,10 +74,10 @@ export const doc: ComponentDoc = {
   features: [
     'forwardRef — accepts a ref to the underlying <button> element',
     "size — s=24px, m=32px (default, use unless there's a specific reason to deviate), l=40px",
-    'loading — shows spinner, disables interaction, sets aria-busy',
+    'isLoading — shows spinner, disables interaction, sets aria-busy',
     'icon / iconEnd — Tabler icon slots with aria-hidden',
     'fullWidth — stretches to container width',
-    'onPress — canonical handler (wraps onClick)',
+    'onClick — canonical handler (React\'s own; onClick is an anti-synonym, ADR-022)',
   ],
 
   examples: [
@@ -95,7 +95,7 @@ export const doc: ComponentDoc = {
     },
     {
       label: 'Loading state',
-      code: `<Button loading>Saving…</Button>`,
+      code: `<Button isLoading>Saving…</Button>`,
     },
     {
       label: 'Danger',

@@ -40,8 +40,8 @@ when: "Displaying an item with its current status in a list, table row, or detai
 ## Code
 
 ```tsx
-import { Badge } from '@helix-ds/core';
-import type { BadgeVariant } from '@helix-ds/core';
+import { Badge } from '@helix/react';
+import type { BadgeVariant } from '@helix/react';
 
 type Status = 'active' | 'pending' | 'failed' | 'draft' | 'scheduled';
 

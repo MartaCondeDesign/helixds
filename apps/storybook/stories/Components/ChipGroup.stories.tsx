@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 import { IconCircleCheck, IconPlayerPause, IconArchive } from '@tabler/icons-react';
-import { ChipGroup, ChipGroupDoc } from '@helix-ds/core';
+import { ChipGroup, ChipGroupDoc } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const STATUS = [

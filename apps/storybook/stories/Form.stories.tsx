@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import {
   Button, Input, Textarea, Select, Checkbox, RadioGroup, Switch, Badge,
-} from '@helix-ds/core';
+} from '@helix/react';
 import {
   IconBolt, IconShieldCheck, IconUsers, IconCheck, IconArrowRight,
   IconMail, IconLock, IconBuilding, IconUser,
@@ -98,7 +98,7 @@ function WorkspacePage() {
           <p style={{ margin: 0, color: 'var(--helix-color-text-neutral-light)' }}>
             Welcome to <strong>{form.workspace}</strong>. You're all set to start building.
           </p>
-          <Button variant="primary" iconEnd={IconArrowRight} onPress={() => setSubmitted(false)}>
+          <Button variant="primary" iconEnd={IconArrowRight} onClick={() => setSubmitted(false)}>
             Go to dashboard
           </Button>
         </div>
@@ -348,7 +348,7 @@ function WorkspacePage() {
               variant="primary"
               type="submit"
               fullWidth
-              loading={loading}
+              isLoading={loading}
               iconEnd={IconArrowRight}
             >
               {loading ? 'Creating workspace…' : 'Create workspace'}

@@ -50,15 +50,15 @@ Building an app inside this same pnpm workspace? Add Helix as a workspace depend
 ```json
 // your-app/package.json
 "dependencies": {
-  "@helix-ds/core": "workspace:*",
-  "@helix-ds/tokens": "workspace:*"
+  "@helix/react": "workspace:*",
+  "@helix/tokens": "workspace:*"
 }
 ```
 
 ```tsx
 // app/layout.tsx or main.tsx
-import '@helix-ds/tokens/helix.css';   // CSS custom properties
-import '@helix-ds/core/globals.css';   // Tailwind base + component styles
+import '@helix/tokens/helix.css';   // CSS custom properties
+import '@helix/react/globals.css';   // Tailwind base + component styles
 ```
 
 To get an AI agent (Claude, Cursor, Copilot...) working in that app up to speed on Helix's rules from the start:

@@ -5,7 +5,7 @@ export type HelixBadgeVariant = 'neutral' | 'info' | 'success' | 'warning' | 'da
 export type HelixBadgeSize = 'xs' | 's';
 
 /**
- * `<helix-badge>` — pilot Web Components equivalent of `@helix-ds/core`'s `Badge` (ADR-015).
+ * `<helix-badge>` — pilot Web Components equivalent of `@helix/react`'s `Badge` (ADR-015).
  * CSS ported from `packages/core/src/globals.css`'s `[data-helix-part="badge"]` block into this
  * component's own `static styles`, since Shadow DOM doesn't see that stylesheet. Token values
  * themselves need no porting — `--helix-*` custom properties inherit through the shadow boundary.

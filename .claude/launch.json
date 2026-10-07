@@ -21,6 +21,15 @@
       "env": {
         "PROOF_NO_OPEN": "1"
       }
+    },
+    {
+      "name": "explainers",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "const h=require('http'),f=require('fs'),p=require('path'),r=process.cwd(),T={'.html':'text/html','.css':'text/css','.js':'text/javascript','.json':'application/json','.svg':'image/svg+xml'};h.createServer((q,s)=>{const u=p.join(r,decodeURIComponent(q.url.split('?')[0]));if(!u.startsWith(r))return s.writeHead(403).end();f.readFile(u,(e,b)=>{if(e)return s.writeHead(404).end('not found');s.writeHead(200,{'Content-Type':T[p.extname(u)]||'application/octet-stream'}).end(b)})}).listen(6011,'127.0.0.1')"
+      ],
+      "port": 6011
     }
   ]
 }

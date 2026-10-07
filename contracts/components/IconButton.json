@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "IconButton",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "status": "stable",
   "purpose": "Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control.",
   "neverUseFor": [
@@ -62,7 +62,7 @@
       "description": "Physical size — same scale and same height tokens as Button (s=24px, m=32px, l=40px), width matches height (square)."
     },
     {
-      "name": "loading",
+      "name": "isLoading",
       "type": "boolean",
       "default": false,
       "description": "When true, shows a spinner in place of the icon and disables interaction."
@@ -74,7 +74,7 @@
       "description": "When true, the button is non-interactive."
     },
     {
-      "name": "onPress",
+      "name": "onClick",
       "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
       "description": "Click/press handler."
     },

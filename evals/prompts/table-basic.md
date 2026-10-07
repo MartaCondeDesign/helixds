@@ -11,7 +11,7 @@ Using Helix DS, show a list of team members as a table with three columns: Name,
 
 # Success criteria
 
-- [ ] Imports `Table` from `@helix-ds/core`
+- [ ] Imports `Table` from `@helix/react`
 - [ ] Puts the column headings in `TableHead` with `TableHeaderCell`
 - [ ] Puts the data rows in `TableBody` with `TableRow` and `TableCell`
 - [ ] Gives each row a stable `key={` from the data
@@ -29,7 +29,7 @@ Using Helix DS, show a list of team members as a table with three columns: Name,
 # Expected output shape
 
 ```tsx
-import { Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helix-ds/core';
+import { Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helix/react';
 
 type Member = { id: string; name: string; role: string; lastSeen: string };
 

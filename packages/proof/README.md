@@ -79,6 +79,7 @@ export default {
                                                  // node_modules has react, react-dom and your packages
   css: ['@acme/tokens/tokens.css', '@acme/ui/styles.css'],
   imports: ['react', 'react-dom', '@acme/ui', '@acme/icons'],   // anything else = build failed
+  exports: { '@acme/ui': ['Button', 'Card'] },   // optional: a made-up component name = build failed
   tasks: ['button-basic', 'card-basic'],         // optional: list every task, run or not
   defaultTask: 'button-basic',                   // optional: the task the page opens on
   vite: async ({ importFromApp }) => ({          // optional: plugins your CSS needs, aliases to source

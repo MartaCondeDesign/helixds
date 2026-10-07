@@ -4,7 +4,7 @@ import type { HelixIconComponent } from '../Icon';
 export interface FABAction {
   icon: HelixIconComponent;
   label: string;
-  onPress: () => void;
+  onClick: () => void;
 }
 
 export interface FABProps {
@@ -24,9 +24,9 @@ export interface FABProps {
   disabled?: boolean;
   /** Additional className for the root wrapper. */
   className?: string;
-  /** Trigger press handler. `onClick` is an anti-synonym (see prop-map.md) and is intentionally omitted.
+  /** Trigger press handler — React's own `onClick` (ADR-022). `onPress` is an anti-synonym.
    *  No other native <button> passthrough is supported — Motion's HTMLMotionProps redefines several native
    *  event names (style, onDrag, onAnimationStart, ...) for its own gesture/animation system, so FAB's
    *  root no longer extends ButtonHTMLAttributes wholesale (it did before the Motion migration, ADR-007). */
-  onPress?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

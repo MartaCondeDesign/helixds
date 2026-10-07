@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "Chip",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "status": "stable",
   "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
   "neverUseFor": [
@@ -117,7 +117,7 @@
       "description": "Trailing icon. Same fixed 14px as icon."
     },
     {
-      "name": "onPress",
+      "name": "onClick",
       "type": "React.MouseEventHandler<HTMLButtonElement> | undefined",
       "description": "Primary press handler."
     },

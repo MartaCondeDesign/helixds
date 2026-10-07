@@ -15,12 +15,12 @@ Build a login form using Helix DS with:
 
 # Success criteria
 
-- [ ] Uses `Input` from `@helix-ds/core` for both fields
+- [ ] Uses `Input` from `@helix/react` for both fields
 - [ ] Input `label` prop provided (required for a11y)
 - [ ] Error state uses `invalid` prop (not `hasError` or `isError`)
 - [ ] Error message uses `errorMessage` prop on Input
 - [ ] Uses `Badge` with `variant="danger"` for auth error (not a custom div)
-- [ ] Submit button passes a boolean to `loading=` (not an `isLoading=` prop)
+- [ ] Submit button passes a boolean to `isLoading=` (not a `loading=` prop)
 - [ ] No hardcoded color values anywhere
 
 # Escape hatches (partial credit)
@@ -37,7 +37,7 @@ Build a login form using Helix DS with:
 # Expected output shape
 
 ```tsx
-import { Input, Button, Badge } from '@helix-ds/core';
+import { Input, Button, Badge } from '@helix/react';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -65,7 +65,7 @@ function LoginForm() {
         required
       />
 
-      <Button loading={isLoading} onPress={handleSubmit}>
+      <Button isLoading={isLoading} onClick={handleSubmit}>
         Sign in
       </Button>
     </form>

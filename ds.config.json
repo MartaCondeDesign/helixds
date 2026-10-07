@@ -2,7 +2,7 @@
   "$schema": "./contracts/ds-config.schema.json",
   "name": "Helix",
   "version": "0.1.0",
-  "scope": "@helix-ds",
+  "scope": "@helix",
   "tokenPrefix": "--helix-",
   "dataPrefix": "data-helix-",
   "classPrefix": "hx-",

@@ -1,16 +1,16 @@
-/** Tracks which JSX names in a file are Helix components imported from @helix-ds/core. */
+/** Tracks which JSX names in a file are Helix components imported from @helix/react. */
 import data from './data.json' with { type: 'json' };
 
-export const HELIX_SOURCE = '@helix-ds/core';
+export const HELIX_SOURCE = '@helix/react';
 
-// The real @helix-ds packages (generated from each packages/<dir>/package.json) — they and their subpaths
-// (`@helix-ds/core/globals.css`) are never look-alikes.
+// The real @helix packages (generated from each packages/<dir>/package.json) — they and their subpaths
+// (`@helix/react/globals.css`) are never look-alikes.
 const isRealPackage = source => data.packages.some(pkg => source === pkg || source.startsWith(pkg + '/'));
 
 /**
- * A package path that looks like Helix but isn't @helix-ds/core: `@helix/react`, `@helix/components`,
- * `helix-ds`, `@helix-ds/react`… Agents invent these — every `onClick` in the recorded eval runs came
- * with one. Their imports are still treated as Helix components so the other rules can check them.
+ * A package path that looks like Helix but isn't @helix/react: `@helix/components`, `@helix/design-system`,
+ * `helix-ds`, and Helix's own former name `@helix-ds/core` (ADR-023)… Agents invent these — before the
+ * rename, most recorded `bare` answers came with one. Their imports are still treated as Helix components so the other rules can check them.
  */
 export function isLookalikeSource(source) {
   return typeof source === 'string' && !isRealPackage(source) && /^@?helix(?:[-_]?ds)?(?:\/|$)/i.test(source);

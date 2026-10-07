@@ -109,7 +109,7 @@ function ToastItem({
           hardcoded data-helix-part="icon-button", so a same-named prop would silently detach every
           IconButton CSS rule (same fix as Modal/SidePanel's close button). */}
       <span data-helix-part="toast-close">
-        <IconButton icon={IconX} label="Dismiss" size="s" variant="ghost" onPress={() => toast.dismiss(record.id)} />
+        <IconButton icon={IconX} label="Dismiss" size="s" variant="ghost" onClick={() => toast.dismiss(record.id)} />
       </span>
     </div>
   );

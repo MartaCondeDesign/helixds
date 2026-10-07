@@ -12,7 +12,7 @@ error message if the user tries to submit without picking one.
 
 # Success criteria
 
-- [ ] Imports `Select` from `@helix-ds/core`
+- [ ] Imports `Select` from `@helix/react`
 - [ ] Passes `options` as the list of choices (not `items` or `choices`)
 - [ ] Uses `onChange` for value updates
 - [ ] Uses `invalid` prop for the error state (not `hasError` or `isError`)
@@ -34,7 +34,7 @@ error message if the user tries to submit without picking one.
 
 ```tsx
 import { useState } from 'react';
-import { Select } from '@helix-ds/core';
+import { Select } from '@helix/react';
 
 const COUNTRIES = [
   { value: 'es', label: 'Spain' },

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { galleryHtml } from '../src/html.ts';
 
-describe('@helix-ds/proof html', () => {
+describe('@helix/proof html', () => {
   it("writes a page whose script parses — escapes in the template literal can't break it", () => {
     const html = galleryHtml({
       name: 'Acme',

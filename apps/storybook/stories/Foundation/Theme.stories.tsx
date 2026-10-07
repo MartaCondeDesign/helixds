@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconFolder } from '@tabler/icons-react';
-import { Switch } from '@helix-ds/core';
+import { Switch } from '@helix/react';
 import { SectionHead, StoryHeader } from './_shared';
 // Imported directly from source (not dist/index.ts, which only holds resolved values) so this table
 // reflects $value (the primitive it aliases) and $description automatically on every token change —

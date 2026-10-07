@@ -11,10 +11,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "paths": {
-      "@helix-ds/core":         ["../../packages/core/src/index.ts"],
-      "@helix-ds/tokens":       ["../../packages/tokens/src/index.ts"],
-      "@helix-ds/tokens/*":     ["../../packages/tokens/dist/*"],
-      "@helix-ds/core/*":       ["../../packages/core/src/*"]
+      "@helix/react":         ["../../packages/core/src/index.ts"],
+      "@helix/tokens":       ["../../packages/tokens/src/index.ts"],
+      "@helix/tokens/*":     ["../../packages/tokens/dist/*"],
+      "@helix/react/*":       ["../../packages/core/src/*"]
     }
   },
   "include": [

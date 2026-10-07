@@ -13,7 +13,7 @@ should start open.
 
 # Success criteria
 
-- [ ] Imports `Accordion` from `@helix-ds/core`
+- [ ] Imports `Accordion` from `@helix/react`
 - [ ] Uses `label=` for each question (not `title=`, `header=`)
 - [ ] Puts each answer as the Accordion's children (not `content=`)
 - [ ] Starts the first one open with `defaultExpanded` (not `open`, `isOpen`)
@@ -30,7 +30,7 @@ should start open.
 # Expected output shape
 
 ```tsx
-import { Accordion } from '@helix-ds/core';
+import { Accordion } from '@helix/react';
 
 function Faq() {
   return (

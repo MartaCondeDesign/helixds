@@ -1,6 +1,6 @@
 /**
  * Validates a JSX/TSX snippet before an agent writes it to disk:
- *   - problems   @helix-ds/eslint-plugin rules (wrong import path, anti-synonym props, raw colors, native
+ *   - problems   @helix/eslint-plugin rules (wrong import path, anti-synonym props, raw colors, native
  *                controls), each with its fix or suggestions
  *   - fixedCode  the snippet with every safe auto-fix applied (null when nothing changed)
  *   - advisories the eval suite's global checks the linter doesn't cover (raw <div> layout, raw Tabler
@@ -8,11 +8,11 @@
  */
 import { ESLint, type Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
-import helix from '@helix-ds/eslint-plugin';
+import helix from '@helix/eslint-plugin';
 import { GLOBAL_CHECKS } from '../../../scripts/eval-lib.ts';
 
 // Already reported (with fixes) by the lint rules above — don't say the same thing twice.
-const COVERED_BY_LINT = new Set(['hardcoded-color', 'on-click', 'raw-native-control']);
+const COVERED_BY_LINT = new Set(['hardcoded-color', 'on-press', 'raw-native-control']);
 
 // Keeps the recommended config's own `files` (JS/TS extensions): in ESLint 9 a bare `**/*` pattern
 // doesn't count as matching a file, which would skip every snippet as "no matching configuration".

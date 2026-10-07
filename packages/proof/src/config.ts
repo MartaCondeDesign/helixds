@@ -35,6 +35,9 @@ export type GalleryConfig = {
    * failure without trying to compile it. Exact names match the package and its subpaths.
    */
   imports: string[];
+  /** Optional: what each package really exports. An answer importing a name its package doesn't have (an
+   * agent's made-up `HxTopBar`) is recorded as a build failure instead of breaking the whole render. */
+  exports?: Record<string, string[]>;
   /** Extra Vite config — plugins your CSS needs (Tailwind…), aliases to source. Receives a helper that
    * imports a package from `app`, since the config file itself may not see the app's dependencies. */
   vite?: (helpers: { importFromApp: (spec: string) => Promise<any> }) => InlineConfig | Promise<InlineConfig>;

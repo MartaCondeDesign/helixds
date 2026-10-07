@@ -12,14 +12,14 @@
  * home for exactly that category, not an exception to the rule).
  *
  * Where a value coincides with a real duration token (FAB_COLLAPSE_TRANSITION below), it's derived
- * from `@helix-ds/tokens` rather than retyped — see packages/tokens/CLAUDE.md's "Motion naming
+ * from `@helix/tokens` rather than retyped — see packages/tokens/CLAUDE.md's "Motion naming
  * vocabulary" section for the full reasoning, including why the other durations here stay bespoke
  * literals instead of being forced onto the scale.
  *
  * See ADR-007 and .ai/maps/patterns/motion-effects.md.
  */
 import type { Transition } from 'motion/react';
-import { tokens } from '@helix-ds/tokens';
+import { tokens } from '@helix/tokens';
 
 function msToSeconds(ms: string): number {
   return Number.parseFloat(ms) / 1000;

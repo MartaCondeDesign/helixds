@@ -13,7 +13,7 @@ Using Helix DS, when the user presses "Delete project", ask for confirmation in 
 
 # Success criteria
 
-- [ ] Imports `Modal` from `@helix-ds/core`
+- [ ] Imports `Modal` from `@helix/react`
 - [ ] Opens it with `expanded=` (not `open=`, `isOpen=`)
 - [ ] Closes it through `onDismiss=` (not `onClose=`)
 - [ ] Uses `label=` for the dialog title (not `title=`)
@@ -32,13 +32,13 @@ Using Helix DS, when the user presses "Delete project", ask for confirmation in 
 
 ```tsx
 import { useState } from 'react';
-import { Modal, Button } from '@helix-ds/core';
+import { Modal, Button } from '@helix/react';
 
 function DeleteProject({ onDelete }: { onDelete: () => void }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <>
-      <Button variant="danger" onPress={() => setExpanded(true)}>Delete project</Button>
+      <Button variant="danger" onClick={() => setExpanded(true)}>Delete project</Button>
       <Modal
         label="Delete project"
         expanded={expanded}

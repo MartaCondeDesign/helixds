@@ -3,11 +3,11 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { describe, it } from 'node:test';
-import { readCells, unresolvedImport } from '../src/cells.ts';
+import { missingExport, readCells, unresolvedImport } from '../src/cells.ts';
 
 const allowed = ['react', '@acme/ui'];
 
-describe('@helix-ds/proof cells', () => {
+describe('@helix/proof cells', () => {
   it('accepts allowed packages, their subpaths and relative imports', () => {
     const code = `import { useState } from 'react';\nimport { createRoot } from 'react-dom/client';`;
     assert.equal(unresolvedImport(code, [...allowed, 'react-dom']), null);
@@ -19,6 +19,13 @@ describe('@helix-ds/proof cells', () => {
     assert.equal(unresolvedImport(`const m = import('lodash');`, allowed), 'lodash');
     // A name that only starts like an allowed package is still a different package.
     assert.equal(unresolvedImport(`import x from 'react-query';`, allowed), 'react-query');
+  });
+
+  it('flags a named import its package does not export', () => {
+    const exportsByPackage = { '@acme/ui': ['Button', 'Card'] };
+    assert.equal(missingExport(`import { Button, Card } from '@acme/ui';`, exportsByPackage), null);
+    assert.deepEqual(missingExport(`import { Button, AcmeTopBar as Bar } from '@acme/ui';`, exportsByPackage), { pkg: '@acme/ui', name: 'AcmeTopBar' });
+    assert.equal(missingExport(`import { Whatever } from 'react';`, exportsByPackage), null);
   });
 
   it('reads answers, skips ones without a variant, and normalizes scores to 0–100', () => {

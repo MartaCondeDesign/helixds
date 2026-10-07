@@ -13,48 +13,48 @@ RuleTester.itOnly = it.only;
 const tester = new RuleTester({
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module', parserOptions: { ecmaFeatures: { jsx: true } } },
 });
-const helix = "import { Button, Badge, Card, Input } from '@helix-ds/core';\n";
+const helix = "import { Button, Badge, Card, Input } from '@helix/react';\n";
 
 tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
   valid: [
-    helix + '<Button onPress={save}>Save</Button>',
+    helix + '<Button onClick={save}>Save</Button>',
     helix + '<Button type="submit" variant="primary">Save</Button>',  // native passthrough, not variant
     helix + '<Input name="email" label="Email" />',
-    helix + '<Card onClick={open}>…</Card>',                            // Card has no onPress
-    '<Button onClick={save} />',                                        // not imported from Helix
-    "import { Button } from './my-button';\n<Button onClick={save} />",
+    helix + '<Card onPress={open}>…</Card>',                            // Card has no onClick
+    '<Button onPress={save} />',                                        // not imported from Helix
+    "import { Button } from './my-button';\n<Button onPress={save} />",
   ],
   invalid: [
     {
-      code: helix + '<Button onClick={save}>Save</Button>',
-      output: helix + '<Button onPress={save}>Save</Button>',
+      code: helix + '<Button onPress={save}>Save</Button>',
+      output: helix + '<Button onClick={save}>Save</Button>',
       errors: [{ messageId: 'prop' }],
     },
     {
-      code: helix + '<Button isLoading>Save</Button>',
-      output: helix + '<Button loading>Save</Button>',
+      code: helix + '<Button loading>Save</Button>',
+      output: helix + '<Button isLoading>Save</Button>',
       errors: [{ messageId: 'prop' }],
     },
     {
-      code: "import * as Helix from '@helix-ds/core';\n<Helix.Button onClick={save} />",
-      output: "import * as Helix from '@helix-ds/core';\n<Helix.Button onPress={save} />",
+      code: "import * as Helix from '@helix/react';\n<Helix.Button onPress={save} />",
+      output: "import * as Helix from '@helix/react';\n<Helix.Button onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
-      code: "import { Button as B } from '@helix-ds/core';\n<B onClick={save} />",
-      output: "import { Button as B } from '@helix-ds/core';\n<B onPress={save} />",
+      code: "import { Button as B } from '@helix/react';\n<B onPress={save} />",
+      output: "import { Button as B } from '@helix/react';\n<B onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
       // Both set: reported, but not auto-renamed into a duplicate prop.
-      code: helix + '<Button onClick={a} onPress={b} />',
+      code: helix + '<Button onPress={a} onClick={b} />',
       output: null,
       errors: [{ messageId: 'prop' }],
     },
     {
       // A look-alike import is still checked as Helix (import-source reports the path itself).
-      code: "import { Button } from '@helix/react';\n<Button onClick={save} />",
-      output: "import { Button } from '@helix/react';\n<Button onPress={save} />",
+      code: "import { Button } from '@helix/react';\n<Button onPress={save} />",
+      output: "import { Button } from '@helix/react';\n<Button onClick={save} />",
       errors: [{ messageId: 'prop' }],
     },
     {
@@ -72,22 +72,23 @@ tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
 
 tester.run('import-source', plugin.rules['import-source'], {
   valid: [
-    "import { Button } from '@helix-ds/core';",
-    "import { tokens } from '@helix-ds/tokens';",
-    "import helix from '@helix-ds/eslint-plugin';",
-    "import '@helix-ds/core/globals.css';",
-    "import '@helix-ds/wc';",
+    "import { Button } from '@helix/react';",
+    "import { tokens } from '@helix/tokens';",
+    "import helix from '@helix/eslint-plugin';",
+    "import '@helix/react/globals.css';",
+    "import '@helix/wc';",
     "import { Button } from './helix/button';",
   ],
   invalid: [
     {
-      code: "import { Button, toast } from '@helix/react';",
-      output: "import { Button, toast } from '@helix-ds/core';",
+      // Helix's former package name (ADR-023) is now a look-alike — fixed to the new one.
+      code: "import { Button, toast } from '@helix-ds/core';",
+      output: "import { Button, toast } from '@helix/react';",
       errors: [{ messageId: 'source' }],
     },
     {
       code: 'import { Button } from "helix-ds";',
-      output: 'import { Button } from "@helix-ds/core";',
+      output: 'import { Button } from "@helix/react";',
       errors: [{ messageId: 'source' }],
     },
     {
@@ -144,13 +145,13 @@ tester.run('no-raw-color', plugin.rules['no-raw-color'], {
 
 tester.run('no-raw-control', plugin.rules['no-raw-control'], {
   valid: [
-    helix + '<Button onPress={save}>Save</Button>',
+    helix + '<Button onClick={save}>Save</Button>',
     '// [CUSTOM] reason: Helix has no color picker\n<input type="color" />',
     '/* [CUSTOM] calendar heatmap */\n<button />',
     '<input type="hidden" name="id" />',
   ],
   invalid: [
-    { code: '<button onClick={save}>Save</button>', errors: [{ messageId: 'raw', data: { tag: 'button', helix: 'Button (or IconButton for an icon-only action)' } }] },
+    { code: '<button onPress={save}>Save</button>', errors: [{ messageId: 'raw', data: { tag: 'button', helix: 'Button (or IconButton for an icon-only action)' } }] },
     { code: '<input type="checkbox" />', errors: [{ messageId: 'raw', data: { tag: 'input', helix: 'Checkbox' } }] },
     { code: '<select />', errors: [{ messageId: 'raw' }] },
     { code: '// [CUSTOM]\n<button />', errors: [{ messageId: 'noReason' }, { messageId: 'raw' }] },
@@ -159,9 +160,9 @@ tester.run('no-raw-control', plugin.rules['no-raw-control'], {
 
 tester.run('unknown-prop', plugin.rules['unknown-prop'], {
   valid: [
-    helix + '<Button variant="primary" loading={saving} onPress={save}>Save</Button>',
+    helix + '<Button variant="primary" isLoading={saving} onClick={save}>Save</Button>',
     helix + '<Button id="save" aria-busy={saving} data-testid="save" onMouseEnter={hover}>Save</Button>',  // HTML passthrough
-    helix + '<Button isLoading>Save</Button>',          // anti-synonym — prop-vocabulary reports and fixes it
+    helix + '<Button loading>Save</Button>',            // anti-synonym — prop-vocabulary reports and fixes it
     helix + '<Card>…</Card>',
     '<Button isPending />',                             // not imported from Helix
   ],
@@ -169,11 +170,11 @@ tester.run('unknown-prop', plugin.rules['unknown-prop'], {
     {
       // What an agent with no guide wrote in the evals: a prop from another library.
       code: helix + '<Button wobble>Save</Button>',
-      errors: [{ messageId: 'unknown', data: { prop: 'wobble', component: 'Button', props: 'variant, size, loading, disabled, icon, iconEnd, fullWidth, onPress, children' } }],
+      errors: [{ messageId: 'unknown', data: { prop: 'wobble', component: 'Button', props: 'variant, size, isLoading, disabled, icon, iconEnd, fullWidth, onClick, children' } }],
     },
     {
       // Button takes its text as children — the message says so instead of listing props.
-      code: helix + '<Button label="Save" onPress={save} />',
+      code: helix + '<Button label="Save" onClick={save} />',
       errors: [{ messageId: 'children' }],
     },
   ],

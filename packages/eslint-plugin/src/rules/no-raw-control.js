@@ -1,7 +1,7 @@
 /**
  * helix/no-raw-control — a plain <button>, <select>, <textarea> or <input> where Helix has a component.
  *
- *   <button onClick={save}>Save</button>   → <Button onPress={save}>Save</Button>
+ *   <button onClick={save}>Save</button>   → <Button onClick={save}>Save</Button>
  *
  * Allowed in a file marked as a custom component with a `// [CUSTOM] reason: …` header — the AGENTS.md
  * component hierarchy (Helix core first, custom second) and what `pnpm helix scaffold:custom` writes.
@@ -29,7 +29,7 @@ export default {
     docs: { description: 'Use Helix components instead of plain native controls, or mark the file // [CUSTOM] reason: …' },
     schema: [],
     messages: {
-      raw: '<{{tag}}> has a Helix equivalent — use {{helix}} from @helix-ds/core. If you really need a custom control, start the file with `// [CUSTOM] reason: <why Helix doesn\'t cover it>` (pnpm helix scaffold:custom).',
+      raw: '<{{tag}}> has a Helix equivalent — use {{helix}} from @helix/react. If you really need a custom control, start the file with `// [CUSTOM] reason: <why Helix doesn\'t cover it>` (pnpm helix scaffold:custom).',
       noReason: '`[CUSTOM]` needs a reason: `// [CUSTOM] reason: <why Helix doesn\'t cover it>`.',
     },
   },

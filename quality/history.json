@@ -17,8 +17,24 @@
   },
   {
     "date": "2026-10-06",
-    "score": 0.7604089363017934,
-    "evalPassRate": 0.6326530612244898,
+    "score": 0.7019375167605256,
+    "evalPassRate": 0.38495575221238937,
+    "tokens": 763,
+    "components": {
+      "draft": 0,
+      "beta": 13,
+      "stable": 20
+    },
+    "figma": {
+      "synced": 20,
+      "stale": 0,
+      "missing": 13
+    }
+  },
+  {
+    "date": "2026-10-07",
+    "score": 0.6258313220702602,
+    "evalPassRate": 0.004424778761061947,
     "tokens": 763,
     "components": {
       "draft": 0,

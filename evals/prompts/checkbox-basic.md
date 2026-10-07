@@ -12,7 +12,7 @@ user submits without checking it, show the error "You must accept the terms to c
 
 # Success criteria
 
-- [ ] Imports `Checkbox` from `@helix-ds/core`
+- [ ] Imports `Checkbox` from `@helix/react`
 - [ ] Uses `label=` for the visible text (not `text=`, `title=`)
 - [ ] Marks it with `required` (not `isRequired`)
 - [ ] Shows the error with `invalid=` and `errorMessage=` (not `hasError`, `error=`)
@@ -31,7 +31,7 @@ user submits without checking it, show the error "You must accept the terms to c
 
 ```tsx
 import { useState } from 'react';
-import { Checkbox } from '@helix-ds/core';
+import { Checkbox } from '@helix/react';
 
 function TermsField({ submitted }: { submitted: boolean }) {
   const [accepted, setAccepted] = useState(false);

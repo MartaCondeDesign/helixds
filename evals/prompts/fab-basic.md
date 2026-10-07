@@ -12,11 +12,11 @@ related actions: new document, new folder, and upload file.
 
 # Success criteria
 
-- [ ] Imports `FAB` from `@helix-ds/core`
+- [ ] Imports `FAB` from `@helix/react`
 - [ ] Passes the trigger icon by reference with `icon={Icon` (not `icon={<`)
 - [ ] Uses `label` prop for the trigger's accessible name (not `aria-label`, `title`)
 - [ ] Uses the `actions` prop for the speed-dial items (not `items`, `options`)
-- [ ] Each action uses `onPress` (not `onClick`)
+- [ ] Each action uses `onClick` (not `onPress`)
 
 # Escape hatches (partial credit)
 
@@ -32,7 +32,7 @@ related actions: new document, new folder, and upload file.
 # Expected output shape
 
 ```tsx
-import { FAB } from '@helix-ds/core';
+import { FAB } from '@helix/react';
 import { IconPlus, IconFileText, IconFolderPlus, IconUpload } from '@tabler/icons-react';
 
 function DocumentsCreateFAB({
@@ -49,9 +49,9 @@ function DocumentsCreateFAB({
       icon={IconPlus}
       label="Create"
       actions={[
-        { icon: IconFileText, label: 'New document', onPress: onNewDocument },
-        { icon: IconFolderPlus, label: 'New folder', onPress: onNewFolder },
-        { icon: IconUpload, label: 'Upload file', onPress: onUpload },
+        { icon: IconFileText, label: 'New document', onClick: onNewDocument },
+        { icon: IconFolderPlus, label: 'New folder', onClick: onNewFolder },
+        { icon: IconUpload, label: 'Upload file', onClick: onUpload },
       ]}
       className="documents-create-fab" // fixed position set in the screen's own CSS
     />

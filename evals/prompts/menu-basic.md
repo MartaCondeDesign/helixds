@@ -13,13 +13,13 @@ Button labelled "Sort by", so a regular form Select doesn't fit.
 
 # Success criteria
 
-- [ ] Imports `Menu` from `@helix-ds/core`
+- [ ] Imports `Menu` from `@helix/react`
 - [ ] Opens and closes it with `expanded=` (not `open=`, `isOpen=`)
 - [ ] Positions it against the trigger with `anchorRef=`
 - [ ] Handles the choice with Menu's own `onSelect=`
 - [ ] Passes the choices as `options=` objects with `value` and `label`
 - [ ] Links the trigger to the list with `aria-controls=` and `aria-expanded=`
-- [ ] Uses Helix `Button` with `onPress=` as the trigger (not `onClick=`)
+- [ ] Uses Helix `Button` with `onClick=` as the trigger (not `onPress=`)
 
 # Escape hatches (partial credit)
 
@@ -34,7 +34,7 @@ Button labelled "Sort by", so a regular form Select doesn't fit.
 
 ```tsx
 import { useId, useRef, useState } from 'react';
-import { Button, Menu } from '@helix-ds/core';
+import { Button, Menu } from '@helix/react';
 import { IconArrowsSort } from '@tabler/icons-react';
 
 const SORT_OPTIONS = [
@@ -57,7 +57,7 @@ function SortMenu({ sort, onSortChange }: { sort: string; onSortChange: (value: 
         aria-haspopup="listbox"
         aria-expanded={expanded}
         aria-controls={menuId}
-        onPress={() => setExpanded(e => !e)}
+        onClick={() => setExpanded(e => !e)}
       >
         Sort by
       </Button>

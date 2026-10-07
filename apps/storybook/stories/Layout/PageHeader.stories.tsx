@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconPlus } from '@tabler/icons-react';
-import { PageHeader, PageHeaderDoc, Button, Badge } from '@helix-ds/core';
+import { PageHeader, PageHeaderDoc, Button, Badge } from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof PageHeader> = {

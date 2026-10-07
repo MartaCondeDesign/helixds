@@ -1,5 +1,5 @@
 {
-  "name": "@helix-ds/storybook-addon-tokens",
+  "name": "@helix/storybook-addon-tokens",
   "version": "0.1.0",
   "private": false,
   "description": "Helix Storybook addon that shows component token lists in the manager UI",

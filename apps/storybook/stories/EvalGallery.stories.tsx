@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Component, useEffect, useMemo, useState, type ComponentType, type ReactNode } from 'react';
-import { Badge, Card, IconButton, Select, Tooltip } from '@helix-ds/core';
+import { Badge, Card, IconButton, Select, Tooltip } from '@helix/react';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { StoryHeader } from './_shared/StoryHeader';
 import ladder from '../../../evals/ladder.json';

@@ -5,7 +5,7 @@ import { IconGripVertical } from '@tabler/icons-react';
 import {
   Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell,
   TableDoc, Badge, Avatar, Button, Icon,
-} from '@helix-ds/core';
+} from '@helix/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const meta: Meta<typeof Table> = {

@@ -13,7 +13,7 @@ sharing the form name "plan".
 
 # Success criteria
 
-- [ ] Imports `RadioButton` from `@helix-ds/core`
+- [ ] Imports `RadioButton` from `@helix/react`
 - [ ] Uses `label=` for each option's text
 - [ ] Groups them with a shared `name="plan"`
 - [ ] Controls the selection with `checked=` and `onChange=` (not `selected=`, `isChecked=`)
@@ -30,7 +30,7 @@ sharing the form name "plan".
 
 ```tsx
 import { useState } from 'react';
-import { RadioButton, Card } from '@helix-ds/core';
+import { RadioButton, Card } from '@helix/react';
 
 function PlanCards() {
   const [plan, setPlan] = useState('free');
