@@ -98,13 +98,17 @@ function addUsage(total: Usage, raw: any) {
   total.calls++;
 }
 
-// Returns the answer text; adds the call's tokens to `usage`.
-function generate(promptText: string, usage: Usage): Promise<string> {
+// Every tool the agent called (MCP lookups, file reads…), so an answer shows whether it looked anything up.
+export type ToolCall = { name: string; input: unknown };
+
+// Returns the answer text; adds the call's tokens to `usage` and the agent's tool calls to `tools`.
+function generate(promptText: string, usage: Usage, tools: ToolCall[] = []): Promise<string> {
   const cliArgs = [
     '-p', promptText,
     '--append-system-prompt', systemPrompt,
     '--disallowedTools', 'Edit,Write,NotebookEdit,Bash,Agent,Artifact',
-    '--output-format', 'json',
+    // stream-json (one event per line) instead of json: the events include every tool call.
+    '--output-format', 'stream-json', '--verbose',
     '--strict-mcp-config', '--mcp-config', mcpConfigPath,
   ];
   if (useMcp) cliArgs.push('--allowedTools', 'mcp__helix');
@@ -121,7 +125,14 @@ function generate(promptText: string, usage: Usage): Promise<string> {
     child.on('close', code => {
       clearTimeout(timer);
       let result: any;
-      try { result = JSON.parse(stdout); } catch { /* not JSON: report below */ }
+      for (const line of stdout.split('\n')) {
+        let event: any;
+        try { event = JSON.parse(line); } catch { continue; }
+        if (event.type === 'result') result = event;
+        for (const block of event.message?.content ?? []) {
+          if (block?.type === 'tool_use') tools.push({ name: block.name, input: block.input });
+        }
+      }
       if (code !== 0 || !result || result.is_error) {
         reject(new Error(`claude ${code !== 0 ? `exited with code ${code}` : 'failed'}: ${(result?.result ?? stderr ?? stdout).toString().trim().slice(0, 300)}`));
         return;
@@ -133,10 +144,10 @@ function generate(promptText: string, usage: Usage): Promise<string> {
 }
 
 // Usage/rate limits surface as a non-zero exit — wait and retry instead of losing the generation.
-async function generateWithRetry(promptText: string, usage: Usage, attempts = 3): Promise<string> {
+async function generateWithRetry(promptText: string, usage: Usage, attempts = 3, tools: ToolCall[] = []): Promise<string> {
   for (let i = 1; ; i++) {
     try {
-      return await generate(promptText, usage);
+      return await generate(promptText, usage, tools);
     } catch (err) {
       // A logged-out CLI won't fix itself by waiting.
       if (i >= attempts || /authenticat|log ?in/i.test((err as Error).message)) throw err;
@@ -178,7 +189,8 @@ async function worker() {
     const { prompt: p, rep } = jobs.shift()!;
     try {
       const usage = emptyUsage();
-      let code = extractCodeBlock(await generateWithRetry(p.prompt, usage));
+      const toolCalls: ToolCall[] = [];
+      let code = extractCodeBlock(await generateWithRetry(p.prompt, usage, 3, toolCalls));
       let lintRounds = 0;
       while (lintLoop && lintRounds < LINT_ROUNDS) {
         const { problems } = await validateSnippet(code);
@@ -187,7 +199,7 @@ async function worker() {
         const report = problems.map(m => `${m.line}:${m.column} ${m.rule} — ${m.message}`).join('\n');
         code = extractCodeBlock(await generateWithRetry(
           `${p.prompt}\n\nYour previous answer:\n\n\`\`\`tsx\n${code}\n\`\`\`\n\nHelix lint found ${problems.length} problem(s) in it. Fix them and answer again:\n${report}`,
-          usage,
+          usage, 3, toolCalls,
         ));
       }
       fs.writeFileSync(path.join(candidatesDir, `${p.id}-${rep}.tsx`), code);
@@ -196,6 +208,7 @@ async function worker() {
       results.push(result);
       reportOne(result, rep);
       const mechanical = await checkMechanical(code);
+      console.log(`   tools used: ${toolCalls.length ? toolCalls.map(t => t.name.replace(/^mcp__helix__/, 'mcp:')).join(', ') : 'none'}`);
       console.log(`   ${mechanical.compiles ? 'compiles' : `doesn't compile (${mechanical.compileErrors.length} error${mechanical.compileErrors.length > 1 ? 's' : ''}): ${mechanical.compileErrors[0]}`}`);
       console.log(`   ${usage.totalTokens.toLocaleString()} tokens (${usage.calls} call${usage.calls > 1 ? 's' : ''})`);
       runTokens += usage.totalTokens;
@@ -207,7 +220,7 @@ async function worker() {
       };
       fs.writeFileSync(
         path.join(outputsDir, `${p.id}-${meta.timestamp}-${rep}.json`),
-        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code, mechanical), mechanical, usage, generatedCode: code }, null, 2),
+        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code, mechanical), mechanical, toolCalls, usage, generatedCode: code }, null, 2),
       );
     } catch (err) {
       failures++;

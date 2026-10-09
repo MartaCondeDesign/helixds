@@ -181,7 +181,15 @@ const epoch = lastBreaking
 
 const prompts = new Map(loadPrompts().map(p => [p.id, p]));
 const all = loadRuns().filter(r => r.source === 'claude-cli');
-const current = all.filter(r => r.timestamp >= epoch.at).map(r => {
+// Only the latest measurement round of each task × level — the same rule as the Eval Gallery and Proof —
+// so a round run after a fix replaces the one before it instead of averaging with it.
+const sinceEpoch = all.filter(r => r.timestamp >= epoch.at);
+const latestRound = new Map<string, string>();
+for (const r of sinceEpoch) {
+  const key = `${r.promptId}|${r.variant}`;
+  if ((latestRound.get(key) ?? '') < (r.round ?? '')) latestRound.set(key, r.round!);
+}
+const current = sinceEpoch.filter(r => (r.round ?? '') === (latestRound.get(`${r.promptId}|${r.variant}`) ?? '')).map(r => {
   const p = prompts.get(r.promptId);
   return p ? { ...r, ...scorePrompt(p, r.generatedCode) } : r;
 });
@@ -235,7 +243,7 @@ const importsHelixRight = (code: string) => {
 };
 const used = [
   rate('compiles', 'Imports @helixds/react and compiles', 'Share of answers (with Helix context) that import the real package — no made-up or former package name — and type-check against Helix\'s source (eval-mechanical.ts).', guided.filter(r => (r as any).mechanical), r => importsHelixRight(r.generatedCode) && (r as any).mechanical.compiles, 'pnpm eval:rescore'),
-  rate('no-invented-props', 'No invented props', 'Share of answers that import @helixds/react with no helix/unknown-prop or helix/prop-vocabulary problem. Answers with a made-up package are left out: their props can\'t be checked (the row above already counts them).', guided.filter(r => (r as any).mechanical && importsHelixRight(r.generatedCode)), r => !r.globalChecks?.['invented-prop'], 'pnpm eval:rescore'),
+  rate('no-invented-props', 'No invented props', 'Share of answers that import @helixds/react with no invented or wrong prop — helix/unknown-prop, helix/prop-vocabulary, or a tsc "property does not exist" (the lint lets native attributes like title through). Answers with a made-up package are left out: their props can\'t be checked (the row above already counts them).', guided.filter(r => (r as any).mechanical && importsHelixRight(r.generatedCode)), r => !r.globalChecks?.['invented-prop'], 'pnpm eval:rescore'),
   rate('checklist', 'Task checklist passed', 'Share of answers (with Helix context) that meet every checkable criterion of their prompt.', guided, r => r.passed, 'pnpm eval:report'),
   rate('design', 'Design judged good', 'Share of judged answers (with Helix context) that pass every critical item of the design rubric (LLM judge, calibrated by pnpm eval:calibrate --judge).', judged, r => (r as any).judge.passed, 'pnpm eval:judge'),
   lift(),
@@ -268,7 +276,7 @@ const report = {
   basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'used well (① readable is shown as prerequisites, not averaged in)',
   readable: { score: readableScore, checks: readable },
   used: {
-    score: usedScore, enough, coverageNote, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
+    score: usedScore, enough, coverageNote, supersededAnswers: sinceEpoch.length - current.length, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
     epoch, answers: current.length, olderAnswersExcluded: all.length - current.length, checks: used,
   },
 };

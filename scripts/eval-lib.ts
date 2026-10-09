@@ -249,7 +249,7 @@ export const GLOBAL_CHECKS: GlobalCheck[] = [
   // Mechanical (scripts/eval-mechanical.ts): only known for answers checked since it existed —
   // `pnpm eval:rescore` backfills the rest.
   { id: 'doesnt-compile', description: "Doesn't compile against Helix's real types (tsc)" },
-  { id: 'invented-prop', description: 'Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)' },
+  { id: 'invented-prop', description: 'Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)' },
 ];
 
 /** The shape eval-mechanical.ts stores on a run as `mechanical`. */
@@ -266,7 +266,10 @@ export function runGlobalChecks(code: string, mechanical?: MechanicalChecks): Re
   );
   if (mechanical) {
     checks['doesnt-compile'] = !mechanical.compiles;
-    checks['invented-prop'] = mechanical.lintProblems.some(p => /^helix\/(unknown-prop|prop-vocabulary)$/.test(p.rule));
+    // The lint lets native HTML attributes through (title, style…), but a Helix component that doesn't take
+    // one is still given a prop it doesn't have — tsc says so. Either source counts.
+    checks['invented-prop'] = mechanical.lintProblems.some(p => /^helix\/(unknown-prop|prop-vocabulary)$/.test(p.rule))
+      || mechanical.compileErrors.some(e => /Property '\w+' does not exist on type 'IntrinsicAttributes/.test(e));
   }
   return checks;
 }

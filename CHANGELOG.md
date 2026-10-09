@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat: every contract and the MCP say where to import from (latest commit)
+- 2026-10-09 — feat(evals): record agents' tool calls; readiness uses the latest round — 69/100 (latest commit)
+- 2026-10-09 — feat: every contract and the MCP say where to import from ([`c1c88ee`](https://github.com/MartaCondeDesign/helixds/commit/c1c88ee))
 - 2026-10-09 — feat: first AI Readiness rating — 54/100 (Invested), from a screen-task round ([`fc3ca8b`](https://github.com/MartaCondeDesign/helixds/commit/fc3ca8b))
 - 2026-10-09 — feat: AI Readiness page — can an agent read Helix, and do agents use it well? ([`bbbd3dc`](https://github.com/MartaCondeDesign/helixds/commit/bbbd3dc))
 - 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself ([`cf9bb48`](https://github.com/MartaCondeDesign/helixds/commit/cf9bb48))
