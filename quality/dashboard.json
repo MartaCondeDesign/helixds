@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-09T17:48:05.640Z",
+  "generatedAt": "2026-10-09T18:38:26.535Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
-    "evalRuns": 331,
-    "lastEvalRunAt": "2026-10-09T17:34:39.826Z",
-    "weeklyEvalRuns": 290,
+    "evalRuns": 361,
+    "lastEvalRunAt": "2026-10-09T18:25:04.232Z",
+    "weeklyEvalRuns": 320,
     "improvementRecords": 0,
     "unscoredComponents": []
   },
@@ -67,69 +67,69 @@
     "defined": 763
   },
   "evals": {
-    "generations": 331,
-    "passRate": 0.12084592145015106,
+    "generations": 361,
+    "passRate": 0.14681440443213298,
     "promptsCovered": 35,
     "globalChecks": [
       {
         "id": "hardcoded-color",
         "label": "Hardcoded color (#hex, rgb(), hsl())",
-        "failed": 1,
-        "rate": 0.0030211480362537764
+        "failed": 11,
+        "rate": 0.030470914127423823
       },
       {
         "id": "hardcoded-size",
         "label": "Hardcoded px/rem value",
-        "failed": 15,
-        "rate": 0.045317220543806644
+        "failed": 37,
+        "rate": 0.10249307479224377
       },
       {
         "id": "inline-style",
         "label": "Inline style={{…}}",
-        "failed": 40,
-        "rate": 0.12084592145015106
+        "failed": 65,
+        "rate": 0.18005540166204986
       },
       {
         "id": "raw-icon",
         "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-        "failed": 1,
-        "rate": 0.0030211480362537764
+        "failed": 2,
+        "rate": 0.00554016620498615
       },
       {
         "id": "icon-element-prop",
         "label": "icon={<IconXxx />} instead of icon={IconXxx}",
         "failed": 2,
-        "rate": 0.006042296072507553
+        "rate": 0.00554016620498615
       },
       {
         "id": "on-press",
         "label": "onPress instead of onClick",
         "failed": 103,
-        "rate": 0.311178247734139
+        "rate": 0.2853185595567867
       },
       {
         "id": "raw-div",
         "label": "<div> instead of a Helix layout component",
-        "failed": 70,
-        "rate": 0.21148036253776434
+        "failed": 99,
+        "rate": 0.2742382271468144
       },
       {
         "id": "raw-native-control",
         "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-        "failed": 15,
-        "rate": 0.045317220543806644
+        "failed": 19,
+        "rate": 0.05263157894736842
       },
       {
         "id": "doesnt-compile",
         "label": "Doesn't compile against Helix's real types (tsc)",
-        "failed": 199,
-        "rate": 0.6012084592145015
+        "failed": 220,
+        "rate": 0.6094182825484764
       },
       {
         "id": "invented-prop",
         "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-        "failed": 144,
-        "rate": 0.4350453172205438
+        "failed": 157,
+        "rate": 0.43490304709141275
       }
     ],
     "ladder": [
@@ -143,6 +143,17 @@
         "meanScore": 0.3269230769230769,
         "tokensPerAnswer": 43235,
         "totalTokens": 1297050
+      },
+      {
+        "variant": "installed",
+        "label": "npm install",
+        "detail": "Only @helixds/react installed in an empty app — no guide, no MCP",
+        "answers": 30,
+        "tasks": 5,
+        "passRate": 0.43333333333333335,
+        "meanScore": 0.6155555555555556,
+        "tokensPerAnswer": 217132.13333333333,
+        "totalTokens": 6513964
       },
       {
         "variant": "llms-txt",
@@ -418,9 +429,66 @@
         ],
         "tokenSum": 2961186,
         "measured": 25
+      },
+      {
+        "date": "2026-10-09",
+        "variant": "installed",
+        "answers": 30,
+        "scoreSum": 18.46666666666667,
+        "passed": 13,
+        "tasks": [
+          "screen-delete-account",
+          "screen-notification-settings",
+          "screen-save-feedback",
+          "screen-signup-errors",
+          "screen-team-members"
+        ],
+        "tokenSum": 6513964,
+        "measured": 30
       }
     ],
     "improvements": [
+      {
+        "id": "2026-10-09T18-22-05",
+        "date": "2026-10-09T18:25:04.331Z",
+        "previous": "2026-10-09T18-17-54",
+        "commit": "00ef583-dirty",
+        "commits": [],
+        "uncommitted": true,
+        "tasksCompared": 5,
+        "levels": [
+          {
+            "variant": "installed",
+            "label": "npm install",
+            "before": {
+              "answers": 15,
+              "passRate": 0.3333333333333333,
+              "meanScore": 0.5866666666666667
+            },
+            "after": {
+              "answers": 15,
+              "passRate": 0.5333333333333333,
+              "meanScore": 0.6444444444444445
+            }
+          }
+        ],
+        "verdict": "better",
+        "meanDelta": 0.05777777777777782
+      },
+      {
+        "id": "2026-10-09T18-17-54",
+        "date": "2026-10-09T18:20:36.527Z",
+        "previous": "2026-10-09T17-29-57",
+        "commit": "00ef583-dirty",
+        "commits": [
+          "feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes"
+        ],
+        "uncommitted": true,
+        "tasksCompared": 5,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
+      },
       {
         "id": "2026-10-09T17-29-57",
         "date": "2026-10-09T17:34:39.971Z",
@@ -1080,6 +1148,54 @@
             "totalTokens": 1944027
           }
         ]
+      },
+      {
+        "id": "2026-10-09T18-17-54",
+        "date": "2026-10-09T18:20:36.527Z",
+        "commit": "00ef583-dirty",
+        "runs": 3,
+        "tasks": [
+          "screen-delete-account",
+          "screen-notification-settings",
+          "screen-save-feedback",
+          "screen-signup-errors",
+          "screen-team-members"
+        ],
+        "levels": [
+          {
+            "variant": "installed",
+            "label": "npm install",
+            "answers": 15,
+            "passRate": 0.3333333333333333,
+            "meanScore": 0.5866666666666667,
+            "tokensPerAnswer": 213103,
+            "totalTokens": 3196545
+          }
+        ]
+      },
+      {
+        "id": "2026-10-09T18-22-05",
+        "date": "2026-10-09T18:25:04.331Z",
+        "commit": "00ef583-dirty",
+        "runs": 3,
+        "tasks": [
+          "screen-delete-account",
+          "screen-notification-settings",
+          "screen-save-feedback",
+          "screen-signup-errors",
+          "screen-team-members"
+        ],
+        "levels": [
+          {
+            "variant": "installed",
+            "label": "npm install",
+            "answers": 15,
+            "passRate": 0.5333333333333333,
+            "meanScore": 0.6444444444444445,
+            "tokensPerAnswer": 221161.26666666666,
+            "totalTokens": 3317419
+          }
+        ]
       }
     ]
   },
@@ -1089,81 +1205,81 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.630943879886478,
+  "healthScore": 0.6321749349450181,
   "healthScoreBreakdown": {
     "componentReadiness": 0.6060606060606061,
     "figmaAlignment": 0.6060606060606061,
-    "agentReliability": 0.12084592145015106,
-    "ruleCompliance": 0.8217522658610271,
+    "agentReliability": 0.14681440443213298,
+    "ruleCompliance": 0.8019390581717453,
     "governanceCoverage": 1
   },
   "weekly": {
     "from": "2026-10-02",
     "to": "2026-10-09",
     "evals": {
-      "generations": 290,
-      "passRate": 0.13793103448275862,
+      "generations": 320,
+      "passRate": 0.165625,
       "promptsCovered": 12,
       "globalChecks": [
         {
           "id": "hardcoded-color",
           "label": "Hardcoded color (#hex, rgb(), hsl())",
-          "failed": 1,
-          "rate": 0.0034482758620689655
+          "failed": 11,
+          "rate": 0.034375
         },
         {
           "id": "hardcoded-size",
           "label": "Hardcoded px/rem value",
-          "failed": 14,
-          "rate": 0.04827586206896552
+          "failed": 36,
+          "rate": 0.1125
         },
         {
           "id": "inline-style",
           "label": "Inline style={{…}}",
-          "failed": 29,
-          "rate": 0.1
+          "failed": 54,
+          "rate": 0.16875
         },
         {
           "id": "raw-icon",
           "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-          "failed": 1,
-          "rate": 0.0034482758620689655
+          "failed": 2,
+          "rate": 0.00625
         },
         {
           "id": "icon-element-prop",
           "label": "icon={<IconXxx />} instead of icon={IconXxx}",
           "failed": 2,
-          "rate": 0.006896551724137931
+          "rate": 0.00625
         },
         {
           "id": "on-press",
           "label": "onPress instead of onClick",
           "failed": 85,
-          "rate": 0.29310344827586204
+          "rate": 0.265625
         },
         {
           "id": "raw-div",
           "label": "<div> instead of a Helix layout component",
-          "failed": 61,
-          "rate": 0.2103448275862069
+          "failed": 90,
+          "rate": 0.28125
         },
         {
           "id": "raw-native-control",
           "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-          "failed": 15,
-          "rate": 0.05172413793103448
+          "failed": 19,
+          "rate": 0.059375
         },
         {
           "id": "doesnt-compile",
           "label": "Doesn't compile against Helix's real types (tsc)",
-          "failed": 177,
-          "rate": 0.6103448275862069
+          "failed": 198,
+          "rate": 0.61875
         },
         {
           "id": "invented-prop",
           "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-          "failed": 124,
-          "rate": 0.42758620689655175
+          "failed": 137,
+          "rate": 0.428125
         }
       ]
     }

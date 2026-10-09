@@ -300,7 +300,7 @@ export interface RunMeta {
   timestamp: number;
   commit: string; // git sha the run was generated against (+"-dirty" if uncommitted changes)
   context?: string; // what system context the agent got (e.g. "AGENTS.md")
-  cwd?: 'repo' | 'isolated';
+  cwd?: 'repo' | 'isolated' | 'installed';
   mcp?: boolean; // the agent had the Helix MCP tools
   lintRounds?: number; // --lint-loop: how many times lint problems went back to the agent
   round?: string; // pnpm eval:ladder --round: the measurement round this answer belongs to

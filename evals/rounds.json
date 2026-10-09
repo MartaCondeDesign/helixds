@@ -312,5 +312,53 @@
         "totalTokens": 1944027
       }
     ]
+  },
+  {
+    "id": "2026-10-09T18-17-54",
+    "date": "2026-10-09T18:20:36.527Z",
+    "commit": "00ef583-dirty",
+    "runs": 3,
+    "tasks": [
+      "screen-delete-account",
+      "screen-notification-settings",
+      "screen-save-feedback",
+      "screen-signup-errors",
+      "screen-team-members"
+    ],
+    "levels": [
+      {
+        "variant": "installed",
+        "label": "npm install",
+        "answers": 15,
+        "passRate": 0.3333333333333333,
+        "meanScore": 0.5866666666666667,
+        "tokensPerAnswer": 213103,
+        "totalTokens": 3196545
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09T18-22-05",
+    "date": "2026-10-09T18:25:04.331Z",
+    "commit": "00ef583-dirty",
+    "runs": 3,
+    "tasks": [
+      "screen-delete-account",
+      "screen-notification-settings",
+      "screen-save-feedback",
+      "screen-signup-errors",
+      "screen-team-members"
+    ],
+    "levels": [
+      {
+        "variant": "installed",
+        "label": "npm install",
+        "answers": 15,
+        "passRate": 0.5333333333333333,
+        "meanScore": 0.6444444444444445,
+        "tokensPerAnswer": 221161.26666666666,
+        "totalTokens": 3317419
+      }
+    ]
   }
 ]

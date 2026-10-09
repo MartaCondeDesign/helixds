@@ -19,3 +19,6 @@ packages/helix-storybook-addon-tokens/
 apps/storybook/eval-gallery/
 evals/proof/
 apps/storybook/.proof/
+
+# Copied from the root AGENTS.md at build (packages/core/scripts/copy-agent-docs.mjs)
+packages/core/AGENTS.md

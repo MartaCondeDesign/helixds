@@ -1,22 +1,34 @@
 {
   "name": "@helixds/tokens",
   "version": "0.1.0",
+  "type": "module",
   "description": "Helix Design System tokens — DTCG source → CSS custom properties + TypeScript constants",
-  "main":    "./dist/index.ts",
-  "module":  "./dist/index.ts",
-  "types":   "./dist/index.ts",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/tokens"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".":          { "import": "./dist/index.ts", "types": "./dist/index.ts" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "./helix.css": "./dist/helix.css"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build":     "tsx src/build.ts",
-    "dev":       "tsx --watch src/build.ts",
+    "build": "tsx src/build.ts && tsc dist/index.ts --declaration --module esnext --target es2022 --skipLibCheck --outDir dist",
+    "dev": "tsx --watch src/build.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "tsx":        "*",
+    "tsx": "*",
     "typescript": "*"
   }
 }

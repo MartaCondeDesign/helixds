@@ -1,7 +1,14 @@
 {
   "name": "@helixds/react",
   "version": "0.1.0",
+  "type": "module",
   "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/core"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,11 +20,13 @@
     "./globals.css": "./src/globals.css",
     "./contracts/*": "./dist/contracts/*.json",
     "./prop-map.md": "./dist/prop-map.md",
-    "./AGENTS.md": "./dist/AGENTS.md"
+    "./AGENTS.md": "./AGENTS.md"
   },
   "files": [
     "dist",
-    "src/globals.css"
+    "src/globals.css",
+    "AGENTS.md",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.json && node scripts/copy-agent-docs.mjs",
@@ -26,7 +35,8 @@
   },
   "peerDependencies": {
     "react": ">=19.0.0",
-    "react-dom": ">=19.0.0"
+    "react-dom": ">=19.0.0",
+    "tailwindcss": ">=4.0.0"
   },
   "dependencies": {
     "@helixds/tokens": "workspace:*",

@@ -23,7 +23,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import { spawn } from 'child_process';
+import { execFileSync, spawn } from 'child_process';
 import { validateSnippet } from '../packages/mcp/src/validate.ts';
 import { checkMechanical } from './eval-mechanical.ts';
 import {
@@ -41,6 +41,9 @@ const note = argValue(args, '--note');
 const hypothesis = argValue(args, '--hypothesis');
 const contextArg = argValue(args, '--context') ?? 'AGENTS.md';
 const isolated = args.includes('--isolated');
+// --installed: run claude from an empty app whose only Helix knowledge is @helixds/react and @helixds/tokens in
+// node_modules, packed exactly as they'd be published (pnpm pack) — what a team gets from `npm install`.
+const installed = args.includes('--installed');
 // --mcp: the agent can call the Helix MCP tools (contracts, token search, snippet validation) while it works.
 const useMcp = args.includes('--mcp');
 // --lint-loop: after each answer, the Helix lint problems go back to the agent to fix — what the Claude Code
@@ -69,7 +72,33 @@ const systemPrompt = `You are an engineer using the Helix design system in your 
 
 // --isolated: run claude from an empty temp dir so it can't read CLAUDE.md / contracts / .ai from this repo —
 // the only Helix knowledge it has is --context. Default (repo) matches how every earlier run was made.
-const cwd = isolated ? fs.mkdtempSync(path.join(os.tmpdir(), 'helix-eval-')) : repoRoot;
+const cwd = installed ? prepareInstalledApp() : isolated ? fs.mkdtempSync(path.join(os.tmpdir(), 'helix-eval-')) : repoRoot;
+
+// A fresh app: package.json, a two-line entry point, and the packed Helix packages unpacked in node_modules.
+// Their dependencies (react, echarts…) aren't installed — the agent only reads files, and the answer is
+// type-checked separately (eval-mechanical.ts).
+function prepareInstalledApp(): string {
+  const app = fs.mkdtempSync(path.join(os.tmpdir(), 'helix-eval-app-'));
+  const packs = fs.mkdtempSync(path.join(os.tmpdir(), 'helix-eval-packs-'));
+  const versions: Record<string, string> = {};
+  for (const [name, dir] of [['@helixds/tokens', 'packages/tokens'], ['@helixds/react', 'packages/core']] as const) {
+    // From the package's own dir: `pnpm --filter … pack` isn't supported by this pnpm. Prints the tarball path.
+    const out = execFileSync('pnpm', ['pack', '--pack-destination', packs], { cwd: path.join(repoRoot, dir), encoding: 'utf8' });
+    const tarball = out.trim().split('\n').pop()!.trim();
+    const dest = path.join(app, 'node_modules', ...name.split('/'));
+    fs.mkdirSync(dest, { recursive: true });
+    execFileSync('tar', ['-xzf', tarball, '-C', dest, '--strip-components', '1']);
+    versions[name] = JSON.parse(fs.readFileSync(path.join(dest, 'package.json'), 'utf8')).version;
+  }
+  fs.writeFileSync(path.join(app, 'package.json'), JSON.stringify({
+    name: 'my-app', private: true, type: 'module',
+    dependencies: { react: '^19.0.0', 'react-dom': '^19.0.0', ...Object.fromEntries(Object.entries(versions).map(([n, v]) => [n, `^${v}`])) },
+  }, null, 2));
+  fs.mkdirSync(path.join(app, 'src'));
+  fs.writeFileSync(path.join(app, 'src/main.tsx'), "import { createRoot } from 'react-dom/client';\nimport { App } from './App';\n\ncreateRoot(document.getElementById('root')!).render(<App />);\n");
+  fs.rmSync(packs, { recursive: true, force: true });
+  return app;
+}
 
 // Every run gets an explicit MCP config (--strict-mcp-config), so a level only has the servers it names —
 // never whatever .mcp.json or user settings happen to load.
@@ -175,7 +204,7 @@ for (const p of prompts) for (let rep = 0; rep < runs; rep++) jobs.push({ prompt
 
 console.log(
   `\n⏳ ${jobs.length} generation(s): ${prompts.length} prompt(s) × ${runs} run(s) · variant "${variant}" · ` +
-  `model ${model ?? 'default'} · context ${contextArg} · cwd ${isolated ? 'isolated' : 'repo'}` +
+  `model ${model ?? 'default'} · context ${contextArg} · cwd ${installed ? `app with @helixds/react installed (${cwd})` : isolated ? 'isolated' : 'repo'}` +
   `${useMcp ? ' · Helix MCP' : ''}${lintLoop ? ' · lint loop' : ''} · ${concurrency} at a time`,
 );
 
@@ -215,7 +244,7 @@ async function worker() {
 
       const meta: RunMeta = {
         runId, variant, model: model ?? 'default', rep, timestamp: Date.now(), commit,
-        context: contextArg, cwd: isolated ? 'isolated' : 'repo',
+        context: contextArg, cwd: installed ? 'installed' : isolated ? 'isolated' : 'repo',
         mcp: useMcp, ...(lintLoop ? { lintRounds } : {}), ...(round ? { round } : {}),
       };
       fs.writeFileSync(
