@@ -24,7 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat: "npm install" eval level; publish-ready packages that point agents to their contracts (latest commit)
+- 2026-10-09 — feat: "npm install" eval level; publish-ready packages that point agents to their contracts ([`08eb706`](https://github.com/MartaCondeDesign/helixds/commit/08eb706))
 - 2026-10-09 — feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes ([`00ef583`](https://github.com/MartaCondeDesign/helixds/commit/00ef583))
 - 2026-10-09 — feat: MCP asks for every contract up front; lint catches HTML attributes Helix components don't take ([`8c12045`](https://github.com/MartaCondeDesign/helixds/commit/8c12045))
 - 2026-10-09 — feat(evals): record agents' tool calls; readiness uses the latest round — 69/100 ([`837f1fb`](https://github.com/MartaCondeDesign/helixds/commit/837f1fb))
@@ -78,6 +78,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-09 — chore(evals): register the npm install level as an experiment (latest commit)
 - 2026-10-09 — docs(mcp): example cwd uses the helixds folder name ([`d1e57ff`](https://github.com/MartaCondeDesign/helixds/commit/d1e57ff))
 - 2026-10-09 — chore: GitHub repo renamed helix-ds → helixds ([`334dc81`](https://github.com/MartaCondeDesign/helixds/commit/334dc81))
 - 2026-10-09 — docs: ADRs use the @helixds package names (ADR-023) ([`65737cc`](https://github.com/MartaCondeDesign/helixds/commit/65737cc))

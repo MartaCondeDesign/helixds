@@ -55,5 +55,11 @@
     "description": "lint loop — Only its Helix lint problems, sent back to fix — no guide, no repo",
     "createdAt": "2026-10-06T18:25:36.446Z",
     "commit": "7318daf-dirty"
+  },
+  {
+    "id": "installed",
+    "description": "npm install — Only @helixds/react installed in an empty app — no guide, no MCP",
+    "createdAt": "2026-10-09T18:17:55.365Z",
+    "commit": "00ef583-dirty"
   }
 ]
