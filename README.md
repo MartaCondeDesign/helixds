@@ -39,8 +39,8 @@ Helix is a design system built directly on **native HTML elements** — no primi
 Helix isn't published to npm yet — `packages/*` are `private: true` while the component API stabilizes. Today, using it means working from a clone:
 
 ```bash
-git clone https://github.com/MartaCondeDesign/helix-ds.git
-cd helix-ds
+git clone https://github.com/MartaCondeDesign/helixds.git
+cd helixds
 pnpm install
 pnpm sb          # browse every component in Storybook → http://localhost:6006
 ```

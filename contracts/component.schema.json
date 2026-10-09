@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://helix-ds.design/contracts/component.schema.json",
+  "$id": "https://helixds.design/contracts/component.schema.json",
   "title": "Helix Component Contract",
   "description": "Framework-agnostic contract describing what a Helix component IS. Not how it's implemented.",
   "type": "object",

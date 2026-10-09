@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://helix-ds/schemas/token-naming.schema.json",
+  "$id": "https://helixds/schemas/token-naming.schema.json",
   "title": "Helix Semantic Token Naming Grammar",
   "description": "Formalizes the key grammar for semantic.color.{fill,text,icon,border}.* keys documented in packages/tokens/CLAUDE.md's \"Semantic naming vocabulary\" (decided 2026-08-21): {role}[-interactive][-modifier][-state]. This is the STRUCTURAL/vocabulary half of token-name validation only — it checks that a key is built from the right words in the right order. It deliberately does NOT (and cannot) check the one rule that matters most in practice: whether a `-light`/`-dark` modifier is correct RELATIVE to a token's siblings in the same role group (e.g. is this really the lightest of three tones?) — that's a comparison across resolved values, which a per-key schema has no way to see. scripts/verify-token-naming.ts still owns that check; this schema and that script are complementary, not redundant — see packages/tokens/CLAUDE.md for the prose version of these same rules and scripts/token-naming-lib.ts for the banned-segment list this schema's `not` block mirrors.",
 
