@@ -78,7 +78,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — chore: take the "npm install" level off the ladder; fix the onPress risk label (latest commit)
+- 2026-10-09 — chore(evals): the no-context level is labelled as the control group, expected to fail (latest commit)
+- 2026-10-09 — chore: take the "npm install" level off the ladder; fix the onPress risk label ([`b0febfb`](https://github.com/MartaCondeDesign/helixds/commit/b0febfb))
 - 2026-10-09 — fix(storybook): Color page follows the toolbar theme — no switch of its own ([`59b6e42`](https://github.com/MartaCondeDesign/helixds/commit/59b6e42))
 - 2026-10-09 — chore: mark every Helix package private — not published ([`a8c8d5a`](https://github.com/MartaCondeDesign/helixds/commit/a8c8d5a))
 - 2026-10-09 — chore(evals): register the npm install level as an experiment ([`ba396f7`](https://github.com/MartaCondeDesign/helixds/commit/ba396f7))

@@ -30,7 +30,7 @@ const plain = (text: string) => text.replace(/`/g, '');
 // tsc prints whole object types; the first sentence is the part a reader needs.
 const clip = (text: string) => (text.length > 140 ? `${text.slice(0, 140).trimEnd()}…` : text);
 const issuesOf = (out: Output, unresolved: string | undefined, missing?: string) => [
-  ...(unresolved ? ["Imports a package that doesn't exist"] : []),
+  ...(unresolved ? [out.variant === 'no-context' ? "Imports a package that doesn't exist (expected: Helix isn't public, so with no context the agent can't know it)" : "Imports a package that doesn't exist"] : []),
   ...(missing ? ["Imports a component Helix doesn't have"] : []),
   // tsc against Helix's real types (scripts/eval-mechanical.ts): the first error says what to fix.
   ...(!unresolved && !missing && out.mechanical && !out.mechanical.compiles
@@ -81,7 +81,12 @@ for (const { file, out } of outputs) {
   // error overlay over the whole page — record it as the cell's build failure instead.
   const unresolved = [...code.matchAll(/from\s+['"]([^'"]+)['"]/g)].map(m => m[1]).find(spec => !resolvable(spec));
   const missing = unresolved ? undefined : missingExport(code);
-  const buildError = unresolved ? `Cannot resolve "${unresolved}"` : missing ? `"@helixds/react" has no export "${missing}"` : null;
+  // The no-context level is the control group: Helix isn't public, so a model told nothing can't know its
+  // package or props. Say so on the card, so the red isn't read as a Helix bug.
+  const control = out.variant === 'no-context'
+    ? " — Expected: this is the control group. Helix isn't public, so an agent with no context can't know its package (@helixds/react) or props. Not a Helix bug; making Helix public is the only fix."
+    : '';
+  const buildError = unresolved ? `Cannot resolve "${unresolved}"${control}` : missing ? `"@helixds/react" has no export "${missing}"${control}` : null;
   writeFileSync(path.join(cellsDir, `${id}.tsx`), buildError ? `export const __buildError = ${JSON.stringify(buildError)};\n` : code);
   cells.push({
     id, promptId: out.promptId, variant: out.variant,

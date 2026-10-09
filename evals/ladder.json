@@ -4,9 +4,9 @@
   "levels": [
     {
       "variant": "no-context",
-      "label": "bare",
-      "detail": "No Helix guide, no repo",
-      "explain": "Nothing about Helix: no guide, no files, no tools. Shows what the model already knows on its own — usually it invents package and prop names.",
+      "label": "no help (control)",
+      "detail": "No Helix guide, no repo — expected to fail",
+      "explain": "Control group, expected to fail: the agent gets nothing about Helix — no guide, no files, no tools. Helix is not public, so no model has ever seen it and it invents package and prop names. Not a Helix bug: it is the baseline that shows how much every other level helps.",
       "flags": [
         "--context",
         "none",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T18:46:02.781Z",
+  "generatedAt": "2026-10-09T18:54:38.603Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
     "evalRuns": 361,
@@ -135,8 +135,8 @@
     "ladder": [
       {
         "variant": "no-context",
-        "label": "bare",
-        "detail": "No Helix guide, no repo",
+        "label": "no help (control)",
+        "detail": "No Helix guide, no repo — expected to fail",
         "answers": 65,
         "tasks": 12,
         "passRate": 0,
