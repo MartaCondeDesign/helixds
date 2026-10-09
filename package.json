@@ -25,6 +25,7 @@
     "verify:governance": "tsx scripts/verify-governance.ts",
     "lint": "eslint apps",
     "test:lint-hook": "node --test scripts/claude-lint-hook.test.mjs",
+    "test:contract-hook": "node --test scripts/claude-contract-hook.test.mjs",
     "report:paints": "tsx scripts/report-paints.ts",
     "lint:ai": "tsx scripts/lint-ai.ts",
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",

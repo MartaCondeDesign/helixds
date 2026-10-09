@@ -3,7 +3,8 @@
 > For teams using Helix in their apps. If you're contributing to Helix itself, read `contributor-ai/CONTRIBUTOR.md` instead.
 
 > **Before writing any JSX with `@helixds/react`: read each component's real props first** — the
-> `use-helix` skill, `helix_get_contract` (MCP), or the component's `<Name>.types.ts`. Never guess a prop:
+> `use-helix` skill, `helix_get_contract` (MCP), or the contract shipped in the package
+> (`node_modules/@helixds/react/dist/contracts/<Name>.json`, vocabulary in `dist/prop-map.md`). Never guess a prop:
 > Helix names differ from other libraries (`Button` takes its text as children, not `label`; form
 > controls require `label`; `Select` takes `options`). Use only `--helix-*` tokens for spacing and color.
 

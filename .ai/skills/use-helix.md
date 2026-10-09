@@ -23,8 +23,10 @@ Before using a component, read its API from the first source available:
 2. **Type file**: find where `@helixds/react` resolves (`tsconfig.json` `paths`, `vite.config.ts`
    `alias`, or `node_modules/@helixds/react/`), then read
    `components/<Name>/<Name>.types.ts` (source) or `dist/components/<Name>/<Name>.types.d.ts` (npm).
-3. **Contract** (inside the Helix repo): `contracts/components/<Name>.json` — props, required flags,
-   `neverUseFor`.
+3. **Contract**: `node_modules/@helixds/react/dist/contracts/<Name>.json` (shipped in the npm package),
+   or `contracts/components/<Name>.json` inside the Helix repo — props, required flags, `neverUseFor`.
+   The prop vocabulary (canonical names and the wrong ones to avoid) is next to it:
+   `node_modules/@helixds/react/dist/prop-map.md`.
 
 Props marked required (`label` on most form controls) are required; leaving one out fails `tsc`.
 

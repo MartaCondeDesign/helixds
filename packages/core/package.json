@@ -10,14 +10,17 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./globals.css": "./src/globals.css"
+    "./globals.css": "./src/globals.css",
+    "./contracts/*": "./dist/contracts/*.json",
+    "./prop-map.md": "./dist/prop-map.md",
+    "./AGENTS.md": "./dist/AGENTS.md"
   },
   "files": [
     "dist",
     "src/globals.css"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.json && node scripts/copy-agent-docs.mjs",
     "dev": "tsc --watch --project tsconfig.json",
     "typecheck": "tsc --noEmit"
   },

@@ -24,6 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
+- 2026-10-09 — feat: contracts in the npm package, contract-read hook for Claude Code (latest commit)
 - 2026-10-09 — feat: use-helix consumer skill, no-raw-spacing lint rule, bench results ([`fe24c6e`](https://github.com/MartaCondeDesign/helix-ds/commit/fe24c6e))
 - 2026-10-09 — feat: agent-readable CHANGELOG, var() token chains and skills for every agent tool ([`88d9ef3`](https://github.com/MartaCondeDesign/helix-ds/commit/88d9ef3))
 - 2026-10-07 — feat: concept tiles illustrations, Motion-only strokes (no GSAP) ([`c6907d2`](https://github.com/MartaCondeDesign/helix-ds/commit/c6907d2))
@@ -66,7 +67,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — fix: stories use spacing tokens; no-raw-spacing suggests the t-shirt scale first (latest commit)
+- 2026-10-09 — fix: stories use spacing tokens; no-raw-spacing suggests the t-shirt scale first ([`efd89e2`](https://github.com/MartaCondeDesign/helix-ds/commit/efd89e2))
 - 2026-10-07 — chore: button-basic eval round under @helixds — llms.txt, agents-md, mcp and full repo 5/5, lint loop 4/5, bare 60 ([`8402970`](https://github.com/MartaCondeDesign/helix-ds/commit/8402970))
 - 2026-10-07 — chore: button-basic eval round with @helix/react; add blog drafts, prototypes and ADR-024 ([`0a079c5`](https://github.com/MartaCondeDesign/helix-ds/commit/0a079c5))
 - 2026-10-03 — chore: changelog no longer auto-commits; alphabetical component order; Figma cleanup ([`7318daf`](https://github.com/MartaCondeDesign/helix-ds/commit/7318daf))

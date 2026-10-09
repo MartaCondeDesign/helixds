@@ -125,12 +125,16 @@ pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-fil
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
                             ADR-018 — needs Storybook running; --details lists what's missing
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
-                            raw colors, native controls (also live in the editor via eslint.config.mjs).
+                            raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
                             `pnpm --filter @helixds/eslint-plugin build:data` (its tests fail while stale).
                             Claude Code runs it on every file it edits (.claude/settings.json →
                             scripts/claude-lint-hook.mjs) and gets the problems back to fix in the same turn
 pnpm test:lint-hook         test that Claude Code lint hook
+                            Before that, scripts/claude-contract-hook.mjs (PreToolUse) denies writing a file that
+                            imports @helixds/react until every Helix component in it has had its contract read
+                            this session (helix_get_contract, the contract/.types file, or `pnpm helix component`)
+pnpm test:contract-hook     test that Claude Code contract hook
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
