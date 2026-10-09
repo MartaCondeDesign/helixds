@@ -8,6 +8,12 @@ Measures whether an AI agent can use Helix DS correctly.
 2. **Prop vocabulary** — does the agent use canonical prop names?
 3. **Token usage** — does the agent use `--helix-*` tokens, not hardcoded values?
 4. **No invention** — does the agent hallucinate components or props that don't exist?
+5. **Real screens** — `screen-*` prompts describe a product screen ("make sure nobody deletes their account
+   by accident") and never name a component, prop or Helix detail: the agent has to find its way through
+   the design system, as in [open-design-system-bench](bench/README.md).
+
+Every answer, whatever the prompt, is also type-checked against Helix's real source and linted
+(`scripts/eval-mechanical.ts`) — stored as the `doesnt-compile` and `invented-prop` global checks.
 
 ## The eval loop
 
@@ -17,7 +23,7 @@ read what it got wrong, change one thing, and compare against a baseline.
 
 | Step | Command |
 |------|---------|
-| 0. Check the evals themselves | `pnpm eval:run` — every prompt's reference answer must score 100% (runs in pre-commit) |
+| 0. Check the evals themselves | `pnpm eval:run` — every prompt's reference answer must score 100%; `pnpm eval:calibrate` — every grader must catch a set of planted mistakes and flag no reference answer (both run in pre-commit) |
 | 1. Collect a baseline | `pnpm eval:generate --runs 5` (variant `baseline` by default) |
 | 2. Error analysis | `pnpm eval:review --variant baseline` → write it up in `evals/error-analysis.md` |
 | 3. See error rates | `pnpm eval:report --variant baseline` |
