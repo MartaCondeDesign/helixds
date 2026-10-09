@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconFolder } from '@tabler/icons-react';
-import { Switch } from '@helixds/react';
 import { SectionHead, StoryHeader } from './_shared';
 // Imported directly from source (not dist/index.ts, which only holds resolved values) so this table
 // reflects $value (the primitive it aliases) and $description automatically on every token change —
@@ -26,37 +25,31 @@ function primitiveRef(value: string): string {
   return value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
 }
 
-// ── Light/dark toggle wrapper ────────────────────────────────────────────
-// Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (packages/tokens/src/build.ts)
-// — setting the attribute on document.documentElement is what actually flips every --helix-color-* var.
+// ── Resolved values, following Storybook's theme toolbar ────────────────
+// Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (packages/tokens/src/build.ts), and
+// the toolbar's light/dark switch (withThemeByDataAttribute in .storybook/preview.tsx) sets that attribute.
+// The page has no switch of its own: it re-reads every --helix-color-* var whenever the attribute changes.
 
-function ThemeToggle({ children }: { children: (theme: 'light' | 'dark', hexes: Record<string, string>) => React.ReactNode }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+function useResolvedHexes(): Record<string, string> {
   const [hexes, setHexes] = useState<Record<string, string>>({});
-
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    const next: Record<string, string> = {};
-    for (const [kind, group] of Object.entries(semanticColor)) {
-      for (const key of Object.keys(group)) {
-        const varName = `--helix-color-${kind}-${key}`;
-        next[`${kind}-${key}`] = getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || varName;
+    const read = () => {
+      const styles = getComputedStyle(document.documentElement);
+      const next: Record<string, string> = {};
+      for (const [kind, group] of Object.entries(semanticColor)) {
+        for (const key of Object.keys(group)) {
+          const varName = `--helix-color-${kind}-${key}`;
+          next[`${kind}-${key}`] = styles.getPropertyValue(varName).trim() || varName;
+        }
       }
-    }
-    setHexes(next);
-    return () => { document.documentElement.removeAttribute('data-theme'); };
-  }, [theme]);
-
-  return (
-    <div>
-      <div style={{ marginBottom: 'var(--helix-spacing-l)' }}>
-        <Switch label="Dark mode" checked={theme === 'dark'} onChange={checked => setTheme(checked ? 'dark' : 'light')} />
-      </div>
-      <div style={{ background: 'var(--helix-color-fill-page)', borderRadius: 12 }}>
-        {children(theme, hexes)}
-      </div>
-    </div>
-  );
+      setHexes(next);
+    };
+    read();
+    const observer = new MutationObserver(read);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+  return hexes;
 }
 
 // ── Swatch preview (small, per row) ──────────────────────────────────────
@@ -146,33 +139,36 @@ function ColorTable({ kind, tokens, hexes }: { kind: ColorKind; tokens: ColorGro
 }
 
 export const Color: Story = {
-  render: () => (
-    <div style={{ maxWidth: 760 }}>
-      <StoryHeader
-        title="Color"
-        description="Every semantic color token, the primitive it aliases, its resolved hex, and its usage description — all read live from tokens.json. Toggle light/dark below."
-      />
-      <ThemeToggle>{(_, hexes) => (
-        <div>
-          <SectionHead title="Fill" />
-          <ColorTable kind="fill" tokens={semanticColor.fill} hexes={hexes} />
-          <SectionHead title="Text" />
-          <ColorTable kind="text" tokens={semanticColor.text} hexes={hexes} />
-          <SectionHead title="Icon" />
-          <ColorTable kind="icon" tokens={semanticColor.icon} hexes={hexes} />
-          <SectionHead title="Border" />
-          <ColorTable kind="border" tokens={semanticColor.border} hexes={hexes} />
-          <SectionHead title="Chart" />
-          <ColorTable kind="chart" tokens={semanticColor.chart} hexes={hexes} />
-        </div>
-      )}</ThemeToggle>
-    </div>
-  ),
+  render: () => <ColorPage />,
   parameters: {
     docs: {
       description: {
-        story: 'The Theme collection — every semantic color token, the primitive it aliases, and its usage description (both read live from `tokens.json`, so this table updates automatically on any token change). Toggle light/dark above. Component tokens (`--helix-button-*`, `--helix-input-*`…) are internal implementation; never use them outside their component.',
+        story: 'The Theme collection — every semantic color token, the primitive it aliases, and its usage description (both read live from `tokens.json`, so this table updates automatically on any token change). Switch light/dark with the theme button in the toolbar. Component tokens (`--helix-button-*`, `--helix-input-*`…) are internal implementation; never use them outside their component.',
       },
     },
   },
 };
+
+function ColorPage() {
+  const hexes = useResolvedHexes();
+  return (
+    <div style={{ maxWidth: 760 }}>
+      <StoryHeader
+        title="Color"
+        description="Every semantic color token, the primitive it aliases, its resolved hex, and its usage description — all read live from tokens.json. Switch light/dark with the theme button in the toolbar."
+      />
+      <div style={{ background: 'var(--helix-color-fill-page)', borderRadius: 12 }}>
+        <SectionHead title="Fill" />
+        <ColorTable kind="fill" tokens={semanticColor.fill} hexes={hexes} />
+        <SectionHead title="Text" />
+        <ColorTable kind="text" tokens={semanticColor.text} hexes={hexes} />
+        <SectionHead title="Icon" />
+        <ColorTable kind="icon" tokens={semanticColor.icon} hexes={hexes} />
+        <SectionHead title="Border" />
+        <ColorTable kind="border" tokens={semanticColor.border} hexes={hexes} />
+        <SectionHead title="Chart" />
+        <ColorTable kind="chart" tokens={semanticColor.chart} hexes={hexes} />
+      </div>
+    </div>
+  );
+}

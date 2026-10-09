@@ -78,7 +78,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — chore: mark every Helix package private — not published (latest commit)
+- 2026-10-09 — fix(storybook): Color page follows the toolbar theme — no switch of its own (latest commit)
+- 2026-10-09 — chore: mark every Helix package private — not published ([`a8c8d5a`](https://github.com/MartaCondeDesign/helixds/commit/a8c8d5a))
 - 2026-10-09 — chore(evals): register the npm install level as an experiment ([`ba396f7`](https://github.com/MartaCondeDesign/helixds/commit/ba396f7))
 - 2026-10-09 — docs(mcp): example cwd uses the helixds folder name ([`d1e57ff`](https://github.com/MartaCondeDesign/helixds/commit/d1e57ff))
 - 2026-10-09 — chore: GitHub repo renamed helix-ds → helixds ([`334dc81`](https://github.com/MartaCondeDesign/helixds/commit/334dc81))
