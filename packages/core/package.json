@@ -1,6 +1,7 @@
 {
   "name": "@helixds/react",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
   "license": "MIT",

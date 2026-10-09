@@ -19,8 +19,12 @@ Full guide: [`AGENTS.md`](./AGENTS.md) · prop vocabulary: `dist/prop-map.md`.
 
 ## Install
 
+Not published: the packages are marked `"private": true`, so `npm publish` refuses them. Inside the Helix
+monorepo, depend on them with `workspace:*`. Elsewhere, pack them and install the tarballs:
+
 ```bash
-npm install @helixds/react @helixds/tokens react react-dom tailwindcss
+cd packages/tokens && pnpm pack && cd ../core && pnpm pack
+npm install ./helixds-tokens-0.1.0.tgz ./helixds-react-0.1.0.tgz react react-dom tailwindcss
 ```
 
 ```tsx
