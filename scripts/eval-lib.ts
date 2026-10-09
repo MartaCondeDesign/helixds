@@ -222,7 +222,8 @@ export function scorePrompt(prompt: EvalPrompt, code: string): ScoreResult {
 export interface GlobalCheck {
   id: string;
   description: string;
-  pattern: RegExp;
+  /** A regex over the code. Checks without one come from eval-mechanical.ts (compile, lint) instead. */
+  pattern?: RegExp;
 }
 
 export const GLOBAL_CHECKS: GlobalCheck[] = [
@@ -234,11 +235,29 @@ export const GLOBAL_CHECKS: GlobalCheck[] = [
   { id: 'on-press', description: 'onPress instead of onClick', pattern: /\bonPress=/ },
   { id: 'raw-div', description: '<div> instead of a Helix layout component', pattern: /<div\b/ },
   { id: 'raw-native-control', description: 'Native <button>/<input>/<select>/<textarea> instead of the Helix component', pattern: /<(button|input|select|textarea)\b/ },
+  // Mechanical (scripts/eval-mechanical.ts): only known for answers checked since it existed —
+  // `pnpm eval:rescore` backfills the rest.
+  { id: 'doesnt-compile', description: "Doesn't compile against Helix's real types (tsc)" },
+  { id: 'invented-prop', description: 'Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)' },
 ];
 
-export function runGlobalChecks(code: string): Record<string, boolean> {
+/** The shape eval-mechanical.ts stores on a run as `mechanical`. */
+export interface MechanicalChecks {
+  compiles: boolean;
+  compileErrors: string[];
+  lintProblems: { rule: string; message: string }[];
+}
+
+export function runGlobalChecks(code: string, mechanical?: MechanicalChecks): Record<string, boolean> {
   // true = the check FAILED (the bad pattern is present)
-  return Object.fromEntries(GLOBAL_CHECKS.map(c => [c.id, c.pattern.test(code)]));
+  const checks: Record<string, boolean> = Object.fromEntries(
+    GLOBAL_CHECKS.filter(c => c.pattern).map(c => [c.id, c.pattern!.test(code)]),
+  );
+  if (mechanical) {
+    checks['doesnt-compile'] = !mechanical.compiles;
+    checks['invented-prop'] = mechanical.lintProblems.some(p => /^helix\/(unknown-prop|prop-vocabulary)$/.test(p.rule));
+  }
+  return checks;
 }
 
 /** Rough error category for a failed criterion, used to group failures in eval:report / eval:review. */
@@ -277,6 +296,7 @@ export interface StoredRun extends ScoreResult, Partial<RunMeta> {
   source: RunSource;
   generatedCode: string;
   globalChecks?: Record<string, boolean>;
+  mechanical?: MechanicalChecks; // compile + lint, scripts/eval-mechanical.ts
   usage?: { totalTokens?: number }; // recorded by eval:generate since the context ladder
 }
 
@@ -319,7 +339,7 @@ export function loadRuns(opts: { includeSelfTests?: boolean } = {}): LoadedRun[]
     .sort((a, b) => a.ts - b.ts)
     .map(run => {
       if (run.runId) {
-        return { ...run, globalChecks: run.globalChecks ?? runGlobalChecks(run.generatedCode), legacy: false } as LoadedRun;
+        return { ...run, globalChecks: run.globalChecks ?? runGlobalChecks(run.generatedCode, run.mechanical), legacy: false } as LoadedRun;
       }
       const group = legacyGroups.get(run.source);
       let runId: string;
@@ -343,7 +363,7 @@ export function loadRuns(opts: { includeSelfTests?: boolean } = {}): LoadedRun[]
         commit: commitCache.get(runId)!,
         context: run.source === 'claude-cli' ? 'AGENTS.md' : 'unknown',
         cwd: 'repo',
-        globalChecks: runGlobalChecks(run.generatedCode),
+        globalChecks: runGlobalChecks(run.generatedCode, run.mechanical),
         legacy: true,
       } as LoadedRun;
     });

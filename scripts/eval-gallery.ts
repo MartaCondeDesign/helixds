@@ -17,16 +17,24 @@ type Output = {
   round?: string;
   successResults?: Array<{ text: string; pass?: boolean | null }>;
   invalidResults?: Array<{ text: string; pass?: boolean | null }>;
+  mechanical?: { compiles: boolean; compileErrors: string[]; lintProblems: Array<{ rule: string; message: string }> };
 };
 
 // What went wrong with one answer, in words: a made-up import first (nothing else matters if it can't
-// build), then each success criterion it missed and each invalid pattern it used.
+// build), then a compile error and invented props (eval-mechanical.ts), then each success criterion it
+// missed and each invalid pattern it used.
 // Package names are left out on purpose: "@helixds/react" and "@helixds/design-system" are the same problem,
 // and the row status counts problems, not spellings. Code backticks are dropped for plain reading.
 const plain = (text: string) => text.replace(/`/g, '');
+// tsc prints whole object types; the first sentence is the part a reader needs.
+const clip = (text: string) => (text.length > 140 ? `${text.slice(0, 140).trimEnd()}…` : text);
 const issuesOf = (out: Output, unresolved: string | undefined, missing?: string) => [
   ...(unresolved ? ["Imports a package that doesn't exist"] : []),
   ...(missing ? ["Imports a component Helix doesn't have"] : []),
+  // tsc against Helix's real types (scripts/eval-mechanical.ts): the first error says what to fix.
+  ...(!unresolved && !missing && out.mechanical && !out.mechanical.compiles
+    ? [`Doesn't compile: ${clip(plain(out.mechanical.compileErrors[0]?.replace(/^\d+:\d+ /, '') ?? ''))}`] : []),
+  ...(out.mechanical?.lintProblems ?? []).filter(p => /^helix\/(unknown-prop|prop-vocabulary)$/.test(p.rule)).map(p => `Invented prop: ${plain(p.message)}`),
   ...(out.successResults ?? []).filter(r => r.pass === false).map(r => `Missed: ${plain(r.text)}`),
   ...(out.invalidResults ?? []).filter(r => r.pass === false).map(r => `Used: ${plain(r.text.split(' — ')[0])}`),
 ];
@@ -76,6 +84,7 @@ for (const { file, out } of outputs) {
     id, promptId: out.promptId, variant: out.variant,
     context: out.context && out.context.length > 40 ? path.basename(out.context) : out.context ?? null,
     rep: out.rep ?? null, model: out.model ?? null, score: out.score, passed: out.passed,
+    compiles: out.mechanical ? out.mechanical.compiles && !buildError : null,
     tokens: out.usage?.totalTokens ?? null,
     issues: issuesOf(out, unresolved, missing),
     timestamp: out.timestamp ?? out.runId ?? null,

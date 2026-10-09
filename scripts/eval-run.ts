@@ -12,6 +12,7 @@ import path from 'path';
 import {
   loadPrompts, scorePrompt, runGlobalChecks, gitCommit, newRunId, argValue, outputsDir, type ScoreResult,
 } from './eval-lib.ts';
+import { checkMechanical } from './eval-mechanical.ts';
 
 const args = process.argv.slice(2);
 const promptFilter = argValue(args, '--prompt');
@@ -52,31 +53,38 @@ const results: ScoreResult[] = [];
 const runId = newRunId();
 const commit = inputFile || save ? gitCommit() : '';
 
-for (const p of prompts) {
-  const code = inputFile ? fs.readFileSync(inputFile, 'utf-8') : p.expectedOutput;
-  const result = scorePrompt(p, code);
-  results.push(result);
-  report(result);
+// A function, not top-level await: these scripts run as CommonJS under tsx.
+async function main() {
+  for (const p of prompts) {
+    const code = inputFile ? fs.readFileSync(inputFile, 'utf-8') : p.expectedOutput;
+    const result = scorePrompt(p, code);
+    results.push(result);
+    report(result);
 
-  if (inputFile || save) {
-    const timestamp = Date.now();
-    fs.writeFileSync(
-      path.join(outputsDir, `${p.id}-${timestamp}.json`),
-      JSON.stringify({
-        ...result,
-        runId, variant: inputFile ? variant : 'self-test', model: inputFile ? 'manual' : 'reference', rep: 0, timestamp, commit,
-        source: inputFile ? 'manual-input' : 'self-test',
-        globalChecks: runGlobalChecks(code),
-        generatedCode: code,
-      }, null, 2),
-    );
+    if (inputFile || save) {
+      const timestamp = Date.now();
+      const mechanical = await checkMechanical(code);
+      fs.writeFileSync(
+        path.join(outputsDir, `${p.id}-${timestamp}.json`),
+        JSON.stringify({
+          ...result,
+          runId, variant: inputFile ? variant : 'self-test', model: inputFile ? 'manual' : 'reference', rep: 0, timestamp, commit,
+          source: inputFile ? 'manual-input' : 'self-test',
+          globalChecks: runGlobalChecks(code, mechanical),
+          mechanical,
+          generatedCode: code,
+        }, null, 2),
+      );
+    }
   }
+
+  const passedCount = results.filter(r => r.passed).length;
+  console.log(`\n${passedCount}/${results.length} prompts passed.`);
+
+  // Self-test mode (no --input) scores each prompt's OWN reference code — a failure there means the prompt's
+  // criteria are broken, so exit non-zero and let the pre-commit hook block it. With --input, a failing
+  // score is the measurement itself, not an error.
+  if (!inputFile && passedCount < results.length) process.exit(1);
 }
 
-const passedCount = results.filter(r => r.passed).length;
-console.log(`\n${passedCount}/${results.length} prompts passed.`);
-
-// Self-test mode (no --input) scores each prompt's OWN reference code — a failure there means the prompt's
-// criteria are broken, so exit non-zero and let the pre-commit hook block it. With --input, a failing
-// score is the measurement itself, not an error.
-if (!inputFile && passedCount < results.length) process.exit(1);
+main();

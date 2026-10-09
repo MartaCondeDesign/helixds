@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-07T10:52:05.256Z",
+  "generatedAt": "2026-10-09T14:23:23.931Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
     "evalRuns": 281,
@@ -118,6 +118,18 @@
         "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
         "failed": 1,
         "rate": 0.0035587188612099642
+      },
+      {
+        "id": "doesnt-compile",
+        "label": "Doesn't compile against Helix's real types (tsc)",
+        "failed": 172,
+        "rate": 0.6120996441281139
+      },
+      {
+        "id": "invented-prop",
+        "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)",
+        "failed": 128,
+        "rate": 0.4555160142348754
       }
     ],
     "ladder": [
@@ -830,17 +842,17 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.6453601854847406,
+  "healthScore": 0.6268370538121427,
   "healthScoreBreakdown": {
     "componentReadiness": 0.6060606060606061,
     "figmaAlignment": 0.6060606060606061,
     "agentReliability": 0.08540925266903915,
-    "ruleCompliance": 0.929270462633452,
+    "ruleCompliance": 0.8366548042704627,
     "governanceCoverage": 1
   },
   "weekly": {
-    "from": "2026-09-30",
-    "to": "2026-10-07",
+    "from": "2026-10-02",
+    "to": "2026-10-09",
     "evals": {
       "generations": 240,
       "passRate": 0.1,
@@ -893,6 +905,18 @@
           "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
           "failed": 1,
           "rate": 0.004166666666666667
+        },
+        {
+          "id": "doesnt-compile",
+          "label": "Doesn't compile against Helix's real types (tsc)",
+          "failed": 150,
+          "rate": 0.625
+        },
+        {
+          "id": "invented-prop",
+          "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)",
+          "failed": 108,
+          "rate": 0.45
         }
       ]
     }

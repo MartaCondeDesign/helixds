@@ -25,6 +25,7 @@ import os from 'os';
 import path from 'path';
 import { spawn } from 'child_process';
 import { validateSnippet } from '../packages/mcp/src/validate.ts';
+import { checkMechanical } from './eval-mechanical.ts';
 import {
   loadPrompts, scorePrompt, extractCodeBlock, runGlobalChecks, registerExperiment,
   gitCommit, newRunId, argValue, outputsDir, type EvalPrompt, type ScoreResult, type RunMeta,
@@ -194,6 +195,8 @@ async function worker() {
       const result = scorePrompt(p, code);
       results.push(result);
       reportOne(result, rep);
+      const mechanical = await checkMechanical(code);
+      console.log(`   ${mechanical.compiles ? 'compiles' : `doesn't compile (${mechanical.compileErrors.length} error${mechanical.compileErrors.length > 1 ? 's' : ''}): ${mechanical.compileErrors[0]}`}`);
       console.log(`   ${usage.totalTokens.toLocaleString()} tokens (${usage.calls} call${usage.calls > 1 ? 's' : ''})`);
       runTokens += usage.totalTokens;
 
@@ -204,7 +207,7 @@ async function worker() {
       };
       fs.writeFileSync(
         path.join(outputsDir, `${p.id}-${meta.timestamp}-${rep}.json`),
-        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code), usage, generatedCode: code }, null, 2),
+        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code, mechanical), mechanical, usage, generatedCode: code }, null, 2),
       );
     } catch (err) {
       failures++;

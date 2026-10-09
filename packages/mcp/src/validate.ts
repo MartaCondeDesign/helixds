@@ -45,7 +45,7 @@ export async function validateSnippet(code: string) {
   }));
 
   const advisories = GLOBAL_CHECKS
-    .filter(check => !COVERED_BY_LINT.has(check.id) && check.pattern.test(result!.output ?? code))
+    .filter(check => !COVERED_BY_LINT.has(check.id) && check.pattern?.test(result!.output ?? code))
     .map(check => ({ check: check.id, message: check.description }));
 
   return {
