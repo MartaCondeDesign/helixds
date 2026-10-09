@@ -178,6 +178,8 @@ const lastBreaking = changelogJson.days.flatMap((d: any) => d.commits).find((c: 
 const epoch = lastBreaking
   ? { hash: lastBreaking.hash, subject: lastBreaking.subject, at: Number(execSync(`git show -s --format=%ct ${lastBreaking.hash}`, { cwd: root, encoding: 'utf8' }).trim()) * 1000 }
   : { hash: null, subject: null, at: 0 };
+// For people reading the page: a date, not a commit hash.
+const since = epoch.at ? new Date(epoch.at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'the start';
 
 const prompts = new Map(loadPrompts().map(p => [p.id, p]));
 const all = loadRuns().filter(r => r.source === 'claude-cli');
@@ -208,7 +210,7 @@ function rate(id: string, label: string, how: string, runs: LoadedRun[], ok: (r:
     evidence: tasks.length
       ? perTask.flatMap(p => [`${p.good === p.total ? '✓' : '✗'} ${p.t}: ${p.good}/${p.total}`,
           ...p.misses.slice(0, 3).map(r => `     ${r.variant} · rep ${r.rep} — evals/outputs/${r.file}`)])
-      : [`No ${id === 'design' ? 'judged answers' : 'answers'} since ${epoch.hash ?? 'the start'} — run ${command} to measure.`],
+      : [`No ${id === 'design' ? 'judged answers' : 'answers'} since ${since} — run ${command} to measure.`],
   };
 }
 
@@ -224,7 +226,7 @@ function lift(): Check {
     score: has ? Math.max(0, Math.min(100, avg(mcp))) : null,
     how: 'Mean checklist score of the MCP level, on the tasks also answered with no Helix context; the gap between the two is in the evidence.',
     evidence: has ? [`Same tasks: ${shared.join(', ')}`, `No context: ${avg(bare)} · MCP: ${avg(mcp)} · gap ${avg(mcp) - avg(bare) >= 0 ? '+' : ''}${avg(mcp) - avg(bare)}`]
-      : [`No task measured at both levels since ${epoch.hash ?? 'the start'} — pnpm eval:ladder --levels no-context,mcp --yes`],
+      : [`No task measured at both levels since ${since} — pnpm eval:ladder --levels no-context,mcp --yes`],
     command: 'pnpm eval:ladder --levels no-context,mcp',
   };
 }
@@ -254,7 +256,7 @@ const MIN_TASKS = 5, MIN_SCREENS = 3;
 const tasksCovered = [...new Set(current.map(r => r.promptId))].sort();
 const screensCovered = tasksCovered.filter(id => prompts.get(id)?.category === 'screen');
 const enough = tasksCovered.length >= MIN_TASKS && screensCovered.length >= MIN_SCREENS;
-const coverageNote = `${tasksCovered.length} of ${prompts.size} tasks (${screensCovered.length} screen tasks) answered since ${epoch.hash}` +
+const coverageNote = `${tasksCovered.length} of ${prompts.size} tasks (${screensCovered.length} of them screens) measured since ${since}` +
   (enough ? '' : ` — needs ${MIN_TASKS}+ tasks incl. ${MIN_SCREENS}+ screens to count in the score`);
 
 const readableScore = mean(readable.map(c => c.score!));
@@ -273,11 +275,11 @@ const report = {
   commit: head,
   score: total,
   tier,
-  basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'used well (① readable is shown as prerequisites, not averaged in)',
+  basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'used well (readable is shown as prerequisites, not averaged in)',
   readable: { score: readableScore, checks: readable },
   used: {
     score: usedScore, enough, coverageNote, supersededAnswers: sinceEpoch.length - current.length, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
-    epoch, answers: current.length, olderAnswersExcluded: all.length - current.length, checks: used,
+    epoch: { ...epoch, date: since }, answers: current.length, olderAnswersExcluded: all.length - current.length, checks: used,
   },
 };
 fs.writeFileSync(rel('quality/ai-readiness.json'), JSON.stringify(report, null, 2) + '\n');
@@ -290,7 +292,7 @@ if (last && last.commit === head) history[history.length - 1] = point; else hist
 fs.writeFileSync(historyFile, JSON.stringify(history, null, 2) + '\n');
 
 console.log(`AI Readiness ${total === null ? 'not rated yet' : `${total}/100 · ${tier}`} (${report.basis})`);
-console.log(`  ① Readable ${readableScore}: ${readable.map(c => `${c.label} ${c.score}`).join(' · ')}`);
-console.log(`  ② Used well ${usedScore ?? 'n/a'}: ${used.map(c => `${c.label} ${c.score ?? 'n/a'}${c.n !== undefined ? ` (n=${c.n})` : ''}`).join(' · ')}`);
+console.log(`  Readable ${readableScore}: ${readable.map(c => `${c.label} ${c.score}`).join(' · ')}`);
+console.log(`  Used well ${usedScore ?? 'n/a'}: ${used.map(c => `${c.label} ${c.score ?? 'n/a'}${c.n !== undefined ? ` (n=${c.n})` : ''}`).join(' · ')}`);
 console.log(`     ${current.length} answers since ${epoch.hash} "${epoch.subject}"; ${all.length - current.length} older ones excluded.`);
 console.log(`     Coverage: ${coverageNote}`);

@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat: MCP asks for every contract up front; lint catches HTML attributes Helix components don't take (latest commit)
+- 2026-10-09 — feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes (latest commit)
+- 2026-10-09 — feat: MCP asks for every contract up front; lint catches HTML attributes Helix components don't take ([`8c12045`](https://github.com/MartaCondeDesign/helixds/commit/8c12045))
 - 2026-10-09 — feat(evals): record agents' tool calls; readiness uses the latest round — 69/100 ([`837f1fb`](https://github.com/MartaCondeDesign/helixds/commit/837f1fb))
 - 2026-10-09 — feat: every contract and the MCP say where to import from ([`c1c88ee`](https://github.com/MartaCondeDesign/helixds/commit/c1c88ee))
 - 2026-10-09 — feat: first AI Readiness rating — 54/100 (Invested), from a screen-task round ([`fc3ca8b`](https://github.com/MartaCondeDesign/helixds/commit/fc3ca8b))

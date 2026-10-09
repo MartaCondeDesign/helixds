@@ -62,7 +62,7 @@ function AIReadinessPage() {
     <div style={{ display: 'grid', gap: 'var(--helix-spacing-l)' }}>
       <StoryHeader
         title="AI Readiness"
-        description="Is Helix ready to be read — and used — by a coding agent? ① Readable is computed from the repo, deterministic and free. ② Used well comes from what agents actually wrote in the evals. Every number opens to show how it's computed, its evidence and the command that recomputes it. Refresh with pnpm readiness."
+        description="Is Helix ready to be read — and used — by a coding agent? Readable is computed from the repo, deterministic and free. Used well comes from what agents actually wrote in the evals. Every number opens to show how it's computed, its evidence and the command that recomputes it. Refresh with pnpm readiness."
       />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--helix-spacing-m)' }}>
@@ -73,33 +73,33 @@ function AIReadinessPage() {
             </strong>
             <span style={muted}>
               {report.score === null
-                ? 'Readable alone only says the pieces exist — not that agents use them well. A score needs ② to cover enough tasks.'
-                : 'The ② Used well score: what agents actually do with Helix. ① Readable is shown as prerequisites, not averaged in — it would lift the score whatever agents do. Tiers: 70+ AI-native, 40+ Invested, below that Emerging.'}
+                ? 'Readable alone only says the pieces exist — not that agents use them well. A score needs Used well to cover enough tasks.'
+                : 'The Used well score: what agents actually do with Helix. Readable is shown as prerequisites, not averaged in — it would lift the score whatever agents do. Tiers: 70+ AI-native, 40+ Invested, below that Emerging.'}
             </span>
-            <span style={muted}>Measured at {report.commit} · {report.generatedAt.slice(0, 10)}</span>
+            <span style={muted}>Last measured {new Date(report.generatedAt).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })} · Helix version {report.commit}</span>
           </div>
         </Card>
-        <Card header="① Readable (prerequisites)">
+        <Card header="Readable (prerequisites)">
           <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
             <Score value={report.readable.score} label="Readable" />
-            <span style={muted}>Presence and coverage checks: the pieces an agent needs are there. They don't show the pieces work — ② does.</span>
+            <span style={muted}>Presence and coverage checks: the pieces an agent needs are there. They don't show the pieces work — Used well does.</span>
           </div>
         </Card>
-        <Card header="② Used well">
+        <Card header="Used well">
           <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
             <Score value={used.score} label="Used well" />
-            <span style={muted}>{used.coverageNote}. {used.olderAnswersExcluded} older answers excluded — they predate {used.epoch.hash} ({used.epoch.subject}).</span>
+            <span style={muted}>{used.coverageNote}. {used.olderAnswersExcluded} older answers aren't counted: they were made before {used.epoch.date}, when the package was renamed to @helixds/react, so they use names that no longer exist.</span>
           </div>
         </Card>
       </div>
 
       <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
-        <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>① Can an agent read Helix?</h2>
+        <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>Can an agent read Helix?</h2>
         <ChecksTable checks={report.readable.checks as Check[]} />
       </section>
 
       <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
-        <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>② Do agents use it well?</h2>
+        <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>Do agents use it well?</h2>
         {!used.enough ? (
           <Card>
             <span style={muted}>

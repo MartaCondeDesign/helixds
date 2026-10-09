@@ -279,5 +279,38 @@
         "totalTokens": 470146
       }
     ]
+  },
+  {
+    "id": "2026-10-09T17-29-57",
+    "date": "2026-10-09T17:34:39.971Z",
+    "commit": "8c12045",
+    "runs": 3,
+    "tasks": [
+      "screen-delete-account",
+      "screen-notification-settings",
+      "screen-save-feedback",
+      "screen-signup-errors",
+      "screen-team-members"
+    ],
+    "levels": [
+      {
+        "variant": "no-context",
+        "label": "bare",
+        "answers": 15,
+        "passRate": 0,
+        "meanScore": 0.1511111111111111,
+        "tokensPerAnswer": 38648.6,
+        "totalTokens": 579729
+      },
+      {
+        "variant": "mcp",
+        "label": "mcp",
+        "answers": 15,
+        "passRate": 0.8,
+        "meanScore": 0.9222222222222222,
+        "tokensPerAnswer": 129601.8,
+        "totalTokens": 1944027
+      }
+    ]
   }
 ]
