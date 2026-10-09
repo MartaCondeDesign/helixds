@@ -23,6 +23,15 @@ Add a section to the settings page where people choose how we notify them: by em
 - `isChecked` or `isOn` or `active={` — anti-synonym of checked
 - `onToggle=` — anti-synonym of onChange
 
+# Judge rubric
+
+Judged by an LLM (`pnpm eval:judge`), blind to who wrote the answer. Never shown to the agent.
+
+- instant-toggles (critical): Each channel is an on/off control that takes effect at once — there is no separate Save step.
+- independent-channels (critical): Email, push and SMS are three independent controls, not one control for all.
+- clear-labels: Each control's label names its channel plainly.
+- grouped-section: The controls are grouped under one section heading.
+
 # Expected output shape
 
 ```tsx

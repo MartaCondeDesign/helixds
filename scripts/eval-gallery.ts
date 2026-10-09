@@ -18,6 +18,7 @@ type Output = {
   successResults?: Array<{ text: string; pass?: boolean | null }>;
   invalidResults?: Array<{ text: string; pass?: boolean | null }>;
   mechanical?: { compiles: boolean; compileErrors: string[]; lintProblems: Array<{ rule: string; message: string }> };
+  judge?: { model: string; score: number; passed: boolean; verdicts: Array<{ id: string; pass: boolean; reason: string }> };
 };
 
 // What went wrong with one answer, in words: a made-up import first (nothing else matters if it can't
@@ -36,6 +37,8 @@ const issuesOf = (out: Output, unresolved: string | undefined, missing?: string)
     ? [`Doesn't compile: ${clip(plain(out.mechanical.compileErrors[0]?.replace(/^\d+:\d+ /, '') ?? ''))}`] : []),
   ...(out.mechanical?.lintProblems ?? []).filter(p => /^helix\/(unknown-prop|prop-vocabulary)$/.test(p.rule)).map(p => `Invented prop: ${plain(p.message)}`),
   ...(out.successResults ?? []).filter(r => r.pass === false).map(r => `Missed: ${plain(r.text)}`),
+  // The LLM judge's design verdict (eval-judge.ts), when the answer has been judged.
+  ...(out.judge?.verdicts ?? []).filter(v => !v.pass).map(v => `Design (judge): ${v.id} — ${clip(plain(v.reason))}`),
   ...(out.invalidResults ?? []).filter(r => r.pass === false).map(r => `Used: ${plain(r.text.split(' — ')[0])}`),
 ];
 
@@ -85,6 +88,7 @@ for (const { file, out } of outputs) {
     context: out.context && out.context.length > 40 ? path.basename(out.context) : out.context ?? null,
     rep: out.rep ?? null, model: out.model ?? null, score: out.score, passed: out.passed,
     compiles: out.mechanical ? out.mechanical.compiles && !buildError : null,
+    judgeScore: out.judge ? out.judge.score : null,
     tokens: out.usage?.totalTokens ?? null,
     issues: issuesOf(out, unresolved, missing),
     timestamp: out.timestamp ?? out.runId ?? null,

@@ -18,6 +18,14 @@ export interface EvalPrompt {
   escapeHatches: string[];
   invalidPatterns: string[];
   expectedOutput: string;
+  /** "# Judge rubric": design/UX items an LLM judges (eval-judge.ts). Never shown to the agent. */
+  judgeRubric: JudgeRubricItem[];
+}
+
+export interface JudgeRubricItem {
+  id: string;
+  critical: boolean;
+  text: string;
 }
 
 export interface CriterionResult {
@@ -71,6 +79,9 @@ function parsePromptFile(filePath: string): EvalPrompt {
     escapeHatches: extractBullets(sections['Escape hatches (partial credit)'] ?? ''),
     invalidPatterns: extractBullets(sections['Invalid patterns (auto-fail)'] ?? ''),
     expectedOutput: extractCodeBlock(sections['Expected output shape'] ?? ''),
+    // "- id (critical): text" — one item per bullet.
+    judgeRubric: [...(sections['Judge rubric'] ?? '').matchAll(/^- ([\w-]+)( \(critical\))?: (.+)$/gm)]
+      .map(m => ({ id: m[1]!, critical: !!m[2], text: m[3]!.trim() })),
   };
 }
 
@@ -297,6 +308,7 @@ export interface StoredRun extends ScoreResult, Partial<RunMeta> {
   generatedCode: string;
   globalChecks?: Record<string, boolean>;
   mechanical?: MechanicalChecks; // compile + lint, scripts/eval-mechanical.ts
+  judge?: { model: string; score: number; passed: boolean; verdicts: { id: string; pass: boolean; reason: string }[] }; // eval-judge.ts
   usage?: { totalTokens?: number }; // recorded by eval:generate since the context ladder
 }
 

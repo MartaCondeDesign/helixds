@@ -22,6 +22,14 @@ On the profile page, after someone saves their changes, let them know it worked 
 - `alert(` — interrupts the user
 - `loading={` — anti-synonym of isLoading
 
+# Judge rubric
+
+Judged by an LLM (`pnpm eval:judge`), blind to who wrote the answer. Never shown to the agent.
+
+- non-blocking (critical): The success feedback doesn't block or interrupt — nothing the person must dismiss (no modal, no alert).
+- says-what-happened (critical): The message says what succeeded ("Profile saved"), not a vague "Done" or "Success".
+- progress-visible: While saving, the action shows it is in progress and can't be triggered twice.
+
 # Expected output shape
 
 ```tsx

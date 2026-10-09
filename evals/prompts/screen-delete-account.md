@@ -24,6 +24,15 @@ In the account settings screen, people can delete their account, and deletion ca
 - `open={` or `isOpen={` on the modal — anti-synonym of expanded
 - `onClose={` on the modal — anti-synonym of onDismiss
 
+# Judge rubric
+
+Judged by an LLM (`pnpm eval:judge`), blind to who wrote the answer. Never shown to the agent.
+
+- confirm-first (critical): The account is deleted only after an explicit confirmation step — never on the first click.
+- consequence-stated (critical): The confirmation says plainly that deleting is permanent and cannot be undone.
+- easy-back-out: Backing out is easy, clearly labelled (for example Cancel) and deletes nothing.
+- specific-action-label: The confirming action names what it does ("Delete account"), not a generic "OK" or "Yes".
+
 # Expected output shape
 
 ```tsx

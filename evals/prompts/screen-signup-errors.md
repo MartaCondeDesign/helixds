@@ -24,6 +24,15 @@ Build a sign-up form with email, password and country (Spain, France or Germany)
 - `<option` — Select takes options, not children
 - `error={` — anti-synonym of errorMessage
 
+# Judge rubric
+
+Judged by an LLM (`pnpm eval:judge`), blind to who wrote the answer. Never shown to the agent.
+
+- error-at-field (critical): Each error is shown next to the field it is about, not only in a summary, banner or alert.
+- error-says-fix (critical): Each message says what is wrong and how to fix it ("Enter a valid email, like name@example.com"), not just "Invalid" or "Error".
+- no-premature-errors: Errors don't appear before the person has tried to submit (or has left the field).
+- visible-labels: Every field has a visible label; a placeholder alone does not count.
+
 # Expected output shape
 
 ```tsx

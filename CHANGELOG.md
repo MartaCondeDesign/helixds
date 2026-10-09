@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat(evals): eval:calibrate — test the graders with planted mistakes (latest commit)
+- 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself (latest commit)
+- 2026-10-09 — feat(evals): eval:calibrate — test the graders with planted mistakes ([`5f8058a`](https://github.com/MartaCondeDesign/helix-ds/commit/5f8058a))
 - 2026-10-09 — feat(evals): screen-level tasks and compile + invented-prop checks on every answer ([`ed6450f`](https://github.com/MartaCondeDesign/helix-ds/commit/ed6450f))
 - 2026-10-09 — feat: contract hook asks only for the components a change touches ([`547943e`](https://github.com/MartaCondeDesign/helix-ds/commit/547943e))
 - 2026-10-09 — feat: contracts in the npm package, contract-read hook for Claude Code ([`ea6af56`](https://github.com/MartaCondeDesign/helix-ds/commit/ea6af56))

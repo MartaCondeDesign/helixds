@@ -15,6 +15,12 @@ Measures whether an AI agent can use Helix DS correctly.
 Every answer, whatever the prompt, is also type-checked against Helix's real source and linted
 (`scripts/eval-mechanical.ts`) — stored as the `doesnt-compile` and `invented-prop` global checks.
 
+6. **Design quality** — what no parser can grade (hierarchy, copy, states): `screen-*` prompts carry a hidden
+   `# Judge rubric`, and `pnpm eval:judge` has a separate model judge saved answers against it, blind to who
+   wrote them (`scripts/eval-judge.ts`, haiku by default, one call per answer). It's an opinion, so it's
+   calibrated too: `pnpm eval:calibrate --judge` — references must pass, deliberately badly designed answers
+   (they compile and lint clean) must fail the items their flaw breaks.
+
 ## The eval loop
 
 Built on the loop from Teresa Torres' *AI Evals: A Hands-On Guide for Product Teams*: an LLM doesn't give the
