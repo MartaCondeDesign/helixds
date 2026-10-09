@@ -114,8 +114,17 @@ function commitsBetween(from: string, to: string): string[] {
  * each level's pass rate and mean score, on the tasks both rounds ran, so a round on fewer tasks doesn't
  * read as a drop.
  */
+// Rounds as Metrics shows them: only the levels still on the context ladder (evals/ladder.json). A level
+// taken off it (the one-off "npm install" level, 2026-10-09) keeps its rounds in rounds.json, unshown.
+function ladderRounds(): RoundEntry[] {
+  const onLadder = new Set(readJson<Ladder>('evals/ladder.json', { levels: [] }).levels.map(level => level.variant));
+  return readJson<RoundEntry[]>('evals/rounds.json', [])
+    .map(round => ({ ...round, levels: round.levels.filter(level => onLadder.has(level.variant)) }))
+    .filter(round => round.levels.length > 0);
+}
+
 function roundImprovements(runs: LoadedRun[]) {
-  const rounds = readJson<RoundEntry[]>('evals/rounds.json', []);
+  const rounds = ladderRounds();
   const prompts = new Map(loadPrompts().map(prompt => [prompt.id, prompt]));
   const byRound = new Map<string, LoadedRun[]>();
   for (const run of runs) {
@@ -229,7 +238,7 @@ export function createHelixSnapshot(now = new Date()) {
   const weeklyRuns = allRuns.filter(run => run.timestamp >= weekAgo);
 
   // Rounds: each `pnpm eval:ladder --round` (Proof's "Run evals" button) — per level, over time.
-  const evals = { ...evalSummary(allRuns), ladder: ladderSummary(allRuns), daily: ladderDaily(allRuns), improvements: roundImprovements(allRuns), rounds: readJson<unknown[]>('evals/rounds.json', []) };
+  const evals = { ...evalSummary(allRuns), ladder: ladderSummary(allRuns), daily: ladderDaily(allRuns), improvements: roundImprovements(allRuns), rounds: ladderRounds() };
   const ruleCompliance = evals.globalChecks.length ? evals.globalChecks.reduce((sum, check) => sum + (1 - (check.rate ?? 0)), 0) / evals.globalChecks.length : null;
   const governance = governanceCoverage();
   // Components the manifest knows about but verify:stable hasn't scored yet — their status is unknown,

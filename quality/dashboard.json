@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T18:38:26.535Z",
+  "generatedAt": "2026-10-09T18:46:02.781Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
     "evalRuns": 361,
@@ -143,17 +143,6 @@
         "meanScore": 0.3269230769230769,
         "tokensPerAnswer": 43235,
         "totalTokens": 1297050
-      },
-      {
-        "variant": "installed",
-        "label": "npm install",
-        "detail": "Only @helixds/react installed in an empty app — no guide, no MCP",
-        "answers": 30,
-        "tasks": 5,
-        "passRate": 0.43333333333333335,
-        "meanScore": 0.6155555555555556,
-        "tokensPerAnswer": 217132.13333333333,
-        "totalTokens": 6513964
       },
       {
         "variant": "llms-txt",
@@ -429,66 +418,9 @@
         ],
         "tokenSum": 2961186,
         "measured": 25
-      },
-      {
-        "date": "2026-10-09",
-        "variant": "installed",
-        "answers": 30,
-        "scoreSum": 18.46666666666667,
-        "passed": 13,
-        "tasks": [
-          "screen-delete-account",
-          "screen-notification-settings",
-          "screen-save-feedback",
-          "screen-signup-errors",
-          "screen-team-members"
-        ],
-        "tokenSum": 6513964,
-        "measured": 30
       }
     ],
     "improvements": [
-      {
-        "id": "2026-10-09T18-22-05",
-        "date": "2026-10-09T18:25:04.331Z",
-        "previous": "2026-10-09T18-17-54",
-        "commit": "00ef583-dirty",
-        "commits": [],
-        "uncommitted": true,
-        "tasksCompared": 5,
-        "levels": [
-          {
-            "variant": "installed",
-            "label": "npm install",
-            "before": {
-              "answers": 15,
-              "passRate": 0.3333333333333333,
-              "meanScore": 0.5866666666666667
-            },
-            "after": {
-              "answers": 15,
-              "passRate": 0.5333333333333333,
-              "meanScore": 0.6444444444444445
-            }
-          }
-        ],
-        "verdict": "better",
-        "meanDelta": 0.05777777777777782
-      },
-      {
-        "id": "2026-10-09T18-17-54",
-        "date": "2026-10-09T18:20:36.527Z",
-        "previous": "2026-10-09T17-29-57",
-        "commit": "00ef583-dirty",
-        "commits": [
-          "feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes"
-        ],
-        "uncommitted": true,
-        "tasksCompared": 5,
-        "levels": [],
-        "verdict": "not comparable",
-        "meanDelta": null
-      },
       {
         "id": "2026-10-09T17-29-57",
         "date": "2026-10-09T17:34:39.971Z",
@@ -1146,54 +1078,6 @@
             "meanScore": 0.9222222222222222,
             "tokensPerAnswer": 129601.8,
             "totalTokens": 1944027
-          }
-        ]
-      },
-      {
-        "id": "2026-10-09T18-17-54",
-        "date": "2026-10-09T18:20:36.527Z",
-        "commit": "00ef583-dirty",
-        "runs": 3,
-        "tasks": [
-          "screen-delete-account",
-          "screen-notification-settings",
-          "screen-save-feedback",
-          "screen-signup-errors",
-          "screen-team-members"
-        ],
-        "levels": [
-          {
-            "variant": "installed",
-            "label": "npm install",
-            "answers": 15,
-            "passRate": 0.3333333333333333,
-            "meanScore": 0.5866666666666667,
-            "tokensPerAnswer": 213103,
-            "totalTokens": 3196545
-          }
-        ]
-      },
-      {
-        "id": "2026-10-09T18-22-05",
-        "date": "2026-10-09T18:25:04.331Z",
-        "commit": "00ef583-dirty",
-        "runs": 3,
-        "tasks": [
-          "screen-delete-account",
-          "screen-notification-settings",
-          "screen-save-feedback",
-          "screen-signup-errors",
-          "screen-team-members"
-        ],
-        "levels": [
-          {
-            "variant": "installed",
-            "label": "npm install",
-            "answers": 15,
-            "passRate": 0.5333333333333333,
-            "meanScore": 0.6444444444444445,
-            "tokensPerAnswer": 221161.26666666666,
-            "totalTokens": 3317419
           }
         ]
       }

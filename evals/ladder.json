@@ -14,17 +14,6 @@
       ]
     },
     {
-      "variant": "installed",
-      "label": "npm install",
-      "detail": "Only @helixds/react installed in an empty app — no guide, no MCP",
-      "explain": "An empty app with @helixds/react installed and nothing else: no guide, no MCP, no Helix repo. Shows whether an agent finds what the package ships (AGENTS.md, contracts, types) on its own — what a team gets right after npm install.",
-      "flags": [
-        "--context",
-        "none",
-        "--installed"
-      ]
-    },
-    {
       "variant": "llms-txt",
       "label": "llms.txt",
       "detail": "Only llms.txt — no repo",

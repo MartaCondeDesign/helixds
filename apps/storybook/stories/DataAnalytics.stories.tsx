@@ -44,7 +44,7 @@ const riskLabel: Record<string, string> = {
   'raw-div': 'Layout manual sin componentes Helix',
   'raw-icon': 'Icono sin el componente Icon de Helix',
   'icon-element-prop': 'Icono pasado de forma incorrecta',
-  'on-press': 'Usó onClick en vez de onClick',
+  'on-press': 'Usó onPress en vez de onClick',
   'raw-native-control': 'Control HTML nativo en vez de componente Helix',
 };
 const localDateKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;

@@ -234,7 +234,9 @@ function lift(): Check {
 const readable = [agentEntryPoints(), contracts(), types(), tokens(), docs(), changeHistory(), guardrails()];
 // ② rates are about Helix, so they use answers that HAD Helix context: the no-context level measures the
 // model's own guesses and only serves as the baseline in "What the MCP adds".
-const guided = current.filter(r => r.variant !== 'no-context');
+// Only the context ladder's levels (evals/ladder.json) — a one-off experiment isn't how agents use Helix.
+const ladderLevels = new Set<string>(JSON.parse(read('evals/ladder.json')).levels.map((l: { variant: string }) => l.variant));
+const guided = current.filter(r => r.variant !== 'no-context' && ladderLevels.has(r.variant));
 const judged = guided.filter(r => (r as any).judge);
 // "Compiles" alone would reward an answer that skipped Helix (plain HTML compiles) or used a former package
 // name (eval-mechanical.ts resolves those for old answers): today it must import @helixds/react and nothing
