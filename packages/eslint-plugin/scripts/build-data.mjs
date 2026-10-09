@@ -8,6 +8,7 @@
  *   props          contracts/components/*.json    every Helix component's documented props
  *   colors         packages/tokens/src/tokens.json  light-mode hex → semantic color CSS variables
  *   primitives     packages/tokens/src/tokens.json  "blue-600" → hex, to map Tailwind palette classes
+ *   spacing        packages/tokens/src/tokens.json  "16px" → semantic spacing CSS variables with that value
  *   coreExports    packages/core/src/index.ts      every name @helixds/react really exports (values + types)
  *   packages       packages/<dir>/package.json     the real @helixds/* package names
  *
@@ -83,6 +84,12 @@ for (const [surface, group] of Object.entries(tokens.semantic.color)) {
   }
 }
 
+const spacing = {};
+for (const [key, token] of Object.entries(tokens.semantic.spacing)) {
+  const px = resolve(token.$value);
+  if (px?.endsWith('px')) (spacing[px] ??= []).push(`--helix-spacing-${key}`);
+}
+
 // ── @helixds/react exports ──────────────────────────────────────────────────
 const coreExports = new Set();
 for (const m of read('packages/core/src/index.ts').matchAll(/export\s+(?:type\s+)?\{([^}]*)\}/g)) {
@@ -100,6 +107,6 @@ const packages = fs.readdirSync(path.join(root, 'packages'))
   .filter(name => name?.startsWith('@helixds/'))
   .sort();
 
-const data = { antiSynonyms, valueSynonyms, props, colors, primitives, coreExports: [...coreExports].sort(), packages };
+const data = { antiSynonyms, valueSynonyms, props, colors, primitives, spacing, coreExports: [...coreExports].sort(), packages };
 fs.writeFileSync(path.join(pkg, 'src/data.json'), JSON.stringify(data, null, 2) + '\n');
-console.log(`✅ src/data.json — ${Object.keys(antiSynonyms).length} anti-synonyms, ${Object.keys(props).length} components, ${Object.keys(colors).length} token colors, ${coreExports.size} core exports`);
+console.log(`✅ src/data.json — ${Object.keys(antiSynonyms).length} anti-synonyms, ${Object.keys(props).length} components, ${Object.keys(colors).length} token colors, ${Object.keys(spacing).length} spacing values, ${coreExports.size} core exports`);

@@ -1,0 +1,541 @@
+{
+  "runId": "20261009-121727-helix-haiku-2tasks",
+  "manifest": {
+    "runId": "20261009-121727-helix-haiku-2tasks",
+    "label": "helix-haiku-2tasks",
+    "profile": "small",
+    "startedAt": "2026-10-09T12:17:27.691Z",
+    "nodeVersion": "v24.18.0",
+    "adapters": {
+      "claude-code": {
+        "version": "2.1.291 (Claude Code)"
+      }
+    },
+    "systems": {
+      "helix": {
+        "root": "/Users/marta/Documents/Documentación/Clientes/Cmd/DS-Helix",
+        "commit": "88d9ef39fa16ddcae30b9d34b5f67acc93347649",
+        "catalogSrcHash": "df7a9affd6630af27050efbcab98bb995c125a1b4dd88f4eac636dfea3432687",
+        "tokensCssHash": "604063b9795825a3e78bfb930b83873513612247116e2e6a50753fba8d99ba3b"
+      }
+    },
+    "cells": [
+      {
+        "spec": {
+          "system": "helix",
+          "context": "skill",
+          "model": "haiku",
+          "agent": "claude-code",
+          "taskId": "confirm-account-deletion",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "helix",
+          "context": "skill",
+          "model": "haiku",
+          "agent": "claude-code",
+          "taskId": "form-validation-errors",
+          "rep": 1
+        },
+        "status": "ok"
+      }
+    ],
+    "totalCostUsd": 0.23581210000000002,
+    "finishedAt": "2026-10-09T12:18:41.627Z",
+    "wallClockMs": 73936,
+    "paused": false
+  },
+  "records": [
+    {
+      "cell": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code"
+      },
+      "taskId": "confirm-account-deletion",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/helix_skill_haiku/confirm-account-deletion/rep1",
+        "transcript": "cells/helix_skill_haiku/confirm-account-deletion/rep1/transcript.jsonl",
+        "diffPatch": "cells/helix_skill_haiku/confirm-account-deletion/rep1/diff.patch"
+      },
+      "agentMeta": {
+        "durationMs": 41292,
+        "costUsd": 0.1058177,
+        "numTurns": 11
+      },
+      "result": {
+        "overall": 48.214285714285715,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 55,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "apiFidelity",
+                "message": "Invented prop 'label' on <Button> in src/task/index.tsx:53",
+                "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+              },
+              {
+                "dimension": "apiFidelity",
+                "message": "Invented prop 'label' on <Button> in src/task/index.tsx:83",
+                "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+              },
+              {
+                "dimension": "apiFidelity",
+                "message": "Invented prop 'label' on <Button> in src/task/index.tsx:88",
+                "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+              }
+            ]
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 0,
+            "gate": "review",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '2rem' in src/task/index.tsx:28 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '2rem' in src/task/index.tsx:38 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginTop: '2rem' in src/task/index.tsx:44 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style maxWidth: '600px' in src/task/index.tsx:44 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '1.5rem' in src/task/index.tsx:46 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '0.5rem' in src/task/index.tsx:47 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '1.125rem' in src/task/index.tsx:47 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '1.5rem' in src/task/index.tsx:50 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style padding: '1.5rem' in src/task/index.tsx:67 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '1rem' in src/task/index.tsx:68 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style fontSize: '1.25rem' in src/task/index.tsx:68 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '1rem' in src/task/index.tsx:71 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginTop: '0.5rem' in src/task/index.tsx:74 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '1.5rem' in src/task/index.tsx:74 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginTop: '1rem' in src/task/index.tsx:79 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style marginBottom: '2rem' in src/task/index.tsx:79 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+              },
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style gap: '0.75rem' in src/task/index.tsx:82 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(30,11): error TS2322: Type '{ title: string; description: string; }' is not assignable to type 'IntrinsicAttributes & PageHeaderProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'title' does not exist on type 'IntrinsicAttributes & PageHeaderProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(40,9): error TS2322: Type '{ title: string; description: string; }' is not assignable to type 'IntrinsicAttributes & PageHeaderProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'title' does not exist on type 'IntrinsicAttributes & PageHeaderProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(56,15): error TS2322: Type '{ onClick: () => void; variant: \"danger\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(63,9): error TS2322: Type '{ children: Element; open: boolean; onOpenChange: Dispatch<SetStateAction<boolean>>; label: string; }' is not assignable to type 'IntrinsicAttributes & ModalProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'open' does not exist on type 'IntrinsicAttributes & ModalProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(86,15): error TS2322: Type '{ onClick: () => void; variant: \"secondary\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(91,15): error TS2322: Type '{ onClick: () => void; variant: \"danger\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "apiFidelity",
+            "message": "Invented prop 'label' on <Button> in src/task/index.tsx:53",
+            "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+          },
+          {
+            "dimension": "apiFidelity",
+            "message": "Invented prop 'label' on <Button> in src/task/index.tsx:83",
+            "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+          },
+          {
+            "dimension": "apiFidelity",
+            "message": "Invented prop 'label' on <Button> in src/task/index.tsx:88",
+            "fix": "'label' is not a prop of Button. Valid props: variant, size, isLoading, icon, iconEnd, fullWidth, onClick, children."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '2rem' in src/task/index.tsx:28 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '2rem' in src/task/index.tsx:38 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginTop: '2rem' in src/task/index.tsx:44 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style maxWidth: '600px' in src/task/index.tsx:44 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '1.5rem' in src/task/index.tsx:46 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '0.5rem' in src/task/index.tsx:47 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '1.125rem' in src/task/index.tsx:47 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '1.5rem' in src/task/index.tsx:50 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style padding: '1.5rem' in src/task/index.tsx:67 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'padding'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '1rem' in src/task/index.tsx:68 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style fontSize: '1.25rem' in src/task/index.tsx:68 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'fontSize'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '1rem' in src/task/index.tsx:71 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginTop: '0.5rem' in src/task/index.tsx:74 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '1.5rem' in src/task/index.tsx:74 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginTop: '1rem' in src/task/index.tsx:79 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginTop'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style marginBottom: '2rem' in src/task/index.tsx:79 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'marginBottom'."
+          },
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style gap: '0.75rem' in src/task/index.tsx:82 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'gap'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(30,11): error TS2322: Type '{ title: string; description: string; }' is not assignable to type 'IntrinsicAttributes & PageHeaderProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'title' does not exist on type 'IntrinsicAttributes & PageHeaderProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(40,9): error TS2322: Type '{ title: string; description: string; }' is not assignable to type 'IntrinsicAttributes & PageHeaderProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'title' does not exist on type 'IntrinsicAttributes & PageHeaderProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(56,15): error TS2322: Type '{ onClick: () => void; variant: \"danger\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(63,9): error TS2322: Type '{ children: Element; open: boolean; onOpenChange: Dispatch<SetStateAction<boolean>>; label: string; }' is not assignable to type 'IntrinsicAttributes & ModalProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'open' does not exist on type 'IntrinsicAttributes & ModalProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(86,15): error TS2322: Type '{ onClick: () => void; variant: \"secondary\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(91,15): error TS2322: Type '{ onClick: () => void; variant: \"danger\"; label: string; }' is not assignable to type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'label' does not exist on type 'IntrinsicAttributes & ButtonProps & RefAttributes<HTMLButtonElement>'."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code"
+      },
+      "taskId": "form-validation-errors",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/helix_skill_haiku/form-validation-errors/rep1",
+        "transcript": "cells/helix_skill_haiku/form-validation-errors/rep1/transcript.jsonl",
+        "diffPatch": "cells/helix_skill_haiku/form-validation-errors/rep1/diff.patch"
+      },
+      "agentMeta": {
+        "durationMs": 59340,
+        "costUsd": 0.1299944,
+        "numTurns": 9
+      },
+      "result": {
+        "overall": 85.71428571428572,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(74,16): error TS2741: Property 'label' is missing in type '{ id: string; type: \"email\"; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; placeholder: string; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' but required in type 'InputProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(94,16): error TS2322: Type '{ children: Element[]; id: string; value: string; onChange: (e: string) => void; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' is not assignable to type 'IntrinsicAttributes & SelectProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'children' does not exist on type 'IntrinsicAttributes & SelectProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(97,44): error TS2339: Property 'target' does not exist on type 'string'."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(74,16): error TS2741: Property 'label' is missing in type '{ id: string; type: \"email\"; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; placeholder: string; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' but required in type 'InputProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(94,16): error TS2322: Type '{ children: Element[]; id: string; value: string; onChange: (e: string) => void; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' is not assignable to type 'IntrinsicAttributes & SelectProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'children' does not exist on type 'IntrinsicAttributes & SelectProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(97,44): error TS2339: Property 'target' does not exist on type 'string'."
+          }
+        ]
+      }
+    }
+  ],
+  "aggregates": [
+    {
+      "cellKey": "helix_skill_haiku",
+      "system": "helix",
+      "context": "skill",
+      "model": "haiku",
+      "taskId": "confirm-account-deletion",
+      "n": 1,
+      "meanOverall": 48.214285714285715,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 55,
+        "tokenDiscipline": 0,
+        "a11yStatic": 100,
+        "compile": 0
+      }
+    },
+    {
+      "cellKey": "helix_skill_haiku",
+      "system": "helix",
+      "context": "skill",
+      "model": "haiku",
+      "taskId": "form-validation-errors",
+      "n": 1,
+      "meanOverall": 85.71428571428572,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 100,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 0
+      }
+    }
+  ]
+}

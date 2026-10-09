@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat: agent-readable CHANGELOG, var() token chains and skills for every agent tool (latest commit)
+- 2026-10-09 — feat: use-helix consumer skill, no-raw-spacing lint rule, bench results (latest commit)
+- 2026-10-09 — feat: agent-readable CHANGELOG, var() token chains and skills for every agent tool ([`88d9ef3`](https://github.com/MartaCondeDesign/helix-ds/commit/88d9ef3))
 - 2026-10-07 — feat: concept tiles illustrations, Motion-only strokes (no GSAP) ([`c6907d2`](https://github.com/MartaCondeDesign/helix-ds/commit/c6907d2))
 - 2026-10-06 — feat: Proof eval gallery, context ladder, eval rounds and unknown-prop lint rule ([`5189f47`](https://github.com/MartaCondeDesign/helix-ds/commit/5189f47))
 - 2026-10-03 — feat: add @helix-ds/mcp — Helix as native MCP tools for agents ([`cd2e91a`](https://github.com/MartaCondeDesign/helix-ds/commit/cd2e91a))

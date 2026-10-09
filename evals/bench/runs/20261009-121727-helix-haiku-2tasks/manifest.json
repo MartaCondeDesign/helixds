@@ -1,0 +1,48 @@
+{
+  "runId": "20261009-121727-helix-haiku-2tasks",
+  "label": "helix-haiku-2tasks",
+  "profile": "small",
+  "startedAt": "2026-10-09T12:17:27.691Z",
+  "nodeVersion": "v24.18.0",
+  "adapters": {
+    "claude-code": {
+      "version": "2.1.291 (Claude Code)"
+    }
+  },
+  "systems": {
+    "helix": {
+      "root": "/Users/marta/Documents/Documentación/Clientes/Cmd/DS-Helix",
+      "commit": "88d9ef39fa16ddcae30b9d34b5f67acc93347649",
+      "catalogSrcHash": "df7a9affd6630af27050efbcab98bb995c125a1b4dd88f4eac636dfea3432687",
+      "tokensCssHash": "604063b9795825a3e78bfb930b83873513612247116e2e6a50753fba8d99ba3b"
+    }
+  },
+  "cells": [
+    {
+      "spec": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code",
+        "taskId": "confirm-account-deletion",
+        "rep": 1
+      },
+      "status": "ok"
+    },
+    {
+      "spec": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code",
+        "taskId": "form-validation-errors",
+        "rep": 1
+      },
+      "status": "ok"
+    }
+  ],
+  "totalCostUsd": 0.23581210000000002,
+  "finishedAt": "2026-10-09T12:18:41.627Z",
+  "wallClockMs": 73936,
+  "paused": false
+}

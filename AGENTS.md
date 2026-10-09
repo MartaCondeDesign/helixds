@@ -2,6 +2,11 @@
 
 > For teams using Helix in their apps. If you're contributing to Helix itself, read `contributor-ai/CONTRIBUTOR.md` instead.
 
+> **Before writing any JSX with `@helixds/react`: read each component's real props first** — the
+> `use-helix` skill, `helix_get_contract` (MCP), or the component's `<Name>.types.ts`. Never guess a prop:
+> Helix names differ from other libraries (`Button` takes its text as children, not `label`; form
+> controls require `label`; `Select` takes `options`). Use only `--helix-*` tokens for spacing and color.
+
 ## What is Helix?
 
 A design system built for teams building AI-powered products. Components have explicit contracts,
@@ -214,7 +219,7 @@ These came up when an agent was asked to build with Helix without reading the co
   `toast.success(label, description?)` — the description can also be `{ description }`.
 - **TopBar's slots are `start` and `end`** — not `search`/`actions`, not `left`/`right`.
 - **Canonical prop names only** — `onClick` (not `onPress`), `expanded` (not `open`/`isOpen`),
-  `label` (not `title`/`name`), `checked` (not `active`/`selected`), `current` (not `active`). Full list:
+  `label` (not `title`/`name`; but `Button` takes its text as children, never `label`), `checked` (not `active`/`selected`), `current` (not `active`). Full list:
   `.ai/maps/prop-map.md`.
 - **Icons by reference** — `icon={IconPlus}`, never `icon={<IconPlus />}`, never a raw `<IconPlus />`.
 

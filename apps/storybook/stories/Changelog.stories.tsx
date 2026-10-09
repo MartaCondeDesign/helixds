@@ -85,8 +85,9 @@ function ChangelogPage() {
         fontSize: 'var(--helix-textStyle-caption-regular-fontSize)',
         color: 'var(--helix-color-text-neutral-lightest)',
       }}>
-        Major/Minor/Patch is a keyword guess from the commit message, not a real semver signal —
-        this repo doesn't use conventional-commit prefixes. Filter by it with the change-type menu below.
+        Major/Minor/Patch comes from the commit message, not a real semver signal: a feat:/fix:/feat!:
+        prefix when there is one, otherwise the first verb (Remove, Add, Fix…). Filter by it with the
+        change-type menu below.
       </p>
 
       {/* Filter bar: search, date, contributor and change type in one row, separated from the

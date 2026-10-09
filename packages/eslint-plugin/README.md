@@ -23,6 +23,7 @@ With the ESLint extension in VS Code / Cursor, the warnings show up as you type.
 | `helix/import-source` | `import { Button } from '@helixds/react'` — a package path that isn't Helix | auto-fix to `@helixds/react` when every imported name exists there |
 | `helix/prop-vocabulary` | `onPress`, `loading`, `startIcon`… on a Helix component; `variant="error"`, `size="md"` | auto-fix to `onClick`, `isLoading`, `icon`, `variant="danger"`, `size="m"` |
 | `helix/no-raw-color` | `'#1d4ed8'`, `` `1px solid #e2e8f0` ``, `bg-blue-600` | suggests the semantic tokens with that exact color, e.g. `var(--helix-color-fill-primary-interactive-hover)` |
+| `helix/no-raw-spacing` | `padding: '16px'`, `marginTop: '2rem'`, `gap: 8` (padding, margin, gap — not sizes) | suggests the spacing tokens with that exact value, e.g. `var(--helix-spacing-m)` |
 | `helix/no-raw-control` | `<button>`, `<input>`, `<select>`, `<textarea>` | points to the Helix component; allowed in files marked `// [CUSTOM] reason: …` |
 
 `prop-vocabulary` only checks components imported from Helix (or a look-alike path), and only when the

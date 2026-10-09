@@ -1,0 +1,65 @@
+
+== helix-after ==
+   80.0  Enablement surface
+         [info] AGENTS.md + CLAUDE.md present at system root.
+         [info] llms.txt present at system root.
+         [info] llms.txt (local) is 9.6 KB.
+         [info] Hosted surface not probed (no docsUrl configured).
+         [info] Machine-readable catalog found: pre-extracted catalog snapshot.
+         [info] MCP server found in workspace package packages/mcp (@helixds/mcp).
+         [info] Skill bundles found: .claude/skills (7 skills).
+         [info] No editor rules file (.cursorrules, .cursor/rules, .github/copilot-instructions.md).
+         [info] No Code Connect files (*.figma.ts[x]) found.
+                fix: Only 10% of systems in the survey have Code Connect mappings: lowest-adoption asset, but it unlocks the Tier-3 Figma-to-code eval.
+         [info] No registry hint found (registry.json, publishConfig.registry).
+         [info] Builder-side agent tooling found: settings hooks.
+         [info] Enablement docs are as new as or newer than the newest component source change (git history).
+   67.8  Catalog quality
+         [info] 66 component dirs, 73 exports, 263 props documented.
+         [warn] 35/73 exports (47.9%) have zero documented props: BADGE_ICON_BY_VARIANT, ICON_STROKE_PX_BY_SIZE, ButtonDoc, IconButtonDoc, ChipDoc, ChipGroupDoc, InputDoc, BadgeDoc, ….
+                fix: These are more likely docgen extraction gaps (unresolved generics, forwardRef, re-exported third-party types) than genuinely prop-less components. Spot-check a few before trusting the 0.
+         [warn] extraction-suspect: 47.9% of exports have no props. Treat the coverage numbers below as a lower bound.
+                fix: Type/description/default coverage below is computed only over the exports that did return props; fix extraction and re-run to get a true reading.
+         [warn] Only 52.1% of exports have a documented props table.
+   n/a  Export hygiene
+         [warn] No component directories with an index.ts found under packages/core/src, and no custom-element declarations either. Reachability was not assessed and the score is withheld.
+                fix: Point componentsSrc at the directory holding the component dirs, if this system has them. If its layout is genuinely neither shape, this check has nothing to measure for it.
+   86.6  Vocabulary convention-distance
+         [info] 13 concept(s) aligned with convention, 3 covered under a different name, 24 not represented in this catalog (n/a).
+         [warn] Component "TextField" (form-text-input): models invented this name 21 time(s) across the mined sample; this system covers it as "Input" instead.
+                fix: MUI vocabulary; often Input elsewhere
+         [warn] Prop "severity" (alert-severity): models invented this name 9 time(s) across the mined sample; this system covers it as "variant" instead.
+                fix: MUI Alert vocabulary; variant/tone elsewhere
+         [warn] Prop "isInvalid" (form-error-state): models invented this name 6 time(s) across the mined sample; this system covers it as "invalid" instead.
+                fix: Chakra vocabulary; error/invalid elsewhere
+   83.8  Token machine-readability
+         [info] 1341 CSS custom properties found.
+         [info] 619/1341 vars (46.2%) reference another var: a semantic layer over primitives.
+         [info] Light/dark theming signal found (prefers-color-scheme, a data-*theme/color-scheme attribute, a .dark class selector, or a color-scheme declaration).
+         [info] 2 DTCG-shaped token file(s) found: packages/tokens/src/tokens.json, prototypes/explainers/illustration-motion.tokens.json.
+   40.0  Deprecation legibility
+         [info] No @deprecated JSDoc annotations found (either nothing is deprecated, or deprecations are undocumented: static analysis can't tell which).
+         [info] CHANGELOG.md present (changelog) with 1 machine-readable version heading(s).
+         [info] No codemods hint found.
+   56.4  Docs greppability
+         [info] 83 markdown file(s) found in the repo.
+         [info] Catalog available: scoring per-component coverage mode.
+         [info] 40/73 components (54.8%) are mentioned in at least one markdown file.
+         [warn] 33 component(s) have no markdown mention: ButtonDoc, IconButtonDoc, ChipDoc, ChipGroupDoc, InputDoc, BadgeDoc, TextareaDoc, SelectDoc, MultiSelectDoc, MenuDoc, ….
+                fix: A component with zero markdown reach is invisible to any docs-grepping or retrieval-based agent workflow.
+         [warn] llms.txt lists 33/73 components (45.2%).
+
+  AI-Readiness Score (basis: surface-only)
+    Surface                71.3
+      weighted mean of 6/7 scoreable checks
+    Lift                   n/a
+      TODO: pass --run <dir> to compute Lift from an actual benchmark run.
+    Ceiling                n/a
+      TODO: pass --run <dir> to compute Ceiling from an actual benchmark run.
+    Engagement             n/a
+      TODO: pass --run <dir> to compute Engagement from an actual benchmark run.
+    Vocabulary-behavioral  n/a
+      TODO: pass --run <dir> to compute Vocabulary-behavioral from an actual benchmark run.
+    Composite              71.3
+    Tier: AI-native (composite 71.3 >= 70)
+

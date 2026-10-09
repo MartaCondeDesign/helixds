@@ -626,6 +626,42 @@
     "turquoise-800": "#075985",
     "turquoise-900": "#0c4a6e"
   },
+  "spacing": {
+    "4px": [
+      "--helix-spacing-component-xs",
+      "--helix-spacing-2xs"
+    ],
+    "8px": [
+      "--helix-spacing-component-s",
+      "--helix-spacing-xs"
+    ],
+    "12px": [
+      "--helix-spacing-component-m",
+      "--helix-spacing-s"
+    ],
+    "16px": [
+      "--helix-spacing-component-l",
+      "--helix-spacing-m"
+    ],
+    "24px": [
+      "--helix-spacing-component-xl",
+      "--helix-spacing-layout-s",
+      "--helix-spacing-l"
+    ],
+    "32px": [
+      "--helix-spacing-layout-m",
+      "--helix-spacing-xl"
+    ],
+    "48px": [
+      "--helix-spacing-layout-l"
+    ],
+    "64px": [
+      "--helix-spacing-layout-xl"
+    ],
+    "2px": [
+      "--helix-spacing-3xs"
+    ]
+  },
   "coreExports": [
     "Accordion",
     "AccordionDoc",

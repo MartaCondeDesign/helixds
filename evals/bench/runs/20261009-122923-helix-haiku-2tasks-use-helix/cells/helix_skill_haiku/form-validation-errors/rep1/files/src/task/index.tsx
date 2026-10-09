@@ -1,0 +1,108 @@
+import { useState } from 'react';
+import {
+  Button,
+  Card,
+  Input,
+  PageHeader,
+  Select,
+} from '@helixds/react';
+
+const ROLE_OPTIONS = [
+  { value: 'admin', label: 'Admin' },
+  { value: 'editor', label: 'Editor' },
+  { value: 'viewer', label: 'Viewer' },
+];
+
+export function TaskScreen() {
+  const [email, setEmail] = useState('');
+  const [role, setRole] = useState<string | undefined>();
+  const [errors, setErrors] = useState<{
+    email?: string;
+    role?: string;
+  }>({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validate = () => {
+    const newErrors: { email?: string; role?: string } = {};
+
+    if (!email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!role) {
+      newErrors.role = 'Please select a role';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validate()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      alert(`Invited ${email} as ${role}`);
+      setEmail('');
+      setRole(undefined);
+      setErrors({});
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ padding: 'var(--helix-spacing-l)' }}>
+      <PageHeader label="Invite Team Member" />
+
+      <Card style={{ marginTop: 'var(--helix-spacing-l)', maxWidth: '500px' }}>
+        <form onSubmit={handleSubmit}>
+          <div style={{ marginBottom: 'var(--helix-spacing-m)' }}>
+            <Input
+              label="Email Address"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (errors.email) {
+                  setErrors({ ...errors, email: undefined });
+                }
+              }}
+              invalid={!!errors.email}
+              errorMessage={errors.email}
+              placeholder="name@company.com"
+              type="email"
+            />
+          </div>
+
+          <div style={{ marginBottom: 'var(--helix-spacing-m)' }}>
+            <Select
+              label="Role"
+              value={role}
+              onChange={(value) => {
+                setRole(value);
+                if (errors.role) {
+                  setErrors({ ...errors, role: undefined });
+                }
+              }}
+              options={ROLE_OPTIONS}
+              invalid={!!errors.role}
+              errorMessage={errors.role}
+            />
+          </div>
+
+          <Button type="submit" isLoading={isLoading}>
+            Send Invite
+          </Button>
+        </form>
+      </Card>
+    </div>
+  );
+}

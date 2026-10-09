@@ -8,6 +8,7 @@
  */
 import propVocabulary from './rules/prop-vocabulary.js';
 import noRawColor from './rules/no-raw-color.js';
+import noRawSpacing from './rules/no-raw-spacing.js';
 import noRawControl from './rules/no-raw-control.js';
 import importSource from './rules/import-source.js';
 import unknownProp from './rules/unknown-prop.js';
@@ -19,6 +20,7 @@ const plugin = {
     'prop-vocabulary': propVocabulary,
     'unknown-prop': unknownProp,
     'no-raw-color': noRawColor,
+    'no-raw-spacing': noRawSpacing,
     'no-raw-control': noRawControl,
   },
   configs: {},
@@ -34,6 +36,7 @@ plugin.configs.recommended = {
     'helix/prop-vocabulary': 'error',
     'helix/unknown-prop': 'error',
     'helix/no-raw-color': 'error',
+    'helix/no-raw-spacing': 'error',
     'helix/no-raw-control': 'warn',
   },
 };

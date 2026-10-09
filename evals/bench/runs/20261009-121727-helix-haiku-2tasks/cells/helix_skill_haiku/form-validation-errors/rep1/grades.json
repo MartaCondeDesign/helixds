@@ -1,0 +1,71 @@
+{
+  "overall": 85.71428571428572,
+  "gate": "fail",
+  "dimensions": {
+    "imports": {
+      "dimension": "imports",
+      "score": 100,
+      "gate": "pass",
+      "diffs": []
+    },
+    "apiFidelity": {
+      "dimension": "apiFidelity",
+      "score": 100,
+      "gate": "pass",
+      "diffs": []
+    },
+    "tokenDiscipline": {
+      "dimension": "tokenDiscipline",
+      "score": 100,
+      "gate": "pass",
+      "diffs": []
+    },
+    "a11yStatic": {
+      "dimension": "a11yStatic",
+      "score": 100,
+      "gate": "pass",
+      "diffs": []
+    },
+    "compile": {
+      "dimension": "compile",
+      "score": 0,
+      "gate": "fail",
+      "diffs": [
+        {
+          "dimension": "compile",
+          "message": "src/task/index.tsx(74,16): error TS2741: Property 'label' is missing in type '{ id: string; type: \"email\"; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; placeholder: string; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' but required in type 'InputProps'."
+        },
+        {
+          "dimension": "compile",
+          "message": "src/task/index.tsx(94,16): error TS2322: Type '{ children: Element[]; id: string; value: string; onChange: (e: string) => void; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' is not assignable to type 'IntrinsicAttributes & SelectProps'."
+        },
+        {
+          "dimension": "compile",
+          "message": "  Property 'children' does not exist on type 'IntrinsicAttributes & SelectProps'."
+        },
+        {
+          "dimension": "compile",
+          "message": "src/task/index.tsx(97,44): error TS2339: Property 'target' does not exist on type 'string'."
+        }
+      ]
+    }
+  },
+  "diffs": [
+    {
+      "dimension": "compile",
+      "message": "src/task/index.tsx(74,16): error TS2741: Property 'label' is missing in type '{ id: string; type: \"email\"; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; placeholder: string; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' but required in type 'InputProps'."
+    },
+    {
+      "dimension": "compile",
+      "message": "src/task/index.tsx(94,16): error TS2322: Type '{ children: Element[]; id: string; value: string; onChange: (e: string) => void; \"aria-invalid\": boolean; \"aria-describedby\": string | undefined; }' is not assignable to type 'IntrinsicAttributes & SelectProps'."
+    },
+    {
+      "dimension": "compile",
+      "message": "  Property 'children' does not exist on type 'IntrinsicAttributes & SelectProps'."
+    },
+    {
+      "dimension": "compile",
+      "message": "src/task/index.tsx(97,44): error TS2339: Property 'target' does not exist on type 'string'."
+    }
+  ]
+}

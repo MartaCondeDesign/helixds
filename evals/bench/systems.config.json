@@ -1,0 +1,3 @@
+{ "systems": {
+  "helix": { "root": "<this repo>", "rootEnv": "BENCH_HELIX_DIR", "componentsSrc": "packages/core/src", "componentsPkg": "@helixds/react", "foundationsPkg": "@helixds/tokens", "foundationsCss": "packages/tokens/dist/helix.css", "catalogStrategy": "docgen", "agentContext": { "agentsMd": ["AGENTS.md"], "skillDirs": [".agents/skills"], "extraDocs": ["llms.txt"] } }
+} }

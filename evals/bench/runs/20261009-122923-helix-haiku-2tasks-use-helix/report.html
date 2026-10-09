@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>open-design-system-bench · helix-haiku-2tasks-use-helix</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#0A0D16; --surface:#10151F; --surface-2:#161D2C; --border:#232B3F;
+  --ink:#E8ECF7; --muted:#8B95B3; --accent:#6C8CFF; --accent-ink:#9FB0FF;
+  --green:#3DD68C; --yellow:#F5C542; --red:#F0576B;
+  --font-display:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --font-mono:'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-full:9999px;
+}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:14.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;letter-spacing:-.01em}
+code,.mono{font-family:var(--font-mono)}
+a{color:var(--accent-ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1320px;margin:0 auto;padding:28px 28px 80px}
+
+header.top{padding:6px 0 22px;border-bottom:1px solid var(--border);margin-bottom:26px}
+header.top h1{font-size:24px;font-weight:700}
+.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
+.meta-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 13px}
+.meta-item .label{color:var(--muted);font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+.meta-item .value{margin-top:4px;font-size:14.5px;font-weight:600}
+.meta-item .sub{margin-top:2px;color:var(--muted);font-size:12px;font-family:var(--font-mono)}
+
+section{margin-top:34px}
+section>h2{font-size:18px;font-weight:650;margin-bottom:4px}
+section>p.lede{color:var(--muted);max-width:74ch;margin:0 0 14px;font-size:13.5px}
+
+.chip{display:inline-block;font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:var(--r-full);border:1px solid;white-space:nowrap}
+.chip-pass{color:var(--green);border-color:color-mix(in srgb,var(--green) 45%,transparent);background:color-mix(in srgb,var(--green) 12%,transparent)}
+.chip-review{color:var(--yellow);border-color:color-mix(in srgb,var(--yellow) 45%,transparent);background:color-mix(in srgb,var(--yellow) 12%,transparent)}
+.chip-fail{color:var(--red);border-color:color-mix(in srgb,var(--red) 45%,transparent);background:color-mix(in srgb,var(--red) 12%,transparent)}
+.chip-skip{color:var(--muted);border-color:var(--border);background:var(--surface-2)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:14px}
+.card>h3{padding:12px 16px;border-bottom:1px solid var(--border);font-size:14.5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.card .body{padding:14px 16px}
+
+.scroll-x{overflow-x:auto;max-width:100%}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--border);white-space:nowrap}
+th{color:var(--muted);font-weight:500;font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+td.num{font-family:var(--font-mono);text-align:right}
+tr:last-child td{border-bottom:0}
+
+.matrix th, .matrix td{text-align:center}
+.matrix td.task-name, .matrix th.task-name{text-align:left;white-space:normal;min-width:170px;position:sticky;left:0;background:var(--surface);z-index:1}
+.matrix thead th{background:var(--surface)}
+.matrix tbody tr:hover td{background:color-mix(in srgb,var(--surface-2) 60%,transparent)}
+.matrix tfoot td{font-weight:600;background:var(--surface-2)}
+.matrix-system{margin-bottom:8px}
+.matrix-system>h3{font-family:var(--font-mono);font-size:12px;font-weight:650;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-ink)}
+.matrix-system + .drilldowns{margin-top:10px;margin-bottom:18px}
+
+.mx-cell{cursor:pointer;border:0;background:transparent;padding:8px 11px;width:100%;font:inherit;color:inherit;display:flex;flex-direction:column;align-items:center;gap:3px}
+.mx-cell:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+/* Hover/selection is a state change, so it gets a short transition rather than
+   snapping. Kept under 200ms: the reader is scanning a matrix, not watching it. */
+@media (prefers-reduced-motion: no-preference){
+  .mx-cell{transition:background 140ms cubic-bezier(0.16,1,0.3,1)}
+  .matrix tbody tr td{transition:background 140ms cubic-bezier(0.16,1,0.3,1)}
+  a{transition:color 140ms cubic-bezier(0.16,1,0.3,1)}
+}
+.mx-score{font-family:var(--font-mono);font-weight:700;font-size:14px}
+.mx-cell.tone-green .mx-score{color:var(--green)}
+.mx-cell.tone-yellow .mx-score{color:var(--yellow)}
+.mx-cell.tone-red .mx-score{color:var(--red)}
+.mx-cell.tone-gray .mx-score{color:var(--muted)}
+.mx-n{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
+
+.drilldowns{margin-top:18px}
+.drill{border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);margin-bottom:12px;padding:14px 16px}
+.drill[hidden]{display:none}
+.drill h4{font-size:14px;margin-bottom:6px}
+.drill .agg-line{color:var(--muted);font-family:var(--font-mono);font-size:12px;margin-bottom:10px}
+.rep-card{border-top:1px dashed var(--border);padding-top:10px;margin-top:10px}
+.rep-card:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.rep-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600;font-size:13px}
+.diff-row .msg{white-space:normal;max-width:46ch}
+.diff-row .fix{white-space:normal;max-width:40ch;color:var(--muted)}
+.judge-note{background:var(--surface-2);border-radius:var(--r-sm);padding:9px 11px;margin-top:8px;font-size:13px;white-space:normal}
+.links{margin-top:8px;display:flex;gap:12px;flex-wrap:wrap;font-family:var(--font-mono);font-size:12px}
+.na{color:var(--muted);font-family:var(--font-mono);font-size:12px}
+
+.delta-up{color:var(--green);font-family:var(--font-mono)}
+.delta-down{color:var(--red);font-family:var(--font-mono)}
+.delta-flat{color:var(--muted);font-family:var(--font-mono)}
+
+footer.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+@media print{.mx-cell{cursor:default}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <h1>helix-haiku-2tasks-use-helix</h1>
+    <div class="meta-grid">
+      <div class="meta-item"><div class="label">Run</div><div class="value">20261009-122923-helix-haiku-2tasks-use-helix</div><div class="sub">profile: small</div></div>
+      <div class="meta-item"><div class="label">Window</div><div class="value">2026-10-09 12:29:23Z</div><div class="sub">&rarr; 2026-10-09 12:30:42Z</div></div>
+      <div class="meta-item"><div class="label">Wall clock</div><div class="value">1m 19s</div></div>
+      <div class="meta-item"><div class="label">Total cost</div><div class="value">$0.21</div></div>
+      
+      <div class="meta-item"><div class="label">System commits</div><div class="value" style="font-size:12.5px">helix @ 88d9ef39fa</div></div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Benchmark matrix</h2>
+    <p class="lede">One table per system. Rows are tasks, columns are context &times; model. Each cell is the mean
+      overall score across ok reps; colour follows the score (green &ge;85, yellow &ge;60, red below).
+      Gate (pass / review / fail) lives in the drill-down, not on the grid. The column summary row &mdash;
+      mean of means, total cost, average duration &mdash; is the headline comparison across context levels.
+      Click any cell to expand per-rep detail.</p>
+    <div class="card matrix-system">
+    <h3>helix</h3>
+    <div class="scroll-x">
+      <table class="matrix">
+        <thead><tr>
+    <th class="task-name">task</th>
+    <th>skill<br><span class="mono" style="color:var(--muted)">haiku</span></th>
+  </tr></thead>
+        <tbody><tr><td class="task-name">confirm-account-deletion</td><td><button type="button" class="mx-cell tone-green" title="n=1 · std=0.0 · gate=pass" aria-label="100.0, n=1" onclick="toggleDrill('drill_confirm-account-deletion__helix_skill_haiku')">
+      <span class="mx-score">100.0</span>
+      <span class="mx-n">n=1</span>
+    </button></td></tr><tr><td class="task-name">form-validation-errors</td><td><button type="button" class="mx-cell tone-yellow" title="n=1 · std=0.0 · gate=fail" aria-label="83.6, n=1, fail" onclick="toggleDrill('drill_form-validation-errors__helix_skill_haiku')">
+      <span class="mx-score">83.6</span>
+      <span class="mx-n">n=1</span>
+    </button></td></tr></tbody>
+        <tfoot><tr>
+    <td class="task-name">column mean &middot; cost &middot; avg duration</td>
+    <td>
+      <div class="mono" style="font-weight:700">91.8</div>
+      <div class="mx-n">$0.21 &middot; 57.6s</div>
+    </td>
+  </tr></tfoot>
+      </table>
+    </div>
+  </div>
+  <div class="drilldowns"><div class="drill" id="drill_confirm-account-deletion__helix_skill_haiku" hidden>
+    <h4>confirm-account-deletion <span class="mono" style="color:var(--muted)">&middot; helix_skill_haiku</span></h4>
+    <div class="agg-line">mean 100.0 · std 0.0 · n=1 · gate pass · dims: imports=100.0, apiFidelity=100.0, tokenDiscipline=100.0, a11yStatic=100.0, compile=100.0</div>
+    <div class="rep-card">
+    <div class="rep-head">rep 1 <span class="chip chip-pass">ok</span> <span class="chip chip-pass">pass</span> <span class="mono">100.0</span> <span class="mono" style="color:var(--muted);font-weight:400">&middot; 1m 16s &middot; $0.14 &middot; 17 turns</span></div>
+    
+    <div class="scroll-x"><table><thead><tr><th>dimension</th><th class="num">score</th><th>gate</th></tr></thead>
+        <tbody><tr><td>imports</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>apiFidelity</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>tokenDiscipline</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>a11yStatic</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>compile</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr></tbody></table></div>
+    
+    
+    <div class="links"><a href="cells/helix_skill_haiku/confirm-account-deletion/rep1">artifacts/</a><a href="cells/helix_skill_haiku/confirm-account-deletion/rep1/diff.patch">diff.patch</a><a href="cells/helix_skill_haiku/confirm-account-deletion/rep1/transcript.jsonl">transcript.jsonl</a></div>
+  </div>
+  </div><div class="drill" id="drill_form-validation-errors__helix_skill_haiku" hidden>
+    <h4>form-validation-errors <span class="mono" style="color:var(--muted)">&middot; helix_skill_haiku</span></h4>
+    <div class="agg-line">mean 83.6 · std 0.0 · n=1 · gate fail · dims: imports=100.0, apiFidelity=100.0, tokenDiscipline=90.0, a11yStatic=100.0, compile=0.0</div>
+    <div class="rep-card">
+    <div class="rep-head">rep 1 <span class="chip chip-pass">ok</span> <span class="chip chip-fail">fail</span> <span class="mono">83.6</span> <span class="mono" style="color:var(--muted);font-weight:400">&middot; 38.9s &middot; $0.07 &middot; 11 turns</span></div>
+    
+    <div class="scroll-x"><table><thead><tr><th>dimension</th><th class="num">score</th><th>gate</th></tr></thead>
+        <tbody><tr><td>imports</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>apiFidelity</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>tokenDiscipline</td><td class="num">90.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>a11yStatic</td><td class="num">100.0</td><td><span class="chip chip-pass">pass</span></td></tr><tr><td>compile</td><td class="num">0.0</td><td><span class="chip chip-fail">fail</span></td></tr></tbody></table></div>
+    <div class="scroll-x"><table><thead><tr><th>dimension</th><th>message</th><th>fix</th></tr></thead>
+        <tbody><tr class="diff-row"><td>tokenDiscipline</td><td class="msg">Inline style maxWidth: &#39;500px&#39; in src/task/index.tsx:66 bypasses design tokens</td><td class="fix">Use a design system spacing/sizing token instead of a raw value for &#39;maxWidth&#39;.</td></tr><tr class="diff-row"><td>compile</td><td class="msg">src/task/index.tsx(66,13): error TS2322: Type &#39;{ children: Element; style: { marginTop: string; maxWidth: string; }; }&#39; is not assignable to type &#39;IntrinsicAttributes &amp; CardProps&#39;.</td><td class="fix">n/a</td></tr><tr class="diff-row"><td>compile</td><td class="msg">  Property &#39;style&#39; does not exist on type &#39;IntrinsicAttributes &amp; CardProps&#39;.</td><td class="fix">n/a</td></tr></tbody></table></div>
+    
+    <div class="links"><a href="cells/helix_skill_haiku/form-validation-errors/rep1">artifacts/</a><a href="cells/helix_skill_haiku/form-validation-errors/rep1/diff.patch">diff.patch</a><a href="cells/helix_skill_haiku/form-validation-errors/rep1/transcript.jsonl">transcript.jsonl</a></div>
+  </div>
+  </div></div>
+  </section>
+
+  <footer class="foot">
+    Run <code>20261009-122923-helix-haiku-2tasks-use-helix</code> &middot; 2 record(s) &middot;
+    2 aggregate(s). Generated by <code>open-design-system-bench</code>.
+  </footer>
+</main>
+<script type="application/json" id="report-data">{"runId":"20261009-122923-helix-haiku-2tasks-use-helix","manifest":{"runId":"20261009-122923-helix-haiku-2tasks-use-helix","label":"helix-haiku-2tasks-use-helix","profile":"small","startedAt":"2026-10-09T12:29:23.562Z","nodeVersion":"v24.18.0","adapters":{"claude-code":{"version":"2.1.291 (Claude Code)"}},"systems":{"helix":{"root":"/Users/marta/Documents/Documentación/Clientes/Cmd/DS-Helix","commit":"88d9ef39fa16ddcae30b9d34b5f67acc93347649","catalogSrcHash":"df7a9affd6630af27050efbcab98bb995c125a1b4dd88f4eac636dfea3432687","tokensCssHash":"604063b9795825a3e78bfb930b83873513612247116e2e6a50753fba8d99ba3b"}},"cells":[{"spec":{"system":"helix","context":"skill","model":"haiku","agent":"claude-code","taskId":"confirm-account-deletion","rep":1},"status":"ok"},{"spec":{"system":"helix","context":"skill","model":"haiku","agent":"claude-code","taskId":"form-validation-errors","rep":1},"status":"ok"}],"totalCostUsd":0.2111442,"finishedAt":"2026-10-09T12:30:42.092Z","wallClockMs":78530,"paused":false},"records":[{"cell":{"system":"helix","context":"skill","model":"haiku","agent":"claude-code"},"taskId":"form-validation-errors","rep":1,"status":"ok","artifacts":{"dir":"cells/helix_skill_haiku/form-validation-errors/rep1","transcript":"cells/helix_skill_haiku/form-validation-errors/rep1/transcript.jsonl","diffPatch":"cells/helix_skill_haiku/form-validation-errors/rep1/diff.patch"},"agentMeta":{"durationMs":38940,"costUsd":0.0715424,"numTurns":11},"result":{"overall":83.57142857142858,"gate":"fail","dimensions":{"imports":{"dimension":"imports","score":100,"gate":"pass","diffs":[]},"apiFidelity":{"dimension":"apiFidelity","score":100,"gate":"pass","diffs":[]},"tokenDiscipline":{"dimension":"tokenDiscipline","score":90,"gate":"pass","diffs":[{"dimension":"tokenDiscipline","message":"Inline style maxWidth: '500px' in src/task/index.tsx:66 bypasses design tokens","fix":"Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."}]},"a11yStatic":{"dimension":"a11yStatic","score":100,"gate":"pass","diffs":[]},"compile":{"dimension":"compile","score":0,"gate":"fail","diffs":[{"dimension":"compile","message":"src/task/index.tsx(66,13): error TS2322: Type '{ children: Element; style: { marginTop: string; maxWidth: string; }; }' is not assignable to type 'IntrinsicAttributes & CardProps'."},{"dimension":"compile","message":"  Property 'style' does not exist on type 'IntrinsicAttributes & CardProps'."}]}},"diffs":[{"dimension":"tokenDiscipline","message":"Inline style maxWidth: '500px' in src/task/index.tsx:66 bypasses design tokens","fix":"Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."},{"dimension":"compile","message":"src/task/index.tsx(66,13): error TS2322: Type '{ children: Element; style: { marginTop: string; maxWidth: string; }; }' is not assignable to type 'IntrinsicAttributes & CardProps'."},{"dimension":"compile","message":"  Property 'style' does not exist on type 'IntrinsicAttributes & CardProps'."}]}},{"cell":{"system":"helix","context":"skill","model":"haiku","agent":"claude-code"},"taskId":"confirm-account-deletion","rep":1,"status":"ok","artifacts":{"dir":"cells/helix_skill_haiku/confirm-account-deletion/rep1","transcript":"cells/helix_skill_haiku/confirm-account-deletion/rep1/transcript.jsonl","diffPatch":"cells/helix_skill_haiku/confirm-account-deletion/rep1/diff.patch"},"agentMeta":{"durationMs":76227,"costUsd":0.1396018,"numTurns":17},"result":{"overall":100,"gate":"pass","dimensions":{"imports":{"dimension":"imports","score":100,"gate":"pass","diffs":[]},"apiFidelity":{"dimension":"apiFidelity","score":100,"gate":"pass","diffs":[]},"tokenDiscipline":{"dimension":"tokenDiscipline","score":100,"gate":"pass","diffs":[]},"a11yStatic":{"dimension":"a11yStatic","score":100,"gate":"pass","diffs":[]},"compile":{"dimension":"compile","score":100,"gate":"pass","diffs":[]}},"diffs":[]}}],"aggregates":[{"cellKey":"helix_skill_haiku","system":"helix","context":"skill","model":"haiku","taskId":"form-validation-errors","n":1,"meanOverall":83.57142857142858,"stdOverall":0,"worstGate":"fail","meanDimensions":{"imports":100,"apiFidelity":100,"tokenDiscipline":90,"a11yStatic":100,"compile":0}},{"cellKey":"helix_skill_haiku","system":"helix","context":"skill","model":"haiku","taskId":"confirm-account-deletion","n":1,"meanOverall":100,"stdOverall":0,"worstGate":"pass","meanDimensions":{"imports":100,"apiFidelity":100,"tokenDiscipline":100,"a11yStatic":100,"compile":100}}]}</script>
+<script>
+
+function toggleDrill(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.hidden = !el.hidden;
+  if (!el.hidden && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+</script>
+</body>
+</html>

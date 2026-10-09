@@ -1,0 +1,236 @@
+{
+  "runId": "20261009-122923-helix-haiku-2tasks-use-helix",
+  "manifest": {
+    "runId": "20261009-122923-helix-haiku-2tasks-use-helix",
+    "label": "helix-haiku-2tasks-use-helix",
+    "profile": "small",
+    "startedAt": "2026-10-09T12:29:23.562Z",
+    "nodeVersion": "v24.18.0",
+    "adapters": {
+      "claude-code": {
+        "version": "2.1.291 (Claude Code)"
+      }
+    },
+    "systems": {
+      "helix": {
+        "root": "/Users/marta/Documents/Documentación/Clientes/Cmd/DS-Helix",
+        "commit": "88d9ef39fa16ddcae30b9d34b5f67acc93347649",
+        "catalogSrcHash": "df7a9affd6630af27050efbcab98bb995c125a1b4dd88f4eac636dfea3432687",
+        "tokensCssHash": "604063b9795825a3e78bfb930b83873513612247116e2e6a50753fba8d99ba3b"
+      }
+    },
+    "cells": [
+      {
+        "spec": {
+          "system": "helix",
+          "context": "skill",
+          "model": "haiku",
+          "agent": "claude-code",
+          "taskId": "confirm-account-deletion",
+          "rep": 1
+        },
+        "status": "ok"
+      },
+      {
+        "spec": {
+          "system": "helix",
+          "context": "skill",
+          "model": "haiku",
+          "agent": "claude-code",
+          "taskId": "form-validation-errors",
+          "rep": 1
+        },
+        "status": "ok"
+      }
+    ],
+    "totalCostUsd": 0.2111442,
+    "finishedAt": "2026-10-09T12:30:42.092Z",
+    "wallClockMs": 78530,
+    "paused": false
+  },
+  "records": [
+    {
+      "cell": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code"
+      },
+      "taskId": "form-validation-errors",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/helix_skill_haiku/form-validation-errors/rep1",
+        "transcript": "cells/helix_skill_haiku/form-validation-errors/rep1/transcript.jsonl",
+        "diffPatch": "cells/helix_skill_haiku/form-validation-errors/rep1/diff.patch"
+      },
+      "agentMeta": {
+        "durationMs": 38940,
+        "costUsd": 0.0715424,
+        "numTurns": 11
+      },
+      "result": {
+        "overall": 83.57142857142858,
+        "gate": "fail",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 90,
+            "gate": "pass",
+            "diffs": [
+              {
+                "dimension": "tokenDiscipline",
+                "message": "Inline style maxWidth: '500px' in src/task/index.tsx:66 bypasses design tokens",
+                "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+              }
+            ]
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 0,
+            "gate": "fail",
+            "diffs": [
+              {
+                "dimension": "compile",
+                "message": "src/task/index.tsx(66,13): error TS2322: Type '{ children: Element; style: { marginTop: string; maxWidth: string; }; }' is not assignable to type 'IntrinsicAttributes & CardProps'."
+              },
+              {
+                "dimension": "compile",
+                "message": "  Property 'style' does not exist on type 'IntrinsicAttributes & CardProps'."
+              }
+            ]
+          }
+        },
+        "diffs": [
+          {
+            "dimension": "tokenDiscipline",
+            "message": "Inline style maxWidth: '500px' in src/task/index.tsx:66 bypasses design tokens",
+            "fix": "Use a design system spacing/sizing token instead of a raw value for 'maxWidth'."
+          },
+          {
+            "dimension": "compile",
+            "message": "src/task/index.tsx(66,13): error TS2322: Type '{ children: Element; style: { marginTop: string; maxWidth: string; }; }' is not assignable to type 'IntrinsicAttributes & CardProps'."
+          },
+          {
+            "dimension": "compile",
+            "message": "  Property 'style' does not exist on type 'IntrinsicAttributes & CardProps'."
+          }
+        ]
+      }
+    },
+    {
+      "cell": {
+        "system": "helix",
+        "context": "skill",
+        "model": "haiku",
+        "agent": "claude-code"
+      },
+      "taskId": "confirm-account-deletion",
+      "rep": 1,
+      "status": "ok",
+      "artifacts": {
+        "dir": "cells/helix_skill_haiku/confirm-account-deletion/rep1",
+        "transcript": "cells/helix_skill_haiku/confirm-account-deletion/rep1/transcript.jsonl",
+        "diffPatch": "cells/helix_skill_haiku/confirm-account-deletion/rep1/diff.patch"
+      },
+      "agentMeta": {
+        "durationMs": 76227,
+        "costUsd": 0.1396018,
+        "numTurns": 17
+      },
+      "result": {
+        "overall": 100,
+        "gate": "pass",
+        "dimensions": {
+          "imports": {
+            "dimension": "imports",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "apiFidelity": {
+            "dimension": "apiFidelity",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "tokenDiscipline": {
+            "dimension": "tokenDiscipline",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "a11yStatic": {
+            "dimension": "a11yStatic",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          },
+          "compile": {
+            "dimension": "compile",
+            "score": 100,
+            "gate": "pass",
+            "diffs": []
+          }
+        },
+        "diffs": []
+      }
+    }
+  ],
+  "aggregates": [
+    {
+      "cellKey": "helix_skill_haiku",
+      "system": "helix",
+      "context": "skill",
+      "model": "haiku",
+      "taskId": "form-validation-errors",
+      "n": 1,
+      "meanOverall": 83.57142857142858,
+      "stdOverall": 0,
+      "worstGate": "fail",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 100,
+        "tokenDiscipline": 90,
+        "a11yStatic": 100,
+        "compile": 0
+      }
+    },
+    {
+      "cellKey": "helix_skill_haiku",
+      "system": "helix",
+      "context": "skill",
+      "model": "haiku",
+      "taskId": "confirm-account-deletion",
+      "n": 1,
+      "meanOverall": 100,
+      "stdOverall": 0,
+      "worstGate": "pass",
+      "meanDimensions": {
+        "imports": 100,
+        "apiFidelity": 100,
+        "tokenDiscipline": 100,
+        "a11yStatic": 100,
+        "compile": 100
+      }
+    }
+  ]
+}

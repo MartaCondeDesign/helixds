@@ -149,6 +149,54 @@ tester.run('no-raw-color', plugin.rules['no-raw-color'], {
   ],
 });
 
+tester.run('no-raw-spacing', plugin.rules['no-raw-spacing'], {
+  valid: [
+    "const s = { padding: 'var(--helix-spacing-m)' };",
+    "const s = { margin: 0, gap: '0px', marginInline: 'auto' };",
+    "const s = { maxWidth: '600px', width: 320 };",
+    "const s = { padding: `calc(var(--helix-spacing-m) * 2)` };",
+  ],
+  invalid: [
+    {
+      code: "const s = { padding: '16px' };",
+      errors: [{
+        messageId: 'raw',
+        suggestions: [
+          { messageId: 'replace', output: "const s = { padding: 'var(--helix-spacing-component-l)' };" },
+          { messageId: 'replace', output: "const s = { padding: 'var(--helix-spacing-m)' };" },
+        ],
+      }],
+    },
+    {
+      code: "<div style={{ marginTop: '2rem' }} />",
+      errors: [{
+        messageId: 'raw',
+        suggestions: [
+          { messageId: 'replace', output: "<div style={{ marginTop: 'var(--helix-spacing-layout-m)' }} />" },
+          { messageId: 'replace', output: "<div style={{ marginTop: 'var(--helix-spacing-xl)' }} />" },
+        ],
+      }],
+    },
+    {
+      code: 'const s = { gap: 8 };',
+      errors: [{
+        messageId: 'raw',
+        suggestions: [
+          { messageId: 'replace', output: "const s = { gap: 'var(--helix-spacing-component-s)' };" },
+          { messageId: 'replace', output: "const s = { gap: 'var(--helix-spacing-xs)' };" },
+        ],
+      }],
+    },
+    {
+      code: "const s = { padding: '8px 20px' };",
+      errors: [
+        { messageId: 'raw', suggestions: 2 },
+        { messageId: 'rawUnknown', suggestions: [] },
+      ],
+    },
+  ],
+});
+
 tester.run('no-raw-control', plugin.rules['no-raw-control'], {
   valid: [
     helix + '<Button onClick={save}>Save</Button>',
