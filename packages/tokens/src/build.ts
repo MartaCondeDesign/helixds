@@ -30,7 +30,18 @@ function isComposite(value: TokenNode['$value']): value is Record<string, string
   return typeof value === 'object' && value !== null;
 }
 type Tree = Record<string, unknown>;
-type CSSVar = { name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string | undefined };
+type CSSVar = {
+  name: string; value: string; layer: 'primitive' | 'semantic' | 'component'; description?: string | undefined;
+  /** CSS var this token directly aliases ({semantic.color.fill.page} → --helix-color-fill-page), if any. */
+  alias?: string | undefined;
+};
+
+// Same naming rule flatten() uses, applied to a DTCG reference path.
+function refToCssVar(value: unknown): string | undefined {
+  if (typeof value !== 'string' || !/^\{[^}]+\}$/.test(value)) return undefined;
+  const [layer, ...rest] = value.slice(1, -1).split('.');
+  return '--helix-' + (layer === 'primitive' ? ['primitive', ...rest] : rest).join('-');
+}
 
 // ─── Resolve DTCG references ({a.b.c} → value) ───────────────────────────────
 
@@ -82,7 +93,7 @@ function flatten(obj: Tree, root: Tree, prefix: string[], layer: CSSVar['layer']
         // --helix-textStyle-body-s-medium-fontSize. Each sub-value is itself an alias string.
         return Object.entries(token.$value).map(([subKey, subVal]) => {
           const name = '--helix-' + [...basePrefix, key, subKey].join('-').replace(/\./g, '-');
-          return { name, value: resolveRef(subVal, root), layer, description: token.$description };
+          return { name, value: resolveRef(subVal, root), layer, description: token.$description, alias: refToCssVar(subVal) };
         });
       }
 
@@ -90,7 +101,7 @@ function flatten(obj: Tree, root: Tree, prefix: string[], layer: CSSVar['layer']
         ? resolveRef(token.$value, root)
         : String(token.$value);
       const name = '--helix-' + [...basePrefix, key].join('-').replace(/\./g, '-');
-      return [{ name, value: rawValue, layer, description: token.$description }];
+      return [{ name, value: rawValue, layer, description: token.$description, alias: refToCssVar(token.$value) }];
     }
     return flatten(node, root, [...prefix, key], layer);
   });
@@ -494,12 +505,8 @@ if (process.env.HELIX_DARK_REPORT) console.log(componentDarkReport.join('\n'));
 // primitive.breakpoint.tablet === primitive.breakpoint.desktop for typography). Below the
 // tablet breakpoint, override with semantic.fontSize.mobile.* (87.5% of desktop, see ADR).
 //
-// CAVEAT: this overrides --helix-primitive-fontSize-* only. semantic/component fontSize vars
-// (e.g. --helix-button-fontSize-m) currently INLINE their resolved value at build time rather
-// than referencing var(--helix-primitive-fontSize-*), so this override does not cascade to
-// them yet — it only affects consumers that reference the primitive var directly. Making it
-// cascade everywhere requires switching alias resolution from inlining to var() chaining,
-// a larger pipeline change tracked separately.
+// This overrides --helix-primitive-fontSize-* only, and reaches every textStyle/component fontSize
+// through its var() chain (see "Alias chaining" below) — e.g. heading-xl is 24px → 21px on mobile.
 
 const tabletBreakpointPx = Number(
   resolveRef('{primitive.breakpoint.tablet}', tokens).replace('px', ''),
@@ -518,12 +525,23 @@ const mobileFontSizeOverrides = mobileFontSizeVars.map(v => {
   return { name: primitiveName, value: v.value };
 });
 
+// ─── Alias chaining ───────────────────────────────────────────────────────────
+//
+// An alias is written as `var(--helix-<target>)` instead of its inlined value, so the CSS itself
+// shows the primitive → semantic → component chain (agents and audits reading helix.css can see
+// that fill-surface IS gray-50), and an override on the target reaches everything built on it:
+// the mobile fontSize override above now shrinks headings too. Dark mode is unaffected in
+// practice — every color that differs in dark already has its own explicit entry in darkOverrides.
+const byName = new Map(allVars.map(v => [v.name, v]));
+const chained = new Set(allVars.filter(v => v.alias && byName.has(v.alias)).map(v => v.name));
+const cssValue = (v: CSSVar) => (chained.has(v.name) ? `var(${v.alias})` : v.value);
+
 // ─── Write CSS ────────────────────────────────────────────────────────────────
 
 const sections = {
-  primitive: primitiveVars.map(v => `  ${v.name}: ${v.value};`).join('\n'),
-  semantic:  semanticVars.map(v => `  ${v.name}: ${v.value};${v.description ? ` /* ${v.description} */` : ''}`).join('\n'),
-  component: componentVars.map(v => `  ${v.name}: ${v.value};`).join('\n'),
+  primitive: primitiveVars.map(v => `  ${v.name}: ${cssValue(v)};`).join('\n'),
+  semantic:  semanticVars.map(v => `  ${v.name}: ${cssValue(v)};${v.description ? ` /* ${v.description} */` : ''}`).join('\n'),
+  component: componentVars.map(v => `  ${v.name}: ${cssValue(v)};`).join('\n'),
   dark2:     Object.entries(darkOverrides).map(([k, v]) => `  ${k}: ${v};`).join('\n'),
   dark4:     Object.entries(darkOverrides).map(([k, v]) => `    ${k}: ${v};`).join('\n'),
   mobileFontSize: mobileFontSizeOverrides.map(v => `    ${v.name}: ${v.value};`).join('\n'),
@@ -649,3 +667,4 @@ console.log(`   Semantic:  ${semanticVars.length} vars`);
 console.log(`   Component: ${componentVars.length} vars`);
 console.log(`   Total:     ${allVars.length} CSS custom properties`);
 console.log(`   Dark mode: ${Object.keys(darkOverrides).length} overrides`);
+console.log(`   Chained:   ${chained.size}/${allVars.filter(v => v.alias).length} aliases emitted as var()`);

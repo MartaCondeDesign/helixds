@@ -174,7 +174,17 @@ function cssValues() {
   const darkStart = css.indexOf(':root[data-theme="dark"]');
   const darkEnd = css.indexOf('}', darkStart);
   const decls = (chunk: string) => new Map([...chunk.matchAll(/(--helix-[\w-]+):\s*([^;]+);/g)].map(m => [m[1]!, m[2]!.trim()]));
-  return { light: decls(css.slice(0, darkStart)), dark: decls(css.slice(darkStart, darkEnd)) };
+  const light = decls(css.slice(0, darkStart));
+  const darkOnly = decls(css.slice(darkStart, darkEnd));
+  // Aliases are emitted as var(--helix-…) chains; follow them so callers still get the final value.
+  const resolve = (name: string, layer: Map<string, string>, depth = 0): string | undefined => {
+    const value = layer.get(name) ?? light.get(name);
+    const ref = value?.match(/^var\((--helix-[\w-]+)\)$/)?.[1];
+    return ref && depth < 20 ? resolve(ref, layer, depth + 1) : value;
+  };
+  const resolved = (names: Iterable<string>, layer: Map<string, string>) =>
+    new Map([...names].map(n => [n, resolve(n, layer)!] as const));
+  return { light: resolved(light.keys(), new Map()), dark: resolved(darkOnly.keys(), darkOnly) };
 }
 
 export function searchTokens(query: string, limit = 8) {

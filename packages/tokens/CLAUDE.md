@@ -208,12 +208,13 @@ category-first, with the exact key grammar for each.
   directly when there's no semantic concept to route through (radius is the one exception that always goes
   through `semantic.radius` now, since that's the only layer it has).
 
-**CSS pipeline caveat:** `build.ts` *inlines* resolved alias values rather than emitting `var()` chains —
-`--helix-button-fontSize-m` gets the literal `12px`, not `var(--helix-primitive-fontSize-s)`. This means the
-`primitive.breakpoint`-driven responsive override only reaches `--helix-primitive-fontSize-*` directly; it
-does not cascade into semantic/component fontSize vars yet. Making it cascade everywhere would mean
-switching the whole pipeline from inlining to `var()` chaining — a bigger, separate change, not something
-the breakpoint feature did as a side effect.
+**CSS pipeline: `var()` chains.** `build.ts` emits every alias as `var()` of the token it references
+(`--helix-color-fill-surface: var(--helix-primitive-color-gray-50)`), so the primitive → semantic →
+component chain is visible in `helix.css` itself, and an override on a token reaches everything built on
+it. That is how the `primitive.breakpoint`-driven mobile override on `--helix-primitive-fontSize-*` now
+shrinks textStyles and component font sizes too (heading-xl 24px → 21px, Modal title 18px → 16px). Dark
+mode still comes from the explicit override map; switching from inlining changed no dark value. Scripts
+that read values out of `helix.css` must follow `var()` (see `cssValues()` in `scripts/helix-query-lib.ts`).
 
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category, plus the Figma-only resolved-px `lineHeight/{key}` — see below),

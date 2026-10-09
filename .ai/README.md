@@ -3,7 +3,8 @@
 Everything an AI agent needs to work on Helix *besides* the always-loaded rules (`CLAUDE.md` in the repo
 root and in each package). Plain Markdown/JSON, so any tool can read it. `.cursor/` is a symlink to this
 directory, so Cursor sees the same files; `.claude/` is a real directory of its own (Claude Code settings
-and `launch.json`), not a link.
+and `launch.json`), not a link. Skills are also published as `.agents/skills/<name>/SKILL.md` (linked from
+`.claude/`, `.gemini/` and `.github/skills`) by `pnpm sync:skills`, which runs on every commit.
 
 ```
 .ai/

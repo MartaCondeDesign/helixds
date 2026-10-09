@@ -1,3 +1,19 @@
+# CHANGELOG.md is tracked, so instead of leaving it modified (or adding a separate "Regenerate
+# changelog" commit, which is what used to happen) it is amended into the commit just made: every
+# commit carries its own changelog entry. The amend fires this hook again, so the env var stops the
+# loop; rebases and cherry-picks are skipped because amending mid-sequence would rewrite the wrong commit.
+# `-o CHANGELOG.md` amends with that file only, never anything else that happens to be staged.
+if [ -z "$HELIX_CHANGELOG_AMEND" ] \
+  && [ ! -d "$(git rev-parse --git-path rebase-merge)" ] \
+  && [ ! -d "$(git rev-parse --git-path rebase-apply)" ] \
+  && [ ! -f "$(git rev-parse --git-path CHERRY_PICK_HEAD)" ]; then
+  pnpm -s docs:changelog:md --head-pending >/dev/null
+  if ! git diff --quiet -- CHANGELOG.md; then
+    HELIX_CHANGELOG_AMEND=1 git commit --amend --no-edit --no-verify --quiet -o CHANGELOG.md
+  fi
+fi
+
 # Keep Storybook's Changelog page current. .ai/maps/changelog.json is generated from `git log` and
-# ignored by git, so this only rewrites the file — it never creates a commit.
+# ignored by git, so this only rewrites the file — it never creates a commit. Runs after the amend so
+# it records the final hash.
 pnpm -s docs:changelog

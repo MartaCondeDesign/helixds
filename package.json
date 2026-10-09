@@ -31,6 +31,7 @@
     "audit:token-usage": "tsx scripts/audit-token-usage.ts",
     "docs:manifest": "tsx scripts/generate-component-manifest.ts",
     "docs:changelog": "tsx scripts/generate-changelog.ts",
+    "docs:changelog:md": "tsx scripts/generate-changelog.ts --md",
     "docs:figma-map": "tsx scripts/docs-figma-map.ts",
     "docs:readme": "tsx scripts/generate-readme-stats.ts",
     "contract": "tsx scripts/contract-cli.ts",
@@ -51,6 +52,7 @@
     "eval:trace": "tsx scripts/log-trace.ts",
     "quality": "tsx scripts/quality-cli.ts",
     "setup:ai": "node scripts/setup-ai.mjs",
+    "sync:skills": "node scripts/sync-skills.mjs",
     "prepare": "husky && tsx scripts/generate-changelog.ts",
     "figma:expected": "tsx scripts/figma/expected-styles.ts"
   },

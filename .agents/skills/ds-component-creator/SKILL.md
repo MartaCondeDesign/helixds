@@ -1,0 +1,1 @@
+../../../.ai/skills/ds-component-creator.md

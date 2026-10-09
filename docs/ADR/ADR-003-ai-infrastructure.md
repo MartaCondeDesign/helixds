@@ -40,21 +40,22 @@ Multi-LLM installation: a `setup:ai` script was originally intended to copy/link
 (`scripts/setup-ai.mjs`) now exists, but it serves the **consumer** audience: it copies `AGENTS.md` into a
 target project and writes pointer files for Cursor (`.cursor/rules/helix.mdc`) and Copilot
 (`.github/copilot-instructions.md`) when those tools are detected there. It does **not** sync this repo's
-own `.ai/skills/` into `.claude/skills/` or `.gemini/skills/` — that contributor-side sync is still not
-built, so keep those in sync with `.ai/skills/` by hand.
+own `.ai/skills/` into `.claude/skills/` or `.gemini/skills/`.
+
+**Update 2026-10-09: contributor-side sync built.** `scripts/sync-skills.mjs` (`pnpm sync:skills`, also run by
+`.husky/pre-commit`) publishes each `.ai/skills/<name>.md` as `.agents/skills/<name>/SKILL.md` — the
+folder-per-skill Agent Skills layout — via symlinks, and links `.claude/skills`, `.gemini/skills` and
+`.github/skills` to `.agents/skills`. `.ai/skills/*.md` stays the only file anyone edits.
 
 CI validation: `pnpm lint:ai` validates the .ai/ directory structure (SPORT sections present,
 agent frontmatter complete, memory files non-empty, config.json valid).
 
 ## Consequences
 
-- **Positive:** Editing `.ai/skills/ds-component-creator.md` propagates to Cursor automatically (symlink)
-  and to Claude Code once the copy is done by hand (`setup:ai` doesn't cover this — see Status above).
+- **Positive:** Editing `.ai/skills/ds-component-creator.md` propagates to Cursor, Claude Code, Gemini CLI,
+  Copilot and any tool reading `.agents/skills/` automatically (symlinks, see the 2026-10-09 update).
 - **Positive:** `pnpm lint:ai` catches drift in `.ai/` structure in CI.
-- **Negative:** `.claude/skills/` can silently drift from `.ai/skills/` until a contributor-side sync is built.
-- **Negative:** On Windows, the `.cursor` symlink requires developer mode or Admin rights.
-- **Open item:** the contributor-side skill sync (`.ai/skills/` → `.claude/skills/`, `.gemini/skills/`)
-  — `setup:ai` shipped for consumers only.
+- **Negative:** On Windows, the `.cursor` and skills symlinks require developer mode or Admin rights.
 
 ## Two-audience principle
 
