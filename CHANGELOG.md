@@ -73,7 +73,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — chore: GitHub repo renamed helix-ds → helixds (latest commit)
+- 2026-10-09 — docs(mcp): example cwd uses the helixds folder name (latest commit)
+- 2026-10-09 — chore: GitHub repo renamed helix-ds → helixds ([`334dc81`](https://github.com/MartaCondeDesign/helixds/commit/334dc81))
 - 2026-10-09 — docs: ADRs use the @helixds package names (ADR-023) ([`65737cc`](https://github.com/MartaCondeDesign/helixds/commit/65737cc))
 - 2026-10-09 — refactor: AI Readiness uses only Helix's own sources ([`b25fbfa`](https://github.com/MartaCondeDesign/helixds/commit/b25fbfa))
 - 2026-10-09 — fix: stories use spacing tokens; no-raw-spacing suggests the t-shirt scale first ([`efd89e2`](https://github.com/MartaCondeDesign/helixds/commit/efd89e2))

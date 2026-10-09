@@ -25,7 +25,7 @@ All tools are read-only. They read the same sources as the CLI (`scripts/helix-q
 ```json
 {
   "mcpServers": {
-    "helix": { "command": "pnpm", "args": ["-s", "helix:mcp"], "cwd": "/path/to/DS-Helix" }
+    "helix": { "command": "pnpm", "args": ["-s", "helix:mcp"], "cwd": "/path/to/helixds" }
   }
 }
 ```
