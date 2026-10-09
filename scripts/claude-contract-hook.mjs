@@ -6,7 +6,7 @@
  * can't guess props (the open-design-system-bench run in evals/bench/ shows what guessing produces).
  *
  * "Read the contract" means any of, per component, anywhere earlier in the session transcript:
- *   - MCP:   helix_get_contract { name: "<Name>" }
+ *   - MCP:   helix_get_contract { name: "<Name>" } or helix_get_contracts { names: ["<Name>", …] }
  *   - Read:  contracts/components/<Name>.json, node_modules/@helixds/react/dist/contracts/<Name>.json,
  *            or <Name>.types.ts / <Name>.types.d.ts
  *   - Bash:  pnpm helix component <Name>
@@ -132,9 +132,13 @@ for (const line of transcript.split('\n')) {
   for (const block of entry.message?.content ?? []) {
     if (block?.type !== 'tool_use') continue;
     const { name, input: use = {} } = block;
-    if (/helix_get_contract$/.test(name) && typeof use.name === 'string') {
-      const match = required.find(c => c.toLowerCase() === use.name.toLowerCase());
-      if (match) read.add(match);
+    if (/helix_get_contracts?$/.test(name)) {
+      // helix_get_contract { name } or helix_get_contracts { names: [...] }
+      const asked = [use.name, ...(Array.isArray(use.names) ? use.names : [])].filter(n => typeof n === 'string');
+      for (const n of asked) {
+        const match = required.find(c => c.toLowerCase() === n.toLowerCase());
+        if (match) read.add(match);
+      }
     } else if (name === 'Read' && typeof use.file_path === 'string') {
       const m = use.file_path.match(/(?:contracts\/(?:components\/)?([A-Za-z]+)\.json|([A-Za-z]+)\.types\.(?:d\.)?ts)$/);
       if (m) read.add(m[1] ?? m[2]);

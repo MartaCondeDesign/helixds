@@ -3,7 +3,7 @@
 > For teams using Helix in their apps. If you're contributing to Helix itself, read `contributor-ai/CONTRIBUTOR.md` instead.
 
 > **Before writing any JSX with `@helixds/react`: read each component's real props first** — the
-> `use-helix` skill, `helix_get_contract` (MCP), or the contract shipped in the package
+> `use-helix` skill, `helix_get_contracts` (MCP), or the contract shipped in the package
 > (`node_modules/@helixds/react/dist/contracts/<Name>.json`, vocabulary in `dist/prop-map.md`). Never guess a prop:
 > Helix names differ from other libraries (`Button` takes its text as children, not `label`; form
 > controls require `label`; `Select` takes `options`). Use only `--helix-*` tokens for spacing and color.
@@ -166,7 +166,8 @@ The repo registers a `helix` MCP server (`.mcp.json`, `pnpm helix:mcp`). Use its
 files or shelling out:
 
 1. `helix_list_components` — check Helix has the component before building anything.
-2. `helix_get_contract` — exact props, accessibility and governance for the component you're using.
+2. `helix_get_contracts` — the contracts of every component you'll use, in one call (`helix_get_contract` for
+   one): the exact import line, props, accessibility and governance. Read one for EVERY component, layout ones too.
 3. `helix_search_tokens` — the token for a concept ("danger background", "subtle text"); never hardcode.
 4. `helix_validate_snippet` — run your JSX through it before writing the file; apply `fixedCode`, then
    fix what's left in `remainingAfterFix`.

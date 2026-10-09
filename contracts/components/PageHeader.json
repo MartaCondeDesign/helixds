@@ -43,7 +43,8 @@
     { "name": "label",       "type": "string", "required": true, "description": "The page or section title text." },
     { "name": "description", "type": "string | undefined", "description": "Supporting one-line description shown below the title." },
     { "name": "level",       "type": "1 | 2", "default": 1, "description": "Heading level of the title — 1 for a page, 2 for a major in-page section. Never skip a level to change visual size; that's what CSS is for." },
-    { "name": "actions",     "type": "React.ReactNode | undefined", "description": "Trailing content — typically a Button and/or Badge." }
+    { "name": "actions",     "type": "React.ReactNode | undefined", "description": "Trailing content — typically a Button and/or Badge." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
   ],
 
   "tokenPolicy": {

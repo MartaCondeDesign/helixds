@@ -12,7 +12,17 @@ import { z } from 'zod';
 import { getComponent, getPattern, listComponents, searchTokens } from '../../../scripts/helix-query-lib.ts';
 import { validateSnippet } from './validate.ts';
 
-const server = new McpServer({ name: 'helix', version: '0.1.0' });
+// Sent to the client when it connects; Claude Code and other clients put it in the agent's context. Evals
+// (2026-10-09) showed agents with these tools still guessed: they imported a made-up package until the
+// contracts carried an import line, and every remaining error was on a component whose contract they
+// hadn't read. So the instructions say both, before any tool is called.
+const INSTRUCTIONS = [
+  'Helix is a React design system. Import every component from @helixds/react — never @helix/…, @helix-ds/… or any other name.',
+  'Before writing JSX that uses Helix, read the contract of EVERY Helix component you will use, including layout ones (PageHeader, Card, AppShell…): call helix_get_contracts once with all their names. Use only the props a contract lists — guessed props (title, style, open…) are usually wrong in Helix.',
+  'Use helix_search_tokens for any color or spacing instead of a raw value, and run helix_validate_snippet on your code before you finish.',
+].join('\n');
+
+const server = new McpServer({ name: 'helix', version: '0.1.0' }, { instructions: INSTRUCTIONS });
 
 const json = (value: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }] });
 const error = (text: string) => ({ content: [{ type: 'text' as const, text }], isError: true });
@@ -20,7 +30,7 @@ const readOnly = { readOnlyHint: true, destructiveHint: false, idempotentHint: t
 
 server.registerTool('helix_list_components', {
   title: 'List Helix components',
-  description: 'Every Helix component with its status (draft/beta/stable), purpose and exact import line (from @helixds/react). Call this first to check whether Helix already has what you are about to build.',
+  description: 'Every Helix component with its status (draft/beta/stable), purpose and exact import line (from @helixds/react). Call this first to check whether Helix already has what you are about to build, then read the contracts of every component you pick with helix_get_contracts.',
   inputSchema: { status: z.enum(['draft', 'beta', 'stable']).optional().describe('Only components with this status') },
   annotations: readOnly,
 }, async ({ status }) => json(listComponents(status)));
@@ -38,6 +48,26 @@ server.registerTool('helix_get_contract', {
   }
   const { suggestedNext: _cliHints, ...rest } = contract;
   return json(rest);
+});
+
+server.registerTool('helix_get_contracts', {
+  title: 'Get several Helix component contracts at once',
+  description: 'The contracts of every Helix component you are about to use, in one call — the same content as helix_get_contract (import line, props, accessibility, neverUseFor, governance) for each name. Call it before writing JSX, with ALL the components the code will use, layout ones included.',
+  inputSchema: { names: z.array(z.string()).min(1).max(20).describe('Component names, e.g. ["PageHeader", "Card", "Button"] (case-insensitive)') },
+  annotations: readOnly,
+}, async ({ names }) => {
+  const contracts = [];
+  const unknown = [];
+  for (const name of names) {
+    const contract = getComponent(name);
+    if (!contract) { unknown.push(name); continue; }
+    const { suggestedNext: _cliHints, ...rest } = contract;
+    contracts.push(rest);
+  }
+  return json({
+    contracts,
+    ...(unknown.length ? { unknown, note: `No Helix component named ${unknown.join(', ')}. Helix has: ${listComponents().map(c => c.name).join(', ')}.` } : {}),
+  });
 });
 
 server.registerTool('helix_search_tokens', {

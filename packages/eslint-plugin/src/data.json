@@ -126,7 +126,8 @@
       "variant",
       "size",
       "icon",
-      "label"
+      "label",
+      "className"
     ],
     "Button": [
       "variant",
@@ -151,7 +152,8 @@
       "series",
       "label",
       "description",
-      "height"
+      "height",
+      "className"
     ],
     "Checkbox": [
       "label",
@@ -216,7 +218,8 @@
       "stroke",
       "color",
       "label",
-      "decorative"
+      "decorative",
+      "className"
     ],
     "IconButton": [
       "icon",
@@ -293,13 +296,15 @@
       "label",
       "href",
       "icon",
-      "current"
+      "current",
+      "className"
     ],
     "PageHeader": [
       "label",
       "description",
       "level",
-      "actions"
+      "actions",
+      "className"
     ],
     "RadioButton": [
       "label",
@@ -336,7 +341,8 @@
       "defaultValue",
       "onChange",
       "disabled",
-      "name"
+      "name",
+      "className"
     ],
     "Select": [
       "label",
@@ -411,7 +417,8 @@
       "label",
       "children",
       "placement",
-      "expanded"
+      "expanded",
+      "className"
     ],
     "TopBar": [
       "start",
@@ -662,6 +669,13 @@
       "--helix-spacing-layout-xl"
     ]
   },
+  "passthrough": [
+    "Button",
+    "Chip",
+    "IconButton",
+    "Input",
+    "Textarea"
+  ],
   "coreExports": [
     "Accordion",
     "AccordionDoc",

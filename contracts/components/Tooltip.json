@@ -43,7 +43,8 @@
     { "name": "label",     "type": "string",  "required": true, "description": "The tooltip's text content — short, plain text only, no interactive content." },
     { "name": "children",  "type": "React.ReactElement", "required": true, "description": "The trigger — whatever the tooltip describes (an icon, an avatar, an icon-only button)." },
     { "name": "placement", "type": "'top' | 'bottom' | 'left' | 'right'", "default": "top", "description": "Preferred side of the trigger. Tooltip auto-flips to the opposite side (and clamps sideways) on its own if the preferred side would clip the viewport — this is a starting preference, not a guarantee (see ADR-009, amending ADR-008)." },
-    { "name": "expanded",  "type": "boolean | undefined", "description": "Forces the content visible regardless of hover/focus — for a controlled/always-shown case. Leave unset for the normal hover/focus-driven behavior." }
+    { "name": "expanded",  "type": "boolean | undefined", "description": "Forces the content visible regardless of hover/focus — for a controlled/always-shown case. Leave unset for the normal hover/focus-driven behavior." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
   ],
 
   "sizing": {

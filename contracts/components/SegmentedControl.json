@@ -48,7 +48,8 @@
     { "name": "defaultValue", "type": "string | undefined", "description": "Uncontrolled initial value." },
     { "name": "onChange", "type": "((value: string) => void) | undefined", "description": "Selection change handler." },
     { "name": "disabled", "type": "boolean", "default": false, "description": "Disables every option in the group." },
-    { "name": "name", "type": "string | undefined", "description": "Native form field name, submitted via a hidden input mirroring the selected value. Auto-generated if omitted." }
+    { "name": "name", "type": "string | undefined", "description": "Native form field name, submitted via a hidden input mirroring the selected value. Auto-generated if omitted." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root element." }
   ],
 
   "sizing": {

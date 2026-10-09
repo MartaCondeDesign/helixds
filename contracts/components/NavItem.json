@@ -45,7 +45,8 @@
     { "name": "label",  "type": "string", "required": true, "description": "Visible label text." },
     { "name": "href",   "type": "string", "required": true, "description": "Navigation target." },
     { "name": "icon",   "type": "TablerIcon | undefined", "description": "Leading icon, passed by reference. Rendered at a fixed 16px." },
-    { "name": "current", "type": "boolean", "default": false, "description": "Marks this item as representing the current view." }
+    { "name": "current", "type": "boolean", "default": false, "description": "Marks this item as representing the current view." },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
   ],
 
   "tokenPolicy": {

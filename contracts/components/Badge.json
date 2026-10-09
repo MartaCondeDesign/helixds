@@ -74,7 +74,8 @@
       "type": "string",
       "required": true,
       "description": "Text content of the badge."
-    }
+    },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for container." }
   ],
   "sizing": {
     "height": {

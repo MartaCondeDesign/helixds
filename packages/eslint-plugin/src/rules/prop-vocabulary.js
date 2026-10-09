@@ -7,13 +7,15 @@
  *
  * Only on components imported from @helixds/react, and only when that component actually documents the
  * canonical prop — so `onPress` on a Card (which has no onClick prop) is left alone. A few anti-synonyms are
- * also real HTML attributes Helix components pass through (`<Button type="submit">`, `<Input name="email">`);
- * those are never reported.
+ * also real HTML attributes (`<Button type="submit">`, `<Input name="email">`); those are left alone on the
+ * components whose props extend HTML attributes (data.passthrough). On the others they don't compile, so
+ * they're reported: `<PageHeader title>` → label. (unknown-prop skips anti-synonyms and leaves them here.)
  */
 import data from '../data.json' with { type: 'json' };
 import { helixImports } from '../helix-imports.js';
 
 const PASSTHROUGH = new Set(['type', 'name', 'title', 'readonly', 'content', 'slot']);
+const takesHtml = new Set(data.passthrough ?? []);
 
 export default {
   meta: {
@@ -41,7 +43,7 @@ export default {
           const name = attr.name.name;
 
           const canonical = data.antiSynonyms[name];
-          if (canonical && props.has(canonical) && !props.has(name) && !PASSTHROUGH.has(name)) {
+          if (canonical && props.has(canonical) && !props.has(name) && !(PASSTHROUGH.has(name) && takesHtml.has(component))) {
             context.report({
               node: attr.name,
               messageId: 'prop',

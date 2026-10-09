@@ -184,7 +184,8 @@
       "type": "boolean",
       "default": true,
       "description": "Marks the icon as decorative when a visible label already exists."
-    }
+    },
+    { "name": "className", "type": "string | undefined", "description": "Additional className for the root svg." }
   ],
 
   "figma": {

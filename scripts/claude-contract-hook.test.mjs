@@ -58,6 +58,7 @@ describe('claude-contract-hook', () => {
     ];
     assert.equal(runHook(lines, { content: page }), null);
     assert.equal(runHook([toolUse('Read', { file_path: '/x/Button.types.d.ts' })], { content: "import { Button } from '@helixds/react';\n<Button>Go</Button>;" }), null);
+    assert.equal(runHook([toolUse('mcp__helix__helix_get_contracts', { names: ['Table', 'modal', 'Button'] })], { content: page }), null);
   });
 
   it('asks only for the component an edit touches, not every component in the file', () => {

@@ -10,6 +10,7 @@
  *   primitives     packages/tokens/src/tokens.json  "blue-600" → hex, to map Tailwind palette classes
  *   spacing        packages/tokens/src/tokens.json  "16px" → semantic spacing CSS variables with that value
  *   coreExports    packages/core/src/index.ts      every name @helixds/react really exports (values + types)
+ *   passthrough    packages/core/src/(components|layout)/<Name>/<Name>.types.ts  props that extend HTML attributes
  *   packages       packages/<dir>/package.json     the real @helixds/* package names
  *
  * Run: pnpm --filter @helixds/eslint-plugin build:data  (the test suite fails if data.json is stale)
@@ -103,6 +104,20 @@ for (const m of read('packages/core/src/index.ts').matchAll(/export\s+(?:type\s+
   }
 }
 
+// ── which components take native HTML attributes ──────────────────────────
+// Only those whose props type extends React's HTML attributes accept title, style, id, onClick… on top of
+// their own props. Code lines only: a comment saying a component *used to* extend them doesn't count.
+const passthrough = [];
+for (const base of ['packages/core/src/components', 'packages/core/src/layout']) {
+  for (const name of fs.readdirSync(path.join(root, base))) {
+    const file = path.join(root, base, name, `${name}.types.ts`);
+    if (!fs.existsSync(file)) continue;
+    const code = fs.readFileSync(file, 'utf8').split('\n').filter(line => !/^\s*(\*|\/\/|\/\*)/.test(line)).join('\n');
+    if (/(extends|&)[^{;]*\b\w*HTMLAttributes\b|(extends|&)[^{;]*ComponentProps(WithoutRef|WithRef)?\b/.test(code)) passthrough.push(name);
+  }
+}
+passthrough.sort();
+
 // ── real @helixds packages ─────────────────────────────────────────────────
 const packages = fs.readdirSync(path.join(root, 'packages'))
   .map(dir => path.join(root, 'packages', dir, 'package.json'))
@@ -111,6 +126,6 @@ const packages = fs.readdirSync(path.join(root, 'packages'))
   .filter(name => name?.startsWith('@helixds/'))
   .sort();
 
-const data = { antiSynonyms, valueSynonyms, props, colors, primitives, spacing, coreExports: [...coreExports].sort(), packages };
+const data = { antiSynonyms, valueSynonyms, props, colors, primitives, spacing, passthrough, coreExports: [...coreExports].sort(), packages };
 fs.writeFileSync(path.join(pkg, 'src/data.json'), JSON.stringify(data, null, 2) + '\n');
-console.log(`✅ src/data.json — ${Object.keys(antiSynonyms).length} anti-synonyms, ${Object.keys(props).length} components, ${Object.keys(colors).length} token colors, ${Object.keys(spacing).length} spacing values, ${coreExports.size} core exports`);
+console.log(`✅ src/data.json — ${Object.keys(antiSynonyms).length} anti-synonyms, ${Object.keys(props).length} components, ${Object.keys(colors).length} token colors, ${Object.keys(spacing).length} spacing values, ${passthrough.length} components taking HTML attributes, ${coreExports.size} core exports`);

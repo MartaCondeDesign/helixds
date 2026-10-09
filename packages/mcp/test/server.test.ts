@@ -20,9 +20,9 @@ before(async () => {
 after(() => client.close());
 
 describe('@helixds/mcp', () => {
-  it('lists the five tools, all read-only', async () => {
+  it('lists the six tools, all read-only', async () => {
     const { tools } = await client.listTools();
-    assert.deepEqual(tools.map(t => t.name).sort(), ['helix_get_contract', 'helix_get_pattern', 'helix_list_components', 'helix_search_tokens', 'helix_validate_snippet']);
+    assert.deepEqual(tools.map(t => t.name).sort(), ['helix_get_contract', 'helix_get_contracts', 'helix_get_pattern', 'helix_list_components', 'helix_search_tokens', 'helix_validate_snippet']);
     assert.ok(tools.every(t => t.annotations?.readOnlyHint === true));
   });
 
@@ -33,6 +33,24 @@ describe('@helixds/mcp', () => {
     assert.ok(data.accessibility.role);
     assert.ok(data.rationale);
     assert.ok(data.governance.mustEscalateToDS.length);
+  });
+
+  it('tells the agent, on connect, the package to import and to read every contract first', () => {
+    const instructions = client.getInstructions() ?? '';
+    assert.match(instructions, /@helixds\/react/);
+    assert.match(instructions, /helix_get_contracts/);
+  });
+
+  it('helix_get_contract leads with the import line', async () => {
+    const { data } = await call('helix_get_contract', { name: 'Table' });
+    assert.equal(data.import, "import { Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helixds/react';");
+  });
+
+  it('helix_get_contracts returns several contracts at once and names the unknown ones', async () => {
+    const { data } = await call('helix_get_contracts', { names: ['PageHeader', 'card', 'Spinner'] });
+    assert.deepEqual(data.contracts.map((c: { name: string }) => c.name), ['PageHeader', 'Card']);
+    assert.ok(data.contracts[0].props.some((p: { name: string }) => p.name === 'label'));
+    assert.deepEqual(data.unknown, ['Spinner']);
   });
 
   it('helix_get_contract explains an unknown component instead of guessing', async () => {

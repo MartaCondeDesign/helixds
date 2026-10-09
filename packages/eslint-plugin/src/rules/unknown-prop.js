@@ -5,8 +5,9 @@
  *   <Button label="Save" />          → not a Button prop — Button's text goes in children
  *
  * The contract is the source of truth: a prop is valid if the component's contract lists it, or if it's a
- * standard HTML/React attribute every Helix component passes through to its element (id, aria-*, data-*,
- * DOM events…). prop-vocabulary already reports — and fixes — known anti-synonyms (`isPending` → `isLoading`),
+ * standard HTML/React attribute (id, title, style, DOM events…) AND the component's props extend HTML
+ * attributes (data.passthrough: Button, Input…). <PageHeader title> or <Card style> is reported: those take
+ * only their own props, so it doesn't compile. key, ref, aria-* and data-* are fine everywhere. prop-vocabulary already reports — and fixes — known anti-synonyms (`isPending` → `isLoading`),
  * so those are skipped here instead of reported twice. Only on components imported from @helixds/react.
  */
 import data from '../data.json' with { type: 'json' };
@@ -27,8 +28,10 @@ const HTML = new Set([
   'loading', 'decoding', 'crossOrigin', 'referrerPolicy', 'colSpan', 'rowSpan', 'scope', 'headers', 'open',
   'popover', 'popoverTarget', 'popoverTargetAction',
 ]);
-const isPassthrough = (name) =>
-  HTML.has(name) || name.startsWith('aria-') || name.startsWith('data-') || /^on[A-Z]/.test(name);
+const passthrough = new Set(data.passthrough ?? []);
+const isPassthrough = (name, component) =>
+  name === 'key' || name === 'ref' || name.startsWith('aria-') || name.startsWith('data-')
+  || (passthrough.has(component) && (HTML.has(name) || /^on[A-Z]/.test(name)));
 
 // Text props an agent reaches for when a component takes its text as children (Button, Card…).
 const TEXT_PROPS = new Set(['label', 'text', 'content', 'caption']);
@@ -57,7 +60,7 @@ export default {
         for (const attr of node.attributes) {
           if (attr.type !== 'JSXAttribute' || attr.name.type !== 'JSXIdentifier') continue;
           const name = attr.name.name;
-          if (props.has(name) || isPassthrough(name)) continue;
+          if (props.has(name) || isPassthrough(name, component)) continue;
           // A known anti-synonym of a prop this component has: prop-vocabulary reports and fixes it.
           const canonical = data.antiSynonyms[name];
           if (canonical && props.has(canonical)) continue;

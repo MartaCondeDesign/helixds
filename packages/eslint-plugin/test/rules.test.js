@@ -13,7 +13,7 @@ RuleTester.itOnly = it.only;
 const tester = new RuleTester({
   languageOptions: { ecmaVersion: 'latest', sourceType: 'module', parserOptions: { ecmaFeatures: { jsx: true } } },
 });
-const helix = "import { Button, Badge, Card, Input } from '@helixds/react';\n";
+const helix = "import { Button, Badge, Card, Input, PageHeader } from '@helixds/react';\n";
 
 tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
   valid: [
@@ -25,6 +25,12 @@ tester.run('prop-vocabulary', plugin.rules['prop-vocabulary'], {
     "import { Button } from './my-button';\n<Button onPress={save} />",
   ],
   invalid: [
+    {
+      // From the evals: PageHeader takes no HTML attributes, so `title` is just the wrong name for `label`.
+      code: helix + '<PageHeader title="Team" />',
+      output: helix + '<PageHeader label="Team" />',
+      errors: [{ messageId: 'prop', data: { wrong: 'title', canonical: 'label', component: 'PageHeader' } }],
+    },
     {
       code: helix + '<Button onPress={save}>Save</Button>',
       output: helix + '<Button onClick={save}>Save</Button>',
@@ -218,9 +224,18 @@ tester.run('unknown-prop', plugin.rules['unknown-prop'], {
     helix + '<Button id="save" aria-busy={saving} data-testid="save" onMouseEnter={hover}>Save</Button>',  // HTML passthrough
     helix + '<Button loading>Save</Button>',            // anti-synonym — prop-vocabulary reports and fixes it
     helix + '<Card>…</Card>',
+    helix + '<Card className="x" data-testid="card" aria-label="Summary">…</Card>',  // its own prop + hyphenated attributes
     '<Button isPending />',                             // not imported from Helix
   ],
   invalid: [
+    {
+      // From the evals: components whose props don't extend HTML attributes (Card, PageHeader…) take no style or id.
+      code: helix + '<Card style={{ marginTop: 8 }} id="summary">…</Card>',
+      errors: [
+        { messageId: 'unknown', data: { prop: 'style', component: 'Card', props: 'header, children, padding, className' } },
+        { messageId: 'unknown', data: { prop: 'id', component: 'Card', props: 'header, children, padding, className' } },
+      ],
+    },
     {
       // What an agent with no guide wrote in the evals: a prop from another library.
       code: helix + '<Button wobble>Save</Button>',

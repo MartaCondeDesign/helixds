@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T17:18:57.980Z",
+  "generatedAt": "2026-10-09T17:29:38.648Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
     "evalRuns": 301,
@@ -128,8 +128,8 @@
       {
         "id": "invented-prop",
         "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-        "failed": 140,
-        "rate": 0.46511627906976744
+        "failed": 141,
+        "rate": 0.4684385382059801
       }
     ],
     "ladder": [
@@ -1012,12 +1012,12 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.6265438437531461,
+  "healthScore": 0.6264773985704217,
   "healthScoreBreakdown": {
     "componentReadiness": 0.6060606060606061,
     "figmaAlignment": 0.6060606060606061,
     "agentReliability": 0.09302325581395349,
-    "ruleCompliance": 0.8275747508305648,
+    "ruleCompliance": 0.8272425249169434,
     "governanceCoverage": 1
   },
   "weekly": {
@@ -1085,8 +1085,8 @@
         {
           "id": "invented-prop",
           "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-          "failed": 120,
-          "rate": 0.46153846153846156
+          "failed": 121,
+          "rate": 0.4653846153846154
         }
       ]
     }
