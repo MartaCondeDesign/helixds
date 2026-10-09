@@ -24,6 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
+- 2026-10-09 — feat: first AI Readiness rating — 54/100 (Invested), from a screen-task round (latest commit)
 - 2026-10-09 — feat: AI Readiness page — can an agent read Helix, and do agents use it well? ([`bbbd3dc`](https://github.com/MartaCondeDesign/helix-ds/commit/bbbd3dc))
 - 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself ([`cf9bb48`](https://github.com/MartaCondeDesign/helix-ds/commit/cf9bb48))
 - 2026-10-09 — feat(evals): eval:calibrate — test the graders with planted mistakes ([`5f8058a`](https://github.com/MartaCondeDesign/helix-ds/commit/5f8058a))
@@ -72,7 +73,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — refactor: AI Readiness uses only Helix's own sources (latest commit)
+- 2026-10-09 — refactor: AI Readiness uses only Helix's own sources ([`b25fbfa`](https://github.com/MartaCondeDesign/helix-ds/commit/b25fbfa))
 - 2026-10-09 — fix: stories use spacing tokens; no-raw-spacing suggests the t-shirt scale first ([`efd89e2`](https://github.com/MartaCondeDesign/helix-ds/commit/efd89e2))
 - 2026-10-07 — chore: button-basic eval round under @helixds — llms.txt, agents-md, mcp and full repo 5/5, lint loop 4/5, bare 60 ([`8402970`](https://github.com/MartaCondeDesign/helix-ds/commit/8402970))
 - 2026-10-07 — chore: button-basic eval round with @helix/react; add blog drafts, prototypes and ADR-024 ([`0a079c5`](https://github.com/MartaCondeDesign/helix-ds/commit/0a079c5))

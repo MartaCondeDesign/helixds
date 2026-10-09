@@ -74,12 +74,12 @@ function AIReadinessPage() {
             <span style={muted}>
               {report.score === null
                 ? 'Readable alone only says the pieces exist — not that agents use them well. A score needs ② to cover enough tasks.'
-                : 'Mean of ① Readable and ② Used well. Tiers: 70+ AI-native, 40+ Invested, below that Emerging.'}
+                : 'The ② Used well score: what agents actually do with Helix. ① Readable is shown as prerequisites, not averaged in — it would lift the score whatever agents do. Tiers: 70+ AI-native, 40+ Invested, below that Emerging.'}
             </span>
             <span style={muted}>Measured at {report.commit} · {report.generatedAt.slice(0, 10)}</span>
           </div>
         </Card>
-        <Card header="① Readable">
+        <Card header="① Readable (prerequisites)">
           <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
             <Score value={report.readable.score} label="Readable" />
             <span style={muted}>Presence and coverage checks: the pieces an agent needs are there. They don't show the pieces work — ② does.</span>

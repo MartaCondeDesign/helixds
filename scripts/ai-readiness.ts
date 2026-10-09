@@ -185,13 +185,20 @@ const current = all.filter(r => r.timestamp >= epoch.at).map(r => {
   return p ? { ...r, ...scorePrompt(p, r.generatedCode) } : r;
 });
 
+// Per task first, then the mean over tasks: a task answered 25 times must not outweigh five answered once.
 function rate(id: string, label: string, how: string, runs: LoadedRun[], ok: (r: LoadedRun) => boolean, command: string): Check {
-  const misses = runs.filter(r => !ok(r));
+  const tasks = [...new Set(runs.map(r => r.promptId))].sort();
+  const perTask = tasks.map(t => {
+    const rs = runs.filter(r => r.promptId === t);
+    return { t, good: rs.filter(ok).length, total: rs.length, misses: rs.filter(r => !ok(r)) };
+  });
   return {
-    id, label, how, command, n: runs.length,
-    score: runs.length ? pct(runs.length - misses.length, runs.length) : null,
-    evidence: runs.length
-      ? [`${runs.length - misses.length}/${runs.length} answers`, ...misses.slice(0, 12).map(r => `   ✗ ${r.promptId} · ${r.variant} · rep ${r.rep} — evals/outputs/${r.file}`), ...(misses.length > 12 ? [`   … and ${misses.length - 12} more`] : [])]
+    id, label, command, n: runs.length,
+    how: `${how} Each task weighs the same (mean of per-task shares), however many answers it has.`,
+    score: tasks.length ? mean(perTask.map(p => (p.good / p.total) * 100)) : null,
+    evidence: tasks.length
+      ? perTask.flatMap(p => [`${p.good === p.total ? '✓' : '✗'} ${p.t}: ${p.good}/${p.total}`,
+          ...p.misses.slice(0, 3).map(r => `     ${r.variant} · rep ${r.rep} — evals/outputs/${r.file}`)])
       : [`No ${id === 'design' ? 'judged answers' : 'answers'} since ${epoch.hash ?? 'the start'} — run ${command} to measure.`],
   };
 }
@@ -200,12 +207,13 @@ function lift(): Check {
   const byLevel = (v: string) => current.filter(r => r.variant === v);
   const bare = byLevel('no-context'), mcp = byLevel('mcp');
   const shared = [...new Set(bare.map(r => r.promptId))].filter(id => mcp.some(r => r.promptId === id));
-  const avg = (rs: LoadedRun[]) => mean(rs.filter(r => shared.includes(r.promptId)).map(r => r.score * 100));
+  // Per task first, then over tasks — same weighting as the rates above.
+  const avg = (rs: LoadedRun[]) => mean(shared.map(t => mean(rs.filter(r => r.promptId === t).map(r => r.score * 100))));
   const has = shared.length > 0;
   return {
-    id: 'lift', label: 'What the MCP adds', n: has ? bare.length + mcp.length : 0,
+    id: 'lift', label: 'Checklist score with the MCP', n: has ? bare.length + mcp.length : 0,
     score: has ? Math.max(0, Math.min(100, avg(mcp))) : null,
-    how: 'Mean checklist score with only the MCP vs with no Helix context at all, on the same tasks. The score shown is the MCP level\'s; the gap is in the evidence.',
+    how: 'Mean checklist score of the MCP level, on the tasks also answered with no Helix context; the gap between the two is in the evidence.',
     evidence: has ? [`Same tasks: ${shared.join(', ')}`, `No context: ${avg(bare)} · MCP: ${avg(mcp)} · gap ${avg(mcp) - avg(bare) >= 0 ? '+' : ''}${avg(mcp) - avg(bare)}`]
       : [`No task measured at both levels since ${epoch.hash ?? 'the start'} — pnpm eval:ladder --levels no-context,mcp --yes`],
     command: 'pnpm eval:ladder --levels no-context,mcp',
@@ -213,12 +221,22 @@ function lift(): Check {
 }
 
 const readable = [agentEntryPoints(), contracts(), types(), tokens(), docs(), changeHistory(), guardrails()];
-const judged = current.filter(r => (r as any).judge);
+// ② rates are about Helix, so they use answers that HAD Helix context: the no-context level measures the
+// model's own guesses and only serves as the baseline in "What the MCP adds".
+const guided = current.filter(r => r.variant !== 'no-context');
+const judged = guided.filter(r => (r as any).judge);
+// "Compiles" alone would reward an answer that skipped Helix (plain HTML compiles) or used a former package
+// name (eval-mechanical.ts resolves those for old answers): today it must import @helixds/react and nothing
+// else that looks like Helix.
+const importsHelixRight = (code: string) => {
+  const specs = [...code.matchAll(/from\s+['"]([^'"]+)['"]/g)].map(m => m[1]!);
+  return specs.includes('@helixds/react') && !specs.some(s => /helix/i.test(s) && !/^@helixds\/(react|tokens)(\/|$)/.test(s));
+};
 const used = [
-  rate('compiles', 'Compiles against Helix', 'Share of answers that type-check against Helix\'s real source (eval-mechanical.ts).', current.filter(r => (r as any).mechanical), r => (r as any).mechanical.compiles, 'pnpm eval:rescore'),
-  rate('no-invented-props', 'No invented props', 'Share of answers with no helix/unknown-prop or helix/prop-vocabulary problem.', current.filter(r => (r as any).mechanical), r => !r.globalChecks?.['invented-prop'], 'pnpm eval:rescore'),
-  rate('checklist', 'Task checklist passed', 'Share of answers that meet every checkable criterion of their prompt.', current, r => r.passed, 'pnpm eval:report'),
-  rate('design', 'Design judged good', 'Share of judged answers that pass every critical item of the design rubric (LLM judge, calibrated by pnpm eval:calibrate --judge).', judged, r => (r as any).judge.passed, 'pnpm eval:judge'),
+  rate('compiles', 'Imports @helixds/react and compiles', 'Share of answers (with Helix context) that import the real package — no made-up or former package name — and type-check against Helix\'s source (eval-mechanical.ts).', guided.filter(r => (r as any).mechanical), r => importsHelixRight(r.generatedCode) && (r as any).mechanical.compiles, 'pnpm eval:rescore'),
+  rate('no-invented-props', 'No invented props', 'Share of answers that import @helixds/react with no helix/unknown-prop or helix/prop-vocabulary problem. Answers with a made-up package are left out: their props can\'t be checked (the row above already counts them).', guided.filter(r => (r as any).mechanical && importsHelixRight(r.generatedCode)), r => !r.globalChecks?.['invented-prop'], 'pnpm eval:rescore'),
+  rate('checklist', 'Task checklist passed', 'Share of answers (with Helix context) that meet every checkable criterion of their prompt.', guided, r => r.passed, 'pnpm eval:report'),
+  rate('design', 'Design judged good', 'Share of judged answers (with Helix context) that pass every critical item of the design rubric (LLM judge, calibrated by pnpm eval:calibrate --judge).', judged, r => (r as any).judge.passed, 'pnpm eval:judge'),
   lift(),
 ];
 
@@ -233,9 +251,9 @@ const coverageNote = `${tasksCovered.length} of ${prompts.size} tasks (${screens
 const readableScore = mean(readable.map(c => c.score!));
 const measured = used.filter(c => c.score !== null);
 const usedScore = enough && measured.length ? mean(measured.map(c => c.score!)) : null;
-// No overall score without ②: ① only says the pieces are there (and Helix built most of them to pass it);
-// whether they work is what agents' answers show.
-const total = usedScore === null ? null : Math.round((readableScore + usedScore) / 2);
+// The overall score IS ②: ① only says the pieces are there (and Helix built most of them to pass it), so
+// averaging it in would lift the score whatever agents do. ① stays on the page as the prerequisites.
+const total = usedScore;
 const tier = total === null ? null : total >= 70 ? 'AI-native' : total >= 40 ? 'Invested' : 'Emerging';
 
 const head = execSync('git rev-parse --short HEAD', { cwd: root, encoding: 'utf8' }).trim();
@@ -246,7 +264,7 @@ const report = {
   commit: head,
   score: total,
   tier,
-  basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'readable + used well',
+  basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'used well (① readable is shown as prerequisites, not averaged in)',
   readable: { score: readableScore, checks: readable },
   used: {
     score: usedScore, enough, coverageNote, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,

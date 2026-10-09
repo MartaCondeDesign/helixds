@@ -189,8 +189,8 @@
         "variant": "mcp",
         "label": "mcp",
         "answers": 5,
-        "passRate": 1.0,
-        "meanScore": 1.0,
+        "passRate": 1,
+        "meanScore": 1,
         "tokensPerAnswer": 91312.8,
         "totalTokens": 456564
       },
@@ -211,6 +211,39 @@
         "meanScore": 1,
         "tokensPerAnswer": 70844,
         "totalTokens": 354220
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09T15-50-08",
+    "date": "2026-10-09T15:51:35.562Z",
+    "commit": "b25fbfa",
+    "runs": 1,
+    "tasks": [
+      "screen-delete-account",
+      "screen-notification-settings",
+      "screen-save-feedback",
+      "screen-signup-errors",
+      "screen-team-members"
+    ],
+    "levels": [
+      {
+        "variant": "no-context",
+        "label": "bare",
+        "answers": 5,
+        "passRate": 0,
+        "meanScore": 0.18,
+        "tokensPerAnswer": 44518.2,
+        "totalTokens": 222591
+      },
+      {
+        "variant": "mcp",
+        "label": "mcp",
+        "answers": 5,
+        "passRate": 0,
+        "meanScore": 0.7533333333333333,
+        "tokensPerAnswer": 109402.6,
+        "totalTokens": 547013
       }
     ]
   }

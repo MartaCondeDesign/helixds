@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-09T14:23:23.931Z",
+  "generatedAt": "2026-10-09T15:55:40.608Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
-    "evalRuns": 281,
-    "lastEvalRunAt": "2026-10-07T10:46:50.053Z",
-    "weeklyEvalRuns": 240,
+    "evalRuns": 291,
+    "lastEvalRunAt": "2026-10-09T15:51:35.437Z",
+    "weeklyEvalRuns": 250,
     "improvementRecords": 0,
     "unscoredComponents": []
   },
@@ -67,9 +67,9 @@
     "defined": 763
   },
   "evals": {
-    "generations": 281,
-    "passRate": 0.08540925266903915,
-    "promptsCovered": 30,
+    "generations": 291,
+    "passRate": 0.08247422680412371,
+    "promptsCovered": 35,
     "globalChecks": [
       {
         "id": "hardcoded-color",
@@ -81,13 +81,13 @@
         "id": "hardcoded-size",
         "label": "Hardcoded px/rem value",
         "failed": 3,
-        "rate": 0.010676156583629894
+        "rate": 0.010309278350515464
       },
       {
         "id": "inline-style",
         "label": "Inline style={{…}}",
-        "failed": 27,
-        "rate": 0.09608540925266904
+        "failed": 28,
+        "rate": 0.09621993127147767
       },
       {
         "id": "raw-icon",
@@ -99,37 +99,37 @@
         "id": "icon-element-prop",
         "label": "icon={<IconXxx />} instead of icon={IconXxx}",
         "failed": 2,
-        "rate": 0.0071174377224199285
+        "rate": 0.006872852233676976
       },
       {
         "id": "on-press",
         "label": "onPress instead of onClick",
         "failed": 103,
-        "rate": 0.3665480427046263
+        "rate": 0.3539518900343643
       },
       {
         "id": "raw-div",
         "label": "<div> instead of a Helix layout component",
-        "failed": 23,
-        "rate": 0.08185053380782918
+        "failed": 32,
+        "rate": 0.10996563573883161
       },
       {
         "id": "raw-native-control",
         "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-        "failed": 1,
-        "rate": 0.0035587188612099642
+        "failed": 4,
+        "rate": 0.013745704467353952
       },
       {
         "id": "doesnt-compile",
         "label": "Doesn't compile against Helix's real types (tsc)",
-        "failed": 172,
-        "rate": 0.6120996441281139
+        "failed": 178,
+        "rate": 0.6116838487972509
       },
       {
         "id": "invented-prop",
         "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)",
         "failed": 128,
-        "rate": 0.4555160142348754
+        "rate": 0.43986254295532645
       }
     ],
     "ladder": [
@@ -137,12 +137,12 @@
         "variant": "no-context",
         "label": "bare",
         "detail": "No Helix guide, no repo",
-        "answers": 40,
-        "tasks": 7,
+        "answers": 45,
+        "tasks": 12,
         "passRate": 0,
-        "meanScore": 0.43375,
-        "tokensPerAnswer": 54569.2,
-        "totalTokens": 272846
+        "meanScore": 0.40555555555555556,
+        "tokensPerAnswer": 49543.7,
+        "totalTokens": 495437
       },
       {
         "variant": "llms-txt",
@@ -170,12 +170,12 @@
         "variant": "mcp",
         "label": "mcp",
         "detail": "Only the Helix MCP tools — no guide, no repo",
-        "answers": 20,
-        "tasks": 1,
-        "passRate": 0.25,
-        "meanScore": 0.75,
-        "tokensPerAnswer": 90174.35,
-        "totalTokens": 1803487
+        "answers": 25,
+        "tasks": 6,
+        "passRate": 0.2,
+        "meanScore": 0.7506666666666668,
+        "tokensPerAnswer": 94020,
+        "totalTokens": 2350500
       },
       {
         "variant": "lint-loop",
@@ -386,9 +386,66 @@
         ],
         "tokenSum": 272846,
         "measured": 5
+      },
+      {
+        "date": "2026-10-09",
+        "variant": "no-context",
+        "answers": 5,
+        "scoreSum": 0.8999999999999999,
+        "passed": 0,
+        "tasks": [
+          "screen-save-feedback",
+          "screen-delete-account",
+          "screen-signup-errors",
+          "screen-notification-settings",
+          "screen-team-members"
+        ],
+        "tokenSum": 222591,
+        "measured": 5
+      },
+      {
+        "date": "2026-10-09",
+        "variant": "mcp",
+        "answers": 5,
+        "scoreSum": 3.7666666666666666,
+        "passed": 0,
+        "tasks": [
+          "screen-notification-settings",
+          "screen-delete-account",
+          "screen-save-feedback",
+          "screen-team-members",
+          "screen-signup-errors"
+        ],
+        "tokenSum": 547013,
+        "measured": 5
       }
     ],
     "improvements": [
+      {
+        "id": "2026-10-09T15-50-08",
+        "date": "2026-10-09T15:51:35.562Z",
+        "previous": "2026-10-07T10-40-10",
+        "commit": "b25fbfa",
+        "commits": [
+          "chore: button-basic eval round under @helixds — llms.txt, agents-md, mcp and full repo 5/5, lint loop 4/5, bare 60",
+          "feat: concept tiles illustrations, Motion-only strokes (no GSAP)",
+          "feat: agent-readable CHANGELOG, var() token chains and skills for every agent tool",
+          "feat: use-helix consumer skill, no-raw-spacing lint rule, bench results",
+          "fix: stories use spacing tokens; no-raw-spacing suggests the t-shirt scale first",
+          "feat: contracts in the npm package, contract-read hook for Claude Code",
+          "feat: contract hook asks only for the components a change touches",
+          "feat(evals): screen-level tasks and compile + invented-prop checks on every answer",
+          "feat(evals): eval:calibrate — test the graders with planted mistakes",
+          "feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself",
+          "feat: AI Readiness page — can an agent read Helix, and do agents use it well?",
+          "refactor: AI Readiness uses only Helix's own sources"
+        ],
+        "uncommitted": false,
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
+      },
       {
         "id": "2026-10-07T10-40-10",
         "date": "2026-10-07T10:44:52.065Z",
@@ -833,6 +890,39 @@
             "totalTokens": 354220
           }
         ]
+      },
+      {
+        "id": "2026-10-09T15-50-08",
+        "date": "2026-10-09T15:51:35.562Z",
+        "commit": "b25fbfa",
+        "runs": 1,
+        "tasks": [
+          "screen-delete-account",
+          "screen-notification-settings",
+          "screen-save-feedback",
+          "screen-signup-errors",
+          "screen-team-members"
+        ],
+        "levels": [
+          {
+            "variant": "no-context",
+            "label": "bare",
+            "answers": 5,
+            "passRate": 0,
+            "meanScore": 0.18,
+            "tokensPerAnswer": 44518.2,
+            "totalTokens": 222591
+          },
+          {
+            "variant": "mcp",
+            "label": "mcp",
+            "answers": 5,
+            "passRate": 0,
+            "meanScore": 0.7533333333333333,
+            "tokensPerAnswer": 109402.6,
+            "totalTokens": 547013
+          }
+        ]
       }
     ]
   },
@@ -842,21 +932,21 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.6268370538121427,
+  "healthScore": 0.6260668541080913,
   "healthScoreBreakdown": {
     "componentReadiness": 0.6060606060606061,
     "figmaAlignment": 0.6060606060606061,
-    "agentReliability": 0.08540925266903915,
-    "ruleCompliance": 0.8366548042704627,
+    "agentReliability": 0.08247422680412371,
+    "ruleCompliance": 0.8357388316151203,
     "governanceCoverage": 1
   },
   "weekly": {
     "from": "2026-10-02",
     "to": "2026-10-09",
     "evals": {
-      "generations": 240,
-      "passRate": 0.1,
-      "promptsCovered": 7,
+      "generations": 250,
+      "passRate": 0.096,
+      "promptsCovered": 12,
       "globalChecks": [
         {
           "id": "hardcoded-color",
@@ -868,13 +958,13 @@
           "id": "hardcoded-size",
           "label": "Hardcoded px/rem value",
           "failed": 2,
-          "rate": 0.008333333333333333
+          "rate": 0.008
         },
         {
           "id": "inline-style",
           "label": "Inline style={{…}}",
-          "failed": 16,
-          "rate": 0.06666666666666667
+          "failed": 17,
+          "rate": 0.068
         },
         {
           "id": "raw-icon",
@@ -886,37 +976,37 @@
           "id": "icon-element-prop",
           "label": "icon={<IconXxx />} instead of icon={IconXxx}",
           "failed": 2,
-          "rate": 0.008333333333333333
+          "rate": 0.008
         },
         {
           "id": "on-press",
           "label": "onPress instead of onClick",
           "failed": 85,
-          "rate": 0.3541666666666667
+          "rate": 0.34
         },
         {
           "id": "raw-div",
           "label": "<div> instead of a Helix layout component",
-          "failed": 14,
-          "rate": 0.058333333333333334
+          "failed": 23,
+          "rate": 0.092
         },
         {
           "id": "raw-native-control",
           "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-          "failed": 1,
-          "rate": 0.004166666666666667
+          "failed": 4,
+          "rate": 0.016
         },
         {
           "id": "doesnt-compile",
           "label": "Doesn't compile against Helix's real types (tsc)",
-          "failed": 150,
-          "rate": 0.625
+          "failed": 156,
+          "rate": 0.624
         },
         {
           "id": "invented-prop",
           "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary)",
           "failed": 108,
-          "rate": 0.45
+          "rate": 0.432
         }
       ]
     }
