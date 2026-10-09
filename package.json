@@ -31,6 +31,7 @@
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",
     "audit:token-usage": "tsx scripts/audit-token-usage.ts",
     "docs:manifest": "tsx scripts/generate-component-manifest.ts",
+    "docs:contract-imports": "tsx scripts/sync-contract-imports.ts",
     "docs:changelog": "tsx scripts/generate-changelog.ts",
     "docs:changelog:md": "tsx scripts/generate-changelog.ts --md",
     "docs:figma-map": "tsx scripts/docs-figma-map.ts",

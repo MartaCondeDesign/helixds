@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "A centered overlay that interrupts the page for a focused task or decision — blocks interaction with the rest of the page until dismissed.",
+  "import": "import { Modal } from '@helixds/react';",
 
   "neverUseFor": [
     "Non-blocking supplementary info — use Tooltip or Popover instead",

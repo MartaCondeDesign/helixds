@@ -77,6 +77,7 @@ function agentEntryPoints(): Check {
 function contracts(): Check {
   const parts = [
     coverage('Components with a contract', components, n => !!contract(n)),
+    coverage("Contracts that say where to import from (import line, @helixds/react)", components, n => /from '@helixds\/react';$/.test(contract(n)?.import ?? '')),
     coverage('Contracts whose every prop is described', components, n => (contract(n)?.props ?? []).every((p: { description?: string }) => (p.description ?? '').length > 10)),
     coverage('Contracts that say when NOT to use it (neverUseFor)', components, n => (contract(n)?.neverUseFor ?? []).length > 0),
     coverage('Contracts with accessibility rules (a11y)', components, n => !!contract(n)?.a11y),
@@ -84,7 +85,7 @@ function contracts(): Check {
   return {
     id: 'contracts', label: 'Component contracts', score: mean(parts.map(p => p[1])),
     evidence: parts.flatMap(([label, , missing]) => [label, ...missing.map(m => `   ✗ ${m}`)]),
-    how: 'Average of four per-component ratios over contracts/components/*.json — what helix_get_contract and the npm package hand an agent.',
+    how: 'Average of five per-component ratios over contracts/components/*.json — what helix_get_contract and the npm package hand an agent.',
     command: 'pnpm verify:contract',
   };
 }

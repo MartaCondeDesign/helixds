@@ -5,6 +5,7 @@
   "status": "beta",
 
   "purpose": "A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial.",
+  "import": "import { FAB } from '@helixds/react';",
 
   "neverUseFor": [
     "The only way to reach an action also available inline — FAB is a shortcut, not the sole path; if removing it would make an action unreachable, it belongs in the page's normal flow instead",

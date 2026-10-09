@@ -36,6 +36,11 @@
       "type": "string",
       "description": "One sentence: what this component is for. Written from the user's perspective."
     },
+    "import": {
+      "type": "string",
+      "pattern": "^import \\{ .+ \\} from '@helixds/react';$",
+      "description": "The exact import statement an app uses. Generated from packages/core/src/index.ts by pnpm docs:contract-imports — do not hand-edit."
+    },
     "neverUseFor": {
       "type": "array",
       "items": {

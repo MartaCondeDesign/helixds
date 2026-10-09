@@ -5,6 +5,7 @@
   "status": "beta",
 
   "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
+  "import": "import { SegmentedControl } from '@helixds/react';",
 
   "neverUseFor": [
     "Navigating between real pages or routes — use NavItem/Tab instead",

@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "Groups related content in a visually distinct, flat surface — a dashboard widget, a settings group, a gallery tile.",
+  "import": "import { Card } from '@helixds/react';",
 
   "neverUseFor": [
     "Dense lists or table rows — never Card-wrap individual list items, use Table or List/Item edge-to-edge instead",

@@ -5,6 +5,7 @@
   "status": "beta",
 
   "purpose": "A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g. a single option embedded in a custom layout, or a hand-assembled set sharing `name`).",
+  "import": "import { RadioButton } from '@helixds/react';",
 
   "neverUseFor": [
     "A set of mutually exclusive options — use RadioGroup instead, which renders one of these per option with the correct fieldset/legend wrapper for free",

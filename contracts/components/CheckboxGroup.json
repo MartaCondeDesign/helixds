@@ -5,6 +5,7 @@
   "status": "beta",
 
   "purpose": "Lets users choose zero or more options from a small, visible set of independent choices.",
+  "import": "import { CheckboxGroup } from '@helixds/react';",
 
   "neverUseFor": [
     "A single independent on/off choice — use Checkbox alone instead",

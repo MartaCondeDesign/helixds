@@ -5,6 +5,7 @@
   "status": "beta",
 
   "purpose": "Lets users choose several values from a predefined list, shown as removable chips inside the field.",
+  "import": "import { MultiSelect } from '@helixds/react';",
 
   "neverUseFor": [
     "A single value - use Select instead",

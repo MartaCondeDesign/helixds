@@ -23,6 +23,7 @@ type Manifest = { components: ManifestEntry[] };
 type Contract = {
   name: string;
   purpose: string;
+  import?: string;
   neverUseFor?: string[];
   rationale?: string;
   governance?: { mayExtendLocally?: string[]; mustEscalateToDS?: string[] };
@@ -54,7 +55,9 @@ function score(query: string, text: string): number {
 export function listComponents(status?: string) {
   return manifest().components
     .filter(component => !status || component.status === status)
-    .map(({ name, category, status, version, purpose }) => ({ name, category, status, version, purpose }));
+    .map(({ name, category, status, version, purpose, contract }) => ({
+      name, category, status, version, purpose, import: readJson<Contract>(contract).import ?? null,
+    }));
 }
 
 export function getComponent(name: string) {
@@ -63,6 +66,8 @@ export function getComponent(name: string) {
   const contract = readJson<Contract>(entry.contract);
   return {
     ...entry,
+    // First, so an agent sees where to import from before anything else (agents guessed @helix/react).
+    import: contract.import ?? null,
     props: contract.props ?? [],
     neverUseFor: contract.neverUseFor ?? [],
     rationale: contract.rationale ?? null,

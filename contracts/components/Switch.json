@@ -5,6 +5,7 @@
   "status": "stable",
 
   "purpose": "Lets users toggle a single setting on or off, with the change taking effect immediately.",
+  "import": "import { Switch } from '@helixds/react';",
 
   "neverUseFor": [
     "A choice that requires explicit confirmation before taking effect — use Checkbox + Button instead",

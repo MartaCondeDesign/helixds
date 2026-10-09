@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "Shows several people or entities associated with the same record as a compact overlapping stack of Avatars, collapsing whatever doesn't fit into a '+N' count.",
+  "import": "import { AvatarGroup } from '@helixds/react';",
 
   "neverUseFor": [
     "A single person — use Avatar directly",

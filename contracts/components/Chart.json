@@ -4,6 +4,7 @@
   "version": "1.1.0",
   "status": "beta",
   "purpose": "Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events.",
+  "import": "import { Chart } from '@helixds/react';",
   "neverUseFor": ["Raw ECharts options or a product-specific chart renderer", "Precise audit values without an accompanying Table", "More than six donut categories"],
 
   "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility.",

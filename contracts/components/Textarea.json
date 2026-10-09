@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "status": "stable",
   "purpose": "Lets users enter multi-line free-form text.",
+  "import": "import { Textarea } from '@helixds/react';",
   "neverUseFor": [
     "Single-line text - use Input instead",
     "Option selection - use Select, RadioGroup, or CheckboxGroup",

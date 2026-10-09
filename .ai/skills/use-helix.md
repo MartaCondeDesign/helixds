@@ -19,7 +19,8 @@ imports `@helixds/react`. Does not cover: building or changing a Helix component
 Helix props are deliberately not the names other libraries use, so a guessed prop is usually wrong.
 Before using a component, read its API from the first source available:
 
-1. **MCP** (if the `helix` server is connected): `helix_get_contract` for each component.
+1. **MCP** (if the `helix` server is connected): `helix_get_contract` for each component — its `import`
+   field is the exact line to copy; the package is always `@helixds/react`, never `@helix/…` or `@helix-ds/…`.
 2. **Type file**: find where `@helixds/react` resolves (`tsconfig.json` `paths`, `vite.config.ts`
    `alias`, or `node_modules/@helixds/react/`), then read
    `components/<Name>/<Name>.types.ts` (source) or `dist/components/<Name>/<Name>.types.d.ts` (npm).

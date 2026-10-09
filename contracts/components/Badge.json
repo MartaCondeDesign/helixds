@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "status": "stable",
   "purpose": "Communicates status, category labels, or counts in a compact, high-contrast capsule.",
+  "import": "import { Badge } from '@helixds/react';",
   "neverUseFor": [
     "Decoration or visual interest with no semantic meaning",
     "Long text — badges truncate at 24 characters",

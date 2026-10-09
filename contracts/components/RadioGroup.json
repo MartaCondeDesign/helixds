@@ -5,6 +5,7 @@
   "status": "stable",
 
   "purpose": "Lets users choose exactly one option from a small, visible set of mutually exclusive choices.",
+  "import": "import { RadioGroup } from '@helixds/react';",
 
   "neverUseFor": [
     "A single independent on/off choice — use Checkbox or Switch instead",

@@ -24,6 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
+- 2026-10-09 — feat: every contract and the MCP say where to import from (latest commit)
 - 2026-10-09 — feat: first AI Readiness rating — 54/100 (Invested), from a screen-task round ([`fc3ca8b`](https://github.com/MartaCondeDesign/helixds/commit/fc3ca8b))
 - 2026-10-09 — feat: AI Readiness page — can an agent read Helix, and do agents use it well? ([`bbbd3dc`](https://github.com/MartaCondeDesign/helixds/commit/bbbd3dc))
 - 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself ([`cf9bb48`](https://github.com/MartaCondeDesign/helixds/commit/cf9bb48))
@@ -73,7 +74,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-09 — docs(mcp): example cwd uses the helixds folder name (latest commit)
+- 2026-10-09 — docs(mcp): example cwd uses the helixds folder name ([`d1e57ff`](https://github.com/MartaCondeDesign/helixds/commit/d1e57ff))
 - 2026-10-09 — chore: GitHub repo renamed helix-ds → helixds ([`334dc81`](https://github.com/MartaCondeDesign/helixds/commit/334dc81))
 - 2026-10-09 — docs: ADRs use the @helixds package names (ADR-023) ([`65737cc`](https://github.com/MartaCondeDesign/helixds/commit/65737cc))
 - 2026-10-09 — refactor: AI Readiness uses only Helix's own sources ([`b25fbfa`](https://github.com/MartaCondeDesign/helixds/commit/b25fbfa))

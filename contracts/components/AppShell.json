@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. Never write `display: flex; min-height: 100vh` by hand again.",
+  "import": "import { AppShell } from '@helixds/react';",
 
   "neverUseFor": [
     "A single content section inside an already-shelled page — AppShell is used once, at the page root",

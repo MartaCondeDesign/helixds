@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
+  "import": "import { Button } from '@helixds/react';",
 
   "neverUseFor": [
     "Pure navigation between pages — use a plain <a>, styled separately",

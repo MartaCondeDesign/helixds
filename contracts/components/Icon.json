@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "Communicates meaning, action, or status through a recognizable visual symbol. Always supplemental to text — never the sole conveyor of information without a tooltip or label.",
+  "import": "import { Icon, createIconAdapter, iconStrokeForSize } from '@helixds/react';",
 
   "neverUseFor": [
     "Decorative illustration — use an Illustration component instead",

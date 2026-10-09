@@ -5,6 +5,7 @@
   "status": "stable",
 
   "purpose": "Lets users choose a single value from a predefined list.",
+  "import": "import { Select } from '@helixds/react';",
 
   "neverUseFor": [
     "Free-form text entry - use Input instead",

@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "status": "stable",
   "purpose": "Shows a small set of related chips side by side — categories, tags or applied filters — as one labelled group.",
+  "import": "import { ChipGroup } from '@helixds/react';",
   "neverUseFor": [
     "A single chip — use Chip alone instead",
     "Choices the user turns on and off — use CheckboxGroup, RadioGroup or SegmentedControl instead",

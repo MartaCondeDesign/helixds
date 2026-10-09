@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row.",
+  "import": "import { PageHeader } from '@helixds/react';",
 
   "neverUseFor": [
     "Card or panel titles — use Card's own header slot instead",

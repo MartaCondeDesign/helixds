@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "A single entry in a persistent navigation list (a SideNav, a tab rail) that links to another view.",
+  "import": "import { NavItem } from '@helixds/react';",
 
   "neverUseFor": [
     "Triggering an action (saving, deleting, opening a dialog) — use Button, which Button.json's own neverUseFor list already forbids for navigation",

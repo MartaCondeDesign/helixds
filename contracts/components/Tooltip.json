@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "Reveals a short, non-interactive text label for whatever it wraps, on hover or keyboard focus — identifies an ambiguous control (an icon-only button, an avatar) without adding permanent visible text.",
+  "import": "import { Tooltip } from '@helixds/react';",
 
   "neverUseFor": [
     "Interactive content (links, buttons) inside the popup — use Popover/Menu instead; Tooltip is read-only text",

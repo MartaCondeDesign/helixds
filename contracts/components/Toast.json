@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
+  "import": "import { Toast, toast } from '@helixds/react';",
 
   "neverUseFor": [
     "A message the user must act on before continuing — use Modal instead, Toast can be missed or auto-dismiss",

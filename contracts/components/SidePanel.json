@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "A modal panel anchored to the right edge of the viewport, for a persistent secondary task alongside — but still blocking — the main page (details, a form, a filter builder).",
+  "import": "import { SidePanel } from '@helixds/react';",
 
   "neverUseFor": [
     "A quick, focused decision that should fully interrupt the page — use Modal instead",

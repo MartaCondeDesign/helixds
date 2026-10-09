@@ -20,14 +20,14 @@ const readOnly = { readOnlyHint: true, destructiveHint: false, idempotentHint: t
 
 server.registerTool('helix_list_components', {
   title: 'List Helix components',
-  description: 'Every Helix component with its status (draft/beta/stable) and purpose. Call this first to check whether Helix already has what you are about to build.',
+  description: 'Every Helix component with its status (draft/beta/stable), purpose and exact import line (from @helixds/react). Call this first to check whether Helix already has what you are about to build.',
   inputSchema: { status: z.enum(['draft', 'beta', 'stable']).optional().describe('Only components with this status') },
   annotations: readOnly,
 }, async ({ status }) => json(listComponents(status)));
 
 server.registerTool('helix_get_contract', {
   title: 'Get a Helix component contract',
-  description: 'The full contract of one Helix component: props (exact names, types, defaults), accessibility (role, keyboard, WCAG), rationale, neverUseFor anti-patterns and governance boundaries (what you may extend locally vs. must escalate). Read it before using a component.',
+  description: 'The full contract of one Helix component: the exact import line (always from @helixds/react), props (exact names, types, defaults), accessibility (role, keyboard, WCAG), rationale, neverUseFor anti-patterns and governance boundaries (what you may extend locally vs. must escalate). Read it before using a component.',
   inputSchema: { name: z.string().describe('Component name, e.g. "Button" (case-insensitive)') },
   annotations: readOnly,
 }, async ({ name }) => {

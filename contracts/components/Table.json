@@ -5,6 +5,7 @@
   "status":  "stable",
 
   "purpose": "Displays tabular data edge-to-edge — rows and columns of related records, e.g. a member list, a billing history.",
+  "import": "import { Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell } from '@helixds/react';",
 
   "neverUseFor": [
     "A single record's key/value details — use a description list pattern instead",

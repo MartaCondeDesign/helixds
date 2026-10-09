@@ -5,6 +5,7 @@
   "status":  "beta",
 
   "purpose": "A single collapsible disclosure — a header that expands/collapses a panel of content, with no JS height measurement needed.",
+  "import": "import { Accordion } from '@helixds/react';",
 
   "neverUseFor": [
     "A single always-visible section — just render the content directly",
