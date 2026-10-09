@@ -11,11 +11,13 @@
  *            or <Name>.types.ts / <Name>.types.d.ts
  *   - Bash:  pnpm helix component <Name>
  *
- * Counts every component in the file after the edit, not only the ones the edit adds: an edit can
- * change how an existing component is used just as easily. Only names that have a contract are checked
- * (subcomponents like TableRow and helpers like toast have none). Fails open: no transcript, an
- * unreadable file or no contracts found → the write goes ahead. Pairs with claude-lint-hook.mjs, which
- * checks the written result.
+ * Only the components the change touches are required: every `<Name` in the changed text, plus the
+ * component whose opening tag the change lands inside (an edit to `variant="primary"` on its own line
+ * of a multi-line <Button …> touches Button). A new file touches everything in it; an edit to one Button
+ * in a 15-component story asks for Button only. Only names imported from @helixds/react that have a
+ * contract count (subcomponents like TableRow and helpers like toast have none). Fails open: no
+ * transcript, an unreadable file or no contracts found → the write goes ahead. Pairs with
+ * claude-lint-hook.mjs, which checks the written result.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -30,20 +32,83 @@ const args = payload.tool_input ?? {};
 const file = args.file_path;
 if (!file || !/\.(jsx?|tsx?)$/.test(file)) process.exit(0);
 
-// ── The file as it will be after this tool call ─────────────────────────────
+// ── Which Helix components the change touches ──────────────────────────────
 let current = '';
 try { current = fs.readFileSync(path.resolve(root, file), 'utf8'); } catch { /* new file */ }
-let next = current;
-if (tool === 'Write') next = args.content ?? '';
-else if (tool === 'Edit') next = args.replace_all ? current.split(args.old_string).join(args.new_string) : current.replace(args.old_string, args.new_string);
-else if (tool === 'MultiEdit') for (const e of args.edits ?? []) next = e.replace_all ? next.split(e.old_string).join(e.new_string) : next.replace(e.old_string, e.new_string);
 
-// ── Helix components it imports ─────────────────────────────────────────────
-const imported = new Set();
+// Positions [start, end) in `text` where `replacement` landed after replacing `find` (all or first).
+function replaceWithRanges(text, find, replacement, all) {
+  const ranges = [];
+  let out = '';
+  let from = 0;
+  for (let i = text.indexOf(find); i !== -1; i = all ? text.indexOf(find, i + find.length) : -1) {
+    out += text.slice(from, i);
+    ranges.push([out.length, out.length + replacement.length]);
+    out += replacement;
+    from = i + find.length;
+  }
+  return { text: out + text.slice(from), ranges };
+}
+
+// The JSX element whose opening tag contains `pos`, e.g. a prop line inside a multi-line <Button …>.
+// Walks back to each `<Name` and forward to the `>` that closes its opening tag, skipping `{…}` so an
+// arrow function's `=>` inside a prop doesn't end the tag early.
+function enclosingTag(text, pos) {
+  for (const m of [...text.slice(0, pos).matchAll(/<([A-Z][\w.]*)/g)].reverse()) {
+    let depth = 0;
+    let end = text.length;
+    for (let i = m.index + m[0].length; i < text.length; i++) {
+      const ch = text[i];
+      if (ch === '{') depth++;
+      else if (ch === '}') depth--;
+      else if (ch === '>' && depth === 0) { end = i; break; }
+    }
+    if (pos <= end) return m[1];
+    if (pos - m.index > 4000) return undefined; // far past any opening tag
+  }
+  return undefined;
+}
+
+function touchedIn(text, ranges) {
+  const names = new Set();
+  for (const [start, end] of ranges) {
+    for (const m of text.slice(start, end).matchAll(/<([A-Z][\w.]*)/g)) names.add(m[1]);
+    const around = enclosingTag(text, start);
+    if (around) names.add(around);
+  }
+  return names;
+}
+
+const touched = new Set();
+let next = current;
+const edits = tool === 'Edit' ? [args] : tool === 'MultiEdit' ? (args.edits ?? []) : [];
+if (tool === 'Write') {
+  next = args.content ?? '';
+  // Changed lines: lines of the new content that the current file doesn't have (all of them for a new file).
+  const before = new Map();
+  for (const line of current.split('\n')) before.set(line, (before.get(line) ?? 0) + 1);
+  let offset = 0;
+  const ranges = [];
+  for (const line of next.split('\n')) {
+    if (before.get(line)) before.set(line, before.get(line) - 1);
+    else ranges.push([offset, offset + line.length]);
+    offset += line.length + 1;
+  }
+  for (const name of touchedIn(next, ranges)) touched.add(name);
+}
+for (const e of edits) {
+  const result = replaceWithRanges(next, e.old_string ?? '', e.new_string ?? '', e.replace_all);
+  next = result.text;
+  for (const name of touchedIn(next, result.ranges)) touched.add(name);
+}
+
+// Local JSX name → Helix export (`import { Button as Btn }` renders <Btn>).
+const imported = new Map();
 for (const m of next.matchAll(/import\s*\{([^}]*)\}\s*from\s*['"]@helixds\/react['"]/g)) {
   for (const spec of m[1].split(',').map(s => s.trim())) {
     if (!spec || spec.startsWith('type ')) continue; // a type import renders nothing
-    imported.add(spec.split(/\s+as\s+/)[0]);
+    const [exported, local = exported] = spec.split(/\s+as\s+/);
+    imported.set(local, exported);
   }
 }
 if (!imported.size) process.exit(0);
@@ -53,7 +118,7 @@ const contractDirs = [path.join(root, 'contracts/components'), path.join(root, '
 const withContract = new Set(contractDirs.flatMap(dir => {
   try { return fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'manifest.json').map(f => f.slice(0, -5)); } catch { return []; }
 }));
-const required = [...imported].filter(name => withContract.has(name));
+const required = [...new Set([...touched].map(local => imported.get(local)).filter(name => name && withContract.has(name)))];
 if (!required.length) process.exit(0);
 
 // ── What this session already looked up ────────────────────────────────────
@@ -88,7 +153,7 @@ console.log(JSON.stringify({
     hookEventName: 'PreToolUse',
     permissionDecision: 'deny',
     permissionDecisionReason:
-      `${relative} uses Helix ${missing.length === 1 ? 'component' : 'components'} whose contract you haven't read in this session: ${missing.join(', ')}. ` +
+      `This change to ${relative} touches Helix ${missing.length === 1 ? 'component' : 'components'} whose contract you haven't read in this session: ${missing.join(', ')}. ` +
       `Read each one first — helix_get_contract (MCP), or contracts/components/<Name>.json ` +
       `(node_modules/@helixds/react/dist/contracts/<Name>.json in an app) — then write the file again ` +
       `using only the props it lists.`,

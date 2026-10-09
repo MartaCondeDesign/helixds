@@ -132,7 +132,7 @@ pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import p
                             scripts/claude-lint-hook.mjs) and gets the problems back to fix in the same turn
 pnpm test:lint-hook         test that Claude Code lint hook
                             Before that, scripts/claude-contract-hook.mjs (PreToolUse) denies writing a file that
-                            imports @helixds/react until every Helix component in it has had its contract read
+                            imports @helixds/react until every Helix component the change touches has had its contract read
                             this session (helix_get_contract, the contract/.types file, or `pnpm helix component`)
 pnpm test:contract-hook     test that Claude Code contract hook
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,

@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat: contracts in the npm package, contract-read hook for Claude Code (latest commit)
+- 2026-10-09 — feat: contract hook asks only for the components a change touches (latest commit)
+- 2026-10-09 — feat: contracts in the npm package, contract-read hook for Claude Code ([`ea6af56`](https://github.com/MartaCondeDesign/helix-ds/commit/ea6af56))
 - 2026-10-09 — feat: use-helix consumer skill, no-raw-spacing lint rule, bench results ([`fe24c6e`](https://github.com/MartaCondeDesign/helix-ds/commit/fe24c6e))
 - 2026-10-09 — feat: agent-readable CHANGELOG, var() token chains and skills for every agent tool ([`88d9ef3`](https://github.com/MartaCondeDesign/helix-ds/commit/88d9ef3))
 - 2026-10-07 — feat: concept tiles illustrations, Motion-only strokes (no GSAP) ([`c6907d2`](https://github.com/MartaCondeDesign/helix-ds/commit/c6907d2))

@@ -13,7 +13,20 @@ const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'helix-contract-hook-'));
 const target = path.join(dir, 'Page.tsx');
 const transcript = path.join(dir, 'transcript.jsonl');
 
-const page = "import { Button, Modal, Table, TableRow, toast, type ButtonProps } from '@helixds/react';\n";
+const page = `import { Button, Modal, Table, TableRow, toast, type ButtonProps } from '@helixds/react';
+export const Page = () => (
+  <>
+    <Table label="People"><TableRow /></Table>
+    <Modal
+      label="Delete"
+      expanded={open}
+      onDismiss={() => setOpen(x => !x)}
+    >
+      <Button variant="danger" onClick={() => toast.success('Deleted')}>Delete</Button>
+    </Modal>
+  </>
+);
+`;
 const toolUse = (name, input) => JSON.stringify({ type: 'assistant', message: { content: [{ type: 'tool_use', id: 'x', name, input }] } });
 
 function runHook(lines, toolInput, tool = 'Write') {
@@ -28,31 +41,54 @@ function runHook(lines, toolInput, tool = 'Write') {
 after(() => fs.rmSync(dir, { recursive: true, force: true }));
 
 describe('claude-contract-hook', () => {
-  it('denies a write that uses components whose contract was never read', () => {
+  it('denies a new file until every component in it has had its contract read', () => {
+    fs.rmSync(target, { force: true });
     const result = runHook([], { content: page });
     assert.equal(result.permissionDecision, 'deny');
     // TableRow and toast have no contract; ButtonProps is a type import.
-    assert.match(result.permissionDecisionReason, /: Button, Modal, Table\./);
+    assert.match(result.permissionDecisionReason, /: Table, Modal, Button\./);
   });
 
   it('accepts the MCP, a contract file, a type file or the CLI as having read it', () => {
+    fs.rmSync(target, { force: true });
     const lines = [
       toolUse('mcp__helix__helix_get_contract', { name: 'button' }),
       toolUse('Read', { file_path: '/app/node_modules/@helixds/react/dist/contracts/Modal.json' }),
       toolUse('Bash', { command: 'pnpm helix component Table --json' }),
     ];
     assert.equal(runHook(lines, { content: page }), null);
-    assert.equal(runHook([toolUse('Read', { file_path: '/x/Button.types.d.ts' })], { content: "import { Button } from '@helixds/react';" }), null);
+    assert.equal(runHook([toolUse('Read', { file_path: '/x/Button.types.d.ts' })], { content: "import { Button } from '@helixds/react';\n<Button>Go</Button>;" }), null);
   });
 
-  it('checks every component in the file after an edit, not only the ones the edit adds', () => {
+  it('asks only for the component an edit touches, not every component in the file', () => {
     fs.writeFileSync(target, page);
-    const result = runHook([toolUse('mcp__helix__helix_get_contract', { name: 'Button' })], { old_string: 'Button', new_string: 'Button' }, 'Edit');
-    assert.match(result.permissionDecisionReason, /: Modal, Table\./);
+    const result = runHook([], { old_string: 'variant="danger"', new_string: 'variant="secondary"' }, 'Edit');
+    assert.match(result.permissionDecisionReason, /component whose contract you haven't read in this session: Button\./);
+  });
+
+  it('finds the component around a prop line of a multi-line tag', () => {
+    fs.writeFileSync(target, page);
+    const result = runHook([], { old_string: '      expanded={open}', new_string: '      expanded={isOpen}' }, 'Edit');
+    assert.match(result.permissionDecisionReason, /: Modal\./);
+  });
+
+  it('lets an edit outside any Helix element through', () => {
+    fs.writeFileSync(target, page);
+    assert.equal(runHook([], { old_string: 'export const Page', new_string: 'export const DeletePage' }, 'Edit'), null);
+  });
+
+  it('on a rewrite of an existing file, asks only for components on changed lines; follows aliases', () => {
+    fs.writeFileSync(target, page);
+    const result = runHook([], { content: page.replace('label="People"', 'label="Members"') });
+    assert.match(result.permissionDecisionReason, /: Table\./);
+    fs.rmSync(target, { force: true });
+    const aliased = runHook([], { content: "import { Button as Btn } from '@helixds/react';\n<Btn>Go</Btn>;" });
+    assert.match(aliased.permissionDecisionReason, /: Button\./);
   });
 
   it('ignores files that do not use Helix, and fails open without a transcript', () => {
-    assert.equal(runHook([], { content: "import React from 'react';" }), null);
+    fs.rmSync(target, { force: true });
+    assert.equal(runHook([], { content: "import React from 'react';\n<div />;" }), null);
     const out = execFileSync('node', [hook], {
       input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: target, content: page } }),
       env: { ...process.env, CLAUDE_PROJECT_DIR: root },
