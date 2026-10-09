@@ -10,8 +10,8 @@ feed Storybook → Data → Metrics (that page reads `quality/dashboard.json`).
 
 | | AI-Readiness | Notes |
 |---|---|---|
-| `2026-10-09-before.txt` | 62.6 (Invested) | `helix-lint-dashboard-charts` @ `c6907d2` |
-| `2026-10-09-after.txt` | 71.3 (AI-native) | + CHANGELOG.md, var() token chains, `.agents/skills` (`88d9ef3`) |
+| `2026-10-09-1-before.txt` | 62.6 (Invested) | `helix-lint-dashboard-charts` @ `c6907d2` |
+| `2026-10-09-2-after.txt` | 71.3 (AI-native) | + CHANGELOG.md, var() token chains, `.agents/skills` (`88d9ef3`) |
 
 ## Agent runs (`runs/`) — Claude Code headless, Haiku, `skill` context, 1 rep, no judge
 

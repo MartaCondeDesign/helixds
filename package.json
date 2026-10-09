@@ -50,6 +50,7 @@
     "eval:ladder": "tsx scripts/eval-ladder.ts",
     "eval:rescore": "tsx scripts/eval-rescore.ts",
     "eval:calibrate": "tsx scripts/eval-calibrate.ts",
+    "readiness": "tsx scripts/ai-readiness.ts",
     "eval:judge": "tsx scripts/eval-judge.ts",
     "eval:trace": "tsx scripts/log-trace.ts",
     "quality": "tsx scripts/quality-cli.ts",

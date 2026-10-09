@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself (latest commit)
+- 2026-10-09 — feat: AI Readiness page — can an agent read Helix, and do agents use it well? (latest commit)
+- 2026-10-09 — feat(evals): real LLM judge for design quality, calibrated; calibration sabotages itself ([`cf9bb48`](https://github.com/MartaCondeDesign/helix-ds/commit/cf9bb48))
 - 2026-10-09 — feat(evals): eval:calibrate — test the graders with planted mistakes ([`5f8058a`](https://github.com/MartaCondeDesign/helix-ds/commit/5f8058a))
 - 2026-10-09 — feat(evals): screen-level tasks and compile + invented-prop checks on every answer ([`ed6450f`](https://github.com/MartaCondeDesign/helix-ds/commit/ed6450f))
 - 2026-10-09 — feat: contract hook asks only for the components a change touches ([`547943e`](https://github.com/MartaCondeDesign/helix-ds/commit/547943e))
