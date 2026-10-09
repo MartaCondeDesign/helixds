@@ -15,7 +15,7 @@ export const label12: React.CSSProperties = {
 export function SectionHead({ title }: { title: string }) {
   return (
     <h3 style={{
-      margin: '0 0 16px',
+      margin: '0 0 var(--helix-spacing-m)',
       fontSize: 11, fontWeight: 600, letterSpacing: '0.08em',
       textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)',
     }}>
@@ -26,9 +26,9 @@ export function SectionHead({ title }: { title: string }) {
 
 export function TableGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginTop: 24 }}>
+    <div style={{ marginTop: 'var(--helix-spacing-l)' }}>
       <h3 style={{
-        margin: '0 0 16px',
+        margin: '0 0 var(--helix-spacing-m)',
         fontSize: 11,
         fontWeight: 600,
         letterSpacing: '0.08em',
@@ -44,7 +44,7 @@ export function TableGroup({ title, children }: { title: string; children: React
 
 export function SpacingBar({ varName, tokenKey, val, dim, desc }: { varName: string; tokenKey: string; val: string; dim?: string; desc?: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}>
       <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{tokenKey}</span>
       <div style={{
         display: 'inline-block',

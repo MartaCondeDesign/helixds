@@ -124,7 +124,7 @@ function IconBrowser() {
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
         <div style={{ position: 'relative', flex: '1 1 240px', maxWidth: 360 }}>
           <input
             type="search"
@@ -133,7 +133,7 @@ function IconBrowser() {
             placeholder={`Search ${ICONS.length} icons…`}
             autoFocus
             style={{
-              width: '100%', boxSizing: 'border-box', padding: '8px 12px 8px 36px',
+              width: '100%', boxSizing: 'border-box', padding: 'var(--helix-spacing-xs) var(--helix-spacing-s) var(--helix-spacing-xs) 36px',
               fontSize: 14, border: '1px solid var(--helix-color-border-neutral)',
               borderRadius: 8, background: 'var(--helix-color-fill-surface)',
               color: 'var(--helix-color-text-neutral)', outline: 'none',
@@ -147,7 +147,7 @@ function IconBrowser() {
           }} />
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
           <label style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>Size</label>
           <input type="range" min={16} max={40} step={4} value={size}
             onChange={e => setSize(Number(e.target.value))} style={{ width: 80 }} />
@@ -161,12 +161,12 @@ function IconBrowser() {
         </span>
       </div>
 
-      <p style={{ margin: '0 0 16px', fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
+      <p style={{ margin: '0 0 var(--helix-spacing-m)', fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
         Curated set from <strong>@tabler/icons-react v3</strong> — 5 000+ icons total at{' '}
         <strong>tabler.io/icons</strong>. Click any icon to copy its import name.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))', gap: 4 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))', gap: 'var(--helix-spacing-2xs)' }}>
         {filtered.map(([name, IconComp]) => (
           <button
             key={name}
@@ -174,7 +174,7 @@ function IconBrowser() {
             onClick={() => copyName(name)}
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              gap: 8, padding: '12px 8px', border: '1px solid transparent', borderRadius: 8,
+              gap: 'var(--helix-spacing-xs)', padding: 'var(--helix-spacing-s) var(--helix-spacing-xs)', border: '1px solid transparent', borderRadius: 8,
               background: copied === name ? 'var(--helix-color-fill-success-light)' : 'transparent',
               color: copied === name ? 'var(--helix-color-text-success)' : 'var(--helix-color-text-neutral)',
               cursor: 'pointer', transition: 'background 120ms, border-color 120ms',

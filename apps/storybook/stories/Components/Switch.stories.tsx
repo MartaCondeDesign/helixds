@@ -85,13 +85,13 @@ export const SettingsGroup: Story = {
           ['activityLog', 'Activity digest',  'Weekly summary of workspace activity'],
         ] as [keyof typeof state, string, string][]).map(([key, label, desc], i, arr) => (
           <div key={key} style={{
-            display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16,
+            display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--helix-spacing-m)',
             padding: 'var(--helix-primitive-spacing-100)',
             borderBottom: i < arr.length - 1 ? '1px solid var(--helix-color-border-neutral-light)' : 'none',
           }}>
             <div>
               <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--helix-color-text-neutral)' }}>{label}</div>
-              <div style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', marginTop: 2 }}>{desc}</div>
+              <div style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', marginTop: 'var(--helix-spacing-3xs)' }}>{desc}</div>
             </div>
             <Switch label={label} hideLabel checked={state[key]} onChange={() => toggle(key)} />
           </div>

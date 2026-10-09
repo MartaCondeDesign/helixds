@@ -162,8 +162,8 @@ tester.run('no-raw-spacing', plugin.rules['no-raw-spacing'], {
       errors: [{
         messageId: 'raw',
         suggestions: [
-          { messageId: 'replace', output: "const s = { padding: 'var(--helix-spacing-component-l)' };" },
           { messageId: 'replace', output: "const s = { padding: 'var(--helix-spacing-m)' };" },
+          { messageId: 'replace', output: "const s = { padding: 'var(--helix-spacing-component-l)' };" },
         ],
       }],
     },
@@ -172,8 +172,8 @@ tester.run('no-raw-spacing', plugin.rules['no-raw-spacing'], {
       errors: [{
         messageId: 'raw',
         suggestions: [
-          { messageId: 'replace', output: "<div style={{ marginTop: 'var(--helix-spacing-layout-m)' }} />" },
           { messageId: 'replace', output: "<div style={{ marginTop: 'var(--helix-spacing-xl)' }} />" },
+          { messageId: 'replace', output: "<div style={{ marginTop: 'var(--helix-spacing-layout-m)' }} />" },
         ],
       }],
     },
@@ -182,8 +182,8 @@ tester.run('no-raw-spacing', plugin.rules['no-raw-spacing'], {
       errors: [{
         messageId: 'raw',
         suggestions: [
-          { messageId: 'replace', output: "const s = { gap: 'var(--helix-spacing-component-s)' };" },
           { messageId: 'replace', output: "const s = { gap: 'var(--helix-spacing-xs)' };" },
+          { messageId: 'replace', output: "const s = { gap: 'var(--helix-spacing-component-s)' };" },
         ],
       }],
     },

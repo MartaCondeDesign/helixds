@@ -47,7 +47,7 @@ function TextStyleRow({ name, weight, sizeKey, sample }: { name: string; weight:
   const isLabel = name.startsWith('Label');
   return (
     <div style={{
-      display: 'flex', alignItems: 'baseline', gap: 24, paddingBlock: 14,
+      display: 'flex', alignItems: 'baseline', gap: 'var(--helix-spacing-l)', paddingBlock: 14,
       borderBottom: '1px solid var(--helix-color-border-neutral-light)',
     }}>
       <div style={{ width: 220, flexShrink: 0 }}>
@@ -55,7 +55,7 @@ function TextStyleRow({ name, weight, sizeKey, sample }: { name: string; weight:
         <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace' }}>
           fontSize/{sizeKey} · lineHeight/{sizeKey} · fontWeight/{weight}
         </div>
-        <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)', marginTop: 2 }}>
+        <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)', marginTop: 'var(--helix-spacing-3xs)' }}>
           {semanticLineHeight[sizeKey]?.$description}
         </div>
       </div>
@@ -95,26 +95,26 @@ export const All: Story = {
             }}>
               <thead>
                 <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Style</th>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Tokens</th>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Sample</th>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)' }}>Description</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Style</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Tokens</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Sample</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)' }}>Description</th>
                 </tr>
               </thead>
               <tbody>
                 {STYLES.filter(([styleGroup]) => styleGroup === group).map(([styleGroup, name, weight, sizeKey, sample]) => (
                   <tr key={name} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
                       <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', fontFamily: 'monospace' }}>{name}</div>
                     </td>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
                       <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)', fontFamily: 'monospace', lineHeight: 1.6 }}>
                         fontSize/{sizeKey}<br />
                         lineHeight/{sizeKey}<br />
                         fontWeight/{weight}
                       </div>
                     </td>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>
                       <span style={{
                         fontFamily: 'var(--helix-primitive-fontFamily-sans)',
                         fontSize: `var(--helix-primitive-fontSize-${sizeKey})`,
@@ -125,7 +125,7 @@ export const All: Story = {
                         {sample}
                       </span>
                     </td>
-                    <td style={{ padding: '12px', verticalAlign: 'top' }}>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top' }}>
                       <div style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)' }}>
                         {semanticLineHeight[sizeKey]?.$description}
                       </div>

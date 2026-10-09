@@ -34,7 +34,7 @@ const SIZE_CONTROL_PX: Record<string, string> = { xs: '16px', s: '24px', m: '32p
 const tableStyle: React.CSSProperties = {
   width: '100%',
   borderCollapse: 'collapse',
-  marginTop: 24,
+  marginTop: 'var(--helix-spacing-l)',
   border: '1px solid var(--helix-color-border-neutral)',
   borderRadius: 8,
   overflow: 'hidden',
@@ -42,7 +42,7 @@ const tableStyle: React.CSSProperties = {
 
 const thStyle: React.CSSProperties = {
   textAlign: 'left',
-  padding: '8px 12px',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)',
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: '0.04em',
@@ -53,7 +53,7 @@ const thStyle: React.CSSProperties = {
 };
 
 const tdStyle: React.CSSProperties = {
-  padding: '8px 12px',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)',
   verticalAlign: 'middle',
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
@@ -240,7 +240,7 @@ function DurationPreview({ duration, selected }: { duration: string; selected: b
   }, [duration]);
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
       <div style={{ width: 66, height: 14, borderRadius: 999, border: '1px solid var(--helix-color-border-neutral-dark)', background: 'var(--helix-color-fill-surface)', overflow: 'hidden', position: 'relative' }}>
         <div
           style={{
@@ -261,7 +261,7 @@ function DurationPreview({ duration, selected }: { duration: string; selected: b
 
 function EasingPreview({ easing }: { easing: 'base' | 'in' | 'out' }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
       <svg width="34" height="34" viewBox="0 0 34 34" style={{ flexShrink: 0, overflow: 'visible' }}>
         <path d="M 6 28 C 8 10 14 6 28 6" fill="none" stroke="var(--helix-color-border-neutral-dark)" strokeWidth="2" strokeLinecap="round" />
       </svg>

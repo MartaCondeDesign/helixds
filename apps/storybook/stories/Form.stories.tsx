@@ -123,15 +123,15 @@ function WorkspacePage() {
       {/* Fills the full screen-tall row, testimonial pinned to the bottom. */}
       <div style={{
         background: 'linear-gradient(160deg, var(--helix-primitive-color-gray-900) 0%, var(--helix-primitive-color-blue-900) 100%)',
-        padding: '48px 56px',
+        padding: 'var(--helix-spacing-layout-l) 56px',
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
         minHeight: 0,
         overflowY: 'auto',
       }}>
         <div>
           <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            color: 'var(--helix-primitive-color-blue-400)', fontWeight: 700, fontSize: 18, marginBottom: 48,
+            display: 'inline-flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)',
+            color: 'var(--helix-primitive-color-blue-400)', fontWeight: 700, fontSize: 18, marginBottom: 'var(--helix-spacing-layout-l)',
           }}>
             <span style={{ fontSize: 24 }}>✦</span>
             <span>Helix</span>
@@ -139,11 +139,11 @@ function WorkspacePage() {
 
           <h1 style={{
             color: 'var(--helix-primitive-color-gray-0)', fontSize: 36, fontWeight: 800, lineHeight: 1.2,
-            letterSpacing: '-0.02em', margin: '0 0 16px',
+            letterSpacing: '-0.02em', margin: '0 0 var(--helix-spacing-m)',
           }}>
             Ship great UI,<br />every sprint.
           </h1>
-          <p style={{ color: 'var(--helix-primitive-color-blue-300)', fontSize: 16, lineHeight: 1.6, margin: '0 0 48px', maxWidth: 360 }}>
+          <p style={{ color: 'var(--helix-primitive-color-blue-300)', fontSize: 16, lineHeight: 1.6, margin: '0 0 var(--helix-spacing-layout-l)', maxWidth: 360 }}>
             A design system built for speed. Tokens, contracts, and AI context baked in from day one.
           </p>
 
@@ -153,7 +153,7 @@ function WorkspacePage() {
               { icon: <IconShieldCheck size={18} />, label: 'WCAG 2.2 AA by default',       desc: 'Accessibility built into every contract, not bolted on' },
               { icon: <IconUsers size={18} />,       label: 'Contract-first components',     desc: 'JSON contracts as the single source of truth' },
             ].map(f => (
-              <div key={f.label} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+              <div key={f.label} style={{ display: 'flex', gap: 'var(--helix-spacing-s)', alignItems: 'flex-start' }}>
                 <div style={{
                   width: 36, height: 36, borderRadius: 8,
                   background: 'color-mix(in srgb, var(--helix-primitive-color-blue-400) 15%, transparent)',
@@ -163,7 +163,7 @@ function WorkspacePage() {
                   {f.icon}
                 </div>
                 <div>
-                  <div style={{ color: 'var(--helix-primitive-color-gray-200)', fontWeight: 600, fontSize: 14, marginBottom: 2 }}>{f.label}</div>
+                  <div style={{ color: 'var(--helix-primitive-color-gray-200)', fontWeight: 600, fontSize: 14, marginBottom: 'var(--helix-spacing-3xs)' }}>{f.label}</div>
                   <div style={{ color: 'var(--helix-primitive-color-gray-300)', fontSize: 13, lineHeight: 1.5 }}>{f.desc}</div>
                 </div>
               </div>
@@ -173,9 +173,9 @@ function WorkspacePage() {
 
         <blockquote style={{
           borderLeft: '3px solid var(--helix-primitive-color-blue-500)',
-          paddingLeft: 16, margin: 0,
+          paddingLeft: 'var(--helix-spacing-m)', margin: 0,
         }}>
-          <p style={{ color: 'var(--helix-primitive-color-gray-300)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.6, margin: '0 0 8px' }}>
+          <p style={{ color: 'var(--helix-primitive-color-gray-300)', fontStyle: 'italic', fontSize: 14, lineHeight: 1.6, margin: '0 0 var(--helix-spacing-xs)' }}>
             "We cut design-to-code time in half. The AI context alone is worth the switch."
           </p>
           <footer style={{ color: 'var(--helix-primitive-color-gray-300)', fontSize: 13 }}>
@@ -187,17 +187,17 @@ function WorkspacePage() {
       {/* ── Right panel: form ────────────────────────────────────────── */}
       <div style={{
         background: 'var(--helix-color-fill-page)',
-        padding: '48px 56px',
+        padding: 'var(--helix-spacing-layout-l) 56px',
         overflowY: 'auto',
         minHeight: 0, // lets the grid item shrink to the row so overflowY actually scrolls
       }}>
         <div style={{ maxWidth: 480, margin: '0 auto' }}>
-          <div style={{ marginBottom: 32 }}>
+          <div style={{ marginBottom: 'var(--helix-spacing-xl)' }}>
             <h2 style={{
               fontSize: 'var(--helix-primitive-fontSize-2xl)',
               fontWeight: 'var(--helix-primitive-fontWeight-bold)',
               color: 'var(--helix-color-text-neutral)',
-              margin: '0 0 4px',
+              margin: '0 0 var(--helix-spacing-2xs)',
             }}>
               Create your workspace
             </h2>

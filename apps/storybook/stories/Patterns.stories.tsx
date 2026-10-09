@@ -119,7 +119,7 @@ export const ActionBarPageHeader: Story = {
         <h1 style={{ margin: 0, fontSize: 'var(--helix-primitive-fontSize-xl)', fontWeight: 'var(--helix-primitive-fontWeight-bold)', color: 'var(--helix-color-text-neutral)' }}>
           Projects
         </h1>
-        <p style={{ margin: '2px 0 0', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
+        <p style={{ margin: 'var(--helix-spacing-3xs) 0 0', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
           24 projects · 3 shared with you
         </p>
       </div>

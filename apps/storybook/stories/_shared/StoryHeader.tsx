@@ -25,7 +25,7 @@ const STORYBOOK_FONT_FAMILY =
 export function StoryHeader({ title, description, figmaUrl }: { title: string; description: string; figmaUrl?: string }) {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
         <h1 style={{
           margin: 0,
           fontSize: 32, fontWeight: 700, lineHeight: '36px',
@@ -40,13 +40,13 @@ export function StoryHeader({ title, description, figmaUrl }: { title: string; d
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 4,
+              display: 'inline-flex', alignItems: 'center', gap: 'var(--helix-spacing-2xs)',
               fontSize: 13, fontWeight: 500, fontFamily: STORYBOOK_FONT_FAMILY,
               color: 'var(--helix-color-text-neutral-light)',
               textDecoration: 'none',
               border: '1px solid var(--helix-color-border-neutral)',
               borderRadius: 'var(--helix-radius-full)',
-              padding: '4px 10px',
+              padding: 'var(--helix-spacing-2xs) 10px',
             }}
           >
             View in Figma
@@ -54,7 +54,7 @@ export function StoryHeader({ title, description, figmaUrl }: { title: string; d
         )}
       </div>
       <p style={{
-        margin: 0, marginTop: 8, marginBottom: 16,
+        margin: 0, marginTop: 'var(--helix-spacing-xs)', marginBottom: 'var(--helix-spacing-m)',
         fontSize: 14, fontWeight: 400, lineHeight: '24px',
         fontFamily: STORYBOOK_FONT_FAMILY,
         color: 'var(--helix-color-text-neutral-light)', maxWidth: 720,

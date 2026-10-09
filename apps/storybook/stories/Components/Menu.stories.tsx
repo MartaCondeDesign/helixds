@@ -27,7 +27,7 @@ function Demo({ options }: { options: typeof FRUITS | typeof GROUPED }) {
         type="button"
         onClick={() => setOpen(o => !o)}
         style={{
-          height: 32, padding: '0 12px', borderRadius: 6,
+          height: 32, padding: '0 var(--helix-spacing-s)', borderRadius: 6,
           border: '1px solid var(--helix-color-border-neutral)',
           background: 'var(--helix-color-fill-page)', color: 'var(--helix-color-text-neutral)',
           fontFamily: 'inherit', fontSize: 14, cursor: 'pointer',

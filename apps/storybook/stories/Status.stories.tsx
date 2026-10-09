@@ -81,7 +81,7 @@ function FigmaMark({ state, details }: { state: keyof typeof FIGMA_MARK; details
 
 const TH_STYLE: React.CSSProperties = {
   textAlign: 'left',
-  padding: '8px 12px',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)',
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: '0.04em',
@@ -104,7 +104,7 @@ function HeaderHint({ label, description }: { label: string; description: string
 }
 
 const TD_STYLE: React.CSSProperties = {
-  padding: '8px 12px',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)',
   fontSize: 13,
   borderBottom: '1px solid var(--helix-color-border-neutral-light)',
   color: 'var(--helix-color-text-neutral)',

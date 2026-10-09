@@ -17,9 +17,9 @@ function PaletteRow({ name, prefix, steps }: { name: string; prefix: string; ste
       <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--helix-color-text-neutral)', marginBottom: 10 }}>
         {name}
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--helix-spacing-xs)' }}>
         {steps.map(step => (
-          <div key={step} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+          <div key={step} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--helix-spacing-2xs)' }}>
             <div style={{
               width: 52, height: 52, borderRadius: 8,
               background: `var(--helix-primitive-color-${prefix}-${step})`,
@@ -83,10 +83,10 @@ export const Typography: Story = {
       {
         title: 'Line height ratios',
         rows: [
-          { token: 'lineHeight-tight', value: '1.2', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-tight)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
-          { token: 'lineHeight-snug', value: '1.35', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-snug)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
-          { token: 'lineHeight-normal', value: '1.5', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-normal)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
-          { token: 'lineHeight-relaxed', value: '1.65', preview: <div style={{ width: 140, padding: '8px 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-relaxed)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-tight', value: '1.2', preview: <div style={{ width: 140, padding: 'var(--helix-spacing-xs) 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-tight)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-snug', value: '1.35', preview: <div style={{ width: 140, padding: 'var(--helix-spacing-xs) 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-snug)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-normal', value: '1.5', preview: <div style={{ width: 140, padding: 'var(--helix-spacing-xs) 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-normal)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
+          { token: 'lineHeight-relaxed', value: '1.65', preview: <div style={{ width: 140, padding: 'var(--helix-spacing-xs) 10px', borderRadius: 4, background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)', fontSize: 13, lineHeight: 'var(--helix-primitive-lineHeight-relaxed)', color: 'var(--helix-color-text-neutral)' }}>Helix DS<br />Type scale<br />Line height</div> },
         ],
       },
       {
@@ -105,17 +105,17 @@ export const Typography: Story = {
             <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid var(--helix-color-border-neutral)', borderRadius: 12, overflow: 'hidden' }}>
               <thead>
                 <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Token</th>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Value</th>
-                  <th style={{ textAlign: 'left', padding: '10px 12px', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Preview</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Token</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Value</th>
+                  <th style={{ textAlign: 'left', padding: '10px var(--helix-spacing-s)', fontSize: 11, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)', borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>Preview</th>
                 </tr>
               </thead>
               <tbody>
                 {table.rows.map((row) => (
                   <tr key={row.token} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}><code style={{ fontSize: 12 }}>{row.token}</code></td>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.value}</td>
-                    <td style={{ padding: '12px', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.preview}</td>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}><code style={{ fontSize: 12 }}>{row.token}</code></td>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.value}</td>
+                    <td style={{ padding: 'var(--helix-spacing-s)', verticalAlign: 'top', borderRight: '1px solid var(--helix-color-border-neutral-light)' }}>{row.preview}</td>
                   </tr>
                 ))}
               </tbody>

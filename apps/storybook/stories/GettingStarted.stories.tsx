@@ -23,12 +23,12 @@ const tableStyle: React.CSSProperties = {
   border: '1px solid var(--helix-color-border-neutral)',
   borderRadius: 12,
   overflow: 'hidden',
-  marginTop: 12,
+  marginTop: 'var(--helix-spacing-s)',
 };
 
 const thStyle: React.CSSProperties = {
   textAlign: 'left',
-  padding: '10px 12px',
+  padding: '10px var(--helix-spacing-s)',
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: '0.04em',
@@ -39,7 +39,7 @@ const thStyle: React.CSSProperties = {
 };
 
 const tdStyle: React.CSSProperties = {
-  padding: '12px',
+  padding: 'var(--helix-spacing-s)',
   verticalAlign: 'top',
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
@@ -49,7 +49,7 @@ const sectionStyle: React.CSSProperties = {
 };
 
 const sectionTitleStyle: React.CSSProperties = {
-  margin: '0 0 8px',
+  margin: '0 0 var(--helix-spacing-xs)',
   fontSize: 14,
   fontWeight: 700,
   color: 'var(--helix-color-text-neutral)',
@@ -57,7 +57,7 @@ const sectionTitleStyle: React.CSSProperties = {
 
 const codeStyle: React.CSSProperties = {
   display: 'block',
-  padding: 16,
+  padding: 'var(--helix-spacing-m)',
   borderRadius: 12,
   background: 'var(--helix-color-fill-surface)',
   border: '1px solid var(--helix-color-border-neutral-light)',

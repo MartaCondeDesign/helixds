@@ -84,9 +84,13 @@ for (const [surface, group] of Object.entries(tokens.semantic.color)) {
   }
 }
 
+// T-shirt keys (xs, m, …) first: they are the canonical scale; component-*/layout-* are the older
+// context scale, suggested only after them (or alone, for 48/64px, which have no t-shirt key).
 const spacing = {};
-for (const [key, token] of Object.entries(tokens.semantic.spacing)) {
-  const px = resolve(token.$value);
+const spacingKeys = Object.keys(tokens.semantic.spacing);
+const contextKey = key => /^(component|layout)-/.test(key);
+for (const key of [...spacingKeys.filter(k => !contextKey(k)), ...spacingKeys.filter(contextKey)]) {
+  const px = resolve(tokens.semantic.spacing[key].$value);
   if (px?.endsWith('px')) (spacing[px] ??= []).push(`--helix-spacing-${key}`);
 }
 

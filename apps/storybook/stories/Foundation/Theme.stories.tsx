@@ -49,7 +49,7 @@ function ThemeToggle({ children }: { children: (theme: 'light' | 'dark', hexes: 
 
   return (
     <div>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ marginBottom: 'var(--helix-spacing-l)' }}>
         <Switch label="Dark mode" checked={theme === 'dark'} onChange={checked => setTheme(checked ? 'dark' : 'light')} />
       </div>
       <div style={{ background: 'var(--helix-color-fill-page)', borderRadius: 12 }}>
@@ -92,21 +92,21 @@ function SwatchPreview({ kind, varName }: { kind: ColorKind; varName: string }) 
 // ── Table ─────────────────────────────────────────────────────────────────
 
 const thStyle: React.CSSProperties = {
-  textAlign: 'left', padding: '8px 12px', fontSize: 11, fontWeight: 600,
+  textAlign: 'left', padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)', fontSize: 11, fontWeight: 600,
   letterSpacing: '0.04em', textTransform: 'uppercase',
   color: 'var(--helix-color-text-neutral-lightest)',
   borderBottom: '1px solid var(--helix-color-border-neutral)',
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
 const tdStyle: React.CSSProperties = {
-  padding: '8px 12px', verticalAlign: 'middle',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)', verticalAlign: 'middle',
   borderRight: '1px solid var(--helix-color-border-neutral-light)',
 };
 
 function ColorTable({ kind, tokens, hexes }: { kind: ColorKind; tokens: ColorGroup; hexes: Record<string, string> }) {
   return (
     <table style={{
-      width: '100%', borderCollapse: 'collapse', marginTop: 24, marginBottom: 36,
+      width: '100%', borderCollapse: 'collapse', marginTop: 'var(--helix-spacing-l)', marginBottom: 36,
       border: '1px solid var(--helix-color-border-neutral)', borderRadius: 8, overflow: 'hidden',
     }}>
       <thead>

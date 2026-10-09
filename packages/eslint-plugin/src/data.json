@@ -627,39 +627,39 @@
     "turquoise-900": "#0c4a6e"
   },
   "spacing": {
+    "2px": [
+      "--helix-spacing-3xs"
+    ],
     "4px": [
-      "--helix-spacing-component-xs",
-      "--helix-spacing-2xs"
+      "--helix-spacing-2xs",
+      "--helix-spacing-component-xs"
     ],
     "8px": [
-      "--helix-spacing-component-s",
-      "--helix-spacing-xs"
+      "--helix-spacing-xs",
+      "--helix-spacing-component-s"
     ],
     "12px": [
-      "--helix-spacing-component-m",
-      "--helix-spacing-s"
+      "--helix-spacing-s",
+      "--helix-spacing-component-m"
     ],
     "16px": [
-      "--helix-spacing-component-l",
-      "--helix-spacing-m"
+      "--helix-spacing-m",
+      "--helix-spacing-component-l"
     ],
     "24px": [
+      "--helix-spacing-l",
       "--helix-spacing-component-xl",
-      "--helix-spacing-layout-s",
-      "--helix-spacing-l"
+      "--helix-spacing-layout-s"
     ],
     "32px": [
-      "--helix-spacing-layout-m",
-      "--helix-spacing-xl"
+      "--helix-spacing-xl",
+      "--helix-spacing-layout-m"
     ],
     "48px": [
       "--helix-spacing-layout-l"
     ],
     "64px": [
       "--helix-spacing-layout-xl"
-    ],
-    "2px": [
-      "--helix-spacing-3xs"
     ]
   },
   "coreExports": [
