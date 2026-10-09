@@ -91,15 +91,6 @@ function AIReadinessPage() {
             <span style={muted}>{used.coverageNote}. {used.olderAnswersExcluded} older answers excluded — they predate {used.epoch.hash} ({used.epoch.subject}).</span>
           </div>
         </Card>
-        {report.independent ? (
-          <Card header="Independent check">
-            <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
-              <Score value={report.independent.score} label={report.independent.tool} />
-              <span style={muted}>Someone else's criteria and code, not computed here. Source: <code style={mono}>{report.independent.file}</code></span>
-              <span style={muted}>Recompute: <code style={mono}>{report.independent.command}</code></span>
-            </div>
-          </Card>
-        ) : null}
       </div>
 
       <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>

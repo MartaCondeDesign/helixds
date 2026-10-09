@@ -10,8 +10,8 @@
  *               for an API that no longer exists (see `epoch`).
  *
  * Every number carries how it's computed, the evidence (files, or the items that failed) and the command
- * that recomputes it, so it can be checked instead of trusted. Inspired by open-design-system-bench's
- * AI-Readiness audit (evals/bench/), computed from Helix's own sources; tiers use its thresholds.
+ * that recomputes it, so it can be checked instead of trusted. Computed only from Helix's own sources;
+ * the graders behind ② are checked by `pnpm eval:calibrate`.
  *
  * Writes quality/ai-readiness.json (Storybook → Data → AI Readiness) and appends the score to
  * quality/ai-readiness-history.json, one point per commit. Run: pnpm readiness
@@ -238,16 +238,6 @@ const usedScore = enough && measured.length ? mean(measured.map(c => c.score!)) 
 const total = usedScore === null ? null : Math.round((readableScore + usedScore) / 2);
 const tier = total === null ? null : total >= 70 ? 'AI-native' : total >= 40 ? 'Invested' : 'Emerging';
 
-// An outside opinion next to our own: the latest open-design-system-bench audit kept in evals/bench/audit/
-// (its criteria, its code — not computed here).
-const auditDir = rel('evals/bench/audit');
-const auditFile = fs.existsSync(auditDir) ? fs.readdirSync(auditDir).filter(f => f.endsWith('.txt')).sort().pop() : undefined;
-const independent = auditFile ? {
-  tool: 'open-design-system-bench audit',
-  file: `evals/bench/audit/${auditFile}`,
-  score: Number(fs.readFileSync(path.join(auditDir, auditFile), 'utf8').match(/Composite\s+([\d.]+)/)?.[1] ?? NaN),
-  command: 'cd <open-design-system-bench> && npx tsx src/cli.ts audit --verbose',
-} : null;
 const head = execSync('git rev-parse --short HEAD', { cwd: root, encoding: 'utf8' }).trim();
 
 const report = {
@@ -257,7 +247,6 @@ const report = {
   score: total,
   tier,
   basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'readable + used well',
-  independent,
   readable: { score: readableScore, checks: readable },
   used: {
     score: usedScore, enough, coverageNote, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
@@ -274,7 +263,6 @@ if (last && last.commit === head) history[history.length - 1] = point; else hist
 fs.writeFileSync(historyFile, JSON.stringify(history, null, 2) + '\n');
 
 console.log(`AI Readiness ${total === null ? 'not rated yet' : `${total}/100 · ${tier}`} (${report.basis})`);
-if (independent) console.log(`  Independent: ${independent.tool} ${independent.score} (${independent.file})`);
 console.log(`  ① Readable ${readableScore}: ${readable.map(c => `${c.label} ${c.score}`).join(' · ')}`);
 console.log(`  ② Used well ${usedScore ?? 'n/a'}: ${used.map(c => `${c.label} ${c.score ?? 'n/a'}${c.n !== undefined ? ` (n=${c.n})` : ''}`).join(' · ')}`);
 console.log(`     ${current.length} answers since ${epoch.hash} "${epoch.subject}"; ${all.length - current.length} older ones excluded.`);
