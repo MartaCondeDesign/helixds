@@ -60,5 +60,5 @@ agent frontmatter complete, memory files non-empty, config.json valid).
 ## Two-audience principle
 
 `.ai/` and `contributor-ai/` serve contributors (people building Helix itself).
-`AGENTS.md` at root serves consumers (teams using `@helix-ds/*` in their own apps).
+`AGENTS.md` at root serves consumers (teams using `@helixds/*` in their own apps).
 `contributor-ai/CONTRIBUTOR.md` is the entry point for the contributor audience — see that file.

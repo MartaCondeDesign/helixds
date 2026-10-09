@@ -1,5 +1,7 @@
 # ADR-002 — Token architecture: DTCG, semantic aliases, CSS custom properties
 
+> Package names updated to the `@helixds` npm scope (ADR-023, 2026-10-07); this ADR was written when they were `@helix-ds/…`.
+
 **Date:** 2026-08-18
 **Status:** Accepted
 
@@ -37,7 +39,7 @@ AND `@media (prefers-color-scheme: dark)` to handle both explicit toggle and OS 
 - **Positive:** Adding a dark mode value is a one-line change in tokens.json.
 - **Positive:** `--helix-color-fill-primary` can point to different primitives in different themes.
 - **Positive:** AI agents can look up token values via the JSON file or a future MCP server.
-- **Negative:** Adding a new token requires a build step (`pnpm build` in @helix-ds/tokens).
+- **Negative:** Adding a new token requires a build step (`pnpm build` in @helixds/tokens).
 - **Negative:** The three layers add indirection — an agent reading component CSS won't see raw values.
 - **Mitigation:** The tokens MCP server (Layer 8) exposes resolved values for agent lookup.
 

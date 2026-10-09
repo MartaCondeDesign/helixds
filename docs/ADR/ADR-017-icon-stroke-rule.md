@@ -1,5 +1,7 @@
 # ADR-017 — Icon stroke rule: design the real on-screen line width, derive `stroke` from it
 
+> Package names updated to the `@helixds` npm scope (ADR-023, 2026-10-07); this ADR was written when they were `@helix-ds/…`.
+
 **Date:** 2026-09-24
 **Status:** Accepted
 **Deciders:** Helix DS team
@@ -45,7 +47,7 @@ and docs/contract/Figma skill still saying "always 1.5").
 2. **One source of truth:** `ICON_STROKE_PX_BY_SIZE` in
    `packages/core/src/components/Icon/iconStroke.ts`. `iconStrokeForSize(size)` turns it into
    the SVG attribute automatically, interpolates px linearly for sizes between rungs, and keeps the
-   edge rung's proportions outside 12–40. Both are exported from `@helix-ds/core`.
+   edge rung's proportions outside 12–40. Both are exported from `@helixds/react`.
 
 3. **Automatic, never per call site.** `Icon` applies `iconStrokeForSize(size)` whenever `stroke`
    isn't passed. Components never pass `stroke` to make an icon heavier or lighter — they pick a
@@ -77,5 +79,5 @@ and docs/contract/Figma skill still saying "always 1.5").
   carries the real px for its display size as a `strokeWeight` override (Button 16→1.5, Badge 12→1.3,
   Chip 14→1.4 / 12→1.3, IconButton 14/16/18/20, Input/Select 16/18, NavItem 16, Checkbox mark 1.5 —
   Badge and Chip had been inheriting 1.5 from the masters, heavier than code).
-- **Neutral:** `<helix-icon>` (Web Components, ADR-015) can't import `@helix-ds/core`, so it keeps a
+- **Neutral:** `<helix-icon>` (Web Components, ADR-015) can't import `@helixds/react`, so it keeps a
   copy of the px table — keep it in sync when the table changes.

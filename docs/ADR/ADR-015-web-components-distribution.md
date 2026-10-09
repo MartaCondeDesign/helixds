@@ -1,13 +1,15 @@
 # ADR-015 — Web Components distribution: Lit, Shadow DOM, four-component pilot
 
+> Package names updated to the `@helixds` npm scope (ADR-023, 2026-10-07); this ADR was written when they were `@helix-ds/…`.
+
 **Date:** 2026-09-14
 **Status:** Proposed
 **Deciders:** Helix DS team
 
 ## Context
 
-Helix ships as a single distribution: `@helix-ds/core`, React 19 components on native HTML + Tailwind
-v4. `@helix-ds/tokens` was already framework-agnostic before this ADR — `dist/helix.css` is plain
+Helix ships as a single distribution: `@helixds/react`, React 19 components on native HTML + Tailwind
+v4. `@helixds/tokens` was already framework-agnostic before this ADR — `dist/helix.css` is plain
 `:root { --helix-*: ...; }`, with no React or Tailwind dependency in the token package itself
 (Tailwind is wired in one layer up, inside `packages/core/src/globals.css`). Nothing about the tokens
 needs to change to be consumed outside React.
@@ -21,7 +23,7 @@ rendering target, not an extension of the existing one.
 
 ## Decision
 
-**A new package, `packages/wc` (`@helix-ds/wc`), built with Lit, using real Shadow DOM.** Not vanilla
+**A new package, `packages/wc` (`@helixds/wc`), built with Lit, using real Shadow DOM.** Not vanilla
 Custom Elements — components in this library already include real interaction logic (`Tooltip`'s
 auto-placement math, `Select`'s hand-rolled listbox keyboard nav per ADR-013) that would mean
 hand-writing a reactive re-render cycle per component; Lit (~5kb) solves that once instead of per
@@ -30,7 +32,7 @@ real style encapsulation from the host page — the trade-off accepted: `package
 `[data-helix-part]` rules cannot be reused as-is, since they don't cross the shadow boundary; each
 component's relevant CSS block is ported into that component's own Lit `static styles`, referencing
 `var(--helix-*)` directly. Tokens themselves need no porting — CSS custom properties inherit through
-Shadow DOM natively, so a consumer only needs `@helix-ds/tokens/helix.css` loaded once on the page.
+Shadow DOM natively, so a consumer only needs `@helixds/tokens/helix.css` loaded once on the page.
 
 **A four-component pilot — `Icon`, `Badge`, `Button`, `Tooltip` — not a port of all 149 components.**
 Chosen to span the complexity tiers actually found in `packages/core`: `Badge` (stateless, validates
@@ -47,7 +49,7 @@ Custom Element cannot receive a live component reference as a prop the way React
 has no Custom-Element equivalent). `<helix-icon>` instead wraps a default `<slot>`: the consumer places
 their own inline `<svg>` (from Tabler, another set, or hand-authored) as light-DOM content, and the
 element applies size/color via `::slotted(svg)` CSS and reflects `aria-hidden`/`role`/`aria-label` onto
-the host element. This is documented as a real, deliberate difference from `@helix-ds/core`'s adapter
+the host element. This is documented as a real, deliberate difference from `@helixds/react`'s adapter
 pattern, not an oversight — the two distributions solve the same interop goal through the mechanism
 each framework actually offers.
 
@@ -63,7 +65,7 @@ reference resolves entirely within the light DOM, where both elements actually l
 ## Consequences
 
 - **Positive:** Helix becomes consumable outside React for the piloted components, without asking
-  consumers to change how they load tokens — `@helix-ds/tokens/helix.css` already works.
+  consumers to change how they load tokens — `@helixds/tokens/helix.css` already works.
 - **Positive:** the pilot surfaces the two hardest structural questions (foreign icon interop without a
   component-reference mechanism; ARIA references across a shadow boundary) before committing to a
   49-times-larger effort of porting the full library.

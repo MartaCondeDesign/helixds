@@ -1,11 +1,13 @@
 # ADR-021 — Data Analytics charts use Apache ECharts through Helix
 
+> Package names updated to the `@helixds` npm scope (ADR-023, 2026-10-07); this ADR was written when they were `@helix-ds/…`.
+
 **Date:** 2026-10-03  
 **Status:** Accepted
 
 ## Decision
 
-`Chart` is a first-class `data-analytics` component in `@helix-ds/core`. It is the sole supported renderer
+`Chart` is a first-class `data-analytics` component in `@helixds/react`. It is the sole supported renderer
 for data visualisations and is implemented with Apache ECharts under Apache License 2.0. Consumers select a
 Helix `variant`; they do not import ECharts or pass raw ECharts options: `line`, `bar`, `stacked-bar`,
 `donut`, or `timeline`.
