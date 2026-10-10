@@ -149,13 +149,13 @@ function DataAnalyticsPage() {
       />
 
       <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}><span>Design System Health Evolution</span><SegmentedControl label="Health period" value={period} onChange={setPeriod} options={[{ value: 'day', label: 'Day' }, { value: 'month', label: 'Month' }, { value: 'year', label: 'Year' }]} /></div>}>
-        <Chart variant="bar" label="Design-system health score" description="Average of component readiness, Figma alignment, agent reliability, Helix-rule compliance, and governance coverage (contracts with rationale, neverUseFor and governance boundaries). Day shows the rolling 30-day window; Month the rolling 12-month window; Year starts at 2024 and adds each calendar year. Missing periods have no bar." categories={healthHistory.map(point => point.date)} series={[{ name: 'Health score', data: healthHistory.map(point => point.score) }]} />
+        <Chart variant="bar" label="Design-system health score" description="Average of component readiness, Figma alignment, agent reliability, Helix-rule compliance, and governance coverage (contracts with rationale, neverUseFor and governance boundaries). Agent reliability and rule compliance count only current answers (latest round of each task × level since the last breaking change, no control group) — from 10 Oct 2026; earlier points counted every saved answer. Day shows the rolling 30-day window; Month the rolling 12-month window; Year starts at 2024 and adds each calendar year. Missing periods have no bar." categories={healthHistory.map(point => point.date)} series={[{ name: 'Health score', data: healthHistory.map(point => point.score) }]} />
       </Card>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--helix-spacing-m)' }}>
         <Metric label="Components" value={snapshot.components.total} detail={`${snapshot.components.byStatus.stable ?? 0} stable · ${snapshot.components.byStatus.beta ?? 0} beta`} />
         <Metric label="Figma alignment" value={snapshot.figma.synced ?? 0} detail={`${snapshot.figma.missing ?? 0} components not modelled`} />
-        <Metric label="Agent eval pass rate" value={pct(snapshot.evals.passRate)} detail={`${snapshot.evals.generations} runs · ${snapshot.evals.promptsCovered} prompts`} />
+        <Metric label="Agent eval pass rate" value={pct(snapshot.evals.passRate)} detail={`${snapshot.evals.generations} current answers · ${snapshot.evals.promptsCovered} tasks — latest round of each, since the last breaking change, control group left out`} />
         <Metric label="Design tokens" value={snapshot.tokens.defined} detail="Tokens indexed in this snapshot" />
       </div>
 

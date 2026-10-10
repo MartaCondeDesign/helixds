@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
-import { GLOBAL_CHECKS, loadRuns, loadPrompts, scorePrompt, type LoadedRun } from './eval-lib.ts';
+import { GLOBAL_CHECKS, loadRuns, loadPrompts, scorePrompt, currentAnswers, type LoadedRun } from './eval-lib.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const qualityDir = path.join(root, 'quality');
@@ -238,7 +238,13 @@ export function createHelixSnapshot(now = new Date()) {
   const weeklyRuns = allRuns.filter(run => run.timestamp >= weekAgo);
 
   // Rounds: each `pnpm eval:ladder --round` (Proof's "Run evals" button) — per level, over time.
-  const evals = { ...evalSummary(allRuns), ladder: ladderSummary(allRuns), daily: ladderDaily(allRuns), improvements: roundImprovements(allRuns), rounds: ladderRounds() };
+  // Agent reliability and rule compliance describe Helix TODAY: the shared rule in eval-lib.ts (answers
+  // since the last breaking change, latest round per task × level, ladder levels, no control group) —
+  // the same answers AI Readiness rates. Every answer, old ones included, still feeds the per-level
+  // history (ladder, daily, rounds) below. Before 2026-10-10 these two used every saved answer, so
+  // history.json points before that date aren't comparable.
+  const current = currentAnswers(allRuns);
+  const evals = { ...evalSummary(current.answers), basis: { since: current.epoch, olderExcluded: current.olderExcluded, superseded: current.superseded }, ladder: ladderSummary(allRuns), daily: ladderDaily(allRuns), improvements: roundImprovements(allRuns), rounds: ladderRounds() };
   const ruleCompliance = evals.globalChecks.length ? evals.globalChecks.reduce((sum, check) => sum + (1 - (check.rate ?? 0)), 0) / evals.globalChecks.length : null;
   const governance = governanceCoverage();
   // Components the manifest knows about but verify:stable hasn't scored yet — their status is unknown,
@@ -266,7 +272,7 @@ export function createHelixSnapshot(now = new Date()) {
     governance: { total: governance.total, complete: governance.complete, rate: governance.rate, incomplete: governance.contracts.filter(entry => !(entry.hasNeverUseFor && entry.hasRationale && entry.hasGovernance)).map(entry => entry.name) },
     healthScore,
     healthScoreBreakdown: { componentReadiness: components.length ? (byStatus.stable as number) / components.length : null, figmaAlignment: components.length ? (figma.synced as number) / components.length : null, agentReliability: evals.passRate, ruleCompliance, governanceCoverage: governance.rate },
-    weekly: { from: new Date(weekAgo).toISOString().slice(0, 10), to: now.toISOString().slice(0, 10), evals: evalSummary(weeklyRuns) },
+    weekly: { from: new Date(weekAgo).toISOString().slice(0, 10), to: now.toISOString().slice(0, 10), evals: evalSummary(current.answers.filter(run => run.timestamp >= weekAgo)) },
     changes: loadChanges(),
   };
 }

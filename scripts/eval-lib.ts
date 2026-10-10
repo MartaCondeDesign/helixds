@@ -384,6 +384,46 @@ export function loadRuns(opts: { includeSelfTests?: boolean } = {}): LoadedRun[]
     });
 }
 
+// ── The answers that describe Helix today ────────────────────────────────────
+// One rule for every "how do agents do with Helix now?" number (AI Readiness, Metrics' health score):
+//   - only answers generated since the last breaking change: older ones used names that no longer exist
+//   - only the latest measurement round of each task × level: a round run after a fix replaces the one before
+//   - only levels on the context ladder (evals/ladder.json); the no-context control group only on request
+// Everything else stays on disk and in the per-level history charts.
+
+const repoRoot = path.resolve(import.meta.dirname, '..');
+
+export interface BreakingChange { hash: string | null; subject: string | null; at: number }
+
+export function lastBreakingChange(): BreakingChange {
+  const file = path.join(repoRoot, '.ai/maps/changelog.json');
+  if (!fs.existsSync(file)) return { hash: null, subject: null, at: 0 };
+  const changelog = JSON.parse(fs.readFileSync(file, 'utf-8')) as { days: Array<{ commits: Array<{ hash: string; subject: string; bump: string }> }> };
+  const last = changelog.days.flatMap(day => day.commits).find(commit => commit.bump === 'major');
+  if (!last) return { hash: null, subject: null, at: 0 };
+  const at = Number(spawnSync('git', ['show', '-s', '--format=%ct', last.hash], { cwd: repoRoot, encoding: 'utf-8' }).stdout.trim()) * 1000;
+  return { hash: last.hash, subject: last.subject, at };
+}
+
+export function currentAnswers(runs: LoadedRun[], opts: { includeControl?: boolean } = {}) {
+  const epoch = lastBreakingChange();
+  const ladder = new Set<string>(JSON.parse(fs.readFileSync(path.join(repoRoot, 'evals/ladder.json'), 'utf-8')).levels.map((l: { variant: string }) => l.variant));
+  const agentRuns = runs.filter(run => run.source === 'claude-cli');
+  const sinceEpoch = agentRuns.filter(run => run.timestamp >= epoch.at && ladder.has(run.variant));
+  const latestRound = new Map<string, string>();
+  for (const run of sinceEpoch) {
+    const key = `${run.promptId}|${run.variant}`;
+    if ((latestRound.get(key) ?? '') < (run.round ?? '')) latestRound.set(key, run.round!);
+  }
+  const latest = sinceEpoch.filter(run => (run.round ?? '') === (latestRound.get(`${run.promptId}|${run.variant}`) ?? ''));
+  return {
+    epoch,
+    answers: opts.includeControl ? latest : latest.filter(run => run.variant !== 'no-context'),
+    olderExcluded: agentRuns.filter(run => run.timestamp < epoch.at).length,
+    superseded: sinceEpoch.length - latest.length,
+  };
+}
+
 // ── Experiments registry ─────────────────────────────────────────────────────
 
 export interface Experiment {

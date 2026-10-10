@@ -19,7 +19,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
-import { loadRuns, loadPrompts, scorePrompt, type LoadedRun } from './eval-lib.ts';
+import { loadRuns, loadPrompts, scorePrompt, currentAnswers, type LoadedRun } from './eval-lib.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const rel = (p: string) => path.join(root, p);
@@ -172,26 +172,15 @@ function guardrails(): Check {
 
 // ── ② Used well ──────────────────────────────────────────────────────────────
 
-// The last breaking change: answers from before it used names that no longer exist.
-const changelogJson = JSON.parse(read('.ai/maps/changelog.json'));
-const lastBreaking = changelogJson.days.flatMap((d: any) => d.commits).find((c: any) => c.bump === 'major');
-const epoch = lastBreaking
-  ? { hash: lastBreaking.hash, subject: lastBreaking.subject, at: Number(execSync(`git show -s --format=%ct ${lastBreaking.hash}`, { cwd: root, encoding: 'utf8' }).trim()) * 1000 }
-  : { hash: null, subject: null, at: 0 };
+// Which answers count: the shared rule in eval-lib.ts (since the last breaking change, latest round per
+// task × level, ladder levels only) — the same one Metrics' health score uses. The control group is kept
+// here for "Checklist score with the MCP" (its baseline); the rates below drop it.
+const prompts = new Map(loadPrompts().map(p => [p.id, p]));
+const selection = currentAnswers(loadRuns(), { includeControl: true });
+const epoch = selection.epoch;
 // For people reading the page: a date, not a commit hash.
 const since = epoch.at ? new Date(epoch.at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'the start';
-
-const prompts = new Map(loadPrompts().map(p => [p.id, p]));
-const all = loadRuns().filter(r => r.source === 'claude-cli');
-// Only the latest measurement round of each task × level — the same rule as the Eval Gallery and Proof —
-// so a round run after a fix replaces the one before it instead of averaging with it.
-const sinceEpoch = all.filter(r => r.timestamp >= epoch.at);
-const latestRound = new Map<string, string>();
-for (const r of sinceEpoch) {
-  const key = `${r.promptId}|${r.variant}`;
-  if ((latestRound.get(key) ?? '') < (r.round ?? '')) latestRound.set(key, r.round!);
-}
-const current = sinceEpoch.filter(r => (r.round ?? '') === (latestRound.get(`${r.promptId}|${r.variant}`) ?? '')).map(r => {
+const current = selection.answers.map(r => {
   const p = prompts.get(r.promptId);
   return p ? { ...r, ...scorePrompt(p, r.generatedCode) } : r;
 });
@@ -234,9 +223,7 @@ function lift(): Check {
 const readable = [agentEntryPoints(), contracts(), types(), tokens(), docs(), changeHistory(), guardrails()];
 // ② rates are about Helix, so they use answers that HAD Helix context: the no-context level measures the
 // model's own guesses and only serves as the baseline in "What the MCP adds".
-// Only the context ladder's levels (evals/ladder.json) — a one-off experiment isn't how agents use Helix.
-const ladderLevels = new Set<string>(JSON.parse(read('evals/ladder.json')).levels.map((l: { variant: string }) => l.variant));
-const guided = current.filter(r => r.variant !== 'no-context' && ladderLevels.has(r.variant));
+const guided = current.filter(r => r.variant !== 'no-context');
 const judged = guided.filter(r => (r as any).judge);
 // "Compiles" alone would reward an answer that skipped Helix (plain HTML compiles) or used a former package
 // name (eval-mechanical.ts resolves those for old answers): today it must import @helixds/react and nothing
@@ -280,8 +267,8 @@ const report = {
   basis: usedScore === null ? 'not rated — not enough eval answers since the last breaking change' : 'used well (readable is shown as prerequisites, not averaged in)',
   readable: { score: readableScore, checks: readable },
   used: {
-    score: usedScore, enough, coverageNote, supersededAnswers: sinceEpoch.length - current.length, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
-    epoch: { ...epoch, date: since }, answers: current.length, olderAnswersExcluded: all.length - current.length, checks: used,
+    score: usedScore, enough, coverageNote, supersededAnswers: selection.superseded, tasksCovered, screensCovered, minTasks: MIN_TASKS, minScreens: MIN_SCREENS,
+    epoch: { ...epoch, date: since }, answers: current.length, olderAnswersExcluded: selection.olderExcluded, checks: used,
   },
 };
 fs.writeFileSync(rel('quality/ai-readiness.json'), JSON.stringify(report, null, 2) + '\n');
@@ -296,5 +283,5 @@ fs.writeFileSync(historyFile, JSON.stringify(history, null, 2) + '\n');
 console.log(`AI Readiness ${total === null ? 'not rated yet' : `${total}/100 · ${tier}`} (${report.basis})`);
 console.log(`  Readable ${readableScore}: ${readable.map(c => `${c.label} ${c.score}`).join(' · ')}`);
 console.log(`  Used well ${usedScore ?? 'n/a'}: ${used.map(c => `${c.label} ${c.score ?? 'n/a'}${c.n !== undefined ? ` (n=${c.n})` : ''}`).join(' · ')}`);
-console.log(`     ${current.length} answers since ${epoch.hash} "${epoch.subject}"; ${all.length - current.length} older ones excluded.`);
+console.log(`     ${current.length} answers since ${epoch.hash} "${epoch.subject}"; ${selection.olderExcluded} older ones excluded.`);
 console.log(`     Coverage: ${coverageNote}`);

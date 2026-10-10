@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-09T18:54:38.603Z",
+  "generatedAt": "2026-10-10T09:41:57.466Z",
   "sources": {
     "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
     "evalRuns": 361,
     "lastEvalRunAt": "2026-10-09T18:25:04.232Z",
-    "weeklyEvalRuns": 320,
+    "weeklyEvalRuns": 288,
     "improvementRecords": 0,
     "unscoredComponents": []
   },
@@ -67,71 +67,80 @@
     "defined": 763
   },
   "evals": {
-    "generations": 361,
-    "passRate": 0.14681440443213298,
-    "promptsCovered": 35,
+    "generations": 40,
+    "passRate": 0.9,
+    "promptsCovered": 6,
     "globalChecks": [
       {
         "id": "hardcoded-color",
         "label": "Hardcoded color (#hex, rgb(), hsl())",
-        "failed": 11,
-        "rate": 0.030470914127423823
+        "failed": 0,
+        "rate": 0
       },
       {
         "id": "hardcoded-size",
         "label": "Hardcoded px/rem value",
-        "failed": 37,
-        "rate": 0.10249307479224377
+        "failed": 9,
+        "rate": 0.225
       },
       {
         "id": "inline-style",
         "label": "Inline style={{…}}",
-        "failed": 65,
-        "rate": 0.18005540166204986
+        "failed": 10,
+        "rate": 0.25
       },
       {
         "id": "raw-icon",
         "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-        "failed": 2,
-        "rate": 0.00554016620498615
+        "failed": 1,
+        "rate": 0.025
       },
       {
         "id": "icon-element-prop",
         "label": "icon={<IconXxx />} instead of icon={IconXxx}",
-        "failed": 2,
-        "rate": 0.00554016620498615
+        "failed": 0,
+        "rate": 0
       },
       {
         "id": "on-press",
         "label": "onPress instead of onClick",
-        "failed": 103,
-        "rate": 0.2853185595567867
+        "failed": 0,
+        "rate": 0
       },
       {
         "id": "raw-div",
         "label": "<div> instead of a Helix layout component",
-        "failed": 99,
-        "rate": 0.2742382271468144
+        "failed": 14,
+        "rate": 0.35
       },
       {
         "id": "raw-native-control",
         "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-        "failed": 19,
-        "rate": 0.05263157894736842
+        "failed": 1,
+        "rate": 0.025
       },
       {
         "id": "doesnt-compile",
         "label": "Doesn't compile against Helix's real types (tsc)",
-        "failed": 220,
-        "rate": 0.6094182825484764
+        "failed": 5,
+        "rate": 0.125
       },
       {
         "id": "invented-prop",
         "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-        "failed": 157,
-        "rate": 0.43490304709141275
+        "failed": 1,
+        "rate": 0.025
       }
     ],
+    "basis": {
+      "since": {
+        "hash": "e5e900b",
+        "subject": "feat!: publish under the @helixds npm scope",
+        "at": 1791369543000
+      },
+      "olderExcluded": 238,
+      "superseded": 20
+    },
     "ladder": [
       {
         "variant": "no-context",
@@ -1089,81 +1098,81 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.6321749349450181,
+  "healthScore": 0.8019242424242424,
   "healthScoreBreakdown": {
     "componentReadiness": 0.6060606060606061,
     "figmaAlignment": 0.6060606060606061,
-    "agentReliability": 0.14681440443213298,
-    "ruleCompliance": 0.8019390581717453,
+    "agentReliability": 0.9,
+    "ruleCompliance": 0.8975,
     "governanceCoverage": 1
   },
   "weekly": {
-    "from": "2026-10-02",
-    "to": "2026-10-09",
+    "from": "2026-10-03",
+    "to": "2026-10-10",
     "evals": {
-      "generations": 320,
-      "passRate": 0.165625,
-      "promptsCovered": 12,
+      "generations": 40,
+      "passRate": 0.9,
+      "promptsCovered": 6,
       "globalChecks": [
         {
           "id": "hardcoded-color",
           "label": "Hardcoded color (#hex, rgb(), hsl())",
-          "failed": 11,
-          "rate": 0.034375
+          "failed": 0,
+          "rate": 0
         },
         {
           "id": "hardcoded-size",
           "label": "Hardcoded px/rem value",
-          "failed": 36,
-          "rate": 0.1125
+          "failed": 9,
+          "rate": 0.225
         },
         {
           "id": "inline-style",
           "label": "Inline style={{…}}",
-          "failed": 54,
-          "rate": 0.16875
+          "failed": 10,
+          "rate": 0.25
         },
         {
           "id": "raw-icon",
           "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-          "failed": 2,
-          "rate": 0.00625
+          "failed": 1,
+          "rate": 0.025
         },
         {
           "id": "icon-element-prop",
           "label": "icon={<IconXxx />} instead of icon={IconXxx}",
-          "failed": 2,
-          "rate": 0.00625
+          "failed": 0,
+          "rate": 0
         },
         {
           "id": "on-press",
           "label": "onPress instead of onClick",
-          "failed": 85,
-          "rate": 0.265625
+          "failed": 0,
+          "rate": 0
         },
         {
           "id": "raw-div",
           "label": "<div> instead of a Helix layout component",
-          "failed": 90,
-          "rate": 0.28125
+          "failed": 14,
+          "rate": 0.35
         },
         {
           "id": "raw-native-control",
           "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-          "failed": 19,
-          "rate": 0.059375
+          "failed": 1,
+          "rate": 0.025
         },
         {
           "id": "doesnt-compile",
           "label": "Doesn't compile against Helix's real types (tsc)",
-          "failed": 198,
-          "rate": 0.61875
+          "failed": 5,
+          "rate": 0.125
         },
         {
           "id": "invented-prop",
           "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-          "failed": 137,
-          "rate": 0.428125
+          "failed": 1,
+          "rate": 0.025
         }
       ]
     }

@@ -62,5 +62,21 @@
       "stale": 0,
       "missing": 13
     }
+  },
+  {
+    "date": "2026-10-10",
+    "score": 0.8019242424242424,
+    "evalPassRate": 0.9,
+    "tokens": 763,
+    "components": {
+      "draft": 0,
+      "beta": 13,
+      "stable": 20
+    },
+    "figma": {
+      "synced": 20,
+      "stale": 0,
+      "missing": 13
+    }
   }
 ]
