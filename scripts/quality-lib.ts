@@ -251,7 +251,11 @@ export function createHelixSnapshot(now = new Date()) {
   // so readiness and Figma alignment are computed without them until `pnpm verify:stable` runs again.
   const scored = new Set(components.map(component => component.name));
   const unscored = readJson<{ components?: Array<{ name: string }> }>('contracts/manifest.json', {}).components?.map(c => c.name).filter(name => !scored.has(name)) ?? [];
-  const rates = [components.length ? (byStatus.stable as number) / components.length : null, components.length ? (figma.synced as number) / components.length : null, evals.passRate, ruleCompliance, governance.rate].filter((rate): rate is number => rate !== null);
+  // Accessibility (pnpm a11y): the average of per-component scores — % of the automatic accessibility checks
+  // that apply to each component and pass. Added 2026-10-11; earlier history points don't include it.
+  const a11yReport = readJson<{ score?: number | null; meetsMinimum?: number; generatedAt?: string }>('quality/accessibility.json', {});
+  const accessibility = typeof a11yReport.score === 'number' ? a11yReport.score / 100 : null;
+  const rates = [components.length ? (byStatus.stable as number) / components.length : null, components.length ? (figma.synced as number) / components.length : null, evals.passRate, ruleCompliance, governance.rate, accessibility].filter((rate): rate is number => rate !== null);
   // Health is an equal-weight average of independent DS quality signals. Keeping the breakdown beside
   // the score makes a change in the headline auditable instead of a black-box “quality” number.
   const healthScore = rates.length ? rates.reduce((sum, rate) => sum + rate, 0) / rates.length : null;
@@ -269,9 +273,10 @@ export function createHelixSnapshot(now = new Date()) {
     figma,
     tokens: { defined: walkTokenLeaves(readJson<Record<string, unknown>>('packages/tokens/src/tokens.json', {})) },
     evals,
+    accessibility: { score: accessibility, meetsMinimum: a11yReport.meetsMinimum ?? null, generatedAt: a11yReport.generatedAt ?? null },
     governance: { total: governance.total, complete: governance.complete, rate: governance.rate, incomplete: governance.contracts.filter(entry => !(entry.hasNeverUseFor && entry.hasRationale && entry.hasGovernance)).map(entry => entry.name) },
     healthScore,
-    healthScoreBreakdown: { componentReadiness: components.length ? (byStatus.stable as number) / components.length : null, figmaAlignment: components.length ? (figma.synced as number) / components.length : null, agentReliability: evals.passRate, ruleCompliance, governanceCoverage: governance.rate },
+    healthScoreBreakdown: { componentReadiness: components.length ? (byStatus.stable as number) / components.length : null, figmaAlignment: components.length ? (figma.synced as number) / components.length : null, agentReliability: evals.passRate, ruleCompliance, governanceCoverage: governance.rate, accessibility },
     weekly: { from: new Date(weekAgo).toISOString().slice(0, 10), to: now.toISOString().slice(0, 10), evals: evalSummary(current.answers.filter(run => run.timestamp >= weekAgo)) },
     changes: loadChanges(),
   };

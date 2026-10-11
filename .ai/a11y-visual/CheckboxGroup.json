@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "CheckboxGroup",
+  "reviewedAt": "2026-10-11T18:23:53.082Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Horizontal",
+    "Invalid"
+  ],
+  "costUsd": 0.032475000000000004,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All states (checked/unchecked/invalid) use checkmark icon and/or outline shape in addition to color; error message provides text."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Checkbox outlines, checkmarks, and focus rings are clearly distinguishable with sufficient contrast in both light and dark themes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible labels (Comments, Mentions, Weekly digest, Mon, Tue, Wed, Thu, Fri) appear in screen reader output matching what users see."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text truncation, clipping, or overlap observed in any story (Default, Horizontal, or Invalid)."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All three focused screenshots show clear blue focus ring/border: Default on Comments, Horizontal on Mon, Invalid on Comments."
+    }
+  ]
+}

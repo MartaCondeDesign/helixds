@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "PageHeader",
+  "reviewedAt": "2026-10-11T18:33:35.582Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Actions",
+    "Section Level"
+  ],
+  "costUsd": 0.025102,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning conveyed by color alone. Text meaning is complete and not color-dependent."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Button and elements have sufficient contrast (3:1+) in both light and dark modes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Button text 'Invite member' matches screen reader announcement; all visible text matches accessibility tree."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text fully visible across all stories—no truncation or overlapping detected."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "With Actions/focused story: 'Invite member' button has clear blue focus ring with good contrast."
+    }
+  ]
+}

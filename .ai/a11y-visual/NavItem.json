@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "NavItem",
+  "reviewedAt": "2026-10-11T18:33:05.661Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Current",
+    "Nav List"
+  ],
+  "costUsd": 0.10008449999999999,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Current state uses background color change which also provides brightness differentiation. Nav List story adds icon/text color change as an additional indicator—not color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": false,
+      "reason": "Nav List story: Team item has blue icon and text on light blue background, lacking sufficient contrast (~3:1). Visually weaker than other list items."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible text ('Dashboard', 'Team', 'Settings') matches screen reader names exactly."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, truncated, or overlapping in any story."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All focused states show a bright blue focus ring clearly indicating keyboard focus on the element."
+    }
+  ]
+}

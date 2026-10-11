@@ -1,0 +1,42 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "AppShell",
+  "reviewedAt": "2026-10-11T18:42:47.764Z",
+  "model": "haiku",
+  "stories": [
+    "Default"
+  ],
+  "costUsd": 0.034692,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": false,
+      "reason": "Default story: The Team navigation link indicates selected/current state using background color alone, with no icon, text styling, border, or pattern change to also convey the state."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Control boundaries, icons, and focus rings are clearly distinguishable from backgrounds in both light and dark modes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible control text (Dashboard, Team, Settings, Search, Notifications) matches the announced names from the screen reader."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, overlapping, or truncated; all content is fully readable."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Default focused story: Dashboard link has a prominent, rounded blue border outline that is immediately obvious and highly contrasting."
+    }
+  ]
+}

@@ -1,5 +1,7 @@
+import { useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Accordion, Badge, Card, Chart, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@helixds/react';
+import { IconSearch } from '@tabler/icons-react';
+import { Badge, Card, Chart, Input, Menu, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@helixds/react';
 import report from '../../../quality/accessibility.json';
 import { StoryHeader } from './_shared/StoryHeader';
 
@@ -16,6 +18,7 @@ const checks = report.checks as CheckDef[];
 const summary = report.summary as Summary[];
 const components = report.components as Record<string, Record<string, Result>>;
 const names = Object.keys(components);
+const scores = report.scores as Record<string, { score: number | null; passed: number; applicable: number; meetsMinimum: boolean }>;
 
 const muted = { color: 'var(--helix-color-text-neutral-light)', fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)' };
 const mono = { fontFamily: 'var(--font-mono)', fontSize: 'var(--helix-textStyle-body-s-regular-fontSize)' };
@@ -32,6 +35,100 @@ function StatusBadge({ r }: { r: Result | undefined }) {
   return <Badge variant={VARIANT[status]} label={TEXT[status]} />;
 }
 
+// One field to search AND pick a component (an editable combobox, WAI-ARIA APG): typing filters the list,
+// Arrow Up/Down move through it, Enter or a click picks, Escape closes. Built from Helix's own Input (the
+// field) and Menu (the list) — Helix has no searchable select yet.
+function ComponentPicker({ value, onChange }: { value: string; onChange: (name: string) => void }) {
+  const failing = (n: string) => checks.filter(c => components[n]?.[c.id]?.status === 'fail').length;
+  const [text, setText] = useState(value);
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | undefined>();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const menuId = 'a11y-component-list';
+  // While the text is the picked name, show every component; once edited, only the matches.
+  const matches = text === value ? names : names.filter(n => n.toLowerCase().includes(text.trim().toLowerCase()));
+  const pick = (n: string) => { onChange(n); setText(n); setOpen(false); setActive(undefined); };
+  const move = (step: number) => {
+    if (!matches.length) return;
+    setOpen(true);
+    const i = active ? matches.indexOf(active) : -1;
+    setActive(matches[(i + step + matches.length) % matches.length]);
+  };
+  return (
+    <div style={{ maxWidth: 360 }}>
+      <Input
+        ref={inputRef}
+        label="Component"
+        icon={IconSearch}
+        placeholder="Search or pick a component"
+        description={`${matches.length} of ${names.length} components`}
+        value={text}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-controls={menuId}
+        aria-activedescendant={open && active ? `${menuId}-option-${active}` : undefined}
+        onFocus={e => { e.target.select(); setOpen(true); }}
+        onClick={() => setOpen(true)}
+        onBlur={() => { setOpen(false); setText(value); }}
+        onChange={e => { setText(e.target.value); setOpen(true); setActive(undefined); }}
+        onKeyDown={e => {
+          if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+          else if (e.key === 'Enter') { e.preventDefault(); const n = active ?? (matches.length === 1 ? matches[0] : undefined); if (n) pick(n); }
+          else if (e.key === 'Escape' && open) { e.preventDefault(); setOpen(false); setText(value); }
+        }}
+      />
+      <Menu
+        id={menuId}
+        expanded={open && matches.length > 0}
+        anchorRef={inputRef}
+        options={matches.map(n => ({ value: n, label: n, ...(failing(n) ? { labelEnd: `${failing(n)} failing` } : {}) }))}
+        value={value}
+        {...(active ? { activeValue: active } : {})}
+        onSelect={pick}
+      />
+    </div>
+  );
+}
+
+// The picked component's every check: result, why, when it ran, and how to re-run it.
+function ComponentDetails() {
+  const failing = (n: string) => checks.filter(c => components[n]?.[c.id]?.status === 'fail').length;
+  const [current, setCurrent] = useState<string>(names.find(n => failing(n)) ?? names[0]!);
+  return (
+    <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
+      <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>Component details</h2>
+      <ComponentPicker value={current} onChange={setCurrent} />
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Check</TableHeaderCell>
+            <TableHeaderCell>Result</TableHeaderCell>
+            <TableHeaderCell>Why</TableHeaderCell>
+            <TableHeaderCell>Checked</TableHeaderCell>
+            <TableHeaderCell>Re-run</TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {checks.map(c => {
+            const r = components[current]?.[c.id];
+            return (
+              <TableRow key={c.id}>
+                <TableCell><strong>{c.label}</strong><div style={muted}>WCAG {c.wcag}</div></TableCell>
+                <TableCell><StatusBadge r={r} /></TableCell>
+                <TableCell><pre style={{ ...mono, margin: 0, whiteSpace: 'pre-wrap' }}>{r?.details.length ? r.details.join('\n') : r?.status === 'pass' ? c.how : '—'}</pre></TableCell>
+                <TableCell><span style={muted}>{r ? fmt(r.checkedAt) : 'never'}</span></TableCell>
+                <TableCell><code style={mono}>{c.command} {current}</code></TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </section>
+  );
+}
+
 function AccessibilityPage() {
   // A check nobody has run yet has no rate — it's left out of the chart rather than drawn as 0%.
   const rated = checks.filter(c => rate(summary.find(s => s.id === c.id)!) !== null);
@@ -46,6 +143,12 @@ function AccessibilityPage() {
       />
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 'var(--helix-spacing-m)' }}>
+        <Card header="Accessibility score">
+          <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
+            <strong style={{ fontSize: 'var(--helix-textStyle-heading-xl-bold-fontSize)' }}>{report.score ?? '—'} / 100</strong>
+            <span style={muted}>Average of the component scores below — each one the % of automatic checks that apply to it and pass (not run = not passed; reviews aren’t scored). Feeds Design System Health.</span>
+          </div>
+        </Card>
         <Card header="Automatic checks">
           <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
             <strong style={{ fontSize: 'var(--helix-textStyle-heading-xl-bold-fontSize)' }}>{allPass.length} / {names.length} components</strong>
@@ -114,6 +217,7 @@ function AccessibilityPage() {
             <TableHead>
               <TableRow>
                 <TableHeaderCell>Component</TableHeaderCell>
+                <TableHeaderCell>Score</TableHeaderCell>
                 {checks.map(c => <TableHeaderCell key={c.id}>{c.label}</TableHeaderCell>)}
               </TableRow>
             </TableHead>
@@ -121,6 +225,10 @@ function AccessibilityPage() {
               {names.map(n => (
                 <TableRow key={n}>
                   <TableCell><strong>{n}</strong></TableCell>
+                  <TableCell>
+                    <Badge variant={scores[n]?.meetsMinimum ? 'success' : 'danger'} label={`${scores[n]?.score ?? '—'}`} />
+                    <div style={muted}>{scores[n]?.passed}/{scores[n]?.applicable}</div>
+                  </TableCell>
                   {checks.map(c => <TableCell key={c.id}><StatusBadge r={components[n]?.[c.id]} /></TableCell>)}
                 </TableRow>
               ))}
@@ -129,26 +237,7 @@ function AccessibilityPage() {
         </div>
       </section>
 
-      <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
-        <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>Details</h2>
-        <span style={muted}>What each failing, pending or reviewed result says — and when it was checked.</span>
-        {names.map(n => {
-          const rows = checks.map(c => ({ c, r: components[n]?.[c.id] })).filter(({ r }) => r && r.details.length);
-          if (!rows.length) return null;
-          return (
-            <Accordion key={n} label={n}>
-              <div style={{ display: 'grid', gap: 'var(--helix-spacing-xs)' }}>
-                {rows.map(({ c, r }) => (
-                  <div key={c.id}>
-                    <strong>{c.label}</strong> <StatusBadge r={r} /> <span style={muted}>· {fmt(r!.checkedAt)}</span>
-                    <pre style={{ ...mono, margin: 0, whiteSpace: 'pre-wrap' }}>{r!.details.join('\n')}</pre>
-                  </div>
-                ))}
-              </div>
-            </Accordion>
-          );
-        })}
-      </section>
+      <ComponentDetails />
     </div>
   );
 }

@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Modal",
+  "reviewedAt": "2026-10-11T18:30:33.393Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Footer Actions",
+    "With Tertiary Action"
+  ],
+  "costUsd": 0.027538,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No states shown by color alone; focus ring adds visual indicator"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Button boundaries and focus ring are clearly visible with strong contrast"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text 'Open Modal' matches screen reader announcement"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text clipping; 'Open Modal' fully visible in all stories"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Bright blue focus ring clearly visible in all focused screenshots (Default, With Footer Actions, With Tertiary Action)"
+    }
+  ]
+}

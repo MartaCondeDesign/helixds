@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "SidePanel",
+  "reviewedAt": "2026-10-11T18:37:03.303Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Bottom Placement",
+    "Right Placement"
+  ],
+  "costUsd": 0.023641999999999996,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning shown by color alone; the button has clear text labeling"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Button boundaries and focus ring have strong contrast in both light and dark modes"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible button text 'Open SidePanel' matches the screen reader announcement exactly"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible with no truncation or overlapping in any story"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Bright blue focus ring is clearly visible in all three focused screenshots (Default, Bottom Placement, Right Placement)"
+    }
+  ]
+}

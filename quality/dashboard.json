@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-11T10:51:26.295Z",
+  "generatedAt": "2026-10-11T18:46:39.986Z",
   "sources": {
-    "stabilityGeneratedAt": "2026-10-11T10:51:16.718Z",
+    "stabilityGeneratedAt": "2026-10-11T17:48:31.747Z",
     "evalRuns": 361,
     "lastEvalRunAt": "2026-10-09T18:25:04.232Z",
     "weeklyEvalRuns": 180,
@@ -1092,19 +1092,25 @@
       }
     ]
   },
+  "accessibility": {
+    "score": 1,
+    "meetsMinimum": 33,
+    "generatedAt": "2026-10-11T18:46:29.784Z"
+  },
   "governance": {
     "total": 33,
     "complete": 33,
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.7049545454545455,
+  "healthScore": 0.754128787878788,
   "healthScoreBreakdown": {
     "componentReadiness": 0.36363636363636365,
     "figmaAlignment": 0.36363636363636365,
     "agentReliability": 0.9,
     "ruleCompliance": 0.8975,
-    "governanceCoverage": 1
+    "governanceCoverage": 1,
+    "accessibility": 1
   },
   "weekly": {
     "from": "2026-10-04",

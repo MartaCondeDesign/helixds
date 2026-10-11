@@ -1,0 +1,43 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Card",
+  "reviewedAt": "2026-10-11T18:21:40.703Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Card Grid"
+  ],
+  "costUsd": 0.023611,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning is conveyed by color alone; cards use text labels and clear structure."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Card borders are clearly visible against backgrounds in both light and dark themes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Default story: visible 'Card title' matches announcement. Card Grid story: visible labels (MEMBERS, ACTIVE, COMPONENTS) and numbers (6, 4, 103) match screen reader output."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible in both stories; no truncation or overlap."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Neither story has interactive elements or a focused screenshot; not applicable."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "AvatarGroup",
+  "reviewedAt": "2026-10-11T18:44:29.267Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Overflow",
+    "Sizes"
+  ],
+  "costUsd": 0.030768999999999998,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning is shown by color alone across all stories"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Avatar boundaries and text elements are clearly distinguishable from backgrounds in light and dark modes"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Avatars are images (exempt per instructions); overflow text ('+2', '+1') matches visible content"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, overlapping, or truncated across Default, With Overflow, and Sizes stories"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "No focused screenshots provided; nothing in these stories takes keyboard focus"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "MultiSelect",
+  "reviewedAt": "2026-10-11T18:31:09.693Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Selection",
+    "Wrapping"
+  ],
+  "costUsd": 0.03018,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning conveyed by color alone; all states shown through text, icons, and visible elements"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Control boundaries, pill outlines, and focus rings are clearly distinguishable from backgrounds in both light and dark themes"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text ('Skills', 'Design', 'Frontend', etc.) matches screen reader announcements across all stories"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off or truncated; all labels, placeholders, and pill text are fully readable in Wrapping story with natural line wrapping"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Focus indicators are obvious in all focused screenshots: blue ring on Default combobox, blue circle on dismiss buttons in With Selection and Wrapping"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "SideNav",
+  "reviewedAt": "2026-10-11T18:36:34.581Z",
+  "model": "haiku",
+  "stories": [
+    "Default"
+  ],
+  "costUsd": 0.027312999999999997,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": false,
+      "reason": "Default story: Team link's selected state is indicated by background color alone (light blue in light theme, blue in dark theme), with no text, icon change, or shape/pattern distinguishing it"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Focus rings and icon/boundary contrast are clear in both themes"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible link labels (Dashboard, Components, Tokens, Team, AI Context, Settings, Marta Conde) match screen reader announcements"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text truncation or overlapping observed"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Default story focused screenshot: Dashboard link has obvious blue focus border"
+    }
+  ]
+}

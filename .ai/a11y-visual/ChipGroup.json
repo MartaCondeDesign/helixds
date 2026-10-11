@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "ChipGroup",
+  "reviewedAt": "2026-10-11T18:26:15.432Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Icons",
+    "Wrapping"
+  ],
+  "costUsd": 0.032844,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All buttons have text labels; no state or meaning is conveyed by color alone across all stories."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Focus rings, button borders, and icons (with icons story) are clearly distinguishable from backgrounds in light and dark modes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible button text matches screen reader names exactly in all stories (Default: Active/Paused/Draft/Archived; With Icons: Active/Paused/Archived; Wrapping: Design/Research/Frontend/Backend/Writing/Data/Product/Marketing)."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible with no clipping or truncation across all stories."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Blue focus rings are prominent and obviously visible in all focused screenshots (Default: Active, With Icons: Active, Wrapping: Design)."
+    }
+  ]
+}

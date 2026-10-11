@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Chart",
+  "reviewedAt": "2026-10-11T18:22:21.776Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Line",
+    "Area"
+  ],
+  "costUsd": 0.033839,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All stories: Data is identified by blue color with accompanying text labels (legend, axes, table)"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "All stories: Blue line/area and grid lines are clearly distinguishable from backgrounds in both light and dark versions"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All stories: Visible legend text ('Active users', 'GB') matches screen reader announcements; month and value labels match"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All stories: No text is cut off or truncated; all labels fully visible"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All stories: No focused screenshots provided; nothing takes keyboard focus per accessibility tree"
+    }
+  ]
+}

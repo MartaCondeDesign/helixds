@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "FAB",
+  "reviewedAt": "2026-10-11T18:27:30.740Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Speed Dial",
+    "Expanded"
+  ],
+  "costUsd": 0.054633,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning shown by color alone. Icons (+, X, download, person) and focus ring provide meaning."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Blue button has strong contrast against light and dark backgrounds. White icons and focus ring are clearly distinguishable."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Icon-only buttons with no visible text labels. Criterion about visible text matching accessible name doesn't apply."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text content to be clipped or truncated."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Visible blue focus ring around button in all focused screenshots (Default, Speed Dial, Expanded) clearly indicates keyboard focus."
+    }
+  ]
+}

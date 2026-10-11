@@ -1,0 +1,43 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Table",
+  "reviewedAt": "2026-10-11T18:43:48.850Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Drag Reorder"
+  ],
+  "costUsd": 0.029691,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Status values are shown as text (Active, Invited) on colored badges; meaning is not conveyed by color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Control boundaries and icons are clearly visible: '···' action buttons have sufficient contrast in light and dark modes; reorder icons are visible; focus ring is clear and contrasting."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text '···' matches screen reader announcement; reorder buttons are icon-only and exempt from this criterion."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible: names, roles, and status labels are not cut off or truncated."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "In Default focused screenshot, the '···' button has a prominent blue outline clearly indicating focus."
+    }
+  ]
+}

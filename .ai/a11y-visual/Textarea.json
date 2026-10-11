@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Textarea",
+  "reviewedAt": "2026-10-11T18:38:35.654Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Description",
+    "With Character Count"
+  ],
+  "costUsd": 0.027365999999999998,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Focus and states are indicated by border change, not color alone"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Textarea borders and focus ring are clearly visible and distinguishable in both light and dark themes"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible label 'Description' matches screen reader announcement for all stories"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is truncated or cut off in any story"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Blue border clearly indicates focus across all focused screenshots (Default, With Description, With Character Count)"
+    }
+  ]
+}

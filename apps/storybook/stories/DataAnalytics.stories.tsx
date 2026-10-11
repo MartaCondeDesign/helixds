@@ -25,12 +25,23 @@ type DashboardSnapshot = {
   figma: Record<string, number>;
   tokens: { defined: number };
   healthScore: number | null;
+  healthScoreBreakdown: Record<string, number | null>;
   evals: { generations: number; passRate: number | null; promptsCovered: number; globalChecks: Array<{ id: string; label: string; failed: number; rate: number }>; ladder?: LadderLevel[]; rounds?: LadderRound[]; daily?: LadderDay[]; improvements?: RoundImprovement[] };
   weekly: { from: string; to: string; evals: { passRate: number | null } };
   changes: Array<{ id: string; date: string; area: string; summary: string; status: string }>;
 };
 
-const snapshot = rawSnapshot as DashboardSnapshot;
+const snapshot = rawSnapshot as unknown as DashboardSnapshot;
+
+// What the health score averages — equal weight, each a 0–1 rate (scripts/quality-lib.ts → createHelixSnapshot).
+const HEALTH_SIGNALS: Array<{ key: string; label: string; measures: string; command: string }> = [
+  { key: 'componentReadiness', label: 'Component readiness', measures: 'Share of components that are stable: the 8 automatic criteria pass and they are aligned in Figma.', command: 'pnpm verify:stable' },
+  { key: 'figmaAlignment', label: 'Figma alignment', measures: 'Share of components in Figma and aligned with code (colors, sizes, typography, variables).', command: 'pnpm verify:stable · pnpm figma:audit' },
+  { key: 'agentReliability', label: 'Agent reliability', measures: 'Share of current eval answers that pass their task checklist.', command: 'pnpm eval:report' },
+  { key: 'ruleCompliance', label: 'Rule compliance', measures: 'Share of current eval answers free of each global mistake (doesn’t compile, invented props…), averaged over the rules.', command: 'pnpm eval:report' },
+  { key: 'governanceCoverage', label: 'Governance coverage', measures: 'Share of contracts with rationale, neverUseFor and governance boundaries.', command: 'pnpm verify:governance' },
+  { key: 'accessibility', label: 'Accessibility', measures: 'Average of the per-component accessibility scores: % of the automatic checks (contract, keys, focus return, keyboard, axe, contrast, focus visible, target size, reflow, screen reader) that apply and pass.', command: 'pnpm a11y' },
+];
 const metricHistory = history as HistoryPoint[];
 type Changelog = { commitCount: number; days: Array<{ date: string; commits: unknown[] }> };
 const changelog = rawChangelog as Changelog;
@@ -149,7 +160,27 @@ function DataAnalyticsPage() {
       />
 
       <Card header={<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}><span>Design System Health Evolution</span><SegmentedControl label="Health period" value={period} onChange={setPeriod} options={[{ value: 'day', label: 'Day' }, { value: 'month', label: 'Month' }, { value: 'year', label: 'Year' }]} /></div>}>
-        <Chart variant="bar" label="Design-system health score" description="Average of component readiness, Figma alignment, agent reliability, Helix-rule compliance, and governance coverage (contracts with rationale, neverUseFor and governance boundaries). Agent reliability and rule compliance count only current answers (latest round of each task × level since the last breaking change, no control group) — from 10 Oct 2026; earlier points counted every saved answer. Day shows the rolling 30-day window; Month the rolling 12-month window; Year starts at 2024 and adds each calendar year. Missing periods have no bar." categories={healthHistory.map(point => point.date)} series={[{ name: 'Health score', data: healthHistory.map(point => point.score) }]} />
+        <Chart variant="bar" label="Design-system health score" description="Average of component readiness, Figma alignment, agent reliability, Helix-rule compliance, governance coverage (contracts with rationale, neverUseFor and governance boundaries) and accessibility (the average of per-component accessibility scores, pnpm a11y — from 11 Oct 2026). Agent reliability and rule compliance count only current answers (latest round of each task × level since the last breaking change, no control group) — from 10 Oct 2026; earlier points counted every saved answer. Day shows the rolling 30-day window; Month the rolling 12-month window; Year starts at 2024 and adds each calendar year. Missing periods have no bar." categories={healthHistory.map(point => point.date)} series={[{ name: 'Health score', data: healthHistory.map(point => point.score) }]} />
+        <Table>
+          <TableHead>
+            <tr data-helix-part="table-row">
+              <TableHeaderCell>What it measures (today: {pct(snapshot.healthScore)})</TableHeaderCell>
+              <TableHeaderCell>Value</TableHeaderCell>
+              <TableHeaderCell>How</TableHeaderCell>
+              <TableHeaderCell>Recompute</TableHeaderCell>
+            </tr>
+          </TableHead>
+          <tbody data-helix-part="table-body">
+            {HEALTH_SIGNALS.map(signal => (
+              <tr key={signal.key} data-helix-part="table-row">
+                <TableCell><strong>{signal.label}</strong></TableCell>
+                <TableCell>{pct(snapshot.healthScoreBreakdown?.[signal.key] ?? null)}</TableCell>
+                <TableCell>{signal.measures}</TableCell>
+                <TableCell><code>{signal.command}</code></TableCell>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Card>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 'var(--helix-spacing-m)' }}>

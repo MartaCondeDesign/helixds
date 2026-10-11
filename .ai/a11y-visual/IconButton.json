@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "IconButton",
+  "reviewedAt": "2026-10-11T18:28:57.710Z",
+  "model": "haiku",
+  "stories": [
+    "Ghost",
+    "Secondary",
+    "Primary"
+  ],
+  "costUsd": 0.026181,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Icons communicate the action; no state shown by color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Icons and focus rings have adequate contrast against backgrounds in all light/dark variants."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Icon-only buttons with accessible labels provided programmatically; no visible text mismatch."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No visible text; all icons are fully visible."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All focused variants (Ghost, Secondary, Primary) show prominent blue focus rings."
+    }
+  ]
+}

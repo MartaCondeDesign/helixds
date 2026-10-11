@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Icon",
+  "reviewedAt": "2026-10-11T18:28:25.478Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Icon Only",
+    "Sizes"
+  ],
+  "costUsd": 0.037524,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Icons convey meaning through shape (trash, magnifying glass, plus), not color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Icons have clear contrast against backgrounds in both light and dark modes."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Icon shapes (trash = delete) visually match their announced names. Icon-only controls are acceptable when the shape is clear."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All icons and size labels (12–40 in Sizes story) are fully visible and readable."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "No focused screenshots provided for any story; this criterion does not apply."
+    }
+  ]
+}

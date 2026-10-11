@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "SegmentedControl",
+  "reviewedAt": "2026-10-11T18:36:04.330Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Four Options",
+    "With Disabled Option"
+  ],
+  "costUsd": 0.038361,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Selected state is shown by filled vs unfilled button appearance (pattern/shape difference), not color alone, across all three stories."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Button boundaries and focus rings are clearly visible and distinguishable from the background in both light and dark themes across all stories."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible button labels (Plan/Debug/Ask in Default and With Disabled Option; Day/Week/Month/Year in Four Options) match the screen reader announcements for all buttons."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible with no truncation or overlap in any story."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Blue focus rings are bright and obvious around the focused elements (Plan in Default and With Disabled Option focused versions; Year in Four Options focused version)."
+    }
+  ]
+}

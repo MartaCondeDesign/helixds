@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Button",
+  "reviewedAt": "2026-10-11T18:45:00.903Z",
+  "model": "haiku",
+  "stories": [
+    "All Variants",
+    "Loading",
+    "Disabled"
+  ],
+  "costUsd": 0.028203,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All buttons use text labels (Primary, Secondary, Ghost, Danger, Saving…, Not available) to identify themselves. While color distinguishes variants, it is not the sole means of conveying meaning."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "All Variants: button fills and text have adequate contrast in light and dark modes. Loading and Disabled stories: disabled controls are exempt from 1.4.11."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text matches screen reader announcements in all stories: Primary, Secondary, Ghost, Danger, Saving…, Not available."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All button text is fully visible with no truncation or overlap."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All Variants focused screenshot: Primary button has a clear blue focus ring; disabled stories have no focus screenshot (controls don't take focus)."
+    }
+  ]
+}

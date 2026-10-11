@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Toast",
+  "reviewedAt": "2026-10-11T18:39:31.217Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Keyboard Reach",
+    "Opened"
+  ],
+  "costUsd": 0.040124,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Buttons have text labels; notification status conveyed through text, not color alone"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Button borders and focus rings clearly distinguishable in light and dark modes with adequate contrast"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible button text matches screen reader announcements exactly"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text cut off or truncated in any screenshot"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Default story: clear blue focus ring on Neutral button. Opened story: screenshot doesn't show notification region to evaluate Dismiss button focus"
+    }
+  ]
+}

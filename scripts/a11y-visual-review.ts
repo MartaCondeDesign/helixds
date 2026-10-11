@@ -55,6 +55,9 @@ const SYSTEM = [
   'story fails it. Name the story and the element in "reason". Only report what you can see; when the screenshots',
   'can\'t show it, pass=true and say so. Disabled controls are exempt from 1.4.11 and never take focus — never report them.',
   'A border that changes color on focus is not "color only" (1.4.1 is about meaning: errors, selection, status).',
+  '2.5.3 only applies to controls whose label is VISIBLE TEXT: icon-only buttons, avatars and images have no text label, so they pass it.',
+  'A borderless (ghost/text) button is identified by its text — 1.4.11 asks for a boundary only when one is needed to identify the control.',
+  'Contrast claims are estimates by eye: report 1.4.11 only when an edge or icon is clearly hard to see, not when it is merely light.',
   'focus-clear only applies to stories that have a "focused" screenshot; the text says which element has focus. Be concise.',
 ].join(' ');
 const SCHEMA = {

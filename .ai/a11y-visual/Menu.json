@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Menu",
+  "reviewedAt": "2026-10-11T18:30:01.776Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Grouped",
+    "Opened"
+  ],
+  "costUsd": 0.029054,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning is shown by color alone across all stories. Buttons and menu items use borders and spacing."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Control boundaries are clearly distinguishable in both light and dark modes. Button borders and focus rings are all visible with sufficient contrast."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible text matches screen reader announcements: 'Open menu' button, menu items 'Apple', 'Pear', 'Carrot', 'Kale', and group labels 'Fruit' and 'Vegetable'."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, overlapping, or truncated in any story or screenshot."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All focused screenshots show clear blue focus rings: Default-focused and Grouped-focused on button, Opened-focused on 'Apple' option. Focus is obvious in each case."
+    }
+  ]
+}

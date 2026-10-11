@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "RadioGroup",
+  "reviewedAt": "2026-10-11T18:35:13.698Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Horizontal",
+    "Invalid"
+  ],
+  "costUsd": 0.04295499999999999,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Selected state uses shape difference (filled vs empty circle), not color alone. Invalid state indicated by both red outline and red text message."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Radio button circles and focus rings have clear contrast in light and dark modes. Focus indicators are prominent and distinguishable."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible text matches screen reader announcements: 'Free Up to 3 editors, unlimited viewers' matches, 'Pro' matches, etc. across all stories including error text and alert."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text truncation or overlapping observed in any screenshot."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Default: Pro has large blue focus circle. Horizontal: Just me has large blue focus circle. Invalid: Free has large blue focus circle. All are obvious and prominent."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Input",
+  "reviewedAt": "2026-10-11T18:29:26.533Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "With Description",
+    "With Leading Icon"
+  ],
+  "costUsd": 0.026570000000000003,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning shown by color alone across all stories"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Input field borders clearly distinguishable from background in light and dark modes; icon visible with adequate contrast"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "In all stories, visible label text (Email/Password) matches screen reader name; decorative icon in 'With Leading Icon' does not require label inclusion"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text fully visible; placeholder text, description text, and labels are not truncated or overlapping"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Blue focus ring is prominently visible in all focused screenshots (Default, With Description, With Leading Icon) making focus immediately obvious"
+    }
+  ]
+}

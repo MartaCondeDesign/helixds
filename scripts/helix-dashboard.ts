@@ -30,6 +30,7 @@ function signals(snapshot: QualitySnapshot) {
     { label: 'Agent reliability', rate: breakdown.agentReliability, detail: `${snapshot.evals.generations} runs · ${snapshot.evals.promptsCovered} prompts`, source: 'pnpm eval:report' },
     { label: 'Rule compliance', rate: breakdown.ruleCompliance, detail: topRisk?.failed ? `worst: ${topRisk.id} in ${percent(topRisk.rate)} of runs` : 'no rule failures', source: 'pnpm eval:report' },
     { label: 'Governance coverage', rate: breakdown.governanceCoverage, detail: `${snapshot.governance.complete}/${snapshot.governance.total} contracts`, source: 'pnpm verify:governance' },
+    { label: 'Accessibility', rate: breakdown.accessibility, detail: `${snapshot.accessibility.meetsMinimum ?? 0}/${total} components pass every automatic check`, source: 'pnpm a11y' },
   ];
 }
 

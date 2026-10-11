@@ -1,0 +1,42 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "TopBar",
+  "reviewedAt": "2026-10-11T18:43:16.495Z",
+  "model": "haiku",
+  "stories": [
+    "Default"
+  ],
+  "costUsd": 0.021218,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No states shown by color alone in Default story."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Search field border, notification icon, and help icon have adequate contrast in both light and dark themes in Default story."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Icon-only buttons (Notifications, Help) pass; search textbox announced name 'Search' matches visible placeholder 'Search…' in Default story."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text truncation or overlap in Default story."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "In Default focused screenshot, blue focus ring clearly marks the search input as having keyboard focus."
+    }
+  ]
+}

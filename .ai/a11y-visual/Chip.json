@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Chip",
+  "reviewedAt": "2026-10-11T18:45:52.312Z",
+  "model": "haiku",
+  "stories": [
+    "Dismissible",
+    "Variants",
+    "With Icons"
+  ],
+  "costUsd": 0.037929000000000004,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All variants and states are identified by text labels ('neutral', 'warning', 'info', 'success', 'danger', etc.). Color reinforces but doesn't convey meaning alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Colored borders on variant chips are clearly visible; icons (checkmarks, X, clock, info) are distinguishable; focus rings are bright blue with strong contrast. Borderless chips in Dismissible story are identified by visible text."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All visible text on controls matches screen reader announcements. Dismiss buttons (×) are icon-only, so 2.5.3 doesn't apply."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, overlapping, or truncated in any story or theme."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All focused screenshots (Dismissible, Variants, With Icons) show a thick, bright blue focus ring that is obviously visible and contrasts well with backgrounds."
+    }
+  ]
+}

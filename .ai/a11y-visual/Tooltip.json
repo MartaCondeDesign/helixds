@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Tooltip",
+  "reviewedAt": "2026-10-11T18:40:13.144Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Placements",
+    "On Avatar"
+  ],
+  "costUsd": 0.031648,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "No state or meaning conveyed by color alone. Icon buttons and focus ring are standard patterns."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Delete icons and blue focus rings have clear contrast against light and dark backgrounds."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Button's visible icon meaning matches screen reader name 'Delete'. Avatar has appropriate accessible name."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All content fully visible, including tooltip 'Top placement' in Placements story. No truncation observed."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Blue focus rings in Default and Placements focused screenshots are obvious and clearly indicate which button has focus."
+    }
+  ]
+}

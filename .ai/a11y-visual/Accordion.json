@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Accordion",
+  "reviewedAt": "2026-10-11T18:18:10.345Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Open By Default",
+    "Disabled"
+  ],
+  "costUsd": 0.034535,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Expanded/collapsed state is indicated by chevron icon direction (up/down), not color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Focus rings are clear blue borders with strong contrast on light and dark backgrounds. Control boundaries and chevron icons are clearly distinguishable."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text 'Shipping details' matches the announced screen reader name. Open By Default story includes expanded content in the announcement."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "All text is fully visible, including the content in Open By Default story ('Orders ship within 3-5 business days. Express shipping is available at checkout.'). No truncation or overlap."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "Default and Open By Default focused screenshots show prominent blue border focus indicators that are immediately obvious."
+    }
+  ]
+}

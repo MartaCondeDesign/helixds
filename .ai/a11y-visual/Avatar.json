@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Avatar",
+  "reviewedAt": "2026-10-11T18:19:22.645Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Sizes",
+    "With Image"
+  ],
+  "costUsd": 0.025931,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Avatar colors are purely decorative; no state or meaning conveyed by color alone"
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Avatars are static images without interactive control boundaries or focus rings"
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible content ('A' or photo) aligns with accessible names in all stories"
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text truncation or clipping in any story"
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "No focused screenshots provided; not applicable for Avatar (non-interactive)"
+    }
+  ]
+}
