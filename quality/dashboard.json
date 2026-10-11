@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-10T09:41:57.466Z",
+  "generatedAt": "2026-10-11T10:44:04.403Z",
   "sources": {
-    "stabilityGeneratedAt": "2026-10-03T21:21:40.359Z",
+    "stabilityGeneratedAt": "2026-10-11T10:43:45.263Z",
     "evalRuns": 361,
     "lastEvalRunAt": "2026-10-09T18:25:04.232Z",
-    "weeklyEvalRuns": 288,
+    "weeklyEvalRuns": 180,
     "improvementRecords": 0,
     "unscoredComponents": []
   },
   "components": {
     "total": 33,
     "byStatus": {
-      "draft": 0,
-      "beta": 13,
-      "stable": 20
+      "draft": 2,
+      "beta": 18,
+      "stable": 13
     },
     "failedCriteria": [
       {
@@ -34,7 +34,7 @@
       {
         "id": "stories",
         "label": "Stories",
-        "failed": 0
+        "failed": 2
       },
       {
         "id": "keyboard",
@@ -59,8 +59,8 @@
     ]
   },
   "figma": {
-    "synced": 20,
-    "stale": 0,
+    "synced": 15,
+    "stale": 5,
     "missing": 13
   },
   "tokens": {
@@ -1098,17 +1098,17 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.8019242424242424,
+  "healthScore": 0.7291969696969697,
   "healthScoreBreakdown": {
-    "componentReadiness": 0.6060606060606061,
-    "figmaAlignment": 0.6060606060606061,
+    "componentReadiness": 0.3939393939393939,
+    "figmaAlignment": 0.45454545454545453,
     "agentReliability": 0.9,
     "ruleCompliance": 0.8975,
     "governanceCoverage": 1
   },
   "weekly": {
-    "from": "2026-10-03",
-    "to": "2026-10-10",
+    "from": "2026-10-04",
+    "to": "2026-10-11",
     "evals": {
       "generations": 40,
       "passRate": 0.9,

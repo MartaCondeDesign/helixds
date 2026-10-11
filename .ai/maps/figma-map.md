@@ -55,7 +55,7 @@ Not decidable from types alone — check the skill: `required` with no visible i
 - `accordion-panel`
 - `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, stable)
+### AppShell (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 
@@ -102,7 +102,7 @@ _No Figma-mappable props._
 - `badge-icon`
 - `badge-label`
 
-### Button (`v2.0.0`, stable)
+### Button (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -249,7 +249,7 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `icon-root`
 
-### IconButton (`v2.0.0`, stable)
+### IconButton (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -264,7 +264,7 @@ _No Figma-mappable props._
 - `icon-button-spinner`
 - `icon-button`
 
-### Input (`v2.0.0`, stable)
+### Input (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -366,7 +366,7 @@ _No Figma-mappable props._
 - `nav-item-icon`
 - `nav-item-label`
 
-### PageHeader (`v1.0.0`, stable)
+### PageHeader (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -440,7 +440,7 @@ _No Figma-mappable props._
 - `segmented-control-item-icon`
 - `segmented-control-item-label`
 
-### Select (`v1.1.0`, stable)
+### Select (`v1.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -575,7 +575,7 @@ _No Figma-mappable props._
 - `tooltip-root`
 - `tooltip-content`
 
-### TopBar (`v1.0.0`, stable)
+### TopBar (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 

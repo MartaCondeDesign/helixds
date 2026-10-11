@@ -2356,6 +2356,14 @@
     transition: transform var(--helix-modal-duration-close) var(--helix-modal-easing),
                 opacity    var(--helix-modal-duration-close) var(--helix-modal-easing);
   }
+  /* A closed <dialog> must not render. The `display: flex` above overrides the UA's
+     `dialog:not([open]) { display: none }`, so a closed Modal/SidePanel stayed in the page at opacity 0 and
+     Tab reached its invisible buttons (found by the visible-focus check, WCAG 2.4.7 / 2.4.3). The close
+     animation is unaffected: useDialogTransition keeps [open] until the transition has finished. */
+  [data-helix-part="modal-root"]:not([open]),
+  [data-helix-part="side-panel-root"]:not([open]) {
+    display: none;
+  }
   [data-helix-part="modal-root"][data-state="open"] {
     transform: scale(1);
     opacity:   1;
@@ -2518,9 +2526,15 @@
 
   [data-helix-part="page-header-root"] {
     display:         flex;
+    flex-wrap:        wrap; /* WCAG 1.4.10 Reflow: at 320px the actions drop below the title instead of being cut off */
     align-items:      flex-start;
     justify-content:  space-between;
     gap:              var(--helix-primitive-spacing-100);
+  }
+  /* The title block takes the row and gives way to the actions only when there's room beside it. */
+  [data-helix-part="page-header-root"] > :first-child {
+    flex:      1 1 16rem;
+    min-width: 0;
   }
 
   /* level 1 = "Heading / 2xl / Bold", level 2 = "Heading / xl / Bold" — the text styles, as in Figma */
@@ -2543,6 +2557,7 @@
 
   [data-helix-part="page-header-actions"] {
     display:      flex;
+    flex-wrap:    wrap;
     align-items:  center;
     gap:          var(--helix-primitive-spacing-50);
     flex-shrink:  0;

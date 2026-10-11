@@ -24,7 +24,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-10 — feat(metrics): health score's agent signals use current answers only — 63.2 → 80.2 (latest commit)
+- 2026-10-11 — feat(a11y): visible focus, target size and reflow checks — and the bugs they found (latest commit)
+- 2026-10-10 — feat(metrics): health score's agent signals use current answers only — 63.2 → 80.2 ([`721d72b`](https://github.com/MartaCondeDesign/helixds/commit/721d72b))
 - 2026-10-09 — feat: "npm install" eval level; publish-ready packages that point agents to their contracts ([`08eb706`](https://github.com/MartaCondeDesign/helixds/commit/08eb706))
 - 2026-10-09 — feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes ([`00ef583`](https://github.com/MartaCondeDesign/helixds/commit/00ef583))
 - 2026-10-09 — feat: MCP asks for every contract up front; lint catches HTML attributes Helix components don't take ([`8c12045`](https://github.com/MartaCondeDesign/helixds/commit/8c12045))

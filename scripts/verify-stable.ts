@@ -9,7 +9,8 @@
  *   2 types       contract props present in {Name}.types.ts (verify:types)
  *   3 tokens      no 🆕/🚩 row for the component in component-token-exceptions.md
  *   4 stories     every variant/size value + authored state of the contract appears in its stories,
- *                 and axe finds no violations (other than contrast, see 6) in any of them
+ *                 and axe finds no violations (other than contrast, see 6) in any of them; nor do the checks axe
+ *                 can't do: visible focus per theme (2.4.7), target size 24×24 (2.5.8), reflow at 320px (1.4.10)
  *   5 keyboard    every key listed in a11y.keyboardNav is exercised by a story `play` test, and all pass
  *   6 contrast    no axe color-contrast violation in any story, in light AND dark theme
  *   7 motion      any Motion (JS) animation beyond whileTap press feedback is wrapped in
@@ -48,7 +49,7 @@ const CRITERIA: Record<CriterionKey, { label: string; description: string }> = {
   contract: { label: 'Contract', description: 'Contract complete — the a11y section (role, WCAG criteria, keyboard behavior) is filled in and the manifest reports no drift for this component.' },
   types:    { label: 'Types',    description: 'Code matches contract — every prop the contract defines exists in the component’s {Name}.types.ts (pnpm verify:types).' },
   tokens:   { label: 'Tokens',   description: 'Tokens resolved — no value is left as 🆕 or 🚩 in component-token-exceptions.md; everything is a token or a documented ADR exception.' },
-  stories:  { label: 'Stories',  description: 'Stories + accessibility — every variant, size and authored state in the contract has a story, and axe (WCAG 2.2 AA) finds no violations in any of them, in a real browser.' },
+  stories:  { label: 'Stories',  description: 'Stories + accessibility — every variant, size and authored state in the contract has a story, and in a real browser axe (WCAG 2.2 AA) finds no violations in any of them, focus is visible in light and dark (2.4.7), every target is at least 24×24 px or well spaced (2.5.8), and nothing overflows at 320 px (1.4.10).' },
   keyboard: { label: 'Keyboard', description: 'Keyboard tested — every key the contract lists under keyboardNav has an automated play test in its stories, and all of them pass.' },
   contrast: { label: 'Contrast', description: 'Color contrast AA — no text or icon fails WCAG AA contrast in any story, checked in light mode AND dark mode.' },
   motion:   { label: 'Motion',   description: 'Reduced motion — with the OS “reduce motion” setting on, nothing moves: CSS motion is neutralized globally, and any Motion (JS) animation sits inside <MotionConfig reducedMotion="user">.' },
@@ -86,7 +87,14 @@ const manifest = JSON.parse(fs.readFileSync(path.join(root, 'contracts/manifest.
 const figmaSync = JSON.parse(fs.readFileSync(path.join(root, 'contracts/figma-sync.json'), 'utf-8'));
 const figmaEntry = new Map<string, any>(figmaSync.components.map((c: any) => [c.name, c]));
 
-type AxeResult = { id: string; title: string; name: string; violations: Record<'light' | 'dark', { rule: string; nodes: number; help: string }[]> };
+type AxeResult = {
+  id: string; title: string; name: string;
+  violations: Record<'light' | 'dark', { rule: string; nodes: number; help: string }[]>;
+  // Checks axe can't do (apps/storybook/.storybook/a11y-extra-checks.ts); absent in results from before them.
+  focusVisible?: Record<'light' | 'dark', { element: string }[]>;
+  targetSize?: { element: string; width: number; height: number }[];
+  reflow?: { element: string; overflowPx: number }[];
+};
 const axeResults: AxeResult[] = fs.readdirSync(a11yDir).map(f => JSON.parse(fs.readFileSync(path.join(a11yDir, f), 'utf-8')));
 
 // jest.json: one testResult per story file; assertionResults' ancestorTitles = [title, storyName]
@@ -178,11 +186,19 @@ for (const c of manifest.components) {
   }
   for (const s of contract.states?.authored ?? []) {
     const stateName = typeof s === 'string' ? s : s.name;
-    if (!new RegExp(`\\b${stateName}\\b`).test(storySrc)) storyGaps.push(`state "${stateName}" not shown`);
+    // ADR-022: boolean states are is-prefixed props (state "loading" is shown through isLoading).
+    const isProp = `is${stateName.charAt(0).toUpperCase()}${stateName.slice(1)}`;
+    if (!new RegExp(`\\b(${stateName}|${isProp})\\b`).test(storySrc)) storyGaps.push(`state "${stateName}" not shown`);
   }
   if (stories.length === 0) storyGaps.push('no browser results for its stories');
   for (const r of stories) for (const theme of ['light', 'dark'] as const)
     for (const v of r.violations[theme]) if (v.rule !== 'color-contrast') storyGaps.push(`axe ${v.rule} (${theme}) in "${r.name}"`);
+  for (const r of stories) {
+    for (const theme of ['light', 'dark'] as const)
+      for (const f of r.focusVisible?.[theme] ?? []) storyGaps.push(`no visible focus on ${f.element} (${theme}) in "${r.name}" — WCAG 2.4.7`);
+    for (const t of r.targetSize ?? []) storyGaps.push(`target ${t.element} is ${t.width}×${t.height}px, under 24×24 with no spacing — WCAG 2.5.8, in "${r.name}"`);
+    for (const f of r.reflow ?? []) storyGaps.push(`at 320px ${f.element} overflows by ${f.overflowPx}px — WCAG 1.4.10, in "${r.name}"`);
+  }
   checks.stories = { pass: storyGaps.length === 0, details: [...new Set(storyGaps)] };
 
   // 5 keyboard

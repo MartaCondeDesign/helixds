@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "AppShell",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "draft",
 
   "purpose": "The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. Never write `display: flex; min-height: 100vh` by hand again.",
   "import": "import { AppShell } from '@helixds/react';",
