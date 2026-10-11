@@ -222,5 +222,12 @@
     "score": 85,
     "readable": 100,
     "used": 85
+  },
+  {
+    "date": "2026-10-11",
+    "commit": "daafd06",
+    "score": null,
+    "readable": 100,
+    "used": null
   }
 ]

@@ -392,12 +392,11 @@ const darkOverrides: Record<string, string> = {
   '--helix-table-cell-color':    '#f1f5f9',
 
   '--helix-navItem-fill-hover':    '#1e293b',
-  '--helix-navItem-fill-current':  '#1e3a8a',
+  // current (fill/text/icon): no entry — since 2026-10-11 they alias fill.primary-interactive-default +
+  // text/icon.inverse (the primary Button pair, same in both themes): a solid blue pill with white text that
+  // stands out 3.45:1 on the dark nav and 5.17:1 on white (WCAG 1.4.1/1.4.11) — the old navy fill was 1.72:1.
   '--helix-navItem-text-default':  '#94a3b8',
-  // blue-300, not blue-400: #60a5fa on the #1e3a8a current fill is 4.07:1 (fails AA); #93c5fd is 5.74:1
-  '--helix-navItem-text-current':  '#93c5fd',
   '--helix-navItem-icon-default':  '#94a3b8',
-  '--helix-navItem-icon-current':  '#93c5fd',
 
   '--helix-topBar-fill':   '#0f172a',
   '--helix-topBar-border': '#1e293b',

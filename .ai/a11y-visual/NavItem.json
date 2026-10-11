@@ -1,44 +1,44 @@
 {
   "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
   "component": "NavItem",
-  "reviewedAt": "2026-10-11T18:33:05.661Z",
+  "reviewedAt": "2026-10-11T20:00:44.367Z",
   "model": "haiku",
   "stories": [
     "Default",
     "Current",
     "Nav List"
   ],
-  "costUsd": 0.10008449999999999,
+  "costUsd": 0.042211,
   "answers": [
     {
       "id": "color-only",
       "wcag": "WCAG 1.4.1",
       "pass": true,
-      "reason": "Current state uses background color change which also provides brightness differentiation. Nav List story adds icon/text color change as an additional indicator—not color alone."
+      "reason": "No state or meaning is conveyed by color alone. The current state (in Current and Nav List stories) uses a blue background fill plus white text, which combines shape/fill change with color."
     },
     {
       "id": "non-text",
       "wcag": "WCAG 1.4.11",
-      "pass": false,
-      "reason": "Nav List story: Team item has blue icon and text on light blue background, lacking sufficient contrast (~3:1). Visually weaker than other list items."
+      "pass": true,
+      "reason": "Focus rings are clear blue borders with strong contrast. Background fills (when present) also have good contrast with text. All controls are clearly distinguishable from background."
     },
     {
       "id": "label-in-name",
       "wcag": "WCAG 2.5.3",
       "pass": true,
-      "reason": "All visible text ('Dashboard', 'Team', 'Settings') matches screen reader names exactly."
+      "reason": "Visible text (Dashboard, Team, Settings) exactly matches the screen reader's announced names."
     },
     {
       "id": "clipped",
       "wcag": "WCAG 1.4.4 / 1.4.12",
       "pass": true,
-      "reason": "No text is cut off, truncated, or overlapping in any story."
+      "reason": "No text truncation or clipping observed in any story or theme."
     },
     {
       "id": "focus-clear",
       "wcag": "WCAG 2.4.11 / 2.4.13",
       "pass": true,
-      "reason": "All focused states show a bright blue focus ring clearly indicating keyboard focus on the element."
+      "reason": "All focused screenshots show an obvious blue border around the focused item (Dashboard in each case), making focus immediately apparent."
     }
   ]
 }

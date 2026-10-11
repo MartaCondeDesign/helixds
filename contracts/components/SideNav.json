@@ -59,7 +59,7 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"pass","screen-reader":"pass","ai-visual":"fail","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
+    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"pass","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "navigation (implicit from <nav>)",
     "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"]
   },

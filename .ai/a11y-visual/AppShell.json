@@ -1,42 +1,42 @@
 {
   "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
   "component": "AppShell",
-  "reviewedAt": "2026-10-11T18:42:47.764Z",
+  "reviewedAt": "2026-10-11T20:02:21.973Z",
   "model": "haiku",
   "stories": [
     "Default"
   ],
-  "costUsd": 0.034692,
+  "costUsd": 0.045964000000000005,
   "answers": [
     {
       "id": "color-only",
       "wcag": "WCAG 1.4.1",
       "pass": false,
-      "reason": "Default story: The Team navigation link indicates selected/current state using background color alone, with no icon, text styling, border, or pattern change to also convey the state."
+      "reason": "Default story: Team link's selected/current state shown only by blue background color; no aria-current, text label, icon change, or independent visual pattern in accessibility tree"
     },
     {
       "id": "non-text",
       "wcag": "WCAG 1.4.11",
       "pass": true,
-      "reason": "Control boundaries, icons, and focus rings are clearly distinguishable from backgrounds in both light and dark modes."
+      "reason": "Default story: all control borders, icons, and focus ring have clear contrast"
     },
     {
       "id": "label-in-name",
       "wcag": "WCAG 2.5.3",
       "pass": true,
-      "reason": "All visible control text (Dashboard, Team, Settings, Search, Notifications) matches the announced names from the screen reader."
+      "reason": "Default story: all visible text labels match screen reader names; icon-only controls (notifications button, avatar) are exempt"
     },
     {
       "id": "clipped",
       "wcag": "WCAG 1.4.4 / 1.4.12",
       "pass": true,
-      "reason": "No text is cut off, overlapping, or truncated; all content is fully readable."
+      "reason": "Default story: no text truncation or overlap visible"
     },
     {
       "id": "focus-clear",
       "wcag": "WCAG 2.4.11 / 2.4.13",
       "pass": true,
-      "reason": "Default focused story: Dashboard link has a prominent, rounded blue border outline that is immediately obvious and highly contrasting."
+      "reason": "Default story: focus ring on Dashboard link is prominent and obvious in focused screenshot"
     }
   ]
 }

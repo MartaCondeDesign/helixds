@@ -9,7 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated (latest commit)
+- 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated ([`daafd06`](https://github.com/MartaCondeDesign/helixds/commit/daafd06))
 - 2026-10-07 — feat!: publish under the @helixds npm scope ([`e5e900b`](https://github.com/MartaCondeDesign/helixds/commit/e5e900b))
 - 2026-10-07 — feat!: names agents expect — onClick, isLoading and the @helix/react package ([`ad1711f`](https://github.com/MartaCondeDesign/helixds/commit/ad1711f))
 - 2026-10-01 — Chip s is 24px (xs removed); 4px group-spacing rule ([`5d2af0a`](https://github.com/MartaCondeDesign/helixds/commit/5d2af0a))
@@ -82,6 +82,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-11 — fix(NavItem): current item is a solid pill — fill.primary-interactive-default + text/icon.inverse (the primary Button pair, chosen 2026-10-11): 5.17:1 against the nav in light, 3.45:1 in dark (was 1.09 / 1.72), white text 5.17:1 — WCAG 1.4.1 / 1.4.11 (latest commit)
 - 2026-10-11 — a11y: daily history (quality/accessibility-history.json, one entry per day from pnpm a11y) + 'By day' on Data/Accessibility — pick a day, see its score and what changed since the previous test; Proposals/Table reorder — options A, B, C and C+A to try (keyboard + no-drag reorder, WCAG 2.1.1 / 2.5.7) ([`ece62e5`](https://github.com/MartaCondeDesign/helixds/commit/ece62e5))
 - 2026-10-11 — fix(Chart): hidden data table no longer stretches the page (visually hidden on a wrapper div — a table ignores height/overflow); missing values read 'No data' instead of 0. a11y CLI: pnpm a11y <Name> and pnpm a11y all <Name> both work ([`9405748`](https://github.com/MartaCondeDesign/helixds/commit/9405748))
 - 2026-10-11 — storybook a11y page: pass/fail/n/a/pending counts in their own column ([`79fa87a`](https://github.com/MartaCondeDesign/helixds/commit/79fa87a))

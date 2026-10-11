@@ -1,8 +1,8 @@
 [
   {
     "date": "2026-10-11",
-    "commit": "ece62e5",
-    "generatedAt": "2026-10-11T19:58:15.967Z",
+    "commit": "daafd06",
+    "generatedAt": "2026-10-11T20:02:22.465Z",
     "score": 100,
     "meetsMinimum": 33,
     "components": {
@@ -342,7 +342,7 @@
           "target-size": "pass",
           "reflow": "n/a",
           "screen-reader": "pass",
-          "ai-visual": "fail",
+          "ai-visual": "pass",
           "human": "pending"
         }
       },
@@ -444,7 +444,7 @@
           "target-size": "pass",
           "reflow": "pass",
           "screen-reader": "pass",
-          "ai-visual": "fail",
+          "ai-visual": "pass",
           "human": "pending"
         }
       },
