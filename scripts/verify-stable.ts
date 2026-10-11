@@ -25,6 +25,7 @@
  *   --details prints what each failing criterion is missing, per component.
  */
 import fs from 'fs';
+import { requiredKeys } from './a11y-keys.ts';
 import path from 'path';
 import { execSync, spawnSync } from 'child_process';
 import { loadPrompts, scorePrompt } from './eval-lib';
@@ -135,21 +136,6 @@ for (const p of loadPrompts()) {
 // first dash names keys. Returns the userEvent snippets a play test must contain for that entry
 // (each inner array = "any one of these"). An entry naming no key (e.g. "Handled by the consumer…",
 // a mouse-only note) yields nothing to test.
-function requiredKeys(entry: string): { label: string; anyOf: string[] }[] {
-  const keyPart = entry.split(/\s[—-]\s/)[0]!;
-  const out: { label: string; anyOf: string[] }[] = [];
-  if (/\bArrow keys\b/i.test(keyPart)) out.push({ label: 'Arrow keys', anyOf: ['{ArrowDown}', '{ArrowRight}', '{ArrowUp}', '{ArrowLeft}'] });
-  if (/Arrow Up/i.test(keyPart)) out.push({ label: 'ArrowUp', anyOf: ['{ArrowUp}'] });
-  if (/Arrow (Up\/)?Down|Up\/Down/i.test(keyPart)) out.push({ label: 'ArrowDown', anyOf: ['{ArrowDown}'] });
-  if (/\bHome\b/.test(keyPart)) out.push({ label: 'Home', anyOf: ['{Home}'] });
-  if (/\bEnd\b/.test(keyPart)) out.push({ label: 'End', anyOf: ['{End}'] });
-  if (/\bEnter\b/.test(keyPart)) out.push({ label: 'Enter', anyOf: ['{Enter}'] });
-  if (/\bSpace\b/.test(keyPart)) out.push({ label: 'Space', anyOf: ['[Space]', '{Space}', "keyboard(' ')"] });
-  if (/\bEscape\b/.test(keyPart)) out.push({ label: 'Escape', anyOf: ['{Escape}'] });
-  if (/\bTab\b/.test(keyPart)) out.push({ label: 'Tab', anyOf: ['userEvent.tab(', '{Tab}'] });
-  return out;
-}
-
 // ── Per-component evaluation ─────────────────────────────────────────────────
 const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
