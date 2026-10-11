@@ -40,5 +40,103 @@
         }
       }
     }
+  },
+  "layout": {
+    "level=1": {
+      "page-header-title": {
+        "fontSize": {
+          "value": 32,
+          "token": "component.pageHeader.title.fontSize.1",
+          "figma": "heading-2xl-bold"
+        },
+        "lineHeight": {
+          "value": 43.2,
+          "token": "semantic.textStyle.heading-2xl-bold.lineHeight",
+          "figma": "heading-2xl-bold"
+        },
+        "fontWeight": {
+          "value": 700,
+          "token": "component.pageHeader.title.fontWeight.1",
+          "figma": "heading-2xl-bold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.heading-2xl-bold.fontFamily",
+          "figma": "heading-2xl-bold"
+        },
+        "textStyle": "heading-2xl-bold"
+      },
+      "page-header-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.pageHeader.description.fontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.pageHeader.description.fontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-s-regular.fontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "level=2": {
+      "page-header-title": {
+        "fontSize": {
+          "value": 24,
+          "token": "component.pageHeader.title.fontSize.2",
+          "figma": "heading-xl-bold"
+        },
+        "lineHeight": {
+          "value": 32.4,
+          "token": "semantic.textStyle.heading-xl-bold.lineHeight",
+          "figma": "heading-xl-bold"
+        },
+        "fontWeight": {
+          "value": 700,
+          "token": "component.pageHeader.title.fontWeight.2",
+          "figma": "heading-xl-bold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.heading-2xl-bold.fontFamily",
+          "figma": "heading-2xl-bold"
+        },
+        "textStyle": "heading-xl-bold"
+      },
+      "page-header-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.pageHeader.description.fontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.pageHeader.description.fontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-s-regular.fontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    }
   }
 }

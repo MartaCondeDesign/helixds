@@ -56,5 +56,122 @@
         }
       }
     }
+  },
+  "layout": {
+    "padding=default": {
+      "(root)": {
+        "paddingTop": {
+          "value": 24,
+          "token": "component.card.padding",
+          "figma": "semantic.spacing.component-xl"
+        },
+        "cornerRadius": {
+          "value": 8,
+          "token": "component.card.radius",
+          "figma": "semantic.radius.l"
+        }
+      },
+      "card-header": {
+        "fontSize": {
+          "value": 18,
+          "token": "component.card.header.fontSize",
+          "figma": "heading-l-bold"
+        },
+        "lineHeight": {
+          "value": 29.7,
+          "token": "component.card.header.lineHeight",
+          "figma": "heading-l-bold"
+        },
+        "fontWeight": {
+          "value": 700,
+          "token": "component.card.header.fontWeight",
+          "figma": "heading-l-bold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.card.header.fontFamily",
+          "figma": "heading-l-bold"
+        },
+        "textStyle": "heading-l-bold"
+      },
+      "card-body": {
+        "fontSize": {
+          "value": 14,
+          "token": "semantic.textStyle.body-m-regular.fontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-regular.lineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "semantic.textStyle.body-m-regular.fontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-regular.fontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      }
+    },
+    "padding=none": {
+      "(root)": {
+        "cornerRadius": {
+          "value": 8,
+          "token": "component.card.radius",
+          "figma": "semantic.radius.l"
+        }
+      },
+      "card-header": {
+        "fontSize": {
+          "value": 18,
+          "token": "component.card.header.fontSize",
+          "figma": "heading-l-bold"
+        },
+        "lineHeight": {
+          "value": 29.7,
+          "token": "component.card.header.lineHeight",
+          "figma": "heading-l-bold"
+        },
+        "fontWeight": {
+          "value": 700,
+          "token": "component.card.header.fontWeight",
+          "figma": "heading-l-bold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.card.header.fontFamily",
+          "figma": "heading-l-bold"
+        },
+        "textStyle": "heading-l-bold"
+      },
+      "card-body": {
+        "fontSize": {
+          "value": 14,
+          "token": "semantic.textStyle.body-m-regular.fontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-regular.lineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "semantic.textStyle.body-m-regular.fontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-regular.fontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      }
+    }
   }
 }

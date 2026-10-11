@@ -22,20 +22,31 @@
  *                a border never appears/disappears between states, only its color changes (otherwise the
  *                component changes size; see .ai/maps/patterns/border-always.md)
  *                — and the border counts in the auto layout (strokesIncludedInLayout), like CSS border-box
+ *   8 layout     with EXPECTED.layout (same file, measured in the browser): per variant, the root's height,
+ *                padding, gap (itemSpacing) and corner radius, each icon's width/height, and each text layer's
+ *                font size, line height, weight and family equal code's (±0.5px)
+ *   9 binding    and each of those is bound to the RIGHT variable — the one code's token resolves to
+ *                (EXPECTED.layout.*.figma, scripts/figma/token-chain.ts) — and each text layer uses the named
+ *                Text Style code's typography comes from. Being bound to *a* variable with the same number
+ *                isn't enough: change the token and Figma wouldn't follow.
  */
 const SET_ID = '__SET_ID__';
 const PAGE_ID = '__PAGE_ID__';
 const EXPECTED = __EXPECTED__; // { states: [...], colors: { "<variant name>": { "<layer name>": { fill, stroke, text } (light), dark: {...} } } }
 
-const page = await figma.getNodeByIdAsync(PAGE_ID);
+// SET_ID may be the component set or the page holding it (figma-sync.json records pages for some components).
+let set = await figma.getNodeByIdAsync(SET_ID);
+if (set.type === 'PAGE') { await figma.setCurrentPageAsync(set); set = set.findAllWithCriteria({ types: ['COMPONENT_SET'] })[0]; }
+// PAGE_ID may be left as is: the set's own page is found by walking up.
+let page = PAGE_ID.startsWith('__') ? set : await figma.getNodeByIdAsync(PAGE_ID);
+while (page && page.type !== 'PAGE') page = page.parent;
 await figma.setCurrentPageAsync(page);
-const set = await figma.getNodeByIdAsync(SET_ID);
 const cols = await figma.variables.getLocalVariableCollectionsAsync();
 const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -157,6 +168,52 @@ if (EXPECTED.colors && theme) {
       }
     }
   } finally { frame.remove(); }
+}
+
+// 8 layout + 9 binding
+const norm = s => String(s).toLowerCase().replace(/[\s/.\-]+/g, '.').replace(/^\.|\.$/g, '');
+// code token → the names a correct Figma variable can have: with or without its category prefix
+// (semantic.color.fill.page → fill/page in Theme; semantic.spacing.component-l → spacing/component/l)
+const accepted = target => { const rest = target.split('.').slice(1); return [norm(rest.join('.')), norm(rest.slice(1).join('.'))]; };
+const FIGMA_KEY = { height: 'height', width: 'width', paddingTop: 'paddingTop', paddingRight: 'paddingRight', paddingBottom: 'paddingBottom', paddingLeft: 'paddingLeft', itemSpacing: 'itemSpacing', cornerRadius: 'topLeftRadius' };
+const WEIGHT = { thin: 100, extralight: 200, light: 300, regular: 400, medium: 500, semibold: 600, bold: 700, extrabold: 800, black: 900 };
+async function figmaValue(node, prop) {
+  if (prop === 'fontSize') return node.fontSize;
+  if (prop === 'lineHeight') return node.lineHeight?.unit === 'PIXELS' ? node.lineHeight.value : node.lineHeight?.unit === 'PERCENT' ? Math.round(node.fontSize * node.lineHeight.value) / 100 : 'auto';
+  if (prop === 'fontWeight') return node.fontWeight ?? WEIGHT[norm(node.fontName?.style ?? '').replace(/\./g, '')];
+  if (prop === 'fontFamily') return node.fontName?.family;
+  return node[FIGMA_KEY[prop]];
+}
+if (EXPECTED.layout) {
+  const pairs = key => key.split(', ').filter(Boolean);
+  for (const [key, layers] of Object.entries(EXPECTED.layout)) {
+    const variants = set.children.filter(v => pairs(key).every(p => v.name.split(', ').includes(p)));
+    if (!variants.length) { issues.layout.push(`no variant matches "${key}"`); continue; }
+    for (const variant of variants) {
+      for (const [layer, props] of Object.entries(layers)) {
+        const node = layer === '(root)' ? variant : variant.findOne(n => n.name === layer);
+        if (!node) { issues.layout.push(`${variant.name} › ${layer}: layer missing`); continue; }
+        for (const [prop, want] of Object.entries(props)) {
+          if (prop === 'textStyle') {
+            const style = node.textStyleId && typeof node.textStyleId === 'string' ? await figma.getStyleByIdAsync(node.textStyleId) : null;
+            if (!style) issues.binding.push(`${variant.name} › ${layer}: no Text Style — code's typography is "${want}"`);
+            else if (norm(style.name) !== norm(want)) issues.binding.push(`${variant.name} › ${layer}: Text Style "${style.name}" — code's typography is "${want}"`);
+            continue;
+          }
+          const got = await figmaValue(node, prop);
+          const ok = typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
+          if (!ok) issues.layout.push(`${variant.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${want.value}${want.token ? ` (${want.token})` : ''}`);
+          // Typography binds through the Text Style above; boxes and icons bind each property to a variable.
+          if (want.figma && FIGMA_KEY[prop]) {
+            const id = node.boundVariables?.[FIGMA_KEY[prop]]?.id;
+            const v = id && await figma.variables.getVariableByIdAsync(id);
+            if (!v) issues.binding.push(`${variant.name} › ${layer} ${prop}: not bound — code uses ${want.figma}`);
+            else if (!accepted(want.figma).includes(norm(v.name))) issues.binding.push(`${variant.name} › ${layer} ${prop}: bound to ${colById[v.variableCollectionId]?.name}/${v.name} — code uses ${want.figma}`);
+          }
+        }
+      }
+    }
+  }
 }
 
 const counts = Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.length]));

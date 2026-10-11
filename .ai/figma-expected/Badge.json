@@ -104,5 +104,242 @@
         }
       }
     }
+  },
+  "layout": {
+    "variant=neutral, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.badge.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "paddingLeft": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.badge.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "badge-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.badge.fontSize",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.badge.lineHeight",
+          "figma": "caption-semibold"
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.badge.fontWeight",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.badge.fontFamily",
+          "figma": "caption-semibold"
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=info, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.badge.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "paddingLeft": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.badge.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "badge-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.badge.fontSize",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.badge.lineHeight",
+          "figma": "caption-semibold"
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.badge.fontWeight",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.badge.fontFamily",
+          "figma": "caption-semibold"
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=success, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.badge.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "paddingLeft": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.badge.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "badge-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.badge.fontSize",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.badge.lineHeight",
+          "figma": "caption-semibold"
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.badge.fontWeight",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.badge.fontFamily",
+          "figma": "caption-semibold"
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=warning, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.badge.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "paddingLeft": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.badge.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "badge-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.badge.fontSize",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.badge.lineHeight",
+          "figma": "caption-semibold"
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.badge.fontWeight",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.badge.fontFamily",
+          "figma": "caption-semibold"
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.badge.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "paddingLeft": {
+          "value": 8,
+          "token": "semantic.spacing.xs",
+          "figma": "semantic.spacing.xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.badge.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "badge-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.badge.fontSize",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.badge.lineHeight",
+          "figma": "caption-semibold"
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.badge.fontWeight",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.badge.fontFamily",
+          "figma": "caption-semibold"
+        },
+        "textStyle": "caption-semibold"
+      }
+    }
   }
 }

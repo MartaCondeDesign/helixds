@@ -1,0 +1,27 @@
+# Figma ↔ code audit without an agent: sizes, typography and (Enterprise only) variable bindings, compared
+# with what code renders (.ai/figma-expected, from `pnpm figma:expected`). Runs every Monday, on demand, and
+# when the expected files change. Needs the repository secret FIGMA_TOKEN (Settings → Secrets → Actions);
+# without it the job stops with an explanation instead of failing silently.
+name: Figma audit
+on:
+  schedule: [{ cron: '0 7 * * 1' }]
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.ai/figma-expected/**', 'contracts/figma-sync.json']
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm figma:audit
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: figma-audit, path: .ai/figma-audit.json, if-no-files-found: ignore }

@@ -489,5 +489,215 @@
         }
       }
     }
+  },
+  "layout": {
+    "variant=primary, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "text": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=secondary, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "text": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=ghost, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "text": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "text": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    }
   }
 }

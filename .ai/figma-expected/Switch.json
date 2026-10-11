@@ -199,5 +199,57 @@
         }
       }
     }
+  },
+  "layout": {
+    "checked=unchecked": {
+      "switch-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "semantic.textStyle.body-s-regular.fontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-s-regular.fontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "checked=checked": {
+      "switch-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "semantic.textStyle.body-s-regular.fontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-s-regular.fontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    }
   }
 }

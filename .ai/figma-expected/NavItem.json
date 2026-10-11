@@ -168,5 +168,145 @@
         }
       }
     }
+  },
+  "layout": {
+    "current=false": {
+      "(root)": {
+        "paddingTop": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "primitive.spacing.75",
+          "figma": "primitive.spacing.75"
+        },
+        "paddingBottom": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "primitive.spacing.75",
+          "figma": "primitive.spacing.75"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.navItem.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "nav-item-icon": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "nav-item-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.navItem.fontSize",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.navItem.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    },
+    "current=true": {
+      "(root)": {
+        "paddingTop": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "primitive.spacing.75",
+          "figma": "primitive.spacing.75"
+        },
+        "paddingBottom": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "primitive.spacing.75",
+          "figma": "primitive.spacing.75"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.navItem.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "nav-item-icon": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "nav-item-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.navItem.fontSize",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.navItem.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    }
   }
 }

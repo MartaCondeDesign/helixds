@@ -508,5 +508,267 @@
         }
       }
     }
+  },
+  "layout": {
+    "variant=neutral, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.chip.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "itemSpacing": {
+          "value": 4,
+          "token": "component.chip.gap.s",
+          "figma": "semantic.spacing.2xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.chip.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "chip-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.chip.fontSize.s",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.chip.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    },
+    "variant=info, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.chip.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "itemSpacing": {
+          "value": 4,
+          "token": "component.chip.gap.s",
+          "figma": "semantic.spacing.2xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.chip.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "chip-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.chip.fontSize.s",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.chip.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    },
+    "variant=success, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.chip.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "itemSpacing": {
+          "value": 4,
+          "token": "component.chip.gap.s",
+          "figma": "semantic.spacing.2xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.chip.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "chip-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.chip.fontSize.s",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.chip.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    },
+    "variant=warning, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.chip.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "itemSpacing": {
+          "value": 4,
+          "token": "component.chip.gap.s",
+          "figma": "semantic.spacing.2xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.chip.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "chip-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.chip.fontSize.s",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.chip.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    },
+    "variant=danger, size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.chip.height.s",
+          "figma": "semantic.size.s"
+        },
+        "paddingRight": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "paddingLeft": {
+          "value": 12,
+          "token": "component.chip.padding-x.s",
+          "figma": "semantic.spacing.component-m"
+        },
+        "itemSpacing": {
+          "value": 4,
+          "token": "component.chip.gap.s",
+          "figma": "semantic.spacing.2xs"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "component.chip.radius",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "chip-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.chip.fontSize.s",
+          "figma": "body-s-medium"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.chip.fontWeight",
+          "figma": "body-s-medium"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-s-medium"
+      }
+    }
   }
 }

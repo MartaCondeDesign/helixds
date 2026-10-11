@@ -248,5 +248,82 @@
         }
       }
     }
+  },
+  "layout": {
+    "checked=unchecked": {
+      "checkbox-text": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      }
+    },
+    "checked=checked": {
+      "checkbox-text": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      }
+    },
+    "checked=indeterminate": {
+      "checkbox-text": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      }
+    }
   }
 }

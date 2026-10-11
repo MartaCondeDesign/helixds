@@ -1,5 +1,5 @@
 /**
- * Expected Figma colors, from code — `pnpm figma:expected <Name>` (Storybook must be running).
+ * Expected Figma colors AND layout, from code — `pnpm figma:expected <Name>` (Storybook must be running).
  *
  * Renders the component in Storybook for every Figma variant listed in its spec below, puts it into each
  * interaction state for real (hover = pointer over it, press = pointer down, focus = keyboard focus,
@@ -8,13 +8,20 @@
  * compares those colors against the Figma variants (the parity check). Nothing here is hand-typed color:
  * if Figma disagrees with this file, Figma is wrong (root CLAUDE.md rule 8).
  *
+ * Layout (light theme, default state, per variant without its state): the root's height, padding, gap and
+ * radius, every icon part's size, and every text part's font size / line height / weight / family — each with
+ * the value AND the token it comes from, read from the real CSS cascade (Chrome DevTools Protocol), so the
+ * audit can check Figma is bound to the RIGHT variable / Text Style, not just to some variable with the
+ * same number (scripts/figma/token-chain.ts).
+ *
  * A spec maps Figma variant axes to Storybook args + a state, and Figma layer names to DOM parts:
  *   parts: { '<figma layer>': { part: '<data-helix-part>', fill?: true, stroke?: true, text?: true } }
  * `(root)` is the variant component itself.
  */
 import fs from 'fs';
 import path from 'path';
-import { chromium, type Page } from 'playwright';
+import { chromium, type CDPSession, type Page } from 'playwright';
+import { figmaTarget, tokenChain } from './token-chain.ts';
 
 type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid' | 'loading' | 'open' | 'checked' | 'indeterminate';
 type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean };
@@ -233,6 +240,121 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
   return Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([p, c]) => [p, toHex(c)]))]));
 }
 
+// ── Layout ──────────────────────────────────────────────────────────────────
+type Measured = { value: number | string; token: string | null; figma: string | null };
+const BOX = { height: 'height', paddingTop: 'padding-top', paddingRight: 'padding-right', paddingBottom: 'padding-bottom', paddingLeft: 'padding-left', itemSpacing: 'gap', cornerRadius: 'border-top-left-radius' } as const;
+const ICON = { width: 'width', height: 'height' } as const;
+const TYPE = { fontSize: 'font-size', lineHeight: 'line-height', fontWeight: 'font-weight', fontFamily: 'font-family' } as const;
+
+// The declared value of `prop` in a shorthand: padding 1–4 values, gap row/column, border-radius' first corner.
+function fromShorthand(shorthand: string, value: string, prop: string): string | undefined {
+  const parts = value.match(/(?:[^\s(]+|\([^)]*\))+/g) ?? [];
+  const at = (i: number) => parts[i] ?? parts[0];
+  if (shorthand === 'padding') {
+    const [t, r = t, b = t, l = r] = parts;
+    return { 'padding-top': t, 'padding-right': r, 'padding-bottom': b, 'padding-left': l }[prop];
+  }
+  if (shorthand === 'gap' && (prop === 'row-gap' || prop === 'column-gap')) return prop === 'row-gap' ? at(0) : at(1);
+  if (shorthand === 'border-radius' && prop === 'border-top-left-radius') return at(0);
+  return undefined;
+}
+const SHORTHAND: Record<string, string> = { 'padding-top': 'padding', 'padding-right': 'padding', 'padding-bottom': 'padding', 'padding-left': 'padding', 'row-gap': 'gap', 'column-gap': 'gap', 'border-top-left-radius': 'border-radius' };
+
+/** Which --helix-* variable sets `prop` on the element marked [data-figma-measure]: every declaration the
+ *  cascade matched for it (inline first, then the most specific rule), and the first whose value — resolved
+ *  on that element — equals the computed one. Checking the value makes the answer right whatever the
+ *  cascade order (layers, specificity) the protocol lists rules in. */
+async function declaredVar(page: Page, cdp: CDPSession, prop: string): Promise<string | null> {
+  const { root } = await cdp.send('DOM.getDocument', { depth: 0 });
+  const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: '[data-figma-measure]' });
+  if (!nodeId) return null;
+  const matched: any = await cdp.send('CSS.getMatchedStylesForNode', { nodeId });
+  const styles = [matched.inlineStyle, ...[...(matched.matchedCSSRules ?? [])].reverse().map((m: any) => m.rule.style)].filter(Boolean);
+  const candidates: string[] = [];
+  for (const st of styles) for (const cp of st.cssProperties ?? []) {
+    if (cp.disabled || cp.parsedOk === false || !cp.value?.includes('var(')) continue;
+    if (cp.name === prop) candidates.push(cp.value);
+    else if (SHORTHAND[prop] === cp.name) { const v = fromShorthand(cp.name, cp.value, prop); if (v?.includes('var(')) candidates.push(v); }
+  }
+  for (const c of candidates) {
+    const same = await page.evaluate(({ prop, c }) => {
+      const el = document.querySelector('[data-figma-measure]') as HTMLElement;
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;display:block';
+      probe.style.setProperty(prop, c.replace(/ !important$/, ''));
+      el.appendChild(probe);
+      const got = getComputedStyle(probe).getPropertyValue(prop);
+      probe.remove();
+      return got === getComputedStyle(el).getPropertyValue(prop);
+    }, { prop, c });
+    const v = c.match(/var\((--helix-[\w-]+)/)?.[1];
+    if (same && v) return v;
+  }
+  return null;
+}
+
+async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: string | null) {
+  const out: Record<string, Record<string, Measured | string>> = {};
+  for (const [layer, p] of Object.entries(spec.parts)) {
+    const kinds = { box: layer === '(root)', icon: /icon/.test(p.part), type: !!(p.text || p.placeholder) && !/icon/.test(p.part) };
+    if (!kinds.box && !kinds.icon && !kinds.type) continue;
+    const found = await page.evaluate(({ part, scope }) => {
+      document.querySelectorAll('[data-figma-measure]').forEach(e => e.removeAttribute('data-figma-measure'));
+      const sc = scope ? document.querySelector(scope) : null;
+      const el = sc?.matches(`[data-helix-part="${part}"]`) ? sc : (sc ?? document).querySelector(`[data-helix-part="${part}"]`);
+      if (!el) return false;
+      el.setAttribute('data-figma-measure', '');
+      return true;
+    }, { part: p.part, scope });
+    if (!found) continue;
+    const props: Record<string, string> = { ...(kinds.box ? BOX : {}), ...(kinds.icon ? ICON : {}), ...(kinds.type ? TYPE : {}) };
+    const entry: Record<string, Measured | string> = {};
+    for (const [figmaProp, cssProp0] of Object.entries(props)) {
+      // Figma's itemSpacing is the gap along the auto-layout direction
+      const cssProp = cssProp0 === 'gap'
+        ? (await page.evaluate(() => getComputedStyle(document.querySelector('[data-figma-measure]')!).flexDirection)).startsWith('column') ? 'row-gap' : 'column-gap'
+        : cssProp0;
+      const raw = await page.evaluate(cp => getComputedStyle(document.querySelector('[data-figma-measure]')!).getPropertyValue(cp), cssProp);
+      const value = cssProp === 'font-family' ? raw.split(',')[0]!.replace(/["']/g, '').trim()
+        : cssProp === 'font-weight' ? Number(raw)
+        : /px$/.test(raw) ? Math.round(parseFloat(raw) * 100) / 100 : raw === 'normal' ? 0 : raw;
+      if (figmaProp === 'height' && kinds.box) {
+        // Only a height the CSS SETS is a spec; a content-driven height (a Card) isn't compared.
+        if (!(await declaredVar(page, cdp, 'height')) && !(await declaredVar(page, cdp, 'min-height'))) continue;
+      }
+      if (typeof value === 'number' && value === 0 && figmaProp !== 'fontWeight') continue; // nothing to bind
+      let v = await declaredVar(page, cdp, cssProp);
+      if (!v && figmaProp in TYPE) {
+        // Inherited: the font is often set on the control (button), not the label inside it — climb until a
+        // declaration sets it, then put the marker back.
+        for (let up = 1; up <= 8 && !v; up++) {
+          const moved = await page.evaluate(n => {
+            const el = document.querySelector('[data-figma-measure]')!;
+            let a: Element | null = el; for (let i = 0; i < n; i++) a = a?.parentElement ?? null;
+            if (!a) return false;
+            el.setAttribute('data-figma-origin', ''); el.removeAttribute('data-figma-measure'); a.setAttribute('data-figma-measure', '');
+            return true;
+          }, up);
+          if (!moved) break;
+          v = await declaredVar(page, cdp, cssProp);
+          await page.evaluate(() => {
+            document.querySelector('[data-figma-measure]')?.removeAttribute('data-figma-measure');
+            const o = document.querySelector('[data-figma-origin]')!; o.removeAttribute('data-figma-origin'); o.setAttribute('data-figma-measure', '');
+          });
+        }
+      }
+      const chain = v ? tokenChain(v) : [];
+      entry[figmaProp] = { value, token: chain[0] ?? null, figma: figmaTarget(chain, kinds.type && figmaProp in TYPE ? 'textStyle' : 'variable') };
+    }
+    if (kinds.type) {
+      const style = Object.values(entry).map(e => (typeof e === 'object' ? e.figma : null)).find(Boolean);
+      if (style) entry.textStyle = style; // the named Text Style the layer must use
+    }
+    out[layer] = entry;
+  }
+  return out;
+}
+
 async function main() {
   const name = process.argv[2];
   const spec = name ? SPECS[name] : undefined;
@@ -242,6 +364,10 @@ async function main() {
   const page = await browser.newPage();
   const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}]);
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
+  const layout: Record<string, unknown> = {};
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('DOM.enable');
+  await cdp.send('CSS.enable');
   for (const v of combos) for (const state of spec.states) {
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
@@ -253,11 +379,23 @@ async function main() {
     await page.waitForSelector(scopeSel ?? `[data-helix-part="${spec.target}"]`, { state: 'attached' });
     const variantName = [...Object.entries(v).map(([k, x]) => `${k}=${x}`), ...(spec.states.length > 1 ? [`state=${state}`] : [])].join(', ');
     colors[variantName] = { light: await measure(page, vScoped, v, state, 'light'), dark: await measure(page, vScoped, v, state, 'dark') };
+    // Layout doesn't change by state or theme: measured once per variant, at its first state, light.
+    const layoutKey = Object.entries(v).map(([k, x]) => `${k}=${x}`).join(', ');
+    if (!(layoutKey in layout) && state === spec.states[0]) {
+      await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
+      await page.mouse.move(0, 0);
+      await page.mouse.up();
+      await page.waitForTimeout(200);
+      // CSS.enable only reports stylesheets parsed after it: re-enable on each new page.
+      await cdp.send('CSS.disable').catch(() => {}); await cdp.send('CSS.enable');
+      layout[layoutKey] = await measureLayout(page, cdp, vScoped, scopeSel);
+    }
   }
   await browser.close();
   const out = path.resolve(__dirname, '../../.ai/figma-expected', `${name}.json`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, colors }, null, 2) + '\n');
-  console.log(`✅ ${path.relative(process.cwd(), out)} — ${Object.keys(colors).length} variants × light/dark`);
+  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, colors, layout }, null, 2) + '\n');
+  const props = Object.values(layout).flatMap(l => Object.values(l as object).flatMap(e => Object.values(e as object))).filter(x => typeof x === 'object');
+  console.log(`✅ ${path.relative(process.cwd(), out)} — ${Object.keys(colors).length} variants × light/dark colors; ${props.length} layout values (${props.filter((x: any) => x.token).length} from a token)`);
 }
 main();

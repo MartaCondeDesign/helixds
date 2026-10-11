@@ -58,5 +58,118 @@
         }
       }
     }
+  },
+  "layout": {
+    "size=s": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.avatar.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "semantic.radius.full",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "avatar-initials": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.avatar.fontSize.s",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.avatar.fontWeight.s",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.avatar.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "semantic.radius.full",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "avatar-initials": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.avatar.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 12,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.avatar.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "size=l": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.avatar.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 9999,
+          "token": "semantic.radius.full",
+          "figma": "semantic.radius.full"
+        }
+      },
+      "avatar-initials": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.avatar.fontSize.l",
+          "figma": "body-m-semibold"
+        },
+        "lineHeight": {
+          "value": 14,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.avatar.fontWeight.l",
+          "figma": "body-m-semibold"
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        },
+        "textStyle": "body-m-semibold"
+      }
+    }
   }
 }

@@ -108,5 +108,43 @@
         }
       }
     }
+  },
+  "layout": {
+    "size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.input.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.input.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "system-ui",
+          "token": null,
+          "figma": null
+        }
+      }
+    }
   }
 }

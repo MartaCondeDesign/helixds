@@ -149,6 +149,9 @@ type Reviews = {
   human: { date: string; by: string; with: string; result?: string } | null;
   ai: { date: string; model: string; findings: string[] } | null;
 };
+const figmaAuditFile = path.join(root, '.ai/figma-audit.json');
+const figmaAudit = fs.existsSync(figmaAuditFile) ? JSON.parse(fs.readFileSync(figmaAuditFile, 'utf-8')) : null;
+
 type Row = { name: string; category: string; previousStatus: string; status: string; inFigma: boolean; figma: FigmaCheck; checks: Record<CriterionKey, Check>; reviews: Reviews };
 const rows: Row[] = [];
 
@@ -234,7 +237,13 @@ for (const c of manifest.components) {
   checks.eval = { pass: evals.length > 0, details: evals.length ? [] : ['no passing eval imports and checks it'] };
 
   const allPass = Object.values(checks).every(ch => ch.pass);
-  const figma = figmaCheck(name, c.contract, figmaEntry.get(name));
+  let figma = figmaCheck(name, c.contract, figmaEntry.get(name));
+  // The automatic audit (pnpm figma:audit, Figma REST): sizes, typography and — when Figma allows it —
+  // variable bindings. A difference there means Figma isn't aligned with code, even if the last sync was.
+  const restAudit = figmaAudit?.components?.[name];
+  const restDiffs = restAudit ? [...restAudit.layout, ...restAudit.textStyle, ...restAudit.variables] : [];
+  if (restDiffs.length && figma.state !== 'missing')
+    figma = { ...figma, state: 'drift', details: [...(figma.state === 'drift' ? figma.details : []), `pnpm figma:audit (${figmaAudit.auditedAt.slice(0, 10)}): ${restDiffs.slice(0, 3).join('; ')}${restDiffs.length > 3 ? ` (+${restDiffs.length - 3} more)` : ''}`] };
   const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma.state === 'synced' ? 'stable' : 'beta';
   const humanReviews = contract.a11y?.humanReview ?? [];
   const aiFile = path.join(root, '.ai/a11y-visual', `${name}.json`);

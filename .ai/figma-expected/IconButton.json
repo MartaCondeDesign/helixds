@@ -345,5 +345,83 @@
         }
       }
     }
+  },
+  "layout": {
+    "variant=primary, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        }
+      }
+    },
+    "variant=secondary, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        }
+      }
+    },
+    "variant=ghost, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        }
+      }
+    },
+    "variant=danger, size=m": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 32,
+          "token": "component.iconButton.height.m",
+          "figma": "semantic.size.m"
+        }
+      }
+    }
   }
 }

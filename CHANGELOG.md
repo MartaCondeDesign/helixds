@@ -81,7 +81,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-11 — a11y: AI visual review (pnpm a11y:visual, advisory) and recorded human screen-reader review (pnpm a11y:review → contract a11y.humanReview); both reported by verify:stable; component skill updated (latest commit)
+- 2026-10-11 — figma: audit sizes, typography and the CORRECT variable — figma:expected measures layout + token per property (CSS cascade via CDP, token-chain.ts); audit-component.js checks 8 layout + 9 binding; figma:audit runs over Figma REST (CI weekly, FIGMA_TOKEN secret) and feeds verify:stable (latest commit)
+- 2026-10-11 — a11y: AI visual review (pnpm a11y:visual, advisory) and recorded human screen-reader review (pnpm a11y:review → contract a11y.humanReview); both reported by verify:stable; component skill updated ([`e66f1d6`](https://github.com/MartaCondeDesign/helixds/commit/e66f1d6))
 - 2026-10-11 — a11y: screen-reader check — ariaSnapshot per story vs contract role (verify:stable criterion 4, .ai/aria/*.yml); Opened stories so overlays are audited open; Menu listbox gets an accessible name; checks scan body (portals); target size skips covered targets, focus check skips already-open triggers ([`063744b`](https://github.com/MartaCondeDesign/helixds/commit/063744b))
 - 2026-10-11 — a11y: focus return after Escape — Tooltip (React + WC) no longer blurs its trigger; play tests assert focus for Modal, SidePanel, Select, MultiSelect, Tooltip; verify:a11y-contracts rule 5 ([`472f67f`](https://github.com/MartaCondeDesign/helixds/commit/472f67f))
 - 2026-10-11 — fix(a11y): TopBar and AppShell reflow at 320 px — no component fails a criterion now ([`6d24716`](https://github.com/MartaCondeDesign/helixds/commit/6d24716))
