@@ -211,6 +211,18 @@ fs.writeFileSync(outFile, JSON.stringify({
   components: Object.fromEntries(allComponents.map(c => [c.name, results[c.name] ?? {}])),
 }, null, 2) + '\n');
 
+// Daily history (quality/accessibility-history.json): one entry per day — the state after that day's last run —
+// so the Storybook page can show any day and what changed since the day before.
+const historyFile = path.join(root, 'quality/accessibility-history.json');
+type HistoryDay = { date: string; commit: string; generatedAt: string; score: number | null; meetsMinimum: number; components: Record<string, { score: number | null; checks: Record<string, Status> }> };
+const history: HistoryDay[] = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
+const today: HistoryDay = {
+  date: now.slice(0, 10), commit, generatedAt: now, score: overall,
+  meetsMinimum: Object.values(scores).filter(x => x.meetsMinimum).length,
+  components: Object.fromEntries(allComponents.map(c => [c.name, { score: scores[c.name]!.score, checks: Object.fromEntries(CHECKS.map(ch => [ch.id, results[c.name]?.[ch.id]?.status ?? 'pending'])) }])),
+};
+fs.writeFileSync(historyFile, JSON.stringify([...history.filter(d => d.date !== today.date), today].sort((a, b) => a.date.localeCompare(b.date)), null, 2) + '\n');
+
 // Each contract carries its own results (a11y.results), next to its role, keys and WCAG criteria — rewritten
 // only when they change, so `changed` is the date they last changed and a re-run doesn't touch the file.
 const reviewIds = CHECKS.filter(ch => ch.kind === 'review').map(ch => ch.id);

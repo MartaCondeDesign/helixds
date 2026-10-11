@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconSearch } from '@tabler/icons-react';
-import { Badge, Card, Chart, Input, Menu, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@helixds/react';
+import { Badge, Card, Chart, Input, Menu, Select, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@helixds/react';
 import report from '../../../quality/accessibility.json';
+import rawHistory from '../../../quality/accessibility-history.json';
 import { StoryHeader } from './_shared/StoryHeader';
 
 // Data from `pnpm a11y` (scripts/a11y.ts): every accessibility check, run on every component in code — Figma
@@ -132,6 +133,73 @@ function ComponentDetails() {
   );
 }
 
+// ── By day: each `pnpm a11y` run saves the day's state (quality/accessibility-history.json, last run of the day).
+type HistoryDay = { date: string; commit: string; generatedAt: string; score: number | null; meetsMinimum: number; components: Record<string, { score: number | null; checks: Record<string, Status> }> };
+const historyDays = rawHistory as HistoryDay[];
+const longDate = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+
+function ByDay() {
+  const [date, setDate] = useState(historyDays.at(-1)?.date ?? '');
+  const i = historyDays.findIndex(d => d.date === date);
+  const day = historyDays[i];
+  const prev = i > 0 ? historyDays[i - 1] : undefined;
+  // Every component × check whose status differs from the previous recorded day.
+  const changes = !day || !prev ? [] : Object.entries(day.components).flatMap(([name, c]) =>
+    checks.filter(ch => (prev.components[name]?.checks[ch.id] ?? 'pending') !== c.checks[ch.id])
+      .map(ch => ({ name, check: ch, before: (prev.components[name]?.checks[ch.id] ?? 'pending') as Status, after: c.checks[ch.id] as Status })));
+  const added = !day || !prev ? [] : Object.keys(day.components).filter(n => !prev.components[n]);
+  return (
+    <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
+      <h2 style={{ margin: 0, fontSize: 'var(--helix-textStyle-heading-l-bold-fontSize)' }}>By day</h2>
+      <span style={muted}>Each run of <code style={mono}>pnpm a11y</code> saves that day’s results (the last run of the day). Pick a day to see it and what changed since the previous test.</span>
+      <div style={{ maxWidth: 360 }}>
+        <Select label="Day" options={[...historyDays].reverse().map(d => ({ value: d.date, label: longDate(d.date), labelEnd: `${d.score ?? '—'}/100` }))} value={date} onChange={setDate} />
+      </div>
+      {!day ? <span style={muted}>No runs recorded yet.</span> : (
+        <>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--helix-spacing-m)' }}>
+            <Card header="Score that day"><strong style={{ fontSize: 'var(--helix-textStyle-heading-xl-bold-fontSize)' }}>{day.score ?? '—'} / 100</strong>
+              {prev ? <div style={muted}>{day.score === prev.score ? 'Same as' : (day.score ?? 0) > (prev.score ?? 0) ? `Up ${(day.score ?? 0) - (prev.score ?? 0)} from` : `Down ${(prev.score ?? 0) - (day.score ?? 0)} from`} {longDate(prev.date)}</div> : null}
+            </Card>
+            <Card header="Meet every check"><strong style={{ fontSize: 'var(--helix-textStyle-heading-xl-bold-fontSize)' }}>{day.meetsMinimum} / {Object.keys(day.components).length}</strong><div style={muted}>components</div></Card>
+            <Card header="Tested"><strong>{fmt(day.generatedAt)}</strong><div style={muted}>Helix version {day.commit}</div></Card>
+          </div>
+          {!prev ? <span style={muted}>This is the first recorded day — nothing to compare with yet.</span>
+            : !changes.length && !added.length ? <span style={muted}>Nothing changed since {longDate(prev.date)}.</span> : (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableHeaderCell>Component</TableHeaderCell>
+                    <TableHeaderCell>Check</TableHeaderCell>
+                    <TableHeaderCell>{longDate(prev.date)}</TableHeaderCell>
+                    <TableHeaderCell>{longDate(day.date)}</TableHeaderCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {added.map(n => (
+                    <TableRow key={`new-${n}`}><TableCell><strong>{n}</strong></TableCell><TableCell>New component</TableCell><TableCell>—</TableCell><TableCell><Badge variant="neutral" label={`${day.components[n]!.score ?? '—'}`} /></TableCell></TableRow>
+                  ))}
+                  {changes.map(c => (
+                    <TableRow key={`${c.name}-${c.check.id}`}>
+                      <TableCell><strong>{c.name}</strong></TableCell>
+                      <TableCell>{c.check.label}</TableCell>
+                      <TableCell><Badge variant={VARIANT[c.before]} label={TEXT[c.before]} /></TableCell>
+                      <TableCell><Badge variant={VARIANT[c.after]} label={TEXT[c.after]} /></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
+          {historyDays.length > 1 ? (
+            <Chart variant="line" label="Accessibility score by day" description="The Accessibility score after the last run of each day."
+              categories={historyDays.map(d => d.date)} series={[{ name: 'Score', data: historyDays.map(d => d.score) }]} />
+          ) : null}
+        </>
+      )}
+    </section>
+  );
+}
+
 function AccessibilityPage() {
   // A check nobody has run yet has no rate — it's left out of the chart rather than drawn as 0%.
   const rated = checks.filter(c => rate(summary.find(s => s.id === c.id)!) !== null);
@@ -241,6 +309,8 @@ function AccessibilityPage() {
       </section>
 
       <ComponentDetails />
+
+      <ByDay />
     </div>
   );
 }

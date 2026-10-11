@@ -81,7 +81,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-11 — fix(Chart): hidden data table no longer stretches the page (visually hidden on a wrapper div — a table ignores height/overflow); missing values read 'No data' instead of 0. a11y CLI: pnpm a11y <Name> and pnpm a11y all <Name> both work (latest commit)
+- 2026-10-11 — a11y: daily history (quality/accessibility-history.json, one entry per day from pnpm a11y) + 'By day' on Data/Accessibility — pick a day, see its score and what changed since the previous test; Proposals/Table reorder — options A, B, C and C+A to try (keyboard + no-drag reorder, WCAG 2.1.1 / 2.5.7) (latest commit)
+- 2026-10-11 — fix(Chart): hidden data table no longer stretches the page (visually hidden on a wrapper div — a table ignores height/overflow); missing values read 'No data' instead of 0. a11y CLI: pnpm a11y <Name> and pnpm a11y all <Name> both work ([`9405748`](https://github.com/MartaCondeDesign/helixds/commit/9405748))
 - 2026-10-11 — storybook a11y page: pass/fail/n/a/pending counts in their own column ([`79fa87a`](https://github.com/MartaCondeDesign/helixds/commit/79fa87a))
 - 2026-10-11 — storybook a11y page: component list spans the whole search field (Menu names itself from a control inside its anchor); score column shows the badge only; 'failing' counts scored checks only ([`6ff6224`](https://github.com/MartaCondeDesign/helixds/commit/6ff6224))
 - 2026-10-11 — a11y: each contract carries its own results (a11y.results: score, meetsMinimum, every check, written by pnpm a11y only on change); CLAUDE.md rules 13–15 (fixes use existing tokens chosen by the owner; human review never scored; a11y gate + report on new components); skill updated ([`bcc6681`](https://github.com/MartaCondeDesign/helixds/commit/bcc6681))
