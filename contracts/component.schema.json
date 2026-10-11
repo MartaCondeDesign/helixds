@@ -58,12 +58,16 @@
       "properties": {
         "mayExtendLocally": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Permitted local customizations using // [CUSTOM] reason."
         },
         "mustEscalateToDS": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Changes that alter shared contracts and must escalate to a Helix DS proposal/ADR."
         }
       }
@@ -203,6 +207,49 @@
           "type": "array",
           "items": {
             "type": "string"
+          }
+        },
+        "announces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ARIA roles a screen reader must hear for this component, checked against each story's accessibility tree (Playwright ariaSnapshot) by verify:stable criterion 4. Optional: when absent, the first ARIA role named in `role` is used. [] = announces no role of its own (e.g. a layout wrapper whose landmark only applies in a real page)."
+        },
+        "humanReview": {
+          "type": "array",
+          "description": "Record of hands-on reviews with real assistive technology — what automated checks can't judge (does the announcement make sense, is the order natural). Newest last.",
+          "items": {
+            "type": "object",
+            "required": [
+              "date",
+              "by",
+              "with"
+            ],
+            "properties": {
+              "date": {
+                "type": "string",
+                "description": "YYYY-MM-DD"
+              },
+              "by": {
+                "type": "string",
+                "description": "Who reviewed"
+              },
+              "with": {
+                "type": "string",
+                "description": "Assistive technology + browser, e.g. 'VoiceOver + Safari 26'"
+              },
+              "result": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "issues"
+                ]
+              },
+              "notes": {
+                "type": "string"
+              }
+            }
           }
         }
       }

@@ -20,7 +20,9 @@ export type TargetIssue = { element: string; width: number; height: number };
 export type FocusIssue = { element: string };
 export type ReflowIssue = { element: string; overflowPx: number };
 
-const ROOT = '#storybook-root';
+// The whole story document, not just #storybook-root: Menu, Toast and other overlays are portaled to <body>.
+// Storybook's own hidden nodes (docs root, error overlays) have no box, so they are skipped.
+const ROOT = 'body';
 const INTERACTIVE = [
   'button', 'a[href]', 'input:not([type="hidden"])', 'select', 'textarea', 'summary',
   '[role="button"]', '[role="link"]', '[role="checkbox"]', '[role="radio"]', '[role="switch"]', '[role="tab"]',
@@ -54,7 +56,15 @@ export async function checkTargetSize(page: Page): Promise<TargetIssue[]> {
       if (el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement && /\S/.test(el.parentElement.textContent?.replace(el.textContent ?? '', '') ?? '')) return false;
       return true;
     });
-    const boxes = targets.map(el => ({ el, box: hitBox(el) })).filter((t): t is { el: Element; box: DOMRect } => !!t.box);
+    // A target covered by something else at its centre (a toast stacked behind the front one, scaled down
+    // until the stack is hovered open) can't be hit by a pointer in this state — not a size problem.
+    const covered = (el: Element, box: DOMRect) => {
+      const hit = document.elementFromPoint(box.left + box.width / 2, box.top + box.height / 2);
+      const label = el instanceof HTMLInputElement ? el.closest('label') : null;
+      return !!hit && !el.contains(hit) && !(label && label.contains(hit)) && !hit.contains(el);
+    };
+    const boxes = targets.map(el => ({ el, box: hitBox(el) }))
+      .filter((t): t is { el: Element; box: DOMRect } => !!t.box && !covered(t.el, t.box));
     const issues: { element: string; width: number; height: number }[] = [];
     for (const { el, box } of boxes) {
       if (box.width >= 24 && box.height >= 24) continue;
@@ -89,6 +99,9 @@ export async function checkFocusVisible(page: Page, maxStops = 12): Promise<Focu
     return els.flatMap(el => {
       const r = el.getBoundingClientRect();
       if (r.width === 0 || r.height === 0) return [];
+      // Already open (a Select whose list is showing): its open state draws the same ring as focus by design,
+      // so the unfocused crop isn't a neutral baseline — it can't be judged here, in either direction.
+      if (el.getAttribute('aria-expanded') === 'true') return [];
       if (!el.dataset.a11yFocusId) el.dataset.a11yFocusId = String(Math.random()).slice(2);
       // Padded: rings are often drawn outside the box (outline-offset, box-shadow spread).
       return [{ id: el.dataset.a11yFocusId, clip: { x: Math.max(0, r.left - 6), y: Math.max(0, r.top - 6), width: r.width + 12, height: r.height + 12 } }];

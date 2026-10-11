@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { Toast, ToastDoc, Button, toast } from '@helixds/react';
@@ -62,5 +63,33 @@ export const KeyboardReach: Story = {
   },
   parameters: {
     docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab reaches each visible toast’s close button; with focus inside, the stack spreads and the toasts stay past the 4s auto-dismiss.' } },
+  },
+};
+
+function NoAutoDismiss() {
+  // Long enough for the browser checks to finish before the toast leaves; restored on unmount.
+  useEffect(() => {
+    document.documentElement.style.setProperty('--helix-toast-autoDismissMs', '600000');
+    return () => document.documentElement.style.removeProperty('--helix-toast-autoDismissMs');
+  }, []);
+  return null;
+}
+
+export const Opened: Story = {
+  // Not in the docs page (an open overlay would cover it) — this story exists so the browser checks
+  // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
+  // other story leaves on screen: their play tests open and close it again.
+  tags: ['!autodocs'],
+  render: () => (
+    <>
+      <NoAutoDismiss />
+      <Button variant="secondary" onClick={() => { toast.success('Published', 'Your changes are now live.'); toast.danger('Connection lost', 'Could not reach the server.'); }}>Show toasts</Button>
+      <Toast />
+    </>
+  ),
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Show toasts' }));
+    // The stack is portaled to <body>
+    await waitFor(() => expect(within(document.body).getByText('Connection lost')).toBeVisible());
   },
 };

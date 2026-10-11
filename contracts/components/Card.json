@@ -58,7 +58,8 @@
   },
 
   "a11y": {
-    "role": "group (implicit — no explicit role unless the card represents a distinct landmark region)",
+    "role": "none of its own (a plain <div>) — add role=\"group\" or \"region\" with a label only when the card represents a distinct section",
+    "announces": [],
     "wcag": ["1.4.3 Contrast (AA)"]
   },
 

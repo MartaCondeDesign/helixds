@@ -101,3 +101,16 @@ export const KeyboardDismiss: Story = {
     docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between the panel’s controls, Escape dismisses it, and focus returns to the button that opened it.' } },
   },
 };
+
+export const Opened: Story = {
+  // Not in the docs page (an open overlay would cover it) — this story exists so the browser checks
+  // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
+  // other story leaves on screen: their play tests open and close it again.
+  tags: ['!autodocs'],
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    await userEvent.click(within(canvasElement).getByRole('button', { name: 'Open SidePanel' }));
+    const dialog = await within(canvasElement).findByRole('dialog');
+    await waitFor(() => expect(dialog).toHaveAttribute('open'));
+  },
+};

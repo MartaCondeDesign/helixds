@@ -108,6 +108,7 @@
   },
   "a11y": {
     "role": "status (add role='status' when content is dynamic)",
+    "announces": [],
     "wcag": [
       "1.4.1 Use of Color (don't rely on color alone)",
       "1.4.3 Contrast (AA)"

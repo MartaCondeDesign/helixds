@@ -63,6 +63,16 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
   const menuRef = React.useRef<HTMLDivElement>(null);
   const style = usePosition(expanded, anchorRef, menuRef);
 
+  // A listbox needs an accessible name (WCAG 4.1.2), taken from the control that opens it: its <label>
+  // (Select/MultiSelect: "Role", not the trigger's current value), else its aria-label, else its text.
+  const [name, setName] = React.useState<string | undefined>();
+  React.useLayoutEffect(() => {
+    const anchor = anchorRef.current;
+    if (!expanded || !anchor) return;
+    const label = (anchor as HTMLButtonElement).labels?.[0];
+    setName((label?.textContent ?? anchor.getAttribute('aria-label') ?? anchor.textContent ?? '').trim() || undefined);
+  }, [expanded, anchorRef]);
+
   if (!expanded) return null;
 
   // Width rule (contract sizing.width): 150px minimum for word options, none when every option is a
@@ -103,6 +113,7 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
       {...(numericOnly ? { 'data-numeric': '' } : {})}
       role="listbox"
       aria-multiselectable={multiple || undefined}
+      aria-label={name}
       style={style}
       className={cn(className)}
     >

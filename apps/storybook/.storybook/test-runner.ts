@@ -6,7 +6,8 @@ import { checkFocusVisible, checkReflow, checkTargetSize } from './a11y-extra-ch
 
 // Stability criteria 4 (a11y) and 6 (contrast, light + dark) — see docs/ADR/ADR-018-stability-criteria.md.
 // Beyond axe, criterion 4 also gets three checks axe can't do (a11y-extra-checks.ts): target size
-// (WCAG 2.5.8), visible focus per theme (2.4.7) and reflow at 320 px (1.4.10).
+// (WCAG 2.5.8), visible focus per theme (2.4.7) and reflow at 320 px (1.4.10), plus the story's ARIA
+// snapshot — what a screen reader would announce — compared with the contract's role.
 // Each story's play function (criterion 5, keyboard tests) is run by the test-runner itself before
 // postVisit; this hook then runs axe once per theme and writes one JSON file per story, which
 // `pnpm verify:stable` aggregates per component. Results are written, never thrown, so one story's
@@ -22,6 +23,9 @@ const config: TestRunnerConfig = {
   },
 
   async postVisit(page, context) {
+    // What a screen reader gets: the accessibility tree of the story, in the state its play test left it
+    // (Playwright ariaSnapshot — roles, names, states). verify:stable compares it with the contract's a11y.role.
+    const aria = await page.locator('body').ariaSnapshot().catch(() => '');
     const byTheme: Record<string, { rule: string; impact: string | null | undefined; nodes: number; help: string }[]> = {};
     const focusVisible: Record<string, Awaited<ReturnType<typeof checkFocusVisible>>> = {};
 
@@ -29,7 +33,7 @@ const config: TestRunnerConfig = {
       await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
       // Let transitions on theme-driven colors settle before measuring contrast.
       await page.waitForTimeout(350);
-      const violations = await getViolations(page, '#storybook-root', {
+      const violations = await getViolations(page, 'body', { // body: portaled overlays (Menu, Toast) live outside #storybook-root
         runOnly: { type: 'tag', values: AXE_TAGS },
       });
       byTheme[theme] = violations.map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
@@ -45,7 +49,7 @@ const config: TestRunnerConfig = {
     fs.mkdirSync(RESULTS_DIR, { recursive: true });
     fs.writeFileSync(
       path.join(RESULTS_DIR, `${context.id}.json`),
-      JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow }, null, 2),
+      JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow, aria }, null, 2),
     );
   },
 };
