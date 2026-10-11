@@ -352,7 +352,7 @@ _No Figma-mappable props._
 - `multi-select-description`
 - `multi-select-error`
 
-### NavItem (`v1.0.0`, stable)
+### NavItem (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|

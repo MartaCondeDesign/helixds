@@ -38,13 +38,14 @@
 # Drag Reorder
 - table:
   - rowgroup:
-    - row "Member Role Status":
-      - columnheader
+    - row "Reorder Member Role Status Actions":
+      - columnheader "Reorder"
       - columnheader "Member"
       - columnheader "Role"
       - columnheader "Status"
+      - columnheader "Actions"
   - rowgroup:
-    - row "Reorder Ana García Ana García Ana García Design Lead Active":
+    - row "Reorder Ana García Ana García Ana García Design Lead Active Actions for Ana García":
       - cell "Reorder Ana García":
         - button "Reorder Ana García"
       - cell "Ana García Ana García":
@@ -52,7 +53,9 @@
         - text: Ana García
       - cell "Design Lead"
       - cell "Active"
-    - row "Reorder Pau Torres Pau Torres Pau Torres Engineer Active":
+      - cell "Actions for Ana García":
+        - button "Actions for Ana García"
+    - row "Reorder Pau Torres Pau Torres Pau Torres Engineer Active Actions for Pau Torres":
       - cell "Reorder Pau Torres":
         - button "Reorder Pau Torres"
       - cell "Pau Torres Pau Torres":
@@ -60,7 +63,9 @@
         - text: Pau Torres
       - cell "Engineer"
       - cell "Active"
-    - row "Reorder Sara Navarro Sara Navarro Sara Navarro Designer Invited":
+      - cell "Actions for Pau Torres":
+        - button "Actions for Pau Torres"
+    - row "Reorder Sara Navarro Sara Navarro Sara Navarro Designer Invited Actions for Sara Navarro":
       - cell "Reorder Sara Navarro":
         - button "Reorder Sara Navarro"
       - cell "Sara Navarro Sara Navarro":
@@ -68,3 +73,7 @@
         - text: Sara Navarro
       - cell "Designer"
       - cell "Invited"
+      - cell "Actions for Sara Navarro":
+        - button "Actions for Sara Navarro"
+- text: Press Space to pick the row up, arrow keys to move it, Space to drop, Escape to cancel. Or use the row's actions menu.
+- status

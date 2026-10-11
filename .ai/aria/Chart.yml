@@ -248,9 +248,9 @@
     - row "W4 2":
       - rowheader "W4"
       - cell "2"
-    - row "W5 0":
+    - row "W5 No data":
       - rowheader "W5"
-      - cell "0"
+      - cell "No data"
     - row "W6 8":
       - rowheader "W6"
       - cell "8"
