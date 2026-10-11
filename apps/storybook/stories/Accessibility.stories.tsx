@@ -188,6 +188,7 @@ function AccessibilityPage() {
               <TableHeaderCell>Check</TableHeaderCell>
               <TableHeaderCell>WCAG</TableHeaderCell>
               <TableHeaderCell>Pass rate</TableHeaderCell>
+              <TableHeaderCell>Components</TableHeaderCell>
               <TableHeaderCell>What it measures</TableHeaderCell>
               <TableHeaderCell>Run it</TableHeaderCell>
             </TableRow>
@@ -202,8 +203,8 @@ function AccessibilityPage() {
                   <TableCell>{c.wcag}</TableCell>
                   <TableCell>
                     <Badge variant={r === null ? 'neutral' : r === 100 ? 'success' : 'danger'} label={r === null ? 'not run' : `${r}%`} />
-                    <div style={muted}>{s.pass} pass · {s.fail} fail · {s.na} n/a · {s.pending} pending</div>
                   </TableCell>
+                  <TableCell><span style={muted}>{s.pass} pass · {s.fail} fail · {s.na} n/a · {s.pending} pending</span></TableCell>
                   <TableCell><span style={muted}>{c.how}</span></TableCell>
                   <TableCell><code style={mono}>{c.command}</code></TableCell>
                 </TableRow>
