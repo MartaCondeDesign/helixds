@@ -24,7 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-11 — feat(a11y): visible focus, target size and reflow checks — and the bugs they found (latest commit)
+- 2026-10-11 — feat(a11y): visible focus, target size and reflow checks — and the bugs they found ([`8d9d236`](https://github.com/MartaCondeDesign/helixds/commit/8d9d236))
 - 2026-10-10 — feat(metrics): health score's agent signals use current answers only — 63.2 → 80.2 ([`721d72b`](https://github.com/MartaCondeDesign/helixds/commit/721d72b))
 - 2026-10-09 — feat: "npm install" eval level; publish-ready packages that point agents to their contracts ([`08eb706`](https://github.com/MartaCondeDesign/helixds/commit/08eb706))
 - 2026-10-09 — feat: AI Readiness 85/100 after a 3-rep screen round; page speaks in dates, not hashes ([`00ef583`](https://github.com/MartaCondeDesign/helixds/commit/00ef583))
@@ -80,6 +80,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-11 — fix(a11y): TopBar and AppShell reflow at 320 px — no component fails a criterion now (latest commit)
 - 2026-10-09 — chore(evals): the no-context level is labelled as the control group, expected to fail ([`ee21d60`](https://github.com/MartaCondeDesign/helixds/commit/ee21d60))
 - 2026-10-09 — chore: take the "npm install" level off the ladder; fix the onPress risk label ([`b0febfb`](https://github.com/MartaCondeDesign/helixds/commit/b0febfb))
 - 2026-10-09 — fix(storybook): Color page follows the toolbar theme — no switch of its own ([`59b6e42`](https://github.com/MartaCondeDesign/helixds/commit/59b6e42))

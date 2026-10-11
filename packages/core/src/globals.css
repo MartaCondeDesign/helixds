@@ -2813,7 +2813,16 @@
 
   [data-helix-part="topbar-start"] {
     flex:      1;
+    min-width: 0;   /* WCAG 1.4.10 Reflow: the search gives way on a narrow screen instead of pushing the end slot off it */
     max-width: 320px;
+  }
+  /* A search Input in the start slot keeps its natural width when there's room and shrinks when there
+     isn't (input-root is fit-content and the native <input> has an intrinsic ~20ch width otherwise). */
+  [data-helix-part="topbar-start"] [data-helix-part="input-root"],
+  [data-helix-part="topbar-start"] [data-helix-part="input-wrapper"],
+  [data-helix-part="topbar-start"] [data-helix-part="input-field"] {
+    min-width: 0;
+    max-width: 100%;
   }
 
   [data-helix-part="topbar-end"] {
@@ -2821,6 +2830,7 @@
     align-items:  center;
     gap:          var(--helix-spacing-component-xs);
     margin-left:  auto;
+    flex-shrink:  0; /* actions keep their size; the search shrinks first */
   }
 
 
@@ -2889,6 +2899,23 @@
     min-height: 0; /* lets the flex item shrink below its content so overflow-y scrolls */
     overflow-y: auto;
     padding:    var(--helix-spacing-l);
+  }
+
+  /* WCAG 1.4.10 Reflow: below primitive.breakpoint.tablet (768px — media queries can't read a var()) the
+     224px side nav would leave ~96px for the page at 320px. The shell stacks instead: nav on top, full
+     width, then the content, and the page scrolls as one column. Desktop and tablet are unchanged. */
+  @media (max-width: 767px) {
+    [data-helix-part="app-shell-root"] {
+      flex-direction: column;
+      height:         auto;
+      min-height:     100vh;
+    }
+    [data-helix-part="app-shell-root"] > [data-helix-part="side-nav-root"] {
+      width: 100%;
+    }
+    [data-helix-part="app-shell-main"] {
+      overflow-y: visible;
+    }
   }
 
 

@@ -81,17 +81,17 @@
   },
   {
     "date": "2026-10-11",
-    "score": 0.7291969696969697,
+    "score": 0.7049545454545455,
     "evalPassRate": 0.9,
     "tokens": 763,
     "components": {
-      "draft": 2,
-      "beta": 18,
-      "stable": 13
+      "draft": 0,
+      "beta": 21,
+      "stable": 12
     },
     "figma": {
-      "synced": 15,
-      "stale": 5,
+      "synced": 12,
+      "stale": 8,
       "missing": 13
     }
   }

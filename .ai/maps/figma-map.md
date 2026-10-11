@@ -55,7 +55,7 @@ Not decidable from types alone — check the skill: `required` with no visible i
 - `accordion-panel`
 - `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, draft)
+### AppShell (`v1.0.0`, beta)
 
 _No Figma-mappable props._
 
@@ -464,7 +464,7 @@ _No Figma-mappable props._
 - `select-description`
 - `select-error`
 
-### SideNav (`v1.0.0`, stable)
+### SideNav (`v1.0.0`, beta)
 
 _No Figma-mappable props._
 
@@ -575,7 +575,7 @@ _No Figma-mappable props._
 - `tooltip-root`
 - `tooltip-content`
 
-### TopBar (`v1.0.0`, draft)
+### TopBar (`v1.0.0`, beta)
 
 _No Figma-mappable props._
 
