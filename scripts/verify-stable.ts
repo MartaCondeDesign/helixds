@@ -143,7 +143,13 @@ for (const p of loadPrompts()) {
 // ── Per-component evaluation ─────────────────────────────────────────────────
 const kebab = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
-type Row = { name: string; category: string; previousStatus: string; status: string; inFigma: boolean; figma: FigmaCheck; checks: Record<CriterionKey, Check> };
+// Reviews that need judgement — reported, never part of the status: a person with a real screen reader
+// (contract a11y.humanReview, pnpm a11y:review) and an advisory AI look at the screenshots (pnpm a11y:visual).
+type Reviews = {
+  human: { date: string; by: string; with: string; result?: string } | null;
+  ai: { date: string; model: string; findings: string[] } | null;
+};
+type Row = { name: string; category: string; previousStatus: string; status: string; inFigma: boolean; figma: FigmaCheck; checks: Record<CriterionKey, Check>; reviews: Reviews };
 const rows: Row[] = [];
 
 for (const c of manifest.components) {
@@ -230,7 +236,14 @@ for (const c of manifest.components) {
   const allPass = Object.values(checks).every(ch => ch.pass);
   const figma = figmaCheck(name, c.contract, figmaEntry.get(name));
   const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma.state === 'synced' ? 'stable' : 'beta';
-  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma.state !== 'missing', figma, checks });
+  const humanReviews = contract.a11y?.humanReview ?? [];
+  const aiFile = path.join(root, '.ai/a11y-visual', `${name}.json`);
+  const ai = fs.existsSync(aiFile) ? JSON.parse(fs.readFileSync(aiFile, 'utf-8')) : null;
+  const reviews: Reviews = {
+    human: humanReviews.at(-1) ?? null,
+    ai: ai && { date: ai.reviewedAt.slice(0, 10), model: ai.model, findings: ai.answers.filter((a: any) => a.pass === false).map((a: any) => `${a.id}: ${a.reason}`) },
+  };
+  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma.state !== 'missing', figma, checks, reviews });
 }
 
 // ── Report ───────────────────────────────────────────────────────────────────
@@ -247,7 +260,14 @@ console.log(`\n${keys.map((k, i) => `${i + 1} ${CRITERIA[k].label}`).join(' · '
 const counts = rows.reduce<Record<string, number>>((acc, r) => ({ ...acc, [r.status]: (acc[r.status] ?? 0) + 1 }), {});
 console.log(`\n${Object.entries(counts).map(([s, n]) => `${s} ${n}`).join(' · ')}`);
 
+const withHuman = rows.filter(r => r.reviews.human);
+const withAi = rows.filter(r => r.reviews.ai);
+console.log(`Reviews (not part of the status): screen reader by a person ${withHuman.length} of ${rows.length}` +
+  `${withHuman.some(r => r.reviews.human!.result === 'issues') ? ` (${withHuman.filter(r => r.reviews.human!.result === 'issues').length} with issues)` : ''}` +
+  ` · AI visual ${withAi.length} of ${rows.length}${withAi.length ? ` (${withAi.filter(r => r.reviews.ai!.findings.length).length} with findings to confirm)` : ''}`);
+
 if (args.includes('--details')) {
+  for (const r of rows) for (const f of r.reviews.ai?.findings ?? []) console.log(`${r.name} · AI visual (to confirm): ${f}`);
   console.log('');
   for (const r of rows) for (const k of keys) if (!r.checks[k].pass) console.log(`${r.name} · ${CRITERIA[k].label}: ${r.checks[k].details.join('; ')}`);
   for (const r of rows) if (r.figma.state === 'drift') console.log(`${r.name} · Figma: ${r.figma.details.join('; ')}`);

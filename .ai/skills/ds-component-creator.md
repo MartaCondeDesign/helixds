@@ -124,7 +124,10 @@ pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs 
    interactive component (it takes `onClick`, `onChange`, `onSelect`, `onDismiss`, `expanded`…) with no keys
    is rejected. If the keys live on another component (Menu ← Select), say so in the entry.
 2. **A `play` test per key** in its stories — `userEvent.keyboard('{Escape}')`, `userEvent.tab()` — asserting
-   the effect, and that focus lands where it should (back on the trigger when something closes).
+   the effect, and that focus lands where it should: when Escape closes something, assert
+   `expect(trigger).toHaveFocus()` right after — it's required (WCAG 2.4.3).
+   If it opens (dialog, panel, menu, toast), add an `Opened` story tagged `['!autodocs']` whose play leaves it
+   open — otherwise no browser check ever sees the open state.
    Steps 1–2 are checked on every commit by `pnpm verify:a11y-contracts` (no browser needed).
 3. **Browser checks** (need Storybook running — `pnpm sb`), for just this component:
    ```bash
@@ -133,9 +136,14 @@ pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs 
    ```
    Criteria 4, 5 and 6 must be ✓: axe (WCAG 2.2 AA) clean in light AND dark, visible focus on every tab stop
    in both themes (2.4.7), every target ≥ 24×24 px or well spaced (2.5.8), and — for Layout/ and Pages/
-   stories — no horizontal scroll at 320 px (1.4.10). Each failure names the element, theme and story.
-4. **A person, once**: read every accessible name aloud ("Save", not "Button 1") and go through it with a
-   real screen reader (VoiceOver: Cmd+F5). Automation can't judge either.
+   stories — no horizontal scroll at 320 px (1.4.10), and a screen reader hears the role the contract promises
+   (ariaSnapshot; set `a11y.announces` when `role` is conditional). Each failure names the element, theme and
+   story. What's announced per story is written to `.ai/aria/{Name}.yml` — read it.
+4. **AI visual review** (advisory, ~3 cents): `pnpm a11y:visual {Name}` — color-only meaning, non-text contrast,
+   label in name, clipped text, focus clarity. Findings land in `.ai/a11y-visual/{Name}.json` to confirm.
+5. **A person, once**: go through it with a real screen reader (VoiceOver: Cmd+F5), check the AI findings,
+   and record it — `pnpm a11y:review {Name} --by "<who>" --with "VoiceOver + Safari" --result pass|issues`.
+   Never record a review on someone's behalf.
 
 Before calling the component done, create what `verify:stable` checks (ADR-018): a story per variant,
 size and authored state; a keyboard `play` test per key in `a11y.keyboardNav` (`userEvent.keyboard('{Enter}')`,

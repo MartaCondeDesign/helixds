@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Select",
+  "reviewedAt": "2026-10-11T17:48:10.762Z",
+  "model": "haiku",
+  "stories": [
+    "Default",
+    "Controlled",
+    "With Groups"
+  ],
+  "costUsd": 0.035013,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "Focus state uses a clear blue border (shape change), not color alone. Labels and dropdown icon provide additional meaning."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Control boundaries are visible in light and dark modes; dropdown chevron icon is clear; focus ring is a prominent blue outline with strong contrast."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "All stories: visible labels (\"Role\", \"Specialty\") match the screen reader names announced by the combobox."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, overlapping, or truncated in any screenshot."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "All three focused screenshots show a clear, prominent blue outline around the combobox button, making focus obvious."
+    }
+  ]
+}

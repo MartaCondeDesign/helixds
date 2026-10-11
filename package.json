@@ -18,6 +18,8 @@
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",
+    "a11y:visual": "tsx scripts/a11y-visual-review.ts",
+    "a11y:review": "tsx scripts/a11y-human-review.ts",
     "verify:tokens": "tsx scripts/verify-token-naming.ts",
     "verify:props": "tsx scripts/prop-map-check.ts",
     "verify:icons": "tsx scripts/verify-icon-usage.ts",

@@ -1,0 +1,44 @@
+{
+  "$comment": "AI visual review (pnpm a11y:visual) — advisory: a person confirms findings and records the review with pnpm a11y:review.",
+  "component": "Badge",
+  "reviewedAt": "2026-10-11T17:44:38.058Z",
+  "model": "haiku",
+  "stories": [
+    "All Variants",
+    "With Icons",
+    "Sizes"
+  ],
+  "costUsd": 0.031148,
+  "answers": [
+    {
+      "id": "color-only",
+      "wcag": "WCAG 1.4.1",
+      "pass": true,
+      "reason": "All badges have visible text labels; 'With Icons' story also uses icons. Meaning is not conveyed by color alone."
+    },
+    {
+      "id": "non-text",
+      "wcag": "WCAG 1.4.11",
+      "pass": true,
+      "reason": "Icons and badges have adequate visual contrast against light and dark backgrounds."
+    },
+    {
+      "id": "label-in-name",
+      "wcag": "WCAG 2.5.3",
+      "pass": true,
+      "reason": "Visible text on badges matches screen reader output across all stories."
+    },
+    {
+      "id": "clipped",
+      "wcag": "WCAG 1.4.4 / 1.4.12",
+      "pass": true,
+      "reason": "No text is cut off, truncated, or overlapped in any story."
+    },
+    {
+      "id": "focus-clear",
+      "wcag": "WCAG 2.4.11 / 2.4.13",
+      "pass": true,
+      "reason": "No focused screenshots provided; badges are non-interactive and don't take focus."
+    }
+  ]
+}
