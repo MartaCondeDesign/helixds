@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { Reorder, useDragControls } from 'motion/react';
-import { IconGripVertical } from '@tabler/icons-react';
 import {
   Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell,
-  TableDoc, Badge, Avatar, Button, Icon,
+  TableDoc, Badge, Avatar, Button,
 } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+import { ReorderGrip, ReorderInstructions, RowMoveMenu, VISUALLY_HIDDEN, moveItem, useReorderAnnouncer } from '../_shared/row-reorder';
 
 const meta: Meta<typeof Table> = {
   title:     'Components/Table',
@@ -84,9 +84,10 @@ const DRAG_MEMBERS: DragMember[] = [
   { id: '3', name: 'Sara Navarro', role: 'Designer',    status: 'warning', statusLabel: 'Invited' },
 ];
 
-function DragRow({ member }: { member: DragMember }) {
+function DragRow({ member, index, total, onMove, announce }: { member: DragMember; index: number; total: number; onMove: (to: number) => void; announce: (m: string) => void }) {
   const dragControls = useDragControls();
   const [dragging, setDragging] = useState(false);
+  const row = { id: member.id, name: member.name, index, total, onMove, announce };
   return (
     <Reorder.Item
       as="tr"
@@ -98,19 +99,7 @@ function DragRow({ member }: { member: DragMember }) {
       onDragStart={() => setDragging(true)}
       onDragEnd={() => setDragging(false)}
     >
-      <TableCell>
-        <span
-          role="button"
-          onPointerDown={e => {
-            e.preventDefault(); // no text selection starting under the pointer as it crosses rows
-            dragControls.start(e);
-          }}
-          style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
-          aria-label={`Reorder ${member.name}`}
-        >
-          <Icon icon={IconGripVertical} size={16} />
-        </span>
-      </TableCell>
+      <TableCell><ReorderGrip {...row} dragControls={dragControls} /></TableCell>
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
           <Avatar label={member.name} size="s" />
@@ -119,6 +108,7 @@ function DragRow({ member }: { member: DragMember }) {
       </TableCell>
       <TableCell>{member.role}</TableCell>
       <TableCell><Badge variant={member.status} label={member.statusLabel} /></TableCell>
+      <TableCell><RowMoveMenu {...row} /></TableCell>
     </Reorder.Item>
   );
 }
@@ -126,26 +116,35 @@ function DragRow({ member }: { member: DragMember }) {
 export const DragReorder: Story = {
   render: () => {
     const [members, setMembers] = useState(DRAG_MEMBERS);
+    const { announce, region } = useReorderAnnouncer();
     return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeaderCell>{''}</TableHeaderCell>
-            <TableHeaderCell>Member</TableHeaderCell>
-            <TableHeaderCell>Role</TableHeaderCell>
-            <TableHeaderCell>Status</TableHeaderCell>
-          </TableRow>
-        </TableHead>
-        <Reorder.Group as="tbody" axis="y" values={members} onReorder={setMembers} data-helix-part="table-body">
-          {members.map(m => <DragRow key={m.id} member={m} />)}
-        </Reorder.Group>
-      </Table>
+      <>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeaderCell><span style={VISUALLY_HIDDEN}>Reorder</span></TableHeaderCell>
+              <TableHeaderCell>Member</TableHeaderCell>
+              <TableHeaderCell>Role</TableHeaderCell>
+              <TableHeaderCell>Status</TableHeaderCell>
+              <TableHeaderCell><span style={VISUALLY_HIDDEN}>Actions</span></TableHeaderCell>
+            </TableRow>
+          </TableHead>
+          <Reorder.Group as="tbody" axis="y" values={members} onReorder={setMembers} data-helix-part="table-body">
+            {members.map((m, i) => (
+              <DragRow key={m.id} member={m} index={i} total={members.length} announce={announce}
+                onMove={to => setMembers(list => moveItem(list, list.findIndex(x => x.id === m.id), to))} />
+            ))}
+          </Reorder.Group>
+        </Table>
+        <ReorderInstructions />
+        {region}
+      </>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: 'Drag any row by its grip handle to reorder. Not a Table prop — real rows composed with Motion\'s Reorder.Group/Reorder.Item (as="tbody"/as="tr"), see the "dragReorder" entry above and .ai/maps/patterns/motion-effects.md.',
+        story: 'Drag a row by its grip ⋮⋮ — or, without dragging, use its ⋯ menu (Move to top / up / down / to bottom), or the keyboard: Space on the grip picks the row up, ↑/↓ move it, Space drops, Escape cancels (WCAG 2.1.1 and 2.5.7). Focus stays on the moved row and the new position is announced. Not a Table prop — real rows composed with Motion\'s Reorder.Group/Reorder.Item (as="tbody"/as="tr"), see the "dragReorder" entry above and .ai/maps/patterns/motion-effects.md.',
       },
     },
   },

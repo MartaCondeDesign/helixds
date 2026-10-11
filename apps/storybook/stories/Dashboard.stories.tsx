@@ -11,10 +11,11 @@ import {
   IconBell, IconSearch, IconBolt,
   IconDownload, IconPlus, IconDots, IconHelp,
   IconArrowUpRight, IconArrowDownRight,
-  IconTable, IconLayoutGrid, IconGripVertical, IconUserPlus,
+  IconTable, IconLayoutGrid, IconUserPlus,
 } from '@tabler/icons-react';
 import { MEMBERS, NAV_ITEMS } from './fixtures/dashboard.fixture';
 import type { Member } from './fixtures/dashboard.fixture';
+import { ReorderGrip, ReorderInstructions, RowMoveMenu, VISUALLY_HIDDEN, moveItem, useReorderAnnouncer } from './_shared/row-reorder';
 
 // ── Stat Card pattern — Card composed with a fixed label/value/delta layout, not its own
 // component. See .ai/maps/patterns/stat-card.md / Patterns → StatCard for the canonical recipe. ──
@@ -87,13 +88,11 @@ const ROLES = Array.from(new Set(MEMBERS.map(m => m.role)));
 // row (can't call it inside a .map() callback directly, that breaks the Rules of Hooks). dragListener is
 // off so the row itself isn't draggable by clicking anywhere in it (that would fight the row's own
 // interactive content, e.g. "Row actions"); the grip icon starts the drag explicitly via dragControls.
-const VISUALLY_HIDDEN: React.CSSProperties = {
-  position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap',
-};
 
-function MemberRow({ member }: { member: Member }) {
+function MemberRow({ member, index, total, onMove, announce }: { member: Member; index: number; total: number; onMove: (to: number) => void; announce: (m: string) => void }) {
   const dragControls = useDragControls();
   const [dragging, setDragging] = useState(false);
+  const row = { id: member.id, name: member.name, index, total, onMove, announce };
   return (
     <Reorder.Item
       as="tr"
@@ -106,17 +105,8 @@ function MemberRow({ member }: { member: Member }) {
       onDragEnd={() => setDragging(false)}
     >
       <TableCell>
-        <span
-          onPointerDown={e => {
-            e.preventDefault(); // no text selection starting under the pointer as it crosses rows
-            dragControls.start(e);
-          }}
-          role="button"
-          style={{ cursor: 'grab', display: 'inline-flex', touchAction: 'none' }}
-          aria-label={`Reorder ${member.name}`}
-        >
-          <Icon icon={IconGripVertical} size={16} />
-        </span>
+        {/* Drag with the pointer, or the keyboard (Space / arrows / Escape) — _shared/row-reorder.tsx */}
+        <ReorderGrip {...row} dragControls={dragControls} />
       </TableCell>
       <TableCell>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
@@ -144,7 +134,8 @@ function MemberRow({ member }: { member: Member }) {
       <TableCell><Badge variant={STATUS_VARIANT[member.status]} label={member.status} /></TableCell>
       <TableCell>{member.components}</TableCell>
       <TableCell>{member.lastSeen}</TableCell>
-      <TableCell><IconButton variant="ghost" size="s" icon={IconDots} label="Row actions" /></TableCell>
+      {/* Move to top / up / down / to bottom — the no-drag alternative (WCAG 2.5.7) */}
+      <TableCell><RowMoveMenu {...row} /></TableCell>
     </Reorder.Item>
   );
 }
@@ -180,6 +171,9 @@ function DashboardPage() {
   // Motion's Reorder.Group works on the currently VISIBLE (filtered) array; reordering within that
   // subset gets spliced back into the full underlying order, so hidden (filtered-out) members keep their
   // relative position instead of being disturbed by a drag they can't see.
+  const { announce, region } = useReorderAnnouncer();
+  // The menu and the keyboard grip move a row inside the visible (filtered) list — same splice as a drag.
+  const moveVisible = (id: string, to: number) => handleReorder(moveItem(filtered, filtered.findIndex(m => m.id === id), to));
   const handleReorder = (newFilteredOrder: Member[]) => {
     const newIds = newFilteredOrder.map(m => m.id);
     setMemberOrder(order => {
@@ -339,9 +333,11 @@ function DashboardPage() {
               </tr>
             </TableHead>
             <Reorder.Group as="tbody" axis="y" values={filtered} onReorder={handleReorder} data-helix-part="table-body">
-              {filtered.map(m => <MemberRow key={m.id} member={m} />)}
+              {filtered.map((m, i) => <MemberRow key={m.id} member={m} index={i} total={filtered.length} announce={announce} onMove={to => moveVisible(m.id, to)} />)}
             </Reorder.Group>
           </Table>
+          <ReorderInstructions />
+          {region}
         </Card>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--helix-spacing-m)' }}>

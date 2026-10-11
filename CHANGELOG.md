@@ -9,6 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated (latest commit)
 - 2026-10-07 — feat!: publish under the @helixds npm scope ([`e5e900b`](https://github.com/MartaCondeDesign/helixds/commit/e5e900b))
 - 2026-10-07 — feat!: names agents expect — onClick, isLoading and the @helix/react package ([`ad1711f`](https://github.com/MartaCondeDesign/helixds/commit/ad1711f))
 - 2026-10-01 — Chip s is 24px (xs removed); 4px group-spacing rule ([`5d2af0a`](https://github.com/MartaCondeDesign/helixds/commit/5d2af0a))
@@ -81,7 +82,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-11 — a11y: daily history (quality/accessibility-history.json, one entry per day from pnpm a11y) + 'By day' on Data/Accessibility — pick a day, see its score and what changed since the previous test; Proposals/Table reorder — options A, B, C and C+A to try (keyboard + no-drag reorder, WCAG 2.1.1 / 2.5.7) (latest commit)
+- 2026-10-11 — a11y: daily history (quality/accessibility-history.json, one entry per day from pnpm a11y) + 'By day' on Data/Accessibility — pick a day, see its score and what changed since the previous test; Proposals/Table reorder — options A, B, C and C+A to try (keyboard + no-drag reorder, WCAG 2.1.1 / 2.5.7) ([`ece62e5`](https://github.com/MartaCondeDesign/helixds/commit/ece62e5))
 - 2026-10-11 — fix(Chart): hidden data table no longer stretches the page (visually hidden on a wrapper div — a table ignores height/overflow); missing values read 'No data' instead of 0. a11y CLI: pnpm a11y <Name> and pnpm a11y all <Name> both work ([`9405748`](https://github.com/MartaCondeDesign/helixds/commit/9405748))
 - 2026-10-11 — storybook a11y page: pass/fail/n/a/pending counts in their own column ([`79fa87a`](https://github.com/MartaCondeDesign/helixds/commit/79fa87a))
 - 2026-10-11 — storybook a11y page: component list spans the whole search field (Menu names itself from a control inside its anchor); score column shows the badge only; 'failing' counts scored checks only ([`6ff6224`](https://github.com/MartaCondeDesign/helixds/commit/6ff6224))
