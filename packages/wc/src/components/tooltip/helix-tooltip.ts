@@ -66,7 +66,8 @@ export class HelixTooltip extends LitElement {
       visibility: visible;
       transition-delay: 0s;
     }
-    :host([expanded='false']) ::slotted([slot='content']) {
+    :host([expanded='false']) ::slotted([slot='content']),
+    :host([data-dismissed]:not([expanded='true'])) ::slotted([slot='content']) {
       opacity: 0 !important;
       visibility: hidden !important;
     }
@@ -143,14 +144,19 @@ export class HelixTooltip extends LitElement {
     window.removeEventListener('resize', this.recalculate);
     window.removeEventListener('scroll', this.recalculate, true);
     this.removeEventListener('keydown', this.handleKeyDown);
+    this.removeEventListener('focusout', this.undismiss);
+    this.removeEventListener('mouseleave', this.undismiss);
   }
 
-  // WCAG 1.4.13 — dismissible on Escape while the trigger holds focus (blurring drops
-  // :focus-within, which is what actually hides the content; this only handles the keypress).
+  // WCAG 1.4.13 — dismissible on Escape while the trigger KEEPS focus (2.4.3: blurring it would drop a
+  // keyboard user back to the top of the page). data-dismissed hides the content until focus or the
+  // pointer leaves; an explicit `expanded` still wins.
   private handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
-      (document.activeElement as HTMLElement | null)?.blur();
-    }
+    if (event.key === 'Escape') this.setAttribute('data-dismissed', '');
+  };
+  private undismiss = (event: Event) => {
+    if (event.type === 'focusout' && this.contains((event as FocusEvent).relatedTarget as Node)) return;
+    this.removeAttribute('data-dismissed');
   };
 
   updated(changed: Map<string, unknown>) {

@@ -135,6 +135,7 @@ export const KeyboardNavigation: Story = {
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(combobox).toHaveAttribute('aria-expanded', 'false'));
     await expect(values).toHaveTextContent(/^writing$/);
+    await expect(combobox).toHaveFocus(); // focus stays on the field, never lost with the closed menu
 
     // Backspace (menu closed) removes the last chip
     await userEvent.keyboard('{Backspace}');

@@ -86,16 +86,21 @@ const Tooltip = ({ label, children, placement = 'top', expanded, className }: To
 
   // `expanded` is undefined by default (normal :hover/:focus-within driven show/hide, no attribute
   // set at all); true/false force it on/off regardless of interaction — see ADR-008.
-  const forcedState = expanded === undefined ? undefined : expanded ? 'true' : 'false';
+  // Escape dismisses the tooltip but leaves focus on the trigger (WCAG 1.4.13 dismissible, 2.4.3 focus
+  // order): blurring it instead would drop a keyboard user back to the top of the page. The dismissal
+  // lasts until focus or the pointer leaves, so the next hover/focus shows it again.
+  const [dismissed, setDismissed] = React.useState(false);
+  const forcedState = expanded !== undefined ? (expanded ? 'true' : 'false') : dismissed ? 'false' : undefined;
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLSpanElement>) => {
     // The one piece of JS this component needs for show/hide (ADR-008) — CSS :hover/:focus-within
-    // can't hear a keypress. Blurring the trigger drops :focus-within, which is what actually hides
-    // the content; this handler doesn't touch visibility itself. (Auto-placement above is separate —
+    // can't hear a keypress. Visibility otherwise stays in CSS. (Auto-placement above is separate —
     // see ADR-009 — and runs independently of show/hide.)
-    if (event.key === 'Escape') {
-      (document.activeElement as HTMLElement | null)?.blur();
-    }
+    if (event.key === 'Escape') setDismissed(true);
+  };
+  const reset = (event: React.FocusEvent<HTMLSpanElement> | React.MouseEvent<HTMLSpanElement>) => {
+    if ('relatedTarget' in event && event.type === 'blur' && rootRef.current?.contains(event.relatedTarget as Node)) return;
+    setDismissed(false);
   };
 
   return (
@@ -105,6 +110,8 @@ const Tooltip = ({ label, children, placement = 'top', expanded, className }: To
       data-placement={resolvedPlacement}
       data-expanded={forcedState}
       onKeyDown={handleKeyDown}
+      onBlur={reset}
+      onMouseLeave={reset}
       className={cn(className)}
     >
       {React.cloneElement(children, { 'aria-describedby': uid } as React.HTMLAttributes<HTMLElement>)}

@@ -82,6 +82,7 @@ export const KeyboardFocus: Story = {
     // Escape dismisses it
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(tooltip).not.toBeVisible());
+    await expect(trigger).toHaveFocus(); // dismissing the tooltip doesn't move focus off its trigger
   },
   parameters: {
     docs: {

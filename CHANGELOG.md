@@ -24,7 +24,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Added
 
-- 2026-10-11 — feat(a11y): a new component can't land without its accessibility contract and keyboard tests (latest commit)
+- 2026-10-11 — feat(a11y): a new component can't land without its accessibility contract and keyboard tests ([`b27d497`](https://github.com/MartaCondeDesign/helixds/commit/b27d497))
 - 2026-10-11 — feat(a11y): visible focus, target size and reflow checks — and the bugs they found ([`8d9d236`](https://github.com/MartaCondeDesign/helixds/commit/8d9d236))
 - 2026-10-10 — feat(metrics): health score's agent signals use current answers only — 63.2 → 80.2 ([`721d72b`](https://github.com/MartaCondeDesign/helixds/commit/721d72b))
 - 2026-10-09 — feat: "npm install" eval level; publish-ready packages that point agents to their contracts ([`08eb706`](https://github.com/MartaCondeDesign/helixds/commit/08eb706))
@@ -81,6 +81,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-11 — a11y: focus return after Escape — Tooltip (React + WC) no longer blurs its trigger; play tests assert focus for Modal, SidePanel, Select, MultiSelect, Tooltip; verify:a11y-contracts rule 5 (latest commit)
 - 2026-10-11 — fix(a11y): TopBar and AppShell reflow at 320 px — no component fails a criterion now ([`6d24716`](https://github.com/MartaCondeDesign/helixds/commit/6d24716))
 - 2026-10-09 — chore(evals): the no-context level is labelled as the control group, expected to fail ([`ee21d60`](https://github.com/MartaCondeDesign/helixds/commit/ee21d60))
 - 2026-10-09 — chore: take the "npm install" level off the ladder; fix the onPress risk label ([`b0febfb`](https://github.com/MartaCondeDesign/helixds/commit/b0febfb))

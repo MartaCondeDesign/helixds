@@ -197,6 +197,7 @@ export const KeyboardNavigation: Story = {
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(trigger).toHaveAttribute('aria-expanded', 'false'));
     await expect(trigger).toHaveTextContent('Choose a role…');
+    await expect(trigger).toHaveFocus(); // focus stays on the trigger, never lost with the closed menu
 
     // Enter opens; Enter confirms the highlighted option
     await userEvent.keyboard('{Enter}');

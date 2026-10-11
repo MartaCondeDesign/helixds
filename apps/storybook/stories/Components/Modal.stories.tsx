@@ -155,8 +155,10 @@ export const KeyboardDismiss: Story = {
     // Escape dismisses it (through onDismiss, with the close animation)
     await userEvent.keyboard('{Escape}');
     await waitFor(() => expect(dialog).not.toHaveAttribute('open'));
+    // …and focus goes back to the button that opened it (WCAG 2.4.3), not to the top of the page
+    await waitFor(() => expect(opener).toHaveFocus());
   },
   parameters: {
-    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between the modal’s controls, Escape dismisses it.' } },
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between the modal’s controls, Escape dismisses it, and focus returns to the button that opened it.' } },
   },
 };
