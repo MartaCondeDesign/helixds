@@ -102,6 +102,7 @@
     "forbidden": ["primitive.color", "color.text"]
   },
   "a11y": {
+    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"n/a","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "button (native)",
     "keyboardNav": ["Enter/Space activates, same as any native <button>"],
     "wcag": ["4.1.2 Name, Role, Value (label is required precisely to satisfy this — no visible text exists to fall back on)", "1.4.3 Contrast (AA)"]

@@ -153,6 +153,7 @@
   },
 
   "a11y": {
+    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"n/a","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "button (implicit from <button> element)",
     "keyboardNav": ["Enter — activates", "Space — activates"],
     "wcag": ["1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]

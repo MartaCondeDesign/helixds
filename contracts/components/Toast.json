@@ -57,6 +57,7 @@
   },
 
   "a11y": {
+    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"n/a","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "each toast-viewport region uses aria-live=\"polite\" so screen readers announce new toasts without interrupting; toast-close is a real button with an accessible label",
     "keyboardNav": ["Tab reaches each visible toast's close button", "Focus inside a toast (e.g. Tab onto its close button) stops its auto-dismiss and spreads the stack — the keyboard equivalent of hovering it (WCAG 2.2.1 Timing Adjustable)"],
     "wcag": ["4.1.3 Status Messages", "1.4.13 Content on Hover or Focus",

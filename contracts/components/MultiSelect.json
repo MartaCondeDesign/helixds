@@ -91,6 +91,7 @@
   },
 
   "a11y": {
+    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"pass","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "combobox on a <button> inside the field (WAI-ARIA select-only combobox) + Menu listbox with aria-multiselectable=\"true\" — see ADR-013 and ADR-019. Chips' × buttons are the only other focus stops.",
     "keyboardNav": [
       "Arrow Up/Down - opens the menu, or moves the highlighted option while open",

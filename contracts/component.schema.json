@@ -251,6 +251,42 @@
               }
             }
           }
+        },
+        "results": {
+          "type": "object",
+          "description": "Written by `pnpm a11y` — do not hand-edit. The latest result of every accessibility check for this component, its score (% of the automatic checks that apply and pass) and whether it meets every one. Reviews (ai-visual, human) are listed but never scored (root CLAUDE.md rule 14). `changed` is the date the results last changed.",
+          "properties": {
+            "score": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "meetsMinimum": {
+              "type": "boolean"
+            },
+            "changed": {
+              "type": "string"
+            },
+            "checks": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "enum": [
+                  "pass",
+                  "fail",
+                  "n/a",
+                  "pending"
+                ]
+              }
+            },
+            "notScored": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },

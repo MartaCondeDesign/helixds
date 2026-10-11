@@ -136,7 +136,11 @@ pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs 
    It prints one row with a column per check (contract, keys, focus return, keyboard, axe, contrast, focus
    visible, target size, reflow, screen reader, AI visual, human) and the reason for each ✗. Re-run a single
    one while fixing it: `pnpm a11y:focus-visible {Name}` (any check id; `--cached` reuses the last browser run).
-   Results land in Storybook → Data/Accessibility. Then `pnpm verify:stable --skip-browser --details`.
+   Results land in Storybook → Data/Accessibility and in the contract's `a11y.results`. Then
+   `pnpm verify:stable --skip-browser --details`.
+   **If anything fails, tell the owner before calling it done** (root CLAUDE.md rule 15): which check, story
+   and element, the WCAG reason, and the options to make it pass. A fix uses only existing tokens, and the
+   owner picks which — list 2–3 candidates with why one is better (rule 13). Never a hand-typed value.
    Criteria 4, 5 and 6 must be ✓: axe (WCAG 2.2 AA) clean in light AND dark, visible focus on every tab stop
    in both themes (2.4.7), every target ≥ 24×24 px or well spaced (2.5.8), and — for Layout/ and Pages/
    stories — no horizontal scroll at 320 px (1.4.10), and a screen reader hears the role the contract promises

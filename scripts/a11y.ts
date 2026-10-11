@@ -209,6 +209,21 @@ fs.writeFileSync(outFile, JSON.stringify({
   components: Object.fromEntries(allComponents.map(c => [c.name, results[c.name] ?? {}])),
 }, null, 2) + '\n');
 
+// Each contract carries its own results (a11y.results), next to its role, keys and WCAG criteria — rewritten
+// only when they change, so `changed` is the date they last changed and a re-run doesn't touch the file.
+const reviewIds = CHECKS.filter(ch => ch.kind === 'review').map(ch => ch.id);
+for (const c of allComponents) {
+  const file = path.join(root, c.contract);
+  const src = fs.readFileSync(file, 'utf8');
+  const prev = JSON.parse(src).a11y?.results;
+  const checksNow = Object.fromEntries(CHECKS.map(ch => [ch.id, results[c.name]?.[ch.id]?.status ?? 'pending']));
+  const next = { score: scores[c.name]!.score, meetsMinimum: scores[c.name]!.meetsMinimum, checks: checksNow, notScored: reviewIds };
+  if (prev && JSON.stringify({ ...prev, changed: undefined }) === JSON.stringify({ ...next, changed: undefined })) continue;
+  const line = `"results": ${JSON.stringify({ ...next, changed: now.slice(0, 10) })}`;
+  const updated = /"results": \{.*\}/.test(src) ? src.replace(/"results": \{.*\}/, line) : /"a11y":\s*\{\n/.test(src) ? src.replace(/("a11y":\s*\{\n)/, `$1    ${line},\n`) : src.replace(/("a11y":\s*\{)\s*/, `$1 ${line}, `);
+  if (updated !== src) { JSON.parse(updated); fs.writeFileSync(file, updated); }
+}
+
 // Table: one row per component, one column per check that ran.
 const mark: Record<Status, string> = { pass: '✓', fail: '✗', 'n/a': '–', pending: '·' };
 const w = Math.max('Component'.length, ...components.map(c => c.name.length)) + 2;

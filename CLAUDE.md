@@ -113,6 +113,18 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    (transparent) and is wide enough that its text is never clipped; the Propstar table holds only the real
    COMPONENT_SET — boolean properties are toggled in the properties panel, never expanded into columns of
    instance copies (they read as extra variants). Details: `.ai/skills/components-to-figma.md`, rules 6 and 9.
+13. **Fixing a component never uses a hand-typed value — and the token is the owner's choice.** A fix only
+   ever swaps in tokens that already exist in `tokens.json`. Before changing anything, present the candidate
+   tokens (2–3 when there are), what each one does, and why one is the better option than the other — then
+   wait for the design-system owner to pick. Never pick a token yourself, never write a raw px/hex/weight, and
+   never create a new token without asking first.
+14. **Human review never counts in any score.** `a11y.humanReview` (and any other review by a person) is
+   recorded and shown, but never averaged into a component's score, the Accessibility score, Design System
+   Health or the stability status. Only automatic checks are scored.
+15. **A new or changed component must pass every accessibility check (`pnpm a11y all {Name}`) before it's
+   done.** If anything fails — when creating it, or when it's attached/published — say so plainly: which check,
+   which story and element, why it fails (WCAG criterion), and the options to make it pass (per rule 13, with
+   the tokens to choose from). Don't publish it silently as if it passed.
 
 ## Workflow commands
 
