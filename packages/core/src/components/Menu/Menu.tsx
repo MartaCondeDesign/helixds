@@ -69,7 +69,10 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
   React.useLayoutEffect(() => {
     const anchor = anchorRef.current;
     if (!expanded || !anchor) return;
-    const label = (anchor as HTMLButtonElement).labels?.[0];
+    // The anchor may be a whole field (an input's wrapper, so the list spans it edge to edge): then the
+    // label is the one of the control inside it.
+    const control = (anchor as HTMLButtonElement).labels ? anchor : anchor.querySelector('input, select, textarea, button');
+    const label = (control as HTMLButtonElement | null)?.labels?.[0];
     setName((label?.textContent ?? anchor.getAttribute('aria-label') ?? anchor.textContent ?? '').trim() || undefined);
   }, [expanded, anchorRef]);
 

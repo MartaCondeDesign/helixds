@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconSearch } from '@tabler/icons-react';
 import { Badge, Card, Chart, Input, Menu, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '@helixds/react';
@@ -39,11 +39,14 @@ function StatusBadge({ r }: { r: Result | undefined }) {
 // Arrow Up/Down move through it, Enter or a click picks, Escape closes. Built from Helix's own Input (the
 // field) and Menu (the list) — Helix has no searchable select yet.
 function ComponentPicker({ value, onChange }: { value: string; onChange: (name: string) => void }) {
-  const failing = (n: string) => checks.filter(c => components[n]?.[c.id]?.status === 'fail').length;
+  const failing = (n: string) => checks.filter(c => c.kind !== 'review' && components[n]?.[c.id]?.status === 'fail').length; // reviews aren't scored
   const [text, setText] = useState(value);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | undefined>();
   const inputRef = useRef<HTMLInputElement>(null);
+  // The list hangs from the whole field (icon included), so it spans the search box edge to edge.
+  const fieldRef = useRef<HTMLElement | null>(null);
+  useEffect(() => { fieldRef.current = inputRef.current?.closest<HTMLElement>('[data-helix-part="input-wrapper"]') ?? inputRef.current; }, []);
   const menuId = 'a11y-component-list';
   // While the text is the picked name, show every component; once edited, only the matches.
   const matches = text === value ? names : names.filter(n => n.toLowerCase().includes(text.trim().toLowerCase()));
@@ -82,7 +85,7 @@ function ComponentPicker({ value, onChange }: { value: string; onChange: (name: 
       <Menu
         id={menuId}
         expanded={open && matches.length > 0}
-        anchorRef={inputRef}
+        anchorRef={fieldRef}
         options={matches.map(n => ({ value: n, label: n, ...(failing(n) ? { labelEnd: `${failing(n)} failing` } : {}) }))}
         value={value}
         {...(active ? { activeValue: active } : {})}
@@ -94,7 +97,7 @@ function ComponentPicker({ value, onChange }: { value: string; onChange: (name: 
 
 // The picked component's every check: result, why, when it ran, and how to re-run it.
 function ComponentDetails() {
-  const failing = (n: string) => checks.filter(c => components[n]?.[c.id]?.status === 'fail').length;
+  const failing = (n: string) => checks.filter(c => c.kind !== 'review' && components[n]?.[c.id]?.status === 'fail').length; // reviews aren't scored
   const [current, setCurrent] = useState<string>(names.find(n => failing(n)) ?? names[0]!);
   return (
     <section style={{ display: 'grid', gap: 'var(--helix-spacing-s)' }}>
@@ -227,7 +230,6 @@ function AccessibilityPage() {
                   <TableCell><strong>{n}</strong></TableCell>
                   <TableCell>
                     <Badge variant={scores[n]?.meetsMinimum ? 'success' : 'danger'} label={`${scores[n]?.score ?? '—'}`} />
-                    <div style={muted}>{scores[n]?.passed}/{scores[n]?.applicable}</div>
                   </TableCell>
                   {checks.map(c => <TableCell key={c.id}><StatusBadge r={components[n]?.[c.id]} /></TableCell>)}
                 </TableRow>
