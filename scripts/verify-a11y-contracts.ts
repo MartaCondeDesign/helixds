@@ -15,19 +15,16 @@
  *
  * The browser checks — axe in light and dark, visible focus, target size, reflow, and the play tests
  * actually passing — need Storybook running, so they stay in `pnpm verify:stable` (criteria 4–6).
+ * The rules live in scripts/a11y-contract-rules.ts (shared with `pnpm a11y`).
  * Run: pnpm verify:a11y-contracts
  */
 import fs from 'fs';
 import path from 'path';
-import { requiredKeys } from './a11y-keys.ts';
+import { staticA11yIssues } from './a11y-contract-rules.ts';
 
 const root = path.resolve(import.meta.dirname, '..');
 const contractsDir = path.join(root, 'contracts/components');
 const storiesDir = path.join(root, 'apps/storybook/stories');
-
-// Props that mean "the user operates this", and roles that are widgets by definition.
-const INTERACTIVE_PROPS = /^(onClick|onChange|onSelect|onDismiss|onExpandedChange|onValueChange|onReorder|expanded|checked|value)$/;
-const WIDGET_ROLE = /\b(button|checkbox|radio|switch|tab|dialog|listbox|combobox|menu|menuitem|slider|textbox|spinbutton|disclosure)\b/i;
 
 const storyFiles = (fs.readdirSync(storiesDir, { recursive: true }) as string[]).filter(f => f.endsWith('.stories.tsx'));
 const storyOf = (name: string) => {
@@ -38,35 +35,11 @@ const storyOf = (name: string) => {
 let problems = 0;
 for (const file of fs.readdirSync(contractsDir).filter(f => f.endsWith('.json')).sort()) {
   const contract = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf8'));
-  const name: string = contract.name;
-  const a11y = contract.a11y ?? {};
-  const issues: string[] = [];
-
-  if (!String(a11y.role ?? '').trim()) issues.push('a11y.role is empty');
-  if (!(a11y.wcag ?? []).length) issues.push('a11y.wcag names no WCAG criterion');
-
-  const interactive = (contract.props ?? []).some((p: { name: string }) => INTERACTIVE_PROPS.test(p.name)) || WIDGET_ROLE.test(String(a11y.role ?? ''));
-  const keys: string[] = a11y.keyboardNav ?? [];
-  if (interactive && keys.length === 0) issues.push('interactive, but a11y.keyboardNav lists no keys');
-
-  const story = storyOf(name);
-  const play = story.includes('play:') ? story : '';
-  for (const entry of keys) {
-    for (const k of requiredKeys(entry)) {
-      if (!k.anyOf.some(s => play.includes(s))) issues.push(`no play test presses ${k.label} ("${entry.slice(0, 50)}")`);
-    }
-  }
-
-  const closesOnEscape = keys.some(k => /esc/i.test(k) && /clos|dismiss|collaps/i.test(k));
-  if (closesOnEscape) {
-    // toHaveFocus within the few lines after an Escape press (the assertion that follows it)
-    const checked = [...play.matchAll(/\{Escape\}/g)].some(m => play.slice(m.index, m.index + 400).includes('toHaveFocus'));
-    if (!checked) issues.push('Escape closes it, but no play test asserts where focus goes afterwards (add `expect(trigger).toHaveFocus()` after `{Escape}`)');
-  }
-
+  const result = staticA11yIssues(contract, storyOf(contract.name));
+  const issues = Object.values(result).flatMap(x => x ?? []);
   if (issues.length) {
     problems += issues.length;
-    console.log(`❌ ${name}`);
+    console.log(`❌ ${contract.name}`);
     for (const issue of issues) console.log(`   ${issue}`);
   }
 }

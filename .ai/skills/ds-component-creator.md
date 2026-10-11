@@ -129,11 +129,14 @@ pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs 
    If it opens (dialog, panel, menu, toast), add an `Opened` story tagged `['!autodocs']` whose play leaves it
    open — otherwise no browser check ever sees the open state.
    Steps 1–2 are checked on every commit by `pnpm verify:a11y-contracts` (no browser needed).
-3. **Browser checks** (need Storybook running — `pnpm sb`), for just this component:
+3. **Every check, for just this component** (Storybook running — `pnpm sb`):
    ```bash
-   pnpm --dir apps/storybook test-storybook --url http://localhost:6006 stories/Components/{Name}.stories.tsx
-   pnpm verify:stable --skip-browser --details
+   pnpm a11y all {Name}
    ```
+   It prints one row with a column per check (contract, keys, focus return, keyboard, axe, contrast, focus
+   visible, target size, reflow, screen reader, AI visual, human) and the reason for each ✗. Re-run a single
+   one while fixing it: `pnpm a11y:focus-visible {Name}` (any check id; `--cached` reuses the last browser run).
+   Results land in Storybook → Data/Accessibility. Then `pnpm verify:stable --skip-browser --details`.
    Criteria 4, 5 and 6 must be ✓: axe (WCAG 2.2 AA) clean in light AND dark, visible focus on every tab stop
    in both themes (2.4.7), every target ≥ 24×24 px or well spaced (2.5.8), and — for Layout/ and Pages/
    stories — no horizontal scroll at 320 px (1.4.10), and a screen reader hears the role the contract promises
