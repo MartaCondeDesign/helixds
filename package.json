@@ -18,7 +18,7 @@
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",
-    "a11y": "tsx scripts/a11y.ts all",
+    "a11y": "tsx scripts/a11y.ts",
     "a11y:contract": "tsx scripts/a11y.ts contract",
     "a11y:keys": "tsx scripts/a11y.ts keys",
     "a11y:focus-return": "tsx scripts/a11y.ts focus-return",

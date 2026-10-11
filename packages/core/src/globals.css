@@ -91,6 +91,8 @@
     flex: none; width: var(--helix-spacing-s); height: var(--helix-spacing-s);
     border-radius: var(--helix-radius-xs); background-color: var(--chart-swatch);
   }
+  /* Visually hidden on a wrapper div, not the table itself: a <table> ignores height/overflow, so a hidden
+     table kept its full height and stretched the page under every chart. Empty values read "No data", not 0. */
   [data-helix-part="chart-data"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
   /* Storybook Docs preview block only: keep the prose light, darken the live example. */

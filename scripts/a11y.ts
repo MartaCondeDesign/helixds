@@ -61,6 +61,8 @@ const args = process.argv.slice(2);
 const opt = (n: string) => { const i = args.indexOf(n); return i === -1 ? undefined : args[i + 1]; };
 const sbUrl = opt('--url') ?? 'http://localhost:6006';
 const positional = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--url');
+// `pnpm a11y Chart` = every check on Chart (the first word is a component, not a check)
+if (positional[0] && positional[0] !== 'all' && !CHECKS.some(c => c.id === positional[0])) positional.unshift('all');
 const checkArg = positional[0] ?? 'all';
 const checks = checkArg === 'all' ? CHECKS : CHECKS.filter(c => c.id === checkArg);
 if (!checks.length) {
