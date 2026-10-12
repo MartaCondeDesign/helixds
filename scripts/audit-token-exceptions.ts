@@ -31,7 +31,7 @@ const tokens = JSON.parse(fs.readFileSync(tokensPath, 'utf-8'));
 // to live here as 'FE'/'NM' judgment calls with no ADR to back them; per 2026-08-23
 // review neither is documented anywhere, so they were removed and now fall through to
 // the mechanical 🆕 classification below like any other unreviewed gap.
-type KnownTag = 'ADR-004' | 'ADR-005' | 'ADR-007' | 'ADR-008' | 'ADR-010' | 'ADR-011' | 'ADR-013' | 'ADR-016';
+type KnownTag = 'ADR-004' | 'ADR-005' | 'ADR-007' | 'ADR-008' | 'ADR-010' | 'ADR-011' | 'ADR-013' | 'ADR-016' | 'ADR-021' | 'ADR-024';
 
 const REASON_TEXT: Record<KnownTag, string> = {
   'ADR-004': 'ADR-004 exception',
@@ -42,6 +42,8 @@ const REASON_TEXT: Record<KnownTag, string> = {
   'ADR-011': 'ADR-011 exception',
   'ADR-013': 'ADR-013 exception',
   'ADR-016': 'ADR-016 exception',
+  'ADR-021': 'ADR-021 exception',
+  'ADR-024': 'ADR-024 exception',
 };
 
 // Human judgment calls — the only hand-maintained data in this script. Add an entry
@@ -75,6 +77,17 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   'toast.durationOpen': { tag: 'ADR-011' },
   'toast.durationClose': { tag: 'ADR-011' },
   'toast.autoDismissMs': { tag: 'ADR-011' },
+  // Chart's area fill opacity — chart-only, no semantic opacity rung (ADR-021 amendment, 2026-10-12).
+  'chart.area-opacity': { tag: 'ADR-021' },
+  // Illustration-only motion values — the ones shared with components alias semantic.duration/easing;
+  // these have no component counterpart (ADR-024, amended 2026-10-12).
+  'illustration.motion.duration-enter': { tag: 'ADR-024' },
+  'illustration.motion.duration-emphasis': { tag: 'ADR-024' },
+  'illustration.motion.duration-recolor': { tag: 'ADR-024' },
+  'illustration.motion.hold': { tag: 'ADR-024' },
+  'illustration.motion.easing-exit': { tag: 'ADR-024' },
+  'illustration.motion.easing-emphasis': { tag: 'ADR-024' },
+  'illustration.motion.easing-draw': { tag: 'ADR-024' },
   // blurEnter is no longer an exception — promoted to semantic.blur.enter once Accordion, SidePanel,
   // and Toast turned out to share the identical 2px value (see packages/tokens/CLAUDE.md's "Motion
   // naming vocabulary" — a value shared by 3+ components is exactly the bar for a real shared token).

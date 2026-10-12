@@ -14,7 +14,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { checkKeyNaming, checkIconAliasNaming, checkRelativeLightness } from './token-naming-lib';
+import { checkKeyNaming, checkIconAliasNaming, checkOpacityStep, checkRelativeLightness } from './token-naming-lib';
 
 const REPORT_ONLY = true;
 
@@ -40,6 +40,9 @@ function walk(node: unknown, pathParts: string[]): void {
     if (child && typeof child === 'object' && '$value' in (child as Record<string, unknown>)) {
       const value = (child as { $value: unknown }).$value;
       for (const message of checkIconAliasNaming(pathParts, value)) {
+        issues.push({ path: fullPath, message, severity: 'error' });
+      }
+      for (const message of checkOpacityStep(key, value)) {
         issues.push({ path: fullPath, message, severity: 'error' });
       }
     }

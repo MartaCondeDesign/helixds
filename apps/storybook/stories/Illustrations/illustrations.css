@@ -1,18 +1,6 @@
-/* Illustration motion tokens (ADR-024) — illustrations only, never components.
-   Mirrors prototypes/explainers/illustration-motion.tokens.json until the family moves into tokens.json. */
-:root {
-  --helix-illustration-motion-duration-enter: 450ms;
-  --helix-illustration-motion-duration-exit: 300ms;
-  --helix-illustration-motion-duration-emphasis: 500ms;
-  --helix-illustration-motion-duration-draw: 700ms;
-  --helix-illustration-motion-duration-recolor: 600ms;
-  --helix-illustration-motion-stagger: 120ms;
-  --helix-illustration-motion-hold: 2200ms;
-  --helix-illustration-motion-easing-enter: cubic-bezier(0.23, 1, 0.32, 1);
-  --helix-illustration-motion-easing-exit: cubic-bezier(0.77, 0, 0.175, 1);
-  --helix-illustration-motion-easing-emphasis: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --helix-illustration-motion-easing-draw: cubic-bezier(0.65, 0, 0.35, 1);
-}
+/* Illustration motion timing comes from tokens.json (component.illustration.motion.* → --helix-illustration-motion-*),
+   loaded with the rest of helix.css — the same motion family as components, aliasing semantic.duration/easing where
+   a value matches. Illustrations only, never components (ADR-024). */
 
 /* The box: animation only, on the page fill. */
 .illustration {

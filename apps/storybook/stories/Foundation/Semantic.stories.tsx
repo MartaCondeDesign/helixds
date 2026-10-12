@@ -213,14 +213,22 @@ export const Shadows: Story = {
 
 // ── Motion (duration + easing, interactive) ──────────────────────────────
 
-const DURATION_MS: Record<string, string> = { instant: '0ms', fast: '80ms', base: '120ms', slow: '200ms', slower: '300ms' };
-const EASING_CURVE: Record<string, string> = {
-  base: 'cubic-bezier(0.4, 0, 0.2, 1)', in: 'cubic-bezier(0.4, 0, 1, 1)', out: 'cubic-bezier(0, 0, 0.2, 1)',
-};
+// Derived from tokens.json (semantic alias → primitive value), so a new duration rung shows up on its own.
+const primitiveDuration = (tokensJson.primitive as unknown as { duration: Record<string, { $value: string }> }).duration;
+const DURATION_MS: Record<string, string> = Object.fromEntries(Object.entries(semantic.duration).map(([key, leaf]) => {
+  const ref = String(leaf.$value).match(/^\{primitive\.duration\.(\w+)\}$/)?.[1];
+  return [key, ref ? primitiveDuration[ref]?.$value ?? '0ms' : String(leaf.$value)];
+}));
+// Derived from tokens.json like DURATION_MS — a semantic easing either aliases a primitive or is a literal.
+const primitiveEasing = (tokensJson.primitive as unknown as { easing: Record<string, { $value: string }> }).easing;
+const EASING_CURVE: Record<string, string> = Object.fromEntries(Object.entries(semantic.easing).map(([key, leaf]) => {
+  const ref = String(leaf.$value).match(/^\{primitive\.easing\.(\w+)\}$/)?.[1];
+  return [key, ref ? primitiveEasing[ref]?.$value ?? '' : String(leaf.$value)];
+}));
 
 function DurationPreview({ duration, selected }: { duration: string; selected: boolean }) {
   const [filled, setFilled] = useState(false);
-  const durationMs = Number(DURATION_MS[duration].replace('ms', ''));
+  const durationMs = Number((DURATION_MS[duration] ?? '0ms').replace('ms', ''));
 
   useEffect(() => {
     setFilled(false);
@@ -259,13 +267,13 @@ function DurationPreview({ duration, selected }: { duration: string; selected: b
   );
 }
 
-function EasingPreview({ easing }: { easing: 'base' | 'in' | 'out' }) {
+function EasingPreview({ easing }: { easing: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
       <svg width="34" height="34" viewBox="0 0 34 34" style={{ flexShrink: 0, overflow: 'visible' }}>
         <path d="M 6 28 C 8 10 14 6 28 6" fill="none" stroke="var(--helix-color-border-neutral-dark)" strokeWidth="2" strokeLinecap="round" />
       </svg>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
         <div style={{ width: 58, height: 10, borderRadius: 999, background: 'var(--helix-color-fill-neutral-lightest)', position: 'relative' }}>
           <div style={{ position: 'absolute', right: 0, top: -2, width: 14, height: 14, borderRadius: 999, background: 'var(--helix-color-fill-neutral-dark)' }} />
         </div>
@@ -281,7 +289,7 @@ function TransformPreview({ kind, token }: { kind: 'lift' | 'scale'; token: stri
       ? { transform: `translateY(var(--helix-transform-lift-${token}))` }
       : { transform: `scale(var(--helix-transform-scale-${token}))` };
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-s)' }}>
       <div style={{ width: 68, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div
           style={{
@@ -321,7 +329,7 @@ export const Motion: Story = {
               </tr>
             </thead>
             <tbody>
-              {(['instant', 'fast', 'base', 'slow', 'slower']).map(key => {
+              {Object.keys(DURATION_MS).map(key => {
                 const on = active === key;
                 return (
                   <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
@@ -346,7 +354,7 @@ export const Motion: Story = {
               </tr>
             </thead>
             <tbody>
-              {(['base', 'in', 'out'] as const).map(key => (
+              {Object.keys(EASING_CURVE).map(key => (
                 <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
                   <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>easing.{key}</code></td>
                   <td style={tdStyle}>
@@ -384,11 +392,6 @@ export const Motion: Story = {
               ))}
             </tbody>
           </table>
-          <p style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-lightest)', marginTop: 10 }}>
-            A generic hover lift/scale scale. In use by AvatarGroup (lift.s + scale.s on the hovered
-            avatar, approved 2026-09-24; no movement under prefers-reduced-motion). Any future component
-            can reference the same scale instead of inventing its own.
-          </p>
         </TableGroup>
       </div>
     );

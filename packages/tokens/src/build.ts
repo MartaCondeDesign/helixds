@@ -326,15 +326,16 @@ const darkOverrides: Record<string, string> = {
   '--helix-color-icon-success': '#16a34a',
   '--helix-color-icon-warning': '#d97706',
   '--helix-color-icon-danger':  '#ef4444',
-  // semantic — chart series: one step lighter per hue than light mode so every series keeps >=3:1
-  // (non-text, WCAG 1.4.11) on page / surface: 7.02/5.75, 8.31/6.81, 7.83/6.42, 6.45/5.29, 10.71/8.77,
-  // 6.96/5.71 (light mode's series-6, gray-500, is 4.76/4.55).
-  // turquoise goes to 300, not 400, to stay clearly apart from blue-400 (ΔE 31).
-  '--helix-color-chart-series-1': '#60a5fa', // blue-400
-  '--helix-color-chart-series-2': '#f59e0b', // orange-500
-  '--helix-color-chart-series-3': '#22c55e', // green-500
-  '--helix-color-chart-series-4': '#f87171', // red-400
-  '--helix-color-chart-series-5': '#7dd3fc', // turquoise-300
+  // semantic — chart series: the primary blue (#2563eb, same as the primary Button in both themes) first, then
+  // blues far from their neighbour — light after dark — so two series never look alike. Blues darker than the
+  // primary drop under 3:1 on the dark page, so dark mode alternates among the lighter ones. On the dark page:
+  // 3.45, 12.56, 7.02, 14.63, 4.85 — all >=3:1 (WCAG 1.4.11). Light mode has no light blue that meets 3:1 on
+  // white, so there the contrast comes from the darkest blue instead (600·900·500·800·700, all >=3:1).
+  '--helix-color-chart-series-1': '#2563eb', // blue-600
+  '--helix-color-chart-series-2': '#bfdbfe', // blue-200
+  '--helix-color-chart-series-3': '#60a5fa', // blue-400
+  '--helix-color-chart-series-4': '#dbeafe', // blue-100
+  '--helix-color-chart-series-5': '#3b82f6', // blue-500
   '--helix-color-chart-series-6': '#94a3b8', // gray-400
 
   '--helix-iconButton-fill-secondary-default': '#1e293b',
@@ -392,9 +393,8 @@ const darkOverrides: Record<string, string> = {
   '--helix-table-cell-color':    '#f1f5f9',
 
   '--helix-navItem-fill-hover':    '#1e293b',
-  // current (fill/text/icon): no entry — since 2026-10-11 they alias fill.primary-interactive-default +
-  // text/icon.inverse (the primary Button pair, same in both themes): a solid blue pill with white text that
-  // stands out 3.45:1 on the dark nav and 5.17:1 on white (WCAG 1.4.1/1.4.11) — the old navy fill was 1.72:1.
+  // current (since 2026-10-12): fill.primary-interactive-light-hover tint + text.link-hover + icon.primary, with a
+  // primary-blue bar — no entries here: component colors take their semantic token's dark value (see below).
   '--helix-navItem-text-default':  '#94a3b8',
   '--helix-navItem-icon-default':  '#94a3b8',
 
