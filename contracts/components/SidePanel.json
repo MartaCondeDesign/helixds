@@ -67,6 +67,47 @@
     "role": "dialog (implicit via native <dialog>)",
     "keyboardNav": ["Escape — dismisses (native <dialog> cancel event, redirected through onDismiss per ADR-010)", "Tab — cycles focus, trapped inside the panel (native)"],
     "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value"],
+    "applied": {
+      "nativeElement": "dialog",
+      "innerComponents": [
+        "Button",
+        "IconButton"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button",
+            "IconButton"
+          ],
+          "note": "focus is drawn by Button, IconButton — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "side-panel-root": {
+          "aria-labelledby": [
+            "(id)"
+          ]
+        }
+      },
+      "announced": [
+        "dialog \"Edit filters\""
+      ],
+      "contrast": {
+        "side-panel-title": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "side-panel-body": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

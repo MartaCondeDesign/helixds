@@ -81,6 +81,64 @@
     "role": "radio (native input type=radio)",
     "keyboardNav": ["Space — selects it", "Tab — moves focus to/from it"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "label",
+      "focus": [
+        {
+          "part": "radio-input",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-radio-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "radio-control": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "radio-input": {
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ]
+        },
+        "radio-item-error": {
+          "role": [
+            "alert"
+          ]
+        }
+      },
+      "announced": [
+        "radio \"Default\"",
+        "radio \"Checked\" [checked]",
+        "radio \"Disabled unchecked\" [disabled]",
+        "radio \"Disabled checked\" [checked] [disabled]",
+        "radio \"Free\" [checked]"
+      ],
+      "contrast": {
+        "radio-item-label": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "radio-item-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "radio-item-description": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "radio-input": "smallest 53×21 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

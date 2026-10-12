@@ -28,6 +28,90 @@
   "tokenPolicy": { "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "shadow", "textStyle"], "forbidden": ["primitive.color"] },
   "a11y": {
     "role": "img with labelled data table; legend entries are toggle buttons (aria-pressed) when there are several", "keyboardNav": ["Tab — moves focus through the legend's toggle buttons", "Space/Enter — shows or hides the focused series"], "wcag": ["1.1.1 Non-text Content", "1.4.1 Use of Color", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "(any focusable element)",
+          "when": ":focus-visible",
+          "inherited": "global rule",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "chart-canvas": {
+          "role": [
+            "img"
+          ],
+          "aria-label": [
+            "Storage used. Storage use rose every month.",
+            "Revenue by month. May was the strongest month.",
+            "Monthly active users. Active users grew steadily through the",
+            "Traffic by source. Search brings in about half of all visits"
+          ]
+        },
+        "chart-legend-swatch": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "chart-legend": {
+          "role": [
+            "group"
+          ],
+          "aria-label": [
+            "Revenue by month — show or hide series",
+            "Traffic by source — show or hide series",
+            "Tickets by priority — show or hide series"
+          ]
+        },
+        "chart-legend-item": {
+          "aria-pressed": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "img \"Storage used. Storage use rose every month.\"",
+        "img \"Revenue by month. May was the strongest month.\"",
+        "img \"Monthly active users. Active users grew steadily through the first half of the year.\"",
+        "img \"Traffic by source. Search brings in about half of all visits.\"",
+        "img \"Tickets by priority. Low-priority tickets make up most of the volume.\""
+      ],
+      "contrast": {
+        "chart-legend-item (area)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "chart-legend-item (bar)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "chart-legend-item (line)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "chart-legend-item (donut)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "chart-legend-item (stacked-bar)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "chart-legend-item (timeline)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "chart-legend-item": "smallest 61×28 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

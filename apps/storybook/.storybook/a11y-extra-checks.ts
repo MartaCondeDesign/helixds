@@ -182,3 +182,92 @@ export async function checkReflow(page: Page): Promise<ReflowIssue[]> {
   await page.waitForTimeout(150);
   return issues;
 }
+
+// ── What a component APPLIES (not pass/fail) — recorded per story, aggregated into each contract's
+// a11y.applied by `pnpm a11y` (scripts/a11y.ts). ──────────────────────────────────────────────────────
+
+export type AppliedAria = { part: string; attribute: string; value: string };
+export type AppliedContrast = { part: string; variant: string; ratio: number; fg: string; bg: string };
+export type AppliedTarget = { part: string; variant: string; width: number; height: number };
+
+/** Every role / aria-* attribute on a Helix part (or its descendants) in the story, as rendered right now. */
+export async function collectAria(page: Page): Promise<AppliedAria[]> {
+  return page.evaluate(root => {
+    const out: { part: string; attribute: string; value: string }[] = [];
+    for (const el of document.querySelector(root)?.querySelectorAll('*') ?? []) {
+      const part = el.closest('[data-helix-part]')?.getAttribute('data-helix-part');
+      if (!part) continue;
+      for (const a of el.attributes) {
+        if (a.name === 'role' || a.name.startsWith('aria-')) out.push({ part, attribute: a.name, value: a.value.slice(0, 60) });
+      }
+    }
+    return out;
+  }, ROOT);
+}
+
+/** axe's measured contrast for every text it checked (the passes, not just failures), per Helix part. */
+export async function collectContrast(page: Page): Promise<AppliedContrast[]> {
+  return page.evaluate(async root => {
+    const axe = (window as unknown as { axe?: { run: (c: unknown, o: unknown) => Promise<any> } }).axe;
+    if (!axe) return [];
+    const r = await axe.run(document.querySelector(root), { runOnly: { type: 'rule', values: ['color-contrast'] } });
+    const out: { part: string; variant: string; ratio: number; fg: string; bg: string }[] = [];
+    for (const group of [r.passes, r.violations]) for (const rule of group) for (const node of rule.nodes) {
+      const data = node.any?.[0]?.data;
+      if (!data?.contrastRatio) continue;
+      const el = document.querySelector(node.target[0]);
+      const part = el?.closest('[data-helix-part]')?.getAttribute('data-helix-part');
+      // variant/size of the instance it belongs to, so "5.16:1" reads as "primary: 5.16:1"
+      const v = el?.closest('[data-variant], [data-size]');
+      const variant = [v?.getAttribute('data-variant'), v?.getAttribute('data-size')].filter(Boolean).join(' ');
+      if (part) out.push({ part, variant, ratio: Math.round(data.contrastRatio * 100) / 100, fg: data.fgColor, bg: data.bgColor });
+    }
+    // Icons are non-text content (WCAG 1.4.11, 3:1) — axe only measures text, so measure each visible icon's
+    // color against the first opaque background behind it.
+    const parse = (c: string) => (c.match(/[\d.]+/g) ?? []).map(Number);
+    const lum = (c: string) => { const [r, g, b] = parse(c).map(v => v / 255).map(v => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4); return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!; };
+    const hex = (c: string) => '#' + parse(c).slice(0, 3).map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+    const bgOf = (el: Element | null): string => {
+      for (let a = el; a; a = a.parentElement) { const bg = getComputedStyle(a).backgroundColor; const p = parse(bg); if (p.length && (p[3] === undefined || p[3] > 0.5)) return bg; }
+      return 'rgb(255, 255, 255)';
+    };
+    for (const svg of document.querySelector(root)?.querySelectorAll('svg') ?? []) {
+      // The icon's owner is the component around it (IconButton, Chip…), not Icon's own wrapper — unless the
+      // story is Icon's own.
+      const own = svg.closest('[data-helix-part]');
+      const host = own?.getAttribute('data-helix-part') === 'icon-root' ? own.parentElement?.closest('[data-helix-part]') ?? own : own;
+      const part = host?.getAttribute('data-helix-part');
+      const r = svg.getBoundingClientRect();
+      if (!part || !r.width || svg.closest('[aria-hidden="true"]:not(svg)') && !svg.closest('button, a, [role="button"]')) continue;
+      // Disabled controls are exempt from contrast (WCAG 1.4.3/1.4.11), as axe does for text.
+      if (svg.closest(':disabled, [aria-disabled="true"], [data-disabled]')) continue;
+      // What is actually painted under the icon's centre — a positioned sibling (NavItem's current pill) or an
+      // ancestor — not just its ancestors' backgrounds.
+      const under = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2).find(e => !svg.contains(e) && e !== svg && (() => { const p = parse(getComputedStyle(e).backgroundColor); return p.length && (p[3] === undefined || p[3] > 0.5); })());
+      const fg = getComputedStyle(svg).color, bg = under ? getComputedStyle(under).backgroundColor : bgOf(svg.parentElement);
+      const [L1, L2] = [lum(fg), lum(bg)].sort((x, y) => y - x);
+      const v = svg.closest('[data-variant], [data-size]');
+      const variant = ['icon', v?.getAttribute('data-variant'), v?.getAttribute('data-size')].filter(Boolean).join(' ');
+      out.push({ part, variant, ratio: Math.round(((L1! + 0.05) / (L2! + 0.05)) * 100) / 100, fg: hex(fg), bg: hex(bg) });
+    }
+    return out;
+  }, ROOT);
+}
+
+/** The box a pointer can hit, for every interactive Helix part in the story. */
+export async function collectTargets(page: Page): Promise<AppliedTarget[]> {
+  return page.evaluate(({ root, selector }) => {
+    const out: { part: string; variant: string; width: number; height: number }[] = [];
+    for (const el of document.querySelector(root)?.querySelectorAll(selector) ?? []) {
+      const part = el.closest('[data-helix-part]')?.getAttribute('data-helix-part');
+      const style = getComputedStyle(el);
+      if (!part || style.display === 'none' || style.visibility === 'hidden') continue;
+      let r = el.getBoundingClientRect();
+      if (el instanceof HTMLInputElement && (r.width <= 1 || style.opacity === '0')) r = (el.closest('label') ?? el).getBoundingClientRect();
+      const v = el.closest('[data-variant], [data-size]');
+      const variant = [v?.getAttribute('data-variant'), v?.getAttribute('data-size')].filter(Boolean).join(' ');
+      if (r.width && r.height) out.push({ part, variant, width: Math.round(r.width), height: Math.round(r.height) });
+    }
+    return out;
+  }, { root: ROOT, selector: INTERACTIVE });
+}

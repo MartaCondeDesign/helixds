@@ -136,7 +136,10 @@ pnpm verify:stable --details   # status from the 8 criteria (ADR-018) — needs 
    It prints one row with a column per check (contract, keys, focus return, keyboard, axe, contrast, focus
    visible, target size, reflow, screen reader, AI visual, human) and the reason for each ✗. Re-run a single
    one while fixing it: `pnpm a11y:focus-visible {Name}` (any check id; `--cached` reuses the last browser run).
-   Results land in Storybook → Data/Accessibility and in the contract's `a11y.results`. Then
+   Results land in Storybook → Data/Accessibility and in the contract's `a11y.results`; the layer the
+   component applies — focus rule and its tokens, ARIA per part, what a screen reader announces, measured
+   contrast (text and icons, light and dark), smallest target, reduced motion — lands in `a11y.applied`.
+   Never write either by hand; a contract without `a11y.applied` fails `verify:a11y-contracts`. Then
    `pnpm verify:stable --skip-browser --details`.
    **If anything fails, tell the owner before calling it done** (root CLAUDE.md rule 15): which check, story
    and element, the WCAG reason, and the options to make it pass. A fix uses only existing tokens, and the

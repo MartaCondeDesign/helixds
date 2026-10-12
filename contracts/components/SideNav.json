@@ -61,6 +61,43 @@
   "a11y": {
     "role": "navigation (implicit from <nav>)",
     "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"],
+    "applied": {
+      "nativeElement": "nav",
+      "innerComponents": [
+        "NavItem"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "NavItem"
+          ],
+          "note": "focus is drawn by NavItem — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {},
+      "announced": [
+        "navigation"
+      ],
+      "contrast": {
+        "side-nav-brand": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "side-nav-footer": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "side-nav-brand (icon)": {
+          "light": "16.4:1 — #0f172a on #eff6ff",
+          "dark": "9.45:1 — #f1f5f9 on #1e3a8a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

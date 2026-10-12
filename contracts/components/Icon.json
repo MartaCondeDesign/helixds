@@ -207,6 +207,37 @@
     "aria":        "aria-hidden='true' when accompanied by a visible label. aria-label='Description' when icon-only.",
     "wcag":        ["1.1.1 Non-text Content", "1.4.3 Contrast (AA)"],
     "note":        "The icon component itself renders aria-hidden. Accessibility is the responsibility of the usage site.",
+    "applied": {
+      "nativeElement": "svg",
+      "focus": [],
+      "aria": {
+        "icon-root": {
+          "aria-hidden": [
+            "true"
+          ],
+          "role": [
+            "img"
+          ],
+          "aria-label": [
+            "Delete"
+          ]
+        }
+      },
+      "announced": [
+        "img",
+        "img \"Delete\""
+      ],
+      "contrast": {
+        "icon-root (icon)": {
+          "light": "4.83:1 — #dc2626 on #ffffff",
+          "dark": "4.74:1 — #ef4444 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

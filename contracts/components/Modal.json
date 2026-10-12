@@ -77,6 +77,47 @@
     "notes": [
       "showCloseButton=false with no footer action leaves the modal with no on-screen dismiss affordance — the component logs a dev-only console.warn in that case (Escape and closeOnBackdropClick, when enabled, still work)."
     ],
+    "applied": {
+      "nativeElement": "dialog",
+      "innerComponents": [
+        "Button",
+        "IconButton"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button",
+            "IconButton"
+          ],
+          "note": "focus is drawn by Button, IconButton — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "modal-root": {
+          "aria-labelledby": [
+            "(id)"
+          ]
+        }
+      },
+      "announced": [
+        "dialog \"Project settings\""
+      ],
+      "contrast": {
+        "modal-title": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "modal-body": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

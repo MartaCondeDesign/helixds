@@ -101,6 +101,94 @@
       "Tab - move focus (closes the menu first)"
     ],
     "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Chip"
+      ],
+      "focus": [
+        {
+          "part": "multi-select-field",
+          "when": ":focus-visible",
+          "border-color": "var(--helix-select-border-hover)"
+        },
+        {
+          "part": "multi-select-field",
+          "when": ":focus-visible",
+          "box-shadow": "0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent)",
+          "border-color": "var(--helix-select-border-focus)"
+        },
+        {
+          "part": "multi-select-field",
+          "when": ":focus-visible",
+          "border-color": "var(--helix-select-border-invalid)"
+        }
+      ],
+      "aria": {
+        "multi-select-trigger": {
+          "role": [
+            "combobox"
+          ],
+          "aria-haspopup": [
+            "listbox"
+          ],
+          "aria-expanded": [
+            "false"
+          ],
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ],
+          "aria-required": [
+            "true"
+          ]
+        },
+        "multi-select-chevron": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "multi-select-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "multi-select-label": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "combobox \"Skills\": Choose skills…",
+        "combobox \"Skills\" [disabled]: \"1 selected: Design\"",
+        "combobox \"Skills\" [invalid]: Choose skills…",
+        "combobox \"Specialties\": Choose specialties…",
+        "combobox \"Skills\": \"2 selected: Design, Frontend\""
+      ],
+      "contrast": {
+        "multi-select-label": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "multi-select-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "multi-select-description": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "multi-select-trigger": "smallest 67×24 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

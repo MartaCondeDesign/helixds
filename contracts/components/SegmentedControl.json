@@ -73,6 +73,61 @@
     "role": "radiogroup (hand-rolled — root is a plain div, options are buttons, not native inputs; see ADR-012)",
     "keyboardNav": ["Arrow keys — move selection between options (roving tabindex, hand-rolled)", "Space/Enter — selects the focused option", "Tab — moves focus into and out of the group (only the checked option is in the tab order)"],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "segmented-control-item",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "segmented-control-root": {
+          "role": [
+            "radiogroup"
+          ],
+          "aria-label": [
+            "Mode",
+            "Period",
+            "View"
+          ]
+        },
+        "segmented-control-item": {
+          "role": [
+            "radio"
+          ],
+          "aria-checked": [
+            "true",
+            "false"
+          ]
+        },
+        "segmented-control-pill": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "radiogroup \"Mode\"",
+        "radiogroup \"Period\"",
+        "radiogroup \"View\""
+      ],
+      "contrast": {
+        "segmented-control-item-icon (icon)": {
+          "light": "6.92:1 — #475569 on #f1f5f9",
+          "dark": "5.71:1 — #94a3b8 on #1e293b"
+        }
+      },
+      "targetSize": {
+        "segmented-control-item": "smallest 32×24 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): inside <MotionConfig reducedMotion=\"user\">"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

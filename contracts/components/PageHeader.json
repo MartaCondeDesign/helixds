@@ -56,6 +56,40 @@
     "role": "banner (implicit only when PageHeader is the page's single top-level heading region — not applied automatically)",
     "announces": ["heading"],
     "wcag": ["1.3.1 Info and Relationships", "2.4.6 Headings and Labels"],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Button"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button"
+          ],
+          "note": "focus is drawn by Button — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {},
+      "announced": [
+        "heading \"Team\" [level=1]",
+        "heading \"Danger zone\" [level=2]"
+      ],
+      "contrast": {
+        "page-header-title": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "page-header-description": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

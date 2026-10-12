@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { injectAxe, getViolations } from 'axe-playwright';
-import { checkFocusVisible, checkReflow, checkTargetSize } from './a11y-extra-checks';
+import { checkFocusVisible, checkReflow, checkTargetSize, collectAria, collectContrast, collectTargets } from './a11y-extra-checks';
 
 // Stability criteria 4 (a11y) and 6 (contrast, light + dark) — see docs/ADR/ADR-018-stability-criteria.md.
 // Beyond axe, criterion 4 also gets three checks axe can't do (a11y-extra-checks.ts): target size
@@ -28,6 +28,8 @@ const config: TestRunnerConfig = {
     const aria = await page.locator('body').ariaSnapshot().catch(() => '');
     const byTheme: Record<string, { rule: string; impact: string | null | undefined; nodes: number; help: string }[]> = {};
     const focusVisible: Record<string, Awaited<ReturnType<typeof checkFocusVisible>>> = {};
+    // The layer the component APPLIES, recorded for its contract (a11y.applied, written by pnpm a11y).
+    const applied = { aria: await collectAria(page), contrast: {} as Record<string, Awaited<ReturnType<typeof collectContrast>>>, targets: await collectTargets(page) };
 
     for (const theme of THEMES) {
       await page.evaluate(t => document.documentElement.setAttribute('data-theme', t), theme);
@@ -37,6 +39,7 @@ const config: TestRunnerConfig = {
         runOnly: { type: 'tag', values: AXE_TAGS },
       });
       byTheme[theme] = violations.map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
+      applied.contrast[theme] = await collectContrast(page);
       focusVisible[theme] = await checkFocusVisible(page);
     }
     await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
@@ -49,7 +52,7 @@ const config: TestRunnerConfig = {
     fs.mkdirSync(RESULTS_DIR, { recursive: true });
     fs.writeFileSync(
       path.join(RESULTS_DIR, `${context.id}.json`),
-      JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow, aria }, null, 2),
+      JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow, aria, applied }, null, 2),
     );
   },
 };

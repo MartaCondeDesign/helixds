@@ -70,6 +70,51 @@
     "announces": ["group"],
     "keyboardNav": ["Enter / Space on the header — toggles (native <summary> behavior)"],
     "wcag": ["4.1.2 Name, Role, Value", "2.1.1 Keyboard"],
+    "applied": {
+      "nativeElement": "details",
+      "focus": [
+        {
+          "part": "(any focusable element)",
+          "when": ":focus-visible",
+          "inherited": "global rule",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "accordion-header": {
+          "aria-expanded": [
+            "true",
+            "false"
+          ],
+          "aria-disabled": [
+            "true"
+          ]
+        },
+        "accordion-chevron": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [],
+      "contrast": {
+        "accordion-title": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "accordion-panel-inner": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "accordion-header": "smallest 418×45 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

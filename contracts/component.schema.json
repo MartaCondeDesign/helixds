@@ -287,6 +287,42 @@
               }
             }
           }
+        },
+        "applied": {
+          "type": "object",
+          "description": "Written by `pnpm a11y` — do not hand-edit. The accessibility layer the component APPLIES, read from the real code and its stories: nativeElement; focus (the CSS rules of its parts that style the focused state, with their tokens — or the inherited global rule); aria (role/aria-* attributes per part, values seen); announced (what a screen reader reads, from ariaSnapshot); contrast (lowest measured ratio per part/variant, light and dark, with the colors); targetSize (smallest pointer box per part); motion (how reduced motion is honored).",
+          "properties": {
+            "nativeElement": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "focus": {
+              "type": "array"
+            },
+            "aria": {
+              "type": "object"
+            },
+            "announced": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "contrast": {
+              "type": "object"
+            },
+            "targetSize": {
+              "type": "object"
+            },
+            "motion": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },

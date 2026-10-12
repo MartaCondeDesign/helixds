@@ -228,6 +228,108 @@
       "3.3.1 Error Identification",
       "3.3.2 Labels or Instructions"
     ],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Button"
+      ],
+      "focus": [
+        {
+          "part": "input-wrapper",
+          "when": ":focus-within",
+          "border-color": "var(--helix-input-border-hover)"
+        },
+        {
+          "part": "input-wrapper",
+          "when": ":focus-within",
+          "box-shadow": "var(--helix-input-shadow-focus)",
+          "border-color": "var(--helix-input-border-focus)"
+        },
+        {
+          "part": "input-wrapper",
+          "when": ":focus-within",
+          "box-shadow": "0 0 0 3px color-mix(in srgb, var(--helix-input-border-invalid) 20%, transparent)"
+        }
+      ],
+      "aria": {
+        "input-field": {
+          "aria-describedby": [
+            "(id)"
+          ],
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-required": [
+            "true"
+          ]
+        },
+        "input-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "input-label": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "textbox \"Email\"",
+        "textbox \"Email\" [disabled]: user@company.com",
+        "textbox \"Email\" [invalid]: not-an-email",
+        "textbox \"Password\"",
+        "textbox \"Full name\""
+      ],
+      "contrast": {
+        "input-label": {
+          "light": "17.06:1 — #0f172a on #f8fafc",
+          "dark": "13.35:1 — #f1f5f9 on #1e293b"
+        },
+        "input-field (m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "input-description": {
+          "light": "7.24:1 — #475569 on #f8fafc",
+          "dark": "5.7:1 — #94a3b8 on #1e293b"
+        },
+        "input-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "input-icon (icon m)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "input-field (s)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "input-field (l)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "input-icon (icon s)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "input-icon (icon l)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "input-icon-end (icon m)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "input-field": "smallest 156×22 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

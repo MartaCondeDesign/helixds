@@ -53,6 +53,41 @@
   "a11y": {
     "role": "table (implicit — native <table>/<thead>/<tbody>/<tr>/<th>/<td> already carries full table semantics, nothing hand-rolled)",
     "wcag": ["1.3.1 Info and Relationships"],
+    "applied": {
+      "nativeElement": "table",
+      "innerComponents": [
+        "Button",
+        "IconButton"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button",
+            "IconButton"
+          ],
+          "note": "focus is drawn by Button, IconButton — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {},
+      "announced": [
+        "table"
+      ],
+      "contrast": {
+        "table-header-cell": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "table-cell": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

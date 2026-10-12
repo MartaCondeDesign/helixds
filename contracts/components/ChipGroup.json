@@ -107,6 +107,41 @@
       "2.4.7 Focus Visible",
       "4.1.2 Name Role Value"
     ],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Chip"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Chip"
+          ],
+          "note": "focus is drawn by Chip — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "chip-group": {
+          "role": [
+            "group"
+          ],
+          "aria-label": [
+            "Status",
+            "Skills"
+          ]
+        }
+      },
+      "announced": [
+        "group \"Status\"",
+        "group \"Skills\""
+      ],
+      "contrast": {},
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

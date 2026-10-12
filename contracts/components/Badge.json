@@ -113,6 +113,62 @@
       "1.4.1 Use of Color (don't rely on color alone)",
       "1.4.3 Contrast (AA)"
     ],
+    "applied": {
+      "nativeElement": "span",
+      "focus": [],
+      "aria": {},
+      "announced": [],
+      "contrast": {
+        "badge-label (neutral s)": {
+          "light": "6.91:1 — #475569 on #f1f5f9",
+          "dark": "5.7:1 — #94a3b8 on #1e293b"
+        },
+        "badge-label (info s)": {
+          "light": "5.56:1 — #0369a1 on #f0f9ff",
+          "dark": "4.53:1 — #7dd3fc on #075985"
+        },
+        "badge-label (success s)": {
+          "light": "4.79:1 — #15803d on #f0fdf4",
+          "dark": "5.07:1 — #86efac on #166534"
+        },
+        "badge-label (warning s)": {
+          "light": "4.84:1 — #b45309 on #fffbeb",
+          "dark": "4.91:1 — #fcd34d on #92400e"
+        },
+        "badge-label (danger s)": {
+          "light": "5.88:1 — #b91c1c on #fff1f2",
+          "dark": "5.89:1 — #fecdd3 on #991b1b"
+        },
+        "badge-label (success xs)": {
+          "light": "4.79:1 — #15803d on #f0fdf4",
+          "dark": "5.07:1 — #86efac on #166534"
+        },
+        "badge-icon (icon success s)": {
+          "light": "4.79:1 — #15803d on #f0fdf4",
+          "dark": "2.16:1 — #16a34a on #166534"
+        },
+        "badge-icon (icon warning s)": {
+          "light": "4.84:1 — #b45309 on #fffbeb",
+          "dark": "2.23:1 — #d97706 on #92400e"
+        },
+        "badge-icon (icon danger s)": {
+          "light": "4.4:1 — #dc2626 on #fff1f2",
+          "dark": "2.21:1 — #ef4444 on #991b1b"
+        },
+        "badge-icon (icon info s)": {
+          "light": "5.57:1 — #0369a1 on #f0f9ff",
+          "dark": "1.85:1 — #0284c7 on #075985"
+        },
+        "badge-icon (icon neutral s)": {
+          "light": "6.92:1 — #475569 on #f1f5f9",
+          "dark": "5.71:1 — #94a3b8 on #1e293b"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

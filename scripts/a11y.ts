@@ -223,39 +223,141 @@ const today: HistoryDay = {
 };
 fs.writeFileSync(historyFile, JSON.stringify([...history.filter(d => d.date !== today.date), today].sort((a, b) => a.date.localeCompare(b.date)), null, 2) + '\n');
 
-// Each contract carries its own results (a11y.results), next to its role, keys and WCAG criteria — rewritten
-// only when they change, so `changed` is the date they last changed and a re-run doesn't touch the file.
+// ── What each component APPLIES (a11y.applied) ─────────────────────────────────────────────────────────
+// Not pass/fail: the accessibility layer itself, so the contract says what the component does — read from the
+// real code, never hand-written. Focus from the CSS rules of its parts; ARIA, contrast and target sizes as
+// rendered in its stories (test-runner → a11y-extra-checks.ts collectAria/collectContrast/collectTargets);
+// what a screen reader announces from the stories' ariaSnapshot; motion from the CSS + implementation.
+type StoryApplied = { aria: { part: string; attribute: string; value: string }[]; contrast: Record<string, { part: string; variant: string; ratio: number; fg: string; bg: string }[]>; targets: { part: string; variant: string; width: number; height: number }[] };
+const css = fs.readFileSync(path.join(root, 'packages/core/src/globals.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+const cssRules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(m => ({ selector: m[1]!.trim().replace(/\s+/g, ' '), body: m[2]! }));
+const decl = (body: string, prop: string) => body.match(new RegExp(`(?:^|;)\\s*${prop}\\s*:\\s*([^;]+)`))?.[1]?.trim();
+const globalFocus = cssRules.find(r => r.selector === ':focus-visible');
+// data-helix-part → the component whose contract lists it
+const partOwner = new Map<string, string>();
+for (const comp of allComponents) for (const a of JSON.parse(fs.readFileSync(path.join(root, comp.contract), 'utf8')).anatomy ?? []) partOwner.set(a.part, comp.name);
+
+function appliedFor(c: typeof allComponents[number], contract: any) {
+  const parts: string[] = (contract.anatomy ?? []).map((a: { part: string }) => a.part);
+  const inParts = (p: string) => parts.includes(p);
+  const stories = storyResults.filter(r => r.title === titleOf(c)) as (StoryResult & { applied?: StoryApplied })[];
+  if (!stories.some(r => r.applied)) return null;
+
+  // Focus: every rule of its parts that styles a focused state, with the tokens it uses.
+  const focus = cssRules
+    .filter(r => /:focus|:has\([^)]*:focus/.test(r.selector) && parts.some(p => r.selector.includes(`"${p}"`)))
+    .map(r => {
+      const part = parts.find(p => r.selector.includes(`"${p}"`))!;
+      const props = Object.fromEntries(['outline', 'outline-offset', 'box-shadow', 'border-color', 'background-color']
+        .map(k => [k, decl(r.body, k)]).filter(([, v]) => v));
+      return { part, when: r.selector.match(/:focus-visible|:focus-within|:focus/)?.[0] ?? ':focus', ...props };
+    })
+    .filter(f => Object.keys(f).length > 2);
+  const interactive = stories.some(r => (r.applied?.targets ?? []).some(t => inParts(t.part)));
+  // Controls inside it that belong to other Helix components (Modal's close IconButton, CheckboxGroup's
+  // Checkboxes): their focus, size and name are those components' own layer — say which, don't repeat it.
+  const delegatedTo = [...new Set(stories.flatMap(r => (r.applied?.targets ?? []).filter(t => !inParts(t.part)).map(t => partOwner.get(t.part)).filter((o): o is string => !!o && o !== c.name)))].sort();
+  const focusOut = focus.length ? focus
+    : delegatedTo.length ? [{ part: '(its inner controls)', delegatedTo, note: `focus is drawn by ${delegatedTo.join(', ')} — see their a11y.applied.focus` }]
+    : interactive && globalFocus ? [{ part: '(any focusable element)', when: ':focus-visible', inherited: 'global rule', outline: decl(globalFocus.body, 'outline'), 'outline-offset': decl(globalFocus.body, 'outline-offset') }]
+    : [];
+
+  // ARIA: attribute → values seen (ids shown as "(id)", so the list stays stable between runs).
+  const aria: Record<string, Record<string, string[]>> = {};
+  for (const r of stories) for (const x of r.applied?.aria ?? []) {
+    if (!inParts(x.part)) continue;
+    const v = /^(:r|helix-|radix-|[a-z]+-\d+$)|-\d+$|option-/.test(x.value) && /\d/.test(x.value) ? '(id)' : x.value;
+    const list = ((aria[x.part] ??= {})[x.attribute] ??= []);
+    if (!list.includes(v) && list.length < 4) list.push(v);
+  }
+
+  // Contrast: per part (and variant), the lowest measured ratio in each theme.
+  const contrast: Record<string, Record<string, string>> = {};
+  for (const theme of ['light', 'dark'] as const) {
+    const lowest = new Map<string, { ratio: number; fg: string; bg: string }>();
+    for (const r of stories) for (const x of r.applied?.contrast?.[theme] ?? []) {
+      if (!inParts(x.part)) continue;
+      const key = x.variant ? `${x.part} (${x.variant})` : x.part;
+      if (!lowest.has(key) || x.ratio < lowest.get(key)!.ratio) lowest.set(key, x);
+    }
+    for (const [key, x] of lowest) (contrast[key] ??= {})[theme] = `${x.ratio}:1 — ${x.fg} on ${x.bg}`;
+  }
+
+  // Target size: the smallest box a pointer can hit, per part.
+  const targetSize: Record<string, string> = {};
+  for (const r of stories) for (const x of r.applied?.targets ?? []) {
+    if (!inParts(x.part)) continue;
+    const [w, h] = (targetSize[x.part]?.match(/\d+/g) ?? ['9999', '9999']).map(Number);
+    targetSize[x.part] = `smallest ${Math.min(w!, x.width)}×${Math.min(h!, x.height)} px`;
+  }
+
+  // What a screen reader announces: the component's own role lines from its stories.
+  const want = expectedRoles(contract.a11y);
+  const announced = [...new Set(stories.flatMap(r => (r.aria ?? '').split('\n').map(l => l.trim().replace(/^- /, '').replace(/:$/, ''))
+    .filter(l => want.some(role => l.startsWith(`${role} `) || l === role))))].slice(0, 5);
+
+  // Motion: CSS motion is neutralised globally; JS motion must sit in MotionConfig reducedMotion="user".
+  const implDir = path.join(root, `packages/core/src/${c.category === 'layout' ? 'layout' : 'components'}/${c.name}`);
+  const impl = fs.existsSync(implDir) ? fs.readdirSync(implDir).filter(f => f.endsWith('.tsx')).map(f => fs.readFileSync(path.join(implDir, f), 'utf8')).join('\n') : '';
+  const motion = [
+    'CSS transitions/animations: neutralised by the global prefers-reduced-motion rule',
+    ...(/from 'motion\/react'/.test(impl) ? [impl.includes('reducedMotion="user"') ? 'Motion (JS): inside <MotionConfig reducedMotion="user">' : 'Motion (JS): press feedback only (whileTap)'] : []),
+  ];
+
+  return {
+    nativeElement: contract.anatomy?.[0]?.element ?? null,
+    ...(delegatedTo.length ? { innerComponents: delegatedTo } : {}),
+    focus: focusOut, aria, announced, contrast, targetSize, motion,
+  };
+}
+
+// Insert or replace one field at the end of a contract's a11y block — readable (one entry per line) and by
+// matching braces outside strings, so the rest of the contract keeps its formatting.
+function closeOf(src: string, open: number) {
+  let depth = 0, inStr = false;
+  for (let i = open; i < src.length; i++) {
+    const ch = src[i];
+    if (inStr) { if (ch === '\\') i++; else if (ch === '"') inStr = false; continue; }
+    if (ch === '"') inStr = true;
+    else if (ch === '{' || ch === '[') depth++;
+    else if ((ch === '}' || ch === ']') && --depth === 0) return i;
+  }
+  return -1;
+}
+function upsertA11yField(src: string, key: string, value: unknown) {
+  let updated = src;
+  const at = updated.indexOf(`"${key}": `, updated.search(/"a11y":\s*\{/));
+  if (at !== -1) {
+    const end = closeOf(updated, updated.indexOf('{', at)) + 1;
+    const before = updated.slice(0, at), after = updated.slice(end);
+    // a field in the middle takes its following comma with it; the last one takes the comma before it
+    updated = /^\s*,/.test(after) ? before + after.replace(/^\s*,\s*/, '') : before.replace(/,\s*$/, '') + after;
+  }
+  const a11yAt = updated.search(/"a11y":\s*\{/);
+  const close = closeOf(updated, updated.indexOf('{', a11yAt));
+  const block = `"${key}": ${JSON.stringify(value, null, 2).replace(/\n/g, '\n    ')}`;
+  const before = updated.slice(0, close).replace(/\s*$/, '');
+  updated = `${before},\n    ${block}\n  ${updated.slice(close)}`;
+  JSON.parse(updated);
+  return updated;
+}
+
+// Each contract carries what it applies (a11y.applied) and its results (a11y.results), next to its role, keys
+// and WCAG criteria — each rewritten only when it changes, so a re-run doesn't touch the file.
 const reviewIds = CHECKS.filter(ch => ch.kind === 'review').map(ch => ch.id);
 for (const c of allComponents) {
   const file = path.join(root, c.contract);
   const src = fs.readFileSync(file, 'utf8');
-  const prev = JSON.parse(src).a11y?.results;
+  const contract = JSON.parse(src);
+  let updated = src;
+  const applied = appliedFor(c, contract);
+  if (applied && JSON.stringify(contract.a11y?.applied) !== JSON.stringify(applied)) updated = upsertA11yField(updated, 'applied', applied);
+  const prev = contract.a11y?.results;
   const checksNow = Object.fromEntries(CHECKS.map(ch => [ch.id, results[c.name]?.[ch.id]?.status ?? 'pending']));
   const next = { score: scores[c.name]!.score, meetsMinimum: scores[c.name]!.meetsMinimum, checks: checksNow, notScored: reviewIds };
-  const oldOneLine = src.includes('"results": {"score"'); // the first format — rewrite it readable once
-  if (!oldOneLine && prev && JSON.stringify({ ...prev, changed: undefined }) === JSON.stringify({ ...next, changed: undefined })) continue;
-  // Written readable (one entry per line, after wcag) — and replaced by matching its braces, so the rest of
-  // the contract keeps its formatting.
-  const block = `"results": ${JSON.stringify({ ...next, changed: now.slice(0, 10) }, null, 2).replace(/\n/g, '\n    ')}`;
-  let updated = src;
-  const at = src.indexOf('"results": {');
-  if (at !== -1) {
-    let depth = 0, end = src.indexOf('{', at);
-    for (let i = end; i < src.length; i++) { if (src[i] === '{') depth++; else if (src[i] === '}' && --depth === 0) { end = i + 1; break; } }
-    // drop the old block with its separating comma/whitespace, then add it back below
-    updated = src.slice(0, at).replace(/\s*$/, '') .replace(/,?$/, '') + src.slice(end).replace(/^\s*,?/, '');
-    updated = updated.replace(/("a11y":\s*\{)\s*\n?\s*/, '$1\n    ');
-  }
-  // the a11y block's last line: put results after it
-  const a11yAt = updated.search(/"a11y":\s*\{/);
-  let depth = 0, close = -1;
-  for (let i = updated.indexOf('{', a11yAt); i < updated.length; i++) { if (updated[i] === '{') depth++; else if (updated[i] === '}' && --depth === 0) { close = i; break; } }
-  const before = updated.slice(0, close).replace(/\s*$/, '');
-  const inline = !updated.slice(a11yAt, close).includes('\n');
-  updated = inline
-    ? `${before}, ${block.replace(/\n\s*/g, ' ')} ${updated.slice(close)}`
-    : `${before},\n    ${block}\n  ${updated.slice(close)}`;
-  JSON.parse(updated);
+  const resultsChanged = !prev || JSON.stringify({ ...prev, changed: undefined }) !== JSON.stringify({ ...next, changed: undefined });
+  // results always last in the block: re-place it after applied when applied was (re)written
+  if (resultsChanged || updated !== src) updated = upsertA11yField(updated, 'results', resultsChanged ? { ...next, changed: now.slice(0, 10) } : prev);
   if (updated !== src) fs.writeFileSync(file, updated);
 }
 

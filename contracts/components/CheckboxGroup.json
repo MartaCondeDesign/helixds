@@ -80,6 +80,57 @@
     "role": "group (native fieldset/legend + independent checkbox inputs)",
     "keyboardNav": ["Tab — moves focus between options and into/out of the group", "Space — toggles the focused option"],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "fieldset",
+      "innerComponents": [
+        "Checkbox"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Checkbox"
+          ],
+          "note": "focus is drawn by Checkbox — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "checkbox-group": {
+          "aria-describedby": [
+            "(id)"
+          ]
+        },
+        "checkbox-group-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "checkbox-group-legend": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "group \"Notify me about\"",
+        "group \"Repeat on\"",
+        "group \"Notify me about (required)\""
+      ],
+      "contrast": {
+        "checkbox-group-legend": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "checkbox-group-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

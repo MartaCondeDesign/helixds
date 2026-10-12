@@ -78,6 +78,70 @@
     "role": "switch",
     "keyboardNav": ["Space — toggles checked state", "Tab — moves focus"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "switch-track",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-switch-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "switch-row": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "switch-track": {
+          "role": [
+            "switch"
+          ],
+          "aria-checked": [
+            "true",
+            "false"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ]
+        },
+        "switch-thumb": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "switch \"Auto-save enabled\" [checked]",
+        "switch \"Dark mode\"",
+        "switch \"Disabled off\" [disabled]",
+        "switch \"Disabled on\" [checked] [disabled]",
+        "switch \"Enable notifications\""
+      ],
+      "contrast": {
+        "switch-label (m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "switch-description (m)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "switch-label (s)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "switch-row": "smallest 1×1 px",
+        "switch-track": "smallest 28×16 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): inside <MotionConfig reducedMotion=\"user\">"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

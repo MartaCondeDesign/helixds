@@ -77,6 +77,63 @@
     "role": "listbox (hand-rolled — see ADR-013)",
     "keyboardNav": ["Handled by the consumer's trigger, not Menu itself — Menu is presentational plus click-to-select. See Select's own contract for the actual Arrow/Home/End/typeahead handling."],
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "(any focusable element)",
+          "when": ":focus-visible",
+          "inherited": "global rule",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "menu": {
+          "role": [
+            "listbox"
+          ],
+          "aria-label": [
+            "Open menu"
+          ]
+        },
+        "menu-item": {
+          "role": [
+            "option"
+          ],
+          "aria-selected": [
+            "false"
+          ]
+        },
+        "menu-group-divider": {
+          "role": [
+            "separator"
+          ],
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "listbox \"Open menu\""
+      ],
+      "contrast": {
+        "menu-group-label": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "menu-item": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "menu-item": "smallest 140×32 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

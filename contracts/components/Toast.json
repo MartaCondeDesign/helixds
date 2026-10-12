@@ -65,6 +65,78 @@
       "Triggered via the imperative `toast` object (toast.success/info/warning/danger/neutral(label, description?) — the description may also be passed Sonner-style as { description }), not props on <Toast /> itself — see ADR-011. <Toast /> is the rendered stack, mounted once; it takes almost no props of its own. Calling toast.* with no <Toast /> mounted logs a console warning (nothing would be shown).",
       "Stacking depth (max 3 visible) and hover-to-spread use real measured pixel heights (offsetHeight), not percentage-based transforms — a percentage approach was tried and broken in the pre-implementation preview by two toasts of different heights; see ADR-011."
     ],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Button",
+        "IconButton"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button",
+            "IconButton"
+          ],
+          "note": "focus is drawn by Button, IconButton — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "toast-viewport": {
+          "role": [
+            "region"
+          ],
+          "aria-label": [
+            "Notifications"
+          ],
+          "aria-live": [
+            "polite"
+          ]
+        }
+      },
+      "announced": [
+        "region \"Notifications\""
+      ],
+      "contrast": {
+        "toast-title (info)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "toast-description (info)": {
+          "light": "7.57:1 — #475569 on #ffffff"
+        },
+        "toast-title (success)": {
+          "light": "17.85:1 — #0f172a on #ffffff"
+        },
+        "toast-description (success)": {
+          "light": "7.57:1 — #475569 on #ffffff"
+        },
+        "toast-icon (icon info)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "toast-icon (icon success)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "toast-title (danger)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "toast-description (danger)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "toast-icon (icon danger)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

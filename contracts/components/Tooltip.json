@@ -67,6 +67,41 @@
     "role": "tooltip (on tooltip-content), referenced from the trigger via aria-describedby",
     "keyboardNav": ["Tab — focuses the trigger, showing the tooltip", "Escape — dismisses while the trigger is focused"],
     "wcag": ["1.4.13 Content on Hover or Focus", "4.1.2 Name, Role, Value"],
+    "applied": {
+      "nativeElement": "span",
+      "innerComponents": [
+        "IconButton"
+      ],
+      "focus": [
+        {
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "IconButton"
+          ],
+          "note": "focus is drawn by IconButton — see their a11y.applied.focus"
+        }
+      ],
+      "aria": {
+        "tooltip-content": {
+          "role": [
+            "tooltip"
+          ]
+        }
+      },
+      "announced": [
+        "tooltip \"Delete\""
+      ],
+      "contrast": {
+        "tooltip-content": {
+          "light": "17.85:1 — #ffffff on #0f172a",
+          "dark": "17.85:1 — #ffffff on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

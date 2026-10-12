@@ -177,6 +177,96 @@
       "2.4.7 Focus Visible",
       "4.1.2 Name Role Value"
     ],
+    "applied": {
+      "nativeElement": "span",
+      "focus": [
+        {
+          "part": "chip-shell",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        },
+        {
+          "part": "chip-dismiss",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "chip-dismiss": {
+          "aria-label": [
+            "Dismiss Recent",
+            "Dismiss Saved"
+          ]
+        }
+      },
+      "announced": [
+        "button \"Recent\"",
+        "button \"Dismiss Recent\"",
+        "button \"Saved\"",
+        "button \"Dismiss Saved\"",
+        "button \"Filter\""
+      ],
+      "contrast": {
+        "chip-label (neutral s)": {
+          "light": "17.06:1 — #0f172a on #f8fafc",
+          "dark": "13.35:1 — #f1f5f9 on #1e293b"
+        },
+        "chip-dismiss (icon neutral s)": {
+          "light": "7.24:1 — #475569 on #f8fafc",
+          "dark": "5.71:1 — #94a3b8 on #1e293b"
+        },
+        "chip-label (neutral m)": {
+          "light": "17.06:1 — #0f172a on #f8fafc",
+          "dark": "13.35:1 — #f1f5f9 on #1e293b"
+        },
+        "chip-label (warning s)": {
+          "light": "4.84:1 — #b45309 on #fffbeb",
+          "dark": "4.91:1 — #fcd34d on #92400e"
+        },
+        "chip-label (info s)": {
+          "light": "5.56:1 — #0369a1 on #f0f9ff",
+          "dark": "4.53:1 — #7dd3fc on #075985"
+        },
+        "chip-label (success s)": {
+          "light": "4.79:1 — #15803d on #f0fdf4",
+          "dark": "5.07:1 — #86efac on #166534"
+        },
+        "chip-label (danger s)": {
+          "light": "5.88:1 — #b91c1c on #fff1f2",
+          "dark": "5.89:1 — #fecdd3 on #991b1b"
+        },
+        "chip-icon (icon neutral s)": {
+          "light": "17.06:1 — #0f172a on #f8fafc",
+          "dark": "13.35:1 — #f1f5f9 on #1e293b"
+        },
+        "chip-icon (icon success s)": {
+          "light": "4.79:1 — #15803d on #f0fdf4",
+          "dark": "5.08:1 — #86efac on #166534"
+        },
+        "chip-icon (icon warning s)": {
+          "light": "4.84:1 — #b45309 on #fffbeb",
+          "dark": "4.92:1 — #fcd34d on #92400e"
+        },
+        "chip-icon (icon danger s)": {
+          "light": "5.89:1 — #b91c1c on #fff1f2",
+          "dark": "5.89:1 — #fecdd3 on #991b1b"
+        },
+        "chip-icon (icon info s)": {
+          "light": "5.57:1 — #0369a1 on #f0f9ff",
+          "dark": "4.54:1 — #7dd3fc on #075985"
+        }
+      },
+      "targetSize": {
+        "chip": "smallest 22×22 px",
+        "chip-dismiss": "smallest 24×24 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): inside <MotionConfig reducedMotion=\"user\">"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

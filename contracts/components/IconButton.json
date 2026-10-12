@@ -105,6 +105,71 @@
     "role": "button (native)",
     "keyboardNav": ["Enter/Space activates, same as any native <button>"],
     "wcag": ["4.1.2 Name, Role, Value (label is required precisely to satisfy this — no visible text exists to fall back on)", "1.4.3 Contrast (AA)"],
+    "applied": {
+      "nativeElement": "button",
+      "focus": [
+        {
+          "part": "icon-button",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-iconButton-border-focus)",
+          "outline-offset": "2px",
+          "box-shadow": "0 0 0 4px color-mix(in srgb, var(--helix-iconButton-border-focus) 20%, transparent)"
+        }
+      ],
+      "aria": {
+        "icon-button": {
+          "aria-label": [
+            "primary default",
+            "primary loading",
+            "primary disabled",
+            "secondary default"
+          ],
+          "aria-busy": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "button \"primary default\"",
+        "button \"primary loading\" [disabled]",
+        "button \"primary disabled\" [disabled]",
+        "button \"secondary default\"",
+        "button \"secondary loading\" [disabled]"
+      ],
+      "contrast": {
+        "icon-button (icon primary m)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
+        },
+        "icon-button (icon secondary m)": {
+          "light": "16.3:1 — #0f172a on #f1f5f9",
+          "dark": "13.35:1 — #f1f5f9 on #1e293b"
+        },
+        "icon-button (icon ghost m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "icon-button (icon danger m)": {
+          "light": "4.83:1 — #ffffff on #dc2626",
+          "dark": "4.83:1 — #ffffff on #dc2626"
+        },
+        "icon-button (icon ghost s)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "icon-button (icon ghost l)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "icon-button": "smallest 24×24 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): press feedback only (whileTap)"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

@@ -156,6 +156,102 @@
     "role": "button (implicit from <button> element)",
     "keyboardNav": ["Enter — activates", "Space — activates"],
     "wcag": ["1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "button",
+      "focus": [
+        {
+          "part": "button",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-button-border-focus)",
+          "outline-offset": "2px",
+          "box-shadow": "0 0 0 4px color-mix(in srgb, var(--helix-button-border-focus) 20%, transparent)"
+        }
+      ],
+      "aria": {
+        "button": {
+          "aria-busy": [
+            "true"
+          ]
+        },
+        "button-spinner": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "button \"Primary\"",
+        "button \"Secondary\"",
+        "button \"Ghost\"",
+        "button \"Danger\"",
+        "button \"Not available\" [disabled]"
+      ],
+      "contrast": {
+        "button-label (primary m)": {
+          "light": "5.16:1 — #ffffff on #2563eb",
+          "dark": "5.16:1 — #ffffff on #2563eb"
+        },
+        "button-label (secondary m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "button-label (ghost m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "button-label (danger m)": {
+          "light": "4.82:1 — #ffffff on #dc2626",
+          "dark": "4.82:1 — #ffffff on #dc2626"
+        },
+        "button-label (primary s)": {
+          "light": "5.16:1 — #ffffff on #2563eb",
+          "dark": "5.16:1 — #ffffff on #2563eb"
+        },
+        "button-label (primary l)": {
+          "light": "5.16:1 — #ffffff on #2563eb",
+          "dark": "5.16:1 — #ffffff on #2563eb"
+        },
+        "button-icon (icon primary m)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
+        },
+        "button-icon (icon secondary m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "button-icon (icon ghost m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "button-icon (icon danger m)": {
+          "light": "4.83:1 — #ffffff on #dc2626",
+          "dark": "4.83:1 — #ffffff on #dc2626"
+        },
+        "button-icon-end (icon primary m)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
+        },
+        "button-icon-end (icon secondary m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "button-icon-end (icon ghost m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "button-icon-end (icon danger m)": {
+          "light": "4.83:1 — #ffffff on #dc2626",
+          "dark": "4.83:1 — #ffffff on #dc2626"
+        }
+      },
+      "targetSize": {
+        "button": "smallest 59×24 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): press feedback only (whileTap)"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

@@ -58,6 +58,52 @@
     "role": "link (implicit from <a href>)",
     "keyboardNav": ["Tab — moves focus", "Enter — activates"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "a",
+      "focus": [
+        {
+          "part": "(any focusable element)",
+          "when": ":focus-visible",
+          "inherited": "global rule",
+          "outline": "2px solid var(--helix-color-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "nav-item": {
+          "aria-current": [
+            "page"
+          ]
+        },
+        "nav-item-indicator": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "link \"Dashboard\"",
+        "link \"Team\"",
+        "link \"Settings\""
+      ],
+      "contrast": {
+        "nav-item-label": {
+          "light": "5.16:1 — #ffffff on #2563eb",
+          "dark": "5.16:1 — #ffffff on #2563eb"
+        },
+        "nav-item-icon (icon)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
+        }
+      },
+      "targetSize": {
+        "nav-item": "smallest 200×34 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): inside <MotionConfig reducedMotion=\"user\">"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

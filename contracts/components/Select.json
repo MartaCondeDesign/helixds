@@ -94,6 +94,97 @@
     "role": "combobox on the <button> trigger (WAI-ARIA select-only combobox) + hand-rolled listbox popup (Menu) — see ADR-013. Not a native <select>.",
     "keyboardNav": ["Arrow Up/Down - opens the menu, or moves the highlighted option while open", "Home/End - jump to first/last enabled option while open", "Enter/Space - open the menu, or confirm the highlighted option while open", "Escape - close without changing the selection", "Tab - move focus (closes the menu first)"],
     "wcag": ["1.3.1 Info and Relationships", "1.4.3 Contrast (AA)", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "innerComponents": [
+        "Menu"
+      ],
+      "focus": [
+        {
+          "part": "select-trigger",
+          "when": ":focus-visible",
+          "border-color": "var(--helix-select-border-hover)"
+        },
+        {
+          "part": "select-trigger",
+          "when": ":focus-visible",
+          "box-shadow": "0 0 0 3px color-mix(in srgb, var(--helix-select-border-focus) 20%, transparent)",
+          "border-color": "var(--helix-select-border-focus)"
+        }
+      ],
+      "aria": {
+        "select-trigger": {
+          "role": [
+            "combobox"
+          ],
+          "aria-haspopup": [
+            "listbox"
+          ],
+          "aria-expanded": [
+            "false",
+            "true"
+          ],
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ],
+          "aria-controls": [
+            "(id)"
+          ],
+          "aria-required": [
+            "true"
+          ]
+        },
+        "select-chevron": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "select-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "select-label": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "combobox \"Role\": Choose a role…",
+        "combobox \"Role\" [disabled]: Designer",
+        "combobox \"Role\" [invalid]: Choose a role…",
+        "combobox \"Role\": Engineer",
+        "combobox \"Role\" [expanded]"
+      ],
+      "contrast": {
+        "select-label": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "select-trigger-label": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "select-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "select-description": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "select-trigger": "smallest 60×32 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

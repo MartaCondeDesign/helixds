@@ -93,6 +93,65 @@
       "1.4.3 Contrast (AA)",
       "2.1.1 Keyboard"
     ],
+    "applied": {
+      "nativeElement": "button",
+      "focus": [
+        {
+          "part": "fab-root",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-fab-border-focus)",
+          "outline-offset": "2px"
+        },
+        {
+          "part": "fab-action",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-fab-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "fab-root": {
+          "aria-label": [
+            "Add"
+          ],
+          "aria-expanded": [
+            "true",
+            "false"
+          ]
+        },
+        "fab-action": {
+          "aria-label": [
+            "Add member",
+            "Export"
+          ]
+        }
+      },
+      "announced": [
+        "button \"Add\"",
+        "button \"Add\" [disabled]",
+        "button \"Add\" [expanded]",
+        "button \"Add member\"",
+        "button \"Export\""
+      ],
+      "contrast": {
+        "fab-icon (icon)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
+        },
+        "fab-action (icon)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "fab-root": "smallest 44×44 px",
+        "fab-action": "smallest 18×18 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
+        "Motion (JS): inside <MotionConfig reducedMotion=\"user\">"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

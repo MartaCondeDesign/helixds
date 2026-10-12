@@ -71,6 +71,50 @@
       "Each avatar is wrapped in Tooltip (see contracts/components/Tooltip.json), showing that person's name on hover — mouse only, since individual avatars carry no tabindex/focus behavior (keyboardNav stays []).",
       "The '+N' overflow indicator is also wrapped in Tooltip, listing the hidden names (comma-separated) — no longer presentational-only."
     ],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [],
+      "aria": {
+        "avatar-group-root": {
+          "role": [
+            "group"
+          ],
+          "aria-label": [
+            "3 people",
+            "4 people",
+            "5 people"
+          ]
+        },
+        "avatar-group-overflow": {
+          "aria-describedby": [
+            "(id)"
+          ]
+        }
+      },
+      "announced": [
+        "group \"3 people\"",
+        "group \"4 people\"",
+        "group \"5 people\""
+      ],
+      "contrast": {
+        "avatar-group-overflow (s)": {
+          "light": "6.91:1 — #475569 on #f1f5f9",
+          "dark": "5.7:1 — #94a3b8 on #1e293b"
+        },
+        "avatar-group-overflow (m)": {
+          "light": "6.91:1 — #475569 on #f1f5f9",
+          "dark": "5.7:1 — #94a3b8 on #1e293b"
+        },
+        "avatar-group-overflow (l)": {
+          "light": "6.91:1 — #475569 on #f1f5f9",
+          "dark": "5.7:1 — #94a3b8 on #1e293b"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

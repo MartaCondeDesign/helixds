@@ -61,6 +61,26 @@
     "role": "none of its own (a plain <div>) — add role=\"group\" or \"region\" with a label only when the card represents a distinct section",
     "announces": [],
     "wcag": ["1.4.3 Contrast (AA)"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [],
+      "aria": {},
+      "announced": [],
+      "contrast": {
+        "card-body": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "card-header": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

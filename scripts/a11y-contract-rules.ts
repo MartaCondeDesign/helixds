@@ -2,8 +2,9 @@
  * The accessibility checks that need no browser — read from a component's contract and its stories file.
  * Shared by the pre-commit gate (verify:a11y-contracts) and `pnpm a11y` (scripts/a11y.ts).
  *
- *   contract      a11y.role filled in, a11y.wcag names at least one criterion, and an INTERACTIVE component
- *                 (onClick/onChange/onSelect/onDismiss/expanded…, or a widget role) lists its keys in a11y.keyboardNav
+ *   contract      a11y.role filled in, a11y.wcag names at least one criterion, an INTERACTIVE component
+ *                 (onClick/onChange/onSelect/onDismiss/expanded…, or a widget role) lists its keys in a11y.keyboardNav,
+ *                 and a11y.applied documents the layer it applies (focus, ARIA, contrast, target size — pnpm a11y)
  *   keys          every key in a11y.keyboardNav is pressed by a `play` test in its stories
  *   focus-return  when Escape closes something (dialog, panel, menu, tooltip, speed dial), a play test asserts
  *                 where focus lands right after (`toHaveFocus` after `{Escape}`) — WCAG 2.4.3
@@ -26,6 +27,10 @@ export function staticA11yIssues(contract: any, storySrc: string): Record<Static
   if (!(a11y.wcag ?? []).length) contractIssues.push('a11y.wcag names no WCAG criterion');
   const interactive = (contract.props ?? []).some((p: { name: string }) => INTERACTIVE_PROPS.test(p.name)) || WIDGET_ROLE.test(String(a11y.role ?? ''));
   if (interactive && keys.length === 0) contractIssues.push('interactive, but a11y.keyboardNav lists no keys');
+  // The layer it applies must be documented (written by `pnpm a11y` from the real code — never by hand).
+  const applied = a11y.applied;
+  if (!applied) contractIssues.push('no a11y.applied — run `pnpm a11y <Name>` (Storybook running) to record its focus, ARIA, contrast and target sizes');
+  else if (keys.length && !(applied.focus ?? []).length) contractIssues.push('a11y.applied has no focus indicator for an interactive component');
 
   const keyIssues: string[] = [];
   for (const entry of keys)

@@ -213,6 +213,98 @@
       "3.3.1 Error Identification",
       "3.3.2 Labels or Instructions"
     ],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "textarea-wrapper",
+          "when": ":focus-within",
+          "border-color": "var(--helix-textarea-border-hover)"
+        },
+        {
+          "part": "textarea-wrapper",
+          "when": ":focus-within",
+          "box-shadow": "0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-focus) 20%, transparent)",
+          "border-color": "var(--helix-textarea-border-focus)"
+        },
+        {
+          "part": "textarea-wrapper",
+          "when": ":focus-within",
+          "box-shadow": "0 0 0 3px color-mix(in srgb, var(--helix-textarea-border-invalid) 20%, transparent)"
+        }
+      ],
+      "aria": {
+        "textarea-field": {
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ]
+        },
+        "textarea-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "textarea-counter": {
+          "aria-live": [
+            "polite"
+          ]
+        }
+      },
+      "announced": [
+        "textbox \"Description\"",
+        "textbox \"Description\" [disabled]",
+        "textbox \"Description\" [invalid]",
+        "textbox \"Small\"",
+        "textbox \"Medium\""
+      ],
+      "contrast": {
+        "textarea-label (m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-field (m)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-error (m)": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "textarea-label (s)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-field (s)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-label (l)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-field (l)": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "textarea-counter (m)": {
+          "light": "4.75:1 — #64748b on #ffffff",
+          "dark": "5.58:1 — #8391a7 on #0f172a"
+        },
+        "textarea-description (m)": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "textarea-field": "smallest 165×96 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

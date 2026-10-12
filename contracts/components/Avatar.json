@@ -66,6 +66,48 @@
   "a11y": {
     "role": "img (implicit via <img>) when src is set; presentation otherwise — the accessible name comes from the alt/name, never announced twice",
     "wcag": ["1.1.1 Non-text Content"],
+    "applied": {
+      "nativeElement": "span",
+      "focus": [],
+      "aria": {
+        "avatar-initials": {
+          "aria-label": [
+            "Sara Navarro",
+            "Ana García",
+            "Pau Torres",
+            "Marta Conde"
+          ],
+          "role": [
+            "img"
+          ]
+        }
+      },
+      "announced": [
+        "img \"Sara Navarro\": S",
+        "img \"Ana García\": A",
+        "img \"Pau Torres\": P",
+        "img \"Marta Conde\": M",
+        "img \"Jordi Puig\": J"
+      ],
+      "contrast": {
+        "avatar-initials (m)": {
+          "light": "4.74:1 — #2563eb on #eff6ff",
+          "dark": "5.74:1 — #93c5fd on #1e3a8a"
+        },
+        "avatar-initials (s)": {
+          "light": "4.74:1 — #2563eb on #eff6ff",
+          "dark": "5.74:1 — #93c5fd on #1e3a8a"
+        },
+        "avatar-initials (l)": {
+          "light": "4.74:1 — #2563eb on #eff6ff",
+          "dark": "5.74:1 — #93c5fd on #1e3a8a"
+        }
+      },
+      "targetSize": {},
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,

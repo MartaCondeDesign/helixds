@@ -85,6 +85,72 @@
     "role": "checkbox (native input)",
     "keyboardNav": ["Space — toggles checked state", "Tab — moves focus"],
     "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "applied": {
+      "nativeElement": "div",
+      "focus": [
+        {
+          "part": "checkbox-input",
+          "when": ":focus-visible",
+          "outline": "2px solid var(--helix-checkbox-border-focus)",
+          "outline-offset": "2px"
+        }
+      ],
+      "aria": {
+        "checkbox-control": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "checkbox-input": {
+          "aria-invalid": [
+            "true"
+          ],
+          "aria-describedby": [
+            "(id)"
+          ],
+          "aria-required": [
+            "true"
+          ]
+        },
+        "checkbox-error": {
+          "role": [
+            "alert"
+          ]
+        },
+        "checkbox-text": {
+          "aria-hidden": [
+            "true"
+          ]
+        }
+      },
+      "announced": [
+        "checkbox \"Default\"",
+        "checkbox \"Checked\" [checked]",
+        "checkbox \"Indeterminate\" [checked=mixed]",
+        "checkbox \"Disabled unchecked\" [disabled]",
+        "checkbox \"Disabled checked\" [checked] [disabled]"
+      ],
+      "contrast": {
+        "checkbox-text": {
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+        },
+        "checkbox-error": {
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
+        },
+        "checkbox-description": {
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        }
+      },
+      "targetSize": {
+        "checkbox-input": "smallest 71×21 px"
+      },
+      "motion": [
+        "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
+      ]
+    },
     "results": {
       "score": 100,
       "meetsMinimum": true,
