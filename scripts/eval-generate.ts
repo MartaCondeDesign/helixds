@@ -18,7 +18,7 @@
  * `pnpm eval:ladder` runs whatever is missing from it.
  *
  * Every stored answer records its token usage (all calls, lint rounds included) — `pnpm eval:ladder`
- * estimates a run's cost from it.
+ * estimates a run's cost from it — and `durationMs`, how long the agent took to answer (retries included).
  */
 import fs from 'fs';
 import os from 'os';
@@ -210,6 +210,7 @@ console.log(
 
 const results: ScoreResult[] = [];
 let runTokens = 0;
+let runMs = 0;
 let loggedOut = false;
 let failures = 0;
 
@@ -217,6 +218,8 @@ async function worker() {
   while (jobs.length > 0) {
     const { prompt: p, rep } = jobs.shift()!;
     try {
+      // Wall-clock time the agent took to answer (lint-loop rounds included, scoring excluded).
+      const started = Date.now();
       const usage = emptyUsage();
       const toolCalls: ToolCall[] = [];
       let code = extractCodeBlock(await generateWithRetry(p.prompt, usage, 3, toolCalls));
@@ -231,6 +234,7 @@ async function worker() {
           usage, 3, toolCalls,
         ));
       }
+      const durationMs = Date.now() - started;
       fs.writeFileSync(path.join(candidatesDir, `${p.id}-${rep}.tsx`), code);
 
       const result = scorePrompt(p, code);
@@ -239,8 +243,9 @@ async function worker() {
       const mechanical = await checkMechanical(code);
       console.log(`   tools used: ${toolCalls.length ? toolCalls.map(t => t.name.replace(/^mcp__helix__/, 'mcp:')).join(', ') : 'none'}`);
       console.log(`   ${mechanical.compiles ? 'compiles' : `doesn't compile (${mechanical.compileErrors.length} error${mechanical.compileErrors.length > 1 ? 's' : ''}): ${mechanical.compileErrors[0]}`}`);
-      console.log(`   ${usage.totalTokens.toLocaleString()} tokens (${usage.calls} call${usage.calls > 1 ? 's' : ''})`);
+      console.log(`   ${usage.totalTokens.toLocaleString()} tokens (${usage.calls} call${usage.calls > 1 ? 's' : ''}) · ${(durationMs / 1000).toFixed(1)}s`);
       runTokens += usage.totalTokens;
+      runMs += durationMs;
 
       const meta: RunMeta = {
         runId, variant, model: model ?? 'default', rep, timestamp: Date.now(), commit,
@@ -249,7 +254,7 @@ async function worker() {
       };
       fs.writeFileSync(
         path.join(outputsDir, `${p.id}-${meta.timestamp}-${rep}.json`),
-        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code, mechanical), mechanical, toolCalls, usage, generatedCode: code }, null, 2),
+        JSON.stringify({ ...result, ...meta, source: 'claude-cli', globalChecks: runGlobalChecks(code, mechanical), mechanical, toolCalls, usage, durationMs, generatedCode: code }, null, 2),
       );
     } catch (err) {
       failures++;
@@ -267,6 +272,7 @@ Promise.all(Array.from({ length: Math.max(1, concurrency) }, worker)).then(() =>
   const passedCount = results.filter(r => r.passed).length;
   console.log(`\n${passedCount}/${results.length} generations passed (variant "${variant}", run ${runId}).`);
   console.log(`Tokens used: ${runTokens.toLocaleString()} (${results.length ? Math.round(runTokens / results.length).toLocaleString() : 0} per answer).`);
+  if (results.length) console.log(`Time: ${(runMs / 1000 / results.length).toFixed(1)}s per answer (agent time, ${concurrency} running at once).`);
   if (failures) console.log(`${failures} generation(s) errored and weren't recorded.`);
   if (loggedOut) {
     console.error('\nClaude Code is logged out — run `claude`, then /login, and try again.');

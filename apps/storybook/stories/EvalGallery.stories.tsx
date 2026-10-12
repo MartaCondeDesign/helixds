@@ -7,7 +7,7 @@ import ladder from '../../../evals/ladder.json';
 
 // Data from `pnpm eval:gallery` (apps/storybook/eval-gallery/, git-ignored). Globs, not imports, so the
 // page still loads — with instructions — before the script has ever run.
-type Cell = { id: string; promptId: string; variant: string; context: string | null; rep: number | null; score: number; passed: boolean; tokens: number | null; issues?: string[] };
+type Cell = { id: string; promptId: string; variant: string; context: string | null; rep: number | null; score: number; passed: boolean; tokens: number | null; durationMs?: number | null; issues?: string[] };
 const indexFiles = import.meta.glob<{ default: { generatedAt: string; tasks?: string[]; cells: Cell[] } }>('../eval-gallery/index.json', { eager: true });
 const cellModules = import.meta.glob<Record<string, unknown>>('../eval-gallery/cells/*.tsx');
 const gallery = Object.values(indexFiles)[0]?.default ?? null;
@@ -39,6 +39,7 @@ const variantOrder = Object.keys(variantInfo);
 
 const DEFAULT_TASK = 'button-basic';
 const score100 = (score: number) => (score * 100).toFixed(2);
+const fmtSeconds = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
 const fmtTokens = (n: number) => n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}k` : String(Math.round(n));
 
 class CellBoundary extends Component<{ children: ReactNode }, { error: string | null }> {
@@ -144,6 +145,7 @@ function EvalGallery() {
         const mean = cells.reduce((sum, cell) => sum + cell.score, 0) / cells.length;
         const measured = cells.filter(cell => cell.tokens);
         const tokens = measured.reduce((sum, cell) => sum + (cell.tokens ?? 0), 0);
+        const timed = cells.filter(cell => typeof cell.durationMs === 'number');
         return (
           <section key={variant} style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 'var(--helix-spacing-m)' }}>
             <div style={{ paddingLeft: 'var(--helix-spacing-m)' }}>
@@ -154,6 +156,7 @@ function EvalGallery() {
               </div>
               <p style={{ margin: 'var(--helix-spacing-2xs) 0 0', fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{rowStatus(cells)}</p>
               {measured.length > 0 && <p style={{ margin: 0, fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>~{fmtTokens(tokens / measured.length)} tokens/answer · {fmtTokens(tokens)} total</p>}
+              {timed.length > 0 && <p style={{ margin: 0, fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>~{fmtSeconds(timed.reduce((sum, cell) => sum + (cell.durationMs ?? 0), 0) / timed.length)}/answer</p>}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--helix-spacing-s)' }}>
               {cells.map((cell, i) => (
@@ -162,6 +165,7 @@ function EvalGallery() {
                     <span>rep{cell.rep ?? i}</span>
                     <span>{score100(cell.score)}</span>
                     {cell.tokens ? <span>{fmtTokens(cell.tokens)} tok</span> : null}
+                    {typeof cell.durationMs === 'number' ? <span>{fmtSeconds(cell.durationMs)}</span> : null}
                     <Badge size="xs" variant={cell.passed ? 'success' : 'danger'} label={cell.passed ? 'PASS' : 'FAIL'} />
                   </div>
                 }>

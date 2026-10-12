@@ -35,6 +35,7 @@ read what it got wrong, change one thing, and compare against a baseline.
 | 3. See error rates | `pnpm eval:report --variant baseline` |
 | 4. Run an experiment | change one thing (prop-map, a contract, AGENTS.md…), then `pnpm eval:generate --runs 5 --variant <id> --note "<what changed>"` |
 | 5. Compare | `pnpm eval:report --compare baseline <id>` |
+| 6. Score on the PR | `pnpm eval:pr --variant <id> --post` — posts the comparison as one comment on this branch's PR (updated in place on every run). Reads stored runs only; it never generates. |
 
 No paid API, no billing setup: `eval:generate` shells out to the `claude` CLI you already have
 (`claude -p`), under your Claude Code plan. It's real usage of that plan, though — each generation is a
@@ -106,6 +107,20 @@ pnpm eval:report --stored                 # use the score saved at run time inst
   hardcoded colors/px, inline `style`, raw `<IconXxx>`, `icon={<…/>}`, `onClick`, `<div>`, native
   controls. They're reported as their own rates and never change a prompt's score. Add one in
   `GLOBAL_CHECKS` (`scripts/eval-lib.ts`).
+- **Time** — every answer generated since 2026-10-12 stores `durationMs`, how long the agent took (retries
+  included). The overview, `--variant` and `--compare` show the average; older runs show `–`.
+
+### `eval:pr`
+
+```bash
+pnpm eval:pr                                  # latest variant vs baseline, printed only
+pnpm eval:pr --variant <id> --baseline <id>   # pick both sides
+pnpm eval:pr --variant <id> --post            # also post it on this branch's PR (needs gh logged in)
+```
+
+The PR comment shows pass rate, time and tokens per answer for both sides, and every prompt that got worse.
+**It never runs an agent** — evals are generated on purpose, never as a side effect of a PR. Generate the
+variant first, then post its score.
 
 ### `eval:review`
 

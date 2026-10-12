@@ -9,7 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (latest commit)
+- 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
 - 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated ([`daafd06`](https://github.com/MartaCondeDesign/helixds/commit/daafd06))
 - 2026-10-07 — feat!: publish under the @helixds npm scope ([`e5e900b`](https://github.com/MartaCondeDesign/helixds/commit/e5e900b))
 - 2026-10-07 — feat!: names agents expect — onClick, isLoading and the @helix/react package ([`ad1711f`](https://github.com/MartaCondeDesign/helixds/commit/ad1711f))
@@ -83,7 +83,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-12 — Merge branch 'main' into eval-duration-pr-score (latest commit)
 - 2026-10-12 — Charts: all-blue palette and draw-in motion; NavItem: tinted current item with a blue bar; one motion family (#2) ([`b266608`](https://github.com/MartaCondeDesign/helixds/commit/b266608))
+- 2026-10-12 — Evals: record answer duration and post the eval score on a PR ([`35f5806`](https://github.com/MartaCondeDesign/helixds/commit/35f5806))
 - 2026-10-12 — a11y.applied in every contract — the accessibility layer each component applies, read from the real code: focus rule and its tokens (or the inner components that draw it), ARIA per part, what a screen reader announces, measured contrast for text AND icons in light and dark, smallest target, reduced motion. Written by pnpm a11y; verify:a11y-contracts fails a contract without it ([`b921459`](https://github.com/MartaCondeDesign/helixds/commit/b921459))
 - 2026-10-12 — a11y: contract results written readable (one entry per line, after wcag); pnpm a11y refreshes the package copy of the contracts (dist/contracts) so it never lags behind ([`4e02b9d`](https://github.com/MartaCondeDesign/helixds/commit/4e02b9d))
 - 2026-10-11 — verify:stable — NavItem back to beta until its Figma component gets the new current-item colors ([`e08f85f`](https://github.com/MartaCondeDesign/helixds/commit/e08f85f))
