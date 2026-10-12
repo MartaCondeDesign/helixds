@@ -66,6 +66,9 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
   // Everything the option depends on: an identical re-render (React runs effects twice on mount) must not
   // call setOption again — a second setOption, even an identical one, redraws the line in full mid draw-in.
   const applied = React.useRef('');
+  // Until when the draw-in is still running. An update in that window (Storybook or an app setting the theme
+  // right after mount) would make ECharts grow everything at once as a plain update — restart the draw-in instead.
+  const drawingUntil = React.useRef(0);
   React.useEffect(() => {
     if (!root.current) return;
     const chart = instance.current && !instance.current.isDisposed() ? instance.current : echarts.init(root.current); instance.current = chart;
@@ -125,9 +128,13 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
     const signature = JSON.stringify([variant, categories, series]);
     // New data draws in from scratch; anything else merges into what's on screen, so an identical re-render
     // (React's double effect on mount) doesn't cut the draw-in short.
-    const fresh = drawn.current !== signature;
+    const fresh = drawn.current !== signature || performance.now() < drawingUntil.current;
     const key = JSON.stringify([signature, themeVersion, [...hidden], height, label, description]);
-    if (fresh) { chart.clear(); drawn.current = signature; }
+    if (fresh) {
+      chart.clear(); drawn.current = signature;
+      // The longest draw-in: every bar staggered one after another, plus the draw itself.
+      drawingUntil.current = reduced ? 0 : performance.now() + draw + stagger * series.length * categories.length;
+    }
     if (applied.current !== key) { chart.setOption(option, fresh); applied.current = key; }
     // ResizeObserver always fires once when it starts observing; resizing then would redraw the line in full
     // mid draw-in, so only resize when the size really changed.
@@ -135,7 +142,7 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
     const observer = new ResizeObserver(() => { if (el.clientWidth !== chart.getWidth() || el.clientHeight !== chart.getHeight()) chart.resize(); });
     observer.observe(el); return () => observer.disconnect();
   }, [variant,categories,series,label,description,height,themeVersion,hidden]);
-  React.useEffect(() => () => { instance.current?.dispose(); instance.current = null; drawn.current = ''; applied.current = ''; }, []);
+  React.useEffect(() => () => { instance.current?.dispose(); instance.current = null; drawn.current = ''; applied.current = ''; drawingUntil.current = 0; }, []);
   return <div data-helix-part="chart-root" data-variant={variant} className={cn(className)}><div ref={root} data-helix-part="chart-canvas" role="img" aria-label={description ? `${label}. ${description}` : label} style={{ height }} /><div data-helix-part="chart-legend" role={interactive ? 'group' : undefined} aria-label={interactive ? `${label} — show or hide series` : undefined}>{entries.map((name, index) => { const swatch = <span data-helix-part="chart-legend-swatch" aria-hidden="true" style={{ '--chart-swatch': `var(--helix-color-chart-series-${(index % 6) + 1})` } as React.CSSProperties} />; return interactive ? <button key={name} type="button" data-helix-part="chart-legend-item" aria-pressed={!hidden.has(name)} onClick={() => toggle(name)}>{swatch}{name}</button> : <span key={name} data-helix-part="chart-legend-item">{swatch}{name}</span>; })}</div><div data-helix-part="chart-data"><table><caption>{label}</caption><tbody>{categories.map((category,index) => <tr key={category}><th scope="row">{category}</th>{series.map(item => <td key={item.name}>{item.data[index] ?? 'No data'}</td>)}</tr>)}</tbody></table></div></div>;
 };
 Chart.displayName = 'Chart'; export { Chart };
