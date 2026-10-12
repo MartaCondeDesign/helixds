@@ -53,10 +53,32 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"pass","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "banner (implicit only when PageHeader is the page's single top-level heading region — not applied automatically)",
     "announces": ["heading"],
-    "wcag": ["1.3.1 Info and Relationships", "2.4.6 Headings and Labels"]
+    "wcag": ["1.3.1 Info and Relationships", "2.4.6 Headings and Labels"],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "n/a",
+        "focus-return": "n/a",
+        "keyboard": "n/a",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "pass",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

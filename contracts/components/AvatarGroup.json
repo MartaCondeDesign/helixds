@@ -64,14 +64,36 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "group",
     "keyboardNav": [],
     "wcag": ["1.1.1 Non-text Content", "4.1.2 Name, Role, Value", "1.4.13 Content on Hover or Focus"],
     "notes": [
       "Each avatar is wrapped in Tooltip (see contracts/components/Tooltip.json), showing that person's name on hover — mouse only, since individual avatars carry no tabindex/focus behavior (keyboardNav stays []).",
       "The '+N' overflow indicator is also wrapped in Tooltip, listing the hidden names (comma-separated) — no longer presentational-only."
-    ]
+    ],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "n/a",
+        "focus-return": "n/a",
+        "keyboard": "n/a",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

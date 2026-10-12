@@ -203,11 +203,33 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role":        "img (when meaningful) or presentation (when decorative)",
     "aria":        "aria-hidden='true' when accompanied by a visible label. aria-label='Description' when icon-only.",
     "wcag":        ["1.1.1 Non-text Content", "1.4.3 Contrast (AA)"],
-    "note":        "The icon component itself renders aria-hidden. Accessibility is the responsibility of the usage site."
+    "note":        "The icon component itself renders aria-hidden. Accessibility is the responsibility of the usage site.",
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "n/a",
+        "focus-return": "n/a",
+        "keyboard": "n/a",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "tokenPolicy": {

@@ -64,10 +64,32 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"pass","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "dialog (implicit via native <dialog>)",
     "keyboardNav": ["Escape — dismisses (native <dialog> cancel event, redirected through onDismiss per ADR-010)", "Tab — cycles focus, trapped inside the panel (native)"],
-    "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value"]
+    "wcag": ["2.4.3 Focus Order", "4.1.2 Name, Role, Value"],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "pass",
+        "focus-return": "pass",
+        "keyboard": "pass",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

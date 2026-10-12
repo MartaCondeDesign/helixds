@@ -55,10 +55,32 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"n/a","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "link (implicit from <a href>)",
     "keyboardNav": ["Tab — moves focus", "Enter — activates"],
-    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+    "wcag": ["2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "pass",
+        "focus-return": "n/a",
+        "keyboard": "pass",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

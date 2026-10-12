@@ -58,10 +58,32 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"n/a","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "none of its own (a plain <div>) — add role=\"group\" or \"region\" with a label only when the card represents a distinct section",
     "announces": [],
-    "wcag": ["1.4.3 Contrast (AA)"]
+    "wcag": ["1.4.3 Contrast (AA)"],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "n/a",
+        "focus-return": "n/a",
+        "keyboard": "n/a",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "n/a",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

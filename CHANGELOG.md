@@ -82,7 +82,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-11 — verify:stable — NavItem back to beta until its Figma component gets the new current-item colors (latest commit)
+- 2026-10-12 — a11y: contract results written readable (one entry per line, after wcag); pnpm a11y refreshes the package copy of the contracts (dist/contracts) so it never lags behind (latest commit)
+- 2026-10-11 — verify:stable — NavItem back to beta until its Figma component gets the new current-item colors ([`e08f85f`](https://github.com/MartaCondeDesign/helixds/commit/e08f85f))
 - 2026-10-11 — fix(NavItem): current item is a solid pill — fill.primary-interactive-default + text/icon.inverse (the primary Button pair, chosen 2026-10-11): 5.17:1 against the nav in light, 3.45:1 in dark (was 1.09 / 1.72), white text 5.17:1 — WCAG 1.4.1 / 1.4.11 ([`dcaa347`](https://github.com/MartaCondeDesign/helixds/commit/dcaa347))
 - 2026-10-11 — a11y: daily history (quality/accessibility-history.json, one entry per day from pnpm a11y) + 'By day' on Data/Accessibility — pick a day, see its score and what changed since the previous test; Proposals/Table reorder — options A, B, C and C+A to try (keyboard + no-drag reorder, WCAG 2.1.1 / 2.5.7) ([`ece62e5`](https://github.com/MartaCondeDesign/helixds/commit/ece62e5))
 - 2026-10-11 — fix(Chart): hidden data table no longer stretches the page (visually hidden on a wrapper div — a table ignores height/overflow); missing values read 'No data' instead of 0. a11y CLI: pnpm a11y <Name> and pnpm a11y all <Name> both work ([`9405748`](https://github.com/MartaCondeDesign/helixds/commit/9405748))

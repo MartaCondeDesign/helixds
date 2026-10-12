@@ -70,10 +70,32 @@
   },
 
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"pass","focus-return":"n/a","keyboard":"pass","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"pass","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "radiogroup (hand-rolled — root is a plain div, options are buttons, not native inputs; see ADR-012)",
     "keyboardNav": ["Arrow keys — move selection between options (roving tabindex, hand-rolled)", "Space/Enter — selects the focused option", "Tab — moves focus into and out of the group (only the checked option is in the tab order)"],
-    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"]
+    "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "pass",
+        "focus-return": "n/a",
+        "keyboard": "pass",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "pass",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
 
   "figma": {

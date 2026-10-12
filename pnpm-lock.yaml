@@ -154,6 +154,9 @@ importers:
       tailwind-merge:
         specifier: ^2.5.0
         version: 2.6.1
+      tailwindcss:
+        specifier: '>=4.0.0'
+        version: 4.3.3
     devDependencies:
       '@types/react':
         specifier: ^19.0.0

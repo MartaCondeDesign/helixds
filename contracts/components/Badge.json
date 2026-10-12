@@ -107,13 +107,35 @@
     ]
   },
   "a11y": {
-    "results": {"score":100,"meetsMinimum":true,"checks":{"contract":"pass","keys":"n/a","focus-return":"n/a","keyboard":"n/a","axe":"pass","contrast":"pass","focus-visible":"pass","target-size":"pass","reflow":"n/a","screen-reader":"n/a","ai-visual":"pass","human":"pending"},"notScored":["ai-visual","human"],"changed":"2026-10-11"},
     "role": "status (add role='status' when content is dynamic)",
     "announces": [],
     "wcag": [
       "1.4.1 Use of Color (don't rely on color alone)",
       "1.4.3 Contrast (AA)"
-    ]
+    ],
+    "results": {
+      "score": 100,
+      "meetsMinimum": true,
+      "checks": {
+        "contract": "pass",
+        "keys": "n/a",
+        "focus-return": "n/a",
+        "keyboard": "n/a",
+        "axe": "pass",
+        "contrast": "pass",
+        "focus-visible": "pass",
+        "target-size": "pass",
+        "reflow": "n/a",
+        "screen-reader": "n/a",
+        "ai-visual": "pass",
+        "human": "pending"
+      },
+      "notScored": [
+        "ai-visual",
+        "human"
+      ],
+      "changed": "2026-10-12"
+    }
   },
   "figma": {
     "states": [],

@@ -232,10 +232,37 @@ for (const c of allComponents) {
   const prev = JSON.parse(src).a11y?.results;
   const checksNow = Object.fromEntries(CHECKS.map(ch => [ch.id, results[c.name]?.[ch.id]?.status ?? 'pending']));
   const next = { score: scores[c.name]!.score, meetsMinimum: scores[c.name]!.meetsMinimum, checks: checksNow, notScored: reviewIds };
-  if (prev && JSON.stringify({ ...prev, changed: undefined }) === JSON.stringify({ ...next, changed: undefined })) continue;
-  const line = `"results": ${JSON.stringify({ ...next, changed: now.slice(0, 10) })}`;
-  const updated = /"results": \{.*\}/.test(src) ? src.replace(/"results": \{.*\}/, line) : /"a11y":\s*\{\n/.test(src) ? src.replace(/("a11y":\s*\{\n)/, `$1    ${line},\n`) : src.replace(/("a11y":\s*\{)\s*/, `$1 ${line}, `);
-  if (updated !== src) { JSON.parse(updated); fs.writeFileSync(file, updated); }
+  const oldOneLine = src.includes('"results": {"score"'); // the first format — rewrite it readable once
+  if (!oldOneLine && prev && JSON.stringify({ ...prev, changed: undefined }) === JSON.stringify({ ...next, changed: undefined })) continue;
+  // Written readable (one entry per line, after wcag) — and replaced by matching its braces, so the rest of
+  // the contract keeps its formatting.
+  const block = `"results": ${JSON.stringify({ ...next, changed: now.slice(0, 10) }, null, 2).replace(/\n/g, '\n    ')}`;
+  let updated = src;
+  const at = src.indexOf('"results": {');
+  if (at !== -1) {
+    let depth = 0, end = src.indexOf('{', at);
+    for (let i = end; i < src.length; i++) { if (src[i] === '{') depth++; else if (src[i] === '}' && --depth === 0) { end = i + 1; break; } }
+    // drop the old block with its separating comma/whitespace, then add it back below
+    updated = src.slice(0, at).replace(/\s*$/, '') .replace(/,?$/, '') + src.slice(end).replace(/^\s*,?/, '');
+    updated = updated.replace(/("a11y":\s*\{)\s*\n?\s*/, '$1\n    ');
+  }
+  // the a11y block's last line: put results after it
+  const a11yAt = updated.search(/"a11y":\s*\{/);
+  let depth = 0, close = -1;
+  for (let i = updated.indexOf('{', a11yAt); i < updated.length; i++) { if (updated[i] === '{') depth++; else if (updated[i] === '}' && --depth === 0) { close = i; break; } }
+  const before = updated.slice(0, close).replace(/\s*$/, '');
+  const inline = !updated.slice(a11yAt, close).includes('\n');
+  updated = inline
+    ? `${before}, ${block.replace(/\n\s*/g, ' ')} ${updated.slice(close)}`
+    : `${before},\n    ${block}\n  ${updated.slice(close)}`;
+  JSON.parse(updated);
+  if (updated !== src) fs.writeFileSync(file, updated);
+}
+
+// The package's copy of the contracts (packages/core/dist/contracts — what agents and the MCP read once
+// installed) is otherwise only refreshed by a build: refresh it now so it never lags behind the results.
+if (fs.existsSync(path.join(root, 'packages/core/dist'))) {
+  spawnSync('node', ['scripts/copy-agent-docs.mjs'], { cwd: path.join(root, 'packages/core'), stdio: 'ignore' });
 }
 
 // Table: one row per component, one column per check that ran.
