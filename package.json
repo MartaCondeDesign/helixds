@@ -60,6 +60,7 @@
     "eval:run": "tsx scripts/eval-run.ts",
     "eval:generate": "tsx scripts/eval-generate.ts",
     "eval:report": "tsx scripts/eval-report.ts",
+    "eval:pr": "tsx scripts/eval-pr.ts",
     "eval:review": "tsx scripts/eval-review.ts",
     "eval:gallery": "tsx scripts/eval-gallery.ts",
     "proof": "tsx packages/proof/src/cli.ts",

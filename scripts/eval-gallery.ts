@@ -14,6 +14,7 @@ type Output = {
   promptId: string; variant?: string; context?: string; rep?: number; model?: string;
   score: number; passed: boolean; generatedCode?: string; timestamp?: string; runId?: string;
   usage?: { totalTokens?: number };
+  durationMs?: number;
   round?: string;
   successResults?: Array<{ text: string; pass?: boolean | null }>;
   invalidResults?: Array<{ text: string; pass?: boolean | null }>;
@@ -95,6 +96,7 @@ for (const { file, out } of outputs) {
     compiles: out.mechanical ? out.mechanical.compiles && !buildError : null,
     judgeScore: out.judge ? out.judge.score : null,
     tokens: out.usage?.totalTokens ?? null,
+    durationMs: out.durationMs ?? null,
     issues: issuesOf(out, unresolved, missing),
     timestamp: out.timestamp ?? out.runId ?? null,
   });

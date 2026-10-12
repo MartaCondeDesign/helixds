@@ -28,6 +28,11 @@ const runs: (LoadedRun & { storedPassed: boolean })[] = loadRuns().map(run => {
   return { ...run, ...scorePrompt(prompt, run.generatedCode), storedPassed: run.passed };
 });
 
+// Average agent time per answer; '–' when none of them recorded a duration (runs from before it was tracked).
+const avgTime = (rs: LoadedRun[]) => {
+  const timed = rs.filter(r => typeof r.durationMs === 'number');
+  return timed.length ? `${(timed.reduce((s, r) => s + r.durationMs!, 0) / timed.length / 1000).toFixed(1)}s` : '–';
+};
 const pct = (n: number, d: number) => (d === 0 ? '  –' : `${Math.round((n / d) * 100)}%`.padStart(4));
 const byVariant = groupBy(runs, r => r.variant);
 
@@ -80,7 +85,7 @@ function overview() {
     console.log('\nNo generations yet — run `pnpm eval:generate --runs 5` to collect a baseline.');
     return;
   }
-  console.log(`\n${'variant'.padEnd(18)} ${'gens'.padStart(5)} ${'prompts'.padStart(8)} ${'pass rate'.padStart(10)} ${'avg score'.padStart(10)}  model · commit`);
+  console.log(`\n${'variant'.padEnd(18)} ${'gens'.padStart(5)} ${'prompts'.padStart(8)} ${'pass rate'.padStart(10)} ${'avg score'.padStart(10)} ${'avg time'.padStart(9)}  model · commit`);
   for (const [variant, rs] of [...byVariant].sort((a, b) => a[1][0].timestamp - b[1][0].timestamp)) {
     const promptsCovered = new Set(rs.map(r => r.promptId)).size;
     const passed = rs.filter(r => r.passed).length;
@@ -89,7 +94,7 @@ function overview() {
     const commits = [...new Set(rs.map(r => r.commit))].join(',');
     console.log(
       `${variant.padEnd(18)} ${String(rs.length).padStart(5)} ${String(promptsCovered).padStart(8)} ` +
-      `${`${passed}/${rs.length}`.padStart(6)} ${pct(passed, rs.length)} ${`${Math.round(avg * 100)}%`.padStart(10)}  ${models} · ${commits}`,
+      `${`${passed}/${rs.length}`.padStart(6)} ${pct(passed, rs.length)} ${`${Math.round(avg * 100)}%`.padStart(10)} ${avgTime(rs).padStart(9)}  ${models} · ${commits}`,
     );
     const storedPassed = rs.filter(r => r.storedPassed).length;
     if (!useStored && storedPassed !== passed) {
@@ -109,16 +114,16 @@ function detail(variant: string) {
     process.exit(1);
   }
   const passed = rs.filter(r => r.passed).length;
-  console.log(`\n📊 variant "${variant}" — ${rs.length} generation(s), pass rate ${passed}/${rs.length} (${pct(passed, rs.length).trim()})\n`);
+  console.log(`\n📊 variant "${variant}" — ${rs.length} generation(s), pass rate ${passed}/${rs.length} (${pct(passed, rs.length).trim()}), ${avgTime(rs)} per answer\n`);
   evalHealth();
 
   console.log('\nPer prompt (pass rate over its runs — a prompt that passes 3/5 is NOT reliable):');
   const byPrompt = groupBy(rs, r => r.promptId);
-  const rows = [...byPrompt].map(([id, prs]) => ({ id, n: prs.length, k: prs.filter(r => r.passed).length, avg: prs.reduce((s, r) => s + r.score, 0) / prs.length }));
+  const rows = [...byPrompt].map(([id, prs]) => ({ id, n: prs.length, k: prs.filter(r => r.passed).length, avg: prs.reduce((s, r) => s + r.score, 0) / prs.length, time: avgTime(prs) }));
   rows.sort((a, b) => a.k / a.n - b.k / b.n || a.id.localeCompare(b.id));
   for (const r of rows) {
     const icon = r.k === r.n ? '✅' : r.k === 0 ? '❌' : '⚠️ ';
-    console.log(`  ${icon} ${r.id.padEnd(30)} ${`${r.k}/${r.n}`.padStart(5)} ${pct(r.k, r.n)}   avg score ${Math.round(r.avg * 100)}%`);
+    console.log(`  ${icon} ${r.id.padEnd(30)} ${`${r.k}/${r.n}`.padStart(5)} ${pct(r.k, r.n)}   avg score ${Math.round(r.avg * 100)}%   ${r.time}`);
   }
   const flaky = rows.filter(r => r.k > 0 && r.k < r.n).length;
   if (rows.every(r => r.n === 1)) console.log('  (1 run per prompt — rerun with --runs 5 to see which passes are luck)');
@@ -162,6 +167,7 @@ function compareView(a: string, b: string) {
   evalHealth();
   const fmt = (rs: LoadedRun[]) => `${rs.filter(r => r.passed).length}/${rs.length}`.padStart(6) + ' ' + pct(rs.filter(r => r.passed).length, rs.length);
   console.log(`\nOverall pass rate: ${a} ${fmt(ra).trim()}  →  ${b} ${fmt(rb).trim()}   (${delta(rate(rb) - rate(ra))})`);
+  console.log(`Time per answer:   ${a} ${avgTime(ra)}  →  ${b} ${avgTime(rb)}`);
 
   console.log('\nPer prompt:');
   let better = 0, worse = 0;

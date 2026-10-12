@@ -313,6 +313,7 @@ export interface StoredRun extends ScoreResult, Partial<RunMeta> {
   mechanical?: MechanicalChecks; // compile + lint, scripts/eval-mechanical.ts
   judge?: { model: string; score: number; passed: boolean; verdicts: { id: string; pass: boolean; reason: string }[] }; // eval-judge.ts
   usage?: { totalTokens?: number }; // recorded by eval:generate since the context ladder
+  durationMs?: number; // how long the agent took to answer — recorded by eval:generate since 2026-10-12
 }
 
 export type LoadedRun = Omit<StoredRun, keyof RunMeta> & RunMeta & {
