@@ -13,7 +13,7 @@
     "Decorative clusters not tied to real people/entities on the record"
   ],
 
-  "rationale": "AvatarGroup collapses several people tied to one record into a compact overlapping stack with a '+N' overflow, so tables and cards stay scannable. Every child is an Avatar at the group's size, so heights stay on the same semantic.size rungs; names are exposed through per-avatar Tooltips and a labelled group rather than extra focus stops.",
+  "rationale": "AvatarGroup collapses several people tied to one record into a compact overlapping stack with a '+N' overflow, so tables and cards stay scannable. Every child is an Avatar at the group's size, so heights stay on the same semantic.size rungs; names are exposed through per-avatar Tooltips and a labelled group rather than extra focus stops. Hovering an avatar lifts and scales only that avatar (component.avatarGroup.hover-lift/hover-scale, aliasing the generic semantic.transform.lift.s and scale.s — approved 2026-09-24); its neighbours never move, and under prefers-reduced-motion nothing moves at all.",
 
   "governance": {
     "mayExtendLocally": [

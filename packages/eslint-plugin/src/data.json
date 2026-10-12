@@ -449,7 +449,8 @@
     ],
     "#3b82f6": [
       "--helix-color-fill-primary",
-      "--helix-color-border-focus"
+      "--helix-color-border-focus",
+      "--helix-color-chart-series-3"
     ],
     "#93c5fd": [
       "--helix-color-fill-primary-light"
@@ -463,10 +464,12 @@
     ],
     "#1d4ed8": [
       "--helix-color-fill-primary-interactive-hover",
-      "--helix-color-text-link-hover"
+      "--helix-color-text-link-hover",
+      "--helix-color-chart-series-5"
     ],
     "#1e40af": [
-      "--helix-color-fill-primary-interactive-press"
+      "--helix-color-fill-primary-interactive-press",
+      "--helix-color-chart-series-4"
     ],
     "#eff6ff": [
       "--helix-color-fill-primary-interactive-light-default"
@@ -484,8 +487,7 @@
     "#dc2626": [
       "--helix-color-fill-danger-interactive-default",
       "--helix-color-icon-danger",
-      "--helix-color-border-danger",
-      "--helix-color-chart-series-4"
+      "--helix-color-border-danger"
     ],
     "#b91c1c": [
       "--helix-color-fill-danger-interactive-hover",
@@ -502,8 +504,7 @@
     ],
     "#16a34a": [
       "--helix-color-fill-success-interactive-default",
-      "--helix-color-border-success",
-      "--helix-color-chart-series-3"
+      "--helix-color-border-success"
     ],
     "#15803d": [
       "--helix-color-fill-success-interactive-hover",
@@ -515,8 +516,7 @@
     ],
     "#d97706": [
       "--helix-color-fill-warning-interactive-default",
-      "--helix-color-border-warning",
-      "--helix-color-chart-series-2"
+      "--helix-color-border-warning"
     ],
     "#b45309": [
       "--helix-color-fill-warning-interactive-hover",
@@ -533,8 +533,7 @@
     "#0369a1": [
       "--helix-color-fill-info-interactive-hover",
       "--helix-color-text-info",
-      "--helix-color-icon-info",
-      "--helix-color-chart-series-5"
+      "--helix-color-icon-info"
     ],
     "#f0f9ff": [
       "--helix-color-fill-info-light"
@@ -568,6 +567,9 @@
     ],
     "#334155": [
       "--helix-color-border-inverse"
+    ],
+    "#1e3a8a": [
+      "--helix-color-chart-series-2"
     ]
   },
   "primitives": {

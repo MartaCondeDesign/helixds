@@ -13,7 +13,7 @@
     "A single standalone link inside body text — use a plain <a>, styled separately"
   ],
 
-  "rationale": "NavItem is a native <a href> so links behave like links — middle-click, open in new tab, correct link role — instead of a button that navigates. It's the only allowed entry inside SideNav, and its active-state motion follows the shared motion engine (ADR-007).",
+  "rationale": "NavItem is a native <a href> so links behave like links — middle-click, open in new tab, correct link role — instead of a button that navigates. It's the only allowed entry inside SideNav, and its active-state motion follows the shared motion engine (ADR-007). The current item is a light blue tint (fill.primary-interactive-light-hover) with blue text (text.link-hover, 5.49:1) and icon (icon.primary), marked by a 4px primary-blue bar at its left edge; the tint and the bar are one indicator, so both slide together to the next current item. Dark mode follows the semantic tokens: navy tint, light-blue text (4.84:1). Approved 2026-10-12 over the earlier solid blue pill.",
 
   "governance": {
     "mayExtendLocally": [
@@ -88,12 +88,12 @@
       ],
       "contrast": {
         "nav-item-label": {
-          "light": "5.16:1 — #ffffff on #2563eb",
-          "dark": "5.16:1 — #ffffff on #2563eb"
+          "light": "5.49:1 — #1d4ed8 on #dbeafe",
+          "dark": "4.83:1 — #93c5fd on #1e40af"
         },
         "nav-item-icon (icon)": {
-          "light": "5.17:1 — #ffffff on #2563eb",
-          "dark": "5.17:1 — #ffffff on #2563eb"
+          "light": "4.24:1 — #2563eb on #dbeafe",
+          "dark": "4.84:1 — #93c5fd on #1e40af"
         }
       },
       "targetSize": {
