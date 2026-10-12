@@ -19,7 +19,7 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { checkKeyNaming, checkIconAliasNaming, checkRelativeLightness } from './token-naming-lib';
+import { checkKeyNaming, checkIconAliasNaming, checkOpacityStep, checkRelativeLightness } from './token-naming-lib';
 
 const args = process.argv.slice(2);
 const [dotPath, value] = args;
@@ -58,6 +58,14 @@ if (iconViolations.length > 0) {
   console.error(`❌ '${dotPath}':`);
   for (const v of iconViolations) console.error(`   ${v}`);
   console.error('\nNot written.');
+  process.exit(1);
+}
+
+const opacityViolations = checkOpacityStep(pathParts[pathParts.length - 1] ?? '', Number.isNaN(Number(value)) ? value : Number(value));
+if (opacityViolations.length > 0) {
+  console.error(`❌ '${dotPath}':`);
+  for (const v of opacityViolations) console.error(`   ${v}`);
+  console.error('\nSee packages/tokens/CLAUDE.md → "Opacity steps". Not written.');
   process.exit(1);
 }
 

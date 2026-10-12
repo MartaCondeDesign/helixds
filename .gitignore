@@ -22,3 +22,6 @@ apps/storybook/.proof/
 
 # Copied from the root AGENTS.md at build (packages/core/scripts/copy-agent-docs.mjs)
 packages/core/AGENTS.md
+
+# Blog drafts and images live on the Desktop, never in the repo
+docs/blog/

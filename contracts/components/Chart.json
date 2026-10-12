@@ -7,7 +7,7 @@
   "import": "import { Chart } from '@helixds/react';",
   "neverUseFor": ["Raw ECharts options or a product-specific chart renderer", "Precise audit values without an accompanying Table", "More than six donut categories"],
 
-  "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility.",
+  "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility. The palette is all blue: series 1 is the primary Button's blue and every next series is a blue far from the one before it, never a near tone, and every series meets 3:1 on the page with no outline — dark blues alternate in light mode, light blues in dark mode (ADR-021 amendment). Stacked segments and donut slices are split by a page-colored gap. Charts draw in on load — lines sweep over semantic.duration.draw with each point appearing as the line reaches it, bars and series follow semantic.duration.stagger apart, eased with semantic.easing.gentle — and render finished under prefers-reduced-motion. The area fill fades from component.chart.area-opacity to transparent.",
 
   "governance": {
     "mayExtendLocally": [

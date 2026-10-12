@@ -34,6 +34,14 @@ export function checkIconAliasNaming(pathParts: string[], value: unknown): strin
   return [`Icon token aliases '${value}' — icons must alias semantic.color.icon.*, never semantic.color.text.*.`];
 }
 
+// Transparency comes in steps of 5% (packages/tokens/CLAUDE.md → "Opacity steps"): 0.05, 0.1, 0.15 … 1.
+// Any token whose key says opacity and whose value is a literal number must sit on that grid.
+export function checkOpacityStep(key: string, value: unknown): string[] {
+  if (!/opacity/i.test(key) || typeof value !== 'number') return [];
+  const percent = Math.round(value * 1000) / 10;
+  return percent % 5 === 0 && value >= 0 && value <= 1 ? [] : [`Opacity ${value} (${percent}%) is off the 5% grid — use the nearest step (${Math.round(value * 20) / 20}).`];
+}
+
 // ── Relative light/dark modifier check ──────────────────────────────────────────
 //
 // The one naming rule that was previously undocumented-as-code: packages/tokens/CLAUDE.md says

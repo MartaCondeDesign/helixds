@@ -476,6 +476,13 @@ custom property at all — the naming vocabulary is shared, the storage mechanis
   can't become a real `var()` — `motionPresets.ts` is the dedicated place for exactly that category,
   outside the token file, not a backdoor into it.
 
+## Opacity steps (decided 2026-10-12)
+
+Every transparency token — an `*opacity*` value, or the alpha of a gradient stop — moves in **steps of 5%**:
+0.05, 0.1, 0.15, 0.2 … 1. Never 0.16 or 0.33: pick the nearest step. `pnpm verify:tokens` and `pnpm token:add`
+enforce it (`checkOpacityStep` in `scripts/token-naming-lib.ts`) for any token whose key contains `opacity`.
+Examples: `component.chart.area-opacity` = 0.15, `component.modal.overlay-opacity` = 0.6.
+
 ## Dark mode tokens
 
 Dark overrides are in `dist/helix.css` under `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`.

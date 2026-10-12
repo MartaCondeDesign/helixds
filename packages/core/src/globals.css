@@ -2659,6 +2659,17 @@
     border-radius:  var(--helix-navItem-radius);
     background-color: var(--helix-navItem-fill-current);
   }
+  /* The blue bar at the left edge of the current item — part of the indicator, so it slides with it. */
+  [data-helix-part="nav-item-indicator"]::before {
+    content:          '';
+    position:         absolute;
+    top:              0;
+    bottom:           0;
+    left:             0;
+    width:            var(--helix-navItem-bar-width);
+    border-radius:    var(--helix-radius-full);
+    background-color: var(--helix-navItem-fill-bar);
+  }
 
   [data-helix-part="nav-item-icon"] {
     position:     relative;

@@ -34,6 +34,13 @@ Two problems surfaced building the first prototypes (`prototypes/explainers/`):
    (`prototypes/explainers/illustration-motion.tokens.json`, CSS vars `--helix-illustration-motion-*`).
    Illustrations read only these; components never read them, and illustrations never read
    `semantic.duration.*` / `semantic.easing.*`.
+   **Amended 2026-10-12 — one motion family, not two.** The family now lives in `tokens.json` as
+   `component.illustration.motion.*` (same CSS var names, `--helix-illustration-motion-*`). Where a value is
+   shared with components it aliases the semantic token instead of keeping its own copy: `duration-exit` →
+   `semantic.duration.slower`, `duration-draw` → `semantic.duration.draw`, `stagger` → `semantic.duration.stagger`
+   (both new, also used by Chart's draw-in), `easing-enter` → `semantic.easing.gentle` (was 0.23,1,0.32,1 — the
+   same curve to the eye). The values only illustrations use stay literals in that group. Components still never
+   read `component.illustration.*`.
 2. **One engine: Motion** — every effect in an illustration (opacity, scale, move, recolor, shape morph via
    `attrX`/`attrY`/`width`/`height`/`rx`) **and SVG strokes**, on a single timeline that is also the clock
    for looping, seeking and off-screen pausing.
