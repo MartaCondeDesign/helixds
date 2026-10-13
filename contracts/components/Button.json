@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name":    "Button",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "status":  "beta",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
@@ -13,7 +13,7 @@
     "Submitting a form implicitly — always set type='submit' explicitly"
   ],
 
-  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight.",
+  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight. Content that changes in place swaps instead of cutting (transitions.dev icon swap + text morph): with an icon, icon ↔ spinner and icon ↔ icon cross-fade with blur and scale over semantic.duration.enter; a plain-text label cross-blurs over semantic.duration.exit while its width eases to the new text's. The outgoing label is aria-hidden, so only the new one is read; under prefers-reduced-motion the swap is instant.",
 
   "governance": {
     "mayExtendLocally": [
@@ -211,13 +211,13 @@
           "light": "5.16:1 — #ffffff on #2563eb",
           "dark": "5.16:1 — #ffffff on #2563eb"
         },
-        "button-icon (icon primary m)": {
-          "light": "5.17:1 — #ffffff on #2563eb",
-          "dark": "5.17:1 — #ffffff on #2563eb"
-        },
         "button-icon (icon secondary m)": {
           "light": "17.85:1 — #0f172a on #ffffff",
           "dark": "16.3:1 — #f1f5f9 on #0f172a"
+        },
+        "button-icon (icon primary m)": {
+          "light": "5.17:1 — #ffffff on #2563eb",
+          "dark": "5.17:1 — #ffffff on #2563eb"
         },
         "button-icon (icon ghost m)": {
           "light": "17.85:1 — #0f172a on #ffffff",
@@ -245,7 +245,7 @@
         }
       },
       "targetSize": {
-        "button": "smallest 59×24 px"
+        "button": "smallest 58×24 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule",
@@ -273,7 +273,7 @@
         "ai-visual",
         "human"
       ],
-      "changed": "2026-10-12"
+      "changed": "2026-10-13"
     }
   }
 }

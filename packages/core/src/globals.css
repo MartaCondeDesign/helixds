@@ -254,6 +254,58 @@
     to { transform: rotate(360deg); }
   }
 
+  /* Swap in place (transitions.dev "icon swap" + "text morph") — Button.tsx keeps the outgoing content
+     for the length of the swap (data-swapping) and stacks it under the incoming one in the same grid
+     cell: the first child leaves, the last child arrives. The icon cross-fades with blur and scale
+     (scale/filter/opacity, never transform — the spinner's own spin owns transform); the label
+     cross-blurs while its width eases to the new text's (set inline by Button.tsx). The global
+     reduced-motion rule neutralises all of it, and Button.tsx doesn't stack anything under it. */
+  [data-helix-part="button-icon"][data-swapping] {
+    display:     inline-grid;
+    place-items: center;
+  }
+  [data-helix-part="button-icon"][data-swapping] > * { grid-area: 1 / 1; }
+  [data-helix-part="button-icon"][data-swapping] > :first-child {
+    animation: helix-button-icon-out var(--helix-button-swap-duration-icon) var(--helix-button-swap-easing-icon) forwards;
+  }
+  [data-helix-part="button-icon"][data-swapping] > :last-child {
+    animation: helix-button-icon-in var(--helix-button-swap-duration-icon) var(--helix-button-swap-easing-icon);
+  }
+  [data-helix-part="button-icon"][data-swapping] > [data-helix-part="button-spinner"]:first-child {
+    animation: helix-button-icon-out var(--helix-button-swap-duration-icon) var(--helix-button-swap-easing-icon) forwards, helix-spin 0.7s linear infinite;
+  }
+  [data-helix-part="button-icon"][data-swapping] > [data-helix-part="button-spinner"]:last-child {
+    animation: helix-button-icon-in var(--helix-button-swap-duration-icon) var(--helix-button-swap-easing-icon), helix-spin 0.7s linear infinite;
+  }
+  @keyframes helix-button-icon-out {
+    to { opacity: 0; scale: var(--helix-button-swap-scale); filter: blur(var(--helix-button-swap-blur)); }
+  }
+  @keyframes helix-button-icon-in {
+    from { opacity: 0; scale: var(--helix-button-swap-scale); filter: blur(var(--helix-button-swap-blur)); }
+  }
+
+  [data-helix-part="button-label"] {
+    transition: width var(--helix-button-swap-duration-width) var(--helix-button-swap-easing-label);
+  }
+  [data-helix-part="button-label"][data-swapping] {
+    display:       inline-grid;
+    justify-items: start;
+    white-space:   nowrap;
+  }
+  [data-helix-part="button-label"][data-swapping] > * { grid-area: 1 / 1; white-space: pre; }
+  [data-helix-part="button-label"][data-swapping] > :first-child {
+    animation: helix-button-label-out var(--helix-button-swap-duration-label) var(--helix-button-swap-easing-label) forwards;
+  }
+  [data-helix-part="button-label"][data-swapping] > :last-child {
+    animation: helix-button-label-in var(--helix-button-swap-duration-label) var(--helix-button-swap-easing-label);
+  }
+  @keyframes helix-button-label-out {
+    to { opacity: 0; filter: blur(var(--helix-button-swap-blur)); }
+  }
+  @keyframes helix-button-label-in {
+    from { opacity: 0; filter: blur(var(--helix-button-swap-blur)); }
+  }
+
   /* Icon sizing by size */
   [data-helix-part="button-icon"],
   [data-helix-part="button-icon-end"] {
@@ -1397,6 +1449,22 @@
     flex-direction: column;
     max-height:    320px;
     overflow-y:    auto;
+    /* Grows from its trigger (transitions.dev "menu dropdown"): it always opens below the anchor at the
+       anchor's width (ADR-013), so the origin is the top edge's centre. Opens from scale-enter over
+       duration-open; closes to the near-resting scale-exit over the shorter duration-close, while
+       Menu.tsx keeps it mounted (data-state="closing"). The global reduced-motion rule neutralises both. */
+    transform-origin: 50% 0;
+    animation:     helix-menu-enter var(--helix-menu-duration-open) var(--helix-menu-easing);
+  }
+  [data-helix-part="menu"][data-state="closing"] {
+    pointer-events: none;
+    animation:      helix-menu-exit var(--helix-menu-duration-close) var(--helix-menu-easing) forwards;
+  }
+  @keyframes helix-menu-enter {
+    from { opacity: 0; transform: scale(var(--helix-menu-scale-enter)); }
+  }
+  @keyframes helix-menu-exit {
+    to { opacity: 0; transform: scale(var(--helix-menu-scale-exit)); }
   }
   /* Minimum popup width when the options are words — the menu takes its trigger's width, and a
      narrow trigger (Select has no minimum) would otherwise squeeze the options. Numeric-only lists
@@ -3000,16 +3068,21 @@
      when every toast happens to be the same height; two different heights (a 2-line description vs.
      a 1-line one) immediately made the gaps look uneven. Same root cause, and the same fix, as
      --spread-y below. */
-  [data-helix-part="toast"][data-depth="0"] { z-index: 3; transform: translateY(0) scale(1); opacity: 1; }
+  [data-helix-part="toast"][data-depth="0"] { z-index: 3; transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
   [data-helix-part="toast"][data-depth="1"] {
     z-index: 2;
     transform: translateY(var(--peek-y, 0px)) scale(calc(1 - var(--helix-toast-depthScale)));
     opacity: calc(1 - var(--helix-toast-depthFade));
+    /* Toasts further back go softer — half the depth blur one step back, the full blur two steps back
+       (transitions.dev banner stacking: 1px / 2px). Explicit blur(0) on the front toast and on spread,
+       never an unset filter: blur → none isn't reliably interpolated and would snap. */
+    filter: blur(calc(var(--helix-toast-depthBlur) * 0.5));
   }
   [data-helix-part="toast"][data-depth="2"] {
     z-index: 1;
     transform: translateY(var(--peek-y, 0px)) scale(calc(1 - var(--helix-toast-depthScale) * 2));
     opacity: calc(1 - var(--helix-toast-depthFade) * 1.6);
+    filter: blur(var(--helix-toast-depthBlur));
   }
 
   /* --spread-y is a real measured pixel offset (React sets it inline via offsetHeight — see
@@ -3020,6 +3093,7 @@
   [data-helix-part="toast-viewport"][data-spread="true"] [data-helix-part="toast"][data-depth="2"] {
     opacity: 1;
     transform: translateY(var(--spread-y, 0px)) scale(1);
+    filter: blur(0);
   }
 
   [data-helix-part="toast"][data-state="closed"] {

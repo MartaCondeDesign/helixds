@@ -63,6 +63,9 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
   // change only updates what's there. Without this, React rendering twice on mount turns the first draw-in
   // into a plain update and the line just appears.
   const drawn = React.useRef('');
+  // The donut's shape (its categories) when it was last drawn: new values for the same categories morph
+  // the slices into place instead of drawing in from scratch.
+  const drawnShape = React.useRef('');
   // Everything the option depends on: an identical re-render (React runs effects twice on mount) must not
   // call setOption again — a second setOption, even an identical one, redraws the line in full mid draw-in.
   const applied = React.useRef('');
@@ -107,8 +110,12 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
     // page-colored gap instead (WCAG 1.4.11).
     const gap = { borderColor: page };
 
+    // Donut update (transitions.dev "donut chart"): when only the values change, each slice eases from
+    // its old angle to its new one over component.chart.duration-update with easing-update — the gaps
+    // between slices stay even the whole way.
+    const update = { animationDurationUpdate: ms(token(style,'--helix-chart-duration-update')), animationEasingUpdate: bezier(token(style,'--helix-chart-easing-update')) };
     const option = variant === 'donut'
-      ? { ...base, series: [{ type: 'pie', radius: ['56%','78%'], animationType: 'expansion', animationEasing: easeOut, itemStyle: { ...gap, borderWidth: 2 }, data: categories.map((name,index) => ({ name, value: series[0]?.data[index] ?? 0 })) }] }
+      ? { ...base, ...update, series: [{ type: 'pie', radius: ['56%','78%'], animationType: 'expansion', animationEasing: easeOut, ...update, itemStyle: { ...gap, borderWidth: 2 }, data: categories.map((name,index) => ({ name, value: series[0]?.data[index] ?? 0 })) }] }
       : { ...base, grid: { left: 8,right: 16,top: 24,bottom: 8,containLabel: true }, xAxis: { type: 'category',data: categories,axisLine:{lineStyle:{color:border}},axisLabel:{color:text,fontFamily} }, yAxis: { type:'value',splitLine:{lineStyle:{color:border}},axisLabel:{color:text,fontFamily} },
         series: series.map((item, index) => {
           const value = (point: number) => Math.abs(item.data[point] ?? 0);
@@ -125,9 +132,13 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
     const signature = JSON.stringify([variant, categories, series]);
     // New data draws in from scratch; anything else merges into what's on screen, so an identical re-render
     // (React's double effect on mount) doesn't cut the draw-in short.
-    const fresh = drawn.current !== signature;
+    // A donut whose categories didn't change only morphs to its new values.
+    const shape = JSON.stringify([variant, categories]);
+    const morph = variant === 'donut' && drawnShape.current === shape;
+    const fresh = drawn.current !== signature && !morph;
     const key = JSON.stringify([signature, themeVersion, [...hidden], height, label, description]);
-    if (fresh) { chart.clear(); drawn.current = signature; }
+    if (fresh) chart.clear();
+    drawn.current = signature; drawnShape.current = shape;
     if (applied.current !== key) { chart.setOption(option, fresh); applied.current = key; }
     // ResizeObserver always fires once when it starts observing; resizing then would redraw the line in full
     // mid draw-in, so only resize when the size really changed.
@@ -135,7 +146,7 @@ const Chart = ({ variant, categories, series, label, description, height = 280, 
     const observer = new ResizeObserver(() => { if (el.clientWidth !== chart.getWidth() || el.clientHeight !== chart.getHeight()) chart.resize(); });
     observer.observe(el); return () => observer.disconnect();
   }, [variant,categories,series,label,description,height,themeVersion,hidden]);
-  React.useEffect(() => () => { instance.current?.dispose(); instance.current = null; drawn.current = ''; applied.current = ''; }, []);
+  React.useEffect(() => () => { instance.current?.dispose(); instance.current = null; drawn.current = ''; drawnShape.current = ''; applied.current = ''; }, []);
   return <div data-helix-part="chart-root" data-variant={variant} className={cn(className)}><div ref={root} data-helix-part="chart-canvas" role="img" aria-label={description ? `${label}. ${description}` : label} style={{ height }} /><div data-helix-part="chart-legend" role={interactive ? 'group' : undefined} aria-label={interactive ? `${label} — show or hide series` : undefined}>{entries.map((name, index) => { const swatch = <span data-helix-part="chart-legend-swatch" aria-hidden="true" style={{ '--chart-swatch': `var(--helix-color-chart-series-${(index % 6) + 1})` } as React.CSSProperties} />; return interactive ? <button key={name} type="button" data-helix-part="chart-legend-item" aria-pressed={!hidden.has(name)} onClick={() => toggle(name)}>{swatch}{name}</button> : <span key={name} data-helix-part="chart-legend-item">{swatch}{name}</span>; })}</div><div data-helix-part="chart-data"><table><caption>{label}</caption><tbody>{categories.map((category,index) => <tr key={category}><th scope="row">{category}</th>{series.map(item => <td key={item.name}>{item.data[index] ?? 'No data'}</td>)}</tr>)}</tbody></table></div></div>;
 };
 Chart.displayName = 'Chart'; export { Chart };

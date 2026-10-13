@@ -83,9 +83,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-12 — Merge branch 'main' into eval-duration-pr-score (latest commit)
+- 2026-10-13 — Motion: transitions.dev effects on Toast, Menu, Button and the donut Chart (latest commit)
+- 2026-10-12 — Evals: record answer duration and post the eval score on a PR (#1) ([`d9ed415`](https://github.com/MartaCondeDesign/helixds/commit/d9ed415))
 - 2026-10-12 — Charts: all-blue palette and draw-in motion; NavItem: tinted current item with a blue bar; one motion family (#2) ([`b266608`](https://github.com/MartaCondeDesign/helixds/commit/b266608))
-- 2026-10-12 — Evals: record answer duration and post the eval score on a PR ([`35f5806`](https://github.com/MartaCondeDesign/helixds/commit/35f5806))
 - 2026-10-12 — a11y.applied in every contract — the accessibility layer each component applies, read from the real code: focus rule and its tokens (or the inner components that draw it), ARIA per part, what a screen reader announces, measured contrast for text AND icons in light and dark, smallest target, reduced motion. Written by pnpm a11y; verify:a11y-contracts fails a contract without it ([`b921459`](https://github.com/MartaCondeDesign/helixds/commit/b921459))
 - 2026-10-12 — a11y: contract results written readable (one entry per line, after wcag); pnpm a11y refreshes the package copy of the contracts (dist/contracts) so it never lags behind ([`4e02b9d`](https://github.com/MartaCondeDesign/helixds/commit/4e02b9d))
 - 2026-10-11 — verify:stable — NavItem back to beta until its Figma component gets the new current-item colors ([`e08f85f`](https://github.com/MartaCondeDesign/helixds/commit/e08f85f))

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../lib/utils';
+import { resolveTokenPx } from '../../lib/resolveTokenPx';
 import type { MenuOption, MenuOptionGroup, MenuProps } from './Menu.types';
 
 function isGroup(opt: MenuOption | MenuOptionGroup): opt is MenuOptionGroup {
@@ -59,9 +60,30 @@ function usePosition(expanded: boolean, anchorRef: React.RefObject<HTMLElement |
   return style;
 }
 
+// Keeps the menu on screen for its close transition after `expanded` turns false (transitions.dev
+// "menu dropdown": grows in from its trigger, settles out to a near-resting scale). Under reduced
+// motion there is no transition to wait for, so it goes at once.
+function usePresence(expanded: boolean, menuRef: React.RefObject<HTMLDivElement | null>) {
+  const [closing, setClosing] = React.useState(false);
+  // Decided during render, not in an effect — an effect would commit one frame with the menu already
+  // gone before bringing it back to animate out.
+  const [wasExpanded, setWasExpanded] = React.useState(expanded);
+  if (expanded !== wasExpanded) {
+    setWasExpanded(expanded);
+    setClosing(!expanded && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+  React.useEffect(() => {
+    if (!closing) return;
+    const timer = window.setTimeout(() => setClosing(false), resolveTokenPx('--helix-menu-duration-close', menuRef.current));
+    return () => window.clearTimeout(timer);
+  }, [closing, menuRef]);
+  return closing;
+}
+
 export function Menu({ id, expanded, anchorRef, options, value, multiple = false, values, activeValue, onSelect, className }: MenuProps) {
   const menuRef = React.useRef<HTMLDivElement>(null);
   const style = usePosition(expanded, anchorRef, menuRef);
+  const closing = usePresence(expanded, menuRef);
 
   // A listbox needs an accessible name (WCAG 4.1.2), taken from the control that opens it: its <label>
   // (Select/MultiSelect: "Role", not the trigger's current value), else its aria-label, else its text.
@@ -76,7 +98,7 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
     setName((label?.textContent ?? anchor.getAttribute('aria-label') ?? anchor.textContent ?? '').trim() || undefined);
   }, [expanded, anchorRef]);
 
-  if (!expanded) return null;
+  if (!expanded && !closing) return null;
 
   // Width rule (contract sizing.width): 150px minimum for word options, none when every option is a
   // number (1, 2, 1000…).
@@ -114,6 +136,10 @@ export function Menu({ id, expanded, anchorRef, options, value, multiple = false
       id={id}
       data-helix-part="menu"
       {...(numericOnly ? { 'data-numeric': '' } : {})}
+      data-state={expanded ? undefined : 'closing'}
+      // While it plays out its close transition the list is already gone for everyone: no pointer
+      // (CSS), no assistive tech, no focus.
+      {...(expanded ? {} : { 'aria-hidden': true, inert: true })}
       role="listbox"
       aria-multiselectable={multiple || undefined}
       aria-label={name}

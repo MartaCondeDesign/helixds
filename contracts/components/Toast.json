@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name":    "Toast",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status":  "beta",
 
   "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
@@ -13,7 +13,7 @@
     "Anything the user needs to refer back to later — Toast auto-dismisses and doesn't persist"
   ],
 
-  "rationale": "Toast is triggered imperatively (toast.success('Saved')) instead of rendered conditionally (ADR-011), so feedback can be raised from anywhere. Toasts stack top-right at a fixed 340px width in an aria-live='polite' region, and focus inside a toast pauses auto-dismiss — which is why it's never used for anything the user must act on.",
+  "rationale": "Toast is triggered imperatively (toast.success('Saved')) instead of rendered conditionally (ADR-011), so feedback can be raised from anywhere. Toasts stack top-right at a fixed 340px width in an aria-live='polite' region, and focus inside a toast pauses auto-dismiss — which is why it's never used for anything the user must act on. Toasts further back in the stack also soften — half of component.toast.depthBlur one step back, all of it two steps back — and sharpen when the stack spreads (transitions.dev banner stacking).",
 
   "governance": {
     "mayExtendLocally": [
@@ -158,7 +158,7 @@
         "ai-visual",
         "human"
       ],
-      "changed": "2026-10-12"
+      "changed": "2026-10-13"
     }
   },
 
