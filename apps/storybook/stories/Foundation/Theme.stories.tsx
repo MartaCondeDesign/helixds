@@ -26,7 +26,8 @@ function primitiveRef(value: string): string {
 }
 
 // ── Resolved values, following Storybook's theme toolbar ────────────────
-// Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (packages/tokens/src/build.ts), and
+// Dark mode is driven by `:root[data-theme="dark"]` in the generated CSS (built from packages/tokens/src/tokens.dark.json,
+// the DTCG resolver's dark context — see helix.resolver.json), and
 // the toolbar's light/dark switch (withThemeByDataAttribute in .storybook/preview.tsx) sets that attribute.
 // The page has no switch of its own: it re-reads every --helix-color-* var whenever the attribute changes.
 

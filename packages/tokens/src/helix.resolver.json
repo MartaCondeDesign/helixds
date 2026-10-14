@@ -1,0 +1,26 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
+  "name": "Helix DS",
+  "version": "2025.10",
+  "description": "Helix DS tokens: the base set (tokens.json, light) and the theme modifier, whose dark context replaces the tokens in tokens.dark.json. Any DTCG 2025.10 tool resolves Helix's light and dark themes from this file; packages/tokens/src/build.ts does the same to write dist/helix.css.",
+  "sets": {
+    "helix": {
+      "description": "Every Helix token — primitive, semantic and component — with its light value.",
+      "sources": [{ "$ref": "tokens.json" }]
+    }
+  },
+  "modifiers": {
+    "theme": {
+      "description": "Color theme. Light is tokens.json as is; dark replaces the tokens in tokens.dark.json, and every token aliasing one of them follows it.",
+      "contexts": {
+        "light": [],
+        "dark": [{ "$ref": "tokens.dark.json" }]
+      },
+      "default": "light"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/helix" },
+    { "$ref": "#/modifiers/theme" }
+  ]
+}

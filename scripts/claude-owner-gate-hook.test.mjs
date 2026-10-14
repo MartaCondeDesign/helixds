@@ -25,6 +25,12 @@ describe('claude-owner-gate-hook', () => {
     assert.match(result.permissionDecisionReason, /rule 13/);
   });
 
+  it('asks before the dark theme or the resolver changes too', () => {
+    assert.ok(asks('Edit', { file_path: `${root}/packages/tokens/src/tokens.dark.json` }));
+    assert.ok(asks('Write', { file_path: `${root}/packages/tokens/src/helix.resolver.json` }));
+    assert.ok(asks('Bash', { command: "sed -i 's/a/b/' packages/tokens/src/tokens.dark.json" }));
+  });
+
   it('asks before a contract or the prop map changes, by any editing tool', () => {
     assert.ok(asks('Write', { file_path: `${root}/contracts/components/Button.json`, content: '{}' }));
     assert.ok(asks('MultiEdit', { file_path: 'contracts/components/Modal.json', edits: [] }));

@@ -96,8 +96,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    on noticing it there after the fact; compute or verify contrast before considering a color-token change
    done, the same way `pnpm verify:tokens`/`pnpm docs:token-exceptions` are run before considering a token
    change done. This applies to **both** light and dark mode independently — a pair fixed in one theme is
-   not guaranteed to pass in the other (dark mode's `darkOverrides` map in `packages/tokens/src/build.ts`
-   picks its own values per token; check each theme's actual resolved pair, don't assume symmetry).
+   not guaranteed to pass in the other (dark mode's values come from `packages/tokens/src/tokens.dark.json`,
+   the DTCG resolver's dark context, which picks its own value per token; check each theme's actual resolved
+   pair, don't assume symmetry).
 10. **Status icons use `--helix-color-icon-*`, never `--helix-color-text-*`** — the two diverge in dark
    mode on purpose: `text-{info,success,warning,danger}` is a pale tone tuned for text on a colored tint
    (Badge, Chip), `icon-*` is the saturated tone for an icon on the plain page/surface (Toast, Status,
@@ -134,7 +135,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 pnpm contract <Name>        scaffold a new component contract
 pnpm verify:dtcg            validate packages/tokens/src/tokens.json against the official DTCG 2025.10 JSON Schema
                             (vendored in packages/tokens/schemas/) — values in their standard shape ({ value, unit },
-                            color objects…), converted only by packages/tokens/src/dtcg.mjs. Runs in pre-commit
+                            color objects…), converted only by packages/tokens/src/dtcg.mjs — plus tokens.dark.json and
+                            helix.resolver.json (the 2025.10 Resolver: light/dark themes), resolving each theme and
+                            checking every alias reaches a token of its type. Runs in pre-commit
 pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract

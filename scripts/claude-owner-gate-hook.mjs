@@ -8,7 +8,8 @@
  * if they approve it (permissionDecision "ask"); a denial goes back to the agent as the answer.
  *
  * Gated files:
- *   packages/tokens/src/tokens.json   every token — rule 13: the owner picks it, the agent proposes 2–3
+ *   packages/tokens/src/tokens.json, tokens.dark.json, helix.resolver.json
+ *                                     every token and theme — rule 13: the owner picks it, the agent proposes 2–3
  *   contracts/components/*.json       what each component IS — rule 7: the contract wins over everything
  *   .ai/maps/prop-map.md              the canonical prop vocabulary — rule 5: every prop name follows it
  *   node_modules/@helixds/**, patches/@helixds*
@@ -29,8 +30,8 @@ import { recordHookTrace } from './hook-trace.mjs';
 
 const GATED = [
   {
-    match: p => /(^|\/)packages\/tokens\/src\/tokens\.json$/.test(p),
-    what: 'packages/tokens/src/tokens.json',
+    match: p => /(^|\/)packages\/tokens\/src\/(tokens(\.[\w-]+)?\.json|[\w-]+\.resolver\.json)$/.test(p),
+    what: 'packages/tokens/src/tokens.json (or tokens.dark.json / helix.resolver.json — the themes)',
     why: 'Tokens are the design-system owner\'s choice (CLAUDE.md rule 13): the agent proposes 2–3 existing tokens with what each does and which it recommends, and never creates or edits one without the owner\'s approval.',
   },
   {
@@ -57,7 +58,7 @@ const WRITING_CLIS = [
   { pattern: /\b(?:pnpm|yarn)\s+patch(?:-commit)?\s+[^\n]*@helixds|\bpatch-package\s+[^\n]*@helixds/, gate: GATED[3] },
 ];
 const GATED_IN_COMMAND = [
-  { pattern: /packages\/tokens\/src\/tokens\.json/, gate: GATED[0] },
+  { pattern: /packages\/tokens\/src\/(tokens(\.[\w-]+)?\.json|[\w-]+\.resolver\.json)/, gate: GATED[0] },
   { pattern: /contracts\/components\/[\w*{},-]*\.json|contracts\/components\/?(?:\s|$|['"])/, gate: GATED[1] },
   { pattern: /\.ai\/maps\/prop-map\.md/, gate: GATED[2] },
   { pattern: /node_modules\/@helixds\/|patches\/@helixds/, gate: GATED[3] },
