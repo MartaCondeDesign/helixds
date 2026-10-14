@@ -114,7 +114,7 @@ function main() {
       }
       return out;
     }
-    if ('cssVariable' in result) return `${result.path} = ${JSON.stringify(result.value)} (${result.cssVariable})`;
+    if ('cssVariable' in result) return `${result.path} = ${result.css ?? JSON.stringify(result.value)} (${result.cssVariable})`; // css: the DTCG value rendered
     if ('guidance' in result) return String(result.guidance);
     return JSON.stringify(result, null, 2);
   }

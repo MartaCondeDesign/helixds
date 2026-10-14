@@ -11,6 +11,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { isAlias, toCss } from './dtcg.mjs';
 
 const tokens = JSON.parse(
   fs.readFileSync(new URL('./tokens.json', import.meta.url), 'utf-8'),
@@ -21,13 +22,21 @@ fs.mkdirSync(dist, { recursive: true });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-// $value is usually a leaf (string/number). A DTCG composite token (e.g. $type: "typography" —
-// semantic.textStyle.*) instead holds an object of named sub-properties, each itself an alias
-// string ({primitive.fontSize.s}) — see the composite handling in flatten()/buildTs() below.
-type TokenNode = { $value: string | number | Record<string, string>; $type: string; $description?: string };
+// $value follows DTCG 2025.10 (./dtcg.mjs): an alias string, or the type's own shape — a color object,
+// { value, unit }, a cubicBezier array… — rendered to CSS by toCss(). A typography token
+// (semantic.textStyle.*) is the one composite that becomes one CSS var per sub-property; each sub-property
+// is an alias ({primitive.fontSize.s}) or a literal of its own type — see flatten()/buildTs() below.
+type TokenNode = { $value: unknown; $type: string; $description?: string; $extensions?: Record<string, unknown> };
 
-function isComposite(value: TokenNode['$value']): value is Record<string, string> {
-  return typeof value === 'object' && value !== null;
+function isComposite(token: TokenNode): token is TokenNode & { $value: Record<string, unknown> } {
+  return token.$type === 'typography';
+}
+// The DTCG type of each typography sub-property, to render a literal one (letterSpacing: { value: 0, unit: 'px' }).
+const TYPOGRAPHY_TYPES: Record<string, string> = { fontFamily: 'fontFamily', fontSize: 'dimension', fontWeight: 'fontWeight', letterSpacing: 'dimension', lineHeight: 'number' };
+
+/** A token's CSS value: an alias resolved through the tree, anything else rendered by the DTCG converter. */
+function cssOf(value: unknown, type: string | undefined, root: Tree, extensions?: Record<string, unknown>): string {
+  return isAlias(value) ? resolveRef(value, root) : toCss(value, type, { extensions, ref: v => resolveRef(v, root) });
 }
 type Tree = Record<string, unknown>;
 type CSSVar = {
@@ -46,15 +55,17 @@ function refToCssVar(value: unknown): string | undefined {
 // ─── Resolve DTCG references ({a.b.c} → value) ───────────────────────────────
 
 function resolveRef(value: string, root: Tree): string {
-  if (typeof value !== 'string' || !value.startsWith('{')) return value;
+  if (!isAlias(value)) return value;
   const refPath = value.slice(1, -1).split('.');
   let node: unknown = root;
   for (const key of refPath) {
     // Composite token ($value is an object, e.g. semantic.textStyle.*) reached with path segments
     // still remaining — those segments index into $value (fontSize/fontWeight/...), not the token
     // node itself, since a composite's sub-properties live one level deeper than a normal leaf's.
-    if (node && typeof node === 'object' && '$value' in node && isComposite((node as TokenNode).$value)) {
-      node = ((node as TokenNode).$value as Record<string, unknown>)[key];
+    if (node && typeof node === 'object' && '$value' in node && isComposite(node as TokenNode)) {
+      const sub = ((node as TokenNode).$value as Record<string, unknown>)[key];
+      // A literal sub-property ({ value, unit }) is rendered here; an alias is followed below.
+      node = isAlias(sub) || sub === undefined ? sub : toCss(sub, TYPOGRAPHY_TYPES[key]);
       continue;
     }
     if (typeof node !== 'object' || node === null) {
@@ -65,10 +76,10 @@ function resolveRef(value: string, root: Tree): string {
   if (typeof node === 'string') return resolveRef(node, root); // landed on a composite sub-property's alias/literal
   if (typeof node === 'object' && node !== null && '$value' in node) {
     const t = node as TokenNode;
-    if (isComposite(t.$value)) {
+    if (isComposite(t)) {
       throw new Error(`Token reference ${value} resolved to a composite token — reference one of its sub-properties instead.`);
     }
-    return resolveRef(String(t.$value), root);
+    return cssOf(t.$value, t.$type, root, t.$extensions);
   }
   throw new Error(`Token reference ${value} did not resolve to a leaf token`);
 }
@@ -88,18 +99,16 @@ function flatten(obj: Tree, root: Tree, prefix: string[], layer: CSSVar['layer']
       // component.*  → --helix-{path} (strip 'component.' prefix)
       const basePrefix = layer === 'primitive' ? ['primitive', ...prefix] : prefix;
 
-      if (isComposite(token.$value)) {
+      if (isComposite(token)) {
         // One CSS var per sub-property — e.g. semantic.textStyle.body-s-medium.fontSize →
-        // --helix-textStyle-body-s-medium-fontSize. Each sub-value is itself an alias string.
+        // --helix-textStyle-body-s-medium-fontSize. A sub-value is an alias or a literal of its own type.
         return Object.entries(token.$value).map(([subKey, subVal]) => {
           const name = '--helix-' + [...basePrefix, key, subKey].join('-').replace(/\./g, '-');
-          return { name, value: resolveRef(subVal, root), layer, description: token.$description, alias: refToCssVar(subVal) };
+          return { name, value: cssOf(subVal, TYPOGRAPHY_TYPES[subKey], root), layer, description: token.$description, alias: refToCssVar(subVal) };
         });
       }
 
-      const rawValue = typeof token.$value === 'string'
-        ? resolveRef(token.$value, root)
-        : String(token.$value);
+      const rawValue = cssOf(token.$value, token.$type, root, token.$extensions);
       const name = '--helix-' + [...basePrefix, key].join('-').replace(/\./g, '-');
       return [{ name, value: rawValue, layer, description: token.$description, alias: refToCssVar(token.$value) }];
     }
@@ -607,16 +616,14 @@ function buildTs(obj: Tree, root: Tree, indent = 1): string[] {
     const safeKey = /[^a-zA-Z0-9_$]/.test(key) || /^[0-9]/.test(key) ? `'${key}'` : key;
     if ('$value' in node) {
       const token = node as unknown as TokenNode;
-      if (isComposite(token.$value)) {
+      if (isComposite(token)) {
         lines.push(`${pad}${safeKey}: {`);
         for (const [subKey, subVal] of Object.entries(token.$value)) {
-          lines.push(`${pad}  ${subKey}: '${resolveRef(subVal, root)}',`);
+          lines.push(`${pad}  ${subKey}: '${cssOf(subVal, TYPOGRAPHY_TYPES[subKey], root)}',`);
         }
         lines.push(`${pad}},`);
       } else {
-        const value = typeof token.$value === 'string'
-          ? resolveRef(token.$value, root)
-          : String(token.$value);
+        const value = cssOf(token.$value, token.$type, root, token.$extensions);
         lines.push(`${pad}${safeKey}: '${value}',`);
       }
     } else {

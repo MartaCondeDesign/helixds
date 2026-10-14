@@ -10,7 +10,7 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 | Base      | Native HTML elements + hand-written WAI-ARIA (see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md)) |
 | Styling   | Tailwind CSS v4 — config in CSS     |
 | Icons     | @tabler/icons-react                 |
-| Tokens    | DTCG JSON → CSS vars + Tailwind @theme |
+| Tokens    | DTCG 2025.10 JSON (`pnpm verify:dtcg`, official schema) → CSS vars + Tailwind @theme |
 | Runtime   | React 19, TypeScript strict         |
 | Monorepo  | pnpm workspaces                     |
 
@@ -132,6 +132,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 
 ```
 pnpm contract <Name>        scaffold a new component contract
+pnpm verify:dtcg            validate packages/tokens/src/tokens.json against the official DTCG 2025.10 JSON Schema
+                            (vendored in packages/tokens/schemas/) — values in their standard shape ({ value, unit },
+                            color objects…), converted only by packages/tokens/src/dtcg.mjs. Runs in pre-commit
 pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract

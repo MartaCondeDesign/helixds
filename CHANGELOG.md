@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — pnpm helix validate: helix_validate_snippet from a terminal (latest commit)
+- 2026-10-14 — tokens.json follows DTCG 2025.10 — validated against the official schema (latest commit)
+- 2026-10-14 — pnpm helix validate: helix_validate_snippet from a terminal ([`770243d`](https://github.com/MartaCondeDesign/helixds/commit/770243d))
 - 2026-10-14 — Owner gate: judge inline scripts by what they write; MCP start timeouts ([`3a3b99b`](https://github.com/MartaCondeDesign/helixds/commit/3a3b99b))
 - 2026-10-14 — Guardrails for Cursor, Codex and Gemini CLI, not just Claude Code ([`1a64213`](https://github.com/MartaCondeDesign/helixds/commit/1a64213))
 - 2026-10-14 — Hooks record what they catch; Cursor gets the Helix MCP server ([`09f8e01`](https://github.com/MartaCondeDesign/helixds/commit/09f8e01))

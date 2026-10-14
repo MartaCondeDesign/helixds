@@ -15,29 +15,29 @@
 import fs from 'fs';
 import path from 'path';
 
-type Token = { $value?: unknown };
+type Token = { $value?: unknown; $type?: string };
 const root = path.resolve(import.meta.dirname, '../..');
 const tokens = JSON.parse(fs.readFileSync(path.join(root, 'packages/tokens/src/tokens.json'), 'utf8'));
 
 // Same naming rule as packages/tokens/src/build.ts (refToCssVar / flatten).
 const cssVarOf = (p: string[]) => '--helix-' + (p[0] === 'primitive' ? p : p.slice(1)).join('-');
-const byCssVar = new Map<string, { path: string; value: unknown }>();
+const byCssVar = new Map<string, { path: string; value: unknown; composite?: boolean }>();
 (function flatten(node: Record<string, unknown>, at: string[]) {
   for (const [k, v] of Object.entries(node)) {
     if (k.startsWith('$')) continue;
-    if (v && typeof v === 'object' && '$value' in (v as object)) byCssVar.set(cssVarOf([...at, k]), { path: [...at, k].join('.'), value: (v as Token).$value });
+    if (v && typeof v === 'object' && '$value' in (v as object)) byCssVar.set(cssVarOf([...at, k]), { path: [...at, k].join('.'), value: (v as Token).$value, composite: (v as Token).$type === 'typography' });
     else if (v && typeof v === 'object') flatten(v as Record<string, unknown>, [...at, k]);
   }
 })(tokens, []);
 
 // A reference into a composite token ({semantic.textStyle.caption-semibold.fontSize}): the parent is the
 // token, the last segment a property of its $value object.
-function resolve(ref: string): { path: string; value: unknown } | undefined {
+function resolve(ref: string): { path: string; value: unknown; composite?: boolean } | undefined {
   const parts = ref.split('.');
   const direct = byCssVar.get(cssVarOf(parts));
   if (direct) return direct;
   const parent = byCssVar.get(cssVarOf(parts.slice(0, -1)));
-  const sub = parent && typeof parent.value === 'object' ? (parent.value as Record<string, unknown>)[parts.at(-1)!] : undefined;
+  const sub = parent?.composite ? (parent.value as Record<string, unknown>)[parts.at(-1)!] : undefined;
   return sub === undefined ? undefined : { path: ref, value: sub };
 }
 
@@ -45,7 +45,7 @@ function resolve(ref: string): { path: string; value: unknown } | undefined {
 // as its own variable (token var + '-' + property).
 function compositeProp(cssVar: string): { path: string; value: unknown } | undefined {
   for (const [name, t] of byCssVar) {
-    if (!cssVar.startsWith(name + '-') || typeof t.value !== 'object' || t.value === null) continue;
+    if (!cssVar.startsWith(name + '-') || !t.composite) continue; // only typography is composite; a color/dimension object isn't
     const prop = cssVar.slice(name.length + 1);
     if (prop in (t.value as object)) return { path: `${t.path}.${prop}`, value: (t.value as Record<string, unknown>)[prop] };
   }

@@ -6,9 +6,12 @@ Transforms `src/tokens.json` (DTCG format) into:
 - `dist/helix.css`  — CSS custom properties for runtime use
 - `dist/index.ts`   — TypeScript constants for import
 
-## Token format (DTCG)
+## Token format (DTCG 2025.10)
 
-Every token has `$value` and `$type`. References use `{path.to.token}` syntax:
+`tokens.json` follows the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) —
+the standard, not an approximation of it: `pnpm verify:dtcg` validates the file against the official JSON
+Schema (vendored in `schemas/dtcg-2025.10/`) and runs in pre-commit. Every token has `$value` and `$type`.
+References use `{path.to.token}` syntax:
 
 ```json
 "color": {
@@ -17,6 +20,32 @@ Every token has `$value` and `$type`. References use `{path.to.token}` syntax:
   }
 }
 ```
+
+A literal `$value` has its type's own shape, never a CSS string:
+
+| `$type` | `$value` | CSS it renders |
+|---|---|---|
+| `color` | `{ "colorSpace": "srgb", "components": [0.1451, 0.3882, 0.9216], "hex": "#2563eb" }` (+ `"alpha"`) | `#2563eb` / `rgba(…)` |
+| `dimension` | `{ "value": 16, "unit": "px" }` — `px` or `rem` only | `16px` |
+| `duration` | `{ "value": 200, "unit": "ms" }` — `ms` or `s` | `200ms` |
+| `cubicBezier` | `[0.4, 0, 0.2, 1]` | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| `fontFamily` | `["Inter", "ui-sans-serif", "sans-serif"]` | `Inter, ui-sans-serif, sans-serif` |
+| `fontWeight`, `number` | `600`, `1.02` — a JSON number | `600`, `1.02` |
+| `shadow` | `{ "color", "offsetX", "offsetY", "blur", "spread" }` (or a list of them) | `0 1px 2px rgba(0,0,0,0.05)` |
+| `typography` | `{ "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight" }` — all 5 required | one CSS var per sub-property |
+
+**`src/dtcg.mjs` is the one place that converts.** `toCss()` renders a `$value` as CSS and `fromCss()` turns CSS
+into a `$value` — the build, `pnpm token:add`, the linter's data, the MCP/CLI, the token audits and Storybook all
+call it; nothing else parses a value. Two things the standard has no shape for keep their meaning in
+`$extensions["com.helixds"]`: a length relative to font size (`primitive.letterSpacing.*`, in `em`) is
+`$type: "number"` holding the multiplier plus `"cssUnit": "em"`; and a shadow with every length 0 and a
+transparent color (`primitive.shadow.none`) renders as `none`. The root group carries `$description` and
+`$extensions["com.helixds"].tokenSetOrder` (the former `$schema`/`$metadata` aren't valid group properties).
+
+Write a new token with `pnpm token:add <path> <css-value | {alias}> --type <type>` — it converts the CSS for you
+and refuses a unit the standard doesn't allow (`vw`, `%`…). Dark mode still lives in `src/build.ts`'s
+`darkOverrides` (hex strings), not in the token file — moving it to the standard's Resolver module
+(`sets`/`modifiers`) is the next step toward full 2025.10 conformance.
 
 ## Three layers
 

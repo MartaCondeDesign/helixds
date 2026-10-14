@@ -21,6 +21,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { isAlias, toCss } from '../packages/tokens/src/dtcg.mjs';
 
 export type FigmaState = 'synced' | 'drift' | 'missing';
 export type FigmaCheck = { state: FigmaState; details: string[]; syncedAt?: string };
@@ -52,10 +53,27 @@ function cssRulesFor(css: string, parts: string[]): string[] {
   return out.sort();
 }
 
+// A component's tokens as the CSS they produce: each literal $value rendered by the DTCG converter, so moving
+// tokens.json to DTCG 2025.10 shapes ("250ms" → { value: 250, unit: "ms" }) doesn't read as a design change.
+function asCss(node: any): any {
+  if (!node || typeof node !== 'object') return node;
+  if ('$value' in node) {
+    // Both sides of the comparison go through here — an older commit's plain "250ms"/0.15 and today's
+    // { value: 250, unit: "ms" }/0.15 all come out as the same CSS string.
+    const v = node.$value;
+    const value = isAlias(v) || node.$type === 'typography' ? v
+      : typeof v === 'string' || typeof v === 'number' ? String(v)
+      : toCss(v, node.$type, { extensions: node.$extensions });
+    const { $extensions, ...rest } = node;
+    return { ...rest, $value: value };
+  }
+  return Object.fromEntries(Object.entries(node).map(([k, v]) => [k, asCss(v)]));
+}
+
 function tokensFor(json: string | null, name: string): string {
   if (!json) return '';
   const key = name.charAt(0).toLowerCase() + name.slice(1);
-  return JSON.stringify(JSON.parse(json).component?.[key] ?? null);
+  return JSON.stringify(asCss(JSON.parse(json).component?.[key] ?? null));
 }
 
 // Props with no visual representation in Figma — event handlers, ARIA wiring, form plumbing, DOM passthrough.

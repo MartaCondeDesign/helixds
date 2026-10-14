@@ -26,7 +26,8 @@
   "scripts": {
     "build": "tsx src/build.ts && tsc dist/index.ts --declaration --module esnext --target es2022 --skipLibCheck --outDir dist",
     "dev": "tsx --watch src/build.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.mjs"
   },
   "devDependencies": {
     "tsx": "*",

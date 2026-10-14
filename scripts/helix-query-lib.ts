@@ -6,6 +6,7 @@
  */
 import fs from 'fs';
 import path from 'path';
+import { isAlias, toCss } from '../packages/tokens/src/dtcg.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const readJson = <T>(relativePath: string): T =>
@@ -32,7 +33,10 @@ type Contract = {
   tokenPolicy?: { allowed?: string[]; forbidden?: string[] };
   a11y?: { role?: string; keyboardNav?: string[]; wcag?: string[] };
 };
-type TokenLeaf = { $value: unknown; $type?: string; $description?: string };
+type TokenLeaf = { $value: unknown; $type?: string; $description?: string; $extensions?: Record<string, unknown> };
+
+/** A token's value as CSS — the alias itself, or its DTCG 2025.10 value rendered ("#2563eb", "16px"). */
+const cssOf = (token: TokenLeaf) => (isAlias(token.$value) ? token.$value : toCss(token.$value, token.$type, { extensions: token.$extensions }));
 
 function manifest(): Manifest {
   return readJson<Manifest>('contracts/manifest.json');
@@ -98,6 +102,7 @@ export function getToken(tokenPath: string) {
   return {
     path: token.path.replace(/^semantic\./, ''),
     value: token.token.$value,
+    css: cssOf(token.token),
     type: token.token.$type,
     description: token.token.$description,
     cssVariable: `--helix-${token.path.replace(/^semantic\./, '').replace(/\./g, '-')}`,
@@ -134,7 +139,7 @@ export function search(query: string) {
     .filter(result => result.score > 0 && result.path.startsWith('semantic.'))
     .sort((a, b) => b.score - a.score || a.path.localeCompare(b.path))
     .slice(0, 8)
-    .map(({ path: tokenPath, token }) => ({ kind: 'token', path: tokenPath.replace(/^semantic\./, ''), value: token.$value, type: token.$type }));
+    .map(({ path: tokenPath, token }) => ({ kind: 'token', path: tokenPath.replace(/^semantic\./, ''), value: cssOf(token), type: token.$type }));
 
   return { query, results: [...componentMatches, ...patternMatches, ...tokenMatches] };
 }

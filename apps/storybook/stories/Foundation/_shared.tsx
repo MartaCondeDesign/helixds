@@ -70,8 +70,9 @@ export function SpacingBar({ varName, tokenKey, val, dim, desc }: { varName: str
   );
 }
 
-// Type shape of a single DTCG token leaf ({ $value, $type, $description? }).
-export type TokenLeaf = { $value: string; $type: string; $description?: string };
+// Type shape of a single DTCG token leaf ({ $value, $type, $description? }). $value is an alias string or a
+// DTCG 2025.10 value object/array/number — render it with toCss() from packages/tokens/src/dtcg.mjs.
+export type TokenLeaf = { $value: unknown; $type: string; $description?: string; $extensions?: Record<string, unknown> };
 
 export function DescCaption({ text }: { text?: string }) {
   if (!text) return null;

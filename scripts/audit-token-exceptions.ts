@@ -20,6 +20,7 @@
 import fs from 'fs';
 import path from 'path';
 import { findTextStyle, proposeTextStyleName } from './text-styles';
+import { toCss } from '../packages/tokens/src/dtcg.mjs';
 
 const tokensPath = path.resolve(import.meta.dirname, '../packages/tokens/src/tokens.json');
 const docPath = path.resolve(import.meta.dirname, '../.ai/maps/component-token-exceptions.md');
@@ -162,8 +163,10 @@ type Flag = '✅' | '🚩' | '🆕';
 function getNode(dottedPath: string): any {
   let node: any = tokens;
   for (const key of dottedPath.split('.')) {
-    if (node && typeof node === 'object' && '$value' in node && typeof node.$value === 'object' && node.$value !== null) {
-      node = node.$value[key];
+    if (node && typeof node === 'object' && '$value' in node && node.$type === 'typography') {
+      const sub = node.$value[key];
+      // A literal sub-property ({ value, unit }) — wrap it with its DTCG type so callers can render it.
+      node = sub && typeof sub === 'object' ? { $value: sub, $type: 'dimension' } : sub;
       continue;
     }
     node = node?.[key];
@@ -190,14 +193,14 @@ function resolveValue(dottedPath: string): string {
     node = getNode(target);
     value = node.$value;
   }
-  return String(value); // fontWeight etc. store $value as a JSON number, not a string
+  return toCss(value, node.$type, { extensions: node.$extensions }); // DTCG 2025.10 value → its CSS
 }
 
 type Leaf = { path: string; value: unknown };
 
 function collectLeaves(node: any, prefix: string[]): Leaf[] {
   if (node === null || typeof node !== 'object') return [];
-  if ('$value' in node) return [{ path: prefix.join('.'), value: node.$value }];
+  if ('$value' in node) return [{ path: prefix.join('.'), value: isAlias(node.$value) ? node.$value : toCss(node.$value, node.$type, { extensions: node.$extensions }) }];
   const out: Leaf[] = [];
   for (const [key, child] of Object.entries(node)) {
     if (key.startsWith('$')) continue;
@@ -415,8 +418,8 @@ function primitiveKeyOf(value: unknown, category: 'fontWeight' | 'fontSize'): st
  * exact match — the row stays 🆕, never 🚩, whenever this path is used).
  */
 function nearestFontSizeKey(px: number): string {
-  const entries = Object.entries(tokens.primitive.fontSize as Record<string, { $value: string }>)
-    .map(([key, node]) => [key, parseInt(node.$value, 10)] as const);
+  const entries = Object.entries(tokens.primitive.fontSize as Record<string, { $value: unknown; $type: string }>)
+    .map(([key, node]) => [key, parseInt(toCss(node.$value, node.$type), 10)] as const);
   let best = entries[0];
   for (const entry of entries) {
     const [, bestPx] = best;
