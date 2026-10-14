@@ -7,8 +7,8 @@
 //   - rows: every token under a path, nested groups included (tokenRows)
 //   - previews: drawn with the token's own CSS var, never a copied value, so they follow a value change
 //   - value column: the alias it points to and the CSS it resolves to (toCss, packages/tokens/src/dtcg.mjs)
-//   - unclaimed categories: OtherTokens renders any primitive/semantic category no story has claimed yet,
-//     so a whole new category appears with no story edit
+//   - unclaimed categories: OtherTokens renders any primitive/semantic category no story has claimed yet at the
+//     end of that file's last story (nothing when there is none), so a whole new category appears with no story edit
 // `pnpm verify:storybook-tokens` checks the result in a running Storybook.
 import { useEffect, useState } from 'react';
 import tokensJson from '../../../../packages/tokens/src/tokens.json';
@@ -197,11 +197,40 @@ export function TokenTable({ path, preview, title, label, only }: {
   return title ? <TableGroup title={title}>{table}</TableGroup> : table;
 }
 
-/** Every category of `layer` not in `claimed` — so a category added to tokens.json shows up before it gets its own story. */
+/**
+ * The categories that have a page of their own. A category in tokens.json that isn't here is new: it shows at
+ * the end of the file's last story, and `pnpm verify:storybook-tokens` (pre-commit) prints a warning asking to
+ * review it with the design-system owner — what it is, whether it belongs in tokens.json, and which page shows it.
+ * Add it here once it has its page.
+ */
+export const CLAIMED = {
+  // Foundation/Primitives
+  primitive: [
+    'color', 'spacing', 'size', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'fontFamily',
+    'shadow', 'duration', 'easing', 'zIndex', 'breakpoint',
+  ],
+  // Foundation/Semantic — plus color (Foundation/Theme) and textStyle (Foundation/Text Styles)
+  semantic: [
+    'color', 'textStyle', 'spacing', 'radius', 'size', 'borderWidth', 'shadow', 'fontSize', 'lineHeight',
+    'duration', 'easing', 'transform', 'blur',
+  ],
+} as const;
+
+/** Categories of `layer` in tokens.json with no page of their own yet. */
+export const unclaimedCategories = (layer: 'primitive' | 'semantic') =>
+  categoriesOf(layer).filter(category => !(CLAIMED[layer] as readonly string[]).includes(category));
+
+/** Every category of `layer` not in `claimed`, at the end of that file's last story — so a category added to
+ * tokens.json shows up before it gets its own story. Renders nothing while every category has one. */
 export function OtherTokens({ layer, claimed }: { layer: 'primitive' | 'semantic'; claimed: readonly string[] }) {
   const rest = categoriesOf(layer).filter(category => !claimed.includes(category));
-  if (!rest.length) {
-    return <p style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>Every {layer} category in tokens.json has its own story.</p>;
-  }
-  return <>{rest.map(category => <TokenTable key={category} title={category} path={`${layer}.${category}`} />)}</>;
+  if (!rest.length) return null;
+  return (
+    <TableGroup title={`Not on a page yet: new ${layer} categories`}>
+      <p style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', margin: 0 }}>
+        In tokens.json but with no story of their own — add one, and the category to CLAIMED in _tokens.tsx.
+      </p>
+      {rest.map(category => <TokenTable key={category} title={category} path={`${layer}.${category}`} />)}
+    </TableGroup>
+  );
 }

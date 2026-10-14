@@ -116,15 +116,16 @@ role, which is exactly what the naming overhaul (below) was fixing.
 6. **Storybook shows every token — mandatory, no exceptions, for every layer, not just color.**
    `apps/storybook/stories/Foundation/` is the living reference for the whole token set: Primitives
    (Color, Spacing, Size, Typography, Shadows, Motion, Z-index, Breakpoints), Semantic (Spacing, Radius,
-   Sizing, Border width, Shadows, Typography, Motion), Theme (semantic color) and Text Styles, plus an
-   "Other tokens" story in Primitives and Semantic. **A token addition, rename, or removal in `tokens.json`
+   Sizing, Border width, Shadows, Typography, Motion), Theme (semantic color) and Text Styles. **A token addition, rename, or removal in `tokens.json`
    is not done until Storybook shows it.**
    - **This is automatic now (since 2026-10-14) — don't hand-edit a list.** Every Foundation page builds its
      rows from `src/tokens.json` (`apps/storybook/stories/Foundation/_tokens.tsx` → `TokenTable`), and every
      preview draws through the token's own CSS var, so adding, renaming, removing or changing a token shows in
-     Storybook with no story edit. A whole new category appears on its own in the "Other tokens" story of
-     Foundation/Primitives or Foundation/Semantic until it gets a page of its own (add it to that file's
-     `CLAIMED` list when you give it one). `pnpm sb` rebuilds the tokens before starting, so the CSS it shows
+     Storybook with no story edit. A whole new category appears on its own at the end of the last story of
+     Foundation/Primitives (Breakpoints) or Foundation/Semantic (Motion) until it gets a page of its own. **A new category is
+     never silent:** `pnpm verify:storybook-tokens` prints a ⚠️ warning naming it — stop and tell the
+     design-system owner, review it together (what it is, whether it belongs in `tokens.json`, which page shows
+     it), then add it to `CLAIMED` in `_tokens.tsx`. `pnpm sb` rebuilds the tokens before starting, so the CSS it shows
      is never older than `tokens.json`.
    - **Enforced:** `pnpm verify:storybook-tokens` renders the Foundation stories and fails on any
      primitive/semantic token none of them shows as its CSS var. It runs in pre-commit, so the commit stops.

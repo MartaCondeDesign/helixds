@@ -3,7 +3,7 @@
 //   2. values   — the value a page prints for every token equals what the CSS resolves to (light theme), and
 //                 a semantic shadow resolves to its primitive.shadow.dark twin in dark
 //   3. pages    — every Foundation story renders, every var() it writes by hand exists, and a category no
-//                 story claims lands in "Other tokens"
+//                 story claims shows at the end of the file's last story
 //   4. the gate — verify:storybook-tokens fails, naming the token, when a story stops showing one (sabotage on a
 //                 copy of the stories), and passes on the real ones
 //   5. changelog — a squash-merge body's "* subject" lines become that entry's changes
@@ -78,7 +78,7 @@ describe('Foundation stories', () => {
         count++;
       }
     }
-    assert.ok(count >= 19, `only ${count} stories`);
+    assert.ok(count >= 17, `only ${count} stories`);
   });
 
   it('every var(--helix-…) a Foundation page writes by hand exists in helix.css', () => {
@@ -94,11 +94,11 @@ describe('Foundation stories', () => {
     assert.deepEqual(unknown, []);
   });
 
-  it('a category no story claims shows in "Other tokens"', () => {
+  it('a category no story claims shows at the end of the last story, and nothing shows when none is left', () => {
     const html = renderToStaticMarkup(createElement(OtherTokens, { layer: 'semantic', claimed: categoriesOf('semantic').filter(c => c !== 'blur') }));
     for (const row of tokenRows('semantic.blur')) assert.ok(html.includes(row.cssVar), row.path);
     const none = renderToStaticMarkup(createElement(OtherTokens, { layer: 'semantic', claimed: categoriesOf('semantic') }));
-    assert.match(none, /has its own story/);
+    assert.equal(none, '', 'nothing renders while every category has a story');
   });
 });
 
