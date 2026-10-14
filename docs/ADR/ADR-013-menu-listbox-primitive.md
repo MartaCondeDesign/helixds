@@ -103,6 +103,17 @@ custom button-based trigger does unless constrained). Storybook's own stories no
 `min-w-[100px]` as the example default. No system-wide default width token was added — per root
 `CLAUDE.md`'s policy, min-width/max-width stays a consumer/pattern decision, not a token.
 
+## Amendment (2026-10-13): open/close motion
+
+Menu now grows in from its trigger and settles out instead of appearing and vanishing (the transitions.dev
+"menu dropdown" recipe, previewed and approved first). It opens from `component.menu.scale-enter` (0.97)
+over `semantic.duration.enter` and closes to `component.menu.scale-exit` (0.99) over the shorter
+`semantic.duration.exit`, both eased with `semantic.easing.gentle`. To animate the close, Menu stays
+mounted after `expanded` turns false for the length of the close (`data-state="closing"`, `inert`,
+`aria-hidden`), so nothing in it can be clicked, focused or read while it fades. Under
+`prefers-reduced-motion` it unmounts at once. The two scales stay component literals, like Modal's and
+Tooltip's own `scale-enter`: each overlay's scale is tuned to its own size and feel, not a shared rung.
+
 ## Contracts affected
 
 New: `contracts/components/Menu.json`. Amended: `contracts/components/Select.json` (anatomy changes from

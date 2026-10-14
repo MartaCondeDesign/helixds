@@ -30,6 +30,10 @@
 - button "Medium (default)"
 - button "Large"
 
+# Swap In Place
+- button "Copied"
+- button "Save"
+
 # With Leading Icon
 - button "New item"
 - button "New item"

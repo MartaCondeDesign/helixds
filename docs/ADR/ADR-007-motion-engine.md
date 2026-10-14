@@ -80,3 +80,14 @@ once when a field turns `invalid`. Its easing aliases `semantic.easing.gentle` a
 (`6px` travel) and `component.input.shake.dur-b` (`60ms` return phase). They're tuned for this one gesture,
 with no shared cross-component concept to alias (same reasoning as Toast's/Tooltip's tuned constants in
 ADR-011/ADR-008). If a second component ever needs a shake, promote them to `semantic.*` instead.
+
+## Amendment 2026-10-13 — Button swaps content in place (CSS, from transitions.dev)
+
+Button's icon ↔ spinner, icon ↔ icon and label ↔ label changes now cross-fade in place instead of cutting
+(the transitions.dev "icon swap" and "text morph" recipes, previewed and approved first). Plain CSS
+`@keyframes`, not Motion: Button.tsx only keeps the outgoing content mounted for the length of the swap.
+The timings alias the new `semantic.duration.enter` (250ms) / `semantic.duration.exit` (150ms) and the
+easings/blur alias `semantic.*`; one value stays a component literal — `component.button.swap-scale`
+(`0.25`, the size an icon shrinks to as it leaves and grows from as it arrives). It's tuned for this one
+gesture and has nothing to do with the hover/press `transform.scale.*` rungs (1.02–1.1, or Button's own
+0.97 press), so aliasing it would misdescribe it.
