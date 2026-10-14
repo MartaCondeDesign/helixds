@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { label12, StoryHeader, TableGroup } from './_shared';
+import { label12, StoryHeader, TableGroup, type TokenLeaf } from './_shared';
+// Read from source so a shadow added, renamed or removed in tokens.json shows up here with no story edit.
+import tokensJson from '../../../../packages/tokens/src/tokens.json';
+import { toCss } from '../../../../packages/tokens/src/dtcg.mjs';
 
 const meta: Meta = {
   title: 'Foundation/Primitives',
@@ -125,4 +128,75 @@ export const Typography: Story = {
       </div>
     );
   },
+};
+
+// ── Shadows ──────────────────────────────────────────────────────────────
+// primitive.shadow.* is the light scale; primitive.shadow.dark.* is its dark-theme twin, which
+// semantic.shadow.* aliases in tokens.dark.json. Each preview sits on the ground it was tuned for —
+// a light card on white, a dark card on the dark page — whatever the toolbar theme is.
+
+const shadowTokens = tokensJson.primitive.shadow as unknown as Record<string, TokenLeaf> & { dark: Record<string, TokenLeaf> };
+const shadowKeys = Object.keys(shadowTokens).filter(key => key !== 'dark' && key !== 'none');
+
+const shadowTh: React.CSSProperties = {
+  textAlign: 'left', padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)', fontSize: 11, fontWeight: 600,
+  letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--helix-color-text-neutral-lightest)',
+  borderBottom: '1px solid var(--helix-color-border-neutral)', borderRight: '1px solid var(--helix-color-border-neutral-light)',
+};
+const shadowTd: React.CSSProperties = {
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)', verticalAlign: 'middle',
+  borderRight: '1px solid var(--helix-color-border-neutral-light)',
+};
+
+function ShadowSample({ varName, dark }: { varName: string; dark?: boolean }) {
+  return (
+    <div style={{
+      padding: 'var(--helix-spacing-l)', borderRadius: 8,
+      background: dark ? 'var(--helix-primitive-color-gray-900)' : 'var(--helix-primitive-color-gray-0)',
+    }}>
+      <div style={{
+        width: 96, height: 56, borderRadius: 8, boxShadow: `var(${varName})`,
+        background: dark ? 'var(--helix-primitive-color-gray-800)' : 'var(--helix-primitive-color-gray-0)',
+      }} />
+    </div>
+  );
+}
+
+function ShadowValue({ token }: { token?: TokenLeaf }) {
+  return <code style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-light)' }}>{token ? toCss(token.$value, 'shadow') : '—'}</code>;
+}
+
+export const Shadows: Story = {
+  render: () => (
+    <div>
+      <StoryHeader
+        title="Shadows"
+        description="Raw elevation values: primitive.shadow.* for the light theme and primitive.shadow.dark.* for the dark theme, which semantic.shadow.* switches to in dark mode. xl-up is xl cast upward, for a sheet sliding in from the bottom edge."
+      />
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: 'var(--helix-spacing-l)', border: '1px solid var(--helix-color-border-neutral)', borderRadius: 8, overflow: 'hidden' }}>
+        <thead>
+          <tr style={{ background: 'var(--helix-color-fill-surface)' }}>
+            <th style={shadowTh}>Token</th>
+            <th style={shadowTh}>Light · shadow.*</th>
+            <th style={{ ...shadowTh, borderRight: 'none' }}>Dark · shadow.dark.*</th>
+          </tr>
+        </thead>
+        <tbody>
+          {shadowKeys.map(key => (
+            <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
+              <td style={shadowTd}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow.{key}</code></td>
+              <td style={shadowTd}>
+                <ShadowSample varName={`--helix-primitive-shadow-${key}`} />
+                <ShadowValue token={shadowTokens[key]} />
+              </td>
+              <td style={{ ...shadowTd, borderRight: 'none' }}>
+                {shadowTokens.dark[key] ? <ShadowSample varName={`--helix-primitive-shadow-dark-${key}`} dark /> : null}
+                <ShadowValue token={shadowTokens.dark[key]} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  ),
 };

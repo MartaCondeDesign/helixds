@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-11T18:46:39.965Z",
-  "commit": "fa5341e",
+  "generatedAt": "2026-10-14T14:59:21.468Z",
+  "commit": "a01c7c4",
   "totals": {
     "tokenRefs": 20,
-    "hardcodedColors": 0,
+    "hardcodedColors": 1,
     "hardcodedDimensions": 81,
-    "componentsWithGaps": 20,
-    "coverage": 0.19801980198019803
+    "componentsWithGaps": 21,
+    "coverage": 0.19607843137254902
   },
   "components": [
     {
@@ -54,9 +54,9 @@
     {
       "component": "Chart",
       "tokenRefs": 0,
-      "hardcodedColors": 0,
+      "hardcodedColors": 1,
       "hardcodedDimensions": 0,
-      "coverage": null
+      "coverage": 0
     },
     {
       "component": "Checkbox",

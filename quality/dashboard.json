@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-11T18:46:39.986Z",
+  "generatedAt": "2026-10-14T14:59:21.501Z",
   "sources": {
-    "stabilityGeneratedAt": "2026-10-11T17:48:31.747Z",
-    "evalRuns": 361,
-    "lastEvalRunAt": "2026-10-09T18:25:04.232Z",
-    "weeklyEvalRuns": 180,
+    "stabilityGeneratedAt": "2026-10-13T18:13:48.437Z",
+    "evalRuns": 0,
+    "lastEvalRunAt": null,
+    "weeklyEvalRuns": 0,
     "improvementRecords": 0,
     "unscoredComponents": []
   },
@@ -12,8 +12,8 @@
     "total": 33,
     "byStatus": {
       "draft": 0,
-      "beta": 21,
-      "stable": 12
+      "beta": 22,
+      "stable": 11
     },
     "failedCriteria": [
       {
@@ -59,376 +59,157 @@
     ]
   },
   "figma": {
-    "synced": 12,
-    "stale": 8,
+    "synced": 11,
+    "stale": 9,
     "missing": 13
   },
   "tokens": {
-    "defined": 763
+    "defined": 808
   },
   "evals": {
-    "generations": 40,
-    "passRate": 0.9,
-    "promptsCovered": 6,
+    "generations": 0,
+    "passRate": null,
+    "promptsCovered": 0,
     "globalChecks": [
       {
         "id": "hardcoded-color",
         "label": "Hardcoded color (#hex, rgb(), hsl())",
         "failed": 0,
-        "rate": 0
+        "rate": null
       },
       {
         "id": "hardcoded-size",
         "label": "Hardcoded px/rem value",
-        "failed": 9,
-        "rate": 0.225
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "inline-style",
         "label": "Inline style={{…}}",
-        "failed": 10,
-        "rate": 0.25
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "raw-icon",
         "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-        "failed": 1,
-        "rate": 0.025
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "icon-element-prop",
         "label": "icon={<IconXxx />} instead of icon={IconXxx}",
         "failed": 0,
-        "rate": 0
+        "rate": null
       },
       {
         "id": "on-press",
         "label": "onPress instead of onClick",
         "failed": 0,
-        "rate": 0
+        "rate": null
       },
       {
         "id": "raw-div",
         "label": "<div> instead of a Helix layout component",
-        "failed": 14,
-        "rate": 0.35
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "raw-native-control",
         "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-        "failed": 1,
-        "rate": 0.025
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "doesnt-compile",
         "label": "Doesn't compile against Helix's real types (tsc)",
-        "failed": 5,
-        "rate": 0.125
+        "failed": 0,
+        "rate": null
       },
       {
         "id": "invented-prop",
         "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-        "failed": 1,
-        "rate": 0.025
+        "failed": 0,
+        "rate": null
       }
     ],
     "basis": {
       "since": {
-        "hash": "e5e900b",
-        "subject": "feat!: publish under the @helixds npm scope",
-        "at": 1791369543000
+        "hash": "de180c5",
+        "subject": "Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3)",
+        "at": 1791818754000
       },
-      "olderExcluded": 238,
-      "superseded": 20
+      "olderExcluded": 0,
+      "superseded": 0
     },
     "ladder": [
       {
         "variant": "no-context",
         "label": "no help (control)",
         "detail": "No Helix guide, no repo — expected to fail",
-        "answers": 65,
-        "tasks": 12,
-        "passRate": 0,
-        "meanScore": 0.3269230769230769,
-        "tokensPerAnswer": 43235,
-        "totalTokens": 1297050
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       },
       {
         "variant": "llms-txt",
         "label": "llms.txt",
         "detail": "Only llms.txt — no repo",
-        "answers": 25,
-        "tasks": 1,
-        "passRate": 0.2,
-        "meanScore": 0.7200000000000002,
-        "tokensPerAnswer": 54896.6,
-        "totalTokens": 1372415
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       },
       {
         "variant": "agents-isolated",
         "label": "agents-md",
         "detail": "Only AGENTS.md — no repo",
-        "answers": 50,
-        "tasks": 7,
-        "passRate": 0.1,
-        "meanScore": 0.4726666666666668,
-        "tokensPerAnswer": 50280.53333333333,
-        "totalTokens": 754208
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       },
       {
         "variant": "mcp",
         "label": "mcp",
         "detail": "Only the Helix MCP tools — no guide, no repo",
-        "answers": 45,
-        "tasks": 6,
-        "passRate": 0.4666666666666667,
-        "meanScore": 0.8133333333333334,
-        "tokensPerAnswer": 105881.62222222223,
-        "totalTokens": 4764673
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       },
       {
         "variant": "lint-loop",
         "label": "lint loop",
-        "detail": "Only its Helix lint problems, sent back to fix — no guide, no repo",
-        "answers": 20,
-        "tasks": 1,
-        "passRate": 0.2,
-        "meanScore": 0.72,
-        "tokensPerAnswer": 118266.75,
-        "totalTokens": 2365335
+        "detail": "Only its Helix lint problems and type errors, sent back to fix — no guide, no repo",
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       },
       {
         "variant": "baseline",
         "label": "full repo",
         "detail": "Everything together: AGENTS.md and the whole Helix repo",
-        "answers": 50,
-        "tasks": 7,
-        "passRate": 0.1,
-        "meanScore": 0.5943333333333335,
-        "tokensPerAnswer": 73104.6,
-        "totalTokens": 1096569
+        "answers": 0,
+        "tasks": 0,
+        "passRate": null,
+        "meanScore": null,
+        "tokensPerAnswer": null,
+        "totalTokens": null
       }
     ],
-    "daily": [
-      {
-        "date": "2026-10-03",
-        "variant": "baseline",
-        "answers": 35,
-        "scoreSum": 16.716666666666665,
-        "passed": 0,
-        "tasks": [
-          "button-basic",
-          "button-unguided",
-          "chip-basic",
-          "select-basic",
-          "select-unguided",
-          "toast-basic",
-          "top-bar-basic"
-        ],
-        "tokenSum": 0,
-        "measured": 0
-      },
-      {
-        "date": "2026-10-03",
-        "variant": "agents-isolated",
-        "answers": 35,
-        "scoreSum": 10.633333333333333,
-        "passed": 0,
-        "tasks": [
-          "button-basic",
-          "button-unguided",
-          "chip-basic",
-          "select-basic",
-          "select-unguided",
-          "toast-basic",
-          "top-bar-basic"
-        ],
-        "tokenSum": 0,
-        "measured": 0
-      },
-      {
-        "date": "2026-10-03",
-        "variant": "no-context",
-        "answers": 35,
-        "scoreSum": 14.35,
-        "passed": 0,
-        "tasks": [
-          "button-basic",
-          "button-unguided",
-          "chip-basic",
-          "select-basic",
-          "select-unguided",
-          "toast-basic",
-          "top-bar-basic"
-        ],
-        "tokenSum": 0,
-        "measured": 0
-      },
-      {
-        "date": "2026-10-06",
-        "variant": "llms-txt",
-        "answers": 15,
-        "scoreSum": 9,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 907082,
-        "measured": 15
-      },
-      {
-        "date": "2026-10-06",
-        "variant": "mcp",
-        "answers": 10,
-        "scoreSum": 5.999999999999999,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 897415,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-06",
-        "variant": "lint-loop",
-        "answers": 10,
-        "scoreSum": 5.999999999999999,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 1172610,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-06",
-        "variant": "agents-isolated",
-        "answers": 5,
-        "scoreSum": 4,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 260515,
-        "measured": 5
-      },
-      {
-        "date": "2026-10-06",
-        "variant": "baseline",
-        "answers": 5,
-        "scoreSum": 4,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 358140,
-        "measured": 5
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "llms-txt",
-        "answers": 10,
-        "scoreSum": 9,
-        "passed": 5,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 465333,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "agents-isolated",
-        "answers": 10,
-        "scoreSum": 9,
-        "passed": 5,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 493693,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "mcp",
-        "answers": 10,
-        "scoreSum": 9,
-        "passed": 5,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 906072,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "lint-loop",
-        "answers": 10,
-        "scoreSum": 8.399999999999999,
-        "passed": 4,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 1192725,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "baseline",
-        "answers": 10,
-        "scoreSum": 9,
-        "passed": 5,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 738429,
-        "measured": 10
-      },
-      {
-        "date": "2026-10-07",
-        "variant": "no-context",
-        "answers": 5,
-        "scoreSum": 3,
-        "passed": 0,
-        "tasks": [
-          "button-basic"
-        ],
-        "tokenSum": 272846,
-        "measured": 5
-      },
-      {
-        "date": "2026-10-09",
-        "variant": "no-context",
-        "answers": 25,
-        "scoreSum": 3.9,
-        "passed": 0,
-        "tasks": [
-          "screen-save-feedback",
-          "screen-delete-account",
-          "screen-signup-errors",
-          "screen-notification-settings",
-          "screen-team-members"
-        ],
-        "tokenSum": 1024204,
-        "measured": 25
-      },
-      {
-        "date": "2026-10-09",
-        "variant": "mcp",
-        "answers": 25,
-        "scoreSum": 21.6,
-        "passed": 16,
-        "tasks": [
-          "screen-notification-settings",
-          "screen-delete-account",
-          "screen-save-feedback",
-          "screen-team-members",
-          "screen-signup-errors"
-        ],
-        "tokenSum": 2961186,
-        "measured": 25
-      }
-    ],
+    "daily": [],
     "improvements": [
       {
         "id": "2026-10-09T17-29-57",
@@ -440,39 +221,10 @@
           "feat: MCP asks for every contract up front; lint catches HTML attributes Helix components don't take"
         ],
         "uncommitted": false,
-        "tasksCompared": 5,
-        "levels": [
-          {
-            "variant": "no-context",
-            "label": "bare",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.14666666666666667
-            },
-            "after": {
-              "answers": 15,
-              "passRate": 0,
-              "meanScore": 0.1511111111111111
-            }
-          },
-          {
-            "variant": "mcp",
-            "label": "mcp",
-            "before": {
-              "answers": 5,
-              "passRate": 0.8,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 15,
-              "passRate": 0.8,
-              "meanScore": 0.9222222222222222
-            }
-          }
-        ],
-        "verdict": "better",
-        "meanDelta": 0.06333333333333328
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
       },
       {
         "id": "2026-10-09T17-11-42",
@@ -487,39 +239,10 @@
           "feat: every contract and the MCP say where to import from"
         ],
         "uncommitted": false,
-        "tasksCompared": 5,
-        "levels": [
-          {
-            "variant": "no-context",
-            "label": "bare",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.18
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.14666666666666667
-            }
-          },
-          {
-            "variant": "mcp",
-            "label": "mcp",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.7533333333333333
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0.8,
-              "meanScore": 0.8
-            }
-          }
-        ],
-        "verdict": "same",
-        "meanDelta": 0.00666666666666671
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
       },
       {
         "id": "2026-10-09T15-50-08",
@@ -556,81 +279,10 @@
           "feat!: publish under the @helixds npm scope"
         ],
         "uncommitted": false,
-        "tasksCompared": 1,
-        "levels": [
-          {
-            "variant": "llms-txt",
-            "label": "llms.txt",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 1,
-              "meanScore": 1
-            }
-          },
-          {
-            "variant": "agents-isolated",
-            "label": "agents-md",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 1,
-              "meanScore": 1
-            }
-          },
-          {
-            "variant": "mcp",
-            "label": "mcp",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 1,
-              "meanScore": 1
-            }
-          },
-          {
-            "variant": "lint-loop",
-            "label": "lint loop",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.72
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0.8,
-              "meanScore": 0.96
-            }
-          },
-          {
-            "variant": "baseline",
-            "label": "full repo",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 1,
-              "meanScore": 1
-            }
-          }
-        ],
-        "verdict": "better",
-        "meanDelta": 0.20799999999999996
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
       },
       {
         "id": "2026-10-07T10-01-18",
@@ -641,81 +293,10 @@
           "feat!: names agents expect — onClick, isLoading and the @helix/react package"
         ],
         "uncommitted": false,
-        "tasksCompared": 1,
-        "levels": [
-          {
-            "variant": "llms-txt",
-            "label": "llms.txt",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          },
-          {
-            "variant": "agents-isolated",
-            "label": "agents-md",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          },
-          {
-            "variant": "mcp",
-            "label": "mcp",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          },
-          {
-            "variant": "lint-loop",
-            "label": "lint loop",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.72
-            }
-          },
-          {
-            "variant": "baseline",
-            "label": "full repo",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          }
-        ],
-        "verdict": "same",
-        "meanDelta": -0.016000000000000014
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
       },
       {
         "id": "2026-10-06T18-53",
@@ -726,53 +307,10 @@
           "feat: Proof eval gallery, context ladder, eval rounds and unknown-prop lint rule"
         ],
         "uncommitted": true,
-        "tasksCompared": 1,
-        "levels": [
-          {
-            "variant": "llms-txt",
-            "label": "llms.txt",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.4
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          },
-          {
-            "variant": "mcp",
-            "label": "mcp",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.4
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          },
-          {
-            "variant": "lint-loop",
-            "label": "lint loop",
-            "before": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.4
-            },
-            "after": {
-              "answers": 5,
-              "passRate": 0,
-              "meanScore": 0.8
-            }
-          }
-        ],
-        "verdict": "better",
-        "meanDelta": 0.4000000000000001
+        "tasksCompared": 0,
+        "levels": [],
+        "verdict": "not comparable",
+        "meanDelta": null
       }
     ],
     "rounds": [
@@ -1095,7 +633,7 @@
   "accessibility": {
     "score": 1,
     "meetsMinimum": 33,
-    "generatedAt": "2026-10-11T18:46:29.784Z"
+    "generatedAt": "2026-10-13T18:05:09.421Z"
   },
   "governance": {
     "total": 33,
@@ -1103,82 +641,82 @@
     "rate": 1,
     "incomplete": []
   },
-  "healthScore": 0.754128787878788,
+  "healthScore": 0.7333333333333333,
   "healthScoreBreakdown": {
-    "componentReadiness": 0.36363636363636365,
-    "figmaAlignment": 0.36363636363636365,
-    "agentReliability": 0.9,
-    "ruleCompliance": 0.8975,
+    "componentReadiness": 0.3333333333333333,
+    "figmaAlignment": 0.3333333333333333,
+    "agentReliability": null,
+    "ruleCompliance": 1,
     "governanceCoverage": 1,
     "accessibility": 1
   },
   "weekly": {
-    "from": "2026-10-04",
-    "to": "2026-10-11",
+    "from": "2026-10-07",
+    "to": "2026-10-14",
     "evals": {
-      "generations": 40,
-      "passRate": 0.9,
-      "promptsCovered": 6,
+      "generations": 0,
+      "passRate": null,
+      "promptsCovered": 0,
       "globalChecks": [
         {
           "id": "hardcoded-color",
           "label": "Hardcoded color (#hex, rgb(), hsl())",
           "failed": 0,
-          "rate": 0
+          "rate": null
         },
         {
           "id": "hardcoded-size",
           "label": "Hardcoded px/rem value",
-          "failed": 9,
-          "rate": 0.225
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "inline-style",
           "label": "Inline style={{…}}",
-          "failed": 10,
-          "rate": 0.25
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "raw-icon",
           "label": "Raw <IconXxx> tag instead of the Icon component / icon prop",
-          "failed": 1,
-          "rate": 0.025
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "icon-element-prop",
           "label": "icon={<IconXxx />} instead of icon={IconXxx}",
           "failed": 0,
-          "rate": 0
+          "rate": null
         },
         {
           "id": "on-press",
           "label": "onPress instead of onClick",
           "failed": 0,
-          "rate": 0
+          "rate": null
         },
         {
           "id": "raw-div",
           "label": "<div> instead of a Helix layout component",
-          "failed": 14,
-          "rate": 0.35
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "raw-native-control",
           "label": "Native <button>/<input>/<select>/<textarea> instead of the Helix component",
-          "failed": 1,
-          "rate": 0.025
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "doesnt-compile",
           "label": "Doesn't compile against Helix's real types (tsc)",
-          "failed": 5,
-          "rate": 0.125
+          "failed": 0,
+          "rate": null
         },
         {
           "id": "invented-prop",
           "label": "Invented or wrong prop (helix/unknown-prop, helix/prop-vocabulary, or tsc: prop does not exist)",
-          "failed": 1,
-          "rate": 0.025
+          "failed": 0,
+          "rate": null
         }
       ]
     }

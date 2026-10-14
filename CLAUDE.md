@@ -144,6 +144,9 @@ pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-fil
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
                             ADR-018 — needs Storybook running; --details lists what's missing
+pnpm verify:storybook-tokens every primitive.* and semantic.* token must appear (as its CSS var) on a Foundation story —
+                            needs Storybook running; also printed at the end of verify:stable. A story that renders a
+                            hardcoded value or a hardcoded key list instead of reading tokens.json shows up here
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
                             raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run

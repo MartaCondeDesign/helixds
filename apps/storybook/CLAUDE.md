@@ -103,6 +103,10 @@ zero story edits. `packages/tokens/dist/index.ts` is **not** the right import fo
 resolved values, dropping both the alias path (`$value`) and `$description`; import from `src/tokens.json`
 when you need either of those, from `dist/index.ts` only when you need a plain resolved value at runtime.
 
+**Checked:** `pnpm verify:storybook-tokens` (Storybook running, also at the end of `verify:stable`) fails for every
+primitive/semantic token that no Foundation story renders as its CSS var — a preview with a hardcoded px/hex
+(`borderRadius: '6px'` instead of `var(--helix-radius-m)`) doesn't count, because it wouldn't follow a token change.
+
 ## Foundation story structure
 
 `apps/storybook/stories/Foundation/` mirrors the 4-collection structure of the live Figma file, not a
