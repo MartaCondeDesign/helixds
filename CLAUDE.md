@@ -170,6 +170,8 @@ pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .m
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
 pnpm helix tokens <concept> find tokens by what they're for ("danger background") — same search as the MCP tool
+pnpm helix validate <file|-> lint + type-check code against Helix, exit 1 if not valid — helix_validate_snippet
+                            from a terminal (every MCP tool has a `pnpm helix` command, same library)
 pnpm helix dashboard        AI-readiness view: health score, the 5 signals behind it (readiness, Figma,
                             eval pass rate, rule compliance, governance coverage), gaps and data freshness —
                             read-only; `pnpm quality snapshot` records it for Storybook's Metrics page

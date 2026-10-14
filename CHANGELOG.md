@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Owner gate: judge inline scripts by what they write; MCP start timeouts (latest commit)
+- 2026-10-14 — pnpm helix validate: helix_validate_snippet from a terminal (latest commit)
+- 2026-10-14 — Owner gate: judge inline scripts by what they write; MCP start timeouts ([`3a3b99b`](https://github.com/MartaCondeDesign/helixds/commit/3a3b99b))
 - 2026-10-14 — Guardrails for Cursor, Codex and Gemini CLI, not just Claude Code ([`1a64213`](https://github.com/MartaCondeDesign/helixds/commit/1a64213))
 - 2026-10-14 — Hooks record what they catch; Cursor gets the Helix MCP server ([`09f8e01`](https://github.com/MartaCondeDesign/helixds/commit/09f8e01))
 - 2026-10-14 — setup:ai installs Helix's guardrails in apps, not just AGENTS.md ([`4b2b2f8`](https://github.com/MartaCondeDesign/helixds/commit/4b2b2f8))

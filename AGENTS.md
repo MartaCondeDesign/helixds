@@ -183,8 +183,15 @@ the design system — it does not maintain a second copy of the documentation.
 pnpm helix search "confirmation dialog" --json
 pnpm helix component Modal --json
 pnpm helix token color.fill.primary-interactive-default --json
+pnpm helix tokens "danger background" --json
 pnpm helix pattern empty-state --json
+pnpm helix validate src/Settings.tsx --json   # or `-` for stdin; exits 1 when not valid
 ```
+
+It is the MCP server's twin, for any agent or tool that can run a command — every MCP tool has a
+command here (`helix_get_contract` → `component`, `helix_search_tokens` → `tokens`,
+`helix_validate_snippet` → `validate`, …), from the same library. From an app, run it in your Helix
+clone: `pnpm -s --dir "${HELIX_DS_DIR:-/path/to/helixds}" helix validate "$PWD/src/Settings.tsx"`.
 
 Use `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`
 when several lookups are needed. If no shell is available, consult `contracts/manifest.json`, the
