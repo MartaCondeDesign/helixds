@@ -174,21 +174,6 @@ importers:
         specifier: ^9.0.0
         version: 9.39.5(jiti@2.7.0)
 
-  packages/helix-storybook-addon-tokens:
-    dependencies:
-      '@storybook/manager-api':
-        specifier: ^8.6.18
-        version: 8.6.18(storybook@8.6.18)
-      '@storybook/preview-api':
-        specifier: ^8.6.18
-        version: 8.6.18(storybook@8.6.18)
-      react:
-        specifier: '>=19.0.0'
-        version: 19.2.8
-      storybook:
-        specifier: ^8.6.18
-        version: 8.6.18
-
   packages/mcp:
     dependencies:
       '@helixds/eslint-plugin':
@@ -200,6 +185,9 @@ importers:
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
       typescript-eslint:
         specifier: ^8.71.0
         version: 8.71.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)

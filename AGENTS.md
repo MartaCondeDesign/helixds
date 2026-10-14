@@ -169,8 +169,9 @@ files or shelling out:
 2. `helix_get_contracts` — the contracts of every component you'll use, in one call (`helix_get_contract` for
    one): the exact import line, props, accessibility and governance. Read one for EVERY component, layout ones too.
 3. `helix_search_tokens` — the token for a concept ("danger background", "subtle text"); never hardcode.
-4. `helix_validate_snippet` — run your JSX through it before writing the file; apply `fixedCode`, then
-   fix what's left in `remainingAfterFix`.
+4. `helix_validate_snippet` — run your JSX through it before writing the file: it lints it and type-checks it
+   against Helix's real source. Apply `fixedCode`, then fix what's left in `remainingAfterFix` (lint problems
+   and type errors) until `valid` is `true`.
 
 ## Querying Helix from a terminal
 

@@ -58,8 +58,10 @@ No raw `px`/`rem`/hex anywhere — not in `style={{}}`, not in CSS:
 
 ### Step 4 — Validate before finishing
 
-Run the project's typecheck (`tsc --noEmit`) if you can, or `helix_validate_snippet` via MCP. If you
-can do neither, re-read every Helix element you wrote against its type file from Step 1.
+Run `helix_validate_snippet` via MCP — it lints the code and type-checks it against Helix's real source
+(`compileErrors`: invented props, a missing required prop, a wrong handler signature), so `valid: true`
+means both passed. Without the MCP, run the project's typecheck (`tsc --noEmit`). If you can do neither,
+re-read every Helix element you wrote against its type file from Step 1.
 
 ## Output
 
