@@ -117,7 +117,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    ever swaps in tokens that already exist in `tokens.json`. Before changing anything, present the candidate
    tokens (2–3 when there are), what each one does, and why one is the better option than the other — then
    wait for the design-system owner to pick. Never pick a token yourself, never write a raw px/hex/weight, and
-   never create a new token without asking first.
+   never create a new token without asking first. Enforced: `scripts/claude-owner-gate-hook.mjs` makes Claude Code
+   ask the owner before any change to `tokens.json`, a contract or `prop-map.md` — when it asks, the options
+   and your recommendation must already be in the conversation, so the owner approves a choice, not a surprise.
 14. **Human review never counts in any score.** `a11y.humanReview` (and any other review by a person) is
    recorded and shown, but never averaged into a component's score, the Accessibility score, Design System
    Health or the stability status. Only automatic checks are scored.
@@ -147,6 +149,10 @@ pnpm test:lint-hook         test that Claude Code lint hook
                             imports @helixds/react until every Helix component the change touches has had its contract read
                             this session (helix_get_contract, the contract/.types file, or `pnpm helix component`)
 pnpm test:contract-hook     test that Claude Code contract hook
+                            scripts/claude-owner-gate-hook.mjs (PreToolUse) stops any edit to tokens.json, a contract
+                            or prop-map.md — by Edit/Write, `pnpm token:add`, `pnpm contract`, or a shell write — and
+                            asks the design-system owner to approve it (rule 13 as a gate, not just a sentence)
+pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
