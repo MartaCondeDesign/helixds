@@ -56,6 +56,17 @@ describe('claude-owner-gate-hook', () => {
     assert.equal(runHook('Bash', { command: 'pnpm verify:contract' }), null);
   });
 
+  it('in an app, asks before Helix itself is patched in place', () => {
+    const result = runHook('Edit', { file_path: '/work/my-app/node_modules/@helixds/react/dist/index.js' });
+    assert.equal(result.permissionDecision, 'ask');
+    assert.match(result.permissionDecisionReason, /forks the design system/);
+    assert.ok(asks('Write', { file_path: '/work/my-app/patches/@helixds__react@0.1.0.patch' }));
+    assert.ok(asks('Bash', { command: 'pnpm patch @helixds/react' }));
+    assert.ok(asks('Bash', { command: "sed -i 's/4px/6px/' node_modules/@helixds/react/dist/globals.css" }));
+    assert.equal(runHook('Bash', { command: 'cat node_modules/@helixds/react/dist/contracts/Button.json' }), null);
+    assert.equal(runHook('Edit', { file_path: '/work/my-app/src/App.tsx' }), null);
+  });
+
   it('fails open on a payload it cannot read', () => {
     const out = execFileSync('node', [hook], { input: 'not json' }).toString().trim();
     assert.equal(out, '');

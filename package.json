@@ -43,6 +43,7 @@
     "test:lint-hook": "node --test scripts/claude-lint-hook.test.mjs",
     "test:contract-hook": "node --test scripts/claude-contract-hook.test.mjs",
     "test:owner-gate-hook": "node --test scripts/claude-owner-gate-hook.test.mjs",
+    "test:setup-ai": "node --test scripts/setup-ai.test.mjs",
     "report:paints": "tsx scripts/report-paints.ts",
     "lint:ai": "tsx scripts/lint-ai.ts",
     "docs:token-exceptions": "tsx scripts/audit-token-exceptions.ts",

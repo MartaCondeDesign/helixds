@@ -153,6 +153,10 @@ pnpm test:contract-hook     test that Claude Code contract hook
                             or prop-map.md — by Edit/Write, `pnpm token:add`, `pnpm contract`, or a shell write — and
                             asks the design-system owner to approve it (rule 13 as a gate, not just a sentence)
 pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
+pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
+                            the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
+                            In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json
+pnpm test:setup-ai          test it end to end on throwaway apps
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)

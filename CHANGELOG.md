@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Owner gate: tokens, contracts and prop-map changes need the owner's approval (latest commit)
+- 2026-10-14 — setup:ai installs Helix's guardrails in apps, not just AGENTS.md (latest commit)
+- 2026-10-14 — Owner gate: tokens, contracts and prop-map changes need the owner's approval ([`966bbac`](https://github.com/MartaCondeDesign/helixds/commit/966bbac))
 - 2026-10-14 — helix_validate_snippet type-checks against Helix's real source ([`acc2ef5`](https://github.com/MartaCondeDesign/helixds/commit/acc2ef5))
 - 2026-10-12 — Evals: record answer duration and post the eval score on a PR (#1) ([`d9ed415`](https://github.com/MartaCondeDesign/helixds/commit/d9ed415))
 - 2026-10-12 — Charts: all-blue palette and draw-in motion; NavItem: tinted current item with a blue bar; one motion family (#2) ([`b266608`](https://github.com/MartaCondeDesign/helixds/commit/b266608))

@@ -203,14 +203,25 @@ To install Helix AI context in your project:
 From a clone of the Helix repo:
 
 ```bash
-pnpm setup:ai [target-dir] [--dry-run]
+pnpm setup:ai [target-dir] [--dry-run] [--agents-only]
 ```
 
 This copies AGENTS.md into your project (never overwriting a hand-edited one — it flags
 a conflict instead) and writes a pointer file for whichever AI tool directories it finds
 already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instructions.md`).
-Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
-not touch.
+
+Unless you pass `--agents-only`, it also installs Helix's guardrails for Claude Code, run
+from your Helix clone (set `HELIX_DS_DIR` if a teammate's clone lives elsewhere):
+
+- `.mcp.json` — the Helix MCP server (`helix_get_contracts`, `helix_search_tokens`,
+  `helix_validate_snippet`…).
+- `.claude/settings.json` — three hooks: a write that uses a Helix component is denied until
+  its contract has been read; every written file is linted with Helix's rules (Helix's
+  recommended config if your app has no ESLint setup for them); patching Helix in
+  `node_modules/@helixds` or with a `patches/` file asks you first.
+
+Both files are merged into what's already there — your own servers and hooks stay. Safe to
+run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does not touch.
 
 ## Common mistakes (seen in real eval runs)
 

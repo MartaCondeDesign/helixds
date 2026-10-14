@@ -10,7 +10,17 @@
  * exists with DIFFERENT content, it is never silently overwritten — reported as a
  * conflict instead, so a human decides.
  *
- * Run: node scripts/setup-ai.mjs [target-dir] [--dry-run]
+ * Guardrails (Claude Code) — unless --agents-only: the same checks this repo runs on its own agents, pointed
+ * at this clone of Helix, so they work in the app without copying any code into it:
+ *   .mcp.json               the Helix MCP server (contracts, token search, helix_validate_snippet)
+ *   .claude/settings.json   the three hooks — contracts read before writing (claude-contract-hook), Helix lint
+ *                           after writing (claude-lint-hook) and owner approval before Helix itself is patched
+ *                           in node_modules (claude-owner-gate-hook)
+ * Both reference the clone as ${HELIX_DS_DIR:-<this clone's path>}: each teammate with a clone elsewhere sets
+ * HELIX_DS_DIR, so the files can be committed. They're merged, not overwritten: missing entries are added next
+ * to the app's own servers and hooks; an existing `helix` server that points somewhere else is a conflict.
+ *
+ * Run: node scripts/setup-ai.mjs [target-dir] [--dry-run] [--agents-only]
  * Default target-dir is the current working directory.
  *
  * AGENTS.md is the single source of truth this copies; the pointer files only point back to it.
@@ -24,6 +34,7 @@ const repoRoot = path.resolve(__dirname, '..');
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
+const agentsOnly = args.includes('--agents-only');
 const targetDir = path.resolve(args.find(a => !a.startsWith('--')) ?? process.cwd());
 
 const TEMPLATE_PATH = path.join(repoRoot, 'AGENTS.md');
@@ -51,6 +62,48 @@ const PLAN = [
     targetPath: () => path.join(targetDir, '.github', 'copilot-instructions.md'),
     content: () => `# Helix DS\n\nSee AGENTS.md at the project root for the full Helix DS guide (setup, component inventory, prop vocabulary, token usage) — this file points Copilot at it rather than duplicating it.\n`,
     detect: () => fs.existsSync(path.join(targetDir, '.github')),
+  },
+];
+
+// ── Guardrails: JSON files merged into, never replaced ─────────────────────────
+
+const HELIX_DIR = `\${HELIX_DS_DIR:-${repoRoot}}`;
+const hookCommand = script => `node "${HELIX_DIR}/scripts/${script}"`;
+const HOOKS = [
+  { event: 'PreToolUse', matcher: 'Edit|Write|MultiEdit|NotebookEdit|Bash', script: 'claude-owner-gate-hook.mjs', timeout: 10, statusMessage: 'Helix owner gate' },
+  { event: 'PreToolUse', matcher: 'Edit|Write|MultiEdit', script: 'claude-contract-hook.mjs', timeout: 30, statusMessage: 'Helix contracts read?' },
+  { event: 'PostToolUse', matcher: 'Edit|Write', script: 'claude-lint-hook.mjs', timeout: 60, statusMessage: 'Helix lint' },
+];
+
+/**
+ * A JSON file this script adds entries to. `merge(json)` changes `json` in place and returns
+ * 'changed' | 'same' | a conflict message (an entry exists with a value this script won't overwrite).
+ */
+const GUARDRAILS = agentsOnly ? [] : [
+  {
+    targetPath: () => path.join(targetDir, '.mcp.json'),
+    merge(json) {
+      const server = { command: 'pnpm', args: ['-s', '--dir', HELIX_DIR, 'helix:mcp'] };
+      json.mcpServers ??= {};
+      const existing = json.mcpServers.helix;
+      if (!existing) { json.mcpServers.helix = server; return 'changed'; }
+      return JSON.stringify(existing) === JSON.stringify(server) ? 'same' : 'a "helix" MCP server already exists with a different command';
+    },
+  },
+  {
+    targetPath: () => path.join(targetDir, '.claude', 'settings.json'),
+    merge(json) {
+      json.hooks ??= {};
+      let changed = false;
+      for (const hook of HOOKS) {
+        const entries = (json.hooks[hook.event] ??= []);
+        // Already installed — whatever path it points at — if any entry runs this script.
+        if (entries.some(e => (e.hooks ?? []).some(h => String(h.command ?? '').includes(hook.script)))) continue;
+        entries.push({ matcher: hook.matcher, hooks: [{ type: 'command', command: hookCommand(hook.script), timeout: hook.timeout, statusMessage: hook.statusMessage }] });
+        changed = true;
+      }
+      return changed ? 'changed' : 'same';
+    },
   },
 ];
 
@@ -90,6 +143,27 @@ for (const step of PLAN) {
   report.conflicts.push(relPath);
 }
 
+for (const step of GUARDRAILS) {
+  const targetPath = step.targetPath();
+  const relPath = path.relative(targetDir, targetPath);
+  const exists = fs.existsSync(targetPath);
+  let json = {};
+  if (exists) {
+    try { json = JSON.parse(fs.readFileSync(targetPath, 'utf-8')); } catch {
+      report.conflicts.push(`${relPath} (not valid JSON)`);
+      continue;
+    }
+  }
+  const result = step.merge(json);
+  if (result === 'same') { report.upToDate.push(relPath); continue; }
+  if (result !== 'changed') { report.conflicts.push(`${relPath} (${result})`); continue; }
+  (exists ? report.updated : report.created).push(relPath);
+  if (!dryRun) {
+    ensureDirFor(targetPath);
+    fs.writeFileSync(targetPath, JSON.stringify(json, null, 2) + '\n');
+  }
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 
 const prefix = dryRun ? '[dry-run] ' : '';
@@ -115,6 +189,11 @@ if (report.conflicts.length) {
   console.log(`\n⚠️  Needs manual review — exists with different content than the approved template:`);
   report.conflicts.forEach(f => console.log(`  ! ${f}`));
   console.log('  Not overwritten. Diff by hand and merge what you want to keep.');
+}
+
+if (GUARDRAILS.length) {
+  console.log(`\nGuardrails point at this Helix clone (${repoRoot}).`);
+  console.log('Teammates with their clone elsewhere: export HELIX_DS_DIR=/path/to/helixds. Restart Claude Code to load them.');
 }
 
 process.exit(report.conflicts.length > 0 ? 1 : 0);

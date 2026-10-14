@@ -10,6 +10,10 @@
  *   packages/tokens/src/tokens.json   every token — rule 13: the owner picks it, the agent proposes 2–3
  *   contracts/components/*.json       what each component IS — rule 7: the contract wins over everything
  *   .ai/maps/prop-map.md              the canonical prop vocabulary — rule 5: every prop name follows it
+ *   node_modules/@helixds/**, patches/@helixds*
+ *                                     in an app (installed by `pnpm setup:ai`): Helix itself, patched in place —
+ *                                     a local fork of the design system, which every contract's governance says
+ *                                     to escalate to the Helix team instead
  *
  * Edit/Write/MultiEdit: any write to a gated file asks. Bash: a command asks when it runs a CLI that writes
  * one (`pnpm token:add`, `pnpm contract <Name>`), or names a gated file next to something that writes
@@ -35,17 +39,24 @@ const GATED = [
     what: '.ai/maps/prop-map.md',
     why: 'The prop map is the canonical prop vocabulary (CLAUDE.md rule 5): every contract, the linter and the evals follow it.',
   },
+  {
+    match: p => /(^|\/)(?:node_modules\/@helixds\/|patches\/@helixds)/.test(p),
+    what: 'Helix itself (node_modules/@helixds or a patch of it)',
+    why: 'Patching Helix inside an app forks the design system: the next update overwrites it and no other app gets it. Each contract\'s governance.mustEscalateToDS lists what goes to the Helix team instead — or build a local [CUSTOM] component (pnpm helix scaffold:custom).',
+  },
 ];
 
 // Repo CLIs that write a gated file.
 const WRITING_CLIS = [
   { pattern: /\bpnpm\s+(?:run\s+)?token:add\b|scripts\/token-cli\.ts/, gate: GATED[0] },
   { pattern: /\bpnpm\s+(?:run\s+)?contract\s+[A-Za-z]|scripts\/contract-cli\.ts/, gate: GATED[1] },
+  { pattern: /\b(?:pnpm|yarn)\s+patch(?:-commit)?\s+[^\n]*@helixds|\bpatch-package\s+[^\n]*@helixds/, gate: GATED[3] },
 ];
 const GATED_IN_COMMAND = [
   { pattern: /packages\/tokens\/src\/tokens\.json/, gate: GATED[0] },
   { pattern: /contracts\/components\/[\w*{},-]*\.json|contracts\/components\/?(?:\s|$|['"])/, gate: GATED[1] },
   { pattern: /\.ai\/maps\/prop-map\.md/, gate: GATED[2] },
+  { pattern: /node_modules\/@helixds\/|patches\/@helixds/, gate: GATED[3] },
 ];
 // Anything in a shell command that can change a file.
 // (`=>`/`->` aren't redirects; `2>&1` isn't a file.)
@@ -65,7 +76,7 @@ let action = '';
 if (['Edit', 'Write', 'MultiEdit', 'NotebookEdit'].includes(tool)) {
   const file = String(args.file_path ?? args.notebook_path ?? '').replaceAll('\\', '/');
   hits = GATED.filter(g => g.match(file));
-  action = `${tool} ${file.replace(/^.*?(packages\/tokens|contracts\/components|\.ai\/maps)/, '$1')}`;
+  action = `${tool} ${file.replace(/^.*?(packages\/tokens|contracts\/components|\.ai\/maps|node_modules\/@helixds|patches\/)/, '$1')}`;
 } else if (tool === 'Bash' && typeof args.command === 'string') {
   const command = args.command;
   const viaCli = WRITING_CLIS.filter(c => c.pattern.test(command)).map(c => c.gate);
