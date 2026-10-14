@@ -51,6 +51,14 @@ describe('claude-owner-gate-hook', () => {
     assert.ok(asks('Bash', { command: "python3 - <<'EOF'\nopen('packages/tokens/src/tokens.json','w').write('{}')\nEOF" }));
   });
 
+  it('judges an inline script by what it writes, not by the paths its text mentions', () => {
+    // Caught in a real session: a script editing the contract hook, whose doc comment names contracts/components/*.json.
+    const editsOtherFile = "python3 - <<'EOF'\np='scripts/claude-contract-hook.mjs'; s=open(p).read()\ns=s.replace('x', ' * contracts/components/*.json, tokens.json')\nopen(p,'w').write(s)\nEOF";
+    assert.equal(runHook('Bash', { command: editsOtherFile }), null);
+    assert.ok(asks('Bash', { command: `node -e "require('fs').writeFileSync('contracts/components/Button.json', '{}')"` }));
+    assert.ok(asks('Bash', { command: "python3 -c \"open('.ai/maps/prop-map.md','a').write('x')\"" }));
+  });
+
   it('never asks to read one, or to commit a message that names one', () => {
     assert.equal(runHook('Bash', { command: 'cat packages/tokens/src/tokens.json | jq .semantic' }), null);
     assert.equal(runHook('Bash', { command: 'grep -n "x => y" .ai/maps/prop-map.md 2>&1 | head' }), null);

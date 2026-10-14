@@ -80,6 +80,8 @@ describe('setup-ai', () => {
 
     const gemini = readJson(path.join(app, '.gemini/settings.json'));
     assert.equal(gemini.mcpServers.helix.command, 'sh');
+    assert.equal(gemini.mcpServers.helix.timeout, 30000);
+    assert.match(toml, /startup_timeout_sec = 30\n/);
     assert.deepEqual(gemini.hooks.BeforeTool.map(e => e.hooks[0].name), ['helix-owner-gate', 'helix-contract']);
     assert.equal(gemini.hooks.AfterTool[0].hooks[0].timeout, 60000);
     assert.deepEqual(gemini.context.fileName, ['AGENTS.md', 'GEMINI.md']);

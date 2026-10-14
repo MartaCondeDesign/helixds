@@ -64,7 +64,15 @@ const GATED_IN_COMMAND = [
 ];
 // Anything in a shell command that can change a file.
 // (`=>`/`->` aren't redirects; `2>&1` isn't a file.)
-const WRITES = /\bsed\s+(?:-\w+\s+)*-i|(?:^|[^<>&\d=-])>>?\s*[^&>=\s]|\btee\b|\b(?:mv|cp|rm|truncate|patch)\s|\bgit\s+(?:checkout|restore|apply|mv|rm)\b|\b(?:node|python3?|tsx|deno|bun|perl|ruby)\s+(?:-\w+\s+)*(?:-e|-c|-)(?=\s|$)/;
+const WRITES = /\bsed\s+(?:-\w+\s+)*-i|(?:^|[^<>&\d=-])>>?\s*[^&>=\s]|\btee\b|\b(?:mv|cp|rm|truncate|patch)\s|\bgit\s+(?:checkout|restore|apply|mv|rm)\b/;
+// A script run inline — a heredoc body, or node/python -e/-c '…' — is judged on what it does, not on what it
+// mentions: it asks only when it calls a write function and names a gated file as a whole string literal
+// (open('packages/tokens/src/tokens.json', 'w')). A script editing some other file whose text merely mentions
+// contracts/components/*.json — a doc comment, a regex — goes through.
+const HEREDOC = /<<-?\s*(['"]?)(\w+)\1[^\n]*\n([\s\S]*?)\n\s*\2(?=\s|$)/g;
+const INLINE_SCRIPT = /\b(?:node|python3?|tsx|deno|bun|perl|ruby)\s+(?:-\w+\s+)*(?:-e|-c)\s+(['"])([\s\S]*?)\1/g;
+const WRITE_CALL = /\b(?:open|writeFile(?:Sync)?|appendFile(?:Sync)?|write_text|write_bytes|copyFile(?:Sync)?|rename(?:Sync)?|unlink(?:Sync)?|rm(?:Sync)?|truncate)\s*\(|\bshutil\.|\bos\.(?:remove|rename|replace)\b/;
+const literals = text => [...text.matchAll(/(['"`])([^'"`\n]+)\1/g)].map(m => m[2]);
 // Commands that only record or show history: a commit message naming tokens.json doesn't change it.
 const HISTORY_ONLY = /^\s*git\s+(?:commit|log|show|diff|tag|status|blame)\b/;
 
@@ -84,8 +92,12 @@ if (call.kind === 'files') {
 } else if (call.kind === 'shell') {
   const { command } = call;
   const viaCli = WRITING_CLIS.filter(c => c.pattern.test(command)).map(c => c.gate);
-  const viaShell = !HISTORY_ONLY.test(command) && WRITES.test(command) ? GATED_IN_COMMAND.filter(c => c.pattern.test(command)).map(c => c.gate) : [];
-  hits = [...new Set([...viaCli, ...viaShell])];
+  const scripts = [...command.matchAll(HEREDOC)].map(m => m[3]).concat([...command.matchAll(INLINE_SCRIPT)].map(m => m[2]));
+  const shellPart = command.replace(HEREDOC, '<<script').replace(INLINE_SCRIPT, 'script');
+  const viaShell = !HISTORY_ONLY.test(shellPart) && WRITES.test(shellPart) ? GATED_IN_COMMAND.filter(c => c.pattern.test(shellPart)).map(c => c.gate) : [];
+  const viaScript = scripts.filter(body => WRITE_CALL.test(body))
+    .flatMap(body => literals(body).flatMap(value => GATED.filter(g => g.match(value.replaceAll('\\', '/')))));
+  hits = [...new Set([...viaCli, ...viaShell, ...viaScript])];
   action = `run: ${command.length > 160 ? `${command.slice(0, 157)}…` : command}`;
 }
 if (!hits.length) process.exit(0);

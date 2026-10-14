@@ -156,8 +156,11 @@ const GUARDRAILS = agentsOnly ? [] : [
       let changed = false;
       json.mcpServers ??= {};
       const existing = json.mcpServers.helix;
-      if (!existing) { json.mcpServers.helix = MCP_VIA_SHELL; changed = true; }
-      else if (JSON.stringify(existing) !== JSON.stringify(MCP_VIA_SHELL)) return 'a "helix" MCP server already exists with a different command';
+      // Gemini gives a server 5 s to answer by default (`gemini mcp list`); a cold first start of the Helix
+      // server (pnpm + tsx) can take longer — seen in a real run, so it gets 30 s.
+      const server = { ...MCP_VIA_SHELL, timeout: 30000 };
+      if (!existing) { json.mcpServers.helix = server; changed = true; }
+      else if (JSON.stringify(existing) !== JSON.stringify(server)) return 'a "helix" MCP server already exists with a different command';
       const events = { PreToolUse: 'BeforeTool', PostToolUse: 'AfterTool' };
       const matchers = { 'claude-owner-gate-hook.mjs': 'write_file|replace|run_shell_command', 'claude-contract-hook.mjs': 'write_file|replace', 'claude-lint-hook.mjs': 'write_file|replace' };
       const geminiHooks = HOOKS.map(h => ({ ...h, event: events[h.event] }));
@@ -233,7 +236,8 @@ for (const step of GUARDRAILS) {
 if (!agentsOnly) {
   const tomlPath = path.join(targetDir, '.codex', 'config.toml');
   const relPath = path.relative(targetDir, tomlPath);
-  const table = `[mcp_servers.helix]\ncommand = "sh"\nargs = ${JSON.stringify(MCP_VIA_SHELL.args)}\n`;
+  // 30 s to start, like Gemini: a cold first start of the server can outlast Codex's default.
+  const table = `[mcp_servers.helix]\ncommand = "sh"\nargs = ${JSON.stringify(MCP_VIA_SHELL.args)}\nstartup_timeout_sec = 30\n`;
   if (!uses('codex')) report.skipped.push(relPath);
   else {
     const existing = fs.existsSync(tomlPath) ? fs.readFileSync(tomlPath, 'utf-8') : null;
