@@ -15,6 +15,7 @@ import path from 'node:path';
 import { ESLint } from 'eslint';
 import tseslint from 'typescript-eslint';
 import helix from '@helixds/eslint-plugin';
+import { hasOpenLintBlock, recordHookTrace } from './hook-trace.mjs';
 
 const helixRepo = path.resolve(import.meta.dirname, '..');
 const root = process.env.CLAUDE_PROJECT_DIR || helixRepo;
@@ -51,7 +52,15 @@ if (await eslint.isPathIgnored(file)) process.exit(0);
 const [result] = await eslint.lintFiles([file]);
 // No config applies (e.g. packages/core): ESLint reports a single "no matching configuration" warning.
 const problems = (result?.messages ?? []).filter(m => m.ruleId?.startsWith('helix/'));
-if (!problems.length) process.exit(0);
+if (!problems.length) {
+  // The agent fixed what an earlier block in this session reported: record that it recovered.
+  if (hasOpenLintBlock(payload, file)) recordHookTrace({ hook: 'lint', decision: 'resolved', payload, file });
+  process.exit(0);
+}
+recordHookTrace({
+  hook: 'lint', decision: 'block', payload, file,
+  findings: problems.map(m => ({ rule: m.ruleId, line: m.line, message: m.message })),
+});
 
 const lines = problems.map(m => `${relative}:${m.line}:${m.column} ${m.severity === 2 ? 'error' : 'warning'} ${m.ruleId} — ${m.message}`);
 console.log(JSON.stringify({

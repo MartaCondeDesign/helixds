@@ -21,6 +21,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { recordHookTrace } from './hook-trace.mjs';
 
 const root = process.env.CLAUDE_PROJECT_DIR || path.resolve(import.meta.dirname, '..');
 
@@ -152,6 +153,7 @@ const missing = required.filter(c => !read.has(c));
 if (!missing.length) process.exit(0);
 
 const relative = path.relative(root, path.resolve(root, file));
+recordHookTrace({ hook: 'contract', decision: 'deny', payload, file, findings: missing.map(component => ({ component })) });
 console.log(JSON.stringify({
   hookSpecificOutput: {
     hookEventName: 'PreToolUse',

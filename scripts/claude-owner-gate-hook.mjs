@@ -23,6 +23,8 @@
  * run outside Claude Code, so they never hit it. Fails open: a payload it can't read lets the call through.
  */
 
+import { recordHookTrace } from './hook-trace.mjs';
+
 const GATED = [
   {
     match: p => /(^|\/)packages\/tokens\/src\/tokens\.json$/.test(p),
@@ -85,6 +87,13 @@ if (['Edit', 'Write', 'MultiEdit', 'NotebookEdit'].includes(tool)) {
   action = `run: ${command.length > 160 ? `${command.slice(0, 157)}…` : command}`;
 }
 if (!hits.length) process.exit(0);
+
+// The approval the owner then gives or refuses isn't visible to a PreToolUse hook — the trace records the ask.
+recordHookTrace({
+  hook: 'owner-gate', decision: 'ask', payload,
+  file: args.file_path ?? args.notebook_path,
+  findings: hits.map(g => ({ gate: g.what, message: action })),
+});
 
 console.log(JSON.stringify({
   hookSpecificOutput: {

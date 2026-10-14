@@ -220,7 +220,12 @@ from your Helix clone (set `HELIX_DS_DIR` if a teammate's clone lives elsewhere)
   recommended config if your app has no ESLint setup for them); patching Helix in
   `node_modules/@helixds` or with a `patches/` file asks you first.
 
-Both files are merged into what's already there — your own servers and hooks stay. Safe to
+If the app already has a `.cursor/` folder, Cursor gets the same MCP server in
+`.cursor/mcp.json` (the hooks are Claude Code only). Every time a hook stops an agent, it
+records a one-line trace in your Helix clone (`evals/traces/hooks/`, never the code;
+`HELIX_TRACES=off` turns it off) — `pnpm eval:traces` shows what agents get wrong most.
+
+These files are merged into what's already there — your own servers and hooks stay. Safe to
 run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does not touch.
 
 ## Common mistakes (seen in real eval runs)

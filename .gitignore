@@ -9,6 +9,8 @@ dist/
 *.local
 coverage/
 evals/outputs/
+# Live traces the Claude Code hooks record on this machine (scripts/hook-trace.mjs) — summarize with pnpm eval:traces
+evals/traces/hooks/
 quality/reports/
 apps/storybook/.test-results/
 

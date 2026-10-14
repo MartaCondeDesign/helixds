@@ -156,7 +156,12 @@ pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
 pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
                             the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
                             In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json
-pnpm test:setup-ai          test it end to end on throwaway apps
+pnpm test:setup-ai          test it end to end on throwaway apps (Cursor gets the MCP server in .cursor/mcp.json
+                            when the app already has .cursor/; the hooks are Claude Code only)
+pnpm eval:traces            what the hooks caught in real sessions — every lint block, contract denial and owner-gate
+                            ask is a line in evals/traces/hooks/*.jsonl (git-ignored, never code; HELIX_TRACES=off
+                            to stop): rules broken most, contracts skipped, whether agents recover. Feeds
+                            evals/error-analysis.md. `pnpm test:traces` tests it
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)

@@ -1,7 +1,8 @@
 # Error analysis log
 
 Step 1 of the eval loop: **look at what the agent actually wrote** before fixing anything.
-Fill this from `pnpm eval:review --variant <id>`. Annotate first, then categorize, then prioritize —
+Fill this from `pnpm eval:review --variant <id>` — and from `pnpm eval:traces`, what the Claude Code hooks
+caught in real sessions (here and in apps set up with `pnpm setup:ai`). Annotate first, then categorize, then prioritize —
 don't fix while annotating, or you'll fix minor errors before finding the big ones.
 
 ## 1. Annotate — one line per failing generation

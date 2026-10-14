@@ -5,6 +5,9 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 
+// The hooks record a trace of what they catch (scripts/hook-trace.mjs) — not from tests.
+process.env.HELIX_TRACES = 'off';
+
 const root = path.resolve(import.meta.dirname, '..');
 const hook = path.join(root, 'scripts/claude-owner-gate-hook.mjs');
 

@@ -8,6 +8,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+// The hooks record a trace of what they catch (scripts/hook-trace.mjs) — not from tests.
+process.env.HELIX_TRACES = 'off';
+
 const root = path.resolve(import.meta.dirname, '..');
 const script = path.join(root, 'scripts/setup-ai.mjs');
 const apps = [];
@@ -48,6 +51,22 @@ describe('setup-ai', () => {
     assert.deepEqual(commands('PreToolUse').map(c => path.basename(c.replace(/"$/, ''))), ['claude-owner-gate-hook.mjs', 'claude-contract-hook.mjs']);
     assert.deepEqual(commands('PostToolUse').map(c => path.basename(c.replace(/"$/, ''))), ['claude-lint-hook.mjs']);
     assert.ok(commands('PreToolUse').every(c => c.includes(`\${HELIX_DS_DIR:-${root}}/scripts/`)));
+  });
+
+  it('gives Cursor the same MCP server when the app uses Cursor, and runs it', () => {
+    const plain = newApp();
+    setup(plain);
+    assert.ok(!fs.existsSync(path.join(plain, '.cursor/mcp.json')), 'no .cursor/ → nothing for Cursor');
+
+    const app = newApp();
+    fs.mkdirSync(path.join(app, '.cursor'));
+    assert.equal(setup(app).code, 0);
+    const { helix } = readJson(path.join(app, '.cursor/mcp.json')).mcpServers;
+    assert.equal(helix.command, 'sh');
+    assert.equal(helix.args[1], `pnpm -s --dir "\${HELIX_DS_DIR:-${root}}" helix:mcp`);
+    // The shell resolves the clone path: the command lists the MCP server's own script.
+    const resolved = execFileSync('sh', ['-c', `echo ${helix.args[1]}`], { env: { ...process.env, HELIX_DS_DIR: '' } }).toString();
+    assert.match(resolved, new RegExp(`--dir ${root} helix:mcp`));
   });
 
   it('is idempotent — a second run changes nothing', () => {

@@ -13,6 +13,7 @@
  * Guardrails (Claude Code) — unless --agents-only: the same checks this repo runs on its own agents, pointed
  * at this clone of Helix, so they work in the app without copying any code into it:
  *   .mcp.json               the Helix MCP server (contracts, token search, helix_validate_snippet)
+ *   .cursor/mcp.json        the same server for Cursor — only if the app already has .cursor/
  *   .claude/settings.json   the three hooks — contracts read before writing (claude-contract-hook), Helix lint
  *                           after writing (claude-lint-hook) and owner approval before Helix itself is patched
  *                           in node_modules (claude-owner-gate-hook)
@@ -91,6 +92,19 @@ const GUARDRAILS = agentsOnly ? [] : [
     },
   },
   {
+    // Cursor reads .cursor/mcp.json — only if the app already has .cursor/ (same rule as the pointer file).
+    // Cursor doesn't expand ${VAR:-default}, so the shell does: HELIX_DS_DIR still overrides the clone path.
+    targetPath: () => path.join(targetDir, '.cursor', 'mcp.json'),
+    detect: () => fs.existsSync(path.join(targetDir, '.cursor')),
+    merge(json) {
+      const server = { command: 'sh', args: ['-c', `pnpm -s --dir "${HELIX_DIR}" helix:mcp`] };
+      json.mcpServers ??= {};
+      const existing = json.mcpServers.helix;
+      if (!existing) { json.mcpServers.helix = server; return 'changed'; }
+      return JSON.stringify(existing) === JSON.stringify(server) ? 'same' : 'a "helix" MCP server already exists with a different command';
+    },
+  },
+  {
     targetPath: () => path.join(targetDir, '.claude', 'settings.json'),
     merge(json) {
       json.hooks ??= {};
@@ -146,6 +160,7 @@ for (const step of PLAN) {
 for (const step of GUARDRAILS) {
   const targetPath = step.targetPath();
   const relPath = path.relative(targetDir, targetPath);
+  if (step.detect && !step.detect()) { report.skipped.push(relPath); continue; }
   const exists = fs.existsSync(targetPath);
   let json = {};
   if (exists) {

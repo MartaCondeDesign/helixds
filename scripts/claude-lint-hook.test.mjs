@@ -6,6 +6,9 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
+// The hooks record a trace of what they catch (scripts/hook-trace.mjs) — not from tests.
+process.env.HELIX_TRACES = 'off';
+
 const root = path.resolve(import.meta.dirname, '..');
 const hook = path.join(root, 'scripts/claude-lint-hook.mjs');
 // Inside apps/ (the only place eslint.config.mjs lints) but not a *.stories.tsx, so Storybook ignores it.
