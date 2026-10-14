@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "dev": "pnpm -w docs:changelog && storybook dev --port 6006",
-    "build": "pnpm -w docs:changelog && storybook build --output-dir dist",
+    "dev": "pnpm --filter @helixds/tokens build && pnpm -w docs:changelog && storybook dev --port 6006",
+    "build": "pnpm --filter @helixds/tokens build && pnpm -w docs:changelog && storybook build --output-dir dist",
     "test": "vitest run",
     "test-storybook": "test-storybook"
   },

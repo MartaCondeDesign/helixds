@@ -83,7 +83,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Quality snapshot 2026-10-14: health 73.3% (latest commit)
+- 2026-10-14 — Storybook shows every token: primitive shadows page + a coverage check (latest commit)
+- 2026-10-14 — Quality snapshot 2026-10-14: health 73.3% ([`a2750b9`](https://github.com/MartaCondeDesign/helixds/commit/a2750b9))
 - 2026-10-14 — AI guardrails for every agent, and tokens on the DTCG 2025.10 standard (#6) ([`a01c7c4`](https://github.com/MartaCondeDesign/helixds/commit/a01c7c4))
 - 2026-10-14 — Motion: transitions.dev effects on Toast, Menu, Button and the donut Chart (#5) ([`f5df45f`](https://github.com/MartaCondeDesign/helixds/commit/f5df45f))
 - 2026-10-12 — Evals: record answer duration and post the eval score on a PR (#1) ([`d9ed415`](https://github.com/MartaCondeDesign/helixds/commit/d9ed415))

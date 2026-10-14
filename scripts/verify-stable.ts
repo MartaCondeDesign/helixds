@@ -319,3 +319,11 @@ for (const r of rows) {
 }
 execSync('npx tsx scripts/generate-component-manifest.ts', { cwd: root, stdio: 'ignore' });
 console.log('\n✅ contracts/stability.json written, contract statuses updated, manifest regenerated.');
+
+// Foundation coverage: every primitive/semantic token shown on a Foundation story (scripts/verify-storybook-tokens.ts).
+// Reported here because this is the run that already has Storybook up; it doesn't change any component's status.
+if (!skipBrowser) {
+  const coverage = spawnSync('npx', ['tsx', 'scripts/verify-storybook-tokens.ts', '--url', sbUrl], { cwd: root, encoding: 'utf-8' });
+  process.stdout.write(coverage.stdout ?? '');
+  process.stderr.write(coverage.stderr ?? '');
+}

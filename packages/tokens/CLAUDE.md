@@ -130,6 +130,9 @@ role, which is exactly what the naming overhaul (below) was fixing.
      array (most of `Foundation.stories.tsx` does, as of this writing — converting it is a separate,
      larger refactor, not implied by adding one token), updating that array by hand remains mandatory
      until the section is migrated to derive from `tokens`.
+   - **`pnpm verify:storybook-tokens` checks it** (Storybook running): it lists every primitive/semantic token
+     no Foundation story shows as its CSS var. A new token that's missing there isn't done. `pnpm sb` rebuilds
+     the tokens before starting, so the CSS it shows is never older than `tokens.json`.
    - This applies to `ColorSemantic`'s existing `TokenGroup` lists as it always did (add the new token, or
      update the label on a rename) — extend the same expectation to whichever other story covers the
      category you touched.
