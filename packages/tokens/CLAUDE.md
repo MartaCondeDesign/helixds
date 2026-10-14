@@ -6,9 +6,12 @@ Transforms `src/tokens.json` (DTCG format) into:
 - `dist/helix.css`  — CSS custom properties for runtime use
 - `dist/index.ts`   — TypeScript constants for import
 
-## Token format (DTCG)
+## Token format (DTCG 2025.10)
 
-Every token has `$value` and `$type`. References use `{path.to.token}` syntax:
+`tokens.json` follows the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) —
+the standard, not an approximation of it: `pnpm verify:dtcg` validates the file against the official JSON
+Schema (vendored in `schemas/dtcg-2025.10/`) and runs in pre-commit. Every token has `$value` and `$type`.
+References use `{path.to.token}` syntax:
 
 ```json
 "color": {
@@ -17,6 +20,51 @@ Every token has `$value` and `$type`. References use `{path.to.token}` syntax:
   }
 }
 ```
+
+A literal `$value` has its type's own shape, never a CSS string:
+
+| `$type` | `$value` | CSS it renders |
+|---|---|---|
+| `color` | `{ "colorSpace": "srgb", "components": [0.1451, 0.3882, 0.9216], "hex": "#2563eb" }` (+ `"alpha"`) | `#2563eb` / `rgba(…)` |
+| `dimension` | `{ "value": 16, "unit": "px" }` — `px` or `rem` only | `16px` |
+| `duration` | `{ "value": 200, "unit": "ms" }` — `ms` or `s` | `200ms` |
+| `cubicBezier` | `[0.4, 0, 0.2, 1]` | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| `fontFamily` | `["Inter", "ui-sans-serif", "sans-serif"]` | `Inter, ui-sans-serif, sans-serif` |
+| `fontWeight`, `number` | `600`, `1.02` — a JSON number | `600`, `1.02` |
+| `shadow` | `{ "color", "offsetX", "offsetY", "blur", "spread" }` (or a list of them) | `0 1px 2px rgba(0,0,0,0.05)` |
+| `typography` | `{ "fontFamily", "fontSize", "fontWeight", "letterSpacing", "lineHeight" }` — all 5 required | one CSS var per sub-property |
+
+**`src/dtcg.mjs` is the one place that converts.** `toCss()` renders a `$value` as CSS and `fromCss()` turns CSS
+into a `$value` — the build, `pnpm token:add`, the linter's data, the MCP/CLI, the token audits and Storybook all
+call it; nothing else parses a value. Two things the standard has no shape for keep their meaning in
+`$extensions["com.helixds"]`: a length relative to font size (`primitive.letterSpacing.*`, in `em`) is
+`$type: "number"` holding the multiplier plus `"cssUnit": "em"`; and a shadow with every length 0 and a
+transparent color (`primitive.shadow.none`) renders as `none`. The root group carries `$description` and
+`$extensions["com.helixds"].tokenSetOrder` (the former `$schema`/`$metadata` aren't valid group properties).
+
+Write a new token with `pnpm token:add <path> <css-value | {alias}> --type <type>` — it converts the CSS for you
+and refuses a unit the standard doesn't allow (`vw`, `%`…).
+
+### Themes: the DTCG 2025.10 Resolver
+
+`src/helix.resolver.json` is a [Resolver Module 2025.10](https://www.designtokens.org/tr/2025.10/resolver/)
+document: one set (`tokens.json`, every token with its **light** value) and a `theme` modifier whose `dark`
+context lays `src/tokens.dark.json` on top, and a `viewport` modifier whose `mobile` context (below
+`primitive.breakpoint.tablet`; tablet shares desktop) lays `src/tokens.mobile.json` on top — each
+`primitive.fontSize` rung >= 18px aliasing its `semantic.fontSize.mobile.*` value. Any DTCG 2025.10 tool resolves
+Helix's themes and viewports from it; `build.ts` does the same (`src/resolver.mjs`) and writes the dark blocks and
+the mobile `@media` block of `dist/helix.css` from it. A new `fontSize` rung >= 18px needs its line in
+`tokens.mobile.json` too, next to its `semantic.fontSize.mobile.*` token.
+
+- **A dark value is a token in `tokens.dark.json`** at the same path as in `tokens.json` — an alias to a
+  primitive (`{primitive.color.gray.900}`) when the color is on the palette, a color object when it isn't. Why
+  that value (the contrast it reaches) goes in `$extensions["com.helixds"].note`. `$description` stays in
+  `tokens.json` only — one source of truth.
+- **Aliases resolve after the theme is applied**, so a token aliasing a dark token follows it: a component
+  color aliasing a semantic color takes that color's dark value with **no entry of its own** — never add one.
+  If a component needs a different dark color, it aliases a different semantic token.
+- `pnpm verify:dtcg` validates both files and the resolver against the official schemas, resolves each theme
+  and checks every alias. `tokens.dark.json` and `helix.resolver.json` are owner-gated like `tokens.json`.
 
 ## Three layers
 
@@ -85,13 +133,11 @@ role, which is exactly what the naming overhaul (below) was fixing.
    - This applies to `ColorSemantic`'s existing `TokenGroup` lists as it always did (add the new token, or
      update the label on a rename) — extend the same expectation to whichever other story covers the
      category you touched.
-6b. **A `component.*` alias does NOT inherit its semantic token's dark value.** The build resolves every
-   alias to a literal, and `darkOverrides` in `src/build.ts` is keyed per CSS variable — so
-   `component.input.text.error → {semantic.color.text.danger}` still renders the *light* hex in dark mode
-   unless `--helix-input-text-error` has its own `darkOverrides` entry. When you add or change a semantic
-   dark override, grep `tokens.json` for every `component.*` aliasing it and give each the same dark
-   value (or a deliberate, commented different one). Most dark-mode contrast failures found so far were
-   exactly this drift.
+6b. **A token that needs a dark value gets it in `src/tokens.dark.json`** (same path, see "Themes" above) —
+   a new semantic color with no entry there is the same color in both themes. A `component.*` color aliasing
+   that semantic token follows it in dark by itself; don't give it an entry. (Before 2026-10-14 the dark
+   values were a per-CSS-variable map in `build.ts`, and component aliases drifting from their semantic
+   token's dark value caused most dark-mode contrast failures — the resolver makes that drift impossible.)
 7. Reference the token in component CSS as `var(--helix-{path-with-dashes})`.
    Example: `semantic.color.fill.primary` → `--helix-color-fill-primary`.
 8. **Run `pnpm docs:token-exceptions` after every token add/edit — not just `component.*` ones.** This
@@ -145,10 +191,9 @@ specific one instead of grepping blind:
 1. `src/tokens.json` — rename the token, and every `{semantic....}` / `{component....}` alias that
    references it elsewhere in the same file (there are usually many).
 2. `pnpm build` — regenerates `dist/helix.css` and `dist/index.ts`.
-3. `src/build.ts` — the **dark-mode override map is hand-written and separate from tokens.json.** It
-   will NOT pick up the rename automatically; grep it for the old `--helix-*` var name and rename the
-   key. Skipping this silently breaks dark mode for that token — it keeps resolving to its old light-mode
-   value baked into the wrong key.
+3. `src/tokens.dark.json` — rename the token there too (same path as in `tokens.json`), and every alias to
+   it. `pnpm verify:dtcg` fails on an alias that no longer resolves in either theme, but a dark entry left
+   under the old name just stops applying — the token falls back to its light value in dark mode.
 4. `packages/core/src/globals.css` — every `var(--helix-{old-name})` reference.
 5. Figma "Theme" (and other) variable collections — rename the matching variable by hand via
    `use_figma` (see `.ai/skills/tokens-to-figma.md`). Nothing syncs code → Figma automatically.
@@ -213,7 +258,7 @@ category-first, with the exact key grammar for each.
 component chain is visible in `helix.css` itself, and an override on a token reaches everything built on
 it. That is how the `primitive.breakpoint`-driven mobile override on `--helix-primitive-fontSize-*` now
 shrinks textStyles and component font sizes too (heading-xl 24px → 21px, Modal title 18px → 16px). Dark
-mode still comes from the explicit override map; switching from inlining changed no dark value. Scripts
+mode comes from the resolver's dark context (`tokens.dark.json`), written as literal values per var. Scripts
 that read values out of `helix.css` must follow `var()` (see `cssValues()` in `scripts/helix-query-lib.ts`).
 
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
@@ -485,8 +530,9 @@ Examples: `component.chart.area-opacity` = 0.15, `component.modal.overlay-opacit
 
 ## Dark mode tokens
 
-Dark overrides are in `dist/helix.css` under `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`.
-When adding a semantic color token that needs a dark value, add both variants.
+Dark values are authored in `src/tokens.dark.json` (see "Themes: the DTCG 2025.10 Resolver") and built into
+`dist/helix.css` under `[data-theme="dark"]` and `@media (prefers-color-scheme: dark)`. When adding a semantic
+color token that needs a dark value, add it to both files.
 
 ## What NOT to do
 

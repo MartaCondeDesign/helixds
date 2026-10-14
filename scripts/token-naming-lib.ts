@@ -4,6 +4,7 @@
  * whole file) and token-cli.ts (checks one new key before writing it).
  */
 import tokenNamingSchema from '../contracts/token-naming.schema.json' with { type: 'json' };
+import { toCss } from '../packages/tokens/src/dtcg.mjs';
 
 // Words that must never appear as a hyphen-delimited segment of a semantic/component
 // token key — each has a required replacement per packages/tokens/CLAUDE.md.
@@ -77,7 +78,9 @@ function resolveHex(tokens: unknown, ref: string, depth = 0): string | null {
   }
   if (node === null || typeof node !== 'object' || !('$value' in node)) return null;
   const val = (node as { $value: unknown }).$value;
-  return typeof val === 'string' ? resolveHex(tokens, val, depth + 1) : null;
+  if (typeof val === 'string') return resolveHex(tokens, val, depth + 1);
+  // A DTCG 2025.10 color object: its CSS form is the hex (or rgba() when translucent — not judged here).
+  return val && typeof val === 'object' ? resolveHex(tokens, toCss(val, 'color'), depth + 1) : null;
 }
 
 /** HSL lightness (0–1) from a 6-digit hex string. */

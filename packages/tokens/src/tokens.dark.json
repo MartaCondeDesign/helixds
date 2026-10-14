@@ -1,0 +1,80 @@
+{
+  "$description": "Helix DS — dark theme. The \"dark\" context of the theme modifier in helix.resolver.json: each token here replaces the same token of tokens.json when the theme is dark. Tokens that alias these (component colors aliasing semantic colors) follow them by themselves.",
+  "semantic": {
+    "color": {
+      "fill": {
+        "page": { "$value": "{primitive.color.gray.900}", "$type": "color" },
+        "surface": { "$value": "{primitive.color.gray.800}", "$type": "color" },
+        "surface-dark": { "$value": "{primitive.color.gray.700}", "$type": "color" },
+        "secondary-interactive-default": { "$value": "{primitive.color.gray.800}", "$type": "color" },
+        "secondary-interactive-hover": { "$value": "{primitive.color.gray.700}", "$type": "color" },
+        "secondary-interactive-press": { "$value": "{primitive.color.gray.600}", "$type": "color" },
+        "secondary-interactive-dark-default": { "$value": "{primitive.color.gray.500}", "$type": "color", "$extensions": { "com.helixds": { "note": "Unchecked Switch track: must keep 3:1 against the dark page AND let the white thumb keep 3:1 on it. gray-500 does both (3.75 / 4.76); the hover goes LIGHTER in dark like the other secondary fills — #8391a7 (= text-neutral-lightest dark): 5.59 page / 3.19 thumb. gray-400 would drop the thumb to 2.56." } } },
+        "secondary-interactive-dark-hover": { "$value": "{primitive.color.gray.600}", "$type": "color", "$extensions": { "com.helixds": { "note": "Unchecked Switch track, hover: darker than the gray-500 default (1.59:1 between them, so the hover shows) and the white thumb keeps 7.58:1 on it. gray-400 (lighter, like the other secondary fills) leaves the thumb at 2.56:1 — fails WCAG 1.4.11." } } },
+        "disabled": { "$value": "{primitive.color.gray.800}", "$type": "color" },
+        "primary-interactive-light-default": { "$value": "{primitive.color.blue.900}", "$type": "color", "$extensions": { "com.helixds": { "note": "semantic — colored \"-light\" tint fills (badges/chips/nav \"current\" highlight), never overridden before now. Reuse steps already defined in each hue's own primitive ramp rather than inventing new colors. Status hues (danger/success/ warning/info) use .800, one step lighter than .900, so the fill itself reads as a visible tinted chip rather than near-black; the brand \"primary\" tint (nav \"current\" highlight, avatar) stays at .900 since it isn't a status color." } } },
+        "danger-interactive-light-default": { "$value": "{primitive.color.red.800}", "$type": "color" },
+        "success-light": { "$value": "{primitive.color.green.800}", "$type": "color" },
+        "warning-light": { "$value": "{primitive.color.orange.800}", "$type": "color" },
+        "info-light": { "$value": "{primitive.color.turquoise.800}", "$type": "color" },
+        "primary-interactive-light-hover": { "$value": "{primitive.color.blue.800}", "$type": "color", "$extensions": { "com.helixds": { "note": "2) Pale-tint interactive hover: `fill.primary-interactive-light-default` and    `fill.danger-interactive-light-default` already had dark values below (#1e3a8a,    #991b1b — one step down each primitive scale) — their `-hover` siblings didn't,    so hovering one of these light-tint surfaces in dark mode silently fell back to    the light-mode pale tint (near-invisible against a dark page). Hover now steps    one primitive rung lighter than its own default, matching how every other    default→hover pair in this file gets lighter on hover in dark mode." } } },
+        "danger-interactive-light-hover": { "$value": "{primitive.color.red.700}", "$type": "color" }
+      },
+      "text": {
+        "neutral": { "$value": "{primitive.color.gray.100}", "$type": "color" },
+        "neutral-light": { "$value": "{primitive.color.gray.400}", "$type": "color" },
+        "neutral-lightest": { "$value": "{primitive.color.gray.400}", "$type": "color", "$extensions": { "com.helixds": { "note": "Not gray-500 (#64748b) like light mode: that is only 3.75:1 on the dark page and 3.07:1 on surface — fails AA for normal text. gray-400: 6.96:1 page, 5.71:1 surface. Same value as neutral-light in dark." } } },
+        "disabled": { "$value": "{primitive.color.gray.600}", "$type": "color" },
+        "primary": { "$value": "{primitive.color.blue.300}", "$type": "color", "$extensions": { "com.helixds": { "note": "text/icon-inverse: no dark entry — they are white on saturated brand fills (and Tooltip's fill.inverse), which keep the same hex in both themes, so the white stays white too (it used to flip to #0f172a and fail contrast on every primary/danger Button in dark mode once components followed the semantic layer). blue-300: #60a5fa only reached 4.07:1 on fill-primary-interactive-light-default (selected NavItem)" } } },
+        "link": { "$value": "{primitive.color.blue.400}", "$type": "color" },
+        "link-hover": { "$value": "{primitive.color.blue.300}", "$type": "color" },
+        "info": { "$value": "{primitive.color.turquoise.300}", "$type": "color", "$extensions": { "com.helixds": { "note": "semantic — status TEXT sits mostly on a colored \"-light\" tint background (badges, chips): the light-mode hex reads low-contrast against the dark tint fills above, so text gets a lighter step of its own hue." } } },
+        "success": { "$value": "{primitive.color.green.300}", "$type": "color" },
+        "warning": { "$value": "{primitive.color.orange.300}", "$type": "color" },
+        "danger": { "$value": "{primitive.color.red.200}", "$type": "color" }
+      },
+      "icon": {
+        "neutral": { "$value": "{primitive.color.gray.100}", "$type": "color" },
+        "neutral-light": { "$value": "{primitive.color.gray.400}", "$type": "color" },
+        "disabled": { "$value": "{primitive.color.gray.600}", "$type": "color" },
+        "primary": { "$value": "{primitive.color.blue.300}", "$type": "color", "$extensions": { "com.helixds": { "note": "same step as text-primary" } } },
+        "info": { "$value": "{primitive.color.turquoise.600}", "$type": "color", "$extensions": { "com.helixds": { "note": "semantic — status ICONS default to a plain page/surface background (Toast, Status, a trend arrow, a validation icon), so they keep the saturated tone — one \"danger red\" everywhere in dark mode. >=3:1 (icon threshold) on page / surface: info 4.36/3.57, success 5.42/4.44, warning 5.60/4.59, danger 4.74/3.89. Icons on a colored tint (Badge, Chip) don't use these — they match their label's text tone instead (--helix-badge-icon-*, Chip's CSS)." } } },
+        "success": { "$value": "{primitive.color.green.600}", "$type": "color" },
+        "warning": { "$value": "{primitive.color.orange.600}", "$type": "color" },
+        "danger": { "$value": "{primitive.color.red.500}", "$type": "color" }
+      },
+      "border": {
+        "neutral": { "$value": "{primitive.color.gray.700}", "$type": "color" },
+        "neutral-dark": { "$value": "{primitive.color.gray.600}", "$type": "color" },
+        "neutral-light": { "$value": "{primitive.color.gray.800}", "$type": "color" },
+        "inverse": { "$value": "{primitive.color.gray.400}", "$type": "color" },
+        "danger": { "$value": "{primitive.color.red.400}", "$type": "color", "$extensions": { "com.helixds": { "note": "semantic — status border on a colored \"-light\" tint background: a lighter, more saturated step so the outline stays visible against the dark fill above. `danger`/`success`/`warning`/`info` are now the OFFICIAL/base tone (moved from `-dark` — see the naming correction: the base name belongs to the more commonly used tone, not whichever one was named first); `-light` is the decorative-only exception (Badge). Same resolved dark-mode values as before the rename in every case — only which var name maps to which value changed." } } },
+        "danger-light": { "$value": "{primitive.color.red.400}", "$type": "color" },
+        "success": { "$value": "{primitive.color.green.400}", "$type": "color" },
+        "success-light": { "$value": "{primitive.color.green.400}", "$type": "color" },
+        "warning": { "$value": "{primitive.color.orange.400}", "$type": "color" },
+        "warning-light": { "$value": "{primitive.color.orange.400}", "$type": "color" },
+        "info": { "$value": "{primitive.color.turquoise.400}", "$type": "color" },
+        "info-light": { "$value": "{primitive.color.turquoise.400}", "$type": "color" },
+        "focus": { "$value": "{primitive.color.blue.400}", "$type": "color", "$extensions": { "com.helixds": { "note": "─── Dark-mode completeness audit (2026-09-13) ─────────────────────────── This map only needs an entry per CSS var whose dark value actually DIFFERS from light — that's the whole point of a diff-style override map, not a gap by itself. But a pass comparing every light color/shadow var against this map turned up real omissions: tokens that were clearly *meant* to follow an already-established dark convention elsewhere in this same file, just never got their own entry (the build inlines resolved values per CSS var rather than chaining var(), so an alias can't \"inherit\" its source token's override automatically — see the CSS pipeline caveat in packages/tokens/CLAUDE.md). Two real families fixed here:  1) Focus-ring color: Select/Textarea/Checkbox/Radio/Switch/IconButton's own    `border-focus` were already using #60a5fa (a lighter blue that reads better on    a dark surface than the light-mode #3b82f6) — but the base semantic token and    Button/Input/FAB's own `border-focus` were left un-overridden, silently keeping    the light-mode blue in dark mode. Same fix, applied everywhere the others already were." } } }
+      },
+      "chart": {
+        "series-1": { "$value": "{primitive.color.blue.600}", "$type": "color", "$extensions": { "com.helixds": { "note": "semantic — chart series: the primary blue (#2563eb, same as the primary Button in both themes) first, then blues far from their neighbour — light after dark — so two series never look alike. Blues darker than the primary drop under 3:1 on the dark page, so dark mode alternates among the lighter ones. On the dark page: 3.45, 12.56, 7.02, 14.63, 4.85 — all >=3:1 (WCAG 1.4.11). Light mode has no light blue that meets 3:1 on white, so there the contrast comes from the darkest blue instead (600·900·500·800·700, all >=3:1). blue-600" } } },
+        "series-2": { "$value": "{primitive.color.blue.200}", "$type": "color", "$extensions": { "com.helixds": { "note": "blue-200" } } },
+        "series-3": { "$value": "{primitive.color.blue.400}", "$type": "color", "$extensions": { "com.helixds": { "note": "blue-400" } } },
+        "series-4": { "$value": "{primitive.color.blue.100}", "$type": "color", "$extensions": { "com.helixds": { "note": "blue-100" } } },
+        "series-5": { "$value": "{primitive.color.blue.500}", "$type": "color", "$extensions": { "com.helixds": { "note": "blue-500" } } },
+        "series-6": { "$value": "{primitive.color.gray.400}", "$type": "color", "$extensions": { "com.helixds": { "note": "gray-400" } } }
+      }
+    },
+    "shadow": {
+      "focus": { "$value": "{primitive.shadow.dark.focus}", "$type": "shadow" },
+      "xs": { "$value": "{primitive.shadow.dark.xs}", "$type": "shadow", "$extensions": { "com.helixds": { "note": "3) Shadows had ZERO dark treatment anywhere in the file — every floating surface    (Menu, Modal, SidePanel, Toast, Tooltip, FAB) was reusing light-mode's very low    alpha (0.04–0.1) black shadow, which reads as almost no shadow at all against a    near-black page. Opacity roughly tripled so elevation stays visible; hue/offsets    unchanged since only visibility, not direction, needed to change." } } },
+      "s": { "$value": "{primitive.shadow.dark.s}", "$type": "shadow" },
+      "m": { "$value": "{primitive.shadow.dark.m}", "$type": "shadow" },
+      "l": { "$value": "{primitive.shadow.dark.l}", "$type": "shadow" },
+      "xl": { "$value": "{primitive.shadow.dark.xl}", "$type": "shadow" },
+      "xl-up": { "$value": "{primitive.shadow.dark.xl-up}", "$type": "shadow" }
+    }
+  }
+}

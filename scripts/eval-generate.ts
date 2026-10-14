@@ -46,8 +46,9 @@ const isolated = args.includes('--isolated');
 const installed = args.includes('--installed');
 // --mcp: the agent can call the Helix MCP tools (contracts, token search, snippet validation) while it works.
 const useMcp = args.includes('--mcp');
-// --lint-loop: after each answer, the Helix lint problems go back to the agent to fix — what the Claude Code
-// lint hook (scripts/claude-lint-hook.mjs) does in a real session — up to LINT_ROUNDS times.
+// --lint-loop: after each answer, helix_validate_snippet's verdict goes back to the agent to fix — its Helix
+// lint problems (what the Claude Code lint hook, scripts/claude-lint-hook.mjs, does in a real session) and,
+// since 2026-10-14, its type errors against Helix's real source — up to LINT_ROUNDS times.
 const lintLoop = args.includes('--lint-loop');
 const LINT_ROUNDS = 2;
 // --round: the measurement round (pnpm eval:ladder --round) this answer belongs to.
@@ -225,12 +226,16 @@ async function worker() {
       let code = extractCodeBlock(await generateWithRetry(p.prompt, usage, 3, toolCalls));
       let lintRounds = 0;
       while (lintLoop && lintRounds < LINT_ROUNDS) {
-        const { problems } = await validateSnippet(code);
-        if (!problems.length) break;
+        const { valid, problems, compileErrors } = await validateSnippet(code);
+        if (valid) break;
         lintRounds++;
-        const report = problems.map(m => `${m.line}:${m.column} ${m.rule} — ${m.message}`).join('\n');
+        const report = [
+          ...problems.map(m => `${m.line}:${m.column} ${m.rule} — ${m.message}`),
+          ...compileErrors.map(e => `${e} (type error)`),
+        ].join('\n');
+        const count = problems.length + compileErrors.length;
         code = extractCodeBlock(await generateWithRetry(
-          `${p.prompt}\n\nYour previous answer:\n\n\`\`\`tsx\n${code}\n\`\`\`\n\nHelix lint found ${problems.length} problem(s) in it. Fix them and answer again:\n${report}`,
+          `${p.prompt}\n\nYour previous answer:\n\n\`\`\`tsx\n${code}\n\`\`\`\n\nHelix's validator (lint + type-check against Helix's real source) found ${count} problem(s) in it. Fix them and answer again:\n${report}`,
           usage, 3, toolCalls,
         ));
       }

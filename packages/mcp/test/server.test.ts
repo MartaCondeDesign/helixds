@@ -96,6 +96,25 @@ describe('@helixds/mcp', () => {
     assert.equal(data.fixedCode, null);
   });
 
+  it('helix_validate_snippet type-checks against Helix\'s real source — what lint can\'t see', async () => {
+    // Mistakes no lint rule sees: a value Button's `size` doesn't take, and Select without its required `label`.
+    const code = "import { Button, Select } from '@helixds/react';\nexport const F = () => <><Button size=\"huge\" onClick={save}>Save</Button><Select options={[]} /></>;\n";
+    const { data } = await call('helix_validate_snippet', { code });
+    assert.equal(data.valid, false);
+    assert.deepEqual(data.problems, []);
+    assert.equal(data.compiles, false);
+    assert.ok(data.compileErrors.some((e: string) => /"huge"/.test(e)));
+    assert.ok(data.compileErrors.some((e: string) => /'label'/.test(e)));
+    assert.ok(data.remainingAfterFix.some((e: string) => /\(type error\)$/.test(e)));
+  });
+
+  it('helix_validate_snippet flags a component Helix doesn\'t have, but not the snippet\'s own undeclared handlers', async () => {
+    const { data } = await call('helix_validate_snippet', { code: "import { Spinner } from '@helixds/react';\nexport const L = () => <Spinner onDone={finish} />;\n" });
+    assert.equal(data.compiles, false);
+    assert.ok(data.compileErrors.some((e: string) => /Spinner/.test(e)));
+    assert.ok(!data.compileErrors.some((e: string) => /'finish'/.test(e)));
+  });
+
   it('helix_validate_snippet reports a syntax error instead of crashing', async () => {
     const { data } = await call('helix_validate_snippet', { code: '<Button onClick={' });
     assert.equal(data.valid, false);

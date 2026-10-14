@@ -10,7 +10,7 @@ Helix as native tools for AI agents, over the Model Context Protocol — instead
 | `helix_list_components` | Every component with its status and purpose — "does Helix already have this?" |
 | `helix_get_contract` | One component's props (exact names, types, defaults), accessibility, rationale, `neverUseFor` and governance boundaries |
 | `helix_search_tokens` | The right token for a concept — "danger background", "subtle text", "focus border" — with its `var(--helix-…)`, light and dark values |
-| `helix_validate_snippet` | Checks JSX/TSX before it's written: problems, a `fixedCode` with the safe fixes applied, what's left, and layout/icon/inline-style advisories |
+| `helix_validate_snippet` | Checks JSX/TSX before it's written: lint problems, a `fixedCode` with the safe fixes applied, `compileErrors` from type-checking it against Helix's real source (`src/compile.ts`, the same compiler the evals grade with), what's left, and layout/icon/inline-style advisories |
 | `helix_get_pattern` | A documented composition pattern (`group-spacing`, `show-hide-parts`…) |
 
 All tools are read-only. They read the same sources as the CLI (`scripts/helix-query-lib.ts`) and the linter

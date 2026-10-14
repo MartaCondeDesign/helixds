@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isAlias, toCss } from '../../tokens/src/dtcg.mjs';
 
 const pkg = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const root = path.resolve(pkg, '../..');
@@ -65,15 +66,16 @@ for (const file of fs.readdirSync(path.join(root, 'contracts/components')).filte
 // ── tokens ──────────────────────────────────────────────────────────────────
 const tokens = JSON.parse(read('packages/tokens/src/tokens.json'));
 const get = dotted => dotted.split('.').reduce((node, key) => node?.[key], tokens);
+// Follows aliases to the final token, then renders its DTCG 2025.10 value as CSS ("#2563eb", "16px").
 const resolve = value => {
-  let current = value;
-  for (let hops = 0; typeof current === 'string' && current.startsWith('{') && hops < 10; hops++) current = get(current.slice(1, -1))?.$value;
-  return typeof current === 'string' ? current.toLowerCase() : undefined;
+  let token = { $value: value };
+  for (let hops = 0; isAlias(token?.$value) && hops < 10; hops++) token = get(token.$value.slice(1, -1));
+  return token && !isAlias(token.$value) ? toCss(token.$value, token.$type, { extensions: token.$extensions }).toLowerCase() : undefined;
 };
 
 const primitives = {};
 for (const [hue, steps] of Object.entries(tokens.primitive.color)) {
-  for (const [step, token] of Object.entries(steps)) primitives[`${hue}-${step}`] = token.$value.toLowerCase();
+  for (const [step, token] of Object.entries(steps)) primitives[`${hue}-${step}`] = toCss(token.$value, token.$type).toLowerCase();
 }
 
 const colors = {};

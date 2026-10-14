@@ -7,6 +7,9 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 
+// The hooks record a trace of what they catch (scripts/hook-trace.mjs) — not from tests.
+process.env.HELIX_TRACES = 'off';
+
 const root = path.resolve(import.meta.dirname, '..');
 const hook = path.join(root, 'scripts/claude-contract-hook.mjs');
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'helix-contract-hook-'));

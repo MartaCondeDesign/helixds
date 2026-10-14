@@ -4,6 +4,7 @@ import { label12, SectionHead, SpacingBar, DescCaption, StoryHeader, TableGroup,
 // Imported directly from source so every section below reflects $value/$description automatically on
 // any token change — no hardcoded list to keep in sync by hand.
 import tokensJson from '../../../../packages/tokens/src/tokens.json';
+import { toCss } from '../../../../packages/tokens/src/dtcg.mjs';
 
 const meta: Meta = {
   title: 'Foundation/Semantic',
@@ -189,7 +190,7 @@ export const Shadows: Story = {
           </tr>
         </thead>
         <tbody>
-          {(['xs', 's', 'm', 'l', 'xl', 'focus']).map(s => (
+          {(['xs', 's', 'm', 'l', 'xl', 'xl-up', 'focus']).map(s => (
             <tr key={s} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow.{s}</code></td>
               <td style={tdStyle}>
@@ -214,16 +215,19 @@ export const Shadows: Story = {
 // ── Motion (duration + easing, interactive) ──────────────────────────────
 
 // Derived from tokens.json (semantic alias → primitive value), so a new duration rung shows up on its own.
-const primitiveDuration = (tokensJson.primitive as unknown as { duration: Record<string, { $value: string }> }).duration;
+// Values are DTCG 2025.10 shapes ({ value, unit }, [x1, y1, x2, y2]) — toCss renders them ("150ms", "cubic-bezier(…)").
+const primitiveDuration = (tokensJson.primitive as unknown as { duration: Record<string, TokenLeaf> }).duration;
 const DURATION_MS: Record<string, string> = Object.fromEntries(Object.entries(semantic.duration).map(([key, leaf]) => {
   const ref = String(leaf.$value).match(/^\{primitive\.duration\.(\w+)\}$/)?.[1];
-  return [key, ref ? primitiveDuration[ref]?.$value ?? '0ms' : String(leaf.$value)];
+  const target = ref ? primitiveDuration[ref] : leaf;
+  return [key, target ? toCss(target.$value, 'duration') : '0ms'];
 }));
 // Derived from tokens.json like DURATION_MS — a semantic easing either aliases a primitive or is a literal.
-const primitiveEasing = (tokensJson.primitive as unknown as { easing: Record<string, { $value: string }> }).easing;
+const primitiveEasing = (tokensJson.primitive as unknown as { easing: Record<string, TokenLeaf> }).easing;
 const EASING_CURVE: Record<string, string> = Object.fromEntries(Object.entries(semantic.easing).map(([key, leaf]) => {
   const ref = String(leaf.$value).match(/^\{primitive\.easing\.(\w+)\}$/)?.[1];
-  return [key, ref ? primitiveEasing[ref]?.$value ?? '' : String(leaf.$value)];
+  const target = ref ? primitiveEasing[ref] : leaf;
+  return [key, target ? toCss(target.$value, 'cubicBezier') : ''];
 }));
 
 function DurationPreview({ duration, selected }: { duration: string; selected: boolean }) {

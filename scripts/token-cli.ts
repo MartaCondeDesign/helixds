@@ -8,7 +8,7 @@
  * whole file destroys its hand-aligned formatting (verified: a naive stringify turned a
  * one-token addition into a 2000-line diff). This only touches the lines it needs to.
  *
- * Run: pnpm token:add <dot.path.to.key> <value> [--type color|dimension|fontWeight|shadow|number|duration|fontFamily] [--description "text"]
+ * Run: pnpm token:add <dot.path.to.key> <css-value | {alias}> [--type color|dimension|fontWeight|shadow|number|duration|fontFamily] [--description "text"]
  * Example: pnpm token:add semantic.color.text.neutral-lightest "{primitive.color.gray.500}" --type color
  *
  * Does NOT push to Figma or update Storybook — those are separate manual/agent steps. After this
@@ -20,6 +20,7 @@
 import fs from 'fs';
 import path from 'path';
 import { checkKeyNaming, checkIconAliasNaming, checkOpacityStep, checkRelativeLightness } from './token-naming-lib';
+import { fromCss } from '../packages/tokens/src/dtcg.mjs';
 
 const args = process.argv.slice(2);
 const [dotPath, value] = args;
@@ -35,7 +36,15 @@ function flagValue(name: string, fallback: string): string {
   return idx !== -1 && args[idx + 1] ? args[idx + 1] : fallback;
 }
 
-const type = flagValue('type', 'color');
+const cssType = flagValue('type', 'color');
+// The value is given as CSS ("#2563eb", "16px", "200ms") or an alias and written in its DTCG 2025.10 shape
+// ({ colorSpace, components, hex }, { value, unit }…) — a length in em becomes a number with cssUnit "em".
+let dtcg: ReturnType<typeof fromCss>;
+try { dtcg = fromCss(value, cssType); } catch (err) {
+  console.error(`❌ ${(err as Error).message}. Not written.`);
+  process.exit(1);
+}
+const type = dtcg.$type ?? cssType;
 const description = args.includes('--description') ? flagValue('description', '') : undefined;
 
 const pathParts = dotPath.split('.');
@@ -61,7 +70,7 @@ if (iconViolations.length > 0) {
   process.exit(1);
 }
 
-const opacityViolations = checkOpacityStep(pathParts[pathParts.length - 1] ?? '', Number.isNaN(Number(value)) ? value : Number(value));
+const opacityViolations = checkOpacityStep(pathParts[pathParts.length - 1] ?? '', dtcg.$value);
 if (opacityViolations.length > 0) {
   console.error(`❌ '${dotPath}':`);
   for (const v of opacityViolations) console.error(`   ${v}`);
@@ -81,7 +90,8 @@ if (parentPath.length === 0) {
 
 // ── Structural checks (parent exists, key doesn't already) — via parse, read-only ──
 
-const tokensPath = path.resolve(import.meta.dirname, '../packages/tokens/src/tokens.json');
+// HELIX_TOKENS_FILE: write to another copy (tests, dry experiments) instead of the real tokens.json.
+const tokensPath = process.env.HELIX_TOKENS_FILE ?? path.resolve(import.meta.dirname, '../packages/tokens/src/tokens.json');
 const raw = fs.readFileSync(tokensPath, 'utf-8');
 const parsed = JSON.parse(raw);
 
@@ -110,7 +120,7 @@ if (layer === 'semantic' && pathParts[1] === 'color' && type === 'color') {
   const simulated = JSON.parse(raw);
   let simNode: any = simulated;
   for (const part of parentPath) simNode = simNode[part];
-  simNode[newKey] = { $value: value, $type: type };
+  simNode[newKey] = { $value: dtcg.$value, $type: type };
 
   const lightnessIssues = checkRelativeLightness(simulated).filter(msg => msg.includes(`.${newKey}:`));
   if (lightnessIssues.length > 0) {
@@ -156,7 +166,9 @@ for (let li = 0; li < lines.length && !inserted; li++) {
       }
 
       const childIndent = indent + '  ';
-      let leaf = `{ "$value": ${JSON.stringify(value)}, "$type": ${JSON.stringify(type)}`;
+      const compact = (v: unknown) => JSON.stringify(v, null, 1).replace(/\n\s*/g, ' ').replace(/\[ /g, '[').replace(/ \]/g, ']');
+      let leaf = `{ "$value": ${compact(dtcg.$value)}, "$type": ${JSON.stringify(type)}`;
+      if (dtcg.$extensions) leaf += `, "$extensions": ${compact(dtcg.$extensions)}`;
       if (description) leaf += `, "$description": ${JSON.stringify(description)}`;
       leaf += ' }';
       const newLine = `${childIndent}"${newKey}": ${leaf}`;

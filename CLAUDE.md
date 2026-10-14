@@ -10,7 +10,7 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 | Base      | Native HTML elements + hand-written WAI-ARIA (see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md)) |
 | Styling   | Tailwind CSS v4 — config in CSS     |
 | Icons     | @tabler/icons-react                 |
-| Tokens    | DTCG JSON → CSS vars + Tailwind @theme |
+| Tokens    | DTCG 2025.10 JSON (`pnpm verify:dtcg`, official schema) → CSS vars + Tailwind @theme |
 | Runtime   | React 19, TypeScript strict         |
 | Monorepo  | pnpm workspaces                     |
 
@@ -96,8 +96,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    on noticing it there after the fact; compute or verify contrast before considering a color-token change
    done, the same way `pnpm verify:tokens`/`pnpm docs:token-exceptions` are run before considering a token
    change done. This applies to **both** light and dark mode independently — a pair fixed in one theme is
-   not guaranteed to pass in the other (dark mode's `darkOverrides` map in `packages/tokens/src/build.ts`
-   picks its own values per token; check each theme's actual resolved pair, don't assume symmetry).
+   not guaranteed to pass in the other (dark mode's values come from `packages/tokens/src/tokens.dark.json`,
+   the DTCG resolver's dark context, which picks its own value per token; check each theme's actual resolved
+   pair, don't assume symmetry).
 10. **Status icons use `--helix-color-icon-*`, never `--helix-color-text-*`** — the two diverge in dark
    mode on purpose: `text-{info,success,warning,danger}` is a pale tone tuned for text on a colored tint
    (Badge, Chip), `icon-*` is the saturated tone for an icon on the plain page/surface (Toast, Status,
@@ -117,7 +118,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    ever swaps in tokens that already exist in `tokens.json`. Before changing anything, present the candidate
    tokens (2–3 when there are), what each one does, and why one is the better option than the other — then
    wait for the design-system owner to pick. Never pick a token yourself, never write a raw px/hex/weight, and
-   never create a new token without asking first.
+   never create a new token without asking first. Enforced: `scripts/claude-owner-gate-hook.mjs` makes Claude Code
+   ask the owner before any change to `tokens.json`, a contract or `prop-map.md` — when it asks, the options
+   and your recommendation must already be in the conversation, so the owner approves a choice, not a surprise.
 14. **Human review never counts in any score.** `a11y.humanReview` (and any other review by a person) is
    recorded and shown, but never averaged into a component's score, the Accessibility score, Design System
    Health or the stability status. Only automatic checks are scored.
@@ -130,6 +133,11 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 
 ```
 pnpm contract <Name>        scaffold a new component contract
+pnpm verify:dtcg            validate packages/tokens/src/tokens.json against the official DTCG 2025.10 JSON Schema
+                            (vendored in packages/tokens/schemas/) — values in their standard shape ({ value, unit },
+                            color objects…), converted only by packages/tokens/src/dtcg.mjs — plus tokens.dark.json and
+                            helix.resolver.json (the 2025.10 Resolver: light/dark themes), resolving each theme and
+                            checking every alias reaches a token of its type. Runs in pre-commit
 pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract
@@ -147,10 +155,29 @@ pnpm test:lint-hook         test that Claude Code lint hook
                             imports @helixds/react until every Helix component the change touches has had its contract read
                             this session (helix_get_contract, the contract/.types file, or `pnpm helix component`)
 pnpm test:contract-hook     test that Claude Code contract hook
+                            scripts/claude-owner-gate-hook.mjs (PreToolUse) stops any edit to tokens.json, a contract
+                            or prop-map.md — by Edit/Write, `pnpm token:add`, `pnpm contract`, or a shell write — and
+                            asks the design-system owner to approve it (rule 13 as a gate, not just a sentence)
+pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
+pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
+                            the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
+                            In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json
+pnpm test:setup-ai          test it end to end on throwaway apps. Other agents get the same guardrails: Cursor
+                            (.cursor/mcp.json + it runs .claude/settings.json's hooks), Codex (.codex/config.toml +
+                            .codex/hooks.json) and Gemini CLI (.gemini/settings.json) — when the app has their folder,
+                            or with --with codex,gemini. scripts/hook-io.mjs translates each agent's payload and answer,
+                            so each hook is written once
+pnpm test:hook-agents       the hooks fed Codex's and Gemini's real payloads (apply_patch, write_file, replace…)
+pnpm eval:traces            what the hooks caught in real sessions — every lint block, contract denial and owner-gate
+                            ask is a line in evals/traces/hooks/*.jsonl (git-ignored, never code; HELIX_TRACES=off
+                            to stop): rules broken most, contracts skipped, whether agents recover. Feeds
+                            evals/error-analysis.md. `pnpm test:traces` tests it
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
 pnpm helix tokens <concept> find tokens by what they're for ("danger background") — same search as the MCP tool
+pnpm helix validate <file|-> lint + type-check code against Helix, exit 1 if not valid — helix_validate_snippet
+                            from a terminal (every MCP tool has a `pnpm helix` command, same library)
 pnpm helix dashboard        AI-readiness view: health score, the 5 signals behind it (readiness, Figma,
                             eval pass rate, rule compliance, governance coverage), gaps and data freshness —
                             read-only; `pnpm quality snapshot` records it for Storybook's Metrics page

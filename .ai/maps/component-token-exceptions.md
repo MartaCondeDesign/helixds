@@ -155,59 +155,56 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 
 <!-- AUTO:ASCII_TABLE -->
 ```
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-| Component    | Type                     | Size | Proposed Token       | Proposed Value                                              |
-+==============+==========================+======+======================+=============================================================+
-+--------------------------------------------------------------- COLOR ---------------------------------------------------------------+
-| Modal        | overlay-opacity          | --   | ✅ ADR-010 exception | 0.6                                                         |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-+-------------------------------------------------------------- MOTION ---------------------------------------------------------------+
-| Accordion    | duration-chevron         | --   | ✅ ADR-016 exception | 250ms                                                       |
-| Accordion    | duration-collapse        | --   | ✅ ADR-016 exception | 250ms                                                       |
-| Accordion    | duration-expand          | --   | ✅ ADR-016 exception | 250ms                                                       |
-| Chart        | duration-update          | --   | ✅ ADR-021 exception | 400ms                                                       |
-| Illustration | motion.duration-emphasis | --   | ✅ ADR-024 exception | 500ms                                                       |
-| Illustration | motion.duration-enter    | --   | ✅ ADR-024 exception | 450ms                                                       |
-| Illustration | motion.duration-recolor  | --   | ✅ ADR-024 exception | 600ms                                                       |
-| Modal        | duration-close           | --   | ✅ ADR-010 exception | 150ms                                                       |
-| Modal        | duration-open            | --   | ✅ ADR-010 exception | 250ms                                                       |
-| SidePanel    | duration-close           | --   | ✅ ADR-010 exception | 350ms                                                       |
-| SidePanel    | duration-open            | --   | ✅ ADR-010 exception | 400ms                                                       |
-| Toast        | durationClose            | --   | ✅ ADR-011 exception | 250ms                                                       |
-| Toast        | durationOpen             | --   | ✅ ADR-011 exception | 350ms                                                       |
-| Tooltip      | duration-in              | --   | ✅ ADR-008 exception | 150ms                                                       |
-| Tooltip      | duration-out             | --   | ✅ ADR-008 exception | 50ms                                                        |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-+-------------------------------------------------------------- SPACING --------------------------------------------------------------+
-| Menu         | gap                      | --   | ✅ ADR-013 exception | 2px                                                         |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-+--------------------------------------------------------------- SIZE ----------------------------------------------------------------+
-| Badge        | height                   | xs   | ✅ ADR-004 exception | 20px                                                        |
-| Fab          | action.height            | --   | ✅ ADR-004 exception | 36px                                                        |
-| Switch       | height                   | m    | ✅ ADR-004 exception | 20px                                                        |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-+-------------------------------------------------------------- SHADOW ---------------------------------------------------------------+
-| SidePanel    | shadowBottom             | --   | ✅ ADR-005 exception | 0 -20px 25px rgba(0,0,0,0.1), 0 -10px 10px rgba(0,0,0,0.04) |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
-+--------------------------------------------------------------- OTHER ---------------------------------------------------------------+
-| Button       | swap-scale               | --   | ✅ ADR-007 exception | 0.25                                                        |
-| Chart        | area-opacity             | --   | ✅ ADR-021 exception | 0.15                                                        |
-| Illustration | motion.easing-draw       | --   | ✅ ADR-024 exception | cubic-bezier(0.65, 0, 0.35, 1)                              |
-| Illustration | motion.easing-emphasis   | --   | ✅ ADR-024 exception | cubic-bezier(0.34, 1.56, 0.64, 1)                           |
-| Illustration | motion.easing-exit       | --   | ✅ ADR-024 exception | cubic-bezier(0.77, 0, 0.175, 1)                             |
-| Illustration | motion.hold              | --   | ✅ ADR-024 exception | 2200ms                                                      |
-| Input        | shake.distance           | --   | ✅ ADR-007 exception | 6px                                                         |
-| Input        | shake.dur-b              | --   | ✅ ADR-007 exception | 60ms                                                        |
-| Menu         | scale-enter              | --   | ✅ ADR-013 exception | 0.97                                                        |
-| Menu         | scale-exit               | --   | ✅ ADR-013 exception | 0.99                                                        |
-| Modal        | scale-enter              | --   | ✅ ADR-010 exception | 0.96                                                        |
-| Toast        | autoDismissMs            | --   | ✅ ADR-011 exception | 4000ms                                                      |
-| Toast        | depthFade                | --   | ✅ ADR-011 exception | 0.4                                                         |
-| Toast        | depthScale               | --   | ✅ ADR-011 exception | 0.06                                                        |
-| Toast        | rise                     | --   | ✅ ADR-011 exception | 80px                                                        |
-| Toast        | scaleEnter               | --   | ✅ ADR-011 exception | 0.97                                                        |
-| Tooltip      | delay                    | --   | ✅ ADR-008 exception | 500ms                                                       |
-| Tooltip      | scale-enter              | --   | ✅ ADR-008 exception | 0.98                                                        |
-+--------------+--------------------------+------+----------------------+-------------------------------------------------------------+
++--------------+--------------------------+------+----------------------+-----------------------------------+
+| Component    | Type                     | Size | Proposed Token       | Proposed Value                    |
++==============+==========================+======+======================+===================================+
++-------------------------------------------------- COLOR --------------------------------------------------+
+| Modal        | overlay-opacity          | --   | ✅ ADR-010 exception | 0.6                               |
++--------------+--------------------------+------+----------------------+-----------------------------------+
++------------------------------------------------- MOTION --------------------------------------------------+
+| Accordion    | duration-chevron         | --   | ✅ ADR-016 exception | 250ms                             |
+| Accordion    | duration-collapse        | --   | ✅ ADR-016 exception | 250ms                             |
+| Accordion    | duration-expand          | --   | ✅ ADR-016 exception | 250ms                             |
+| Chart        | duration-update          | --   | ✅ ADR-021 exception | 400ms                             |
+| Illustration | motion.duration-emphasis | --   | ✅ ADR-024 exception | 500ms                             |
+| Illustration | motion.duration-enter    | --   | ✅ ADR-024 exception | 450ms                             |
+| Illustration | motion.duration-recolor  | --   | ✅ ADR-024 exception | 600ms                             |
+| Modal        | duration-close           | --   | ✅ ADR-010 exception | 150ms                             |
+| Modal        | duration-open            | --   | ✅ ADR-010 exception | 250ms                             |
+| SidePanel    | duration-close           | --   | ✅ ADR-010 exception | 350ms                             |
+| SidePanel    | duration-open            | --   | ✅ ADR-010 exception | 400ms                             |
+| Toast        | durationClose            | --   | ✅ ADR-011 exception | 250ms                             |
+| Toast        | durationOpen             | --   | ✅ ADR-011 exception | 350ms                             |
+| Tooltip      | duration-in              | --   | ✅ ADR-008 exception | 150ms                             |
+| Tooltip      | duration-out             | --   | ✅ ADR-008 exception | 50ms                              |
++--------------+--------------------------+------+----------------------+-----------------------------------+
++------------------------------------------------- SPACING -------------------------------------------------+
+| Menu         | gap                      | --   | ✅ ADR-013 exception | 2px                               |
++--------------+--------------------------+------+----------------------+-----------------------------------+
++-------------------------------------------------- SIZE ---------------------------------------------------+
+| Badge        | height                   | xs   | ✅ ADR-004 exception | 20px                              |
+| Fab          | action.height            | --   | ✅ ADR-004 exception | 36px                              |
+| Switch       | height                   | m    | ✅ ADR-004 exception | 20px                              |
++--------------+--------------------------+------+----------------------+-----------------------------------+
++-------------------------------------------------- OTHER --------------------------------------------------+
+| Button       | swap-scale               | --   | ✅ ADR-007 exception | 0.25                              |
+| Chart        | area-opacity             | --   | ✅ ADR-021 exception | 0.15                              |
+| Illustration | motion.easing-draw       | --   | ✅ ADR-024 exception | cubic-bezier(0.65, 0, 0.35, 1)    |
+| Illustration | motion.easing-emphasis   | --   | ✅ ADR-024 exception | cubic-bezier(0.34, 1.56, 0.64, 1) |
+| Illustration | motion.easing-exit       | --   | ✅ ADR-024 exception | cubic-bezier(0.77, 0, 0.175, 1)   |
+| Illustration | motion.hold              | --   | ✅ ADR-024 exception | 2200ms                            |
+| Input        | shake.distance           | --   | ✅ ADR-007 exception | 6px                               |
+| Input        | shake.dur-b              | --   | ✅ ADR-007 exception | 60ms                              |
+| Menu         | scale-enter              | --   | ✅ ADR-013 exception | 0.97                              |
+| Menu         | scale-exit               | --   | ✅ ADR-013 exception | 0.99                              |
+| Modal        | scale-enter              | --   | ✅ ADR-010 exception | 0.96                              |
+| Toast        | autoDismissMs            | --   | ✅ ADR-011 exception | 4000ms                            |
+| Toast        | depthFade                | --   | ✅ ADR-011 exception | 0.4                               |
+| Toast        | depthScale               | --   | ✅ ADR-011 exception | 0.06                              |
+| Toast        | rise                     | --   | ✅ ADR-011 exception | 80px                              |
+| Toast        | scaleEnter               | --   | ✅ ADR-011 exception | 0.97                              |
+| Tooltip      | delay                    | --   | ✅ ADR-008 exception | 500ms                             |
+| Tooltip      | scale-enter              | --   | ✅ ADR-008 exception | 0.98                              |
++--------------+--------------------------+------+----------------------+-----------------------------------+
 ```
 <!-- /AUTO -->

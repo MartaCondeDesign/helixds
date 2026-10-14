@@ -1006,7 +1006,8 @@ primitives).
    — same mapping the `semanticColors` table in Phase 2 uses.
 2. Resolve which **primitive** it aliases (light mode) and its dark-mode counterpart, the same way
    every row in the Phase 2 `semanticColors` table does — read the token's `$value` alias in
-   `tokens.json` for light, and the matching key in `src/build.ts`'s `darkOverrides` map for dark.
+   `tokens.json` for light, and the same path in `src/tokens.dark.json` for dark (the DTCG resolver's dark
+   context — no entry there means the token keeps its light value; a component alias follows its semantic token).
 3. Run one `use_figma` call:
 
 ```js

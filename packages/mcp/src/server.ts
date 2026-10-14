@@ -82,7 +82,7 @@ server.registerTool('helix_search_tokens', {
 
 server.registerTool('helix_validate_snippet', {
   title: 'Validate a JSX snippet against Helix',
-  description: 'Check JSX/TSX before writing it to a file: wrong import paths (@helixds/react → @helixds/react), anti-synonym props (onPress → onClick), raw colors, native controls, plus layout/icon/inline-style advisories. Returns each problem, a fixedCode with the safe fixes applied, and what is left to fix by hand.',
+  description: 'Check JSX/TSX before writing it to a file: wrong import paths (@helixds/react → @helixds/react), anti-synonym props (onPress → onClick), raw colors, native controls, plus a type-check against the real Helix source (invented props, missing required props, wrong handler signatures), plus layout/icon/inline-style advisories. Returns each problem, a fixedCode with the safe fixes applied, compileErrors, and what is left to fix by hand — valid is true only when lint and the type-check both pass.',
   inputSchema: { code: z.string().describe('The JSX/TSX code to check (a full module or a fragment with its imports)') },
   annotations: readOnly,
 }, async ({ code }) => json(await validateSnippet(code)));

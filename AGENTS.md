@@ -169,8 +169,9 @@ files or shelling out:
 2. `helix_get_contracts` — the contracts of every component you'll use, in one call (`helix_get_contract` for
    one): the exact import line, props, accessibility and governance. Read one for EVERY component, layout ones too.
 3. `helix_search_tokens` — the token for a concept ("danger background", "subtle text"); never hardcode.
-4. `helix_validate_snippet` — run your JSX through it before writing the file; apply `fixedCode`, then
-   fix what's left in `remainingAfterFix`.
+4. `helix_validate_snippet` — run your JSX through it before writing the file: it lints it and type-checks it
+   against Helix's real source. Apply `fixedCode`, then fix what's left in `remainingAfterFix` (lint problems
+   and type errors) until `valid` is `true`.
 
 ## Querying Helix from a terminal
 
@@ -182,8 +183,15 @@ the design system — it does not maintain a second copy of the documentation.
 pnpm helix search "confirmation dialog" --json
 pnpm helix component Modal --json
 pnpm helix token color.fill.primary-interactive-default --json
+pnpm helix tokens "danger background" --json
 pnpm helix pattern empty-state --json
+pnpm helix validate src/Settings.tsx --json   # or `-` for stdin; exits 1 when not valid
 ```
+
+It is the MCP server's twin, for any agent or tool that can run a command — every MCP tool has a
+command here (`helix_get_contract` → `component`, `helix_search_tokens` → `tokens`,
+`helix_validate_snippet` → `validate`, …), from the same library. From an app, run it in your Helix
+clone: `pnpm -s --dir "${HELIX_DS_DIR:-/path/to/helixds}" helix validate "$PWD/src/Settings.tsx"`.
 
 Use `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`
 when several lookups are needed. If no shell is available, consult `contracts/manifest.json`, the
@@ -202,14 +210,41 @@ To install Helix AI context in your project:
 From a clone of the Helix repo:
 
 ```bash
-pnpm setup:ai [target-dir] [--dry-run]
+pnpm setup:ai [target-dir] [--dry-run] [--agents-only]
 ```
 
 This copies AGENTS.md into your project (never overwriting a hand-edited one — it flags
 a conflict instead) and writes a pointer file for whichever AI tool directories it finds
 already in your project (`.cursor/rules/helix.mdc`, `.github/copilot-instructions.md`).
-Safe to run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does
-not touch.
+
+Unless you pass `--agents-only`, it also installs Helix's guardrails for Claude Code, run
+from your Helix clone (set `HELIX_DS_DIR` if a teammate's clone lives elsewhere):
+
+- `.mcp.json` — the Helix MCP server (`helix_get_contracts`, `helix_search_tokens`,
+  `helix_validate_snippet`…).
+- `.claude/settings.json` — three hooks: a write that uses a Helix component is denied until
+  its contract has been read; every written file is linted with Helix's rules (Helix's
+  recommended config if your app has no ESLint setup for them); patching Helix in
+  `node_modules/@helixds` or with a `patches/` file asks you first.
+
+Other agents get the same guardrails, from the same scripts:
+
+| Agent | Context | MCP server | Hooks |
+|---|---|---|---|
+| Claude Code | AGENTS.md | `.mcp.json` | `.claude/settings.json` |
+| Cursor | `.cursor/rules/helix.mdc` | `.cursor/mcp.json` | runs `.claude/settings.json`'s — turn on Settings → "Include Third-Party Plugins, Skills, and Other Configs" |
+| Codex (ChatGPT) | AGENTS.md (read natively) | `.codex/config.toml` | `.codex/hooks.json` — trust the project in Codex |
+| Gemini CLI | AGENTS.md (via `context.fileName`) | `.gemini/settings.json` | `.gemini/settings.json` |
+
+Cursor, Codex and Gemini are installed when the app already has their folder (`.cursor/`,
+`.codex/`, `.gemini/`), or with `--with codex,gemini` (`--with all`). Codex and Gemini can't
+pause a hook for approval, so the owner gate stops the change there and tells the agent to
+ask you; Claude Code and Cursor show an approval prompt. Every time a hook stops an agent, it
+records a one-line trace in your Helix clone (`evals/traces/hooks/`, never the code;
+`HELIX_TRACES=off` turns it off) — `pnpm eval:traces` shows what agents get wrong most.
+
+These files are merged into what's already there — your own servers and hooks stay. Safe to
+run more than once. See `scripts/setup-ai.mjs` for exactly what it does and does not touch.
 
 ## Common mistakes (seen in real eval runs)
 

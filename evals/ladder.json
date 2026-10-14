@@ -48,8 +48,8 @@
     {
       "variant": "lint-loop",
       "label": "lint loop",
-      "detail": "Only its Helix lint problems, sent back to fix — no guide, no repo",
-      "explain": "No guide — the agent answers, Helix's lint rules check the code, and the problems go back to it to fix (up to 2 rounds).",
+      "detail": "Only its Helix lint problems and type errors, sent back to fix — no guide, no repo",
+      "explain": "No guide — the agent answers, helix_validate_snippet checks the code (Helix's lint rules plus a type-check against Helix's real source; lint only in rounds before 2026-10-14), and the problems go back to it to fix (up to 2 rounds).",
       "flags": [
         "--context",
         "none",
