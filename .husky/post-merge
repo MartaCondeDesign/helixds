@@ -1,0 +1,5 @@
+# After `git pull` (or any merge): rebuild Storybook's Changelog page data from the new git log.
+# .ai/maps/changelog.json is git-ignored, so pulling never updates it by itself — without this the page
+# kept showing the history as of the last local commit or `pnpm install`. Only rewrites the file; a running
+# Storybook picks it up through hot reload.
+pnpm -s docs:changelog

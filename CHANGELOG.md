@@ -83,9 +83,23 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Storybook shows every token: primitive shadows page + a coverage check (latest commit)
-- 2026-10-14 — Quality snapshot 2026-10-14: health 73.3% ([`a2750b9`](https://github.com/MartaCondeDesign/helixds/commit/a2750b9))
+- 2026-10-14 — Tests that Storybook's token pages show tokens.json right, and a fix they found (latest commit)
+- 2026-10-14 — Storybook's token pages read tokens.json, and a commit can't leave a token off them ([`ff3b820`](https://github.com/MartaCondeDesign/helixds/commit/ff3b820))
+- 2026-10-14 — Storybook shows every token, and a quality snapshot for 2026-10-14 (#7) ([`c86c5f3`](https://github.com/MartaCondeDesign/helixds/commit/c86c5f3))
+  - Quality snapshot 2026-10-14: health 73.3%
+  - Storybook shows every token: primitive shadows page + a coverage check
 - 2026-10-14 — AI guardrails for every agent, and tokens on the DTCG 2025.10 standard (#6) ([`a01c7c4`](https://github.com/MartaCondeDesign/helixds/commit/a01c7c4))
+  - helix_validate_snippet type-checks against Helix's real source
+  - Owner gate: tokens, contracts and prop-map changes need the owner's approval
+  - setup:ai installs Helix's guardrails in apps, not just AGENTS.md
+  - Hooks record what they catch; Cursor gets the Helix MCP server
+  - Guardrails for Cursor, Codex and Gemini CLI, not just Claude Code
+  - Owner gate: judge inline scripts by what they write; MCP start timeouts
+  - pnpm helix validate: helix_validate_snippet from a terminal
+  - tokens.json follows DTCG 2025.10 — validated against the official schema
+  - Dark mode via the DTCG 2025.10 Resolver: helix.resolver.json + tokens.dark.json
+  - Mobile font sizes via the resolver's viewport modifier
+  - Dark mode on the palette: every dark value is now an alias
 - 2026-10-14 — Motion: transitions.dev effects on Toast, Menu, Button and the donut Chart (#5) ([`f5df45f`](https://github.com/MartaCondeDesign/helixds/commit/f5df45f))
 - 2026-10-12 — Evals: record answer duration and post the eval score on a PR (#1) ([`d9ed415`](https://github.com/MartaCondeDesign/helixds/commit/d9ed415))
 - 2026-10-12 — Charts: all-blue palette and draw-in motion; NavItem: tinted current item with a blue bar; one motion family (#2) ([`b266608`](https://github.com/MartaCondeDesign/helixds/commit/b266608))
