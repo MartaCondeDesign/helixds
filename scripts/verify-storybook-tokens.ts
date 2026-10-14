@@ -13,7 +13,8 @@
  *     token off Storybook doesn't go through.
  *   - --url http://localhost:6006: opens each Foundation story in a running Storybook (Playwright) — what
  *     `pnpm verify:stable` runs at its end. CHROMIUM_PATH=/path/to/chrome to use another browser.
- * Run: pnpm verify:storybook-tokens [--url http://localhost:6006] [--json]
+ * Run: pnpm verify:storybook-tokens [--url http://localhost:6006] [--json] [--dir <stories dir>]
+ *      --dir renders another copy of the Foundation stories (scripts/storybook-tokens.test.ts uses it).
  */
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
@@ -24,6 +25,7 @@ const root = path.resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
 const sbUrl = args.includes('--url') ? args[args.indexOf('--url') + 1] : undefined;
 const asJson = args.includes('--json');
+const storiesDir = args.includes('--dir') ? path.resolve(args[args.indexOf('--dir') + 1]!) : undefined;
 
 type Node = Record<string, unknown>;
 const tokens = JSON.parse(fs.readFileSync(path.join(root, 'packages/tokens/src/tokens.json'), 'utf8')) as Node;
@@ -50,7 +52,7 @@ async function renderInNode(): Promise<{ html: string; count: number }> {
   const storybookDir = path.join(root, 'apps/storybook');
   // react-dom lives in the Storybook app's dependencies, not the root's.
   const { renderToStaticMarkup } = createRequire(path.join(storybookDir, 'package.json'))('react-dom/server') as typeof import('react-dom/server');
-  const dir = path.join(storybookDir, 'stories/Foundation');
+  const dir = storiesDir ?? path.join(storybookDir, 'stories/Foundation');
   let html = '';
   let count = 0;
   for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.stories.tsx')).sort()) {

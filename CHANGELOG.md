@@ -83,7 +83,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Storybook's token pages read tokens.json, and a commit can't leave a token off them (latest commit)
+- 2026-10-14 — Tests that Storybook's token pages show tokens.json right, and a fix they found (latest commit)
+- 2026-10-14 — Storybook's token pages read tokens.json, and a commit can't leave a token off them ([`ff3b820`](https://github.com/MartaCondeDesign/helixds/commit/ff3b820))
 - 2026-10-14 — Storybook shows every token, and a quality snapshot for 2026-10-14 (#7) ([`c86c5f3`](https://github.com/MartaCondeDesign/helixds/commit/c86c5f3))
   - Quality snapshot 2026-10-14: health 73.3%
   - Storybook shows every token: primitive shadows page + a coverage check

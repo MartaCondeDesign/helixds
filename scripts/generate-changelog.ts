@@ -25,6 +25,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { squashedChanges } from './changelog-lib';
 
 const root    = path.resolve(import.meta.dirname, '..');
 const outPath = path.join(root, '.ai/maps/changelog.json');
@@ -96,12 +97,6 @@ const raw = execSync(
   'git log --pretty=format:' + format + ' --date=format:%Y-%m-%d',
   { cwd: root, encoding: 'utf-8', maxBuffer: 1024 * 1024 * 64 },
 ).trim();
-
-/** A squash-merged PR lists the commits it folded in as `* subject` lines in its body (GitHub's default
- * squash message) — those are the changes it carries, shown under its subject instead of being lost. */
-function squashedChanges(body: string): string[] {
-  return body.split('\n').filter(line => line.startsWith('* ')).map(line => line.slice(2).trim()).filter(Boolean);
-}
 
 type Commit = { hash: string; subject: string; author: string; bump: Bump; changes?: string[] };
 type Day = { date: string; commits: Commit[] };

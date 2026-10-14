@@ -98,11 +98,11 @@ function MotionTrack({ cssVar, kind }: { cssVar: string; kind: 'duration' | 'eas
   const on = useReplay();
   const transition = kind === 'duration'
     ? `transform var(${cssVar}) var(--helix-easing-base)`
-    : `transform var(--helix-duration-slowest) var(${cssVar})`;
+    : `transform var(--helix-duration-draw) var(${cssVar})`;
   return (
     <div style={{ width: 96, height: 12, borderRadius: 'var(--helix-radius-full)', background: 'var(--helix-color-fill-surface)', border: '1px solid var(--helix-color-border-neutral-light)' }}>
       <div style={{
-        width: 10, height: 10, borderRadius: 'var(--helix-radius-full)', background: 'var(--helix-color-fill-neutral-dark)',
+        width: 10, height: 10, borderRadius: 'var(--helix-radius-full)', background: 'var(--helix-color-fill-secondary-interactive-dark-default)',
         transform: on ? 'translateX(84px)' : 'translateX(0)', transition,
       }} />
     </div>
@@ -113,8 +113,8 @@ export function TokenPreview({ kind, row }: { kind: PreviewKind; row: TokenRow }
   const v = `var(${row.cssVar})`;
   switch (kind) {
     case 'swatch': return <div style={{ ...box, background: v }} />;
-    case 'bar': return <div style={{ width: v, minWidth: 1, height: 12, borderRadius: 'var(--helix-radius-full)', background: 'var(--helix-color-fill-neutral)', border: '1px solid var(--helix-color-border-neutral-dark)' }} />;
-    case 'square': return <div style={{ width: v, height: v, background: 'var(--helix-color-fill-neutral)', border: '1px solid var(--helix-color-border-neutral-dark)' }} />;
+    case 'bar': return <div style={{ width: v, minWidth: 1, height: 12, borderRadius: 'var(--helix-radius-full)', background: 'var(--helix-color-fill-secondary-interactive-dark-default)', border: '1px solid var(--helix-color-border-neutral-dark)' }} />;
+    case 'square': return <div style={{ width: v, height: v, background: 'var(--helix-color-fill-secondary-interactive-dark-default)', border: '1px solid var(--helix-color-border-neutral-dark)' }} />;
     case 'radius': return <div style={{ ...box, width: 64, height: 64, borderRadius: v }} />;
     case 'border': return <div style={{ ...box, border: `${v} solid var(--helix-color-border-neutral-dark)` }} />;
     case 'blur': return <span style={{ ...sample, fontSize: 18, filter: `blur(${v})` }}>Helix</span>;

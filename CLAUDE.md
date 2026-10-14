@@ -149,6 +149,9 @@ pnpm verify:storybook-tokens every primitive.* and semantic.* token must appear 
                             a commit that leaves a token off Storybook is refused. --url <storybook> checks a running one
                             instead (what verify:stable does at its end). The pages build every row from tokens.json
                             (apps/storybook/stories/Foundation/_tokens.tsx), so a new or changed token shows with no edit
+pnpm test:storybook-tokens  tests behind it (pre-commit too): every var a page computes exists in helix.css, every value it
+                            prints equals the CSS (light and dark shadows), every hand-written var() exists, every story
+                            renders, a new category lands in "Other tokens", and the gate fails on a sabotaged copy
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
                             raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
