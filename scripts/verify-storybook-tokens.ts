@@ -113,6 +113,16 @@ async function main() {
     for (const [cat, keys] of byCategory) console.error(`   ${cat} (${keys.length}): ${keys.join(', ')}`);
     console.error('\nShow them on the matching Foundation story, reading the list from tokens.json (apps/storybook/CLAUDE.md).');
   }
+  // A category no page claims yet still shows (at the end of the file's last story), so it passes the check —
+  // but it's new, so say so: someone should look at it with the design-system owner before it ships.
+  const { unclaimedCategories } = await import('../apps/storybook/stories/Foundation/_tokens');
+  const fresh = (['primitive', 'semantic'] as const).flatMap(layer => unclaimedCategories(layer).map(c => `${layer}.${c}`));
+  if (fresh.length && !asJson) {
+    console.warn(`\n⚠️  New token ${fresh.length === 1 ? 'category' : 'categories'} in tokens.json with no Storybook page of ${fresh.length === 1 ? 'its' : 'their'} own: ${fresh.join(', ')}`);
+    console.warn('   Review it with the design-system owner (what it is, whether it belongs in tokens.json, which page shows it),');
+    console.warn('   then add it to CLAIMED in apps/storybook/stories/Foundation/_tokens.tsx. Until then it shows at the end of the');
+    console.warn('   last story of Foundation/Primitives or Foundation/Semantic.');
+  }
   process.exit(missing.length ? 1 : 0);
 }
 

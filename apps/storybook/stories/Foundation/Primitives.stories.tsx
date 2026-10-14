@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { label12, StoryHeader } from './_shared';
 // Every list on this page comes from tokens.json through _tokens.tsx — add, rename or change a primitive
-// there and it shows here with no edit. A new primitive category lands in "Other tokens" until it gets a story.
-import { OtherTokens, resolvedCss, tokenRows, TokenTable } from './_tokens';
+// there and it shows here with no edit. A new primitive category shows at the end of the last story until it gets its own.
+import { CLAIMED, OtherTokens, resolvedCss, tokenRows, TokenTable } from './_tokens';
 
 const meta: Meta = {
   title: 'Foundation/Primitives',
@@ -12,11 +12,6 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The primitive categories each story below shows. Any other one appears in the "Other tokens" story. */
-const CLAIMED = [
-  'color', 'spacing', 'size', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'fontFamily',
-  'shadow', 'duration', 'easing', 'zIndex', 'breakpoint',
-] as const;
 
 // ── Color ────────────────────────────────────────────────────────────────
 
@@ -195,18 +190,8 @@ export const Breakpoints: Story = {
     <div>
       <StoryHeader title="Breakpoints" description="Viewport widths where the layout changes. Below tablet, the mobile font sizes apply (the viewport modifier in helix.resolver.json)." />
       <TokenTable path="primitive.breakpoint" preview="none" />
-    </div>
-  ),
-};
-
-// ── Anything else ───────────────────────────────────────────────────────
-
-export const OtherTokensStory: Story = {
-  name: 'Other tokens',
-  render: () => (
-    <div>
-      <StoryHeader title="Other tokens" description="Primitive categories in tokens.json that no story above shows yet — a new category appears here on its own until it gets a page." />
-      <OtherTokens layer="primitive" claimed={CLAIMED} />
+      {/* A primitive category with no story yet shows here; nothing while every category has one. */}
+      <OtherTokens layer="primitive" claimed={CLAIMED.primitive} />
     </div>
   ),
 };

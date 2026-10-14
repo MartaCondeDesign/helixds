@@ -124,8 +124,8 @@ flat list of token categories:
 - `TextStyles.stories.tsx` — the named `{role} / {size} / {weight}` combinations mirroring Figma's Text
   Styles.
 - `_tokens.tsx` — reads `tokens.json`: `tokenRows(path)`, `TokenTable`, the CSS-var previews, and `OtherTokens`,
-  which renders any category not in the file's `CLAIMED` list (the "Other tokens" story) — a new category
-  shows up there by itself.
+  which renders any category not in the file's `CLAIMED` list at the end of that file's last story — a new
+  category shows up there by itself, and nothing shows while every category has a page.
 - `_shared.tsx` — layout helpers local to Foundation (`SectionHead`, `TableGroup`, `TokenLeaf`).
   Neither is a `*.stories.tsx` file, so Storybook's glob doesn't pick them up as stories.
 

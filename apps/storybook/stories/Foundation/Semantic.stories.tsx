@@ -3,8 +3,8 @@ import { StoryHeader } from './_shared';
 // Every list on this page comes from tokens.json through _tokens.tsx — rows, values and $description. Add,
 // rename or change a semantic token there and it shows here with no edit; previews draw through the token's
 // own CSS var, so they follow a value change and the light/dark toolbar. A new semantic category lands in
-// "Other tokens" until it gets a story.
-import { OtherTokens, TokenTable, type TokenRow } from './_tokens';
+// the end of the last story (Motion) until it gets its own.
+import { CLAIMED, OtherTokens, TokenTable, type TokenRow } from './_tokens';
 
 const meta: Meta = {
   title: 'Foundation/Semantic',
@@ -14,11 +14,6 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-/** The semantic categories this file's stories show; color is on Foundation/Theme, textStyle on Foundation/Text Styles. */
-const CLAIMED = [
-  'color', 'textStyle', 'spacing', 'radius', 'size', 'borderWidth', 'shadow', 'fontSize', 'lineHeight',
-  'duration', 'easing', 'transform', 'blur',
-] as const;
 
 // semantic.spacing holds two scales: the t-shirt one (xs, m…) and the older context one (component-*, layout-*).
 const isContextKey = (row: TokenRow) => row.key.includes('-');
@@ -88,16 +83,8 @@ export const Motion: Story = {
       <TokenTable title="Easing" path="semantic.easing" preview="easing" />
       <TokenTable title="Transform" path="semantic.transform" preview={row => (row.key.startsWith('lift.') ? 'lift' : 'scale')} />
       <TokenTable title="Blur" path="semantic.blur" preview="blur" />
-    </div>
-  ),
-};
-
-export const OtherTokensStory: Story = {
-  name: 'Other tokens',
-  render: () => (
-    <div>
-      <StoryHeader title="Other tokens" description="Semantic categories in tokens.json that no story above shows yet — a new category appears here on its own until it gets a page." />
-      <OtherTokens layer="semantic" claimed={CLAIMED} />
+      {/* A semantic category with no story yet shows here; nothing while every category has one. */}
+      <OtherTokens layer="semantic" claimed={CLAIMED.semantic} />
     </div>
   ),
 };
