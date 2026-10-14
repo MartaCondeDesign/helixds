@@ -1,0 +1,14 @@
+{
+  "$description": "Helix DS — mobile viewport. The \"mobile\" context of the viewport modifier in helix.resolver.json (below primitive.breakpoint.tablet): each primitive.fontSize rung of 18px and up takes its semantic.fontSize.mobile value (87.5%), and every textStyle/component font size aliasing it follows. Tablet and desktop share the base sizes.",
+  "primitive": {
+    "fontSize": {
+      "l":   { "$value": "{semantic.fontSize.mobile.l}", "$type": "dimension" },
+      "xl":  { "$value": "{semantic.fontSize.mobile.xl}", "$type": "dimension" },
+      "2xl": { "$value": "{semantic.fontSize.mobile.2xl}", "$type": "dimension" },
+      "3xl": { "$value": "{semantic.fontSize.mobile.3xl}", "$type": "dimension" },
+      "4xl": { "$value": "{semantic.fontSize.mobile.4xl}", "$type": "dimension" },
+      "5xl": { "$value": "{semantic.fontSize.mobile.5xl}", "$type": "dimension" },
+      "6xl": { "$value": "{semantic.fontSize.mobile.6xl}", "$type": "dimension" }
+    }
+  }
+}

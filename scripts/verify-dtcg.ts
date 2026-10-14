@@ -2,7 +2,7 @@
  * Validates Helix's tokens against the official DTCG 2025.10 JSON Schemas (packages/tokens/schemas/dtcg-2025.10/,
  * vendored from design-tokens/community-group) — the standard's own definition of a valid file, not Helix's
  * reading of it:
- *   - packages/tokens/src/tokens.json and tokens.dark.json against the Format schema (a color as a hex string,
+ *   - packages/tokens/src/tokens.json, tokens.dark.json and tokens.mobile.json against the Format schema (a color as a hex string,
  *     "16px", a unit the standard doesn't allow, a typography without letterSpacing… all fail)
  *   - packages/tokens/src/helix.resolver.json against the Resolver schema
  *   - then each theme the resolver produces is resolved, and every alias must reach a token of the same $type
@@ -69,7 +69,7 @@ if (process.argv[2]) {
 }
 
 const counts: string[] = [];
-for (const name of ['tokens.json', 'tokens.dark.json']) {
+for (const name of ['tokens.json', 'tokens.dark.json', 'tokens.mobile.json']) {
   const data = check(path.join(src, name), FORMAT);
   if (data) counts.push(`${name} ${leaves(data).length}`);
 }

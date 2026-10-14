@@ -143,30 +143,28 @@ const darkVars = [
 const lightValue = new Map(allVars.map(v => [v.name, v.value]));
 const darkOnly = darkVars.filter(v => lightValue.get(v.name) !== v.value);
 
-// ─── Responsive typography (mobile fontSize override) ─────────────────────────
+// ─── Mobile viewport: the resolver's "viewport" modifier ───────────────────────
 //
-// primitive.fontSize.* is the desktop/tablet size (unchanged, no media query needed since
-// primitive.breakpoint.tablet === primitive.breakpoint.desktop for typography). Below the
-// tablet breakpoint, override with semantic.fontSize.mobile.* (87.5% of desktop, see ADR).
-//
-// This overrides --helix-primitive-fontSize-* only, and reaches every textStyle/component fontSize
-// through its var() chain (see "Alias chaining" below) — e.g. heading-xl is 24px → 21px on mobile.
+// helix.resolver.json's viewport modifier: desktop (default — tablet shares it) is tokens.json as is; its mobile
+// context (tokens.mobile.json) points each primitive.fontSize rung >= 18px at semantic.fontSize.mobile.* (87.5%).
+// The CSS writes only the tokens that context redefines, below primitive.breakpoint.tablet, and every
+// textStyle/component font size reaches the new size through its var() chain (see "Alias chaining" below) —
+// e.g. heading-xl is 24px → 21px on mobile.
 
 const tabletBreakpointPx = Number(
   resolveRef('{primitive.breakpoint.tablet}', tokens).replace('px', ''),
 );
 const mobileMaxWidthPx = tabletBreakpointPx - 1;
 
-const mobileFontSizeVars = flatten(
-  (tokens['semantic'] as Tree)['fontSize'] as Tree,
-  tokens,
-  ['fontSize'],
-  'semantic',
-).filter(v => v.name.startsWith('--helix-fontSize-mobile-'));
-
-const mobileFontSizeOverrides = mobileFontSizeVars.map(v => {
-  const primitiveName = v.name.replace('--helix-fontSize-mobile-', '--helix-primitive-fontSize-');
-  return { name: primitiveName, value: v.value };
+const mobileTokens = resolver.resolve({ viewport: 'mobile' }) as Record<string, unknown>;
+const mobileVars = (['primitive', 'semantic', 'component'] as const)
+  .flatMap(layer => flatten(mobileTokens[layer] as Tree, mobileTokens, [], layer));
+const lightVar = new Map(allVars.map(v => [v.name, v]));
+// A token the context redefines changes its own value or its alias target; a token that merely aliases one
+// keeps the same alias and needs no line of its own.
+const mobileFontSizeOverrides = mobileVars.filter(v => {
+  const base = lightVar.get(v.name);
+  return !!base && (base.alias !== v.alias || (!base.alias && base.value !== v.value));
 });
 
 // ─── Alias chaining ───────────────────────────────────────────────────────────

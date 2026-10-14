@@ -2,7 +2,7 @@
   "$schema": "https://www.designtokens.org/schemas/2025.10/resolver.json",
   "name": "Helix DS",
   "version": "2025.10",
-  "description": "Helix DS tokens: the base set (tokens.json, light) and the theme modifier, whose dark context replaces the tokens in tokens.dark.json. Any DTCG 2025.10 tool resolves Helix's light and dark themes from this file; packages/tokens/src/build.ts does the same to write dist/helix.css.",
+  "description": "Helix DS tokens: the base set (tokens.json, light and desktop), the theme modifier (dark context: tokens.dark.json) and the viewport modifier (mobile context: tokens.mobile.json). Any DTCG 2025.10 tool resolves Helix's light and dark themes from this file; packages/tokens/src/build.ts does the same to write dist/helix.css.",
   "sets": {
     "helix": {
       "description": "Every Helix token — primitive, semantic and component — with its light value.",
@@ -17,10 +17,19 @@
         "dark": [{ "$ref": "tokens.dark.json" }]
       },
       "default": "light"
+    },
+    "viewport": {
+      "description": "Viewport. Desktop (and tablet, which shares it) is tokens.json as is; mobile — below primitive.breakpoint.tablet — replaces the tokens in tokens.mobile.json: the font sizes of 18px and up shrink to semantic.fontSize.mobile.*.",
+      "contexts": {
+        "desktop": [],
+        "mobile": [{ "$ref": "tokens.mobile.json" }]
+      },
+      "default": "desktop"
     }
   },
   "resolutionOrder": [
     { "$ref": "#/sets/helix" },
-    { "$ref": "#/modifiers/theme" }
+    { "$ref": "#/modifiers/theme" },
+    { "$ref": "#/modifiers/viewport" }
   ]
 }

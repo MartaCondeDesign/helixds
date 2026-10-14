@@ -77,4 +77,16 @@ describe('Helix themes (dist/helix.css)', () => {
     assert.ok(followers.length > 50);
     for (const [component, semantic] of followers) assert.equal(dark.get(component), dark.get(semantic), component);
   });
+
+  it('the mobile media block applies tokens.mobile.json — the viewport modifier\'s mobile context', () => {
+    const block = css.match(/@media \(max-width: (\d+)px\) \{\s*:root \{([^}]*)\}/);
+    assert.ok(block, 'no mobile media block');
+    const tree = helix.resolve({ viewport: 'mobile' });
+    const mobileFile = JSON.parse(fs.readFileSync(new URL('../src/tokens.mobile.json', import.meta.url), 'utf8'));
+    for (const key of Object.keys(mobileFile.primitive.fontSize)) {
+      const mobile = tree.semantic.fontSize.mobile[key].$value;
+      assert.match(block[2], new RegExp(`--helix-primitive-fontSize-${key}: ${mobile.value}${mobile.unit};`));
+    }
+    assert.equal(Number(block[1]) + 1, tree.primitive.breakpoint.tablet.$value.value);
+  });
 });

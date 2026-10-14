@@ -49,8 +49,12 @@ and refuses a unit the standard doesn't allow (`vw`, `%`…).
 
 `src/helix.resolver.json` is a [Resolver Module 2025.10](https://www.designtokens.org/tr/2025.10/resolver/)
 document: one set (`tokens.json`, every token with its **light** value) and a `theme` modifier whose `dark`
-context lays `src/tokens.dark.json` on top. Any DTCG 2025.10 tool resolves Helix's light and dark themes from
-it; `build.ts` does the same (`src/resolver.mjs`) and writes the dark block of `dist/helix.css` from it.
+context lays `src/tokens.dark.json` on top, and a `viewport` modifier whose `mobile` context (below
+`primitive.breakpoint.tablet`; tablet shares desktop) lays `src/tokens.mobile.json` on top — each
+`primitive.fontSize` rung >= 18px aliasing its `semantic.fontSize.mobile.*` value. Any DTCG 2025.10 tool resolves
+Helix's themes and viewports from it; `build.ts` does the same (`src/resolver.mjs`) and writes the dark blocks and
+the mobile `@media` block of `dist/helix.css` from it. A new `fontSize` rung >= 18px needs its line in
+`tokens.mobile.json` too, next to its `semantic.fontSize.mobile.*` token.
 
 - **A dark value is a token in `tokens.dark.json`** at the same path as in `tokens.json` — an alias to a
   primitive (`{primitive.color.gray.900}`) when the color is on the palette, a color object when it isn't. Why

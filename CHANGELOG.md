@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Dark mode via the DTCG 2025.10 Resolver: helix.resolver.json + tokens.dark.json (latest commit)
+- 2026-10-14 — Mobile font sizes via the resolver's viewport modifier (latest commit)
+- 2026-10-14 — Dark mode via the DTCG 2025.10 Resolver: helix.resolver.json + tokens.dark.json ([`1b9bd40`](https://github.com/MartaCondeDesign/helixds/commit/1b9bd40))
 - 2026-10-14 — tokens.json follows DTCG 2025.10 — validated against the official schema ([`fbab019`](https://github.com/MartaCondeDesign/helixds/commit/fbab019))
 - 2026-10-14 — pnpm helix validate: helix_validate_snippet from a terminal ([`770243d`](https://github.com/MartaCondeDesign/helixds/commit/770243d))
 - 2026-10-14 — Owner gate: judge inline scripts by what they write; MCP start timeouts ([`3a3b99b`](https://github.com/MartaCondeDesign/helixds/commit/3a3b99b))
