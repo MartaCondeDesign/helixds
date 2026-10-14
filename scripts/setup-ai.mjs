@@ -13,7 +13,11 @@
  * Guardrails (Claude Code) — unless --agents-only: the same checks this repo runs on its own agents, pointed
  * at this clone of Helix, so they work in the app without copying any code into it:
  *   .mcp.json               the Helix MCP server (contracts, token search, helix_validate_snippet)
- *   .cursor/mcp.json        the same server for Cursor — only if the app already has .cursor/
+ *   .cursor/mcp.json        the same server for Cursor — only if the app already has .cursor/; Cursor runs the
+ *                           hooks from .claude/settings.json (its "third-party hooks" setting)
+ *   .codex/config.toml      Codex (ChatGPT's coding agent): the MCP server; .codex/hooks.json: the hooks
+ *   .gemini/settings.json   Gemini CLI: the MCP server, the hooks and AGENTS.md as its context file
+ *                           — Codex and Gemini when the app has .codex/ / .gemini/, or with --with codex,gemini
  *   .claude/settings.json   the three hooks — contracts read before writing (claude-contract-hook), Helix lint
  *                           after writing (claude-lint-hook) and owner approval before Helix itself is patched
  *                           in node_modules (claude-owner-gate-hook)
@@ -21,7 +25,7 @@
  * HELIX_DS_DIR, so the files can be committed. They're merged, not overwritten: missing entries are added next
  * to the app's own servers and hooks; an existing `helix` server that points somewhere else is a conflict.
  *
- * Run: node scripts/setup-ai.mjs [target-dir] [--dry-run] [--agents-only]
+ * Run: node scripts/setup-ai.mjs [target-dir] [--dry-run] [--agents-only] [--with codex,gemini|all]
  * Default target-dir is the current working directory.
  *
  * AGENTS.md is the single source of truth this copies; the pointer files only point back to it.
@@ -36,7 +40,11 @@ const repoRoot = path.resolve(__dirname, '..');
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const agentsOnly = args.includes('--agents-only');
-const targetDir = path.resolve(args.find(a => !a.startsWith('--')) ?? process.cwd());
+// --with codex,gemini: install for these agents even if the app has no .codex/ or .gemini/ folder yet.
+const withArg = args.find(a => a.startsWith('--with='))?.slice(7) ?? (args.includes('--with') ? args[args.indexOf('--with') + 1] : '');
+const withAgents = new Set(withArg.split(',').map(a => a.trim().toLowerCase()).filter(Boolean));
+const uses = agent => withAgents.has(agent) || withAgents.has('all') || fs.existsSync(path.join(targetDir, `.${agent}`));
+const targetDir = path.resolve(args.find((a, i) => !a.startsWith('--') && args[i - 1] !== '--with') ?? process.cwd());
 
 const TEMPLATE_PATH = path.join(repoRoot, 'AGENTS.md');
 
@@ -76,6 +84,23 @@ const HOOKS = [
   { event: 'PostToolUse', matcher: 'Edit|Write', script: 'claude-lint-hook.mjs', timeout: 60, statusMessage: 'Helix lint' },
 ];
 
+// The MCP server for agents that don't expand ${VAR:-default} in their config: the shell does it.
+const MCP_VIA_SHELL = { command: 'sh', args: ['-c', `pnpm -s --dir "${HELIX_DIR}" helix:mcp`] };
+
+/** Adds `hooks` (Claude-style matcher groups) to `json.hooks` for each event, unless the script is already there. */
+function mergeHooks(json, hooks, entryFor) {
+  json.hooks ??= {};
+  let changed = false;
+  for (const hook of hooks) {
+    const entries = (json.hooks[hook.event] ??= []);
+    // Already installed — whatever path it points at — if any entry runs this script.
+    if (entries.some(e => (e.hooks ?? []).some(h => String(h.command ?? '').includes(hook.script)))) continue;
+    entries.push(entryFor(hook));
+    changed = true;
+  }
+  return changed;
+}
+
 /**
  * A JSON file this script adds entries to. `merge(json)` changes `json` in place and returns
  * 'changed' | 'same' | a conflict message (an entry exists with a value this script won't overwrite).
@@ -106,16 +131,40 @@ const GUARDRAILS = agentsOnly ? [] : [
   },
   {
     targetPath: () => path.join(targetDir, '.claude', 'settings.json'),
+    // Claude Code — and Cursor, which runs these same hooks with its "third-party hooks" setting on.
     merge(json) {
-      json.hooks ??= {};
+      return mergeHooks(json, HOOKS, hook => ({ matcher: hook.matcher, hooks: [{ type: 'command', command: hookCommand(hook.script), timeout: hook.timeout, statusMessage: hook.statusMessage }] }))
+        ? 'changed' : 'same';
+    },
+  },
+  {
+    // Codex (ChatGPT's coding agent) reads AGENTS.md itself; .codex/hooks.json has Claude Code's format, with
+    // its own tool names (Bash, apply_patch). Project hooks run once the project is trusted in Codex.
+    targetPath: () => path.join(targetDir, '.codex', 'hooks.json'),
+    detect: () => uses('codex'),
+    merge(json) {
+      const matchers = { 'claude-owner-gate-hook.mjs': 'Bash|apply_patch', 'claude-contract-hook.mjs': 'apply_patch', 'claude-lint-hook.mjs': 'apply_patch' };
+      return mergeHooks(json, HOOKS, hook => ({ matcher: matchers[hook.script], hooks: [{ type: 'command', command: hookCommand(hook.script), timeout: hook.timeout, statusMessage: hook.statusMessage }] }))
+        ? 'changed' : 'same';
+    },
+  },
+  {
+    // Gemini CLI: the MCP server, the hooks (BeforeTool/AfterTool, timeout in ms) and AGENTS.md as context.
+    targetPath: () => path.join(targetDir, '.gemini', 'settings.json'),
+    detect: () => uses('gemini'),
+    merge(json) {
       let changed = false;
-      for (const hook of HOOKS) {
-        const entries = (json.hooks[hook.event] ??= []);
-        // Already installed — whatever path it points at — if any entry runs this script.
-        if (entries.some(e => (e.hooks ?? []).some(h => String(h.command ?? '').includes(hook.script)))) continue;
-        entries.push({ matcher: hook.matcher, hooks: [{ type: 'command', command: hookCommand(hook.script), timeout: hook.timeout, statusMessage: hook.statusMessage }] });
-        changed = true;
-      }
+      json.mcpServers ??= {};
+      const existing = json.mcpServers.helix;
+      if (!existing) { json.mcpServers.helix = MCP_VIA_SHELL; changed = true; }
+      else if (JSON.stringify(existing) !== JSON.stringify(MCP_VIA_SHELL)) return 'a "helix" MCP server already exists with a different command';
+      const events = { PreToolUse: 'BeforeTool', PostToolUse: 'AfterTool' };
+      const matchers = { 'claude-owner-gate-hook.mjs': 'write_file|replace|run_shell_command', 'claude-contract-hook.mjs': 'write_file|replace', 'claude-lint-hook.mjs': 'write_file|replace' };
+      const geminiHooks = HOOKS.map(h => ({ ...h, event: events[h.event] }));
+      if (mergeHooks(json, geminiHooks, hook => ({ matcher: matchers[hook.script], hooks: [{ type: 'command', name: `helix-${hook.script.replace(/^claude-|-hook\.mjs$/g, '')}`, command: hookCommand(hook.script), timeout: hook.timeout * 1000, description: hook.statusMessage }] }))) changed = true;
+      json.context ??= {};
+      const names = [json.context.fileName ?? []].flat();
+      if (!names.includes('AGENTS.md')) { json.context.fileName = ['AGENTS.md', ...(names.length ? names : ['GEMINI.md'])]; changed = true; }
       return changed ? 'changed' : 'same';
     },
   },
@@ -179,6 +228,27 @@ for (const step of GUARDRAILS) {
   }
 }
 
+// Codex's MCP servers live in .codex/config.toml. Without a TOML parser: append the [mcp_servers.helix] table
+// when there's none; an existing one that differs is a conflict, like the JSON files.
+if (!agentsOnly) {
+  const tomlPath = path.join(targetDir, '.codex', 'config.toml');
+  const relPath = path.relative(targetDir, tomlPath);
+  const table = `[mcp_servers.helix]\ncommand = "sh"\nargs = ${JSON.stringify(MCP_VIA_SHELL.args)}\n`;
+  if (!uses('codex')) report.skipped.push(relPath);
+  else {
+    const existing = fs.existsSync(tomlPath) ? fs.readFileSync(tomlPath, 'utf-8') : null;
+    if (existing?.includes(table)) report.upToDate.push(relPath);
+    else if (existing && /^\s*\[mcp_servers\.helix\]/m.test(existing)) report.conflicts.push(`${relPath} (an [mcp_servers.helix] table already exists with different settings)`);
+    else {
+      (existing === null ? report.created : report.updated).push(relPath);
+      if (!dryRun) {
+        ensureDirFor(tomlPath);
+        fs.writeFileSync(tomlPath, existing === null ? table : `${existing.replace(/\n*$/, '\n\n')}${table}`);
+      }
+    }
+  }
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 
 const prefix = dryRun ? '[dry-run] ' : '';
@@ -208,7 +278,10 @@ if (report.conflicts.length) {
 
 if (GUARDRAILS.length) {
   console.log(`\nGuardrails point at this Helix clone (${repoRoot}).`);
-  console.log('Teammates with their clone elsewhere: export HELIX_DS_DIR=/path/to/helixds. Restart Claude Code to load them.');
+  console.log('Teammates with their clone elsewhere: export HELIX_DS_DIR=/path/to/helixds. Restart the agent to load them.');
+  if (fs.existsSync(path.join(targetDir, '.cursor'))) console.log('Cursor: turn on Settings → "Include Third-Party Plugins, Skills, and Other Configs" so it runs the hooks in .claude/settings.json.');
+  if (uses('codex')) console.log('Codex: trust this project when Codex asks, or its project hooks and MCP config stay off.');
+  console.log('Other agents: install for them with --with codex,gemini (or --with all) before their folder exists.');
 }
 
 process.exit(report.conflicts.length > 0 ? 1 : 0);

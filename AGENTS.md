@@ -220,8 +220,19 @@ from your Helix clone (set `HELIX_DS_DIR` if a teammate's clone lives elsewhere)
   recommended config if your app has no ESLint setup for them); patching Helix in
   `node_modules/@helixds` or with a `patches/` file asks you first.
 
-If the app already has a `.cursor/` folder, Cursor gets the same MCP server in
-`.cursor/mcp.json` (the hooks are Claude Code only). Every time a hook stops an agent, it
+Other agents get the same guardrails, from the same scripts:
+
+| Agent | Context | MCP server | Hooks |
+|---|---|---|---|
+| Claude Code | AGENTS.md | `.mcp.json` | `.claude/settings.json` |
+| Cursor | `.cursor/rules/helix.mdc` | `.cursor/mcp.json` | runs `.claude/settings.json`'s — turn on Settings → "Include Third-Party Plugins, Skills, and Other Configs" |
+| Codex (ChatGPT) | AGENTS.md (read natively) | `.codex/config.toml` | `.codex/hooks.json` — trust the project in Codex |
+| Gemini CLI | AGENTS.md (via `context.fileName`) | `.gemini/settings.json` | `.gemini/settings.json` |
+
+Cursor, Codex and Gemini are installed when the app already has their folder (`.cursor/`,
+`.codex/`, `.gemini/`), or with `--with codex,gemini` (`--with all`). Codex and Gemini can't
+pause a hook for approval, so the owner gate stops the change there and tells the agent to
+ask you; Claude Code and Cursor show an approval prompt. Every time a hook stops an agent, it
 records a one-line trace in your Helix clone (`evals/traces/hooks/`, never the code;
 `HELIX_TRACES=off` turns it off) — `pnpm eval:traces` shows what agents get wrong most.
 

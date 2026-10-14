@@ -69,6 +69,35 @@ describe('setup-ai', () => {
     assert.match(resolved, new RegExp(`--dir ${root} helix:mcp`));
   });
 
+  it('--with codex,gemini installs the MCP server, the hooks and AGENTS.md context for both', () => {
+    const app = newApp();
+    assert.equal(setup(app, '--with', 'codex,gemini').code, 0);
+    const toml = fs.readFileSync(path.join(app, '.codex/config.toml'), 'utf8');
+    assert.match(toml, /^\[mcp_servers\.helix\]\ncommand = "sh"\nargs = \["-c","pnpm -s --dir \\"\$\{HELIX_DS_DIR:-/m);
+    const codexHooks = readJson(path.join(app, '.codex/hooks.json')).hooks;
+    assert.deepEqual(codexHooks.PreToolUse.map(e => e.matcher), ['Bash|apply_patch', 'apply_patch']);
+    assert.equal(codexHooks.PostToolUse[0].matcher, 'apply_patch');
+
+    const gemini = readJson(path.join(app, '.gemini/settings.json'));
+    assert.equal(gemini.mcpServers.helix.command, 'sh');
+    assert.deepEqual(gemini.hooks.BeforeTool.map(e => e.hooks[0].name), ['helix-owner-gate', 'helix-contract']);
+    assert.equal(gemini.hooks.AfterTool[0].hooks[0].timeout, 60000);
+    assert.deepEqual(gemini.context.fileName, ['AGENTS.md', 'GEMINI.md']);
+
+    // Idempotent for these too, and an app's own TOML is kept.
+    assert.doesNotMatch(setup(app, '--with', 'codex,gemini').out, /Created|Updated/);
+  });
+
+  it('installs for Codex and Gemini on its own when the app already has their folder', () => {
+    const app = newApp();
+    fs.mkdirSync(path.join(app, '.codex'));
+    fs.writeFileSync(path.join(app, '.codex/config.toml'), 'model = "gpt-5"\n');
+    setup(app);
+    const toml = fs.readFileSync(path.join(app, '.codex/config.toml'), 'utf8');
+    assert.match(toml, /^model = "gpt-5"\n\n\[mcp_servers\.helix\]/);
+    assert.ok(!fs.existsSync(path.join(app, '.gemini')));
+  });
+
   it('is idempotent — a second run changes nothing', () => {
     const app = newApp();
     setup(app);

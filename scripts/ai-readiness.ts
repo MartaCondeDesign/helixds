@@ -169,7 +169,7 @@ function guardrails(): Check {
     ['Claude hook: owner approves token, contract and prop-map changes (claude-owner-gate-hook.mjs)', settings.includes('claude-owner-gate-hook')],
     ['Apps get the same guardrails: pnpm setup:ai installs the MCP server and the hooks (setup-ai.mjs)', ['.mcp.json', 'claude-contract-hook', 'claude-lint-hook', 'claude-owner-gate-hook'].every(k => read('scripts/setup-ai.mjs').includes(k))],
   ]);
-  return { id: 'guardrails', label: 'Guardrails', score, evidence, how: 'What catches an agent\'s mistake while it works, before a person has to.', command: 'pnpm --filter @helixds/eslint-plugin test && pnpm test:contract-hook && pnpm test:lint-hook && pnpm test:owner-gate-hook && pnpm test:setup-ai' };
+  return { id: 'guardrails', label: 'Guardrails', score, evidence, how: 'What catches an agent\'s mistake while it works, before a person has to.', command: 'pnpm --filter @helixds/eslint-plugin test && pnpm test:contract-hook && pnpm test:lint-hook && pnpm test:owner-gate-hook && pnpm test:setup-ai && pnpm test:hook-agents' };
 }
 
 // ── ② Used well ──────────────────────────────────────────────────────────────

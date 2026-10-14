@@ -10,6 +10,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { agentOf, projectDir } from './hook-io.mjs';
 
 const helixRepo = path.resolve(import.meta.dirname, '..');
 export const tracesDir = () => process.env.HELIX_TRACES_DIR || path.join(helixRepo, 'evals/traces/hooks');
@@ -25,11 +26,12 @@ export const tracesDir = () => process.env.HELIX_TRACES_DIR || path.join(helixRe
 export function recordHookTrace({ hook, decision, payload = {}, file, findings = [] }) {
   if (/^(off|0|false)$/i.test(process.env.HELIX_TRACES ?? '')) return;
   try {
-    const project = process.env.CLAUDE_PROJECT_DIR || helixRepo;
+    const project = projectDir(payload);
     const now = new Date();
     const line = {
       timestamp: now.toISOString(),
-      source: 'claude-hook',
+      source: 'agent-hook',
+      agent: agentOf(payload),
       hook,
       decision,
       project: path.basename(project),
@@ -58,7 +60,7 @@ export function readHookTraces() {
 export function hasOpenLintBlock(payload = {}, file) {
   if (!payload.session_id || !file) return false;
   try {
-    const project = process.env.CLAUDE_PROJECT_DIR || helixRepo;
+    const project = projectDir(payload);
     const relative = path.relative(project, path.resolve(project, file));
     const month = path.join(tracesDir(), `${new Date().toISOString().slice(0, 7)}.jsonl`);
     const mine = fs.readFileSync(month, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l))

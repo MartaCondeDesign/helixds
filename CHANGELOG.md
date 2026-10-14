@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Hooks record what they catch; Cursor gets the Helix MCP server (latest commit)
+- 2026-10-14 — Guardrails for Cursor, Codex and Gemini CLI, not just Claude Code (latest commit)
+- 2026-10-14 — Hooks record what they catch; Cursor gets the Helix MCP server ([`09f8e01`](https://github.com/MartaCondeDesign/helixds/commit/09f8e01))
 - 2026-10-14 — setup:ai installs Helix's guardrails in apps, not just AGENTS.md ([`4b2b2f8`](https://github.com/MartaCondeDesign/helixds/commit/4b2b2f8))
 - 2026-10-14 — Owner gate: tokens, contracts and prop-map changes need the owner's approval ([`966bbac`](https://github.com/MartaCondeDesign/helixds/commit/966bbac))
 - 2026-10-14 — helix_validate_snippet type-checks against Helix's real source ([`acc2ef5`](https://github.com/MartaCondeDesign/helixds/commit/acc2ef5))

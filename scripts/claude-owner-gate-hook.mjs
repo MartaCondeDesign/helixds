@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Claude Code PreToolUse hook (.claude/settings.json, on Edit|Write|MultiEdit|Bash): the files that define
+ * PreToolUse hook (Claude Code and Cursor: .claude/settings.json · Codex: .codex/hooks.json · Gemini CLI:
+ * .gemini/settings.json BeforeTool — scripts/hook-io.mjs translates each agent's payload and answer): the files that define
  * what Helix IS stop the agent and ask the design-system owner before they change. CLAUDE.md rule 13 says
  * the token is the owner's choice and a new token is never created without asking — this makes that a
  * gate instead of a sentence. Claude Code shows the owner the reason below and the change only goes ahead
@@ -23,6 +24,7 @@
  * run outside Claude Code, so they never hit it. Fails open: a payload it can't read lets the call through.
  */
 
+import { ask, readPayload, toolCall } from './hook-io.mjs';
 import { recordHookTrace } from './hook-trace.mjs';
 
 const GATED = [
@@ -66,21 +68,21 @@ const WRITES = /\bsed\s+(?:-\w+\s+)*-i|(?:^|[^<>&\d=-])>>?\s*[^&>=\s]|\btee\b|\b
 // Commands that only record or show history: a commit message naming tokens.json doesn't change it.
 const HISTORY_ONLY = /^\s*git\s+(?:commit|log|show|diff|tag|status|blame)\b/;
 
-let input = '';
-for await (const chunk of process.stdin) input += chunk;
-let payload;
-try { payload = JSON.parse(input || '{}'); } catch { process.exit(0); }
-const tool = payload.tool_name;
-const args = payload.tool_input ?? {};
+const payload = await readPayload();
+if (!payload) process.exit(0);
+const call = toolCall(payload);
+const short = file => String(file).replaceAll('\\', '/').replace(/^.*?(packages\/tokens|contracts\/components|\.ai\/maps|node_modules\/@helixds|patches\/)/, '$1');
 
 let hits = [];
 let action = '';
-if (['Edit', 'Write', 'MultiEdit', 'NotebookEdit'].includes(tool)) {
-  const file = String(args.file_path ?? args.notebook_path ?? '').replaceAll('\\', '/');
-  hits = GATED.filter(g => g.match(file));
-  action = `${tool} ${file.replace(/^.*?(packages\/tokens|contracts\/components|\.ai\/maps|node_modules\/@helixds|patches\/)/, '$1')}`;
-} else if (tool === 'Bash' && typeof args.command === 'string') {
-  const command = args.command;
+let firstFile;
+if (call.kind === 'files') {
+  const gated = call.files.filter(f => GATED.some(g => g.match(String(f.path).replaceAll('\\', '/'))));
+  hits = [...new Set(gated.flatMap(f => GATED.filter(g => g.match(String(f.path).replaceAll('\\', '/')))))];
+  firstFile = gated[0]?.path;
+  action = `${payload.tool_name} ${gated.map(f => short(f.path)).join(', ')}`;
+} else if (call.kind === 'shell') {
+  const { command } = call;
   const viaCli = WRITING_CLIS.filter(c => c.pattern.test(command)).map(c => c.gate);
   const viaShell = !HISTORY_ONLY.test(command) && WRITES.test(command) ? GATED_IN_COMMAND.filter(c => c.pattern.test(command)).map(c => c.gate) : [];
   hits = [...new Set([...viaCli, ...viaShell])];
@@ -90,18 +92,12 @@ if (!hits.length) process.exit(0);
 
 // The approval the owner then gives or refuses isn't visible to a PreToolUse hook — the trace records the ask.
 recordHookTrace({
-  hook: 'owner-gate', decision: 'ask', payload,
-  file: args.file_path ?? args.notebook_path,
+  hook: 'owner-gate', decision: 'ask', payload, file: firstFile,
   findings: hits.map(g => ({ gate: g.what, message: action })),
 });
 
-console.log(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: 'PreToolUse',
-    permissionDecision: 'ask',
-    permissionDecisionReason:
-      `Helix owner approval needed — ${action}\n` +
-      hits.map(g => `• ${g.what}: ${g.why}`).join('\n') +
-      '\nApprove only if this is the change you chose. If the agent hasn\'t shown you the options and why, deny and ask it to.',
-  },
-}));
+console.log(JSON.stringify(ask(payload,
+  `Helix owner approval needed — ${action}\n` +
+  hits.map(g => `• ${g.what}: ${g.why}`).join('\n') +
+  '\nApprove only if this is the change you chose. If the agent hasn\'t shown you the options and why, deny and ask it to.',
+)));
