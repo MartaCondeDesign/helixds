@@ -42,39 +42,6 @@ export function TableGroup({ title, children }: { title: string; children: React
   );
 }
 
-export function SpacingBar({ varName, tokenKey, val, dim, desc }: { varName: string; tokenKey: string; val: string; dim?: string; desc?: string }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-m)' }}>
-      <span style={{ ...label12, width: 36, flexShrink: 0, textAlign: 'right' }}>{tokenKey}</span>
-      <div style={{
-        display: 'inline-block',
-        width: val,
-        minWidth: dim === '0px' ? 1 : undefined,
-        height: 12,
-        borderRadius: 999,
-        background: 'var(--helix-color-fill-surface)',
-      }}>
-        <div style={{
-          width: '100%',
-          height: '100%',
-          borderRadius: 999,
-          background: 'var(--helix-color-fill-neutral)',
-          border: '1px solid var(--helix-color-border-neutral-dark)',
-          opacity: dim === '0px' ? 0.2 : 1,
-          transition: 'width 0.2s',
-        }} />
-      </div>
-      <span style={{ ...label12, width: 40, textAlign: 'left' }}>{val}</span>
-      {desc && <span style={{ fontSize: 12, color: 'var(--helix-color-text-neutral-light)' }}>{desc}</span>}
-    </div>
-  );
-}
-
 // Type shape of a single DTCG token leaf ({ $value, $type, $description? }). $value is an alias string or a
 // DTCG 2025.10 value object/array/number — render it with toCss() from packages/tokens/src/dtcg.mjs.
 export type TokenLeaf = { $value: unknown; $type: string; $description?: string; $extensions?: Record<string, unknown> };
-
-export function DescCaption({ text }: { text?: string }) {
-  if (!text) return null;
-  return <span style={{ fontSize: 11, color: 'var(--helix-color-text-neutral-lightest)' }}>{text}</span>;
-}

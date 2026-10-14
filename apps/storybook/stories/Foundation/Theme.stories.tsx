@@ -17,9 +17,7 @@ type Story = StoryObj;
 
 type ColorToken = { $value: string; $type: string; $description?: string };
 type ColorGroup = Record<string, ColorToken>;
-const semanticColor = tokensJson.semantic.color as unknown as {
-  fill: ColorGroup; text: ColorGroup; icon: ColorGroup; border: ColorGroup; chart: ColorGroup;
-};
+const semanticColor = tokensJson.semantic.color as unknown as Record<string, ColorGroup>;
 
 function primitiveRef(value: string): string {
   return value.startsWith('{') && value.endsWith('}') ? value.slice(1, -1) : value;
@@ -55,14 +53,15 @@ function useResolvedHexes(): Record<string, string> {
 
 // ── Swatch preview (small, per row) ──────────────────────────────────────
 
-type ColorKind = 'fill' | 'text' | 'icon' | 'border' | 'chart';
+// fill, text, icon and border get their own swatch; any other group (chart…) is drawn as a fill.
+type ColorKind = string;
 
 function SwatchPreview({ kind, varName }: { kind: ColorKind; varName: string }) {
   const box: React.CSSProperties = {
     width: 32, height: 32, borderRadius: 6, flexShrink: 0,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   };
-  if (kind === 'fill' || kind === 'chart') {
+  if (kind !== 'border' && kind !== 'icon' && kind !== 'text') {
     return <div style={{ ...box, background: `var(${varName})`, border: '1px solid var(--helix-color-border-neutral-light)' }} />;
   }
   if (kind === 'border') {
@@ -159,16 +158,13 @@ function ColorPage() {
         description="Every semantic color token, the primitive it aliases, its resolved hex, and its usage description — all read live from tokens.json. Switch light/dark with the theme button in the toolbar."
       />
       <div style={{ background: 'var(--helix-color-fill-page)', borderRadius: 12 }}>
-        <SectionHead title="Fill" />
-        <ColorTable kind="fill" tokens={semanticColor.fill} hexes={hexes} />
-        <SectionHead title="Text" />
-        <ColorTable kind="text" tokens={semanticColor.text} hexes={hexes} />
-        <SectionHead title="Icon" />
-        <ColorTable kind="icon" tokens={semanticColor.icon} hexes={hexes} />
-        <SectionHead title="Border" />
-        <ColorTable kind="border" tokens={semanticColor.border} hexes={hexes} />
-        <SectionHead title="Chart" />
-        <ColorTable kind="chart" tokens={semanticColor.chart} hexes={hexes} />
+        {/* Every color group in tokens.json (fill, text, icon, border, chart…) — a new group shows up on its own. */}
+        {(Object.keys(semanticColor) as ColorKind[]).map(kind => (
+          <div key={kind}>
+            <SectionHead title={kind.charAt(0).toUpperCase() + kind.slice(1)} />
+            <ColorTable kind={kind} tokens={semanticColor[kind]} hexes={hexes} />
+          </div>
+        ))}
       </div>
     </div>
   );

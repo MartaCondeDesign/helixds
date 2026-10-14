@@ -89,22 +89,29 @@ function getGithubRepoUrl(): string | null {
 // %x1f asks git itself to insert the ASCII unit-separator byte (0x1F) — resolved by git, not the
 // shell, so there's no shell-escaping risk from embedding a raw control character in the command.
 const FIELD_SEP = '%x1f';
-const format = ['%H', '%ad', '%s', '%an'].join(FIELD_SEP);
+// %b (the body) can span lines, so each commit ends with the record separator %x1e instead of a newline.
+const format = ['%H', '%ad', '%s', '%an', '%b'].join(FIELD_SEP) + '%x1e';
 
 const raw = execSync(
   'git log --pretty=format:' + format + ' --date=format:%Y-%m-%d',
-  { cwd: root, encoding: 'utf-8', maxBuffer: 1024 * 1024 * 16 },
+  { cwd: root, encoding: 'utf-8', maxBuffer: 1024 * 1024 * 64 },
 ).trim();
 
-type Commit = { hash: string; subject: string; author: string; bump: Bump };
+/** A squash-merged PR lists the commits it folded in as `* subject` lines in its body (GitHub's default
+ * squash message) — those are the changes it carries, shown under its subject instead of being lost. */
+function squashedChanges(body: string): string[] {
+  return body.split('\n').filter(line => line.startsWith('* ')).map(line => line.slice(2).trim()).filter(Boolean);
+}
+
+type Commit = { hash: string; subject: string; author: string; bump: Bump; changes?: string[] };
 type Day = { date: string; commits: Commit[] };
 
 const days: Day[] = [];
 const byDate = new Map<string, Commit[]>();
 
 if (raw.length > 0) {
-  for (const line of raw.split('\n')) {
-    const [hash, date, subject, author] = line.split('\x1f');
+  for (const record of raw.split('\x1e')) {
+    const [hash, date, subject, author, body = ''] = record.replace(/^\n/, '').split('\x1f');
     if (!hash || !date || !subject) continue;
     // Bookkeeping commits from the old auto-commit hook — not changes anyone made.
     if (subject.startsWith('Regenerate changelog')) continue;
@@ -117,6 +124,7 @@ if (raw.length > 0) {
       subject,
       author: author ?? 'unknown',
       bump: classify(subject),
+      ...(squashedChanges(body).length ? { changes: squashedChanges(body) } : {}),
     });
   }
 }
@@ -167,7 +175,7 @@ if (process.argv.includes('--md')) {
   const link = (c: Commit) =>
     c.hash === pendingHash ? 'latest commit'
     : changelog.repoUrl ? `[\`${c.hash}\`](${changelog.repoUrl}/commit/${c.hash})` : `\`${c.hash}\``;
-  const line = (d: Day, c: Commit) => `- ${d.date} — ${c.subject} (${link(c)})`;
+  const line = (d: Day, c: Commit) => [`- ${d.date} — ${c.subject} (${link(c)})`, ...(c.changes ?? []).map(change => `  - ${change}`)].join('\n');
   const section = (title: string, bump: Bump) => {
     const lines = days.flatMap(d => d.commits.filter(c => c.bump === bump).map(c => line(d, c)));
     return lines.length ? [`### ${title}`, '', ...lines, ''] : [];

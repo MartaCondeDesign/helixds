@@ -7,17 +7,22 @@
  * primitive.shadow.dark.* invisible after it was added. Stories that derive their rows from tokens.json
  * (packages/tokens/CLAUDE.md → "Adding a token", step 6) pass with no edit; a hardcoded list fails here.
  *
- * Needs a running Storybook (pnpm sb). Also runs at the end of `pnpm verify:stable`.
+ * Two ways to look:
+ *   - default: renders every story of apps/storybook/stories/Foundation/*.stories.tsx in Node (React server
+ *     rendering) — no Storybook, no browser, a few seconds. Runs in .husky/pre-commit, so a commit that leaves a
+ *     token off Storybook doesn't go through.
+ *   - --url http://localhost:6006: opens each Foundation story in a running Storybook (Playwright) — what
+ *     `pnpm verify:stable` runs at its end. CHROMIUM_PATH=/path/to/chrome to use another browser.
  * Run: pnpm verify:storybook-tokens [--url http://localhost:6006] [--json]
- *      CHROMIUM_PATH=/path/to/chrome to use a browser other than Playwright's own.
  */
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
-import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
 
 const root = path.resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
-const sbUrl = args.includes('--url') ? args[args.indexOf('--url') + 1] : 'http://localhost:6006';
+const sbUrl = args.includes('--url') ? args[args.indexOf('--url') + 1] : undefined;
 const asJson = args.includes('--json');
 
 type Node = Record<string, unknown>;
@@ -40,24 +45,50 @@ function expected(): Array<[string, string]> {
   return out;
 }
 
-async function main() {
-  const index = await fetch(`${sbUrl}/index.json`).then(r => r.json()).catch(() => null) as
+/** Renders every Foundation story in Node and returns the HTML — what the pages show, without a browser. */
+async function renderInNode(): Promise<{ html: string; count: number }> {
+  const storybookDir = path.join(root, 'apps/storybook');
+  // react-dom lives in the Storybook app's dependencies, not the root's.
+  const { renderToStaticMarkup } = createRequire(path.join(storybookDir, 'package.json'))('react-dom/server') as typeof import('react-dom/server');
+  const dir = path.join(storybookDir, 'stories/Foundation');
+  let html = '';
+  let count = 0;
+  for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.stories.tsx')).sort()) {
+    const mod = await import(pathToFileURL(path.join(dir, file)).href) as Record<string, { render?: (args: object, context: object) => unknown }>;
+    for (const [name, story] of Object.entries(mod)) {
+      if (name === 'default' || typeof story?.render !== 'function') continue;
+      html += renderToStaticMarkup(story.render({}, {}) as Parameters<typeof renderToStaticMarkup>[0]);
+      count++;
+    }
+  }
+  return { html, count };
+}
+
+/** Opens every Foundation story in a running Storybook and returns the rendered HTML. */
+async function renderInBrowser(url: string): Promise<{ html: string; count: number }> {
+  const index = await fetch(`${url}/index.json`).then(r => r.json()).catch(() => null) as
     { entries: Record<string, { id: string; title: string; type: string }> } | null;
   if (!index) {
-    console.error(`❌ Storybook isn't reachable at ${sbUrl}. Start it (pnpm sb) or pass --url.`);
+    console.error(`❌ Storybook isn't reachable at ${url}. Start it (pnpm sb), or drop --url to check without it.`);
     process.exit(1);
   }
   const stories = Object.values(index.entries).filter(e => e.type === 'story' && e.title.startsWith('Foundation/'));
-
+  const { chromium } = await import('playwright');
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const page = await browser.newPage();
-  let shown = '';
+  let html = '';
   for (const story of stories) {
-    await page.goto(`${sbUrl}/iframe.html?id=${story.id}&viewMode=story`, { waitUntil: 'networkidle' });
+    await page.goto(`${url}/iframe.html?id=${story.id}&viewMode=story`, { waitUntil: 'networkidle' });
     await page.waitForSelector('#storybook-root > *', { timeout: 15000 }).catch(() => {});
-    shown += await page.evaluate(() => document.getElementById('storybook-root')?.outerHTML ?? '');
+    html += await page.evaluate(() => document.getElementById('storybook-root')?.outerHTML ?? '');
   }
   await browser.close();
+  return { html, count: stories.length };
+}
+
+async function main() {
+  const { html: shown, count } = sbUrl ? await renderInBrowser(sbUrl) : await renderInNode();
+  const stories = { length: count };
 
   // A var counts when the page names it whole (not as the prefix of a longer var); a composite token
   // (typography) counts when any of its sub-property vars is shown.

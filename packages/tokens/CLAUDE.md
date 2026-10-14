@@ -113,29 +113,24 @@ role, which is exactly what the naming overhaul (below) was fixing.
    directly, don't just leave the info in `tokens.json`). See `.ai/skills/tokens-to-figma.md` → "Entry C —
    single token addition" for the reusable script pattern. Renaming an existing variable: change
    `.name` in place, never create a second variable — that orphans every instance already bound to it.
-6. **Update Storybook — mandatory, no exceptions, for every layer, not just color.**
-   `apps/storybook/stories/Foundation.stories.tsx` is the living reference for the whole token set, one
-   story per category: `ColorPrimitives`, `ColorSemantic`, `Spacing` (primitive + semantic sections),
-   `Radius`, `Sizing` (`semantic.size.*`), `Typography` (primitive + semantic line-height
-   sections), `Shadows` (primitive + semantic sections). **A token addition, rename, or removal in
-   `tokens.json` is not done until its matching story reflects it** — check every story that touches the
-   category you changed, not just the first one that comes to mind.
-   - **Prefer deriving the story's token list from the generated build output
-     (`packages/tokens/dist/index.ts`'s `tokens` export) over a hardcoded array of keys**, wherever a
-     section can reasonably do so (e.g. `Object.keys(tokens.semantic.spacing)` instead of
-     `['xs','s','m','l','xl']`). A hardcoded array requires a human to remember to edit this file on every
-     token change; deriving from `tokens` makes the story pick up a new/renamed/removed key automatically
-     on the next build, with no story edit needed at all — that's what "must reflect token changes" should
-     mean in practice, not just "someone remembered to update it." Where a section still uses a hardcoded
-     array (most of `Foundation.stories.tsx` does, as of this writing — converting it is a separate,
-     larger refactor, not implied by adding one token), updating that array by hand remains mandatory
-     until the section is migrated to derive from `tokens`.
-   - **`pnpm verify:storybook-tokens` checks it** (Storybook running): it lists every primitive/semantic token
-     no Foundation story shows as its CSS var. A new token that's missing there isn't done. `pnpm sb` rebuilds
-     the tokens before starting, so the CSS it shows is never older than `tokens.json`.
-   - This applies to `ColorSemantic`'s existing `TokenGroup` lists as it always did (add the new token, or
-     update the label on a rename) — extend the same expectation to whichever other story covers the
-     category you touched.
+6. **Storybook shows every token — mandatory, no exceptions, for every layer, not just color.**
+   `apps/storybook/stories/Foundation/` is the living reference for the whole token set: Primitives
+   (Color, Spacing, Size, Typography, Shadows, Motion, Z-index, Breakpoints), Semantic (Spacing, Radius,
+   Sizing, Border width, Shadows, Typography, Motion), Theme (semantic color) and Text Styles, plus an
+   "Other tokens" story in Primitives and Semantic. **A token addition, rename, or removal in `tokens.json`
+   is not done until Storybook shows it.**
+   - **This is automatic now (since 2026-10-14) — don't hand-edit a list.** Every Foundation page builds its
+     rows from `src/tokens.json` (`apps/storybook/stories/Foundation/_tokens.tsx` → `TokenTable`), and every
+     preview draws through the token's own CSS var, so adding, renaming, removing or changing a token shows in
+     Storybook with no story edit. A whole new category appears on its own in the "Other tokens" story of
+     Foundation/Primitives or Foundation/Semantic until it gets a page of its own (add it to that file's
+     `CLAIMED` list when you give it one). `pnpm sb` rebuilds the tokens before starting, so the CSS it shows
+     is never older than `tokens.json`.
+   - **Enforced:** `pnpm verify:storybook-tokens` renders the Foundation stories and fails on any
+     primitive/semantic token none of them shows as its CSS var. It runs in pre-commit, so the commit stops.
+     Why a check and not a sentence: these pages were written in Aug 2026 with key lists and px values copied
+     by hand, and this step said "prefer deriving" — nothing enforced it, so the migration never happened and
+     112 of 316 tokens (the dark shadows among them) never reached Storybook.
 6b. **A token that needs a dark value gets it in `src/tokens.dark.json`** (same path, see "Themes" above) —
    a new semantic color with no entry there is the same color in both themes. A `component.*` color aliasing
    that semantic token follows it in dark by itself; don't give it an entry. (Before 2026-10-14 the dark

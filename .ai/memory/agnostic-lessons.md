@@ -85,3 +85,14 @@ Figma variable with the same name (`spacing/component-xl` doesn't exist in Figma
 (rectangles) first, then call the Figma MCP `upload_assets` tool with their `nodeIds` and POST the image
 bytes to each returned URL — the image lands as the layer's fill. Keep the source files in the repo
 (e.g. `apps/storybook/public/avatars`) so code and Figma use the same pictures.
+
+---
+
+## A rule written as "prefer" with no check is a rule nobody follows
+
+**Lesson:** In Aug 2026 the docs said Storybook's token pages should "prefer deriving" their lists from
+tokens.json, and deferred the migration as "a separate, larger refactor". Nothing checked it, so it never
+happened: by Oct 2026, 112 of 316 tokens (the new dark shadows among them) appeared on no Storybook page, and
+the pages showed hand-copied px values. When a rule matters, ship it with the check that enforces it
+(`pnpm verify:storybook-tokens` in pre-commit) and build the thing so the rule holds by construction
+(every Foundation row comes from tokens.json through `_tokens.tsx`).

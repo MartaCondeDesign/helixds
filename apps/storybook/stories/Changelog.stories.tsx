@@ -66,7 +66,8 @@ function ChangelogPage() {
       commits: day.commits.filter(c =>
         (bumpFilter.length === 0 || bumpFilter.includes(c.bump))
         && (authorFilter === ALL_AUTHORS || c.author === authorFilter)
-        && (q === '' || c.subject.toLowerCase().includes(q) || c.hash.includes(q)),
+        && (q === '' || c.subject.toLowerCase().includes(q) || c.hash.includes(q)
+          || ('changes' in c && (c.changes as string[]).some(change => change.toLowerCase().includes(q)))),
       ),
     }))
     .filter(day => day.commits.length > 0);
@@ -185,7 +186,7 @@ function ChangelogPage() {
                     key={commit.hash}
                     style={{
                       display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'changes' in commit ? 'flex-start' : 'center',
                       gap: 'var(--helix-spacing-s)',
                       padding: 'var(--helix-spacing-xs) 0',
                       borderBottom: '1px solid var(--helix-color-border-neutral-light)',
@@ -225,6 +226,12 @@ function ChangelogPage() {
                       flex: 1,
                     }}>
                       {commit.subject}
+                      {/* A squash-merged PR: the commits it folded in (generate-changelog.ts → squashedChanges). */}
+                      {'changes' in commit && (
+                        <ul style={{ margin: 'var(--helix-spacing-2xs) 0 0', paddingLeft: 'var(--helix-spacing-m)', color: 'var(--helix-color-text-neutral-light)' }}>
+                          {(commit.changes as string[]).map(change => <li key={change}>{change}</li>)}
+                        </ul>
+                      )}
                     </span>
                     <span style={{
                       fontSize: 'var(--helix-textStyle-caption-regular-fontSize)',

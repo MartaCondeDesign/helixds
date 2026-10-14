@@ -39,7 +39,7 @@
     "verify:icons": "tsx scripts/verify-icon-usage.ts",
     "verify:types": "tsx scripts/verify-types.ts",
     "verify:stable": "tsx scripts/verify-stable.ts",
-    "verify:storybook-tokens": "tsx scripts/verify-storybook-tokens.ts",
+    "verify:storybook-tokens": "tsx --tsconfig apps/storybook/tsconfig.json scripts/verify-storybook-tokens.ts",
     "verify:governance": "tsx scripts/verify-governance.ts",
     "test:lint-hook": "node --test scripts/claude-lint-hook.test.mjs",
     "test:contract-hook": "node --test scripts/claude-contract-hook.test.mjs",

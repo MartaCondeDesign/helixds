@@ -11,7 +11,9 @@ story shows up there as a `drift` entry instead of silently going unnoticed.
 **`Changelog.stories.tsx`** (top-level, sidebar position right after "Getting Started" — see `preview.ts`'s `storySort`)
 renders `.ai/maps/changelog.json`, generated from `git log` by `pnpm docs:changelog`. It is the project's
 only changelog — there is no separate `CHANGELOG.md` to keep in sync. The file is git-ignored and rebuilt
-automatically (on `pnpm install`, `dev`/`build` here, and after every commit), so the page is always current.
+automatically (on `pnpm install`, `dev`/`build` here, after every commit and after every `git pull`), so the page is
+always current. A PR merged with squash lists the commits it folded in under its own entry (the `* subject` lines
+of its message).
 
 **`Status.stories.tsx`** (top-level, right after Changelog) renders `contracts/stability.json` — every
 component's computed status (draft/beta/stable, ADR-018) with one ✓/✗ column per automatic criterion
@@ -94,17 +96,18 @@ the separate "Docs" tab, never in "Canvas" view, which is what most people actua
 
 ## Token-driven stories must read from `tokens.json`, not hardcode a list
 
-See `packages/tokens/CLAUDE.md` → "Adding a token" step 6. Where a story enumerates tokens (a color table,
-a spacing scale, a list of radii…), prefer importing `tokens.json` directly
-(`import tokensJson from '../../../../packages/tokens/src/tokens.json'` — path depth varies by file
-location; `resolveJsonModule` is already enabled in `tsconfig.json`) over a hardcoded array of keys.
-A derived list picks up a token addition/rename/removal, and its `$description`, on the next build with
-zero story edits. `packages/tokens/dist/index.ts` is **not** the right import for this — it only holds
+See `packages/tokens/CLAUDE.md` → "Adding a token" step 6. A story that shows tokens never lists them by
+hand: it uses `Foundation/_tokens.tsx` — `<TokenTable path="semantic.radius" preview="radius" />` renders
+every token under that path from `tokens.json` (rows, alias, resolved CSS, `$description`) with a preview
+drawn through the token's own CSS var. Outside Foundation, import `tokens.json` directly
+(`import tokensJson from '../../../../packages/tokens/src/tokens.json'`) and derive the list from it.
+A derived list picks up a token addition/rename/removal, and its `$description`, with zero story edits. `packages/tokens/dist/index.ts` is **not** the right import for this — it only holds
 resolved values, dropping both the alias path (`$value`) and `$description`; import from `src/tokens.json`
 when you need either of those, from `dist/index.ts` only when you need a plain resolved value at runtime.
 
-**Checked:** `pnpm verify:storybook-tokens` (Storybook running, also at the end of `verify:stable`) fails for every
-primitive/semantic token that no Foundation story renders as its CSS var — a preview with a hardcoded px/hex
+**Checked in pre-commit:** `pnpm verify:storybook-tokens` (renders the Foundation stories in Node — no Storybook
+needed; `--url` checks a running one, as `verify:stable` does) fails for every primitive/semantic token that no
+Foundation story renders as its CSS var — a preview with a hardcoded px/hex
 (`borderRadius: '6px'` instead of `var(--helix-radius-m)`) doesn't count, because it wouldn't follow a token change.
 
 ## Foundation story structure
@@ -120,8 +123,11 @@ flat list of token categories:
   selector `packages/tokens/src/build.ts` actually emits).
 - `TextStyles.stories.tsx` — the named `{role} / {size} / {weight}` combinations mirroring Figma's Text
   Styles.
-- `_shared.tsx` — helpers local to Foundation (`SectionHead`, `SpacingBar`, `DescCaption`, `TokenLeaf`).
-  Not a `*.stories.tsx` file, so Storybook's glob doesn't pick it up as its own story.
+- `_tokens.tsx` — reads `tokens.json`: `tokenRows(path)`, `TokenTable`, the CSS-var previews, and `OtherTokens`,
+  which renders any category not in the file's `CLAIMED` list (the "Other tokens" story) — a new category
+  shows up there by itself.
+- `_shared.tsx` — layout helpers local to Foundation (`SectionHead`, `TableGroup`, `TokenLeaf`).
+  Neither is a `*.stories.tsx` file, so Storybook's glob doesn't pick them up as stories.
 
 `packages/tokens/src/tokens.json` is the SSOT for semantic-token descriptions: if a `$description`
 changes there, Storybook should reflect it automatically by reading the same JSON, not by adding a
@@ -133,9 +139,8 @@ The `helixTokens` docs panel is for `Components/*` stories only. Do not add `hel
 Patterns, Pages, or other non-component stories, or the token tab will appear where it does not belong.
 
 A token category that exists in both `primitive.*` and `semantic.*` (color, spacing, shadow, motion) gets
-a section in both files. A category with no primitive layer (radius) or no semantic layer at time of
-writing gets a short explanatory note in the file where it's missing, rather than silently having no entry
-at all — see `Primitives.stories.tsx`'s `Radius` story for the pattern.
+a section in both files. A category with no primitive layer (radius) says so in its semantic story's
+description, rather than silently having no entry at all — see `Semantic.stories.tsx`'s `Radius` story.
 
 ## Every component story links to Figma
 

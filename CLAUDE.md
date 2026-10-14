@@ -144,9 +144,11 @@ pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-fil
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
                             ADR-018 — needs Storybook running; --details lists what's missing
-pnpm verify:storybook-tokens every primitive.* and semantic.* token must appear (as its CSS var) on a Foundation story —
-                            needs Storybook running; also printed at the end of verify:stable. A story that renders a
-                            hardcoded value or a hardcoded key list instead of reading tokens.json shows up here
+pnpm verify:storybook-tokens every primitive.* and semantic.* token must appear (as its CSS var) on a Foundation story.
+                            Renders the Foundation stories in Node (no Storybook needed, ~3 s) and runs in pre-commit, so
+                            a commit that leaves a token off Storybook is refused. --url <storybook> checks a running one
+                            instead (what verify:stable does at its end). The pages build every row from tokens.json
+                            (apps/storybook/stories/Foundation/_tokens.tsx), so a new or changed token shows with no edit
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
                             raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
@@ -244,8 +246,8 @@ component, run `pnpm docs:manifest` first — the README script trusts `contract
   rough read, not authoritative; nothing here is published, so no real version number depends on it
   anyway). Rendered in Storybook's own "Changelog" page (`apps/storybook/stories/Changelog.stories.tsx`) —
   no separate CHANGELOG.md, no manual curation. **Not tracked by git** (it's derived from `git log`):
-  rebuilt on `pnpm install`, when Storybook starts or builds, and by `.husky/post-commit` after every
-  commit — which only rewrites the file, never commits. Never re-add a hook that commits it: that's what
+  rebuilt on `pnpm install`, when Storybook starts or builds, by `.husky/post-commit` after every
+  commit and by `.husky/post-merge` after every `git pull` — which only rewrites the file, never commits. Never re-add a hook that commits it: that's what
   produced a "Regenerate changelog" commit after every real one (108 of the first 273).
 - `contracts/component.schema.json`    — JSON schema for component contracts
 - `contracts/token-naming.schema.json` — JSON schema for the semantic token key grammar
