@@ -165,6 +165,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Accordion    | duration-chevron         | --   | ✅ ADR-016 exception | 250ms                             |
 | Accordion    | duration-collapse        | --   | ✅ ADR-016 exception | 250ms                             |
 | Accordion    | duration-expand          | --   | ✅ ADR-016 exception | 250ms                             |
+| Chart        | duration-update          | --   | ✅ ADR-021 exception | 400ms                             |
 | Illustration | motion.duration-emphasis | --   | ✅ ADR-024 exception | 500ms                             |
 | Illustration | motion.duration-enter    | --   | ✅ ADR-024 exception | 450ms                             |
 | Illustration | motion.duration-recolor  | --   | ✅ ADR-024 exception | 600ms                             |
@@ -186,6 +187,7 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Switch       | height                   | m    | ✅ ADR-004 exception | 20px                              |
 +--------------+--------------------------+------+----------------------+-----------------------------------+
 +-------------------------------------------------- OTHER --------------------------------------------------+
+| Button       | swap-scale               | --   | ✅ ADR-007 exception | 0.25                              |
 | Chart        | area-opacity             | --   | ✅ ADR-021 exception | 0.15                              |
 | Illustration | motion.easing-draw       | --   | ✅ ADR-024 exception | cubic-bezier(0.65, 0, 0.35, 1)    |
 | Illustration | motion.easing-emphasis   | --   | ✅ ADR-024 exception | cubic-bezier(0.34, 1.56, 0.64, 1) |
@@ -193,6 +195,8 @@ silently overwritten the next time the script runs. Two things stay hand-maintai
 | Illustration | motion.hold              | --   | ✅ ADR-024 exception | 2200ms                            |
 | Input        | shake.distance           | --   | ✅ ADR-007 exception | 6px                               |
 | Input        | shake.dur-b              | --   | ✅ ADR-007 exception | 60ms                              |
+| Menu         | scale-enter              | --   | ✅ ADR-013 exception | 0.97                              |
+| Menu         | scale-exit               | --   | ✅ ADR-013 exception | 0.99                              |
 | Modal        | scale-enter              | --   | ✅ ADR-010 exception | 0.96                              |
 | Toast        | autoDismissMs            | --   | ✅ ADR-011 exception | 4000ms                            |
 | Toast        | depthFade                | --   | ✅ ADR-011 exception | 0.4                               |

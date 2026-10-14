@@ -80,6 +80,8 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   'toast.autoDismissMs': { tag: 'ADR-011' },
   // Chart's area fill opacity — chart-only, no semantic opacity rung (ADR-021 amendment, 2026-10-12).
   'chart.area-opacity': { tag: 'ADR-021' },
+  // The donut's update morph (ADR-021 amendment, 2026-10-13) — 400ms, no semantic.duration rung matches.
+  'chart.duration-update': { tag: 'ADR-021' },
   // Illustration-only motion values — the ones shared with components alias semantic.duration/easing;
   // these have no component counterpart (ADR-024, amended 2026-10-12).
   'illustration.motion.duration-enter': { tag: 'ADR-024' },
@@ -102,6 +104,11 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   // 2px hairline gap between menu items, explicit review feedback (not a rounding of the 4px
   // primitive.spacing.25 rung, deliberately smaller) — see ADR-013's amendment.
   'menu.gap': { tag: 'ADR-013' },
+  // Menu's open/close scales — tuned to Menu like Modal's/Tooltip's own scale-enter (ADR-013 amendment, 2026-10-13).
+  'menu.scale-enter': { tag: 'ADR-013' },
+  'menu.scale-exit': { tag: 'ADR-013' },
+  // How small an icon gets as it swaps out/in — unrelated to the hover/press scale rungs (ADR-007 amendment, 2026-10-13).
+  'button.swap-scale': { tag: 'ADR-007' },
 
   // Tooltip's tuned show/hide timing — ADR-008 explicitly discusses the show-delay's purpose
   // ("a short show delay avoids flashing one on every incidental mouse pass, matching the APG

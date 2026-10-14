@@ -102,7 +102,7 @@ _No Figma-mappable props._
 - `badge-icon`
 - `badge-label`
 
-### Button (`v2.0.0`, beta)
+### Button (`v2.1.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ _No Figma-mappable props._
 - `card-header`
 - `card-body`
 
-### Chart (`v1.1.0`, beta)
+### Chart (`v1.2.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -291,7 +291,7 @@ _No Figma-mappable props._
 - `input-description`
 - `input-error`
 
-### Menu (`v0.2.0`, beta)
+### Menu (`v0.3.0`, beta)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -549,7 +549,7 @@ _No Figma-mappable props._
 - `textarea-description`
 - `textarea-error`
 
-### Toast (`v0.1.0`, beta)
+### Toast (`v0.2.0`, beta)
 
 _No Figma-mappable props._
 

@@ -36,7 +36,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-14 — Dark mode on the palette: every dark value is now an alias (latest commit)
+- 2026-10-14 — Merge main into claude/charming-darwin-tuepfd (latest commit)
+- 2026-10-14 — Dark mode on the palette: every dark value is now an alias ([`d054096`](https://github.com/MartaCondeDesign/helixds/commit/d054096))
 - 2026-10-14 — Mobile font sizes via the resolver's viewport modifier ([`f15330d`](https://github.com/MartaCondeDesign/helixds/commit/f15330d))
 - 2026-10-14 — Dark mode via the DTCG 2025.10 Resolver: helix.resolver.json + tokens.dark.json ([`1b9bd40`](https://github.com/MartaCondeDesign/helixds/commit/1b9bd40))
 - 2026-10-14 — tokens.json follows DTCG 2025.10 — validated against the official schema ([`fbab019`](https://github.com/MartaCondeDesign/helixds/commit/fbab019))
@@ -47,6 +48,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 - 2026-10-14 — setup:ai installs Helix's guardrails in apps, not just AGENTS.md ([`4b2b2f8`](https://github.com/MartaCondeDesign/helixds/commit/4b2b2f8))
 - 2026-10-14 — Owner gate: tokens, contracts and prop-map changes need the owner's approval ([`966bbac`](https://github.com/MartaCondeDesign/helixds/commit/966bbac))
 - 2026-10-14 — helix_validate_snippet type-checks against Helix's real source ([`acc2ef5`](https://github.com/MartaCondeDesign/helixds/commit/acc2ef5))
+- 2026-10-14 — Motion: transitions.dev effects on Toast, Menu, Button and the donut Chart (#5) ([`f5df45f`](https://github.com/MartaCondeDesign/helixds/commit/f5df45f))
 - 2026-10-12 — Evals: record answer duration and post the eval score on a PR (#1) ([`d9ed415`](https://github.com/MartaCondeDesign/helixds/commit/d9ed415))
 - 2026-10-12 — Charts: all-blue palette and draw-in motion; NavItem: tinted current item with a blue bar; one motion family (#2) ([`b266608`](https://github.com/MartaCondeDesign/helixds/commit/b266608))
 - 2026-10-12 — a11y.applied in every contract — the accessibility layer each component applies, read from the real code: focus rule and its tokens (or the inner components that draw it), ARIA per part, what a screen reader announces, measured contrast for text AND icons in light and dark, smallest target, reduced motion. Written by pnpm a11y; verify:a11y-contracts fails a contract without it ([`b921459`](https://github.com/MartaCondeDesign/helixds/commit/b921459))

@@ -1138,5 +1138,575 @@
         }
       }
     }
+  },
+  {
+    "date": "2026-10-13",
+    "commit": "d9ed415",
+    "generatedAt": "2026-10-13T18:05:09.421Z",
+    "score": 100,
+    "meetsMinimum": 33,
+    "components": {
+      "Accordion": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "AppShell": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "pass",
+          "screen-reader": "pass",
+          "ai-visual": "fail",
+          "human": "pending"
+        }
+      },
+      "Avatar": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "AvatarGroup": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Badge": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "n/a",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Button": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Card": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "n/a",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Chart": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Checkbox": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "CheckboxGroup": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Chip": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "ChipGroup": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "FAB": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Icon": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "IconButton": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Input": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Menu": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Modal": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "MultiSelect": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "NavItem": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "PageHeader": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "pass",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "RadioButton": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "RadioGroup": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "SegmentedControl": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Select": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "SideNav": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "pass",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "SidePanel": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Switch": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Table": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Textarea": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Toast": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "n/a",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "Tooltip": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "pass",
+          "focus-return": "pass",
+          "keyboard": "pass",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "n/a",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      },
+      "TopBar": {
+        "score": 100,
+        "checks": {
+          "contract": "pass",
+          "keys": "n/a",
+          "focus-return": "n/a",
+          "keyboard": "n/a",
+          "axe": "pass",
+          "contrast": "pass",
+          "focus-visible": "pass",
+          "target-size": "pass",
+          "reflow": "pass",
+          "screen-reader": "pass",
+          "ai-visual": "pass",
+          "human": "pending"
+        }
+      }
+    }
   }
 ]

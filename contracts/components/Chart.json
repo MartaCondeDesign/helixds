@@ -1,13 +1,13 @@
 {
   "$schema": "../component.schema.json",
   "name": "Chart",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "beta",
   "purpose": "Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events.",
   "import": "import { Chart } from '@helixds/react';",
   "neverUseFor": ["Raw ECharts options or a product-specific chart renderer", "Precise audit values without an accompanying Table", "More than six donut categories"],
 
-  "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility. The palette is all blue: series 1 is the primary Button's blue and every next series is a blue far from the one before it, never a near tone, and every series meets 3:1 on the page with no outline — dark blues alternate in light mode, light blues in dark mode (ADR-021 amendment). Stacked segments and donut slices are split by a page-colored gap. Charts draw in on load — lines sweep over semantic.duration.draw with each point appearing as the line reaches it, bars and series follow semantic.duration.stagger apart, eased with semantic.easing.gentle — and render finished under prefers-reduced-motion. The area fill fades from component.chart.area-opacity to transparent.",
+  "rationale": "Chart wraps the charting engine behind a token-branded API (ADR-021) so series colors, axes and typography come from --helix-* tokens rather than raw library options, and every chart ships with a labelled data table for 1.1.1 Non-text Content. Consumers describe the metric; Helix owns the rendering, palette and accessibility. The palette is all blue: series 1 is the primary Button's blue and every next series is a blue far from the one before it, never a near tone, and every series meets 3:1 on the page with no outline — dark blues alternate in light mode, light blues in dark mode (ADR-021 amendment). Stacked segments and donut slices are split by a page-colored gap. Charts draw in on load — lines sweep over semantic.duration.draw with each point appearing as the line reaches it, bars and series follow semantic.duration.stagger apart, eased with semantic.easing.gentle — and render finished under prefers-reduced-motion. The area fill fades from component.chart.area-opacity to transparent. A donut whose categories stay the same but whose values change does not draw in again: each slice eases to its new angle over component.chart.duration-update with component.chart.easing-update, the gaps between slices staying even (transitions.dev donut chart).",
 
   "governance": {
     "mayExtendLocally": [
@@ -106,7 +106,7 @@
         }
       },
       "targetSize": {
-        "chart-legend-item": "smallest 61×28 px"
+        "chart-legend-item": "smallest 62×28 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -133,7 +133,7 @@
         "ai-visual",
         "human"
       ],
-      "changed": "2026-10-12"
+      "changed": "2026-10-13"
     }
   }
 }

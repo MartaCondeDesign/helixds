@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import {
   IconPlus,
   IconDownload,
   IconArrowRight,
   IconSearch,
   IconSend,
+  IconCopy,
+  IconCheck,
+  IconDeviceFloppy,
 } from '@tabler/icons-react';
 import { Button, ButtonDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
@@ -162,6 +166,57 @@ export const FullWidth: Story = {
       </div>
     ),
   ],
+};
+
+function CopyButton() {
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 1600);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+  return (
+    <Button variant="secondary" icon={copied ? IconCheck : IconCopy} onClick={() => setCopied(true)}>
+      {copied ? 'Copied' : 'Copy link'}
+    </Button>
+  );
+}
+
+function SaveButton() {
+  const [saving, setSaving] = useState(false);
+  useEffect(() => {
+    if (!saving) return;
+    const timer = window.setTimeout(() => setSaving(false), 1800);
+    return () => window.clearTimeout(timer);
+  }, [saving]);
+  return (
+    <Button icon={IconDeviceFloppy} isLoading={saving} onClick={() => setSaving(true)}>
+      {saving ? 'Saving' : 'Save'}
+    </Button>
+  );
+}
+
+export const SwapInPlace: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
+      <CopyButton />
+      <SaveButton />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByRole('button', { name: 'Copy link' }));
+    // The outgoing label is aria-hidden, so the button's name is the new label straight away.
+    await expect(canvas.getByRole('button', { name: 'Copied' })).toBeInTheDocument();
+    await waitFor(() => expect(canvasElement.querySelector('[data-swapping]')).toBeNull());
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Content that changes in place swaps instead of cutting: the icon cross-fades (copy → check, save → spinner) and the label cross-blurs while the button eases to its new width. Click either button. Under reduced motion the swap is instant.',
+      },
+    },
+  },
 };
 
 // Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the

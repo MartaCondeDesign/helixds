@@ -45,3 +45,13 @@ Decided by the design-system owner after a preview (`ds-preview-before-ship`):
   (ADR-024, amended the same day), which is why they are semantic rungs rather than chart-only values.
 - **Area fill.** A gradient from the series color at `component.chart.area-opacity` (0.15 — opacity moves in 5% steps) to transparent —
   a chart-only value with no semantic equivalent, so a documented component literal.
+
+## Amendment — 2026-10-13: donut update motion
+
+When a donut keeps its categories but gets new values (switching period, filter or unit), it no longer
+clears and draws in again: each slice eases to its new angle (the transitions.dev "donut chart" recipe,
+previewed and approved first). The timing is `component.chart.duration-update` (400ms — the recipe's own
+value; nothing on the `semantic.duration` scale matches, and shortening it to `slower` would rush a morph
+the eye follows across the whole ring) with `component.chart.easing-update` → `semantic.easing.gentle`.
+New categories, a different variant or new series still draw in from scratch. Under
+`prefers-reduced-motion` Chart already renders with `animation: false`, so the values just change.

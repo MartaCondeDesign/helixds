@@ -1,7 +1,7 @@
 {
   "$schema": "../component.schema.json",
   "name": "Menu",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "status": "beta",
 
   "purpose": "A Helix-styled, portaled popup listbox anchored to a trigger element — the internal primitive Select uses instead of a native <select> dropdown, and the foundation for any future popup list (Combobox, a context menu, a DatePicker's own internals).",
@@ -12,7 +12,7 @@
     "Content that isn't a flat or single-level-grouped list of choices — this is a listbox, not a generic popover"
   ],
 
-  "rationale": "Menu is the hand-rolled, portaled listbox (ADR-013) that Select and MultiSelect use instead of a native <select> popup, so options can be styled with tokens and rendered in the top layer. Rows are semantic.size.m (32px) to match field triggers, and keyboard handling lives in the consumer's trigger so one primitive serves every future popup list.",
+  "rationale": "Menu is the hand-rolled, portaled listbox (ADR-013) that Select and MultiSelect use instead of a native <select> popup, so options can be styled with tokens and rendered in the top layer. Rows are semantic.size.m (32px) to match field triggers, and keyboard handling lives in the consumer's trigger so one primitive serves every future popup list. It grows in from its trigger (scale-enter 0.97 to 1 over semantic.duration.enter) and, when closed, stays on screen for semantic.duration.exit settling to scale-exit 0.99 — inert and hidden from assistive tech while it does — eased with semantic.easing.gentle (transitions.dev menu dropdown); under prefers-reduced-motion it appears and goes at once.",
 
   "governance": {
     "mayExtendLocally": [
@@ -155,7 +155,7 @@
         "ai-visual",
         "human"
       ],
-      "changed": "2026-10-12"
+      "changed": "2026-10-13"
     }
   },
 
