@@ -190,7 +190,7 @@ export const Shadows: Story = {
           </tr>
         </thead>
         <tbody>
-          {(['xs', 's', 'm', 'l', 'xl', 'focus']).map(s => (
+          {(['xs', 's', 'm', 'l', 'xl', 'xl-up', 'focus']).map(s => (
             <tr key={s} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}><code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>shadow.{s}</code></td>
               <td style={tdStyle}>

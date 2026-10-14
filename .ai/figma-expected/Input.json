@@ -24,7 +24,7 @@
           "stroke": "#334155"
         },
         "input-field": {
-          "fill": "#8391a7"
+          "fill": "#94a3b8"
         }
       }
     },
@@ -44,7 +44,7 @@
           "stroke": "#475569"
         },
         "input-field": {
-          "fill": "#8391a7"
+          "fill": "#94a3b8"
         }
       }
     },
@@ -64,7 +64,7 @@
           "stroke": "#60a5fa"
         },
         "input-field": {
-          "fill": "#8391a7"
+          "fill": "#94a3b8"
         }
       }
     },
@@ -84,7 +84,7 @@
           "stroke": "#f87171"
         },
         "input-field": {
-          "fill": "#8391a7"
+          "fill": "#94a3b8"
         }
       }
     },
@@ -104,7 +104,7 @@
           "stroke": "#1e293b"
         },
         "input-field": {
-          "fill": "#8391a7"
+          "fill": "#94a3b8"
         }
       }
     }
@@ -136,14 +136,15 @@
         },
         "fontWeight": {
           "value": 400,
-          "token": null,
-          "figma": null
+          "token": "semantic.textStyle.body-m-regular.fontWeight",
+          "figma": "body-m-regular"
         },
         "fontFamily": {
           "value": "system-ui",
           "token": null,
           "figma": null
-        }
+        },
+        "textStyle": "body-m-regular"
       }
     }
   }

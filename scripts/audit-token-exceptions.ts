@@ -126,10 +126,6 @@ const KNOWN_EXCEPTIONS: Record<string, { tag: KnownTag }> = {
   // SidePanel shares ADR-010 with Modal for the same open/close choreography reasoning.
   'sidePanel.duration-open': { tag: 'ADR-010' },
   'sidePanel.duration-close': { tag: 'ADR-010' },
-  // The bottom-edge shadow exists because ADR-005 puts SidePanel in the "gets a shadow" overlay
-  // category at all — this compound value is that policy's implementation detail for the one
-  // edge that needs its own separate shadow (the panel's leading edge).
-  'sidePanel.shadowBottom': { tag: 'ADR-005' },
 
   // Accordion's chevron/height/content all transition on the same duration on purpose, so the
   // chevron finishes rotating exactly when the panel finishes expanding or collapsing — see
