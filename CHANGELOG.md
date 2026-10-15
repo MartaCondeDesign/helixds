@@ -9,7 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-15 — Remove a tsx cache file committed by mistake in #6; ignore tsx-0/ (latest commit)
+- 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([#11](https://github.com/MartaCondeDesign/helixds/pull/11))
+  - Remove a tsx cache file committed by mistake in #6; ignore tsx-0/
 - 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
 - 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated ([`daafd06`](https://github.com/MartaCondeDesign/helixds/commit/daafd06))
 - 2026-10-07 — feat!: publish under the @helixds npm scope ([`e5e900b`](https://github.com/MartaCondeDesign/helixds/commit/e5e900b))
