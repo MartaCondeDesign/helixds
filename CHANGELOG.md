@@ -86,7 +86,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-15 — Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed (latest commit)
+- 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([#12](https://github.com/MartaCondeDesign/helixds/pull/12))
+  - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
 - 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR (#10) ([`9f6ca33`](https://github.com/MartaCondeDesign/helixds/commit/9f6ca33))
   - CHANGELOG.md gets each pull request's entry inside the PR, so main never falls behind
   - Workflows: let pnpm/action-setup read the pnpm version from packageManager
