@@ -252,7 +252,10 @@ component, run `pnpm docs:manifest` first — the README script trusts `contract
   anyway). Rendered in Storybook's own "Changelog" page (`apps/storybook/stories/Changelog.stories.tsx`) —
   no separate CHANGELOG.md, no manual curation. **Not tracked by git** (it's derived from `git log`):
   rebuilt on `pnpm install`, when Storybook starts or builds, by `.husky/post-commit` after every
-  commit and by `.husky/post-merge` after every `git pull` — which only rewrites the file, never commits. Never re-add a hook that commits it: that's what
+  commit and by `.husky/post-merge` after every `git pull` — which only rewrites the file, never commits.
+  The tracked `CHANGELOG.md` twin is amended into each local commit by `.husky/post-commit`, and written into
+  each pull request by `.github/workflows/changelog.yml` (its entry rides the squash merge — `git pull` the PR
+  branch before pushing to it again, the job may have added a commit). Never re-add a hook that commits it: that's what
   produced a "Regenerate changelog" commit after every real one (108 of the first 273).
 - `contracts/component.schema.json`    — JSON schema for component contracts
 - `contracts/token-naming.schema.json` — JSON schema for the semantic token key grammar
