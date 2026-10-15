@@ -1,0 +1,46 @@
+# CHANGELOG.md on every pull request, so a squash merge carries the PR's own entry into main.
+# A PR merged on GitHub never runs the local .husky/post-commit hook that keeps CHANGELOG.md current, so main
+# fell behind (#8 and #9 were missing). This job writes the file as it will read after the squash merge
+# (main's history + one entry for this PR: its title, the commits it carries, a link to it) and commits it
+# to the PR's branch. The squash folds that commit away: main gets no "Regenerate changelog" commit of its
+# own — CLAUDE.md forbids those (they were 108 of the first 273 commits).
+# Pushing to the branch again? `git pull` first: this job may have added a commit to it.
+name: Changelog
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+    branches: [main]
+permissions:
+  contents: write
+concurrency:
+  group: changelog-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  changelog:
+    # Only branches of this repository: a fork's branch can't be pushed to with this token.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Write CHANGELOG.md as it will read after the merge
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: pnpm -s exec tsx scripts/generate-changelog.ts --md --pr "$PR_NUMBER" --pr-title "$PR_TITLE" --base origin/main
+      - name: Commit it to the PR branch (only if it changed)
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if git diff --quiet -- CHANGELOG.md; then echo "CHANGELOG.md already current"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update CHANGELOG.md for #$PR_NUMBER" -- CHANGELOG.md
+          git push
