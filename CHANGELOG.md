@@ -9,7 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([#11](https://github.com/MartaCondeDesign/helixds/pull/11))
+- 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
   - Remove a tsx cache file committed by mistake in #6; ignore tsx-0/
 - 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
 - 2026-10-11 — a11y(Table reorder pattern): keyboard grip + row ⋯ move menu (WCAG 2.1.1 / 2.5.7) in Components/Table DragReorder and Pages/Team Dashboard, shared in _shared/row-reorder.tsx; proposals removed; pattern doc updated ([`daafd06`](https://github.com/MartaCondeDesign/helixds/commit/daafd06))
@@ -86,10 +86,11 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([#12](https://github.com/MartaCondeDesign/helixds/pull/12))
+  - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
 - 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR (#10) ([`9f6ca33`](https://github.com/MartaCondeDesign/helixds/commit/9f6ca33))
   - CHANGELOG.md gets each pull request's entry inside the PR, so main never falls behind
   - Workflows: let pnpm/action-setup read the pnpm version from packageManager
-  - Update CHANGELOG.md for #10
 - 2026-10-14 — Storybook's token pages read tokens.json, enforced in pre-commit; changelog shows squashed changes (#8) ([`4f1675c`](https://github.com/MartaCondeDesign/helixds/commit/4f1675c))
   - Storybook's token pages read tokens.json, and a commit can't leave a token off them
   - Tests that Storybook's token pages show tokens.json right, and a fix they found

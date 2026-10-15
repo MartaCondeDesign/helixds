@@ -228,7 +228,7 @@ function ChangelogPage() {
                       {commit.subject}
                       {/* A squash-merged PR: the commits it folded in (generate-changelog.ts → squashedChanges). */}
                       {'changes' in commit && (
-                        <ul style={{ margin: 'var(--helix-spacing-2xs) 0 0', paddingLeft: 'var(--helix-spacing-m)', color: 'var(--helix-color-text-neutral-light)' }}>
+                        <ul style={{ margin: 'var(--helix-spacing-2xs) 0 0', padding: 0, listStyle: 'none', color: 'var(--helix-color-text-neutral-light)' }}>
                           {(commit.changes as string[]).map(change => <li key={change}>{change}</li>)}
                         </ul>
                       )}
