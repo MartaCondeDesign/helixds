@@ -84,8 +84,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-15 — Workflows: let pnpm/action-setup read the pnpm version from packageManager (latest commit)
-- 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR, so main never falls behind ([`e7c4931`](https://github.com/MartaCondeDesign/helixds/commit/e7c4931))
+- 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR (#10) ([#10](https://github.com/MartaCondeDesign/helixds/pull/10))
+  - CHANGELOG.md gets each pull request's entry inside the PR, so main never falls behind
+  - Workflows: let pnpm/action-setup read the pnpm version from packageManager
 - 2026-10-14 — Storybook's token pages read tokens.json, enforced in pre-commit; changelog shows squashed changes (#8) ([`4f1675c`](https://github.com/MartaCondeDesign/helixds/commit/4f1675c))
   - Storybook's token pages read tokens.json, and a commit can't leave a token off them
   - Tests that Storybook's token pages show tokens.json right, and a fix they found
