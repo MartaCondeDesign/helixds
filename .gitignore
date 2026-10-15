@@ -27,3 +27,6 @@ packages/core/AGENTS.md
 
 # Blog drafts and images live on the Desktop, never in the repo
 docs/blog/
+
+# tsx compile cache (written to the working dir when TMPDIR is unset) — never commit it
+tsx-0/
