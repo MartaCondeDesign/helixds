@@ -131,5 +131,6 @@ describe('changelog', () => {
     const body = 'Summary line\n\n* First change\n\nDetails\n\n* Second change\n  indented, not a change\n---------\nCo-authored-by: X';
     assert.deepEqual(squashedChanges(body), ['First change', 'Second change']);
     assert.deepEqual(squashedChanges('a plain commit body'), []);
+    assert.deepEqual(squashedChanges('* Real change\n\n* Update CHANGELOG.md for #10'), ['Real change'], 'the workflow commit is not a change');
   });
 });
