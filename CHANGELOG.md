@@ -9,6 +9,10 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([#14](https://github.com/MartaCondeDesign/helixds/pull/14))
+  - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
+- 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
+  - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
   - Remove a tsx cache file committed by mistake in #6; ignore tsx-0/
 - 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
@@ -86,7 +90,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([#13](https://github.com/MartaCondeDesign/helixds/pull/13))
+- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
   - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
