@@ -9,6 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-19 — Remove figma-tokens-prompt.md (latest commit)
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
   - Remove a tsx cache file committed by mistake in #6; ignore tsx-0/
 - 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
@@ -86,7 +87,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Merge remote-tracking branch 'origin/ci-and-bench-cleanup' into open-source-readiness (latest commit)
+- 2026-10-19 — Merge remote-tracking branch 'origin/ci-and-bench-cleanup' into open-source-readiness ([`f776482`](https://github.com/MartaCondeDesign/helixds/commit/f776482))
 - 2026-10-19 — Storybook on GitHub Pages; Getting started for apps ([`4ab7db6`](https://github.com/MartaCondeDesign/helixds/commit/4ab7db6))
 - 2026-10-19 — CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates ([`f7f9681`](https://github.com/MartaCondeDesign/helixds/commit/f7f9681))
 - 2026-10-19 — Versioning and npm releases with Changesets ([`23ab4df`](https://github.com/MartaCondeDesign/helixds/commit/23ab4df))
