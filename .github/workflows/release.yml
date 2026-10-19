@@ -3,8 +3,10 @@
 # request (version bumps + each package's CHANGELOG.md). When that pull request merges there are none
 # left, so the same job builds and publishes whatever version isn't on npm yet, then tags it and creates
 # the GitHub releases. Private packages are never published.
-# Needs the repository secret NPM_TOKEN (an npm automation token with publish rights on @helixds) —
-# Settings → Secrets and variables → Actions. Packages are published with npm provenance.
+# Not wired to npm yet, on purpose: there is no NPM_TOKEN secret. Plan for the first release — publish
+# each package once by hand (npm requires a package to exist before it can trust a publisher), configure
+# npm Trusted Publishing for this repo + this workflow on each package, then switch this job to OIDC (no
+# token; bypass-2FA publish tokens stop working in January 2027). Provenance also needs the repo public.
 name: Release
 on:
   push:
