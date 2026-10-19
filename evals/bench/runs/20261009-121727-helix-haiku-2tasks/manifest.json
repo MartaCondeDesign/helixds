@@ -11,7 +11,7 @@
   },
   "systems": {
     "helix": {
-      "root": "/Users/marta/Documents/Documentación/Clientes/Cmd/DS-Helix",
+      "root": "<this repo>",
       "commit": "88d9ef39fa16ddcae30b9d34b5f67acc93347649",
       "catalogSrcHash": "df7a9affd6630af27050efbcab98bb995c125a1b4dd88f4eac636dfea3432687",
       "tokensCssHash": "604063b9795825a3e78bfb930b83873513612247116e2e6a50753fba8d99ba3b"

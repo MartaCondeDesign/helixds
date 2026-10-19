@@ -123,7 +123,7 @@ function WorkspacePage() {
       {/* Fills the full screen-tall row, testimonial pinned to the bottom. */}
       <div style={{
         background: 'linear-gradient(160deg, var(--helix-primitive-color-gray-900) 0%, var(--helix-primitive-color-blue-900) 100%)',
-        padding: 'var(--helix-spacing-layout-l) 56px',
+        padding: 'var(--helix-spacing-layout-l) var(--helix-spacing-layout-xl)',
         display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
         minHeight: 0,
         overflowY: 'auto',
@@ -147,7 +147,7 @@ function WorkspacePage() {
             A design system built for speed. Tokens, contracts, and AI context baked in from day one.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-l)' }}>
             {[
               { icon: <IconBolt size={18} />,        label: 'AI-ready from day one',        desc: 'Agents that know your components, tokens, and patterns' },
               { icon: <IconShieldCheck size={18} />, label: 'WCAG 2.2 AA by default',       desc: 'Accessibility built into every contract, not bolted on' },
@@ -187,7 +187,7 @@ function WorkspacePage() {
       {/* ── Right panel: form ────────────────────────────────────────── */}
       <div style={{
         background: 'var(--helix-color-fill-page)',
-        padding: 'var(--helix-spacing-layout-l) 56px',
+        padding: 'var(--helix-spacing-layout-l) var(--helix-spacing-layout-xl)',
         overflowY: 'auto',
         minHeight: 0, // lets the grid item shrink to the row so overflowY actually scrolls
       }}>

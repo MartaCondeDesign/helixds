@@ -86,10 +86,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — @helixds/mcp runs from npm (npx @helixds/mcp) (#16) ([#16](https://github.com/MartaCondeDesign/helixds/pull/16))
-  - Packages ready for npm: tokens, react, eslint-plugin, storybook-addon-tokens and proof publish; mcp and wc stay private
-  - @helixds/mcp runs from npm: reads installed @helixds/react and @helixds/tokens, builds to a bin
-- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
+- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([#13](https://github.com/MartaCondeDesign/helixds/pull/13))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
   - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed

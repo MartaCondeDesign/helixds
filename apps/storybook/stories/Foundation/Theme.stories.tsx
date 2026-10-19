@@ -99,7 +99,7 @@ const tdStyle: React.CSSProperties = {
 function ColorTable({ kind, tokens, hexes }: { kind: ColorKind; tokens: ColorGroup; hexes: Record<string, string> }) {
   return (
     <table style={{
-      width: '100%', borderCollapse: 'collapse', marginTop: 'var(--helix-spacing-l)', marginBottom: 36,
+      width: '100%', borderCollapse: 'collapse', marginTop: 'var(--helix-spacing-l)', marginBottom: 'var(--helix-spacing-xl)',
       border: '1px solid var(--helix-color-border-neutral)', borderRadius: 8, overflow: 'hidden',
     }}>
       <thead>
@@ -116,7 +116,7 @@ function ColorTable({ kind, tokens, hexes }: { kind: ColorKind; tokens: ColorGro
           return (
             <tr key={key} style={{ borderTop: '1px solid var(--helix-color-border-neutral-light)' }}>
               <td style={tdStyle}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-spacing-xs)' }}>
                   <SwatchPreview kind={kind} varName={`--helix-color-${kind}-${key}`} />
                   <code style={{ fontSize: 12, color: 'var(--helix-color-text-neutral)' }}>{kind}-{key}</code>
                 </div>
