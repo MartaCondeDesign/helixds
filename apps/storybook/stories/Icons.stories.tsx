@@ -124,7 +124,7 @@ function IconBrowser() {
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', alignItems: 'center', marginBottom: 'var(--helix-spacing-l)', flexWrap: 'wrap' }}>
         <div style={{ position: 'relative', flex: '1 1 240px', maxWidth: 360 }}>
           <input
             type="search"
@@ -133,7 +133,7 @@ function IconBrowser() {
             placeholder={`Search ${ICONS.length} icons…`}
             autoFocus
             style={{
-              width: '100%', boxSizing: 'border-box', padding: 'var(--helix-spacing-xs) var(--helix-spacing-s) var(--helix-spacing-xs) 36px',
+              width: '100%', boxSizing: 'border-box', padding: 'var(--helix-spacing-xs) var(--helix-spacing-s) var(--helix-spacing-xs) calc(var(--helix-spacing-l) + var(--helix-spacing-s))',
               fontSize: 14, border: '1px solid var(--helix-color-border-neutral)',
               borderRadius: 8, background: 'var(--helix-color-fill-surface)',
               color: 'var(--helix-color-text-neutral)', outline: 'none',

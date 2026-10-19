@@ -46,7 +46,7 @@ export function StoryHeader({ title, description, figmaUrl }: { title: string; d
               textDecoration: 'none',
               border: '1px solid var(--helix-color-border-neutral)',
               borderRadius: 'var(--helix-radius-full)',
-              padding: 'var(--helix-spacing-2xs) 10px',
+              padding: 'var(--helix-spacing-2xs) var(--helix-spacing-xs)',
             }}
           >
             View in Figma

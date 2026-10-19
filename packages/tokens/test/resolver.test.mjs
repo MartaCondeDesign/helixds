@@ -7,6 +7,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { loadResolver } from '../src/resolver.mjs';
 import { resolveThemes } from './css-themes.mjs';
 
@@ -53,7 +54,7 @@ describe('resolver.mjs', () => {
 describe('Helix themes (dist/helix.css)', () => {
   const css = fs.readFileSync(new URL('../dist/helix.css', import.meta.url), 'utf8');
   const { light, dark } = resolveThemes(css);
-  const helix = loadResolver(new URL('../src/helix.resolver.json', import.meta.url).pathname);
+  const helix = loadResolver(fileURLToPath(new URL('../src/helix.resolver.json', import.meta.url)));
 
   it('the dark block applies tokens.dark.json', () => {
     const darkFile = JSON.parse(fs.readFileSync(new URL('../src/tokens.dark.json', import.meta.url), 'utf8'));

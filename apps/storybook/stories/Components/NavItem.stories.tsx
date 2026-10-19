@@ -27,7 +27,7 @@ export const Current: Story = { args: { current: true } };
 
 export const NavList: Story = {
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 1, width: 200 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-3xs)', width: 200 }}>
       <NavItem label="Dashboard" href="#" icon={IconLayoutDashboard} />
       <NavItem label="Team" href="#" icon={IconUsers} current />
       <NavItem label="Settings" href="#" icon={IconSettings} />
@@ -40,7 +40,7 @@ export const NavList: Story = {
 export const KeyboardActivation: Story = {
   tags: ['!dev', '!autodocs'],
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 1, width: 200 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-3xs)', width: 200 }}>
       <NavItem label="Dashboard" href="#dashboard" icon={IconLayoutDashboard} />
       <NavItem label="Team" href="#team" icon={IconUsers} current />
     </div>
