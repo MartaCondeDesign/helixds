@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Docs in their launch wording: npm install, MCP via npx (latest commit)
+- 2026-10-19 — Docs in their launch wording: npm install, MCP via npx (#18) ([#18](https://github.com/MartaCondeDesign/helixds/pull/18))
+  - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
   - Keep the standalone tokens addon out of the pnpm workspace
