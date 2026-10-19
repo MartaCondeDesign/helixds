@@ -3,10 +3,6 @@
 How to use Helix in a React app. Browse every component first in the
 [Storybook](https://martacondedesign.github.io/helixds/).
 
-> **Until the first npm release** the packages aren't on npm yet: work from a clone and add them as
-> `workspace:*` dependencies (see the [README](../README.md#getting-started)). Everything below about
-> CSS, dark mode and agents applies the same way.
-
 ## Requirements
 
 - React 19 (`react` and `react-dom` ≥ 19)
@@ -78,11 +74,22 @@ tokens and they will too.
 
 ## 5. Get your AI agent up to speed
 
-Helix is built to be used by agents without guessing. Copy
-[`AGENTS.md`](../packages/core/AGENTS.md) (also shipped at `@helixds/react/AGENTS.md`) into your
-project root so Claude, Cursor, Copilot or Codex read the rules before writing JSX. From a clone,
-`pnpm setup:ai <path-to-your-app>` also installs the Helix MCP server and lint/contract hooks
-([AGENTS.md](../AGENTS.md) has the details).
+Helix is built to be used by agents without guessing. Copy the agent guide to your project root, where
+Claude, Cursor, Copilot and Codex look for it:
+
+```bash
+cp node_modules/@helixds/react/AGENTS.md ./AGENTS.md
+```
+
+Then connect the Helix MCP server (`.mcp.json` for Claude Code, `.cursor/mcp.json` for Cursor), so the agent
+reads each component's contract and validates its JSX before writing it:
+
+```json
+{ "mcpServers": { "helix": { "command": "npx", "args": ["-y", "@helixds/mcp"] } } }
+```
+
+For hooks that enforce it (contract read before writing, lint after writing), run
+`pnpm setup:ai <path-to-your-app>` from a clone of the Helix repo — see [AGENTS.md](../AGENTS.md).
 
 ## Lint
 

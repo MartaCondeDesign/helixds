@@ -19,22 +19,32 @@ Full guide: [`AGENTS.md`](./AGENTS.md) · prop vocabulary: `dist/prop-map.md`.
 
 ## Install
 
-Not published: the packages are marked `"private": true`, so `npm publish` refuses them. Inside the Helix
-monorepo, depend on them with `workspace:*`. Elsewhere, pack them and install the tarballs:
+Requires React 19 and Tailwind CSS v4 set up in your app.
 
 ```bash
-cd packages/tokens && pnpm pack && cd ../core && pnpm pack
-npm install ./helixds-tokens-0.1.0.tgz ./helixds-react-0.1.0.tgz react react-dom tailwindcss
+npm install @helixds/react @helixds/tokens @tabler/icons-react
+```
+
+In the CSS file Tailwind processes, replace `@import "tailwindcss";` with:
+
+```css
+@import "@helixds/react/globals.css"; /* Tailwind + every --helix-* token + component styles */
 ```
 
 ```tsx
-// once, in your app entry
-import '@helixds/tokens/helix.css';
-import '@helixds/react/globals.css';
-
 import { Button } from '@helixds/react';
 
-export const Save = () => <Button variant="primary" onClick={save}>Save</Button>;
+export const Save = ({ onSave }: { onSave: () => void }) => (
+  <Button variant="primary" onClick={onSave}>Save</Button>
+);
 ```
+
+Dark mode follows the operating system; set `data-theme="dark"` or `"light"` on `<html>` to force one.
+
+**Docs:** [Storybook](https://martacondedesign.github.io/helixds/) ·
+[Getting started](https://github.com/MartaCondeDesign/helixds/blob/main/docs/getting-started.md) ·
+[GitHub](https://github.com/MartaCondeDesign/helixds)
+
+**Agents:** connect the Helix MCP server (`npx -y @helixds/mcp`) — see [`AGENTS.md`](./AGENTS.md).
 
 MIT © Marta Conde

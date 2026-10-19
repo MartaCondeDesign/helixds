@@ -11,7 +11,8 @@ Helix goes public, in order. Nothing here needs to happen before that day.
 - Changesets + release workflow, **switched off** until step 5 (`RELEASE_ENABLED`)
 - Storybook deploy workflow, which only runs while the repo is public
 - CONTRIBUTING, Code of Conduct, CODEOWNERS, issue and PR templates, SECURITY.md
-- Getting started guide (`docs/getting-started.md`)
+- Docs already in their published wording: README, `docs/getting-started.md`, SECURITY.md, the
+  `@helixds/react` README and `AGENTS.md` (MCP via `npx @helixds/mcp`)
 - Personal paths removed from the tracked files. Decided: commit `fe24c6e` keeps them in history
   (local folder names only, no secrets); not worth rewriting history.
 - npm org `@helixds`: owned by Marta
@@ -66,5 +67,3 @@ From now on: changesets in a merged PR → a **Version Packages** PR → merging
 - https://martacondedesign.github.io/helixds/ loads
 - https://www.npmjs.com/package/@helixds/react shows the version and the README
 - In an empty folder: `npx @helixds/mcp` starts, and `npm i @helixds/react @helixds/tokens` works
-- README → Getting started and SECURITY.md still say "not published to npm yet": switch them to the npm
-  install (`docs/getting-started.md` already has it)

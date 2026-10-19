@@ -40,38 +40,50 @@ Helix is a design system built directly on **native HTML elements** — no primi
 
 ## Getting started
 
-Helix isn't published to npm yet — `packages/*` are `private: true` while the component API stabilizes. Once it is, [docs/getting-started.md](docs/getting-started.md) covers installing it in any React app. Today, using it means working from a clone:
+Requires React 19 and Tailwind CSS v4 in your app.
+
+```bash
+npm install @helixds/react @helixds/tokens @tabler/icons-react
+```
+
+```css
+/* the CSS file Tailwind processes — replaces @import "tailwindcss"; */
+@import "@helixds/react/globals.css";
+```
+
+```tsx
+import { Button } from '@helixds/react';
+
+<Button variant="primary" onClick={save}>Save</Button>
+```
+
+Dark mode follows the operating system, or set `data-theme="dark"` / `"light"` on `<html>`. The full guide —
+setup, dark mode, lint — is [docs/getting-started.md](docs/getting-started.md); every component is in the
+[Storybook](https://martacondedesign.github.io/helixds/).
+
+### Using it with an AI agent
+
+Copy `node_modules/@helixds/react/AGENTS.md` to your project root, and connect the Helix MCP server so the
+agent reads contracts and validates its code instead of guessing props:
+
+```json
+{ "mcpServers": { "helix": { "command": "npx", "args": ["-y", "@helixds/mcp"] } } }
+```
+
+For the full guardrails (hooks that make the agent read a contract before writing, lint after writing and ask
+before patching Helix), run `pnpm setup:ai <path-to-your-app>` from a clone of this repo. Claude Code, Cursor,
+Codex and Gemini CLI are supported — details in [AGENTS.md](AGENTS.md).
+
+### Working on Helix itself
 
 ```bash
 git clone https://github.com/MartaCondeDesign/helixds.git
 cd helixds
 pnpm install
-pnpm sb          # browse every component in Storybook → http://localhost:6006
+pnpm sb          # Storybook → http://localhost:6006
 ```
 
-Building an app inside this same pnpm workspace? Add Helix as a workspace dependency:
-
-```json
-// your-app/package.json
-"dependencies": {
-  "@helixds/react": "workspace:*",
-  "@helixds/tokens": "workspace:*"
-}
-```
-
-```tsx
-// app/layout.tsx or main.tsx
-import '@helixds/tokens/helix.css';   // CSS custom properties
-import '@helixds/react/globals.css';   // Tailwind base + component styles
-```
-
-To get an AI agent (Claude, Cursor, Copilot...) working in that app up to speed on Helix's rules from the start:
-
-```bash
-pnpm setup:ai <path-to-your-app>
-```
-
-Copies `AGENTS.md` into your project (never overwriting one you've hand-edited — it flags the conflict instead of clobbering it) and drops a pointer file for `.cursor/` or `.github/` if those folders already exist. It also installs the guardrails Helix runs on its own agents, for Claude Code: the Helix MCP server in `.mcp.json`, and three hooks in `.claude/settings.json` — contracts read before writing, Helix lint after writing (with Helix's own rules if your app has none), and your approval before an agent patches Helix inside `node_modules`. Both point at your Helix clone (`HELIX_DS_DIR` overrides it per machine) and are merged into what's already there, never overwritten. Cursor, Codex (ChatGPT's coding agent) and Gemini CLI get the same MCP server and hooks, in their own config files — when the app has their folder, or with `--with codex,gemini`. Each time a hook stops an agent it records a one-line trace (never the code) — `pnpm eval:traces` summarizes what agents get wrong most. `--agents-only` skips all of this. Full detail in [AGENTS.md](AGENTS.md).
+Then read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Everything it includes
 
