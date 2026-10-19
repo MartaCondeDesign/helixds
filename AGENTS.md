@@ -190,8 +190,9 @@ pnpm helix validate src/Settings.tsx --json   # or `-` for stdin; exits 1 when n
 
 It is the MCP server's twin, for any agent or tool that can run a command — every MCP tool has a
 command here (`helix_get_contract` → `component`, `helix_search_tokens` → `tokens`,
-`helix_validate_snippet` → `validate`, …), from the same library. From an app, run it in your Helix
-clone: `pnpm -s --dir "${HELIX_DS_DIR:-/path/to/helixds}" helix validate "$PWD/src/Settings.tsx"`.
+`helix_validate_snippet` → `validate`, …), from the same library. It runs from a clone of the Helix
+repo: `pnpm -s --dir "${HELIX_DS_DIR:-/path/to/helixds}" helix validate "$PWD/src/Settings.tsx"`. In an
+app that only installed the packages, use the MCP server below instead — it answers the same questions.
 
 Use `pnpm helix batch --command "component Button" --command "token color.fill.primary-interactive-default" --json`
 when several lookups are needed. If no shell is available, consult `contracts/manifest.json`, the
@@ -207,7 +208,30 @@ pnpm helix scaffold:custom UsageMeter --reason "Helix has no meter component" --
 
 To install Helix AI context in your project:
 
-From a clone of the Helix repo:
+### In an app that installed `@helixds/react`
+
+1. **Context** — copy this guide to your project root, where every agent looks for it:
+   `cp node_modules/@helixds/react/AGENTS.md ./AGENTS.md`
+2. **MCP server** — add Helix's tools (`helix_get_contracts`, `helix_search_tokens`,
+   `helix_validate_snippet`…) to your agent's MCP config (`.mcp.json` for Claude Code,
+   `.cursor/mcp.json` for Cursor):
+
+   ```json
+   {
+     "mcpServers": {
+       "helix": { "command": "npx", "args": ["-y", "@helixds/mcp"] }
+     }
+   }
+   ```
+
+   It reads the contracts, tokens and patterns your installed version ships, so its answers match it.
+3. **Lint** — `npm i -D @helixds/eslint-plugin` flags raw colors and spacing, invented props and
+   anti-synonyms in the editor ([its README](https://www.npmjs.com/package/@helixds/eslint-plugin)).
+
+### Full guardrails, from a clone of the Helix repo
+
+The hooks below (contract read before writing, lint after writing, approval before patching Helix)
+run Helix's own scripts, so they need a clone:
 
 ```bash
 pnpm setup:ai [target-dir] [--dry-run] [--agents-only]

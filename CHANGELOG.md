@@ -88,7 +88,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([#17](https://github.com/MartaCondeDesign/helixds/pull/17))
+- 2026-10-19 — Docs in their launch wording: npm install, MCP via npx (#18) ([#18](https://github.com/MartaCondeDesign/helixds/pull/18))
+  - Docs in their launch wording: npm install, MCP via npx
+- 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
   - Keep the standalone tokens addon out of the pnpm workspace
   - Versioning and npm releases with Changesets
@@ -97,6 +99,11 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Remove figma-tokens-prompt.md
   - release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN
   - Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup
+- 2026-10-19 — @helixds/mcp runs from npm (npx @helixds/mcp) (#16) ([`aa3432a`](https://github.com/MartaCondeDesign/helixds/commit/aa3432a))
+  - Packages ready for npm: tokens, react, eslint-plugin, storybook-addon-tokens and proof publish; mcp and wc stay private
+  - @helixds/mcp runs from npm: reads installed @helixds/react and @helixds/tokens, builds to a bin
+- 2026-10-19 — Packages ready for npm (mcp and wc stay private) (#15) ([`830af5e`](https://github.com/MartaCondeDesign/helixds/commit/830af5e))
+  - Packages ready for npm: tokens, react, eslint-plugin, storybook-addon-tokens and proof publish; mcp and wc stay private
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))

@@ -2,8 +2,9 @@
 
 ## Supported versions
 
-Helix DS is a pre-release monorepo (`packages/*` are all `private: true`, nothing is published to npm
-yet). There are no independently supported version lines — security fixes land on `main` only.
+Helix DS is in `0.x`: only the **latest published version** of the `@helixds/*` packages gets security
+fixes. All packages share one version number, so "latest" means the same release for every package. Fixes
+land on `main` and ship in the next release.
 
 ## Scope
 
@@ -27,5 +28,5 @@ Please don't open a public issue for a security report. Instead, email
 for this repository. Include the affected package/component, a minimal reproduction, and the impact
 you'd expect.
 
-There's no formal SLA at this stage (single-maintainer, pre-release project) — expect an acknowledgment
+There's no formal SLA at this stage (single-maintainer project) — expect an acknowledgment
 within a few days.
