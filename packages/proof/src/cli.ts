@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env node
 // proof [--config proof.config.mjs] [--task a,b] [--no-screenshots] [--serve [--no-build] [--port 6007]]
 // Proof: builds <out>/proof.html from saved agent answers. No agent runs — it only reads what's on disk.
 import { mkdirSync, writeFileSync } from 'node:fs';

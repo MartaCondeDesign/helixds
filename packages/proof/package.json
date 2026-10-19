@@ -1,11 +1,45 @@
 {
   "name": "@helixds/proof",
   "version": "0.1.0",
-  "private": true,
   "description": "Proof — see what the agents actually built. Turns saved coding-agent answers into one shareable proof.html — every answer rendered, screenshotted and laid out per context level and rep next to its score. Design-system agnostic: everything system-specific lives in proof.config.mjs",
   "type": "module",
-  "bin": { "proof": "./src/cli.ts" },
+  "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/proof#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/proof"
+  },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "bin": {
+    "proof": "./dist/cli.js"
+  },
+  "main": "./dist/config.js",
+  "types": "./dist/config.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "tsup",
     "start": "tsx src/cli.ts",
     "test": "node --test --import tsx test/*.test.ts",
     "typecheck": "tsc --noEmit"
@@ -17,6 +51,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
     "tsx": "^4.0.0"
   }
 }

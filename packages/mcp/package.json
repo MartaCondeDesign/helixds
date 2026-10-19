@@ -2,8 +2,22 @@
   "name": "@helixds/mcp",
   "version": "0.1.0",
   "private": true,
-  "description": "MCP server that gives AI agents native Helix tools \u2014 component contracts, token search by concept, and snippet validation",
+  "description": "MCP server that gives AI agents native Helix tools — component contracts, token search by concept, and snippet validation",
   "type": "module",
+  "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./src/server.ts",
   "scripts": {
     "start": "tsx src/server.ts",
