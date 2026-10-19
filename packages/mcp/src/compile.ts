@@ -1,6 +1,7 @@
 /**
- * Type-checks a JSX/TSX snippet against Helix's real source (packages/core/src): a made-up prop, a missing
- * required `label` or a wrong onChange signature is a compile error here, which no lint rule can catch.
+ * Type-checks a JSX/TSX snippet against Helix's real types (packages/core/src in this repo, the installed
+ * @helixds/react's .d.ts in an app): a made-up prop, a missing required `label` or a wrong onChange
+ * signature is a compile error here, which no lint rule can catch.
  * Used by helix_validate_snippet and by the evals' mechanical checks (scripts/eval-mechanical.ts) — one
  * compiler, so the MCP never passes code the evals would fail.
  *
@@ -10,13 +11,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
+import { sources } from './sources.ts';
 
-const root = path.resolve(import.meta.dirname, '../../..');
-const core = path.join(root, 'packages/core');
-const coreIndex = path.join(core, 'src/index.ts');
+const { mode, coreTypes, packageDir } = sources();
+// In the repo, core's source; installed, the shipped dist/index.d.ts — what an app's own tsc sees.
+const coreDir = path.resolve(path.dirname(coreTypes), '..');
+const typesOf = (name: string) => packageDir(name) ?? path.join(coreDir, 'node_modules', name);
+const reactTypes = typesOf('@types/react');
 
-// The snippet is compiled the way an app would see Helix: @helixds/react is core's source, React and
-// Tabler come from core's own dependencies. It measures how Helix is USED, so:
+// The snippet is compiled the way an app would see Helix: @helixds/react is core (source or .d.ts), React
+// and Tabler come from core's own dependencies (in an app: the app's, then this package's). It measures how
+// Helix is USED, so:
 //   - the package's former names (@helix-ds/core, @helix/react — ADR-023) resolve too: older answers used
 //     the right name for their day, and a stale import path is helix/import-source's finding, not tsc's.
 //     Packages that never existed (@helix/button, @helix/toast…) still fail.
@@ -33,22 +38,22 @@ const compilerOptions: ts.CompilerOptions = {
   noEmit: true,
   skipLibCheck: true,
   allowImportingTsExtensions: true,
-  baseUrl: root,
+  baseUrl: coreDir,
   paths: {
-    '@helixds/react': [coreIndex],
-    '@helix-ds/core': [coreIndex],
-    '@helix/react': [coreIndex],
-    'react': [path.join(core, 'node_modules/@types/react/index.d.ts')],
-    'react/*': [path.join(core, 'node_modules/@types/react/*')],
-    'react-dom': [path.join(core, 'node_modules/@types/react-dom/index.d.ts')],
-    '@tabler/icons-react': [path.join(core, 'node_modules/@tabler/icons-react')],
+    '@helixds/react': [coreTypes],
+    '@helix-ds/core': [coreTypes],
+    '@helix/react': [coreTypes],
+    'react': [path.join(reactTypes, 'index.d.ts')],
+    'react/*': [path.join(reactTypes, '*')],
+    'react-dom': [path.join(typesOf('@types/react-dom'), 'index.d.ts')],
+    '@tabler/icons-react': [typesOf('@tabler/icons-react')],
   },
-  typeRoots: [path.join(core, 'node_modules/@types')],
+  typeRoots: [path.dirname(reactTypes)],
   types: [],
 };
 
-// Inside packages/core so module resolution walks the same node_modules a real Helix file would.
-const SNIPPET = path.join(core, '__helix_snippet__.tsx');
+// Inside core so module resolution walks the same node_modules a real Helix file would.
+const SNIPPET = path.join(coreDir, '__helix_snippet__.tsx');
 
 const baseHost = ts.createCompilerHost(compilerOptions, true);
 const cache = new Map<string, ts.SourceFile | undefined>();
@@ -100,8 +105,10 @@ export function compileSnippet(code: string, { allowMissingLocals = false }: Com
 }
 
 function coreChangedSince(time: number): boolean {
+  // An installed package doesn't change under a running server; only the repo's source does.
+  if (mode !== 'repo') return false;
   for (const file of cache.keys()) {
-    if (!file.startsWith(path.join(core, 'src'))) continue;
+    if (!file.startsWith(path.join(coreDir, 'src'))) continue;
     try { if (fs.statSync(file).mtimeMs > time) return true; } catch { return true; }
   }
   return false;

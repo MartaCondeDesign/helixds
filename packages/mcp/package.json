@@ -1,7 +1,6 @@
 {
   "name": "@helixds/mcp",
   "version": "0.1.0",
-  "private": true,
   "description": "MCP server that gives AI agents native Helix tools — component contracts, token search by concept, and snippet validation",
   "type": "module",
   "license": "MIT",
@@ -16,23 +15,43 @@
     "url": "https://github.com/MartaCondeDesign/helixds/issues"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.11"
   },
-  "main": "./src/server.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "bin": {
+    "helix-mcp": "./dist/server.js"
+  },
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "tsup",
     "start": "tsx src/server.ts",
     "test": "node --test --import tsx test/*.test.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@helixds/eslint-plugin": "workspace:^",
+    "@helixds/react": "workspace:^",
+    "@helixds/tokens": "workspace:^",
     "@modelcontextprotocol/sdk": "^1.32.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "eslint": "^9",
     "typescript": "^5.5.0",
     "typescript-eslint": "^8.71.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "tsup": "^8.0.0",
     "tsx": "^4.23.15"
   }
 }

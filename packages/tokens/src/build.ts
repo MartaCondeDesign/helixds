@@ -234,6 +234,8 @@ ${sections.mobileFontSize}
 `;
 
 fs.writeFileSync(path.join(dist, 'helix.css'), css);
+// The DTCG source as shipped (types, descriptions): @helixds/mcp's token search reads it from an install.
+fs.copyFileSync(path.join(import.meta.dirname, 'tokens.json'), path.join(dist, 'tokens.json'));
 
 // ─── Write TypeScript constants ───────────────────────────────────────────────
 
