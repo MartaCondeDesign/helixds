@@ -86,7 +86,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Versioning and npm releases with Changesets (latest commit)
+- 2026-10-19 — CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates (latest commit)
+- 2026-10-19 — Versioning and npm releases with Changesets ([`23ab4df`](https://github.com/MartaCondeDesign/helixds/commit/23ab4df))
 - 2026-10-19 — Keep the standalone tokens addon out of the pnpm workspace ([`fdad1f0`](https://github.com/MartaCondeDesign/helixds/commit/fdad1f0))
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths ([`8b9c757`](https://github.com/MartaCondeDesign/helixds/commit/8b9c757))
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
