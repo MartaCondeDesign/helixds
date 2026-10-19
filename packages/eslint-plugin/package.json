@@ -1,18 +1,39 @@
 {
   "name": "@helixds/eslint-plugin",
   "version": "0.1.0",
-  "private": true,
   "description": "Real-time lint rules for Helix DS — canonical props, semantic color tokens and Helix components over native controls",
   "type": "module",
+  "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/eslint-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/eslint-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
   "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "exports": {
     ".": {
       "types": "./src/index.d.ts",
       "default": "./src/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
-    "src"
+    "src",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
@@ -23,6 +44,5 @@
   },
   "devDependencies": {
     "eslint": "^9.0.0"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

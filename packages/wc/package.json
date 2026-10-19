@@ -4,17 +4,32 @@
   "private": true,
   "description": "Helix DS — Web Components pilot (Lit + Shadow DOM). See ADR-015. Icon, Badge, Button, Tooltip only — not a full port.",
   "type": "module",
+  "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/wc#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/wc"
+  },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --out-dir dist",
