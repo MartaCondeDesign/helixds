@@ -9,7 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-19 — Remove figma-tokens-prompt.md ([`ca44c65`](https://github.com/MartaCondeDesign/helixds/commit/ca44c65))
+- 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
+  - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
   - Remove a tsx cache file committed by mistake in #6; ignore tsx-0/
 - 2026-10-12 — Remove blog images from the repo — they live on the Desktop; ignore docs/blog/ (#3) ([`de180c5`](https://github.com/MartaCondeDesign/helixds/commit/de180c5))
@@ -87,20 +88,17 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Merge branch 'open-source-readiness' of https://github.com/MartaCondeDesign/helixds into open-source-readiness (latest commit)
-- 2026-10-19 — Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup ([`d98cb3f`](https://github.com/MartaCondeDesign/helixds/commit/d98cb3f))
-- 2026-10-19 — Update CHANGELOG.md for #17 ([`4aa9f99`](https://github.com/MartaCondeDesign/helixds/commit/4aa9f99))
-- 2026-10-19 — Merge remote-tracking branch 'origin/main' into open-source-readiness ([`7da5460`](https://github.com/MartaCondeDesign/helixds/commit/7da5460))
+- 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([#17](https://github.com/MartaCondeDesign/helixds/pull/17))
+  - CI runs the pre-commit checks on every PR; bench results lose personal paths
+  - Keep the standalone tokens addon out of the pnpm workspace
+  - Versioning and npm releases with Changesets
+  - CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates
+  - Storybook on GitHub Pages; Getting started for apps
+  - Remove figma-tokens-prompt.md
+  - release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN
+  - Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
-- 2026-10-19 — release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN ([`19388bc`](https://github.com/MartaCondeDesign/helixds/commit/19388bc))
-- 2026-10-19 — Merge remote-tracking branch 'origin/ci-and-bench-cleanup' into open-source-readiness ([`f776482`](https://github.com/MartaCondeDesign/helixds/commit/f776482))
-- 2026-10-19 — Storybook on GitHub Pages; Getting started for apps ([`4ab7db6`](https://github.com/MartaCondeDesign/helixds/commit/4ab7db6))
-- 2026-10-19 — CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates ([`f7f9681`](https://github.com/MartaCondeDesign/helixds/commit/f7f9681))
-- 2026-10-19 — Versioning and npm releases with Changesets ([`23ab4df`](https://github.com/MartaCondeDesign/helixds/commit/23ab4df))
-- 2026-10-19 — Keep the standalone tokens addon out of the pnpm workspace ([`fdad1f0`](https://github.com/MartaCondeDesign/helixds/commit/fdad1f0))
-- 2026-10-19 — Update CHANGELOG.md for #13 ([`a5cc1b1`](https://github.com/MartaCondeDesign/helixds/commit/a5cc1b1))
-- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths ([`8b9c757`](https://github.com/MartaCondeDesign/helixds/commit/8b9c757))
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
   - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
 - 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR (#10) ([`9f6ca33`](https://github.com/MartaCondeDesign/helixds/commit/9f6ca33))
