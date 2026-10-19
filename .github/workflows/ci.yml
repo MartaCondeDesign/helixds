@@ -1,0 +1,82 @@
+# The checks .husky/pre-commit runs locally, run again on every pull request and every push to main.
+# A pull request from a fork never runs the contributor's hooks (they may not have them installed), so
+# without this job nothing stops a broken contract, token or story from reaching main.
+# The generated files pre-commit rewrites (token exceptions, figma map, README counts, synced skills,
+# contract imports) are regenerated here and must come out identical: a diff means someone committed
+# without the hook, and the job prints what's stale.
+# No agent evals here (eval:generate / eval:judge / a11y:visual cost tokens) — eval:run and eval:calibrate
+# are the free, offline graders pre-commit already runs.
+name: CI
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  HELIX_TRACES: 'off'
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        # Full history: Storybook's build runs docs:changelog, which reads `git log`.
+        with: { fetch-depth: 0 }
+      # No version here: pnpm/action-setup reads package.json's packageManager (pnpm@9.0.0); naming it twice fails.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+
+      # Includes Storybook's static build, so a story that doesn't compile fails here.
+      - name: Build
+        run: pnpm -r build
+      - name: Typecheck
+        run: pnpm -r typecheck
+      - name: Lint
+        run: pnpm lint
+
+      - name: Contracts, props and tokens
+        run: |
+          pnpm verify:contract
+          pnpm -s verify:a11y-contracts
+          pnpm verify:props
+          pnpm verify:types
+          pnpm verify:icons
+          pnpm verify:tokens
+          pnpm -s verify:dtcg
+      - name: Every token on a Foundation story
+        run: |
+          pnpm -s verify:storybook-tokens
+          pnpm -s test:storybook-tokens
+      - name: Eval graders (offline, no tokens)
+        run: |
+          pnpm eval:run
+          pnpm eval:calibrate
+
+      - name: Package tests
+        run: pnpm -r test
+      - name: Agent hook tests
+        run: |
+          pnpm test:lint-hook
+          pnpm test:contract-hook
+          pnpm test:owner-gate-hook
+          pnpm test:hook-agents
+          pnpm test:traces
+
+      - name: Generated files are up to date
+        run: |
+          pnpm -s docs:contract-imports
+          pnpm docs:token-exceptions
+          pnpm docs:figma-map
+          pnpm docs:readme
+          node scripts/sync-skills.mjs
+          if ! git diff --exit-code --stat; then
+            echo "::error::Generated files are stale — run the commands above (or commit with the pre-commit hook) and push again."
+            git diff
+            exit 1
+          fi
