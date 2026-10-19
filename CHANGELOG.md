@@ -87,7 +87,10 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN (latest commit)
+- 2026-10-19 — Merge remote-tracking branch 'origin/main' into open-source-readiness (latest commit)
+- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
+  - CI runs the pre-commit checks on every PR; bench results lose personal paths
+- 2026-10-19 — release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN ([`19388bc`](https://github.com/MartaCondeDesign/helixds/commit/19388bc))
 - 2026-10-19 — Merge remote-tracking branch 'origin/ci-and-bench-cleanup' into open-source-readiness ([`f776482`](https://github.com/MartaCondeDesign/helixds/commit/f776482))
 - 2026-10-19 — Storybook on GitHub Pages; Getting started for apps ([`4ab7db6`](https://github.com/MartaCondeDesign/helixds/commit/4ab7db6))
 - 2026-10-19 — CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates ([`f7f9681`](https://github.com/MartaCondeDesign/helixds/commit/f7f9681))
