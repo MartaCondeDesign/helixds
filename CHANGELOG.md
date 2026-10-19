@@ -86,9 +86,11 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — @helixds/mcp runs from npm: reads installed @helixds/react and @helixds/tokens, builds to a bin (latest commit)
-- 2026-10-19 — Update CHANGELOG.md for #15 ([`15a1ecb`](https://github.com/MartaCondeDesign/helixds/commit/15a1ecb))
-- 2026-10-19 — Packages ready for npm: tokens, react, eslint-plugin, storybook-addon-tokens and proof publish; mcp and wc stay private ([`679d092`](https://github.com/MartaCondeDesign/helixds/commit/679d092))
+- 2026-10-19 — @helixds/mcp runs from npm (npx @helixds/mcp) (#16) ([#16](https://github.com/MartaCondeDesign/helixds/pull/16))
+  - Packages ready for npm: tokens, react, eslint-plugin, storybook-addon-tokens and proof publish; mcp and wc stay private
+  - @helixds/mcp runs from npm: reads installed @helixds/react and @helixds/tokens, builds to a bin
+- 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
+  - CI runs the pre-commit checks on every PR; bench results lose personal paths
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
   - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
 - 2026-10-15 — CHANGELOG.md gets each pull request's entry inside the PR (#10) ([`9f6ca33`](https://github.com/MartaCondeDesign/helixds/commit/9f6ca33))
