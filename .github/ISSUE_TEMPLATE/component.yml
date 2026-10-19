@@ -1,0 +1,33 @@
+name: Component proposal
+description: A new component, or a new variant, size or part of an existing one.
+labels: [component, proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every component starts as a contract (`contracts/components/{Name}.json`). Components with no
+        native HTML equivalent (dialogs, popovers, comboboxes…) also need an ADR choosing how they're built
+        (ADR-001). Check the existing ones first: `pnpm helix components`.
+  - type: textarea
+    id: need
+    attributes:
+      label: The problem it solves
+      description: Where you need it and why composing existing components doesn't work.
+    validations: { required: true }
+  - type: textarea
+    id: shape
+    attributes:
+      label: Proposed API
+      description: Props (with the canonical names in .ai/maps/prop-map.md), variants, sizes, parts.
+      render: tsx
+  - type: textarea
+    id: a11y
+    attributes:
+      label: Accessibility
+      description: The native element or ARIA pattern it maps to, and its keyboard interaction.
+    validations: { required: true }
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art
+      description: How other design systems handle it (links welcome).

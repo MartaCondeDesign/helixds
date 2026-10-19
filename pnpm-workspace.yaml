@@ -1,3 +1,7 @@
 packages:
   - 'packages/*'
   - 'apps/*'
+  # The standalone, prefix-agnostic version of the tokens addon (its own repo, git-ignored, see
+  # .gitignore). Helix uses @helixds/storybook-addon-tokens; keep this one out of the workspace so a
+  # local `pnpm -r` or a release never picks it up.
+  - '!packages/helix-storybook-addon-tokens'

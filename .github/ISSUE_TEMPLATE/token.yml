@@ -1,0 +1,30 @@
+name: Token proposal
+description: Add, change or remove a design token.
+labels: [tokens, proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tokens define what Helix is, so the maintainer decides them (CLAUDE.md rule 13). The fastest
+        proposals list the options considered and recommend one. Prefer an existing token: `pnpm helix tokens "<what it's for>"` searches them.
+  - type: textarea
+    id: need
+    attributes:
+      label: What it's for
+      description: The component or situation that needs it, and why the existing tokens don't fit.
+    validations: { required: true }
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and recommendation
+      description: |
+        Name and value of each option (follow the `{role}[-interactive][-modifier][-state]` grammar for
+        semantic colors). For a text, icon or border color, include its contrast against its fill in
+        light and in dark mode — AA is 4.5:1 for text, 3:1 for icons and meaningful borders.
+    validations: { required: true }
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Layer
+      options: [primitive, semantic, component]
+    validations: { required: true }

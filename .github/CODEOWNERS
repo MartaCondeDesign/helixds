@@ -1,0 +1,9 @@
+# Who reviews what. GitHub requests these reviewers automatically; with branch protection's
+# "Require review from Code Owners" on, their approval is required to merge.
+# Tokens, contracts and the prop vocabulary define what Helix is — CLAUDE.md rule 13.
+*                                  @MartaCondeDesign
+/packages/tokens/src/              @MartaCondeDesign
+/contracts/                        @MartaCondeDesign
+/.ai/maps/prop-map.md              @MartaCondeDesign
+/docs/ADR/                         @MartaCondeDesign
+/.github/                          @MartaCondeDesign

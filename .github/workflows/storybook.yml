@@ -1,0 +1,45 @@
+# Publishes Storybook to GitHub Pages on every push to main: https://martacondedesign.github.io/helixds/
+# Runs only while the repository is public (GitHub Pages isn't available for a private repo on the
+# free plan), so it switches itself on at launch. Pages' source is set to "GitHub Actions" by
+# scripts/launch-github.sh (docs/launch-checklist.md).
+# The Metrics and Eval gallery pages read git-ignored local data (quality snapshots, eval outputs), so
+# on the public site they show their empty state.
+name: Storybook
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        # Full history: the build runs docs:changelog, which reads `git log`.
+        with: { fetch-depth: 0 }
+      # No version here: pnpm/action-setup reads package.json's packageManager (pnpm@9.0.0); naming it twice fails.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm --filter @helixds/react build
+      - run: pnpm --filter @helixds/storybook build
+        env: { CI: 'true', HELIX_TRACES: 'off' }
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: apps/storybook/dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
