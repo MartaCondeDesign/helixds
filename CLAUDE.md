@@ -185,6 +185,8 @@ pnpm eval:traces            what the hooks caught in real sessions — every lin
 pnpm helix:mcp              @helixds/mcp — MCP server (stdio, registered in .mcp.json): helix_get_contract,
                             helix_search_tokens, helix_validate_snippet, helix_list_components,
                             helix_get_pattern. Same data as `pnpm helix` (scripts/helix-query-lib.ts)
+pnpm test:mcp-installed     pack tokens/react/eslint-plugin/mcp, npm-install the tarballs in a throwaway app and call
+                            every MCP tool through `npx @helixds/mcp` there — the server outside the repo (~1 min)
 pnpm helix tokens <concept> find tokens by what they're for ("danger background") — same search as the MCP tool
 pnpm helix validate <file|-> lint + type-check code against Helix, exit 1 if not valid — helix_validate_snippet
                             from a terminal (every MCP tool has a `pnpm helix` command, same library)

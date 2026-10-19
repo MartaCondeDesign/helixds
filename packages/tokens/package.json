@@ -1,15 +1,28 @@
 {
   "name": "@helixds/tokens",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "Helix Design System tokens — DTCG source → CSS custom properties + TypeScript constants",
+  "type": "module",
   "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/tokens#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MartaCondeDesign/helixds.git",
     "directory": "packages/tokens"
   },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,10 +31,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./helix.css": "./dist/helix.css"
+    "./helix.css": "./dist/helix.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsx src/build.ts && tsc dist/index.ts --declaration --module esnext --target es2022 --skipLibCheck --outDir dist",

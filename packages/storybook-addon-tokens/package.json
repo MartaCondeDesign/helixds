@@ -1,7 +1,6 @@
 {
   "name": "@helixds/storybook-addon-tokens",
   "version": "0.1.0",
-  "private": true,
   "description": "Helix Storybook addon that shows component token lists in the manager UI",
   "keywords": [
     "storybook",
@@ -9,14 +8,24 @@
     "design-tokens",
     "design-system"
   ],
+  "type": "module",
   "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/storybook-addon-tokens#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartaCondeDesign/helixds.git",
+    "directory": "packages/storybook-addon-tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
   "engines": {
     "node": ">=20"
   },
   "publishConfig": {
     "access": "public"
   },
-  "type": "module",
   "main": "./manager.js",
   "module": "./manager.js",
   "exports": {
@@ -31,7 +40,8 @@
     "preview.js",
     "constants.js",
     "CONTRACT.md",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "peerDependencies": {
     "react": ">=19.0.0",

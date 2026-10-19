@@ -12,7 +12,7 @@
 import { ESLint, type Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
 import helix from '@helixds/eslint-plugin';
-import { GLOBAL_CHECKS } from '../../../scripts/eval-lib.ts';
+import { GLOBAL_CHECKS } from './checks.ts';
 import { compileSnippet } from './compile.ts';
 
 // Already reported (with fixes) by the lint rules above — don't say the same thing twice.

@@ -5,6 +5,7 @@
  *   dist/contracts/<Name>.json   contracts/components/*.json   every prop, required flag, neverUseFor
  *   dist/contracts/manifest.json contracts/manifest.json       the component inventory
  *   dist/prop-map.md             .ai/maps/prop-map.md          canonical prop vocabulary + anti-synonyms
+ *   dist/patterns/<name>.md      .ai/maps/patterns/*.md        composition patterns (helix_get_pattern)
  *   AGENTS.md (package root)     AGENTS.md                     the consumer agent guide, where a listing of
  *                                                              node_modules/@helixds/react shows it first
  *
@@ -31,6 +32,12 @@ const contracts = fs.readdirSync(componentsDir).filter(f => f.endsWith('.json'))
 for (const file of contracts) fs.copyFileSync(path.join(componentsDir, file), path.join(contractsOut, file));
 fs.copyFileSync(path.join(root, 'contracts/manifest.json'), path.join(contractsOut, 'manifest.json'));
 fs.copyFileSync(path.join(root, '.ai/maps/prop-map.md'), path.join(dist, 'prop-map.md'));
+const patternsDir = path.join(root, '.ai/maps/patterns');
+const patternsOut = path.join(dist, 'patterns');
+fs.rmSync(patternsOut, { recursive: true, force: true });
+fs.mkdirSync(patternsOut, { recursive: true });
+const patterns = fs.readdirSync(patternsDir).filter(f => f.endsWith('.md'));
+for (const file of patterns) fs.copyFileSync(path.join(patternsDir, file), path.join(patternsOut, file));
 fs.copyFileSync(path.join(root, 'AGENTS.md'), path.join(pkg, 'AGENTS.md'));
 fs.rmSync(path.join(dist, 'AGENTS.md'), { force: true });
 
@@ -63,4 +70,4 @@ for (const base of ['components', 'layout']) {
   }
 }
 
-console.log(`✅ agent docs — ${contracts.length} contracts, manifest, prop-map.md in dist/; AGENTS.md at the package root; ${banners} .d.ts banners`);
+console.log(`✅ agent docs — ${contracts.length} contracts, manifest, prop-map.md, ${patterns.length} patterns in dist/; AGENTS.md at the package root; ${banners} .d.ts banners`);

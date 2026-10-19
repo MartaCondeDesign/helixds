@@ -191,9 +191,21 @@ importers:
       '@helixds/eslint-plugin':
         specifier: workspace:^
         version: link:../eslint-plugin
+      '@helixds/react':
+        specifier: workspace:^
+        version: link:../core
+      '@helixds/tokens':
+        specifier: workspace:^
+        version: link:../tokens
       '@modelcontextprotocol/sdk':
         specifier: ^1.32.0
         version: 1.32.0(zod@4.6.5)
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.4(@types/react@19.2.18)
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)
@@ -207,6 +219,9 @@ importers:
         specifier: ^4.6.5
         version: 4.6.5
     devDependencies:
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.1(@swc/core@1.16.2)(jiti@2.7.0)(postcss@8.5.26)(tsx@4.23.15)(typescript@5.9.3)
       tsx:
         specifier: ^4.23.15
         version: 4.23.15
@@ -226,6 +241,9 @@ importers:
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.43
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.1(@swc/core@1.16.2)(jiti@2.7.0)(postcss@8.5.26)(tsx@4.23.15)(typescript@5.9.3)
       tsx:
         specifier: ^4.0.0
         version: 4.23.15

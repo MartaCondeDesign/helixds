@@ -1,36 +1,53 @@
 {
   "name": "@helixds/react",
   "version": "0.1.0",
-  "private": true,
-  "type": "module",
   "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
+  "type": "module",
   "license": "MIT",
+  "author": "Marta Conde",
+  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/core#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MartaCondeDesign/helixds.git",
     "directory": "packages/core"
   },
+  "bugs": {
+    "url": "https://github.com/MartaCondeDesign/helixds/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     },
     "./globals.css": "./src/globals.css",
     "./contracts/*": "./dist/contracts/*.json",
     "./prop-map.md": "./dist/prop-map.md",
-    "./AGENTS.md": "./AGENTS.md"
+    "./patterns/*": "./dist/patterns/*.md",
+    "./AGENTS.md": "./AGENTS.md",
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
+    "!dist/**/*.map",
     "src/globals.css",
     "AGENTS.md",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.json && node scripts/copy-agent-docs.mjs",
+    "build": "tsc --project tsconfig.json && node scripts/fix-esm-imports.mjs && node scripts/copy-agent-docs.mjs",
     "dev": "tsc --watch --project tsconfig.json",
     "typecheck": "tsc --noEmit"
   },
