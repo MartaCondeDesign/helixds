@@ -86,10 +86,12 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Storybook on GitHub Pages; Getting started for apps (latest commit)
+- 2026-10-19 — Merge remote-tracking branch 'origin/ci-and-bench-cleanup' into open-source-readiness (latest commit)
+- 2026-10-19 — Storybook on GitHub Pages; Getting started for apps ([`4ab7db6`](https://github.com/MartaCondeDesign/helixds/commit/4ab7db6))
 - 2026-10-19 — CONTRIBUTING, Code of Conduct, CODEOWNERS and issue/PR templates ([`f7f9681`](https://github.com/MartaCondeDesign/helixds/commit/f7f9681))
 - 2026-10-19 — Versioning and npm releases with Changesets ([`23ab4df`](https://github.com/MartaCondeDesign/helixds/commit/23ab4df))
 - 2026-10-19 — Keep the standalone tokens addon out of the pnpm workspace ([`fdad1f0`](https://github.com/MartaCondeDesign/helixds/commit/fdad1f0))
+- 2026-10-19 — Update CHANGELOG.md for #13 ([`a5cc1b1`](https://github.com/MartaCondeDesign/helixds/commit/a5cc1b1))
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths ([`8b9c757`](https://github.com/MartaCondeDesign/helixds/commit/8b9c757))
 - 2026-10-15 — Changelog page: a PR's changes line up with its title (#12) ([`bd578ca`](https://github.com/MartaCondeDesign/helixds/commit/bd578ca))
   - Changelog page: a PR's changes line up with its title; the workflow's own commits aren't listed
