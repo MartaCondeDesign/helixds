@@ -32,6 +32,7 @@
       "import": "./dist/index.js"
     },
     "./helix.css": "./dist/helix.css",
+    "./tokens.json": "./dist/tokens.json",
     "./package.json": "./package.json"
   },
   "files": [

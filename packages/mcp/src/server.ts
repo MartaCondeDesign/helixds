@@ -1,15 +1,15 @@
-#!/usr/bin/env tsx
 /**
  * @helixds/mcp — Helix as native tools for AI agents (Claude Code, Cursor, …) over the Model Context
  * Protocol, instead of shelling out to `pnpm helix …` or reading Markdown.
  *
- * Every tool reads the same sources as the CLI (scripts/helix-query-lib.ts) and the linter
- * (@helixds/eslint-plugin) — no second copy of the documentation. Start: `pnpm helix:mcp` (stdio).
+ * Every tool reads the same sources as the CLI (./query-lib.ts) and the linter (@helixds/eslint-plugin) —
+ * no second copy of the documentation. In this repo: `pnpm helix:mcp` (stdio). In an app with @helixds/react
+ * installed: `npx @helixds/mcp` — it reads the installed packages instead (./sources.ts).
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-import { getComponent, getPattern, listComponents, searchTokens } from '../../../scripts/helix-query-lib.ts';
+import { getComponent, getPattern, listComponents, searchTokens } from './query-lib.ts';
 import { validateSnippet } from './validate.ts';
 
 // Sent to the client when it connects; Claude Code and other clients put it in the agent's context. Evals

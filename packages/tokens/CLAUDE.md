@@ -258,7 +258,7 @@ component chain is visible in `helix.css` itself, and an override on a token rea
 it. That is how the `primitive.breakpoint`-driven mobile override on `--helix-primitive-fontSize-*` now
 shrinks textStyles and component font sizes too (heading-xl 24px → 21px, Modal title 18px → 16px). Dark
 mode comes from the resolver's dark context (`tokens.dark.json`), written as literal values per var. Scripts
-that read values out of `helix.css` must follow `var()` (see `cssValues()` in `scripts/helix-query-lib.ts`).
+that read values out of `helix.css` must follow `var()` (see `cssValues()` in `packages/mcp/src/query-lib.ts`).
 
 **Figma collection layout:** the live Figma file groups all of the above into exactly 4 collections —
 `Primitives` (every `primitive.*` category, plus the Figma-only resolved-px `lineHeight/{key}` — see below),

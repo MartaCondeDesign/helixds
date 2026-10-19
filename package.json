@@ -46,6 +46,7 @@
     "test:contract-hook": "node --test scripts/claude-contract-hook.test.mjs",
     "test:owner-gate-hook": "node --test scripts/claude-owner-gate-hook.test.mjs",
     "test:setup-ai": "node --test scripts/setup-ai.test.mjs",
+    "test:mcp-installed": "node --test packages/mcp/test/installed.test.mjs",
     "test:traces": "node --test scripts/hook-trace.test.mjs",
     "test:hook-agents": "node --test scripts/hook-agents.test.mjs",
     "report:paints": "tsx scripts/report-paints.ts",
