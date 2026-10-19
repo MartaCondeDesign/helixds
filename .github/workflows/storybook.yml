@@ -1,6 +1,7 @@
 # Publishes Storybook to GitHub Pages on every push to main: https://martacondedesign.github.io/helixds/
-# One-time setup: Settings → Pages → Source: "GitHub Actions". Without it the deploy step fails with an
-# explanation and nothing else breaks.
+# Runs only while the repository is public (GitHub Pages isn't available for a private repo on the
+# free plan), so it switches itself on at launch. Pages' source is set to "GitHub Actions" by
+# scripts/launch-github.sh (docs/launch-checklist.md).
 # The Metrics and Eval gallery pages read git-ignored local data (quality snapshots, eval outputs), so
 # on the public site they show their empty state.
 name: Storybook
@@ -17,6 +18,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

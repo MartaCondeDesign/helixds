@@ -87,7 +87,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Merge remote-tracking branch 'origin/main' into open-source-readiness (latest commit)
+- 2026-10-19 — Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup (latest commit)
+- 2026-10-19 — Merge remote-tracking branch 'origin/main' into open-source-readiness ([`7da5460`](https://github.com/MartaCondeDesign/helixds/commit/7da5460))
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
 - 2026-10-19 — release.yml: document the Trusted Publishing plan instead of an NPM_TOKEN ([`19388bc`](https://github.com/MartaCondeDesign/helixds/commit/19388bc))

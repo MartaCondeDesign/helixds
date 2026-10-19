@@ -1,12 +1,13 @@
 # Versions and publishes the @helixds/* packages with Changesets (.changeset/README.md).
 # On every push to main: if there are pending changesets, opens or updates the "Version Packages" pull
 # request (version bumps + each package's CHANGELOG.md). When that pull request merges there are none
-# left, so the same job builds and publishes whatever version isn't on npm yet, then tags it and creates
-# the GitHub releases. Private packages are never published.
-# Not wired to npm yet, on purpose: there is no NPM_TOKEN secret. Plan for the first release — publish
-# each package once by hand (npm requires a package to exist before it can trust a publisher), configure
-# npm Trusted Publishing for this repo + this workflow on each package, then switch this job to OIDC (no
-# token; bypass-2FA publish tokens stop working in January 2027). Provenance also needs the repo public.
+# left, so the same job publishes whatever version isn't on npm yet (scripts/release-publish.mjs), tags
+# it and creates the GitHub releases. Private packages are never published.
+#
+# OFF until launch day: the job only runs when the repository variable RELEASE_ENABLED is "true"
+# (Settings → Secrets and variables → Actions → Variables). Launch steps: docs/launch-checklist.md.
+# Publishing uses npm Trusted Publishing (OIDC, no token): each package needs a Trusted Publisher on
+# npmjs.com pointing at this repo and this workflow file, set up after its first, manual publish.
 name: Release
 on:
   push:
@@ -21,8 +22,8 @@ permissions:
   id-token: write
 jobs:
   release:
-    # Never from a fork: it has neither the secret nor a reason to publish.
-    if: github.repository == 'MartaCondeDesign/helixds'
+    # Never from a fork, and never before launch.
+    if: github.repository == 'MartaCondeDesign/helixds' && vars.RELEASE_ENABLED == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +32,8 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm, registry-url: 'https://registry.npmjs.org' }
+      # Trusted Publishing needs npm ≥ 11.5.1; Node 22 ships an older one.
+      - run: npm install -g npm@^11.5.1
       - run: pnpm install --frozen-lockfile --ignore-scripts
       - name: Version Packages pull request, or publish
         uses: changesets/action@v1
@@ -41,7 +44,4 @@ jobs:
           commit: Version Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: 'true'
           HELIX_TRACES: 'off'

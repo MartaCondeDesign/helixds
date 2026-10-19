@@ -64,8 +64,10 @@ the rest.
 ## Releasing (maintainer)
 
 Merging changesets into `main` opens a **Version Packages** pull request; merging that one publishes to
-npm ([`.github/workflows/release.yml`](.github/workflows/release.yml)). All `@helixds/*` packages
-share one version and stay `0.x` until the API is stable.
+npm through Trusted Publishing, with provenance ([`.github/workflows/release.yml`](.github/workflows/release.yml),
+[`scripts/release-publish.mjs`](scripts/release-publish.mjs)). All `@helixds/*` packages share one
+version and stay `0.x` until the API is stable. `pnpm release:dry` shows what would be published.
+The first release has its own steps: [`docs/launch-checklist.md`](docs/launch-checklist.md).
 
 ## Figma
 

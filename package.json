@@ -85,7 +85,9 @@
     "figma:expected": "tsx scripts/figma/expected-styles.ts",
     "figma:audit": "tsx scripts/figma/audit-rest.ts",
     "changeset": "changeset",
-    "release": "pnpm -r --filter './packages/*' build && changeset publish"
+    "release": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs",
+    "release:first": "pnpm release",
+    "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
