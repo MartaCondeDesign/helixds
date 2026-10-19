@@ -33,6 +33,14 @@ jobs:
       - run: pnpm install --frozen-lockfile --ignore-scripts
 
       # Includes Storybook's static build, so a story that doesn't compile fails here.
+      # A warning, not a failure: a change that doesn't reach a published package needs no changeset.
+      - name: Changeset for changed packages
+        if: github.event_name == 'pull_request'
+        run: |
+          if ! pnpm -s changeset status --since=origin/${{ github.base_ref }} >/dev/null 2>&1; then
+            echo "::warning::This PR changes a published @helixds/* package but adds no changeset. If users of the package should see it in its changelog, run \`pnpm changeset\` and commit the file (see .changeset/README.md)."
+          fi
+
       - name: Build
         run: pnpm -r build
       - name: Typecheck

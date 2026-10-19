@@ -22,6 +22,10 @@ Explicit per-component contracts, script-verified tokens, and a canonical prop v
 
 <sub>Everything in this screenshot is Helix: <code>AppShell</code>, <code>SideNav</code>, <code>StatCard</code>, <code>Table</code>, <code>Badge</code>, <code>Switch</code> — zero hand-written layout <code>&lt;div&gt;</code>s.</sub>
 
+<br><br>
+
+**[Storybook](https://martacondedesign.github.io/helixds/)** · **[Getting started](docs/getting-started.md)** · **[Contributing](CONTRIBUTING.md)**
+
 </div>
 
 ---
@@ -36,7 +40,7 @@ Helix is a design system built directly on **native HTML elements** — no primi
 
 ## Getting started
 
-Helix isn't published to npm yet — `packages/*` are `private: true` while the component API stabilizes. Today, using it means working from a clone:
+Helix isn't published to npm yet — `packages/*` are `private: true` while the component API stabilizes. Once it is, [docs/getting-started.md](docs/getting-started.md) covers installing it in any React app. Today, using it means working from a clone:
 
 ```bash
 git clone https://github.com/MartaCondeDesign/helixds.git
@@ -128,7 +132,11 @@ pnpm eval:run               # LLM code-generation evals
 5. Canonical prop vocabulary lives in `.ai/maps/prop-map.md`; synonyms aren't allowed.
 6. New component → contract first, at `contracts/components/{Name}.json`, then the code.
 
-Full detail in [CLAUDE.md](CLAUDE.md) — to contribute to Helix itself, see [contributor-ai/CONTRIBUTOR.md](contributor-ai/CONTRIBUTOR.md).
+Full detail in [CLAUDE.md](CLAUDE.md).
+
+## Contributing
+
+Issues and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md) (proposals for tokens and components go through an issue first). Agents working on Helix itself read [contributor-ai/CONTRIBUTOR.md](contributor-ai/CONTRIBUTOR.md). Everyone follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Security
 
