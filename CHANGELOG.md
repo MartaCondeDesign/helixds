@@ -87,7 +87,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-19 — Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup (latest commit)
+- 2026-10-19 — Merge branch 'open-source-readiness' of https://github.com/MartaCondeDesign/helixds into open-source-readiness (latest commit)
+- 2026-10-19 — Launch kit: release off until launch, Trusted Publishing, one-command GitHub setup ([`d98cb3f`](https://github.com/MartaCondeDesign/helixds/commit/d98cb3f))
+- 2026-10-19 — Update CHANGELOG.md for #17 ([`4aa9f99`](https://github.com/MartaCondeDesign/helixds/commit/4aa9f99))
 - 2026-10-19 — Merge remote-tracking branch 'origin/main' into open-source-readiness ([`7da5460`](https://github.com/MartaCondeDesign/helixds/commit/7da5460))
 - 2026-10-19 — CI runs the pre-commit checks on every PR; bench results lose personal paths (#13) ([`a980935`](https://github.com/MartaCondeDesign/helixds/commit/a980935))
   - CI runs the pre-commit checks on every PR; bench results lose personal paths
