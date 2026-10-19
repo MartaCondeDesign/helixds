@@ -28,7 +28,7 @@ const tableStyle: React.CSSProperties = {
 
 const thStyle: React.CSSProperties = {
   textAlign: 'left',
-  padding: '10px var(--helix-spacing-s)',
+  padding: 'var(--helix-spacing-xs) var(--helix-spacing-s)',
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: '0.04em',
@@ -45,7 +45,7 @@ const tdStyle: React.CSSProperties = {
 };
 
 const sectionStyle: React.CSSProperties = {
-  marginTop: 28,
+  marginTop: 'var(--helix-spacing-xl)',
 };
 
 const sectionTitleStyle: React.CSSProperties = {

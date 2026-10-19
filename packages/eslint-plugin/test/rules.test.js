@@ -127,6 +127,7 @@ tester.run('no-raw-color', plugin.rules['no-raw-color'], {
         suggestions: [
           { messageId: 'replace', output: "const s = { color: 'var(--helix-color-fill-primary-interactive-hover)' };" },
           { messageId: 'replace', output: "const s = { color: 'var(--helix-color-text-link-hover)' };" },
+          { messageId: 'replace', output: "const s = { color: 'var(--helix-color-chart-series-5)' };" },
         ],
       }],
     },
