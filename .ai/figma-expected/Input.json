@@ -136,15 +136,14 @@
         },
         "fontWeight": {
           "value": 400,
-          "token": "semantic.textStyle.body-m-regular.fontWeight",
-          "figma": "body-m-regular"
-        },
-        "fontFamily": {
-          "value": "system-ui",
           "token": null,
           "figma": null
         },
-        "textStyle": "body-m-regular"
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
       }
     }
   }

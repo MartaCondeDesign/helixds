@@ -100,7 +100,9 @@ for (const variant of set.children) {
     const key = n === variant ? '(root)' : n.name;
     // a hidden stroke still counts as a border: code's transparent border keeps the size (border-always.md)
     const has = Array.isArray(n.strokes) && n.strokes.length > 0;
-    (strokeByLayer[key] ??= []).push(has ? `${n.strokeWeight}` : 'none');
+    // per-side borders (a bottom-only divider) have a mixed strokeWeight: compare the four sides instead
+    const weight = typeof n.strokeWeight === 'symbol' ? [n.strokeTopWeight, n.strokeRightWeight, n.strokeBottomWeight, n.strokeLeftWeight].join('/') : `${n.strokeWeight}`;
+    (strokeByLayer[key] ??= []).push(has ? weight : 'none');
     // code is border-box: the border takes space (1 border + padding = the distance to the content). An
     // auto-layout frame whose stroke sits outside the layout is 2px narrower and its content 1px closer to
     // the edge than in code — Badge, Input and Textarea had exactly this.
@@ -118,7 +120,9 @@ for (const [layer, weights] of Object.entries(strokeByLayer)) {
 // 4 states
 const axes = set.componentPropertyDefinitions;
 const stateAxis = axes.state?.variantOptions ?? [];
-for (const s of EXPECTED.states ?? []) if (!stateAxis.includes(s)) issues.states.push(`missing state=${s} (has: ${stateAxis.join(', ') || 'no state axis'})`);
+// a component with no states but its resting one (PageHeader, Card…) needs no state axis
+const onlyDefault = (EXPECTED.states ?? []).every(s => s === 'default');
+for (const s of EXPECTED.states ?? []) if (!(onlyDefault && !stateAxis.length) && !stateAxis.includes(s)) issues.states.push(`missing state=${s} (has: ${stateAxis.join(', ') || 'no state axis'})`);
 
 // 5 parity — resolve colors in light and dark through a temporary instance
 const toHex = c => '#' + [c.r, c.g, c.b].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
@@ -128,8 +132,15 @@ async function paintRgb(node, p) {
   const v = await figma.variables.getVariableByIdAsync(id);
   return v.resolveForConsumer(node).value;
 }
-async function resolvedColor(node, key) {
-  const p = (node[key] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+async function resolvedColor(node, key, part = false) {
+  let p = (node[key] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+  // A part with no fill of its own shows code's `color` through what it holds: an icon instance's vector
+  // stroke (currentColor), or the text inside a wrapper frame that carries the part's own spacing.
+  if (!p && part && key === 'fills' && node.type !== 'TEXT' && 'findOne' in node) {
+    const inner = node.findOne(n => n.type === 'TEXT' || n.type === 'VECTOR');
+    p = inner && (inner[inner.type === 'TEXT' ? 'fills' : 'strokes'] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+    if (p) node = inner;
+  }
   if (!p) return null;
   let c = await paintRgb(node, p);
   // composite: a state-layer child (absolute rectangle, layer opacity) blended over the root fill
@@ -156,7 +167,7 @@ if (EXPECTED.colors && theme) {
           if (!node) { issues.parity.push(`${variantName} › ${layer}: layer missing`); continue; }
           for (const [prop, hex] of Object.entries(props)) {
             const key = prop === 'stroke' ? 'strokes' : 'fills';
-            const got = await resolvedColor(node, key);
+            const got = await resolvedColor(node, key, layer !== '(root)');
             const close = (a, b) => a && b && [1, 3, 5].every(i => Math.abs(parseInt(a.slice(i, i + 2), 16) - parseInt(b.slice(i, i + 2), 16)) <= 5);
             // A transparent border in code is still a border (border-always.md): in Figma it's a stroke in the
             // same color as the fill underneath, so it's invisible but keeps the size — accept that too.
@@ -195,9 +206,12 @@ if (EXPECTED.layout) {
     if (!variants.length) { issues.layout.push(`no variant matches "${key}"`); continue; }
     for (const variant of variants) {
       for (const [layer, props] of Object.entries(layers)) {
-        const node = layer === '(root)' ? variant : variant.findOne(n => n.name === layer);
-        if (!node) { issues.layout.push(`${variant.name} › ${layer}: layer missing`); continue; }
+        const part = layer === '(root)' ? variant : variant.findOne(n => n.name === layer);
+        if (!part) { issues.layout.push(`${variant.name} › ${layer}: layer missing`); continue; }
+        // typography is read off the text itself when the part is a frame wrapping it (its own spacing)
+        const text = part.type === 'TEXT' ? part : ('findOne' in part ? part.findOne(n => n.type === 'TEXT') : null);
         for (const [prop, want] of Object.entries(props)) {
+          const node = (prop === 'textStyle' || ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily'].includes(prop)) && text ? text : part;
           if (prop === 'textStyle') {
             const style = node.textStyleId && typeof node.textStyleId === 'string' ? await figma.getStyleByIdAsync(node.textStyleId) : null;
             if (!style) issues.binding.push(`${variant.name} › ${layer}: no Text Style — code's typography is "${want}"`);

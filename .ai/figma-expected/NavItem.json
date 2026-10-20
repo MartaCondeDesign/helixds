@@ -84,13 +84,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#dbeafe"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#2563eb"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#1d4ed8"
         }
       },
       "dark": {
@@ -98,13 +98,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#1e40af"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         }
       }
     },
@@ -114,13 +114,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#dbeafe"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#2563eb"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#1d4ed8"
         }
       },
       "dark": {
@@ -128,13 +128,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#1e40af"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         }
       }
     },
@@ -144,13 +144,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#dbeafe"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#2563eb"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#1d4ed8"
         }
       },
       "dark": {
@@ -158,13 +158,13 @@
           "fill": "none"
         },
         "nav-item-indicator": {
-          "fill": "#2563eb"
+          "fill": "#1e40af"
         },
         "nav-item-icon": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         },
         "nav-item-label": {
-          "fill": "#ffffff"
+          "fill": "#93c5fd"
         }
       }
     }
@@ -232,8 +232,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
@@ -301,8 +301,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
