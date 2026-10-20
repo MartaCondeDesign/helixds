@@ -104,9 +104,11 @@ describe('Foundation stories', () => {
 
 describe('verify:storybook-tokens (the pre-commit gate)', () => {
   const run = (...args: string[]) => spawnSync('npx', ['tsx', '--tsconfig', 'apps/storybook/tsconfig.json', 'scripts/verify-storybook-tokens.ts', ...args], { cwd: root, encoding: 'utf8' });
-  // Same depth as stories/Foundation, so the copied stories' relative imports still resolve.
-  const copy = path.join(storybook, 'stories/__gate-test__');
-  after(() => fs.rmSync(copy, { recursive: true, force: true }));
+  // Same depth as stories/Foundation (with its sibling _shared), so the copied stories' relative imports still resolve — but outside
+  // stories/: a copy there is indexed by a running Storybook (duplicate story ids → /index.json 500 until restart).
+  const scratch = path.join(storybook, '.gate-test');
+  const copy = path.join(scratch, 'Foundation');
+  after(() => fs.rmSync(scratch, { recursive: true, force: true }));
 
   it('passes on the real stories', () => {
     const out = run();
@@ -114,7 +116,8 @@ describe('verify:storybook-tokens (the pre-commit gate)', () => {
   });
 
   it('fails, naming the token, when a story stops showing one', () => {
-    fs.cpSync(path.join(storybook, 'stories/Foundation'), copy, { recursive: true });
+    fs.rmSync(scratch, { recursive: true, force: true });
+    for (const dir of ['Foundation', '_shared']) fs.cpSync(path.join(storybook, 'stories', dir), path.join(scratch, dir), { recursive: true });
     const file = path.join(copy, 'Semantic.stories.tsx');
     const source = fs.readFileSync(file, 'utf8');
     const hidden = source.replace('<TokenTable path="semantic.radius" preview="radius" />', '<TokenTable path="semantic.radius" preview="radius" only={row => row.key !== "m"} />');
