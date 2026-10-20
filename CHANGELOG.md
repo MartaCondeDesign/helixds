@@ -128,6 +128,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - figma-sync: Textarea at one size
   - Conversion standard v1.3 (owner's rule): the focus ring is never clipped — in a focus/open variant every frame around the ring layer has Clip Content off and the ring layer keeps it on (Figma only draws a shadow's spread on a clipping frame); the Figma audit checks it (check 10, clip). Fixed across all 29 sets in the file
   - figma-sync: syncedCommit follows the rebased commits
+- 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
+  - Storybook-tokens gate test copies stories outside the stories glob
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
