@@ -1169,15 +1169,6 @@
           "type": "TEXT"
         },
         {
-          "name": "size",
-          "type": "VARIANT",
-          "values": [
-            "s",
-            "m",
-            "l"
-          ]
-        },
-        {
           "name": "invalid",
           "type": "VARIANT",
           "values": [

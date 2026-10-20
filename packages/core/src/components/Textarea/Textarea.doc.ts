@@ -10,7 +10,7 @@ export const doc: ComponentDoc = {
     'Pair `invalid` with `errorMessage` and keep the counter meaningful when `showCount` is enabled.',
   ],
   variants: [],
-  sizes: ['s', 'm', 'l'],
+  sizes: [],
   tokens: [
     { part: 'textarea-wrapper', label: 'Default fill', token: '--helix-textarea-fill-default', kind: 'color' },
     { part: 'textarea-wrapper', label: 'Default border', token: '--helix-textarea-border-default', kind: 'color' },
@@ -51,7 +51,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'label / hideLabel — accessible label support',
-    'size — changes font-size only (s/m/l); min-height is a single 32px floor (--helix-textarea-height), not a per-size ladder',
+    'one size only (the field scale\'s m, owner\'s decision 2026-10-20 — like Select and MultiSelect); min-height is a single 32px floor (--helix-textarea-height), visible height is rows-driven',
     'rows — controls visible height',
     'showCount + maxLength — live character counter',
     'resize — native resize behavior',

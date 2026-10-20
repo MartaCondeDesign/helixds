@@ -78,7 +78,7 @@ export type { ChipProps, ChipVariant, ChipSize }                     from './com
 export type { ChipGroupProps, ChipGroupOption }                       from './components/ChipGroup';
 export type { InputProps, InputSize }                                from './components/Input';
 export type { BadgeProps, BadgeVariant, BadgeSize }                  from './components/Badge';
-export type { TextareaProps, TextareaSize, TextareaResize }          from './components/Textarea';
+export type { TextareaProps, TextareaResize }          from './components/Textarea';
 export type { SelectProps, SelectOption, SelectOptionGroup } from './components/Select';
 export type { MultiSelectProps, MultiSelectOption, MultiSelectOptionGroup } from './components/MultiSelect';
 export type { MenuProps, MenuOption, MenuOptionGroup } from './components/Menu';

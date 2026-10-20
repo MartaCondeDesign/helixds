@@ -1139,8 +1139,6 @@
     box-sizing:  border-box;
     resize:      vertical;
   }
-  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-textarea-text-valueFontSize-s); line-height: var(--helix-lineHeight-s); }
-  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-textarea-text-valueFontSize-l); line-height: var(--helix-lineHeight-l); }
   [data-helix-part="textarea-field"][data-resize="none"]       { resize: none; }
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
   [data-helix-part="textarea-field"][data-resize="both"]       { resize: both; }

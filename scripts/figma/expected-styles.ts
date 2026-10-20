@@ -81,9 +81,9 @@ const SPECS: Record<string, Spec> = {
   },
   Textarea: {
     story: 'components-textarea--with-character-count',
-    axes: { size: ['s', 'm', 'l'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
+    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true,
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true,
       invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', resize: v.resize! }),
     parts: {
       '(root)': { part: 'textarea-root' },

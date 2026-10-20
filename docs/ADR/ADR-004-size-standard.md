@@ -44,7 +44,7 @@ Use this scale for button-like components: `Button`.
 | `m` | `semantic.size.m` | `primitive.size.200` | `32px` |
 | `l` | `semantic.size.l` | `primitive.size.250` | `40px` |
 
-Use this scale for form fields such as `Input`, `Select`, and `Textarea`. Same tokens as the Control
+Use this scale for form fields such as `Input`, `Select`, and `Textarea`. **Textarea, Select and MultiSelect ship a single size, `m`** (owner's decision 2026-10-20 — Textarea's s and l were removed; its height is rows-driven anyway); only `Input` exposes the full s / m / l ladder. Same tokens as the Control
 scale's `s`/`m`/`l` — one shared source, two components' worth of exposed rungs.
 
 ### Compact/status components

@@ -14,7 +14,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       required = false,
       fullWidth = false,
       hideLabel = false,
-      size = 'm',
       rows = 4,
       maxLength,
       resize = 'vertical',
@@ -45,7 +44,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div
         data-helix-part="textarea-root"
-        data-size={size}
         {...(fullWidth  ? { 'data-full-width': '' } : {})}
         {...(disabled   ? { 'data-disabled':   '' } : {})}
         {...(invalid    ? { 'data-invalid':     '' } : {})}
@@ -69,7 +67,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             ref={ref}
             id={id}
             data-helix-part="textarea-field"
-            data-size={size}
             data-resize={resize}
             rows={rows}
             maxLength={maxLength}

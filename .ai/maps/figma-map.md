@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 138 of 186 code props match Figma exactly.**
+**Parity today: 137 of 185 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -515,7 +515,6 @@ _No design props._
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code · `union` | ✓ |
 | `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |

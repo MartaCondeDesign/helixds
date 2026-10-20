@@ -12,9 +12,8 @@ const meta: Meta<typeof Textarea> = {
   // w-[300px] — same width-stability fix as Input/Select's own stories; className previously
   // reached the inner <textarea> field instead of textarea-root, so a consumer couldn't actually
   // constrain the component's width at all until that was fixed.
-  args: { label: 'Description', placeholder: 'Write something…', size: 'm', className: 'w-[300px]' },
+  args: { label: 'Description', placeholder: 'Write something…', className: 'w-[300px]' },
   argTypes: {
-     size:      { control: 'select', options: ['s', 'm', 'l'] },
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
     rows:      { control: { type: 'number', min: 2, max: 10 } },
     maxLength: { control: 'number' },
@@ -58,16 +57,6 @@ export const Disabled: Story = {
 
 export const NoResize: Story = {
   args: { resize: 'none', rows: 5 },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
-      <Textarea label="Small"  size="s" placeholder="size=s"           onChange={() => {}} />
-      <Textarea label="Medium" size="m" placeholder="size=m (default)" onChange={() => {}} />
-      <Textarea label="Large"  size="l" placeholder="size=l"           onChange={() => {}} />
-    </div>
-  ),
 };
 
 export const FullWidth: Story = {

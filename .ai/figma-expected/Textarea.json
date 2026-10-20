@@ -6,7 +6,7 @@
     "focus"
   ],
   "colors": {
-    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=none, state=default": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -52,7 +52,53 @@
         }
       }
     },
-    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
+      "light": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#0f172a"
+        },
+        "textarea-required": {
+          "fill": "#b91c1c"
+        },
+        "textarea-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "textarea-field": {
+          "fill": "#64748b"
+        },
+        "textarea-counter": {
+          "fill": "#64748b"
+        },
+        "textarea-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#f1f5f9"
+        },
+        "textarea-required": {
+          "fill": "#fecdd3"
+        },
+        "textarea-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "textarea-field": {
+          "fill": "#94a3b8"
+        },
+        "textarea-counter": {
+          "fill": "#94a3b8"
+        },
+        "textarea-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -98,7 +144,7 @@
         }
       }
     },
-    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -144,7 +190,179 @@
         }
       }
     },
-    "size=s, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=horizontal, state=default": {
+      "light": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#0f172a"
+        },
+        "textarea-required": {
+          "fill": "#b91c1c"
+        },
+        "textarea-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "textarea-field": {
+          "fill": "#64748b"
+        },
+        "textarea-counter": {
+          "fill": "#64748b"
+        },
+        "textarea-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#f1f5f9"
+        },
+        "textarea-required": {
+          "fill": "#fecdd3"
+        },
+        "textarea-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "textarea-field": {
+          "fill": "#94a3b8"
+        },
+        "textarea-counter": {
+          "fill": "#94a3b8"
+        },
+        "textarea-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=both, state=default": {
+      "light": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#0f172a"
+        },
+        "textarea-required": {
+          "fill": "#b91c1c"
+        },
+        "textarea-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "textarea-field": {
+          "fill": "#64748b"
+        },
+        "textarea-counter": {
+          "fill": "#64748b"
+        },
+        "textarea-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#f1f5f9"
+        },
+        "textarea-required": {
+          "fill": "#fecdd3"
+        },
+        "textarea-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "textarea-field": {
+          "fill": "#94a3b8"
+        },
+        "textarea-counter": {
+          "fill": "#94a3b8"
+        },
+        "textarea-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=true, resize=vertical, state=default": {
+      "light": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#0f172a"
+        },
+        "textarea-required": {
+          "fill": "#b91c1c"
+        },
+        "textarea-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "textarea-field": {
+          "fill": "#64748b"
+        },
+        "textarea-counter": {
+          "fill": "#64748b"
+        },
+        "textarea-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "textarea-label": {
+          "fill": "#f1f5f9"
+        },
+        "textarea-required": {
+          "fill": "#fecdd3"
+        },
+        "textarea-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "textarea-field": {
+          "fill": "#94a3b8"
+        },
+        "textarea-counter": {
+          "fill": "#94a3b8"
+        },
+        "textarea-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "invalid=false, disabled=false, hideLabel=true, fullWidth=false, resize=vertical, state=default": {
+      "light": {
+        "(root)": {},
+        "textarea-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "textarea-field": {
+          "fill": "#64748b"
+        },
+        "textarea-counter": {
+          "fill": "#64748b"
+        },
+        "textarea-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "textarea-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "textarea-field": {
+          "fill": "#94a3b8"
+        },
+        "textarea-counter": {
+          "fill": "#94a3b8"
+        },
+        "textarea-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -190,7 +408,7 @@
         }
       }
     },
-    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
+    "invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -236,7 +454,7 @@
         }
       }
     },
-    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
+    "invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -282,869 +500,7 @@
         }
       }
     },
-    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=none, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#94a3b8"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#475569"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#3b82f6"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#60a5fa"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=horizontal, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=both, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=true, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=true, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=m, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#94a3b8"
-        },
-        "textarea-required": {
-          "fill": "#94a3b8"
-        },
-        "textarea-wrapper": {
-          "fill": "#f1f5f9",
-          "stroke": "#f1f5f9"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#475569"
-        },
-        "textarea-required": {
-          "fill": "#475569"
-        },
-        "textarea-wrapper": {
-          "fill": "#1e293b",
-          "stroke": "#1e293b"
-        },
-        "textarea-field": {
-          "fill": "#475569"
-        },
-        "textarea-counter": {
-          "fill": "#475569"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#94a3b8"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#475569"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#3b82f6"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#60a5fa"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      }
-    },
-    "size=l, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#94a3b8"
-        },
-        "textarea-required": {
-          "fill": "#94a3b8"
-        },
-        "textarea-wrapper": {
-          "fill": "#f1f5f9",
-          "stroke": "#f1f5f9"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-description": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#475569"
-        },
-        "textarea-required": {
-          "fill": "#475569"
-        },
-        "textarea-wrapper": {
-          "fill": "#1e293b",
-          "stroke": "#1e293b"
-        },
-        "textarea-field": {
-          "fill": "#475569"
-        },
-        "textarea-counter": {
-          "fill": "#475569"
-        },
-        "textarea-description": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=default": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=hover": {
-      "light": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#0f172a"
-        },
-        "textarea-required": {
-          "fill": "#b91c1c"
-        },
-        "textarea-wrapper": {
-          "fill": "#ffffff",
-          "stroke": "#dc2626"
-        },
-        "textarea-field": {
-          "fill": "#64748b"
-        },
-        "textarea-counter": {
-          "fill": "#64748b"
-        },
-        "textarea-error": {
-          "fill": "#b91c1c"
-        }
-      },
-      "dark": {
-        "(root)": {},
-        "textarea-label": {
-          "fill": "#f1f5f9"
-        },
-        "textarea-required": {
-          "fill": "#fecdd3"
-        },
-        "textarea-wrapper": {
-          "fill": "#0f172a",
-          "stroke": "#f87171"
-        },
-        "textarea-field": {
-          "fill": "#94a3b8"
-        },
-        "textarea-counter": {
-          "fill": "#94a3b8"
-        },
-        "textarea-error": {
-          "fill": "#fecdd3"
-        }
-      }
-    },
-    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
+    "invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical, state=focus": {
       "light": {
         "(root)": {},
         "textarea-label": {
@@ -1192,376 +548,7 @@
     }
   },
   "layout": {
-    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 12,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-description": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.descriptionFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=s, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 12,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-description": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.descriptionFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 12,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-error": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.errorFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=none": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=none": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1684,7 +671,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1807,7 +794,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=horizontal": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=horizontal": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1930,7 +917,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=both": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=both": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -2053,7 +1040,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=true, resize=vertical": {
+    "invalid=false, disabled=false, hideLabel=false, fullWidth=true, resize=vertical": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -2176,7 +1163,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=false, hideLabel=true, fullWidth=false, resize=vertical": {
+    "invalid=false, disabled=false, hideLabel=true, fullWidth=false, resize=vertical": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -2299,7 +1286,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical": {
+    "invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -2422,7 +1409,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
+    "invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -2484,375 +1471,6 @@
         },
         "lineHeight": {
           "value": 21,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-error": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.errorFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 18,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 29.7,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-description": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.descriptionFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=l, invalid=false, disabled=true, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 18,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 29.7,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        }
-      },
-      "textarea-counter": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.counterFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      },
-      "textarea-description": {
-        "fontSize": {
-          "value": 12,
-          "token": "component.textarea.text.descriptionFontSize",
-          "figma": "body-s-regular"
-        },
-        "lineHeight": {
-          "value": 18,
-          "token": "semantic.textStyle.body-s-regular.lineHeight",
-          "figma": "body-s-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": null,
-          "figma": null
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "primitive.fontFamily.sans",
-          "figma": null
-        },
-        "textStyle": "body-s-regular"
-      }
-    },
-    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, resize=vertical": {
-      "(root)": {
-        "itemSpacing": {
-          "value": 8,
-          "token": "component.textarea.gap",
-          "figma": "semantic.spacing.component-s"
-        }
-      },
-      "textarea-label": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-required": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.textarea.text.labelFontSize",
-          "figma": "body-m-medium"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "semantic.textStyle.body-m-medium.lineHeight",
-          "figma": "body-m-medium"
-        },
-        "fontWeight": {
-          "value": 500,
-          "token": "component.textarea.text.labelFontWeight",
-          "figma": "body-m-medium"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "semantic.textStyle.body-m-medium.fontFamily",
-          "figma": "body-m-medium"
-        },
-        "textStyle": "body-m-medium"
-      },
-      "textarea-field": {
-        "fontSize": {
-          "value": 18,
-          "token": "primitive.fontSize.m",
-          "figma": null
-        },
-        "lineHeight": {
-          "value": 29.7,
           "token": "primitive.lineHeight.normal",
           "figma": null
         },

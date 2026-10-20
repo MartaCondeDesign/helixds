@@ -11,7 +11,7 @@
     "File uploads - use FileInput"
   ],
 
-  "rationale": "Textarea wraps a native <textarea> with a 32px min-height floor (semantic.size.m) instead of a height ladder, because its height is driven by rows. `size` only changes font size, keeping it aligned with Input and Select in the same form.",
+  "rationale": "Textarea wraps a native <textarea> with a 32px min-height floor (semantic.size.m) instead of a height ladder, because its height is driven by rows. It has one size — the field scale's m (owner's decision 2026-10-20: s and l removed, like Select and MultiSelect, which never had them).",
 
   "governance": {
     "mayExtendLocally": [
@@ -140,12 +140,6 @@
       "type": "boolean",
       "default": false,
       "description": "Hides the label visually but keeps it accessible."
-    },
-    {
-      "name": "size",
-      "type": "'s' | 'm' | 'l'",
-      "default": "m",
-      "description": "Field size. Uses the shared field scale for density and typography."
     },
     {
       "name": "rows",
@@ -343,7 +337,7 @@
         "type": "VARIANT",
         "values": ["default", "hover", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,   disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,   pattern form-field)."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,    disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,    pattern form-field)."
       }
     ],
     "propertyMap": {
@@ -354,7 +348,7 @@
         "reason": "the text in the field: without it a designer can only draw an empty field (owner-approved exception)"
       }
     },
-    "structure": "textarea-root (8px gap) > textarea-label (text + textarea-required),  textarea-wrapper as wide as code default 20 native columns (173 / 194 / 241px for s / m / l; fullWidth drawn at 480px,  filling its container),  textarea-field 4 rows tall = code default rows,  textarea-counter and the native resize handle anchored bottom-right,  textarea-description,  textarea-error. The native resize handle is drawn by the browser (no data-helix-part); its layer is named native resize handle and hides with resize=none.",
-    "variantCombinations": "26 variants (2026-10-20): size s/m/l × invalid × state default/hover/focus = 18,   disabled per size = 3,   and hideLabel / fullWidth / resize none / horizontal / both once each at size m,   default,   valid,   enabled = 5 (the standard rules). Invalid focus keeps the red border with a 20% red ring."
+    "structure": "textarea-root (8px gap) > textarea-label (text + textarea-required),  textarea-wrapper as wide as code default 20 native columns (194px; fullWidth drawn at 480px,  filling its container),  textarea-field 4 rows tall = code default rows,  textarea-counter and the native resize handle anchored bottom-right,  textarea-description,  textarea-error. One size (m). The native resize handle is drawn by the browser (no data-helix-part); its layer is named native resize handle and hides with resize=none.",
+    "variantCombinations": "12 variants (2026-10-20,  one size since the owner removed s and l): invalid × state default/hover/focus = 6,  disabled = 1,  and hideLabel / fullWidth / resize none / horizontal / both once each = 5 (the standard rules). Invalid focus keeps the red border with a 20% red ring."
   }
 }
