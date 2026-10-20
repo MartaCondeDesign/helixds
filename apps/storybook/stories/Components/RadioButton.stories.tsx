@@ -31,6 +31,7 @@ export const AllTypes: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Default (interactive) and Checked — no indeterminate state, radios are mutually exclusive, not partial.' } },
   },
 };
@@ -52,6 +53,7 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ width: FIXED_WIDTH, display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
       <RadioButton label="Disabled unchecked" disabled />
@@ -90,6 +92,7 @@ export const Group: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Standalone RadioButtons sharing one `name` — native mutual exclusivity, same as RadioGroup\'s own options, without the fieldset wrapper.' } },
   },
 };

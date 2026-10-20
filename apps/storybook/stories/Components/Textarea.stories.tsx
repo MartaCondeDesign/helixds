@@ -58,6 +58,7 @@ export const NoResize: Story = {
 };
 
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
       <Textarea label="Small"  size="s" placeholder="size=s"           onChange={() => {}} />

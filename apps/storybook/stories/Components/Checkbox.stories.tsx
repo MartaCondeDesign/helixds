@@ -27,6 +27,7 @@ export const AllTypes: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Default (interactive), Checked, and Indeterminate — indeterminate is used in a parent checkbox when only some children are checked.' } },
   },
 };
@@ -48,6 +49,7 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
       <Checkbox label="Disabled unchecked" disabled />
@@ -90,6 +92,7 @@ export const Group: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Parent–child checkbox group with indeterminate state on the parent.' } },
   },
 };

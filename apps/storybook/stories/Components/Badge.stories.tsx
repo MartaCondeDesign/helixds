@@ -43,6 +43,7 @@ export const AllVariants: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: {
       description: { story: 'All variants. Each must communicate its meaning through the label text, not color alone.' },
     },
@@ -60,11 +61,13 @@ export const WithIcons: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Leading icon at 10px. Icon is `aria-hidden` — label still required.' } },
   },
 };
 
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
       <Badge size="xs" variant="success" label="Active" />
@@ -129,6 +132,7 @@ export const StatusRowPattern: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story: 'Status row pattern. Badge communicates status in both color and text.',

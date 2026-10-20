@@ -26,6 +26,7 @@ export const Default: Story = { args: {} };
 export const Current: Story = { args: { current: true } };
 
 export const NavList: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-3xs)', width: 200 }}>
       <NavItem label="Dashboard" href="#" icon={IconLayoutDashboard} />
@@ -65,6 +66,7 @@ export const KeyboardActivation: Story = {
     team.removeEventListener('click', onActivate);
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab moves between items, Enter follows the focused link.' } },
   },
 };

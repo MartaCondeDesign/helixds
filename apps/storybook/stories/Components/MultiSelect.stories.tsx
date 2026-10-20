@@ -88,11 +88,11 @@ export const Disabled: Story = {
 // keyboard play test ADR-018's "Keyboard" criterion reads.
 export const KeyboardNavigation: Story = {
   tags: ['!dev', '!autodocs'],
-  render: () => {
+  render: (args) => {
     const [values, setValues] = useState<string[]>([]);
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <MultiSelect label="Skills" options={SKILLS} value={values} onChange={setValues} placeholder="Choose skills…" className="w-[300px]" />
+        <MultiSelect {...args} value={values} onChange={setValues} />
         <output data-testid="values">{values.join(',')}</output>
         <button type="button">After</button>
       </div>
