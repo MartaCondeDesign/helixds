@@ -115,7 +115,7 @@ const SPECS: Record<string, Spec> = {
     target: 'checkbox-label',
     focusTarget: 'checkbox-input',
     // contracts/components/Checkbox.json → figma.variantCombinations: 21 variants
-    skip: (v, s) => (v.checked === 'true' && v.indeterminate === 'true') || (v.disabled === 'true' && (s !== 'default' || v.invalid === 'true')),
+    skip: v => v.checked === 'true' && v.indeterminate === 'true', // code shows indeterminate; disabled: the standard's rule
   },
   RadioGroup: {
     story: 'components-radiogroup--default',
@@ -255,20 +255,20 @@ const SPECS: Record<string, Spec> = {
     },
   },
   RadioButton: {
-    story: 'components-radiobutton--all-types',
-    axes: { checked: ['unchecked', 'checked'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: () => ({}),
-    parts: { 'radio-control': { part: 'radio-control', fill: true, stroke: true }, 'radio-item-label': { part: 'radio-item-label', text: true } },
+    story: 'components-radiobutton--with-description',
+    axes: { checked: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true }),
+    parts: {
+      'radio-control': { part: 'radio-control', fill: true, stroke: true },
+      'radio-dot': { part: 'radio-dot', fill: true },
+      'radio-item-label': { part: 'radio-item-label', text: true },
+      'radio-item-required': { part: 'radio-item-required', text: true },
+      'radio-item-description': { part: 'radio-item-description', text: true },
+    },
     target: 'radio-item',
     focusTarget: 'radio-input',
-    locate: (v, s) => {
-      const nth = (n: number) => `[data-helix-part="radio-item"]:nth-of-type(${n})`;
-      const i = v.checked === 'checked' ? 2 : 1;
-      if (s === 'disabled') return { story: 'components-radiobutton--disabled', scope: nth(i) };
-      if (s === 'invalid') return v.checked === 'unchecked' ? { story: 'components-radiobutton--invalid', scope: nth(1) } : null;
-      return { story: 'components-radiobutton--all-types', scope: nth(i) };
-    },
+    // 14 variants: disabled only at state=default and valid — the standard's rule, applied below
   },
   SegmentedControlItem: {
     story: 'components-segmentedcontrol--default',
@@ -377,6 +377,9 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       const el = scope && document.querySelector(scope)?.matches(`[data-helix-part="${p.part}"]`) ? document.querySelector(scope) : (scope ? document.querySelector(scope)?.querySelector(`[data-helix-part="${p.part}"]`) : root.querySelector(`[data-helix-part="${p.part}"]`));
       if (!el) continue;
       const cs = getComputedStyle(el);
+      // not rendered in this combination (e.g. Radio's dot at scale 0 when unchecked) → no Figma layer to compare
+      const box = el.getBoundingClientRect();
+      if (box.width === 0 || box.height === 0 || cs.visibility === 'hidden' || cs.opacity === '0') continue;
       out[layer] = {};
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';
@@ -528,6 +531,10 @@ async function main() {
   await cdp.send('CSS.enable');
   for (const v of combos) for (const state of spec.states) {
     if (spec.skip?.(v, state)) continue;
+    // the standard's variant rules (contracts/figma-conversion.json → variants): disabled is drawn only at
+    // state=default and valid; hideLabel=true only at state=default
+    if (v.disabled === 'true' && (state !== 'default' || v.invalid === 'true')) continue;
+    if (v.hideLabel === 'true' && state !== 'default') continue;
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');

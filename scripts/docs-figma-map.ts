@@ -4,7 +4,7 @@
  * anatomy layers extracted from each component's data-helix-part attributes.
  *
  * This file is GENERATED — do not hand-edit the per-component sections.
- * The conventions section at the top is stable and hand-maintained.
+ * The standard section at the top is generated from contracts/figma-conversion.json.
  * Run: pnpm docs:figma-map
  * Wired into .husky/pre-commit so it can never drift from contracts.
  */
@@ -135,7 +135,7 @@ function variantValues(propName: string, codeType: string): string {
     .join(', ');
 }
 
-import { expectedFor, setComponent, type Expected } from './figma/prop-rule.ts';
+import { expectedFor, setComponent, patternOf, STANDARD, type Expected } from './figma/prop-rule.ts';
 
 type FigmaProp = { name: string; type: string; values?: string[] };
 const snapshotPath = path.join(root, '.ai/figma-props.json');
@@ -153,34 +153,23 @@ function compare(e: Expected, figma: FigmaProp[] | undefined): string {
   return '✗ missing';
 }
 
-const CONVENTIONS = `<!-- helix:figma-map-conventions — stable, hand-maintained -->
-## Code prop → Figma property: the exact rule
-
-Every code prop a designer can see is a Figma property with **the same name**, shown **the same way** in the
-properties panel (owner's decision, 2026-10-20). \`.ai/skills/components-to-figma.md\` applies it; if the two ever
-disagree this table wins and the skill needs fixing.
-
-| Code prop | Figma property | Shown in the panel as |
-|---|---|---|
-| \`'a' \\| 'b'\` or \`1 \\| 2\` (union) | \`VARIANT\`, same name, **same values** | dropdown |
-| \`boolean\` that changes the look (\`disabled\`, \`invalid\`, \`checked\`, \`isLoading\`, \`current\`, \`expanded\`, \`fullWidth\`, \`hideLabel\`…) | \`VARIANT\` with values \`false\` / \`true\` | on/off toggle — a Figma BOOLEAN can only show/hide a layer, it can't change a color or size |
-| \`boolean\` that only shows/hides a part (\`required\`, \`showCloseButton\`, \`showCount\`, \`dismissible\`) | \`BOOLEAN\`, same name | on/off toggle |
-| Required \`string\` (\`label\`, \`placeholder\`) or the text \`children\` of Button/Accordion/Modal/SidePanel/Card | \`TEXT\`, same name (\`children\` stays \`children\`) | text field |
-| Optional \`string\` with a visible part (\`description\`, \`errorMessage\`, \`primaryActionLabel\`…) | \`BOOLEAN\` \`name\` (shows the part) + \`TEXT\` \`name text\` (its content) | toggle + text field |
-| Icon (\`icon\`, \`iconEnd\`) | \`BOOLEAN\` \`name\` + \`INSTANCE_SWAP\` \`name\` (a required icon: only the swap) | toggle + icon picker |
-| Optional slot (\`header\`, \`actions\`, \`brand\`, \`footer\`, \`start\`, \`end\`, \`sidenav\`, \`topbar\`) | \`BOOLEAN\`, same name | toggle |
-| Figma only: \`state\` | \`VARIANT\` \`default\` / \`hover\` / \`press\` / \`focus\` (+ \`open\`, \`selected\`…) | dropdown — CSS pseudo-classes, not props; \`disabled\`/\`invalid\` are NOT in it |
-| Handlers, ids, refs, data arrays, \`default*\` twins, aria-only text, an overlay's \`expanded\` (Modal/SidePanel/Menu/Tooltip: closed = not on screen) | — | not a design property |
-
-### Naming rules
-
-- **Figma property name** = code prop name, **unchanged** (\`isLoading\`, not \`loading\`; \`children\`, not \`label\`).
-- **VARIANT values** = code values, **unchanged** (\`primary\`, \`stacked-bar\`, \`false\`).
-- **Layer names** = the \`data-helix-part\` values from the TSX — never invented. Visually hidden native
-  inputs (\`checkbox-input\`, \`radio-input\`, \`select-native\`) exist in code but are not layers.
-- **Figma today** is read from \`.ai/figma-props.json\` (a snapshot of the Figma file — refresh it through the
-  Figma MCP after changing a component in Figma, then \`pnpm docs:figma-map\`).
-<!-- /helix:figma-map-conventions -->`;
+// Generated from the standard, so the two can never disagree.
+const CONVENTIONS = [
+  '## Code prop → Figma property: the standard',
+  '',
+  `From \`contracts/figma-conversion.json\` v${STANDARD.version} (owner-approved ${STANDARD.approved}; explained with the`,
+  'common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component',
+  "only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property",
+  'is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.',
+  '',
+  '| Rule | When | Figma property | Why |',
+  '|---|---|---|---|',
+  ...(STANDARD.rules as any[]).map(r => `| \`${r.id}\` | ${r.when.replace(/\|/g, '\\|')} | ${r.figma.length ? r.figma.map((f: string) => `\`${f}\``).join(' + ') : '—'} | ${r.why} |`),
+  '',
+  ...Object.values((STANDARD as any).naming as Record<string, string>).map(n => `- ${n}`),
+  '- **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the',
+  '  Figma MCP after changing a component in Figma, then `pnpm docs:figma-map`).',
+].join('\n');
 
 function run() {
   const contractFiles = fs.readdirSync(contractsDir).filter(f => f.endsWith('.json')).sort();
@@ -194,11 +183,11 @@ function run() {
     const rows: string[] = [];
     const used = new Set<string>();
     for (const prop of contract.props ?? []) {
-      // The owner-approved conversion (contract figma.propertyMap, pnpm figma:props) wins over the rule's proposal.
-      const approved = (contract as any).figma?.propertyMap?.[prop.name];
-      const list: Expected[] = approved && approved.codeType === (prop.type ?? '')
-        ? approved.figma.map((f: Expected) => ({ ...f, why: `approved ${approved.approved}` }))
-        : expectedFor(prop, parts).map(e => ({ ...e, why: `${e.why} — **pending approval** (pnpm figma:props)` }));
+      // The standard (contracts/figma-conversion.json) decides; a contract exception (figma.propertyMap) overrides it.
+      const exception = (contract as any).figma?.propertyMap?.[prop.name];
+      const list: Expected[] = exception
+        ? exception.figma.map((f: Expected) => ({ ...f, why: exception.codeType === (prop.type ?? '') ? `exception, approved ${exception.approved}` : '**stale exception** (pnpm figma:props)' }))
+        : expectedFor(prop, parts).map(e => ({ ...e, why: e.rule === 'unmatched' ? `**${e.why}**` : `${e.why} · \`${e.rule}\`` }));
       for (const e of list) {
         const status = compare(e, figma);
         total++; if (status === '✓') ok++;
@@ -214,11 +203,13 @@ function run() {
     const extraLine = extra.length ? `\n\n**Only in Figma (no code prop of that name and type):** ${extra.map(f => `\`${f.name}\` (${f.type}${f.values ? ': ' + f.values.join(' / ') : ''})`).join(', ')}` : '';
     const stateLine = figma?.find(f => f.name === 'state') ? `\n\n**Figma-only \`state\`:** ${figma.find(f => f.name === 'state')!.values!.map(v => `\`${v}\``).join(' / ')}` : '';
     const anatomy = parts.length ? `\n\n**Anatomy layers** (Figma layer name = \`data-helix-part\` value): ${parts.map(p => `\`${p}\``).join(', ')}` : '';
-    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${table}${extraLine}${stateLine}${anatomy}`);
+    const pattern = patternOf(contract.name);
+    const patternLine = pattern ? `**Pattern:** \`${pattern}\` (.ai/maps/figma-conversion.md)\n\n` : '';
+    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${patternLine}${table}${extraLine}${stateLine}${anatomy}`);
   }
   const out =
     `<!-- GENERATED by scripts/docs-figma-map.ts — do not hand-edit the component sections below.
-     Run \`pnpm docs:figma-map\` to regenerate. The conventions block is stable and hand-maintained. -->
+     Run \`pnpm docs:figma-map\` to regenerate. The standard block comes from contracts/figma-conversion.json. -->
 # Helix → Figma prop map
 
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has

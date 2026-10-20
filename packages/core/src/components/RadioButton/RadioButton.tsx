@@ -50,7 +50,10 @@ const RadioButton = ({
         <span data-helix-part="radio-dot" />
       </span>
       <span data-helix-part="radio-item-content">
-        <span data-helix-part="radio-item-label">{label}</span>
+        <span data-helix-part="radio-item-label">
+          {label}
+          {required && <span data-helix-part="radio-item-required" aria-hidden="true">*</span>}
+        </span>
         {description && !errorMessage && (
           <span id={descId} data-helix-part="radio-item-description">{description}</span>
         )}

@@ -3,12 +3,10 @@
   "states": [
     "default",
     "hover",
-    "focus",
-    "invalid",
-    "disabled"
+    "focus"
   ],
   "colors": {
-    "checked=unchecked, state=default": {
+    "checked=false, invalid=false, disabled=false, state=default": {
       "light": {
         "radio-control": {
           "fill": "#ffffff",
@@ -16,6 +14,12 @@
         },
         "radio-item-label": {
           "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -25,10 +29,16 @@
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "checked=unchecked, state=hover": {
+    "checked=false, invalid=false, disabled=false, state=hover": {
       "light": {
         "radio-control": {
           "fill": "#ffffff",
@@ -36,6 +46,12 @@
         },
         "radio-item-label": {
           "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -45,10 +61,16 @@
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "checked=unchecked, state=focus": {
+    "checked=false, invalid=false, disabled=false, state=focus": {
       "light": {
         "radio-control": {
           "fill": "#ffffff",
@@ -56,6 +78,12 @@
         },
         "radio-item-label": {
           "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -65,10 +93,48 @@
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "checked=unchecked, state=invalid": {
+    "checked=false, invalid=false, disabled=true, state=default": {
+      "light": {
+        "radio-control": {
+          "fill": "#f1f5f9",
+          "stroke": "#94a3b8"
+        },
+        "radio-item-label": {
+          "fill": "#94a3b8"
+        },
+        "radio-item-required": {
+          "fill": "#94a3b8"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#1e293b",
+          "stroke": "#475569"
+        },
+        "radio-item-label": {
+          "fill": "#475569"
+        },
+        "radio-item-required": {
+          "fill": "#475569"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "checked=false, invalid=true, disabled=false, state=default": {
       "light": {
         "radio-control": {
           "fill": "#ffffff",
@@ -76,6 +142,12 @@
         },
         "radio-item-label": {
           "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -85,16 +157,209 @@
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "checked=unchecked, state=disabled": {
+    "checked=false, invalid=true, disabled=false, state=hover": {
+      "light": {
+        "radio-control": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=false, invalid=true, disabled=false, state=focus": {
+      "light": {
+        "radio-control": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=true, invalid=false, disabled=false, state=default": {
+      "light": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=true, invalid=false, disabled=false, state=hover": {
+      "light": {
+        "radio-control": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=true, invalid=false, disabled=false, state=focus": {
+      "light": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=true, invalid=false, disabled=true, state=default": {
       "light": {
         "radio-control": {
           "fill": "#f1f5f9",
           "stroke": "#94a3b8"
         },
+        "radio-dot": {
+          "fill": "#94a3b8"
+        },
         "radio-item-label": {
+          "fill": "#94a3b8"
+        },
+        "radio-item-required": {
+          "fill": "#94a3b8"
+        },
+        "radio-item-description": {
           "fill": "#94a3b8"
         }
       },
@@ -103,94 +368,137 @@
           "fill": "#1e293b",
           "stroke": "#475569"
         },
+        "radio-dot": {
+          "fill": "#475569"
+        },
         "radio-item-label": {
+          "fill": "#475569"
+        },
+        "radio-item-required": {
+          "fill": "#475569"
+        },
+        "radio-item-description": {
           "fill": "#475569"
         }
       }
     },
-    "checked=checked, state=default": {
+    "checked=true, invalid=true, disabled=false, state=default": {
       "light": {
         "radio-control": {
           "fill": "#2563eb",
-          "stroke": "#2563eb"
+          "stroke": "#dc2626"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
         },
         "radio-item-label": {
           "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
         "radio-control": {
           "fill": "#2563eb",
-          "stroke": "#2563eb"
+          "stroke": "#f87171"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=checked, state=hover": {
-      "light": {
-        "radio-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
         },
-        "radio-item-label": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "radio-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+        "radio-item-required": {
+          "fill": "#fecdd3"
         },
-        "radio-item-label": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=checked, state=focus": {
-      "light": {
-        "radio-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "radio-item-label": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "radio-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "radio-item-label": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=checked, state=disabled": {
-      "light": {
-        "radio-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "radio-item-label": {
+        "radio-item-description": {
           "fill": "#94a3b8"
         }
+      }
+    },
+    "checked=true, invalid=true, disabled=false, state=hover": {
+      "light": {
+        "radio-control": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
+          "fill": "#475569"
+        }
       },
       "dark": {
         "radio-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
         },
         "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "checked=true, invalid=true, disabled=false, state=focus": {
+      "light": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#dc2626"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#0f172a"
+        },
+        "radio-item-required": {
+          "fill": "#b91c1c"
+        },
+        "radio-item-description": {
           "fill": "#475569"
+        }
+      },
+      "dark": {
+        "radio-control": {
+          "fill": "#2563eb",
+          "stroke": "#f87171"
+        },
+        "radio-dot": {
+          "fill": "#ffffff"
+        },
+        "radio-item-label": {
+          "fill": "#f1f5f9"
+        },
+        "radio-item-required": {
+          "fill": "#fecdd3"
+        },
+        "radio-item-description": {
+          "fill": "#94a3b8"
         }
       }
     }
   },
   "layout": {
-    "checked=unchecked": {
+    "checked=false, invalid=false, disabled=false": {
       "radio-item-label": {
         "fontSize": {
           "value": 14,
@@ -213,9 +521,55 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
-    "checked=checked": {
+    "checked=false, invalid=false, disabled=true": {
       "radio-item-label": {
         "fontSize": {
           "value": 14,
@@ -238,6 +592,336 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "checked=false, invalid=true, disabled=false": {
+      "radio-item-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "checked=true, invalid=false, disabled=false": {
+      "radio-item-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "checked=true, invalid=false, disabled=true": {
+      "radio-item-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "checked=true, invalid=true, disabled=false": {
+      "radio-item-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.radio.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.radio.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "radio-item-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.radio.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.radio.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.radio.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.radio.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     }
   }

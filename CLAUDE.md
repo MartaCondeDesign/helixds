@@ -144,8 +144,13 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    `checked`, `isLoading`…: a Figma BOOLEAN can't change a color); a string is TEXT (`children` stays `children`);
    an optional string part is BOOLEAN `name` + TEXT `name text`; an icon is BOOLEAN + INSTANCE_SWAP. The only
    Figma-only property is `state` (hover / press / focus / open) — CSS pseudo-classes, never `disabled`/`invalid`.
-   The full table and every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`,
-   Figma side read from the snapshot `.ai/figma-props.json`). A component isn't synced until all its rows are ✓.
+   **The conversion standard** — every rule by type, how variants are drawn (disabled only at `state=default`…) and
+   the common patterns (form-field, checkable, group, action, overlay, layout-slot) — is
+   `contracts/figma-conversion.json` (read by the scripts; owner-gated) explained in `.ai/maps/figma-conversion.md`.
+   It's approved once: a new component or prop converts by it with no per-component approval; the owner is asked
+   only for a prop no rule covers (`pnpm figma:props`, pre-commit) or a component exception (`figma.propertyMap`).
+   Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
+   the snapshot `.ai/figma-props.json`). A component isn't synced until all its rows are ✓.
 
 ## Workflow commands
 

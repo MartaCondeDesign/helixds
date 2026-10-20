@@ -45,6 +45,11 @@ const GATED = [
     why: 'The prop map is the canonical prop vocabulary (CLAUDE.md rule 5): every contract, the linter and the evals follow it.',
   },
   {
+    match: p => /(^|\/)contracts\/figma-conversion\.json$/.test(p),
+    what: 'contracts/figma-conversion.json',
+    why: 'The code → Figma conversion standard (CLAUDE.md rule 16): every component\'s Figma properties follow it, so a change converts every component differently.',
+  },
+  {
     match: p => /(^|\/)(?:node_modules\/@helixds\/|patches\/@helixds)/.test(p),
     what: 'Helix itself (node_modules/@helixds or a patch of it)',
     why: 'Patching Helix inside an app forks the design system: the next update overwrites it and no other app gets it. Each contract\'s governance.mustEscalateToDS lists what goes to the Helix team instead — or build a local [CUSTOM] component (pnpm helix scaffold:custom).',
@@ -55,13 +60,14 @@ const GATED = [
 const WRITING_CLIS = [
   { pattern: /\bpnpm\s+(?:run\s+)?token:add\b|scripts\/token-cli\.ts/, gate: GATED[0] },
   { pattern: /\bpnpm\s+(?:run\s+)?contract\s+[A-Za-z]|scripts\/contract-cli\.ts/, gate: GATED[1] },
-  { pattern: /\b(?:pnpm|yarn)\s+patch(?:-commit)?\s+[^\n]*@helixds|\bpatch-package\s+[^\n]*@helixds/, gate: GATED[3] },
+  { pattern: /\b(?:pnpm|yarn)\s+patch(?:-commit)?\s+[^\n]*@helixds|\bpatch-package\s+[^\n]*@helixds/, gate: GATED[4] },
 ];
 const GATED_IN_COMMAND = [
   { pattern: /packages\/tokens\/src\/(tokens(\.[\w-]+)?\.json|[\w-]+\.resolver\.json)/, gate: GATED[0] },
   { pattern: /contracts\/components\/[\w*{},-]*\.json|contracts\/components\/?(?:\s|$|['"])/, gate: GATED[1] },
   { pattern: /\.ai\/maps\/prop-map\.md/, gate: GATED[2] },
-  { pattern: /node_modules\/@helixds\/|patches\/@helixds/, gate: GATED[3] },
+  { pattern: /node_modules\/@helixds\/|patches\/@helixds/, gate: GATED[4] },
+  { pattern: /contracts\/figma-conversion\.json/, gate: GATED[3] },
 ];
 // Anything in a shell command that can change a file.
 // (`=>`/`->` aren't redirects; `2>&1` isn't a file.)

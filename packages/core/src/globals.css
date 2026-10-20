@@ -1860,7 +1860,12 @@
   [data-helix-part="radio-item"][data-disabled] {
     cursor: not-allowed;
   }
+  [data-helix-part="radio-item-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
   [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-label"],
+  [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-required"],
   [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-description"] {
     color: var(--helix-radio-text-disabled);
   }
