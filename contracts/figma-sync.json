@@ -572,12 +572,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): checked × state (default/hover/focus/invalid/disabled), colors light+dark from .ai/figma-expected/RadioButton.json, Body / m / Regular label; passed.",
-      "compSetId": "459:81",
-      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): checked × state (default/hover/focus/invalid/disabled), colors light+dark from .ai/figma-expected/RadioButton.json, Body / m / Regular label; passed. REBUILT 2026-10-20 by the conversion standard (contracts/figma-conversion.json, pattern checkable): set 595:282 = checked × invalid × disabled (false/true) × state (default/hover/focus) = 14 variants (disabled only at default, valid), from detached instances of the old 10. New radio-item-required part (* text/danger, spacing/3xs; text/disabled when disabled), label in a radio-item-label row. Properties: label, required, description + description text, errorMessage + errorMessage text. Full audit passed in light and dark with every BOOLEAN on. Propstar table 595:283.",
+      "compSetId": "595:282",
+      "syncedCommit": "59cb7ef2210bf7b7049b0a0530415db942acc324",
       "audit": {
         "pass": true,
-        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "commit": "59cb7ef2210bf7b7049b0a0530415db942acc324",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
