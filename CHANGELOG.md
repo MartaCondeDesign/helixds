@@ -100,6 +100,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma
   - Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped
   - verify:stable: all 33 components stable (Figma ✓ for every one)
+  - Exact Figma property parity (CLAUDE.md rule 16): figma-map.md lists every code prop, the Figma property it must be (same name, same kind) and what Figma has today (.ai/figma-props.json snapshot); figma-drift fails a component with any mismatch
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
