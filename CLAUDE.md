@@ -99,6 +99,11 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    not guaranteed to pass in the other (dark mode's values come from `packages/tokens/src/tokens.dark.json`,
    the DTCG resolver's dark context, which picks its own value per token; check each theme's actual resolved
    pair, don't assume symmetry).
+   **Disabled is exempt** (owner's decision 2026-10-20, WCAG 1.4.3 "incidental": text or icons that are part of an
+   inactive component). Everything inside a disabled component — label, description, required *, icon — uses
+   `text/disabled` / `icon/disabled` and is never held to 4.5:1 or 3:1; it never drops a component's status. The
+   contrast criterion skips any node inside `[disabled]`, `[data-disabled]` or `[aria-disabled="true"]`
+   (`apps/storybook/.storybook/test-runner.ts`) — axe alone only exempts a disabled control's own `<label>`.
 10. **Status icons use `--helix-color-icon-*`, never `--helix-color-text-*`** — the two diverge in dark
    mode on purpose: `text-{info,success,warning,danger}` is a pale tone tuned for text on a colored tint
    (Badge, Chip), `icon-*` is the saturated tone for an icon on the plain page/surface (Toast, Status,

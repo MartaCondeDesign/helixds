@@ -14,7 +14,7 @@
  *                 and the role the contract promises (a11y.announces / a11y.role) is in the accessibility tree
  *                 a screen reader reads (ariaSnapshot) of at least one story
  *   5 keyboard    every key listed in a11y.keyboardNav is exercised by a story `play` test, and all pass
- *   6 contrast    no axe color-contrast violation in any story, in light AND dark theme
+ *   6 contrast    no axe color-contrast violation in any story, in light AND dark theme (disabled components are exempt — WCAG 1.4.3, CLAUDE.md rule 9)
  *   7 motion      any Motion (JS) animation beyond whileTap press feedback is wrapped in
  *                 <MotionConfig reducedMotion="user"> (CSS motion is covered globally in globals.css)
  *   8 eval        a passing eval prompt imports and checks the component
@@ -55,7 +55,7 @@ const CRITERIA: Record<CriterionKey, { label: string; description: string }> = {
   tokens:   { label: 'Tokens',   description: 'Tokens resolved — no value is left as 🆕 or 🚩 in component-token-exceptions.md; everything is a token or a documented ADR exception.' },
   stories:  { label: 'Stories',  description: 'Stories + accessibility — every variant, size and authored state in the contract has a story, and in a real browser axe (WCAG 2.2 AA) finds no violations in any of them, focus is visible in light and dark (2.4.7), every target is at least 24×24 px or well spaced (2.5.8), nothing overflows at 320 px (1.4.10), and a screen reader hears the role the contract promises (ariaSnapshot).' },
   keyboard: { label: 'Keyboard', description: 'Keyboard tested — every key the contract lists under keyboardNav has an automated play test in its stories, and all of them pass.' },
-  contrast: { label: 'Contrast', description: 'Color contrast AA — no text or icon fails WCAG AA contrast in any story, checked in light mode AND dark mode.' },
+  contrast: { label: 'Contrast', description: 'Color contrast AA — no text or icon fails WCAG AA contrast in any story, checked in light mode AND dark mode. Disabled components are exempt (WCAG 1.4.3).' },
   motion:   { label: 'Motion',   description: 'Reduced motion — with the OS “reduce motion” setting on, nothing moves: CSS motion is neutralized globally, and any Motion (JS) animation sits inside <MotionConfig reducedMotion="user">.' },
   eval:     { label: 'Eval',     description: 'Eval — an automated test (evals/prompts) checks that an AI agent asked to build something with this component uses it correctly: right props, no anti-synonyms.' },
 };

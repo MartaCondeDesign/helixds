@@ -15,6 +15,7 @@ import { checkFocusVisible, checkReflow, checkTargetSize, collectAria, collectCo
 // not here — setup() runs once per parallel worker, so clearing here wiped other workers' results.
 const RESULTS_DIR = path.resolve(__dirname, '../.test-results/a11y');
 const THEMES = ['light', 'dark'] as const;
+const DISABLED = '[disabled], [data-disabled], [aria-disabled="true"]';
 const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 const config: TestRunnerConfig = {
@@ -38,7 +39,14 @@ const config: TestRunnerConfig = {
       const violations = await getViolations(page, 'body', { // body: portaled overlays (Menu, Toast) live outside #storybook-root
         runOnly: { type: 'tag', values: AXE_TAGS },
       });
-      byTheme[theme] = violations.map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
+      // WCAG 1.4.3 exempts text that is part of an inactive (disabled) component — root CLAUDE.md rule 9.
+      // axe only knows it for a disabled control's own <label>; a description, hint or required * outside it
+      // still gets flagged, so drop contrast nodes inside any disabled component.
+      for (const v of violations) if (v.id === 'color-contrast') {
+        const inactive = await page.evaluate(([targets, sel]) => targets.map(t => !!document.querySelector(t)?.closest(sel)), [v.nodes.map(n => n.target.join(' ')), DISABLED] as const);
+        v.nodes = v.nodes.filter((_, i) => !inactive[i]);
+      }
+      byTheme[theme] = violations.filter(v => v.nodes.length).map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
       applied.contrast[theme] = await collectContrast(page);
       focusVisible[theme] = await checkFocusVisible(page);
     }

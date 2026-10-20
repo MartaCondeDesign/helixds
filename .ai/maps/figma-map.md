@@ -164,7 +164,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
-### CheckboxGroup (`v0.1.0`, draft)
+### CheckboxGroup (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
