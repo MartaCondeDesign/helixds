@@ -32,6 +32,27 @@ export const Default: Story = {
   },
 };
 
+// Toast itself only mounts the stack (<Toast />); what a toast shows is the call: toast[variant](label,
+// description). These controls are that call's arguments — the same three properties the Figma component has.
+type PlaygroundArgs = { variant: 'neutral' | 'info' | 'success' | 'warning' | 'danger'; label: string; description: string };
+export const Playground: StoryObj<PlaygroundArgs> = {
+  args: { variant: 'success', label: 'Published', description: 'Your changes are now live.' },
+  argTypes: {
+    variant:     { control: 'select', options: ['neutral', 'info', 'success', 'warning', 'danger'], description: 'Which call: toast.neutral / info / success / warning / danger' },
+    label:       { control: 'text', description: 'First argument — the title' },
+    description: { control: 'text', description: 'Second argument — optional supporting line' },
+  },
+  render: ({ variant, label, description }) => (
+    <>
+      <Button variant="secondary" onClick={() => toast[variant](label, description || undefined)}>Show toast</Button>
+      <Toast />
+    </>
+  ),
+  parameters: {
+    docs: { description: { story: 'Change the controls, then press the button: it calls `toast[variant](label, description)` with them.' } },
+  },
+};
+
 export const KeyboardReach: Story = {
   render: () => (
     <>

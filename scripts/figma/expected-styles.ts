@@ -286,6 +286,49 @@ const SPECS: Record<string, Spec> = {
     parts: { '(root)': { part: 'tooltip-content', fill: true }, 'tooltip-label': { part: 'tooltip-content', text: true } },
     target: 'tooltip-content',
   },
+  MenuItem: {
+    story: 'components-menu--states',
+    axes: {},
+    states: ['default', 'hover', 'selected', 'disabled'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'menu-item', fill: true }, 'menu-item-label': { part: 'menu-item', text: true } }, // the label span only renders next to a labelEnd
+    target: 'menu-item',
+    locate: (_v, s) => ({
+      story: 'components-menu--states',
+      scope: s === 'selected' ? '[data-helix-part="menu-item"][aria-selected="true"]'
+        : s === 'disabled' ? '[data-helix-part="menu-item"]:disabled'
+        : '[data-helix-part="menu-item"]:not([aria-selected="true"]):not(:disabled)',
+    }),
+  },
+  // Overlays: their Opened stories open them in a play function that only clicks the trigger (it never
+  // fails), so measuring after it is safe.
+  Modal: {
+    story: 'components-modal--opened',
+    axes: {},
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'modal-root', fill: true }, 'modal-title': { part: 'modal-title', text: true }, 'modal-body': { part: 'modal-body', text: true } },
+    target: 'modal-root',
+    scope: () => '[data-helix-part="modal-root"][open]',
+  },
+  SidePanel: {
+    story: 'components-sidepanel--opened',
+    axes: { placement: ['right'] },
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'side-panel-root', fill: true }, 'side-panel-title': { part: 'side-panel-title', text: true }, 'side-panel-body': { part: 'side-panel-body', text: true } },
+    target: 'side-panel-root',
+    scope: () => '[data-helix-part="side-panel-root"][open]',
+  },
+  Toast: {
+    story: 'components-toast--opened',
+    axes: { variant: ['success', 'danger'] },
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'toast', fill: true, stroke: true }, 'toast-icon': { part: 'toast-icon', text: true }, 'toast-title': { part: 'toast-title', text: true }, 'toast-description': { part: 'toast-description', text: true } },
+    target: 'toast',
+    scope: v => `[data-helix-part="toast"][data-variant="${v.variant}"]`,
+  },
 };
 
 const toHex = (css: string): string => {
@@ -323,7 +366,12 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       out[layer] = {};
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';
-      if (p.text) out[layer]!.fill = cs.color; // a Figma TEXT layer's fill is its text color
+      // a Figma TEXT layer's fill is its text color; an icon part's is its svg's (Icon can set its own color)
+      const svg = /icon|chevron/.test(p.part) ? el.querySelector('svg') : null;
+      // Tabler's `color` prop is the svg's stroke attribute (currentColor unless Icon is given a color)
+      // (filled icons, e.g. Toast's, carry it in fill instead)
+      const paint = svg ? [getComputedStyle(svg).stroke, getComputedStyle(svg).fill].find(x => /^rgb|^color/.test(x)) : undefined;
+      if (p.text) out[layer]!.fill = svg ? (paint ?? getComputedStyle(svg).color) : cs.color;
       if (p.placeholder) out[layer]!.fill = getComputedStyle(el, '::placeholder').color; // the Figma layer shows placeholder text
     }
     return out;

@@ -140,7 +140,8 @@ async function resolvedColor(node, key, part = false) {
   // stroke (currentColor), or the text inside a wrapper frame that carries the part's own spacing.
   if (!p && part && key === 'fills' && node.type !== 'TEXT' && 'findOne' in node) {
     const inner = node.findOne(n => n.type === 'TEXT' || n.type === 'VECTOR');
-    p = inner && (inner[inner.type === 'TEXT' ? 'fills' : 'strokes'] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+    const solid = paints => (paints || []).find(x => x.type === 'SOLID' && x.visible !== false);
+    p = inner && (inner.type === 'TEXT' ? solid(inner.fills) : solid(inner.strokes) ?? solid(inner.fills)); // outline icon: stroke · filled: fill
     if (p) node = inner;
   }
   if (!p) return null;

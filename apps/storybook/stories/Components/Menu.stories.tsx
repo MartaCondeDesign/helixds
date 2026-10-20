@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useRef, useState } from 'react';
-import { expect, userEvent, waitFor, within } from '@storybook/test';
-import { Menu, MenuDoc } from '@helixds/react';
+import { useEffect, useRef, useState } from 'react';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { Button, Menu, MenuDoc } from '@helixds/react';
+import type { MenuProps } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
 
 const FRUITS = [
@@ -16,33 +17,40 @@ const GROUPED = [
   { label: 'Vegetable', options: [{ value: 'carrot', label: 'Carrot' }, { value: 'kale', label: 'Kale' }] },
 ];
 
-function Demo({ options }: { options: typeof FRUITS | typeof GROUPED }) {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string | undefined>();
+const WITH_STATES = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'pear',  label: 'Pear' },
+  { value: 'kiwi',  label: 'Kiwi', disabled: true },
+];
+
+// The story owns what an app would: the trigger, the open state and the chosen value. Every Menu prop
+// comes from the story's args, so they all show (and can be changed) in the Controls panel.
+function Demo(args: MenuProps) {
+  const [open, setOpen] = useState(args.expanded);
+  const [value, setValue] = useState<string | undefined>(args.value);
+  const [values, setValues] = useState<string[]>(args.values ?? []);
   const anchorRef = useRef<HTMLButtonElement>(null);
+  // follow the controls when they change
+  useEffect(() => setOpen(args.expanded), [args.expanded]);
+  useEffect(() => setValue(args.value), [args.value]);
+  useEffect(() => setValues(args.values ?? []), [args.values]);
 
   return (
     <>
-      <button
-        ref={anchorRef}
-        type="button"
-        onClick={() => setOpen(o => !o)}
-        style={{
-          height: 32, padding: '0 var(--helix-spacing-s)', borderRadius: 6,
-          border: '1px solid var(--helix-color-border-neutral)',
-          background: 'var(--helix-color-fill-page)', color: 'var(--helix-color-text-neutral)',
-          fontFamily: 'inherit', fontSize: 14, cursor: 'pointer',
-        }}
-      >
-        {value ?? 'Open menu'}
-      </button>
+      <Button ref={anchorRef} variant="secondary" onClick={() => setOpen(o => !o)}>
+        {(args.multiple ? (values.length ? `${values.length} selected` : undefined) : value) ?? 'Open menu'}
+      </Button>
       <Menu
-        id="demo-menu"
+        {...args}
         expanded={open}
         anchorRef={anchorRef}
-        options={options}
         value={value}
-        onSelect={v => { setValue(v); setOpen(false); }}
+        values={values}
+        onSelect={v => {
+          args.onSelect?.(v);
+          if (args.multiple) setValues(vs => (vs.includes(v) ? vs.filter(x => x !== v) : [...vs, v]));
+          else { setValue(v); setOpen(false); }
+        }}
       />
     </>
   );
@@ -53,20 +61,37 @@ const meta: Meta<typeof Menu> = {
   component:  Menu,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(MenuDoc),
+  args: {
+    id:       'demo-menu',
+    options:  FRUITS,
+    expanded: false,
+    multiple: false,
+    onSelect: fn(),
+  },
+  argTypes: {
+    options:     { control: 'object' },
+    value:       { control: 'text' },
+    values:      { control: 'object' },
+    expanded:    { control: 'boolean' },
+    multiple:    { control: 'boolean' },
+    anchorRef:   { table: { disable: true } }, // the story's own trigger button
+    activeValue: { table: { disable: true } }, // driven by the keyboard, not a design choice
+    className:   { table: { disable: true } },
+  },
+  render: args => <Demo {...args} />,
 };
 
 export default meta;
 type Story = StoryObj<typeof Menu>;
 
 export const Default: Story = {
-  render: () => <Demo options={FRUITS} />,
   parameters: {
     docs: { description: { story: 'Menu is normally consumed internally by Select (see Components/Select) — this story exercises it directly to show the primitive on its own.' } },
   },
 };
 
 export const Grouped: Story = {
-  render: () => <Demo options={GROUPED} />,
+  args: { options: GROUPED },
 };
 
 export const Opened: Story = {
@@ -74,10 +99,17 @@ export const Opened: Story = {
   // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
   // other story leaves on screen: their play tests open and close it again.
   tags: ['!autodocs'],
-  render: () => <Demo options={GROUPED} />,
+  args: { options: GROUPED },
   play: async ({ canvasElement }) => {
     await userEvent.click(within(canvasElement).getByRole('button', { name: 'Open menu' }));
     // The list is portaled to <body>, outside the story's own root
     await waitFor(() => expect(within(document.body).getByRole('listbox')).toBeVisible());
   },
+};
+
+export const States: Story = {
+  // Open from the start, with a selected and a disabled option — every MenuItem state on screen at once,
+  // with no play function, so `pnpm figma:expected MenuItem` can measure them (scripts/figma/expected-styles.ts).
+  tags: ['!autodocs'],
+  args: { options: WITH_STATES, expanded: true, value: 'pear' },
 };
