@@ -212,23 +212,25 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "open", "invalid", "disabled"],
+    "states": ["default", "hover", "focus", "open"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": ["default", "hover", "focus", "open", "invalid", "disabled"],
+        "values": ["default", "hover", "focus", "open"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code,  open is the menu-open state (aria-expanded); invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes,  open is the listbox showing (aria-expanded). invalid,  disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,  pattern form-field)."
       }
     ],
     "propertyMap": {
       "value": {
         "codeType": "string | undefined",
-        "figma": [{"name": "value", "type": "TEXT"}],
+        "figma": [{"name": "value", "type": "VARIANT", "values": ["empty", "selected"]}, {"name": "value text", "type": "TEXT"}],
         "approved": "2026-10-20",
-        "reason": "the selected option's label shown in the trigger (owner-approved exception)"
+        "reason": "the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and value text is the chosen label; selected is drawn once (owner-approved option A)"
       }
-    }
+    },
+    "structure": "select-root (8px gap) > select-label (text + select-required),  select-wrapper > select-trigger (hugs its text like code: select-trigger-label + select-chevron; open uses an unrotated ChevronUp,  code flips the chevron),  select-description,  select-error. The listbox itself is the Menu component,  not drawn here.",
+    "variantCombinations": "12 variants (2026-10-20): invalid × state default/hover/focus/open = 8,  disabled = 1,  hideLabel and fullWidth once each = 2,  value=selected once (default,  valid,  enabled) = 1. value=empty binds the trigger label to placeholder,  value=selected to value text."
   }
 }

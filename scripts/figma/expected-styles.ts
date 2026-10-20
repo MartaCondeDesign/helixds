@@ -115,10 +115,12 @@ const SPECS: Record<string, Spec> = {
   },
   Select: {
     story: 'components-select--default',
-    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
+    axes: { value: ['empty', 'selected'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
     states: ['default', 'hover', 'focus', 'open'],
+    // value=selected is drawn once (default, valid, enabled, no secondary) — contracts/components/Select.json → figma.propertyMap.value
+    skip: (v, s) => v.value === 'selected' && (s !== 'default' || v.invalid === 'true' || v.disabled === 'true' || v.hideLabel === 'true' || v.fullWidth === 'true'),
     args: v => ({ label: 'Role', placeholder: 'Choose a role…', required: true, description: 'Helper text', errorMessage: 'Error message',
-      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
+      ...(v.value === 'selected' ? { value: 'designer' } : {}), invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
     parts: {
       '(root)': { part: 'select-root' },
       'select-label': { part: 'select-label', text: true },

@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 126 of 185 code props match Figma exactly.**
+**Parity today: 138 of 186 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -431,20 +431,21 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
-| `value` | `string \| undefined` | `TEXT` `value` | exception, approved 2026-10-20 — the selected option's label shown in the trigger (owner-approved exception) | ✓ |
-| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✗ missing |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `value` | `string \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and value text is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
+| `value` | `string \| undefined` | `TEXT` `value text` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and value text is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
+| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
-**Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus` / `open`
+**Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 

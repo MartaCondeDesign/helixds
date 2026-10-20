@@ -288,7 +288,7 @@
           "fill": "#94a3b8"
         },
         "multi-select-chevron": {
-          "fill": "#475569"
+          "fill": "#94a3b8"
         },
         "multi-select-description": {
           "fill": "#94a3b8"
@@ -310,7 +310,7 @@
           "fill": "#475569"
         },
         "multi-select-chevron": {
-          "fill": "#94a3b8"
+          "fill": "#475569"
         },
         "multi-select-description": {
           "fill": "#475569"
@@ -743,7 +743,7 @@
           "stroke": "#f1f5f9"
         },
         "multi-select-chevron": {
-          "fill": "#475569"
+          "fill": "#94a3b8"
         },
         "multi-select-description": {
           "fill": "#94a3b8"
@@ -762,7 +762,7 @@
           "stroke": "#1e293b"
         },
         "multi-select-chevron": {
-          "fill": "#94a3b8"
+          "fill": "#475569"
         },
         "multi-select-description": {
           "fill": "#475569"
