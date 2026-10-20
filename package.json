@@ -88,7 +88,8 @@
     "changeset": "changeset",
     "release": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs",
     "release:first": "pnpm release",
-    "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run"
+    "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run",
+    "figma:props": "tsx scripts/figma/props.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",

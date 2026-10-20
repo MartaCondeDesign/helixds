@@ -46,10 +46,10 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
-| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
 
 **Only in Figma (no code prop of that name and type):** `content` (TEXT)
 
@@ -61,8 +61,8 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot | ✗ missing |
-| `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot | ✗ missing |
+| `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot — **pending approval** (pnpm figma:props) | ✗ missing |
+| `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
@@ -70,9 +70,9 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `src` | `string \| undefined` | `BOOLEAN` `src` | shows the photo | ✓ |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `src` | `string \| undefined` | `BOOLEAN` `src` | shows the photo — **pending approval** (pnpm figma:props) | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `initials` (TEXT)
 
@@ -82,7 +82,7 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `overflow` (BOOLEAN), `overflow count` (TEXT)
 
@@ -92,11 +92,11 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code | ✓ |
-| `size` | `'xs' \| 's'` | `VARIANT` `size` = `xs` / `s` | same values as code | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `size` | `'xs' \| 's'` | `VARIANT` `size` = `xs` / `s` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
 
@@ -106,16 +106,16 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code | ✓ |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
+| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `label` (TEXT)
 
@@ -127,10 +127,10 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `header` | `React.ReactNode \| undefined` | `BOOLEAN` `header` | shows the slot | ✓ |
-| `header` | `React.ReactNode \| undefined` | `TEXT` `header text` | its text | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
-| `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code | ✓ |
+| `header` | `React.ReactNode \| undefined` | `BOOLEAN` `header` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
+| `header` | `React.ReactNode \| undefined` | `TEXT` `header text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `content` (TEXT)
 
@@ -140,8 +140,8 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code | ✓ |
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chart-root`, `chart-canvas`, `chart-legend`, `chart-legend-swatch`, `chart-legend-item`, `chart-data`
 
@@ -149,34 +149,34 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
-| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked / indeterminate |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `checked` |
+| `label` | `string` | `TEXT` `label` | approved 2026-10-20 | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | approved 2026-10-20 | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | approved 2026-10-20 | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | approved 2026-10-20 | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | approved 2026-10-20 | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | approved 2026-10-20 | ✗ values unchecked / checked / indeterminate |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | approved 2026-10-20 | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | approved 2026-10-20 | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | approved 2026-10-20 | ✗ a value of `state` |
+| `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | approved 2026-10-20 | ✗ a value of `checked` |
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-description`, `checkbox-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
 ### CheckboxGroup (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✓ |
 
 **Figma-only `state`:** `default` / `invalid` / `disabled`
 
@@ -186,15 +186,15 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code | ✓ |
-| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
-| `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part | ✓ |
+| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part — **pending approval** (pnpm figma:props) | ✓ |
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
 
@@ -204,9 +204,9 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
 
 **Figma-only `state`:** `default` / `disabled`
 
@@ -216,10 +216,10 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon | ✗ missing |
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
 
@@ -229,8 +229,8 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `HelixIconComponent` | `INSTANCE_SWAP` `icon` | which icon | ✗ not in Figma |
-| `size` | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40` | `VARIANT` `size` = `12` / `14` / `16` / `18` / `20` / `24` / `28` / `32` / `36` / `40` | same values as code | ✗ not in Figma |
+| `icon` | `HelixIconComponent` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ not in Figma |
+| `size` | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40` | `VARIANT` `size` = `12` / `14` / `16` / `18` / `20` / `24` / `28` / `32` / `36` / `40` | same values as code — **pending approval** (pnpm figma:props) | ✗ not in Figma |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
@@ -238,12 +238,12 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon | ✓ |
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code | ✓ |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled` / `loading`
 
@@ -253,22 +253,22 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `value` (TEXT)
 
@@ -280,7 +280,7 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
@@ -288,15 +288,15 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
-| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part | ✓ |
-| `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | shows the part | ✗ missing |
-| `primaryActionLabel` | `string \| undefined` | `TEXT` `primaryActionLabel text` | its text | ✗ missing |
-| `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | shows the part | ✗ missing |
-| `secondaryActionLabel` | `string \| undefined` | `TEXT` `secondaryActionLabel text` | its text | ✗ missing |
-| `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | shows the part | ✗ missing |
-| `tertiaryActionLabel` | `string \| undefined` | `TEXT` `tertiaryActionLabel text` | its text | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part — **pending approval** (pnpm figma:props) | ✓ |
+| `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `primaryActionLabel` | `string \| undefined` | `TEXT` `primaryActionLabel text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `secondaryActionLabel` | `string \| undefined` | `TEXT` `secondaryActionLabel text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `tertiaryActionLabel` | `string \| undefined` | `TEXT` `tertiaryActionLabel text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `content` (TEXT), `tertiaryAction` (BOOLEAN), `secondaryAction` (BOOLEAN), `primaryAction` (BOOLEAN)
 
@@ -306,17 +306,17 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `value` (VARIANT: empty / selected)
 
@@ -328,10 +328,10 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
-| `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → true/false toggle | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon — **pending approval** (pnpm figma:props) | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon — **pending approval** (pnpm figma:props) | ✗ is BOOLEAN |
+| `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
 
@@ -343,11 +343,11 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code | ✓ |
-| `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
@@ -355,15 +355,15 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ values unchecked / checked |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
 
@@ -373,15 +373,15 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code | ✗ missing |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `checked` (VARIANT: unchecked / checked)
 
@@ -393,8 +393,8 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
 
 **Figma-only `state`:** `default` / `disabled`
 
@@ -404,17 +404,17 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text | ✗ missing |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `value` (TEXT)
 
@@ -426,8 +426,8 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `brand` | `React.ReactNode \| undefined` | `BOOLEAN` `brand` | shows the slot | ✓ |
-| `footer` | `React.ReactNode \| undefined` | `BOOLEAN` `footer` | shows the slot | ✓ |
+| `brand` | `React.ReactNode \| undefined` | `BOOLEAN` `brand` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
+| `footer` | `React.ReactNode \| undefined` | `BOOLEAN` `footer` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
@@ -435,10 +435,10 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
-| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part | ✓ |
-| `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part — **pending approval** (pnpm figma:props) | ✓ |
+| `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
 
 **Only in Figma (no code prop of that name and type):** `content` (TEXT)
 
@@ -448,13 +448,13 @@ disagree this table wins and the skill needs fixing.
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
-| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ values unchecked / checked |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `disabled`
 
@@ -470,19 +470,19 @@ _No design props._
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
-| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code | ✗ missing |
-| `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text — **pending approval** (pnpm figma:props) | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle — **pending approval** (pnpm figma:props) | ✗ missing |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code — **pending approval** (pnpm figma:props) | ✓ |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code — **pending approval** (pnpm figma:props) | ✗ missing |
+| `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Only in Figma (no code prop of that name and type):** `value` (TEXT)
 
@@ -502,8 +502,8 @@ _No design props._
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text | ✓ |
-| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text — **pending approval** (pnpm figma:props) | ✓ |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code — **pending approval** (pnpm figma:props) | ✗ missing |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
@@ -511,8 +511,8 @@ _No design props._
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `start` | `React.ReactNode \| undefined` | `BOOLEAN` `start` | shows the slot | ✓ |
-| `end` | `React.ReactNode \| undefined` | `BOOLEAN` `end` | shows the slot | ✓ |
+| `start` | `React.ReactNode \| undefined` | `BOOLEAN` `start` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
+| `end` | `React.ReactNode \| undefined` | `BOOLEAN` `end` | shows the slot — **pending approval** (pnpm figma:props) | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-start`, `topbar-end`
 

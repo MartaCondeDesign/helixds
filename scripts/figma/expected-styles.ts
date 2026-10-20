@@ -98,22 +98,15 @@ const SPECS: Record<string, Spec> = {
     parts: { '(root)': { part: 'select-trigger', fill: true, stroke: true }, 'select-trigger-label': { part: 'select-trigger-label', text: true } },
     target: 'select-trigger',
   },
+  // Exact parity (root CLAUDE.md rule 16): every look-changing boolean is its own false/true axis, like the props.
   Checkbox: {
-    story: 'components-checkbox--all-types',
-    axes: { checked: ['unchecked', 'checked', 'indeterminate'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: () => ({}),
+    story: 'components-checkbox--invalid',
+    axes: { checked: ['false', 'true'], indeterminate: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', indeterminate: v.indeterminate === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true' }),
     parts: { 'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true }, 'checkbox-text': { part: 'checkbox-text', text: true } },
     target: 'checkbox-label',
     focusTarget: 'checkbox-input',
-    // All Types = unchecked, checked, indeterminate · Disabled = unchecked, checked · Invalid = unchecked
-    locate: (v, state) => {
-      const nth = (n: number) => `[data-helix-part="checkbox-root"]:nth-of-type(${n})`;
-      const i = ['unchecked', 'checked', 'indeterminate'].indexOf(v.checked!) + 1;
-      if (state === 'disabled') return i <= 2 ? { story: 'components-checkbox--disabled', scope: nth(i) } : null;
-      if (state === 'invalid') return i === 1 ? { story: 'components-checkbox--invalid', scope: nth(1) } : null;
-      return { story: 'components-checkbox--all-types', scope: nth(i) };
-    },
   },
   RadioGroup: {
     story: 'components-radiogroup--default',

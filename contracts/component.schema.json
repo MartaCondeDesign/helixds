@@ -403,6 +403,32 @@
           "type": "string",
           "format": "date"
         },
+        "propertyMap": {
+          "type": "object",
+          "description": "How each code prop becomes a Figma property (root CLAUDE.md rule 16), approved by the design-system owner. Keyed by code prop name. `pnpm figma:props` proposes the conversion for every prop that has none (or whose type changed) and blocks the commit until the owner approves it with `pnpm figma:props --approve <Name>`. An empty `figma` list = the prop has no Figma property (behaviour, data, aria-only text).",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["codeType", "figma", "approved"],
+            "additionalProperties": false,
+            "properties": {
+              "codeType": { "type": "string", "description": "The prop's type when it was approved — a type change asks again." },
+              "figma": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "type"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": { "type": "string" },
+                    "type": { "enum": ["VARIANT", "BOOLEAN", "TEXT", "INSTANCE_SWAP"] },
+                    "values": { "type": "array", "items": { "type": "string" } }
+                  }
+                }
+              },
+              "approved": { "type": "string", "format": "date" }
+            }
+          }
+        },
         "states": {
           "type": "array",
           "items": {

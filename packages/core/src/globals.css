@@ -1692,6 +1692,11 @@
     line-height: var(--helix-checkbox-text-labelLineHeight);
     color:       var(--helix-checkbox-text-label);
   }
+  /* The required indicator (the `required` prop) — its own part so Figma has a layer for the BOOLEAN. */
+  [data-helix-part="checkbox-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
   /* checkbox-text sets its own color, so the disabled color on checkbox-label above never reached it. */
   [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-text"] {
     color: var(--helix-checkbox-text-disabled);
