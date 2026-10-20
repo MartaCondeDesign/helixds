@@ -354,12 +354,19 @@
           ]
         },
         {
-          "name": "state",
+          "name": "invalid",
           "type": "VARIANT",
           "values": [
-            "default",
-            "invalid",
-            "disabled"
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
           ]
         }
       ]
@@ -737,13 +744,17 @@
       ]
     },
     "RadioGroup": {
-      "nodeId": "425:699",
+      "nodeId": "600:1218",
       "type": "COMPONENT_SET",
       "page": "RadioGroup",
       "properties": [
         {
           "name": "label",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "description",
@@ -754,22 +765,35 @@
           "type": "TEXT"
         },
         {
-          "name": "checked",
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
+          "type": "TEXT"
+        },
+        {
+          "name": "orientation",
           "type": "VARIANT",
           "values": [
-            "unchecked",
-            "checked"
+            "vertical",
+            "horizontal"
           ]
         },
         {
-          "name": "state",
+          "name": "invalid",
           "type": "VARIANT",
           "values": [
-            "default",
-            "hover",
-            "focus",
-            "invalid",
-            "disabled"
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
           ]
         }
       ]
@@ -869,7 +893,7 @@
       ]
     },
     "Switch": {
-      "nodeId": "428:114",
+      "nodeId": "602:362",
       "type": "COMPONENT_SET",
       "page": "Switch",
       "properties": [
@@ -889,8 +913,8 @@
           "name": "checked",
           "type": "VARIANT",
           "values": [
-            "unchecked",
-            "checked"
+            "false",
+            "true"
           ]
         },
         {
@@ -902,13 +926,28 @@
           ]
         },
         {
+          "name": "hideLabel",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover",
-            "focus",
-            "disabled"
+            "focus"
           ]
         }
       ]

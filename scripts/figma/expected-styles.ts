@@ -119,37 +119,33 @@ const SPECS: Record<string, Spec> = {
   },
   RadioGroup: {
     story: 'components-radiogroup--default',
-    axes: { checked: ['unchecked', 'checked'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: () => ({}),
-    parts: { 'radio-control': { part: 'radio-control', fill: true, stroke: true }, 'radio-item-label': { part: 'radio-item-label', text: true } },
-    target: 'radio-item',
-    focusTarget: 'radio-input',
-    // Default/Invalid/Disabled stories: the 1st option is unchecked, the 2nd checked (Default/Disabled)
-    locate: (v, state) => {
-      const nth = (n: number) => `[data-helix-part="radio-item"]:nth-of-type(${n})`;
-      const i = v.checked === 'checked' ? 2 : 1;
-      if (state === 'disabled') return { story: 'components-radiogroup--disabled', scope: nth(i) };
-      if (state === 'invalid') return v.checked === 'unchecked' ? { story: 'components-radiogroup--invalid', scope: nth(1) } : null;
-      return { story: 'components-radiogroup--default', scope: nth(i) };
+    axes: { orientation: ['vertical', 'horizontal'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default'],
+    args: v => ({ orientation: v.orientation!, invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true,
+      description: 'Helper text', errorMessage: v.invalid === 'true' ? 'Error message' : '' }),
+    parts: {
+      '(root)': { part: 'radio-group' },
+      'radio-options': { part: 'radio-options' },
+      'radio-legend': { part: 'radio-legend', text: true },
+      'radio-required': { part: 'radio-required', text: true },
+      'radio-description': { part: 'radio-description', text: true },
+      'radio-error': { part: 'radio-error', text: true },
     },
+    target: 'radio-group',
   },
   Switch: {
-    story: 'components-switch--default',
-    axes: { checked: ['unchecked', 'checked'] },
-    states: ['default', 'hover', 'focus', 'disabled'],
-    args: () => ({}),
+    story: 'components-switch--checked',
+    axes: { checked: ['false', 'true'], size: ['s', 'm'], hideLabel: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', size: v.size!, hideLabel: v.hideLabel === 'true', disabled: v.disabled === 'true' }),
     parts: {
       'switch-track': { part: 'switch-track', fill: true },
       'switch-thumb': { part: 'switch-thumb', fill: true },
       'switch-label': { part: 'switch-label', text: true },
+      'switch-description': { part: 'switch-description', text: true },
     },
     target: 'switch-track',
-    // Default = unchecked, Checked = checked (both one switch, render-controlled) · Disabled = off, on
-    locate: (v, state) => {
-      if (state === 'disabled') return { story: 'components-switch--disabled', scope: `[data-helix-part="switch-root"]:nth-of-type(${v.checked === 'checked' ? 2 : 1})` };
-      return { story: v.checked === 'checked' ? 'components-switch--checked' : 'components-switch--default', scope: '[data-helix-part="switch-root"]' };
-    },
+    // disabled and hideLabel only at state=default — the standard's variant rules
   },
   Card: {
     story: 'components-card--default',
@@ -224,10 +220,18 @@ const SPECS: Record<string, Spec> = {
   },
   CheckboxGroup: {
     story: 'components-checkboxgroup--default',
-    axes: { orientation: ['vertical', 'horizontal'] },
-    states: ['default', 'invalid', 'disabled'],
-    args: (v, s) => ({ orientation: v.orientation!, invalid: s === 'invalid', errorMessage: s === 'invalid' ? 'Choose at least one.' : '', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'checkbox-group' }, 'legend': { part: 'checkbox-group-legend', text: true } },
+    axes: { orientation: ['vertical', 'horizontal'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default'],
+    args: v => ({ orientation: v.orientation!, invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true,
+      description: 'Helper text', errorMessage: v.invalid === 'true' ? 'Error message' : '' }),
+    parts: {
+      '(root)': { part: 'checkbox-group' },
+      'checkbox-group-options': { part: 'checkbox-group-options' },
+      'checkbox-group-legend': { part: 'checkbox-group-legend', text: true },
+      'checkbox-group-required': { part: 'checkbox-group-required', text: true },
+      'checkbox-group-description': { part: 'checkbox-group-description', text: true },
+      'checkbox-group-error': { part: 'checkbox-group-error', text: true },
+    },
     target: 'checkbox-group',
   },
   FAB: {
@@ -379,7 +383,7 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       const cs = getComputedStyle(el);
       // not rendered in this combination (e.g. Radio's dot at scale 0 when unchecked) → no Figma layer to compare
       const box = el.getBoundingClientRect();
-      if (box.width === 0 || box.height === 0 || cs.visibility === 'hidden' || cs.opacity === '0') continue;
+      if (box.width <= 1 || box.height <= 1 || cs.visibility === 'hidden' || cs.opacity === '0') continue; // (1px = sr-only, e.g. hideLabel)
       out[layer] = {};
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';

@@ -158,17 +158,32 @@
   },
 
   "figma": {
-    "states": ["default", "invalid", "disabled"],
+    "states": ["default"],
     "properties": [
       { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
-      { "name": "state", "type": "VARIANT", "values": ["default", "invalid", "disabled"], "figmaOnly": true, "description": "The group's invalid/disabled props, passed down to every option (hover/focus live on each Checkbox)." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "required", "type": "BOOLEAN", "codeProp": "required", "description": "Shows the danger * after the legend (2px apart)." },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: indented 24px (16px box + 8px) to line up with the option text." },
+      {
+        "name": "required",
+        "type": "BOOLEAN",
+        "codeProp": "required",
+        "description": "Shows the danger * (checkbox-group-required) after the legend,  2px apart; text/disabled when disabled."
+      },
+      {
+        "name": "description",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part: indented 24px (16px box + 8px) to line up with the option text."
+      },
       { "name": "description text", "type": "TEXT", "codeProp": "description" },
-      { "name": "errorMessage", "type": "BOOLEAN", "codeProp": "errorMessage", "description": "Show/hide part: same indent; code shows it instead of the description." },
+      {
+        "name": "errorMessage",
+        "type": "BOOLEAN",
+        "codeProp": "errorMessage",
+        "description": "Show/hide part: same indent; code shows it instead of the description."
+      },
       { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
     ],
-    "structure": "checkbox-group (8px gap) > checkbox-group-legend, checkbox-group-options (12px gap, real Checkbox instances), description, error. Options are a fixed sample of three — options[] has no Figma property."
+    "structure": "checkbox-group (8px gap) > checkbox-group-legend,  checkbox-group-options (12px gap,  real Checkbox instances),  description,  error. Options are a fixed sample of three — options[] has no Figma property.",
+    "variantCombinations": "6 variants (2026-10-20): orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
   }
 }

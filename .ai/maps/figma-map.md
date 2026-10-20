@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 84 of 181 code props match Figma exactly.**
+**Parity today: 95 of 181 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -184,11 +184,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
-
-**Figma-only `state`:** `default` / `invalid` / `disabled`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
@@ -408,18 +406,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✗ missing |
+| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `checked` (VARIANT: unchecked / checked)
-
-**Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
@@ -493,14 +487,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
-| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ values unchecked / checked |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `focus` / `disabled`
+**Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `switch-root`, `switch-row`, `switch-track`, `switch-thumb`, `switch-label`, `switch-description`
 

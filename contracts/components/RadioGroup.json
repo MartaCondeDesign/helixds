@@ -186,43 +186,32 @@
   },
 
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "invalid",
-      "disabled"
-    ],
+    "states": ["default"],
     "properties": [
+      { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
+      { "name": "label", "type": "TEXT", "codeProp": "label", "description": "The legend." },
       {
-        "name": "checked",
-        "type": "VARIANT",
-        "values": [
-          "unchecked",
-          "checked"
-        ],
-        "codeProp": "value",
-        "description": "One option of the group: checked when its value equals the group `value`."
+        "name": "required",
+        "type": "BOOLEAN",
+        "codeProp": "required",
+        "description": "Shows the danger * (radio-required) after the legend,  2px apart; text/disabled when disabled."
       },
       {
-        "name": "state",
-        "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "invalid",
-          "disabled"
-        ],
-        "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "name": "description",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part: indented 24px (16px circle + 8px) to line up with the option text."
       },
+      { "name": "description text", "type": "TEXT", "codeProp": "description" },
       {
-        "name": "label",
-        "type": "TEXT",
-        "codeProp": "options[].label",
-        "description": "The option label text."
-      }
-    ]
+        "name": "errorMessage",
+        "type": "BOOLEAN",
+        "codeProp": "errorMessage",
+        "description": "Show/hide part: same indent; code shows it instead of the description."
+      },
+      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+    ],
+    "structure": "radio-group (8px gap) > radio-legend (text + radio-required),  radio-options (12px gap,  real RadioButton instances: Free,  Pro checked,  Team,  Enterprise),  radio-description,  radio-error. Options are a fixed sample — options[] and value have no Figma property.",
+    "variantCombinations": "6 variants (2026-10-20): orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each RadioButton option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
   }
 }
