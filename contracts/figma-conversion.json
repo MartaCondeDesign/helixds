@@ -1,6 +1,6 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "approved": "2026-10-20",
 
   "naming": {
@@ -21,9 +21,9 @@
     { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
     { "id": "slot", "when": "an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…)", "figma": ["BOOLEAN {name}", "TEXT {name} text (only for slotsWithText)"], "why": "shows the slot" },
     { "id": "photo", "when": "a prop listed in photoProps (Avatar's src)", "figma": ["BOOLEAN {name}"], "why": "shows the photo" },
-    { "id": "text", "when": "a required string or ReactNode, placeholder, or children of a textChildren component", "figma": ["TEXT {name}"], "why": "its text" },
+    { "id": "text", "when": "a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component", "figma": ["TEXT {name}"], "why": "its text" },
     { "id": "optional-text", "when": "an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop)", "figma": ["BOOLEAN {name}", "TEXT {name} text"], "why": "shows the part · its text" },
-    { "id": "aria-text", "when": "an optional string with no part of its own (Icon's label, Chart's description)", "figma": [], "why": "read by screen readers only" }
+    { "id": "aria-text", "when": "a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title or -content part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description", "figma": [], "why": "read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20)" }
   ],
 
   "skip": {

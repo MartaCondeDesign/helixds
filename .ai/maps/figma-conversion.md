@@ -25,11 +25,12 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Union `'a' \| 'b'`, `1 \| 2` | `VARIANT`, same name, same values | dropdown | `union` |
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
-| Required string (`label`), `placeholder`, the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name | text field | `text` |
+| Required string a part renders (`label` → `{prefix}-label` / `-legend`), `placeholder`, the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name | text field | `text` |
 | Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name` + `TEXT` `name text` | toggle + text field | `optional-text` |
 | Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `name swap` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
+| A string no part renders — the `aria-label` `label` of IconButton, FAB, ChipGroup, SegmentedControl; Chart's `description` | — | not a design property: nothing to draw | `aria-text` |
 
 **Why a look-changing boolean is a VARIANT, not a BOOLEAN:** a Figma BOOLEAN can only show or hide a layer. It
 can't change a color or a size, and `true` always means "visible" — so `hideLabel=true` could never hide the

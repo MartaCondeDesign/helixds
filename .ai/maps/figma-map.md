@@ -5,11 +5,11 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 147 of 185 code props match Figma exactly.**
+**Parity today: 147 of 180 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.3.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.4.0 (owner-approved 2026-10-20; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -25,9 +25,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `look-boolean` | any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer) | `VARIANT {name} = false / true` | changes the look → false/true toggle |
 | `slot` | an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…) | `BOOLEAN {name}` + `TEXT {name} text (only for slotsWithText)` | shows the slot |
 | `photo` | a prop listed in photoProps (Avatar's src) | `BOOLEAN {name}` | shows the photo |
-| `text` | a required string or ReactNode, placeholder, or children of a textChildren component | `TEXT {name}` | its text |
+| `text` | a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component | `TEXT {name}` | its text |
 | `optional-text` | an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop) | `BOOLEAN {name}` + `TEXT {name} text` | shows the part · its text |
-| `aria-text` | an optional string with no part of its own (Icon's label, Chart's description) | — | read by screen readers only |
+| `aria-text` | a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title or -content part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description | — | read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20) |
 
 - Figma property name = code prop name, unchanged (isLoading, not loading; children, not label).
 - VARIANT values = code values, unchanged (primary, stacked-bar, false).
@@ -73,7 +73,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
 | `src` | `string \| undefined` | `BOOLEAN` `src` | shows the photo · `photo` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 
@@ -215,7 +214,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
 
@@ -230,7 +228,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ missing |
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
 
@@ -254,7 +251,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
@@ -418,7 +414,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
 
 **Figma-only `state`:** `default` / `disabled`

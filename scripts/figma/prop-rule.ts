@@ -56,10 +56,12 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
     : out('text', [{ name, type: 'TEXT' }]);
   if (/^string/.test(type)) {
     if (has(STANDARD.photoProps, name)) return out('photo', [{ name, type: 'BOOLEAN' }]);
-    if (name === 'placeholder' || !optional) return out('text', [{ name, type: 'TEXT' }]);
+    if (name === 'placeholder') return out('text', [{ name, type: 'TEXT' }]);
     const partSuffix = STANDARD.partSuffix[name] ?? name.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
-    const visible = parts.some(part => part.endsWith('-' + partSuffix)) || /Label$/.test(name);
-    if (!visible) return []; // aria-text: read by screen readers only
+    // a part renders it: {prefix}-{suffix} in the anatomy (a label can render as the -legend, -title or -content part), or a *Label prop
+    const visible = parts.some(part => part.endsWith('-' + partSuffix) || (name === 'label' && /-(legend|title|content)$/.test(part))) || /Label$/.test(name);
+    if (!visible) return []; // aria-text: read by screen readers only (IconButton's label, an optional aria description)
+    if (!optional) return out('text', [{ name, type: 'TEXT' }]);
     return out('optional-text', [{ name, type: 'BOOLEAN' }, { name: `${name} text`, type: 'TEXT' }], ['shows the part', 'its text']);
   }
   return [{ name, type: 'TEXT', rule: UNMATCHED, why: 'no rule in contracts/figma-conversion.json covers this type — extend the standard' }];
