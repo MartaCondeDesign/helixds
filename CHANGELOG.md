@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped (latest commit)
+- 2026-10-20 — verify:stable: all 33 components stable (Figma ✓ for every one) (latest commit)
+- 2026-10-20 — Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped ([`792b183`](https://github.com/MartaCondeDesign/helixds/commit/792b183))
 - 2026-10-20 — Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma ([`214d93f`](https://github.com/MartaCondeDesign/helixds/commit/214d93f))
 - 2026-10-20 — Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip ([`0a39133`](https://github.com/MartaCondeDesign/helixds/commit/0a39133))
 - 2026-10-20 — Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected) ([`f7c8e42`](https://github.com/MartaCondeDesign/helixds/commit/f7c8e42))

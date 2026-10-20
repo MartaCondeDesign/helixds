@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Chart",
   "version": "1.2.0",
-  "status": "beta",
+  "status": "stable",
   "purpose": "Visualizes a metric with a token-branded, accessible chart so people can understand trends, comparisons, composition, or events.",
   "import": "import { Chart } from '@helixds/react';",
   "neverUseFor": ["Raw ECharts options or a product-specific chart renderer", "Precise audit values without an accompanying Table", "More than six donut categories"],

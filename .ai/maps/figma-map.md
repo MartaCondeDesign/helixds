@@ -55,7 +55,7 @@ Not decidable from types alone — check the skill: `required` with no visible i
 - `accordion-panel`
 - `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, draft)
+### AppShell (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 
@@ -64,7 +64,7 @@ _No Figma-mappable props._
 - `app-shell-content`
 - `app-shell-main`
 
-### Avatar (`v1.0.0`, draft)
+### Avatar (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -76,7 +76,7 @@ _No Figma-mappable props._
 - `avatar-image`
 - `avatar-initials`
 
-### AvatarGroup (`v0.1.0`, draft)
+### AvatarGroup (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -121,7 +121,7 @@ _No Figma-mappable props._
 - `button-label`
 - `button-icon-end`
 
-### Card (`v1.0.0`, draft)
+### Card (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ _No Figma-mappable props._
 - `card-header`
 - `card-body`
 
-### Chart (`v1.2.0`, beta)
+### Chart (`v1.2.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -238,7 +238,7 @@ _No Figma-mappable props._
 - `fab-actions`
 - `fab-action`
 
-### Icon (`v1.0.0`, draft)
+### Icon (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -291,7 +291,7 @@ _No Figma-mappable props._
 - `input-description`
 - `input-error`
 
-### Menu (`v0.3.0`, draft)
+### Menu (`v0.3.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -352,7 +352,7 @@ _No Figma-mappable props._
 - `multi-select-description`
 - `multi-select-error`
 
-### NavItem (`v1.0.0`, draft)
+### NavItem (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -464,7 +464,7 @@ _No Figma-mappable props._
 - `select-description`
 - `select-error`
 
-### SideNav (`v1.0.0`, draft)
+### SideNav (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 
@@ -474,7 +474,7 @@ _No Figma-mappable props._
 - `side-nav-items`
 - `side-nav-footer`
 
-### SidePanel (`v0.1.0`, draft)
+### SidePanel (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -512,7 +512,7 @@ _No Figma-mappable props._
 - `switch-label`
 - `switch-description`
 
-### Table (`v1.0.0`, draft)
+### Table (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 
@@ -575,7 +575,7 @@ _No Figma-mappable props._
 - `tooltip-root`
 - `tooltip-content`
 
-### TopBar (`v1.0.0`, draft)
+### TopBar (`v1.0.0`, stable)
 
 _No Figma-mappable props._
 
