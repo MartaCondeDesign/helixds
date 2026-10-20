@@ -135,100 +135,140 @@ function variantValues(propName: string, codeType: string): string {
     .join(', ');
 }
 
+// ── Exact parity rule (owner's decision 2026-10-20) ─────────────────────────────────────────────────
+// Every code prop a designer can see has a Figma property with the SAME NAME, shown the same way in the
+// properties panel: a code boolean is a Figma toggle, a code string is a Figma text field, a code union is a
+// Figma dropdown with the same values. The one Figma-only property is `state` (hover / press / focus / open),
+// because those are CSS pseudo-classes, not props.
+type Expected = { name: string; type: 'VARIANT' | 'BOOLEAN' | 'TEXT' | 'INSTANCE_SWAP'; values?: string[]; why: string };
+
+// Not a design choice: behaviour, data, ids and wiring.
+const SKIP = (name: string, type: string) =>
+  /^on[A-Z]/.test(name) || /^default[A-Z]/.test(name) || name.startsWith('aria-') ||
+  ['className', 'id', 'name', 'href', 'ref', 'anchorRef', 'activeValue', 'invalidAttempt', 'closeOnBackdropClick',
+   'decorative', 'rows', 'maxLength', 'max', 'height', 'stroke', 'color', 'values'].includes(name) ||
+  /\[\]|Array<|RefObject/.test(type) || (name === 'value' && !/^string$/.test(type.trim()));
+// A boolean that only shows or hides a part → a real BOOLEAN. Any other boolean changes the look → a VARIANT
+// with the values false / true (Figma shows a two-value true/false variant as an on/off toggle too).
+const SHOW_HIDE_BOOLEANS = new Set(['required', 'showCloseButton', 'showCount', 'dismissible']);
+// Props whose Figma layer is another component or free content, not a property.
+const NESTED = (name: string, type: string) => type.includes('ReactElement') || (name === 'children' && type.includes('ReactNode') && !TEXT_CHILDREN.has(currentComponent));
+const TEXT_CHILDREN = new Set(['Button', 'Accordion', 'Modal', 'SidePanel', 'Card']);
+let currentComponent = '';
+const OVERLAYS = new Set(['Modal', 'SidePanel', 'Menu', 'Tooltip']);
+
+function expectedFor(prop: Prop, parts: string[]): Expected[] {
+  const name = prop.name, type = (prop.type ?? '').replace(/\s+/g, ' ').trim();
+  if (SKIP(name, type) || NESTED(name, type)) return [];
+  // An overlay's `expanded` is whether it's on screen at all — Figma draws it open, there's no closed look.
+  if (name === 'expanded' && OVERLAYS.has(currentComponent)) return [];
+  const optional = !prop.required && /undefined/.test(type);
+  if (/TablerIcon|HelixIconComponent/.test(type)) return optional
+    ? [{ name, type: 'BOOLEAN', why: 'shows the icon' }, { name, type: 'INSTANCE_SWAP', why: 'which icon' }]
+    : [{ name, type: 'INSTANCE_SWAP', why: 'which icon' }];
+  const literals = type.split('|').map(t => t.trim()).filter(t => t !== 'undefined');
+  if (literals.length > 1 && literals.every(t => /^'[^']*'$/.test(t) || /^\d+$/.test(t)))
+    return [{ name, type: 'VARIANT', values: literals.map(t => t.replace(/'/g, '')), why: 'same values as code' }];
+  if (/^boolean/.test(type))
+    return SHOW_HIDE_BOOLEANS.has(name) ? [{ name, type: 'BOOLEAN', why: 'shows / hides a part' }]
+      : [{ name, type: 'VARIANT', values: ['false', 'true'], why: 'changes the look → true/false toggle' }];
+  if (/ReactNode/.test(type)) return optional
+    ? (name === 'header' ? [{ name, type: 'BOOLEAN', why: 'shows the slot' }, { name: `${name} text`, type: 'TEXT', why: 'its text' }] : [{ name, type: 'BOOLEAN', why: 'shows the slot' }])
+    : [{ name, type: 'TEXT', why: 'its text' }];
+  if (/^string/.test(type)) {
+    if (name === 'src') return [{ name, type: 'BOOLEAN', why: 'shows the photo' }];
+    if (name === 'placeholder' || !optional) return [{ name, type: 'TEXT', why: 'its text' }];
+    const partSuffix = PART_SUFFIX[name] ?? name.replace(/[A-Z]/g, c => '-' + c.toLowerCase());
+    const visible = parts.some(part => part.endsWith('-' + partSuffix)) || /Label$/.test(name);
+    if (!visible) return []; // aria-only text (Icon's label, Chart's description)
+    return [{ name, type: 'BOOLEAN', why: 'shows the part' }, { name: `${name} text`, type: 'TEXT', why: 'its text' }];
+  }
+  return [];
+}
+
+type FigmaProp = { name: string; type: string; values?: string[] };
+const snapshotPath = path.join(root, '.ai/figma-props.json');
+const snapshot: Record<string, { properties: FigmaProp[] }> = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf-8')).components : {};
+
+function compare(e: Expected, figma: FigmaProp[] | undefined): string {
+  if (!figma) return '✗ not in Figma';
+  const same = figma.find(f => f.name === e.name && f.type === e.type);
+  if (same && (e.type !== 'VARIANT' || JSON.stringify([...(same.values ?? [])].sort()) === JSON.stringify([...(e.values ?? [])].sort()))) return '✓';
+  if (same) return `✗ values ${(same.values ?? []).join(' / ')}`;
+  const byName = figma.find(f => f.name === e.name);
+  if (byName) return `✗ is ${byName.type}${byName.values ? ` (${byName.values.join(' / ')})` : ''}`;
+  const inState = figma.find(f => f.type === 'VARIANT' && (f.values ?? []).includes(e.name));
+  if (inState) return `✗ a value of \`${inState.name}\``;
+  return '✗ missing';
+}
+
 const CONVENTIONS = `<!-- helix:figma-map-conventions — stable, hand-maintained -->
-## Prop → Figma property: general conventions
+## Code prop → Figma property: the exact rule
 
-Summary of \`.ai/skills/components-to-figma.md\` ("Prop taxonomy" + its exceptions) — that skill is the
-authority; if the two ever disagree, the skill wins and this generator needs fixing.
+Every code prop a designer can see is a Figma property with **the same name**, shown **the same way** in the
+properties panel (owner's decision, 2026-10-20). \`.ai/skills/components-to-figma.md\` applies it; if the two ever
+disagree this table wins and the skill needs fixing.
 
-| Code shape | Figma property | Notes |
+| Code prop | Figma property | Shown in the panel as |
 |---|---|---|
-| \`'a' \\| 'b'\` (string union) | \`VARIANT\` | Values exactly as in code — \`variant=primary\`, never \`Variant=Primary\` |
-| \`boolean\` | \`BOOLEAN\` | Except \`disabled\` ↓ |
-| \`disabled\` | \`VARIANT\` (\`false\` / \`true\`) | A BOOLEAN can't express the disabled visual change (skill: "Disabled state rule") |
-| Required label-like \`string\` | \`TEXT\` | \`label\`, \`children\`, and \`placeholder\` (always shown when empty) |
-| Optional label-like \`string\` | \`BOOLEAN\` + \`TEXT\` | A show/hide part (\`description\`, \`errorMessage\`…): BOOLEAN \`description\` on the part's visibility + TEXT \`description text\` for its content. Code stays implicit — passing the prop shows the part (show-hide-parts.md) |
-| Icon component (\`icon\`, \`iconEnd\`) | \`BOOLEAN\` + \`INSTANCE_SWAP\` | Both bound to the same icon layer; BOOLEAN-only fallback if the icon library isn't in Figma yet |
-| Event handlers, refs, callbacks, arrays/objects | — | Not expressed in Figma |
-
-Not decidable from types alone — check the skill: \`required\` with no visible indicator is skipped;
-\`children\` that nests other components is a nested layer, not a property.
+| \`'a' \\| 'b'\` or \`1 \\| 2\` (union) | \`VARIANT\`, same name, **same values** | dropdown |
+| \`boolean\` that changes the look (\`disabled\`, \`invalid\`, \`checked\`, \`isLoading\`, \`current\`, \`expanded\`, \`fullWidth\`, \`hideLabel\`…) | \`VARIANT\` with values \`false\` / \`true\` | on/off toggle — a Figma BOOLEAN can only show/hide a layer, it can't change a color or size |
+| \`boolean\` that only shows/hides a part (\`required\`, \`showCloseButton\`, \`showCount\`, \`dismissible\`) | \`BOOLEAN\`, same name | on/off toggle |
+| Required \`string\` (\`label\`, \`placeholder\`) or the text \`children\` of Button/Accordion/Modal/SidePanel/Card | \`TEXT\`, same name (\`children\` stays \`children\`) | text field |
+| Optional \`string\` with a visible part (\`description\`, \`errorMessage\`, \`primaryActionLabel\`…) | \`BOOLEAN\` \`name\` (shows the part) + \`TEXT\` \`name text\` (its content) | toggle + text field |
+| Icon (\`icon\`, \`iconEnd\`) | \`BOOLEAN\` \`name\` + \`INSTANCE_SWAP\` \`name\` (a required icon: only the swap) | toggle + icon picker |
+| Optional slot (\`header\`, \`actions\`, \`brand\`, \`footer\`, \`start\`, \`end\`, \`sidenav\`, \`topbar\`) | \`BOOLEAN\`, same name | toggle |
+| Figma only: \`state\` | \`VARIANT\` \`default\` / \`hover\` / \`press\` / \`focus\` (+ \`open\`, \`selected\`…) | dropdown — CSS pseudo-classes, not props; \`disabled\`/\`invalid\` are NOT in it |
+| Handlers, ids, refs, data arrays, \`default*\` twins, aria-only text, an overlay's \`expanded\` (Modal/SidePanel/Menu/Tooltip: closed = not on screen) | — | not a design property |
 
 ### Naming rules
 
-- **Figma property name** = code prop name, **unchanged** (\`variant\`, \`size\`, \`disabled\`).
-- **VARIANT values** = code values, **unchanged** (\`primary\`, \`icon-only\`, \`false\`).
+- **Figma property name** = code prop name, **unchanged** (\`isLoading\`, not \`loading\`; \`children\`, not \`label\`).
+- **VARIANT values** = code values, **unchanged** (\`primary\`, \`stacked-bar\`, \`false\`).
 - **Layer names** = the \`data-helix-part\` values from the TSX — never invented. Visually hidden native
   inputs (\`checkbox-input\`, \`radio-input\`, \`select-native\`) exist in code but are not layers.
+- **Figma today** is read from \`.ai/figma-props.json\` (a snapshot of the Figma file — refresh it through the
+  Figma MCP after changing a component in Figma, then \`pnpm docs:figma-map\`).
 <!-- /helix:figma-map-conventions -->`;
 
 function run() {
-  const contractFiles = fs.readdirSync(contractsDir)
-    .filter(f => f.endsWith('.json'))
-    .sort();
-
+  const contractFiles = fs.readdirSync(contractsDir).filter(f => f.endsWith('.json')).sort();
   const sections: string[] = [];
-
+  let total = 0, ok = 0;
   for (const file of contractFiles) {
-    const contract = JSON.parse(
-      fs.readFileSync(path.join(contractsDir, file), 'utf-8'),
-    ) as Contract;
-
-    if (!contract.props || contract.props.length === 0) continue;
-
-    const rows: PropRow[] = [];
-
+    const contract = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf-8')) as Contract;
+    currentComponent = contract.name;
     const parts = extractAnatomyParts(contract.name);
-    for (const prop of contract.props) {
-      const kind = inferFigmaKind(prop.name, prop.type ?? '', prop.required === true, parts);
-      if (!kind) continue;
-
-      rows.push({
-        name:         prop.name,
-        codeType:     prop.type ?? '',
-        figmaKind:    kind,
-        // rendered inside backticks: an optional part lists both properties, `description` + `description text`
-        figmaProperty: kind === 'OPTIONAL_TEXT' ? `${prop.name}\` + \`${prop.name} text` : prop.name,
-        values:       kind === 'VARIANT' ? variantValues(prop.name, prop.type ?? '') : '—',
-      });
+    const figma = snapshot[contract.name]?.properties;
+    const rows: string[] = [];
+    const used = new Set<string>();
+    for (const prop of contract.props ?? []) {
+      for (const e of expectedFor(prop, parts)) {
+        const status = compare(e, figma);
+        total++; if (status === '✓') ok++;
+        const m = figma?.find(f => f.name === e.name && f.type === e.type); if (m) used.add(m.name + m.type);
+        const fig = e.type === 'VARIANT' ? `\`${e.name}\` = ${e.values!.map(v => `\`${v}\``).join(' / ')}` : `\`${e.name}\``;
+        rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | \`${e.type}\` ${fig} | ${e.why} | ${status} |`);
+      }
     }
-
-    const anatomyParts = extractAnatomyParts(contract.name);
-
-    if (rows.length === 0 && anatomyParts.length === 0) continue;
-
-    const kindLabel = (r: PropRow) =>
-      r.figmaKind === 'ICON_SLOT' ? '`BOOLEAN` + `INSTANCE_SWAP`'
-        : r.figmaKind === 'OPTIONAL_TEXT' ? '`BOOLEAN` + `TEXT`'
-        : `\`${r.figmaKind}\``;
-
-    const propSection = rows.length > 0
-      ? `| Code prop | Code type | Figma kind | Figma property | Values |\n` +
-        `|---|---|---|---|---|\n` +
-        rows.map(r =>
-          `| \`${r.name}\` | \`${r.codeType.replace(/\|/g, '\\|')}\` | ${kindLabel(r)} | \`${r.figmaProperty}\` | ${r.values} |`,
-        ).join('\n')
-      : '_No Figma-mappable props._';
-
-    const anatomySection = anatomyParts.length > 0
-      ? `**Anatomy layers** (Figma layer name = \`data-helix-part\` value):\n` +
-        anatomyParts.map(p => `- \`${p}\``).join('\n')
-      : '';
-
-    sections.push(
-      `### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n` +
-      propSection +
-      (anatomySection ? '\n\n' + anatomySection : ''),
-    );
+    const extra = (figma ?? []).filter(f => !used.has(f.name + f.type) && f.name !== 'state');
+    const table = rows.length
+      ? `| Code prop | Code type | Figma property | Why | Figma today |\n|---|---|---|---|---|\n${rows.join('\n')}`
+      : '_No design props._';
+    const extraLine = extra.length ? `\n\n**Only in Figma (no code prop of that name and type):** ${extra.map(f => `\`${f.name}\` (${f.type}${f.values ? ': ' + f.values.join(' / ') : ''})`).join(', ')}` : '';
+    const stateLine = figma?.find(f => f.name === 'state') ? `\n\n**Figma-only \`state\`:** ${figma.find(f => f.name === 'state')!.values!.map(v => `\`${v}\``).join(' / ')}` : '';
+    const anatomy = parts.length ? `\n\n**Anatomy layers** (Figma layer name = \`data-helix-part\` value): ${parts.map(p => `\`${p}\``).join(', ')}` : '';
+    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${table}${extraLine}${stateLine}${anatomy}`);
   }
-
   const out =
     `<!-- GENERATED by scripts/docs-figma-map.ts — do not hand-edit the component sections below.
      Run \`pnpm docs:figma-map\` to regenerate. The conventions block is stable and hand-maintained. -->
 # Helix → Figma prop map
 
-Maps every Helix component prop to its expected Figma property.
-**Read by:** \`.ai/skills/components-to-figma.md\` (mandatory pre-read) · Figma-parity audit.
+Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
+today. **Read by:** \`.ai/skills/components-to-figma.md\` (mandatory pre-read) · Figma-parity audit.
+
+**Parity today: ${ok} of ${total} code props match Figma exactly.**
 
 ${CONVENTIONS}
 
@@ -242,9 +282,8 @@ ${sections.join('\n\n')}
 
 <!-- /helix:figma-map-components -->
 `;
-
   fs.writeFileSync(outPath, out, 'utf-8');
-  console.log(`✓ .ai/maps/figma-map.md  —  ${sections.length} components`);
+  console.log(`✓ .ai/maps/figma-map.md  —  ${sections.length} components, ${ok}/${total} props match Figma`);
 }
 
 run();

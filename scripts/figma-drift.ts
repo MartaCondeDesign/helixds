@@ -116,6 +116,12 @@ export function figmaCheck(name: string, contractPath: string, figmaEntry: any |
   const audit = figmaEntry.audit;
   if (!audit?.pass) return { state: 'drift', details: ['Not audited — run scripts/figma/audit-component.js and record the passing result in figma-sync.json (components-to-figma.md, Phase 6)'] };
   if (figmaEntry.syncedCommit && audit.commit !== figmaEntry.syncedCommit) return { state: 'drift', details: [`Audit is for ${String(audit.commit).slice(0, 7)}, not the synced commit ${String(figmaEntry.syncedCommit).slice(0, 7)} — re-run the audit`] };
+  // Exact property parity (root CLAUDE.md rule 16): every code prop has its Figma property with the same name and
+  // kind — read from .ai/maps/figma-map.md (pnpm docs:figma-map, Figma side from .ai/figma-props.json).
+  const map = readNow('.ai/maps/figma-map.md') ?? '';
+  const section = map.split(/^### /m).find(sec => sec.startsWith(`${name} (`)) ?? '';
+  const mismatched = section.split('\n').filter(l => /\| ✗[^|]*\|\s*$/.test(l)).map(l => l.split(/(?<!\\)\|/)[3]?.trim().replace(/`/g, '')).filter(Boolean);
+  if (mismatched.length) return { state: 'drift', details: [`Figma properties differ from the code props (${mismatched.length}): ${mismatched.join(', ')} — see .ai/maps/figma-map.md`] };
   const rev = baselineRev(figmaEntry);
   const syncedAt = figmaEntry.syncedCommit ? `commit ${String(figmaEntry.syncedCommit).slice(0, 7)}` : figmaEntry.lastChecked;
   if (!rev) return { state: 'drift', details: ['No sync point recorded in figma-sync.json — re-check it against code'], syncedAt };

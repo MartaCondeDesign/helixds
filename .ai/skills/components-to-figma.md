@@ -26,7 +26,9 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    press and focus don't exist as props in code (they're CSS pseudo-classes) — they are **figma-only
    properties** and must be declared in the contract's `figma.properties` with `"figmaOnly": true`
    (see `contracts/component.schema.json` → `figma`). Designing only "default + disabled" is a failed sync.
-   A `disabled` prop folds into this same `state` axis — not a separate `disabled=true/false` axis.
+   **Since 2026-10-20 `state` holds only the pseudo-class states** (hover, press, focus, open…). Props that change
+   the look — `disabled`, `invalid`, `checked`, `isLoading`, `current`, `expanded` — are their own `false`/`true`
+   VARIANT, named exactly like the prop (rule 10 below; root `CLAUDE.md` rule 16).
 2. **Colors come from code, not from reading CSS.** Run `pnpm figma:expected <Name>` (Storybook running):
    it renders each variant × state in light AND dark and records the real computed colors. Bind each
    fill/stroke/text to the Theme variable that produces that color. Never a raw hex, never a Primitives
@@ -69,6 +71,13 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
      resize it to the final variant size after text styles are applied (instances then stretch fine).
 8. **Audit before recording.** Phase 6 must return `pass: true`, and its result is recorded in
    `contracts/figma-sync.json` (`audit: { pass, commit, date, counts }`) next to `syncedCommit`.
+10. **Exact property parity (root `CLAUDE.md` rule 16).** Every visible code prop is a Figma property with the
+   same name and the same kind of control: union → VARIANT (same values); boolean that changes the look →
+   `false`/`true` VARIANT (shown as a toggle — a BOOLEAN can only toggle a layer's visibility); boolean that
+   only shows/hides a part → BOOLEAN; string → TEXT (`children` stays `children`); optional string part →
+   BOOLEAN + TEXT `name text`; icon → BOOLEAN + INSTANCE_SWAP. `.ai/maps/figma-map.md` lists every prop with its
+   status in Figma today — every row must be ✓. After changing a component in Figma, refresh
+   `.ai/figma-props.json` (Figma MCP `list_file_components_for_code_connect`) and run `pnpm docs:figma-map`.
 9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
    components A→Z after `Icons`, layout components A→Z after the last `-` separator — the same order as
    Storybook's sidebar (root `CLAUDE.md` rule 11). On the page, the doc frame holding the title, description
@@ -124,7 +133,7 @@ Figma component properties come in exactly 4 types: `BOOLEAN`, `TEXT`, `INSTANCE
 
 | Prop | Code type | Figma property type | Why |
 |------|-----------|---------------------|-----|
-| `disabled` | `boolean` | a value of the `state` VARIANT axis (`state=disabled`), not BOOLEAN | BOOLEAN can't express a color/opacity change; folding it into `state` keeps every visual state on one axis — see Phase 2.75 |
+| `disabled` (and every boolean that changes the look: `invalid`, `checked`, `isLoading`, `current`, `expanded`…) | `boolean` | its own `false`/`true` VARIANT, same name (`disabled=true`) — shown as a toggle | BOOLEAN can't express a color/opacity change. Not folded into `state` any more (2026-10-20, rule 10) |
 | `icon` / `iconEnd` | icon component reference | falls back to `BOOLEAN`-only if the icon library isn't imported into Figma yet (no `INSTANCE_SWAP` without real icon components to reference) | see "Icon discovery flow" and "Icon slots need BOTH..." below |
 | `onClick`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
 | `required` (when no asterisk rendered) | `boolean` | *(no Figma property — skipped)* | No visual difference in the anatomy |
@@ -203,7 +212,7 @@ allComponents.push(comp);
 **Layout:** position doesn't matter at this point — Phase 7 lays the finished set out as a Propstar
 property table. Just keep components from overlapping.
 
-A `disabled` prop is a value of the `state` VARIANT axis, NOT a BOOLEAN — full rule in Phase 2.75.
+A `disabled` prop is its own `disabled=false/true` VARIANT (rule 10), NOT a BOOLEAN and not a `state` value.
 
 ### Phase 2 — Build anatomy layers
 
@@ -667,7 +676,8 @@ After building the component:
 - [ ] Component name matches code: PascalCase (`Button`, not `button`)
 - [ ] VARIANT property names are lowercase (`variant`, `size`, `disabled`) — match code exactly
 - [ ] VARIANT values are lowercase (`primary`, `xs`, `false`, `true`) — match TypeScript unions exactly
-- [ ] `disabled` is a value of the `state` axis (not a BOOLEAN, not its own axis) — colors as in the expected file
+- [ ] `disabled`, `invalid` and every look-changing boolean are their own `false`/`true` VARIANT named like the prop — colors as in the expected file
+- [ ] Every row of the component in `.ai/maps/figma-map.md` is ✓ (exact property parity, rule 10)
 - [ ] BOOLEAN property names match code (`icon`, `iconEnd`, `loading`) — NOT `disabled`
 - [ ] Icon slots have BOTH a BOOLEAN (visibility) and an INSTANCE_SWAP (which icon) property bound to the
       same layer via a single `componentPropertyReferences = { visible: ..., mainComponent: ... }` call —

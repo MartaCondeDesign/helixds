@@ -2,34 +2,38 @@
      Run `pnpm docs:figma-map` to regenerate. The conventions block is stable and hand-maintained. -->
 # Helix → Figma prop map
 
-Maps every Helix component prop to its expected Figma property.
-**Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
+Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
+today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
+
+**Parity today: 75 of 181 code props match Figma exactly.**
 
 <!-- helix:figma-map-conventions — stable, hand-maintained -->
-## Prop → Figma property: general conventions
+## Code prop → Figma property: the exact rule
 
-Summary of `.ai/skills/components-to-figma.md` ("Prop taxonomy" + its exceptions) — that skill is the
-authority; if the two ever disagree, the skill wins and this generator needs fixing.
+Every code prop a designer can see is a Figma property with **the same name**, shown **the same way** in the
+properties panel (owner's decision, 2026-10-20). `.ai/skills/components-to-figma.md` applies it; if the two ever
+disagree this table wins and the skill needs fixing.
 
-| Code shape | Figma property | Notes |
+| Code prop | Figma property | Shown in the panel as |
 |---|---|---|
-| `'a' \| 'b'` (string union) | `VARIANT` | Values exactly as in code — `variant=primary`, never `Variant=Primary` |
-| `boolean` | `BOOLEAN` | Except `disabled` ↓ |
-| `disabled` | `VARIANT` (`false` / `true`) | A BOOLEAN can't express the disabled visual change (skill: "Disabled state rule") |
-| Required label-like `string` | `TEXT` | `label`, `children`, and `placeholder` (always shown when empty) |
-| Optional label-like `string` | `BOOLEAN` + `TEXT` | A show/hide part (`description`, `errorMessage`…): BOOLEAN `description` on the part's visibility + TEXT `description text` for its content. Code stays implicit — passing the prop shows the part (show-hide-parts.md) |
-| Icon component (`icon`, `iconEnd`) | `BOOLEAN` + `INSTANCE_SWAP` | Both bound to the same icon layer; BOOLEAN-only fallback if the icon library isn't in Figma yet |
-| Event handlers, refs, callbacks, arrays/objects | — | Not expressed in Figma |
-
-Not decidable from types alone — check the skill: `required` with no visible indicator is skipped;
-`children` that nests other components is a nested layer, not a property.
+| `'a' \| 'b'` or `1 \| 2` (union) | `VARIANT`, same name, **same values** | dropdown |
+| `boolean` that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `current`, `expanded`, `fullWidth`, `hideLabel`…) | `VARIANT` with values `false` / `true` | on/off toggle — a Figma BOOLEAN can only show/hide a layer, it can't change a color or size |
+| `boolean` that only shows/hides a part (`required`, `showCloseButton`, `showCount`, `dismissible`) | `BOOLEAN`, same name | on/off toggle |
+| Required `string` (`label`, `placeholder`) or the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name (`children` stays `children`) | text field |
+| Optional `string` with a visible part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name` (shows the part) + `TEXT` `name text` (its content) | toggle + text field |
+| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `name` (a required icon: only the swap) | toggle + icon picker |
+| Optional slot (`header`, `actions`, `brand`, `footer`, `start`, `end`, `sidenav`, `topbar`) | `BOOLEAN`, same name | toggle |
+| Figma only: `state` | `VARIANT` `default` / `hover` / `press` / `focus` (+ `open`, `selected`…) | dropdown — CSS pseudo-classes, not props; `disabled`/`invalid` are NOT in it |
+| Handlers, ids, refs, data arrays, `default*` twins, aria-only text, an overlay's `expanded` (Modal/SidePanel/Menu/Tooltip: closed = not on screen) | — | not a design property |
 
 ### Naming rules
 
-- **Figma property name** = code prop name, **unchanged** (`variant`, `size`, `disabled`).
-- **VARIANT values** = code values, **unchanged** (`primary`, `icon-only`, `false`).
+- **Figma property name** = code prop name, **unchanged** (`isLoading`, not `loading`; `children`, not `label`).
+- **VARIANT values** = code values, **unchanged** (`primary`, `stacked-bar`, `false`).
 - **Layer names** = the `data-helix-part` values from the TSX — never invented. Visually hidden native
   inputs (`checkbox-input`, `radio-input`, `select-native`) exist in code but are not layers.
+- **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the
+  Figma MCP after changing a component in Figma, then `pnpm docs:figma-map`).
 <!-- /helix:figma-map-conventions -->
 
 ---
@@ -40,548 +44,476 @@ Not decidable from types alone — check the skill: `required` with no visible i
 
 ### Accordion (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `expanded` | `boolean \| undefined` | `BOOLEAN` | `expanded` | — |
-| `defaultExpanded` | `boolean` | `BOOLEAN` | `defaultExpanded` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
+| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `accordion-root`
-- `accordion-header`
-- `accordion-title`
-- `accordion-chevron`
-- `accordion-panel`
-- `accordion-panel-inner`
+**Only in Figma (no code prop of that name and type):** `content` (TEXT)
+
+**Figma-only `state`:** `default` / `focus` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
 ### AppShell (`v1.0.0`, stable)
 
-_No Figma-mappable props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot | ✗ missing |
+| `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `app-shell-root`
-- `app-shell-content`
-- `app-shell-main`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
 ### Avatar (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `src` | `string \| undefined` | `BOOLEAN` `src` | shows the photo | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `avatar-root`
-- `avatar-image`
-- `avatar-initials`
+**Only in Figma (no code prop of that name and type):** `initials` (TEXT)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-root`, `avatar-image`, `avatar-initials`
 
 ### AvatarGroup (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `avatar-group-root`
-- `avatar-group-item`
-- `avatar-group-overflow`
+**Only in Figma (no code prop of that name and type):** `overflow` (BOOLEAN), `overflow count` (TEXT)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
 ### Badge (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` | `variant` | `neutral`, `info`, `success`, `warning`, `danger` |
-| `size` | `'xs' \| 's'` | `VARIANT` | `size` | `xs`, `s` |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `label` | `string` | `TEXT` | `label` | — |
+| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code | ✓ |
+| `size` | `'xs' \| 's'` | `VARIANT` `size` = `xs` / `s` | same values as code | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `badge`
-- `badge-content`
-- `badge-icon`
-- `badge-label`
+**Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
 ### Button (`v2.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` | `variant` | `primary`, `secondary`, `ghost`, `danger` |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
-| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
+| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `button-spinner`
-- `button`
-- `button-icon`
-- `button-label`
-- `button-icon-end`
+**Only in Figma (no code prop of that name and type):** `label` (TEXT)
+
+**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled` / `loading`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
 ### Card (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `padding` | `'none' \| 'default'` | `VARIANT` | `padding` | `none`, `default` |
+| `header` | `React.ReactNode \| undefined` | `BOOLEAN` `header` | shows the slot | ✓ |
+| `header` | `React.ReactNode \| undefined` | `TEXT` `header text` | its text | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
+| `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `card-root`
-- `card-header`
-- `card-body`
+**Only in Figma (no code prop of that name and type):** `content` (TEXT)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
 ### Chart (`v1.2.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` | `variant` | `line`, `area`, `bar`, `stacked-bar`, `donut`, `timeline` |
-| `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `TEXT` | `description` | — |
+| `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code | ✓ |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `chart-root`
-- `chart-canvas`
-- `chart-legend`
-- `chart-legend-swatch`
-- `chart-legend-item`
-- `chart-data`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `chart-root`, `chart-canvas`, `chart-legend`, `chart-legend-swatch`, `chart-legend-item`, `chart-data`
 
 ### Checkbox (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
-| `defaultChecked` | `boolean \| undefined` | `BOOLEAN` | `defaultChecked` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `indeterminate` | `boolean` | `BOOLEAN` | `indeterminate` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked / indeterminate |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `checked` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `checkbox-root`
-- `checkbox-label`
-- `checkbox-control`
-- `checkbox-indicator`
-- `checkbox-text`
-- `checkbox-description`
-- `checkbox-error`
+**Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-description`, `checkbox-error`
 
 ### CheckboxGroup (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` | `orientation` | `vertical`, `horizontal` |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `checkbox-group`
-- `checkbox-group-legend`
-- `checkbox-group-options`
-- `checkbox-group-description`
-- `checkbox-group-error`
+**Figma-only `state`:** `default` / `invalid` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
 ### Chip (`v2.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` | `variant` | `neutral`, `info`, `success`, `warning`, `danger` |
-| `size` | `'s' \| 'm'` | `VARIANT` | `size` | `s`, `m` |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `label` | `string` | `TEXT` | `label` | — |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
-| `dismissible` | `boolean` | `BOOLEAN` | `dismissible` | — |
+| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code | ✓ |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
+| `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `chip-shell`
-- `chip`
-- `chip-icon`
-- `chip-label`
-- `chip-icon-end`
-- `chip-dismiss`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
 
 ### ChipGroup (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `size` | `'s' \| 'm'` | `VARIANT` | `size` | `s`, `m` |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `chip-group`
+**Figma-only `state`:** `default` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
 ### FAB (`v2.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `TablerIcon` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `label` | `string` | `TEXT` | `label` | — |
-| `expanded` | `boolean \| undefined` | `BOOLEAN` | `expanded` | — |
-| `defaultExpanded` | `boolean` | `BOOLEAN` | `defaultExpanded` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → true/false toggle | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `fab-root-wrapper`
-- `fab-root`
-- `fab-icon`
-- `fab-actions`
-- `fab-action`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
 ### Icon (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `HelixIconComponent` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `label` | `string \| undefined` | `TEXT` | `label` | — |
-| `decorative` | `boolean` | `BOOLEAN` | `decorative` | — |
+| `icon` | `HelixIconComponent` | `INSTANCE_SWAP` `icon` | which icon | ✗ not in Figma |
+| `size` | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40` | `VARIANT` `size` = `12` / `14` / `16` / `18` / `20` / `24` / `28` / `32` / `36` / `40` | same values as code | ✗ not in Figma |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `icon-root`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
 ### IconButton (`v2.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `TablerIcon` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `label` | `string` | `TEXT` | `label` | — |
-| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` | `variant` | `primary`, `secondary`, `ghost`, `danger` |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon | ✓ |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code | ✓ |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `icon-button-spinner`
-- `icon-button`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled` / `loading`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
 ### Input (`v2.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `isLoading` | `boolean` | `BOOLEAN` | `isLoading` | — |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `iconEnd` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon | ✗ is BOOLEAN |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `input-root`
-- `input-label`
-- `input-wrapper`
-- `input-icon`
-- `input-field`
-- `input-icon-end`
-- `input-description`
-- `input-error`
+**Only in Figma (no code prop of that name and type):** `value` (TEXT)
+
+**Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-wrapper`, `input-icon`, `input-field`, `input-icon-end`, `input-description`, `input-error`
 
 ### Menu (`v0.3.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `expanded` | `boolean` | `BOOLEAN` | `expanded` | — |
-| `multiple` | `boolean` | `BOOLEAN` | `multiple` | — |
+| `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `menu-item`
-- `menu-item-label`
-- `menu-item-label-end`
-- `menu`
-- `menu-group-divider`
-- `menu-group-label`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
 ### Modal (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `expanded` | `boolean` | `BOOLEAN` | `expanded` | — |
-| `showCloseButton` | `boolean` | `BOOLEAN` | `showCloseButton` | — |
-| `closeOnBackdropClick` | `boolean` | `BOOLEAN` | `closeOnBackdropClick` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
+| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part | ✓ |
+| `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | shows the part | ✗ missing |
+| `primaryActionLabel` | `string \| undefined` | `TEXT` `primaryActionLabel text` | its text | ✗ missing |
+| `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | shows the part | ✗ missing |
+| `secondaryActionLabel` | `string \| undefined` | `TEXT` `secondaryActionLabel text` | its text | ✗ missing |
+| `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | shows the part | ✗ missing |
+| `tertiaryActionLabel` | `string \| undefined` | `TEXT` `tertiaryActionLabel text` | its text | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `modal-root`
-- `modal-header`
-- `modal-title`
-- `icon-button`
-- `modal-close`
-- `modal-body`
-- `modal-footer`
-- `modal-footer-start`
-- `modal-footer-end`
+**Only in Figma (no code prop of that name and type):** `content` (TEXT), `tertiaryAction` (BOOLEAN), `secondaryAction` (BOOLEAN), `primaryAction` (BOOLEAN)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
 ### MultiSelect (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `placeholder` | `string \| undefined` | `TEXT` | `placeholder` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
-| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `multi-select-chip`
-- `multi-select-root`
-- `multi-select-label`
-- `multi-select-field`
-- `multi-select-trigger`
-- `multi-select-placeholder`
-- `multi-select-chevron`
-- `multi-select-native`
-- `multi-select-description`
-- `multi-select-error`
+**Only in Figma (no code prop of that name and type):** `value` (VARIANT: empty / selected)
+
+**Figma-only `state`:** `default` / `hover` / `focus` / `open` / `invalid` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
 ### NavItem (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` + `INSTANCE_SWAP` | `icon` | — |
-| `current` | `boolean` | `BOOLEAN` | `current` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon | ✓ |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon | ✗ is BOOLEAN |
+| `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → true/false toggle | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `nav-item`
-- `nav-item-indicator`
-- `nav-item-icon`
-- `nav-item-label`
+**Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
+
+**Figma-only `state`:** `default` / `hover` / `focus`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `nav-item`, `nav-item-indicator`, `nav-item-icon`, `nav-item-label`
 
 ### PageHeader (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code | ✓ |
+| `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `page-header-root`
-- `page-header-title`
-- `page-header-description`
-- `page-header-actions`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
 ### RadioButton (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
-| `defaultChecked` | `boolean` | `BOOLEAN` | `defaultChecked` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `radio-item`
-- `radio-control`
-- `radio-dot`
-- `radio-item-content`
-- `radio-item-label`
-- `radio-item-description`
-- `radio-item-error`
+**Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-item-error`
 
 ### RadioGroup (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` | `orientation` | `vertical`, `horizontal` |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `radio-group`
-- `radio-legend`
-- `radio-options`
-- `radio-item`
-- `radio-control`
-- `radio-dot`
-- `radio-item-content`
-- `radio-item-label`
-- `radio-item-description`
-- `radio-description`
-- `radio-error`
+**Only in Figma (no code prop of that name and type):** `checked` (VARIANT: unchecked / checked)
+
+**Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
 ### SegmentedControl (`v0.2.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `segmented-control-root`
-- `segmented-control-item`
-- `segmented-control-pill`
-- `segmented-control-item-icon`
-- `segmented-control-item-label`
+**Figma-only `state`:** `default` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
 ### Select (`v1.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `placeholder` | `string \| undefined` | `TEXT` | `placeholder` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
-| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `select-root`
-- `select-label`
-- `select-wrapper`
-- `select-trigger`
-- `select-trigger-label`
-- `select-chevron`
-- `select-description`
-- `select-error`
+**Only in Figma (no code prop of that name and type):** `value` (TEXT)
+
+**Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus` / `open`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 
 ### SideNav (`v1.0.0`, stable)
 
-_No Figma-mappable props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `brand` | `React.ReactNode \| undefined` | `BOOLEAN` `brand` | shows the slot | ✓ |
+| `footer` | `React.ReactNode \| undefined` | `BOOLEAN` `footer` | shows the slot | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `side-nav-root`
-- `side-nav-brand`
-- `side-nav-items`
-- `side-nav-footer`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
 ### SidePanel (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `expanded` | `boolean` | `BOOLEAN` | `expanded` | — |
-| `showCloseButton` | `boolean` | `BOOLEAN` | `showCloseButton` | — |
-| `closeOnBackdropClick` | `boolean` | `BOOLEAN` | `closeOnBackdropClick` | — |
-| `placement` | `'right' \| 'bottom'` | `VARIANT` | `placement` | `right`, `bottom` |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text | ✗ missing |
+| `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part | ✓ |
+| `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `side-panel-root`
-- `side-panel-header`
-- `side-panel-title`
-- `icon-button`
-- `side-panel-close`
-- `side-panel-body`
+**Only in Figma (no code prop of that name and type):** `content` (TEXT)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
 ### Switch (`v0.1.1`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `checked` | `boolean \| undefined` | `BOOLEAN` | `checked` | — |
-| `defaultChecked` | `boolean \| undefined` | `BOOLEAN` | `defaultChecked` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `size` | `'s' \| 'm'` | `VARIANT` | `size` | `s`, `m` |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✓ |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → true/false toggle | ✗ values unchecked / checked |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `switch-root`
-- `switch-row`
-- `switch-track`
-- `switch-thumb`
-- `switch-label`
-- `switch-description`
+**Figma-only `state`:** `default` / `hover` / `focus` / `disabled`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `switch-root`, `switch-row`, `switch-track`, `switch-thumb`, `switch-label`, `switch-description`
 
 ### Table (`v1.0.0`, stable)
 
-_No Figma-mappable props._
+_No design props._
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `table`
-- `table-head`
-- `table-body`
-- `table-row`
-- `table-header-cell`
-- `table-cell`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
 ### Textarea (`v1.0.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `description` | `string \| undefined` | `BOOLEAN` + `TEXT` | `description` + `description text` | — |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` + `TEXT` | `errorMessage` + `errorMessage text` | — |
-| `invalid` | `boolean` | `BOOLEAN` | `invalid` | — |
-| `disabled` | `boolean` | `VARIANT` | `disabled` | `false`, `true` |
-| `required` | `boolean` | `BOOLEAN` | `required` | — |
-| `fullWidth` | `boolean` | `BOOLEAN` | `fullWidth` | — |
-| `hideLabel` | `boolean` | `BOOLEAN` | `hideLabel` | — |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` | `size` | `s`, `m`, `l` |
-| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` | `resize` | `none`, `vertical`, `horizontal`, `both` |
-| `showCount` | `boolean` | `BOOLEAN` | `showCount` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part | ✗ missing |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text | ✗ missing |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part | ✗ missing |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → true/false toggle | ✗ a value of `state` |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part | ✗ missing |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → true/false toggle | ✗ missing |
+| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code | ✓ |
+| `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code | ✗ missing |
+| `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `textarea-root`
-- `textarea-label`
-- `textarea-wrapper`
-- `textarea-field`
-- `textarea-counter`
-- `textarea-description`
-- `textarea-error`
+**Only in Figma (no code prop of that name and type):** `value` (TEXT)
+
+**Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `textarea-root`, `textarea-label`, `textarea-wrapper`, `textarea-field`, `textarea-counter`, `textarea-description`, `textarea-error`
 
 ### Toast (`v0.2.0`, stable)
 
-_No Figma-mappable props._
+_No design props._
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `toast`
-- `toast-icon`
-- `toast-content`
-- `toast-title`
-- `toast-description`
-- `icon-button`
-- `toast-close`
-- `toast-viewport`
+**Only in Figma (no code prop of that name and type):** `label` (TEXT), `description` (BOOLEAN), `description text` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger)
+
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
 ### Tooltip (`v0.1.0`, stable)
 
-| Code prop | Code type | Figma kind | Figma property | Values |
+| Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` | `label` | — |
-| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` | `placement` | `top`, `bottom`, `left`, `right` |
-| `expanded` | `boolean \| undefined` | `BOOLEAN` | `expanded` | — |
+| `label` | `string` | `TEXT` `label` | its text | ✓ |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code | ✗ missing |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `tooltip-root`
-- `tooltip-content`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
 ### TopBar (`v1.0.0`, stable)
 
-_No Figma-mappable props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `start` | `React.ReactNode \| undefined` | `BOOLEAN` `start` | shows the slot | ✓ |
+| `end` | `React.ReactNode \| undefined` | `BOOLEAN` `end` | shows the slot | ✓ |
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value):
-- `topbar-root`
-- `topbar-start`
-- `topbar-end`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-start`, `topbar-end`
 
 <!-- /helix:figma-map-components -->

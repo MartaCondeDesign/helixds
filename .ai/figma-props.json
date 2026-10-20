@@ -1,0 +1,1056 @@
+{
+  "$comment": "Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read through the Figma MCP (list_file_components_for_code_connect). Refresh it with the same read after changing a component in Figma, then run pnpm docs:figma-map. Read on 2026-10-20.",
+  "components": {
+    "Accordion": {
+      "nodeId": "468:42",
+      "type": "COMPONENT_SET",
+      "page": "Accordion",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "content",
+          "type": "TEXT"
+        },
+        {
+          "name": "expanded",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "focus",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "Avatar": {
+      "nodeId": "303:4",
+      "type": "COMPONENT_SET",
+      "page": "Avatar",
+      "properties": [
+        {
+          "name": "initials",
+          "type": "TEXT"
+        },
+        {
+          "name": "src",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        }
+      ]
+    },
+    "AvatarGroup": {
+      "nodeId": "461:63",
+      "type": "COMPONENT_SET",
+      "page": "AvatarGroup",
+      "properties": [
+        {
+          "name": "overflow",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "overflow count",
+          "type": "TEXT"
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        }
+      ]
+    },
+    "Badge": {
+      "nodeId": "303:2",
+      "type": "COMPONENT_SET",
+      "page": "Badge",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "neutral",
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "xs",
+            "s"
+          ]
+        }
+      ]
+    },
+    "Button": {
+      "nodeId": "417:482",
+      "type": "COMPONENT_SET",
+      "page": "Button",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "primary",
+            "secondary",
+            "ghost",
+            "danger"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "press",
+            "focus",
+            "disabled",
+            "loading"
+          ]
+        }
+      ]
+    },
+    "Card": {
+      "nodeId": "429:28",
+      "type": "COMPONENT_SET",
+      "page": "Card",
+      "properties": [
+        {
+          "name": "header",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "header text",
+          "type": "TEXT"
+        },
+        {
+          "name": "content",
+          "type": "TEXT"
+        },
+        {
+          "name": "padding",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "none"
+          ]
+        }
+      ]
+    },
+    "Chart": {
+      "nodeId": "578:199",
+      "type": "COMPONENT_SET",
+      "page": "Chart",
+      "properties": [
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "line",
+            "area",
+            "bar",
+            "stacked-bar",
+            "donut",
+            "timeline"
+          ]
+        }
+      ]
+    },
+    "ChartLegendItem": {
+      "nodeId": "577:27",
+      "type": "COMPONENT_SET",
+      "page": "Chart",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "pressed",
+          "type": "VARIANT",
+          "values": [
+            "true",
+            "false"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "press",
+            "focus"
+          ]
+        }
+      ]
+    },
+    "Checkbox": {
+      "nodeId": "424:86",
+      "type": "COMPONENT_SET",
+      "page": "Checkbox",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
+          "type": "TEXT"
+        },
+        {
+          "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "unchecked",
+            "checked",
+            "indeterminate"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "invalid",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "CheckboxGroup": {
+      "nodeId": "460:147",
+      "type": "COMPONENT_SET",
+      "page": "CheckboxGroup",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
+          "type": "TEXT"
+        },
+        {
+          "name": "orientation",
+          "type": "VARIANT",
+          "values": [
+            "vertical",
+            "horizontal"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "invalid",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "Chip": {
+      "nodeId": "581:885",
+      "type": "COMPONENT_SET",
+      "page": "Chip",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "dismissible",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "neutral",
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "press",
+            "focus",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "ChipGroup": {
+      "nodeId": "416:952",
+      "type": "COMPONENT_SET",
+      "page": "ChipGroup",
+      "properties": [
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "FAB": {
+      "nodeId": "469:84",
+      "type": "COMPONENT_SET",
+      "page": "FAB",
+      "properties": [
+        {
+          "name": "expanded",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "press",
+            "focus",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "IconButton": {
+      "nodeId": "419:242",
+      "type": "COMPONENT_SET",
+      "page": "IconButton",
+      "properties": [
+        {
+          "name": "icon",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "primary",
+            "secondary",
+            "ghost",
+            "danger"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "press",
+            "focus",
+            "disabled",
+            "loading"
+          ]
+        }
+      ]
+    },
+    "Input": {
+      "nodeId": "303:45",
+      "type": "COMPONENT_SET",
+      "page": "Input",
+      "properties": [
+        {
+          "name": "value",
+          "type": "TEXT"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "invalid",
+            "disabled",
+            "hover",
+            "focus"
+          ]
+        }
+      ]
+    },
+    "MenuItem": {
+      "nodeId": "470:14",
+      "type": "COMPONENT_SET",
+      "page": "Menu",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "selected",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "Menu": {
+      "nodeId": "470:15",
+      "type": "COMPONENT",
+      "page": "Menu",
+      "properties": []
+    },
+    "Modal": {
+      "nodeId": "471:6",
+      "type": "COMPONENT",
+      "page": "Modal",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "content",
+          "type": "TEXT"
+        },
+        {
+          "name": "showCloseButton",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "tertiaryAction",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "secondaryAction",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "primaryAction",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "MultiSelect": {
+      "nodeId": "464:192",
+      "type": "COMPONENT_SET",
+      "page": "MultiSelect",
+      "properties": [
+        {
+          "name": "placeholder",
+          "type": "TEXT"
+        },
+        {
+          "name": "value",
+          "type": "VARIANT",
+          "values": [
+            "empty",
+            "selected"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "open",
+            "invalid",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "NavItem": {
+      "nodeId": "432:28",
+      "type": "COMPONENT_SET",
+      "page": "NavItem",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "current",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus"
+          ]
+        }
+      ]
+    },
+    "RadioButton": {
+      "nodeId": "459:81",
+      "type": "COMPONENT_SET",
+      "page": "RadioButton",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
+          "type": "TEXT"
+        },
+        {
+          "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "unchecked",
+            "checked"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "invalid",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "RadioGroup": {
+      "nodeId": "425:699",
+      "type": "COMPONENT_SET",
+      "page": "RadioGroup",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "unchecked",
+            "checked"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "invalid",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "SegmentedControlItem": {
+      "nodeId": "462:22",
+      "type": "COMPONENT_SET",
+      "page": "SegmentedControl",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "SegmentedControl": {
+      "nodeId": "462:37",
+      "type": "COMPONENT_SET",
+      "page": "SegmentedControl",
+      "properties": [
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "Select": {
+      "nodeId": "390:23",
+      "type": "COMPONENT_SET",
+      "page": "Select",
+      "properties": [
+        {
+          "name": "value",
+          "type": "TEXT"
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "invalid",
+            "disabled",
+            "hover",
+            "focus",
+            "open"
+          ]
+        }
+      ]
+    },
+    "SidePanel": {
+      "nodeId": "472:29",
+      "type": "COMPONENT_SET",
+      "page": "SidePanel",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "content",
+          "type": "TEXT"
+        },
+        {
+          "name": "showCloseButton",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "placement",
+          "type": "VARIANT",
+          "values": [
+            "right",
+            "bottom"
+          ]
+        }
+      ]
+    },
+    "Switch": {
+      "nodeId": "428:114",
+      "type": "COMPONENT_SET",
+      "page": "Switch",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "unchecked",
+            "checked"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover",
+            "focus",
+            "disabled"
+          ]
+        }
+      ]
+    },
+    "TableHeaderCell": {
+      "nodeId": "437:2",
+      "type": "COMPONENT",
+      "page": "Table",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        }
+      ]
+    },
+    "TableCell": {
+      "nodeId": "437:4",
+      "type": "COMPONENT",
+      "page": "Table",
+      "properties": [
+        {
+          "name": "content",
+          "type": "TEXT"
+        }
+      ]
+    },
+    "Table": {
+      "nodeId": "437:21",
+      "type": "COMPONENT",
+      "page": "Table",
+      "properties": []
+    },
+    "TableRow": {
+      "nodeId": "437:20",
+      "type": "COMPONENT_SET",
+      "page": "Table",
+      "properties": [
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover"
+          ]
+        }
+      ]
+    },
+    "Textarea": {
+      "nodeId": "303:56",
+      "type": "COMPONENT_SET",
+      "page": "Textarea",
+      "properties": [
+        {
+          "name": "value",
+          "type": "TEXT"
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m",
+            "l"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "invalid",
+            "disabled",
+            "hover",
+            "focus"
+          ]
+        }
+      ]
+    },
+    "Toast": {
+      "nodeId": "467:62",
+      "type": "COMPONENT_SET",
+      "page": "Toast",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "variant",
+          "type": "VARIANT",
+          "values": [
+            "neutral",
+            "info",
+            "success",
+            "warning",
+            "danger"
+          ]
+        }
+      ]
+    },
+    "Tooltip": {
+      "nodeId": "465:6",
+      "type": "COMPONENT",
+      "page": "Tooltip",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        }
+      ]
+    },
+    "AppShell": {
+      "nodeId": "334:4",
+      "type": "COMPONENT",
+      "page": "AppShell",
+      "properties": []
+    },
+    "PageHeader": {
+      "nodeId": "435:24",
+      "type": "COMPONENT_SET",
+      "page": "PageHeader",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "actions",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "level",
+          "type": "VARIANT",
+          "values": [
+            "1",
+            "2"
+          ]
+        }
+      ]
+    },
+    "SideNav": {
+      "nodeId": "332:4",
+      "type": "COMPONENT",
+      "page": "SideNav",
+      "properties": [
+        {
+          "name": "brand",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "footer",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "TopBar": {
+      "nodeId": "333:4",
+      "type": "COMPONENT",
+      "page": "TopBar",
+      "properties": [
+        {
+          "name": "start",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "end",
+          "type": "BOOLEAN"
+        }
+      ]
+    }
+  }
+}
