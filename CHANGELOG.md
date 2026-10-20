@@ -88,17 +88,18 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — verify:stable: all 33 components stable (Figma ✓ for every one) (latest commit)
-- 2026-10-20 — Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped ([`792b183`](https://github.com/MartaCondeDesign/helixds/commit/792b183))
-- 2026-10-20 — Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma ([`214d93f`](https://github.com/MartaCondeDesign/helixds/commit/214d93f))
-- 2026-10-20 — Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip ([`0a39133`](https://github.com/MartaCondeDesign/helixds/commit/0a39133))
-- 2026-10-20 — Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected) ([`f7c8e42`](https://github.com/MartaCondeDesign/helixds/commit/f7c8e42))
-- 2026-10-20 — Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height ([`aaa2fea`](https://github.com/MartaCondeDesign/helixds/commit/aaa2fea))
-- 2026-10-20 — Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill) ([`aab0bb2`](https://github.com/MartaCondeDesign/helixds/commit/aab0bb2))
-- 2026-10-20 — Figma: Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControl, Tooltip audited and recorded; Input, Select, Textarea, RadioGroup re-recorded at c210161 ([`06fcf0d`](https://github.com/MartaCondeDesign/helixds/commit/06fcf0d))
-- 2026-10-20 — Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout ([`c210161`](https://github.com/MartaCondeDesign/helixds/commit/c210161))
-- 2026-10-20 — Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components ([`f5c5426`](https://github.com/MartaCondeDesign/helixds/commit/f5c5426))
-- 2026-10-20 — Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading ([`ad48e00`](https://github.com/MartaCondeDesign/helixds/commit/ad48e00))
+- 2026-10-20 — Figma in sync with code: all 33 components stable (#19) ([#19](https://github.com/MartaCondeDesign/helixds/pull/19))
+  - Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading
+  - Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components
+  - Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout
+  - Figma: Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControl, Tooltip audited and recorded; Input, Select, Textarea, RadioGroup re-recorded at c210161
+  - Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill)
+  - Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height
+  - Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected)
+  - Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip
+  - Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma
+  - Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped
+  - verify:stable: all 33 components stable (Figma ✓ for every one)
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
