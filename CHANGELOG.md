@@ -108,6 +108,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - figma-sync: Checkbox synced at 21 variants (audit passed, Propstar table 589:652)
   - Disabled is exempt from color contrast (owner's decision, WCAG 1.4.3 inactive components): CLAUDE.md rule 9 says so, and the test-runner drops color-contrast nodes inside [disabled]/[data-disabled]/[aria-disabled=true] — axe alone only exempted a disabled control's own label, so a disabled Checkbox description dropped CheckboxGroup to draft
   - figma-sync: Checkbox syncedCommit follows the rebased commit
+  - Disabled dims every text part (owner's decision): label, description, required * and group legend go to each component's text.disabled token in Input, Textarea, Select, MultiSelect, CheckboxGroup and RadioGroup (Checkbox, RadioButton, Switch already did); the * gets its own part everywhere ({name}-required, no inline style, 2px = spacing/3xs); rule in CLAUDE.md, disabled-state.md and the Figma skill (disabled = state default, no invalid); contracts' anatomy say so
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
