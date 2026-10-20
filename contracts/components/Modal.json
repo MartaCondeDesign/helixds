@@ -153,6 +153,6 @@
       { "name": "secondaryAction", "type": "BOOLEAN", "codeProp": "secondaryActionLabel" },
       { "name": "primaryAction", "type": "BOOLEAN", "codeProp": "primaryActionLabel" }
     ],
-    "structure": "The open dialog (no backdrop): 560px, min-height 400, radius/xl, shadow / xl, fill/page. The header's 72px right padding (closeInset × 2 + the 40px close button, a calc in code) is three nested tokens: 16 (spacing/m) + 40 (spacing/250) + 16 (spacing/m). Close = IconButton ghost l, absolute 16px from the top/right. Footer: Button m instances, 4px apart. Measured identical to code."
+    "structure": "The open dialog (no backdrop): 560px, min-height 400, radius/xl, shadow / xl, fill/page. The header's 72px right padding (closeInset × 2 + the 40px close button, a calc in code) is three nested tokens: 16 (spacing/m) + 40 (spacing/250) + 16 (spacing/m). Title Heading / xl / Bold (24px, raised from l on 2026-10-20 by the owner). Close = IconButton ghost l, absolute 16px from the top/right. Footer: Button m instances, 4px apart. Measured identical to code."
   }
 }

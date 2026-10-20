@@ -121,9 +121,9 @@
           "figma": "body-m-regular"
         },
         "lineHeight": {
-          "value": 18.9,
-          "token": "primitive.lineHeight.snug",
-          "figma": null
+          "value": 21,
+          "token": "semantic.textStyle.body-m-regular.lineHeight",
+          "figma": "body-m-regular"
         },
         "fontWeight": {
           "value": 400,

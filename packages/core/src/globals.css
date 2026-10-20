@@ -1518,7 +1518,7 @@
     font-family:   inherit;
     font-size:     var(--helix-menu-item-fontSize);
     font-weight:   var(--helix-menu-item-fontWeight);
-    line-height:   var(--helix-primitive-lineHeight-snug);
+    line-height:   var(--helix-textStyle-body-m-regular-lineHeight); /* Body / m / Regular, as in Figma */
     text-align:    left;
     width:         100%;
     cursor:        pointer;
@@ -2453,10 +2453,10 @@
   }
   [data-helix-part="modal-title"] {
     margin:      0;
-    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma */
+    font-family: var(--helix-textStyle-heading-xl-bold-fontFamily); /* "Heading / xl / Bold" in Figma */
     font-size:   var(--helix-modal-titleFontSize);
     font-weight: var(--helix-modal-titleFontWeight);
-    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
+    line-height: var(--helix-textStyle-heading-xl-bold-lineHeight);
   }
   [data-helix-part="modal-close"] {
     position: absolute;
@@ -2570,10 +2570,10 @@
   }
   [data-helix-part="side-panel-title"] {
     margin:      0;
-    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma, like Modal's */
+    font-family: var(--helix-textStyle-heading-xl-bold-fontFamily); /* "Heading / xl / Bold" in Figma, like Modal's */
     font-size:   var(--helix-sidePanel-titleFontSize);
     font-weight: var(--helix-sidePanel-titleFontWeight);
-    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
+    line-height: var(--helix-textStyle-heading-xl-bold-lineHeight);
   }
   [data-helix-part="side-panel-close"] {
     position: absolute;

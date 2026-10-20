@@ -141,6 +141,6 @@
       { "name": "content", "type": "TEXT", "codeProp": "children" },
       { "name": "showCloseButton", "type": "BOOLEAN", "codeProp": "showCloseButton" }
     ],
-    "structure": "Same header as Modal (24px top/left, 72px clear of the close button as 16 + 40 + 16 nested tokens, Heading / l / Bold), body 24px padding, IconButton ghost l close 16px from the corner. shadowBottom is a literal in tokens.json (rgba values, no semantic shadow casts upward) — drawn as raw drop shadows in Figma."
+    "structure": "Same header as Modal (24px top/left, 72px clear of the close button as 16 + 40 + 16 nested tokens, Heading / xl / Bold — raised from l on 2026-10-20 by the owner), body 24px padding, IconButton ghost l close 16px from the corner. shadowBottom is a literal in tokens.json (rgba values, no semantic shadow casts upward) — drawn as raw drop shadows in Figma."
   }
 }
