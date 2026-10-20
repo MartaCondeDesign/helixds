@@ -88,8 +88,11 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([#20](https://github.com/MartaCondeDesign/helixds/pull/20))
+- 2026-10-20 — Merge remote-tracking branch 'origin/main' into claude/story-args-controls (latest commit)
+- 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
   - Storybook-tokens gate test copies stories outside the stories glob
+- 2026-10-20 — Update CHANGELOG.md for #21 ([`80403e1`](https://github.com/MartaCondeDesign/helixds/commit/80403e1))
+- 2026-10-20 — Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls ([`69fbe6f`](https://github.com/MartaCondeDesign/helixds/commit/69fbe6f))
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))

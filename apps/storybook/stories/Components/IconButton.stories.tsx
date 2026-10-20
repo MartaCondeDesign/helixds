@@ -87,6 +87,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'All size variants. Default is `m`, same scale as Button.' } },
   },
 };
@@ -122,6 +123,7 @@ export const AllVariants: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: {
       description: { story: 'Complete matrix: all variants × all states.' },
     },

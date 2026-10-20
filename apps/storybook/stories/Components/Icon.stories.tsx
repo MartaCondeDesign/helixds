@@ -63,6 +63,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Fixed pixel sizes — never scales with font-size.' } },
   },
 };
@@ -78,6 +79,7 @@ export const Colors: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Color always comes from a --helix-color-icon-* token, set explicitly — never inherited from a text/* token.' } },
   },
 };
@@ -90,14 +92,16 @@ export const CustomIconSet: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Icon is icon-set-agnostic (ADR-014) — Tabler is the default, not a requirement. A foreign icon set whose props don\'t match Tabler\'s dialect (here, strokeWidth instead of stroke) is wrapped once with createIconAdapter, then passed to icon/iconEnd like any Tabler icon.' } },
   },
 };
 
 export const InlineWithText: Story = {
-  render: () => (
+  args: { icon: IconArrowRight },
+  render: (args) => (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-25)', fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)' }}>
-      <Icon icon={IconArrowRight} size={16} />
+      <Icon {...args} />
       Continue
     </span>
   ),

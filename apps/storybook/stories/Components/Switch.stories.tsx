@@ -19,9 +19,10 @@ export default meta;
 type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
-  render: () => {
+  args: { label: 'Dark mode' },
+  render: (args) => {
     const [checked, setChecked] = useState(false);
-    return <Switch label="Dark mode" checked={checked} onChange={setChecked} />;
+    return <Switch {...args} checked={checked} onChange={setChecked} />;
   },
 };
 
@@ -30,12 +31,12 @@ export const Checked: Story = {
 };
 
 export const WithDescription: Story = {
-  render: () => {
+  args: { label: 'Email digest', description: 'Receive a weekly summary of activity in your workspace.' },
+  render: (args) => {
     const [checked, setChecked] = useState(true);
     return (
       <Switch
-        label="Email digest"
-        description="Receive a weekly summary of activity in your workspace."
+        {...args}
         checked={checked}
         onChange={setChecked}
       />
@@ -44,6 +45,7 @@ export const WithDescription: Story = {
 };
 
 export const Disabled: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
       <Switch label="Disabled off" disabled />
@@ -53,6 +55,7 @@ export const Disabled: Story = {
 };
 
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
       <Switch size="s" label="Small"             defaultChecked />
@@ -100,6 +103,7 @@ export const SettingsGroup: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Settings panel pattern: label + description on the left, switch on the right.' } },
   },
 };

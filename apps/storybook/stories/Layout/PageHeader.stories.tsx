@@ -28,10 +28,10 @@ export const Default: Story = {
 };
 
 export const WithActions: Story = {
-  render: () => (
+  args: { description: 'Manage members and their access to the Helix workspace.' },
+  render: (args) => (
     <PageHeader
-      label="Team"
-      description="Manage members and their access to the Helix workspace."
+      {...args}
       actions={
         <>
           <Badge variant="success" label="+2 this month" />

@@ -53,11 +53,11 @@ type Story = StoryObj<typeof Select>;
 export const Default: Story = {};
 
 export const Controlled: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" className="w-[300px]" />
+        <Select {...args} value={value} onChange={setValue} />
         {value && (
           <p style={{ margin: 0, fontSize: 13, color: 'var(--helix-color-text-neutral-light)' }}>
             Selected: <strong>{value}</strong>
@@ -110,12 +110,15 @@ export const Disabled: Story = {
 };
 
 export const MinimumWidth: Story = {
-  render: () => {
+  // no fixed width here: the story is about how the trigger hugs its content
+  args: { className: undefined },
+  render: (args) => {
     const [role, setRole] = useState('');
     const [count, setCount] = useState('');
     return (
       <div style={{ display: 'flex', gap: 'var(--helix-spacing-m)', alignItems: 'flex-end' }}>
         <Select
+          {...args}
           label="Role"
           options={[{ value: 'pm', label: 'PM' }, { value: 'qa', label: 'QA' }]}
           placeholder="Role"
@@ -123,6 +126,7 @@ export const MinimumWidth: Story = {
           onChange={setRole}
         />
         <Select
+          {...args}
           label="Seats"
           options={['1', '2', '1000', '2000'].map(n => ({ value: n, label: n }))}
           placeholder="1"
@@ -161,11 +165,11 @@ export const Open: Story = {
 };
 
 export const KeyboardNavigation: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('');
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-        <Select label="Role" options={ROLES} value={value} onChange={setValue} placeholder="Choose a role…" className="w-[300px]" />
+        <Select {...args} value={value} onChange={setValue} />
         <button type="button">After</button>
       </div>
     );

@@ -39,6 +39,7 @@ export const Stack: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Several independent Accordions stacked — each opens/closes on its own, no exclusive-open group behavior.' } },
   },
 };

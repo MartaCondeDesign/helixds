@@ -61,11 +61,13 @@ type Story = StoryObj<typeof Menu>;
 export const Default: Story = {
   render: () => <Demo options={FRUITS} />,
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Menu is normally consumed internally by Select (see Components/Select) — this story exercises it directly to show the primitive on its own.' } },
   },
 };
 
 export const Grouped: Story = {
+  parameters: { controls: { disable: true } },
   render: () => <Demo options={GROUPED} />,
 };
 
@@ -74,6 +76,7 @@ export const Opened: Story = {
   // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
   // other story leaves on screen: their play tests open and close it again.
   tags: ['!autodocs'],
+  parameters: { controls: { disable: true } },
   render: () => <Demo options={GROUPED} />,
   play: async ({ canvasElement }) => {
     await userEvent.click(within(canvasElement).getByRole('button', { name: 'Open menu' }));

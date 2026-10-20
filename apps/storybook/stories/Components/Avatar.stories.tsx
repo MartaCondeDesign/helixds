@@ -24,6 +24,7 @@ type Story = StoryObj<typeof Avatar>;
 export const Default: Story = { args: {} };
 
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center' }}>
       <Avatar label="Ana García" size="s" />
@@ -45,6 +46,7 @@ export const BrokenImageFallsBackToInitials: Story = {
 };
 
 export const MemberList: Story = {
+  parameters: { controls: { disable: true } },
   render: () => {
     const members = ['Ana García', 'Pau Torres', 'Marta Conde', 'Jordi Puig'];
     return (

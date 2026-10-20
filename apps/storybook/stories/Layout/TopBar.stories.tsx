@@ -14,6 +14,7 @@ export default meta;
 type Story = StoryObj<typeof TopBar>;
 
 export const Default: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <TopBar
       start={<Input label="Search" hideLabel icon={IconSearch} placeholder="Search…" />}
