@@ -186,7 +186,7 @@ function run() {
       // The standard (contracts/figma-conversion.json) decides; a contract exception (figma.propertyMap) overrides it.
       const exception = (contract as any).figma?.propertyMap?.[prop.name];
       const list: Expected[] = exception
-        ? exception.figma.map((f: Expected) => ({ ...f, why: exception.codeType === (prop.type ?? '') ? `exception, approved ${exception.approved}` : '**stale exception** (pnpm figma:props)' }))
+        ? exception.figma.map((f: Expected) => ({ ...f, why: exception.codeType === (prop.type ?? '') ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : '**stale exception** (pnpm figma:props)' }))
         : expectedFor(prop, parts).map(e => ({ ...e, why: e.rule === 'unmatched' ? `**${e.why}**` : `${e.why} · \`${e.rule}\`` }));
       for (const e of list) {
         const status = compare(e, figma);
@@ -194,6 +194,17 @@ function run() {
         const m = figma?.find(f => f.name === e.name && f.type === e.type); if (m) used.add(m.name + m.type);
         const fig = e.type === 'VARIANT' ? `\`${e.name}\` = ${e.values!.map(v => `\`${v}\``).join(' / ')}` : `\`${e.name}\``;
         rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | \`${e.type}\` ${fig} | ${e.why} | ${status} |`);
+      }
+    }
+    // exceptions for a native attribute the component passes through (no prop of that name in the contract)
+    for (const [name, ex] of Object.entries(((contract as any).figma?.propertyMap ?? {}) as Record<string, any>)) {
+      if ((contract.props ?? []).some(p => p.name === name)) continue;
+      for (const e of ex.figma as Expected[]) {
+        const status = compare(e, figma);
+        total++; if (status === '✓') ok++;
+        const m = figma?.find(f => f.name === e.name && f.type === e.type); if (m) used.add(m.name + m.type);
+        const fig = e.type === 'VARIANT' ? `\`${e.name}\` = ${e.values!.map(v => `\`${v}\``).join(' / ')}` : `\`${e.name}\``;
+        rows.push(`| \`${name}\` (native) | \`${ex.codeType.replace(/\|/g, '\\|')}\` | \`${e.type}\` ${fig} | exception, approved ${ex.approved}${ex.reason ? ` — ${ex.reason}` : ''} | ${status} |`);
       }
     }
     const extra = (figma ?? []).filter(f => !used.has(f.name + f.type) && f.name !== 'state');

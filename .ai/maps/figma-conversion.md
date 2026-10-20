@@ -47,7 +47,10 @@ the code values, unchanged; an optional string's text property is `{name} text`;
 - **Disabled:** `disabled=true` only with `state=default` and `invalid=false` — a disabled control doesn't hover,
   take focus or validate. All its text (label, description, required `*`, legend) binds `text/disabled`
   ([disabled-state.md](patterns/disabled-state.md)).
-- **hideLabel:** `hideLabel=true` only with `state=default` — the control looks the same, only the label is gone.
+- **Secondary toggles** (`fullWidth`, `hideLabel`, `isLoading`, `resize`): each is drawn **once** — on, with the
+  other secondaries off, `state=default`, valid, enabled and the default `size`. The main axes (`checked`,
+  `variant`, `value`…) keep all their values. They change the width, the label or one icon, which looks the same
+  in every state, so crossing them with everything would only multiply copies.
 - **Impossible combinations aren't drawn** (Checkbox `checked` + `indeterminate`: code shows indeterminate). The
   contract's `figma.variantCombinations` lists what's left.
 - **Booleans are toggled in the panel**, never expanded into extra variants or table columns.

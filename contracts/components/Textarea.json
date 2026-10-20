@@ -336,27 +336,23 @@
     }
   },
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "invalid",
-      "disabled"
-    ],
+    "states": ["default", "hover", "focus", "invalid", "disabled"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "invalid",
-          "disabled"
-        ],
+        "values": ["default", "hover", "focus", "invalid", "disabled"],
         "figmaOnly": true,
         "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
       }
-    ]
+    ],
+    "propertyMap": {
+      "value": {
+        "codeType": "string (native <textarea> value)",
+        "figma": [{"name": "value", "type": "TEXT"}],
+        "approved": "2026-10-20",
+        "reason": "the text in the field: without it a designer can only draw an empty field (owner-approved exception)"
+      }
+    }
   }
 }

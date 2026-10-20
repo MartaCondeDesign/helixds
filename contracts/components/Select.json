@@ -212,29 +212,23 @@
   },
 
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "open",
-      "invalid",
-      "disabled"
-    ],
+    "states": ["default", "hover", "focus", "open", "invalid", "disabled"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "open",
-          "invalid",
-          "disabled"
-        ],
+        "values": ["default", "hover", "focus", "open", "invalid", "disabled"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code, open is the menu-open state (aria-expanded); invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code,  open is the menu-open state (aria-expanded); invalid and disabled are the `invalid`/`disabled` props."
       }
-    ]
+    ],
+    "propertyMap": {
+      "value": {
+        "codeType": "string | undefined",
+        "figma": [{"name": "value", "type": "TEXT"}],
+        "approved": "2026-10-20",
+        "reason": "the selected option's label shown in the trigger (owner-approved exception)"
+      }
+    }
   }
 }

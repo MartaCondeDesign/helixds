@@ -5,11 +5,11 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 95 of 181 code props match Figma exactly.**
+**Parity today: 99 of 185 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.0.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.1.0 (owner-approved 2026-10-20; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -172,7 +172,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
-### CheckboxGroup (`v0.1.0`, beta)
+### CheckboxGroup (`v0.1.0`, stable)
 
 **Pattern:** `group` (.ai/maps/figma-conversion.md)
 
@@ -287,8 +287,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✗ missing |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✗ missing |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `value` (TEXT)
+| `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
 
@@ -331,6 +330,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
+| `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,  selected shows chips — the field's two looks (owner-approved exception) | ✓ |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✗ missing |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✗ missing |
@@ -341,8 +341,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `value` (VARIANT: empty / selected)
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open` / `invalid` / `disabled`
 
@@ -379,7 +377,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
-### RadioButton (`v0.1.0`, beta)
+### RadioButton (`v0.1.0`, stable)
 
 **Pattern:** `checkable` (.ai/maps/figma-conversion.md)
 
@@ -399,7 +397,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-required`, `radio-item-description`, `radio-item-error`
 
-### RadioGroup (`v0.1.0`, beta)
+### RadioGroup (`v0.1.0`, stable)
 
 **Pattern:** `group` (.ai/maps/figma-conversion.md)
 
@@ -437,6 +435,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
+| `value` | `string \| undefined` | `TEXT` `value` | exception, approved 2026-10-20 — the selected option's label shown in the trigger (owner-approved exception) | ✓ |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✗ missing |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✗ missing |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✗ missing |
@@ -447,8 +446,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `value` (TEXT)
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus` / `open`
 
@@ -480,7 +477,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
-### Switch (`v0.1.1`, beta)
+### Switch (`v0.1.1`, stable)
 
 **Pattern:** `checkable` (.ai/maps/figma-conversion.md)
 
@@ -523,8 +520,7 @@ _No design props._
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code · `union` | ✗ missing |
 | `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part · `show-hide-boolean` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `value` (TEXT)
+| `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
 

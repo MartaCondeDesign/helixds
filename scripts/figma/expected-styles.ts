@@ -527,7 +527,16 @@ async function main() {
   const url = process.env.STORYBOOK_URL ?? 'http://localhost:6006';
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}]);
+  // The standard's variant rules (contracts/figma-conversion.json → variants): a secondary toggle is drawn once —
+  // on alone, at the default size, valid and enabled (its state=default rule is applied in the loop below)
+  const STD = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../contracts/figma-conversion.json'), 'utf8'));
+  const contractFile = path.resolve(import.meta.dirname, `../../contracts/components/${name}.json`);
+  const defaults: Record<string, unknown> = fs.existsSync(contractFile)
+    ? Object.fromEntries((JSON.parse(fs.readFileSync(contractFile, 'utf8')).props ?? []).map((p: { name: string; default?: unknown }) => [p.name, p.default])) : {};
+  const def = (k: string) => String(defaults[k] ?? (k === 'size' ? 'm' : 'false'));
+  const secondaryOn = (v: Record<string, string>) => (STD.secondaryAxes as string[]).filter(k => k in v && v[k] !== def(k));
+  const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}])
+    .filter(v => { const on = secondaryOn(v); return on.length === 0 || (on.length === 1 && (!v.size || v.size === def('size')) && v.invalid !== 'true' && v.disabled !== 'true'); });
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   const layout: Record<string, unknown> = {};
   const cdp = await page.context().newCDPSession(page);
@@ -535,10 +544,9 @@ async function main() {
   await cdp.send('CSS.enable');
   for (const v of combos) for (const state of spec.states) {
     if (spec.skip?.(v, state)) continue;
-    // the standard's variant rules (contracts/figma-conversion.json → variants): disabled is drawn only at
-    // state=default and valid; hideLabel=true only at state=default
+    // the standard's variant rules: disabled only at state=default and valid; a secondary toggle only at state=default
     if (v.disabled === 'true' && (state !== 'default' || v.invalid === 'true')) continue;
-    if (v.hideLabel === 'true' && state !== 'default') continue;
+    if (secondaryOn(v).length && state !== 'default') continue;
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');
