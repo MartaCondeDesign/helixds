@@ -22,6 +22,7 @@
     ".storybook/**/*.tsx",
     "stories/**/*.ts",
     "stories/**/*.tsx",
+    ".gate-test/**/*.tsx",
     "../../packages/core/src/**/*.stories.tsx"
   ],
   "exclude": ["node_modules"]

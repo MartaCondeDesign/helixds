@@ -92,7 +92,10 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — figma-sync: syncedCommit follows the rebased commits (latest commit)
+- 2026-10-20 — Merge remote-tracking branch 'origin/main' into claude/affectionate-swartz-794ede (latest commit)
+- 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
+  - Storybook-tokens gate test copies stories outside the stories glob
+- 2026-10-20 — figma-sync: syncedCommit follows the rebased commits ([`1d5caa9`](https://github.com/MartaCondeDesign/helixds/commit/1d5caa9))
 - 2026-10-20 — Conversion standard v1.3 (owner's rule): the focus ring is never clipped — in a focus/open variant every frame around the ring layer has Clip Content off and the ring layer keeps it on (Figma only draws a shadow's spread on a clipping frame); the Figma audit checks it (check 10, clip). Fixed across all 29 sets in the file ([`134d430`](https://github.com/MartaCondeDesign/helixds/commit/134d430))
 - 2026-10-20 — figma-sync: Textarea at one size ([`7a7d009`](https://github.com/MartaCondeDesign/helixds/commit/7a7d009))
 - 2026-10-20 — figma-sync: Select synced, Textarea re-synced ([`4c0f2e0`](https://github.com/MartaCondeDesign/helixds/commit/4c0f2e0))
