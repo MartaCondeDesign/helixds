@@ -545,9 +545,9 @@
           "figma": "body-s-medium"
         },
         "lineHeight": {
-          "value": 12,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
+          "value": 18,
+          "token": "semantic.textStyle.body-s-medium.lineHeight",
+          "figma": "body-s-medium"
         },
         "fontWeight": {
           "value": 500,
@@ -597,9 +597,9 @@
           "figma": "body-s-medium"
         },
         "lineHeight": {
-          "value": 12,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
+          "value": 18,
+          "token": "semantic.textStyle.body-s-medium.lineHeight",
+          "figma": "body-s-medium"
         },
         "fontWeight": {
           "value": 500,
@@ -649,9 +649,9 @@
           "figma": "body-s-medium"
         },
         "lineHeight": {
-          "value": 12,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
+          "value": 18,
+          "token": "semantic.textStyle.body-s-medium.lineHeight",
+          "figma": "body-s-medium"
         },
         "fontWeight": {
           "value": 500,
@@ -701,9 +701,9 @@
           "figma": "body-s-medium"
         },
         "lineHeight": {
-          "value": 12,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
+          "value": 18,
+          "token": "semantic.textStyle.body-s-medium.lineHeight",
+          "figma": "body-s-medium"
         },
         "fontWeight": {
           "value": 500,
@@ -753,9 +753,9 @@
           "figma": "body-s-medium"
         },
         "lineHeight": {
-          "value": 12,
-          "token": "primitive.lineHeight.normal",
-          "figma": null
+          "value": 18,
+          "token": "semantic.textStyle.body-s-medium.lineHeight",
+          "figma": "body-s-medium"
         },
         "fontWeight": {
           "value": 500,

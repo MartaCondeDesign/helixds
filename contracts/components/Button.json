@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Button",
   "version": "2.1.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
   "import": "import { Button } from '@helixds/react';",

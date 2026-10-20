@@ -841,7 +841,7 @@
     color:          var(--helix-color-text-neutral);
     font-size:      var(--helix-chip-fontSize-m);
     font-weight:    var(--helix-chip-fontWeight);
-    line-height:    1;
+    line-height:    var(--helix-textStyle-body-s-medium-lineHeight); /* Body / s / Medium, as in Figma (the 24/32px height keeps the label centered) */
     white-space:    nowrap;
     user-select:    none;
     transition:

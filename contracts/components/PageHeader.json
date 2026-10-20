@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "PageHeader",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row.",
   "import": "import { PageHeader } from '@helixds/react';",

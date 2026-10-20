@@ -38,7 +38,7 @@ Not decidable from types alone — check the skill: `required` with no visible i
 
 <!-- helix:figma-map-components — GENERATED, do not edit -->
 
-### Accordion (`v0.1.0`, beta)
+### Accordion (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -55,7 +55,7 @@ Not decidable from types alone — check the skill: `required` with no visible i
 - `accordion-panel`
 - `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, beta)
+### AppShell (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 
@@ -64,7 +64,7 @@ _No Figma-mappable props._
 - `app-shell-content`
 - `app-shell-main`
 
-### Avatar (`v1.0.0`, stable)
+### Avatar (`v1.0.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -76,7 +76,7 @@ _No Figma-mappable props._
 - `avatar-image`
 - `avatar-initials`
 
-### AvatarGroup (`v0.1.0`, beta)
+### AvatarGroup (`v0.1.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -102,7 +102,7 @@ _No Figma-mappable props._
 - `badge-icon`
 - `badge-label`
 
-### Button (`v2.1.0`, beta)
+### Button (`v2.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -121,7 +121,7 @@ _No Figma-mappable props._
 - `button-label`
 - `button-icon-end`
 
-### Card (`v1.0.0`, stable)
+### Card (`v1.0.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -171,7 +171,7 @@ _No Figma-mappable props._
 - `checkbox-description`
 - `checkbox-error`
 
-### CheckboxGroup (`v0.1.0`, beta)
+### CheckboxGroup (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -221,7 +221,7 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `chip-group`
 
-### FAB (`v2.0.0`, beta)
+### FAB (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -238,7 +238,7 @@ _No Figma-mappable props._
 - `fab-actions`
 - `fab-action`
 
-### Icon (`v1.0.0`, stable)
+### Icon (`v1.0.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -249,7 +249,7 @@ _No Figma-mappable props._
 **Anatomy layers** (Figma layer name = `data-helix-part` value):
 - `icon-root`
 
-### IconButton (`v2.0.0`, beta)
+### IconButton (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -264,7 +264,7 @@ _No Figma-mappable props._
 - `icon-button-spinner`
 - `icon-button`
 
-### Input (`v2.0.0`, beta)
+### Input (`v2.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -291,7 +291,7 @@ _No Figma-mappable props._
 - `input-description`
 - `input-error`
 
-### Menu (`v0.3.0`, beta)
+### Menu (`v0.3.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -306,7 +306,7 @@ _No Figma-mappable props._
 - `menu-group-divider`
 - `menu-group-label`
 
-### Modal (`v0.1.0`, beta)
+### Modal (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -326,7 +326,7 @@ _No Figma-mappable props._
 - `modal-footer-start`
 - `modal-footer-end`
 
-### MultiSelect (`v0.1.0`, beta)
+### MultiSelect (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -352,7 +352,7 @@ _No Figma-mappable props._
 - `multi-select-description`
 - `multi-select-error`
 
-### NavItem (`v1.0.0`, beta)
+### NavItem (`v1.0.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -366,7 +366,7 @@ _No Figma-mappable props._
 - `nav-item-icon`
 - `nav-item-label`
 
-### PageHeader (`v1.0.0`, beta)
+### PageHeader (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -379,7 +379,7 @@ _No Figma-mappable props._
 - `page-header-description`
 - `page-header-actions`
 
-### RadioButton (`v0.1.0`, beta)
+### RadioButton (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -426,7 +426,7 @@ _No Figma-mappable props._
 - `radio-description`
 - `radio-error`
 
-### SegmentedControl (`v0.2.0`, beta)
+### SegmentedControl (`v0.2.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -440,7 +440,7 @@ _No Figma-mappable props._
 - `segmented-control-item-icon`
 - `segmented-control-item-label`
 
-### Select (`v1.1.0`, beta)
+### Select (`v1.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -464,7 +464,7 @@ _No Figma-mappable props._
 - `select-description`
 - `select-error`
 
-### SideNav (`v1.0.0`, beta)
+### SideNav (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 
@@ -474,7 +474,7 @@ _No Figma-mappable props._
 - `side-nav-items`
 - `side-nav-footer`
 
-### SidePanel (`v0.1.0`, beta)
+### SidePanel (`v0.1.0`, draft)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -512,7 +512,7 @@ _No Figma-mappable props._
 - `switch-label`
 - `switch-description`
 
-### Table (`v1.0.0`, stable)
+### Table (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 
@@ -549,7 +549,7 @@ _No Figma-mappable props._
 - `textarea-description`
 - `textarea-error`
 
-### Toast (`v0.2.0`, beta)
+### Toast (`v0.2.0`, stable)
 
 _No Figma-mappable props._
 
@@ -563,7 +563,7 @@ _No Figma-mappable props._
 - `toast-close`
 - `toast-viewport`
 
-### Tooltip (`v0.1.0`, beta)
+### Tooltip (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma kind | Figma property | Values |
 |---|---|---|---|---|
@@ -575,7 +575,7 @@ _No Figma-mappable props._
 - `tooltip-root`
 - `tooltip-content`
 
-### TopBar (`v1.0.0`, beta)
+### TopBar (`v1.0.0`, draft)
 
 _No Figma-mappable props._
 

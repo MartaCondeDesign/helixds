@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip (latest commit)
+- 2026-10-20 — Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma (latest commit)
+- 2026-10-20 — Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip ([`0a39133`](https://github.com/MartaCondeDesign/helixds/commit/0a39133))
 - 2026-10-20 — Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected) ([`f7c8e42`](https://github.com/MartaCondeDesign/helixds/commit/f7c8e42))
 - 2026-10-20 — Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height ([`aaa2fea`](https://github.com/MartaCondeDesign/helixds/commit/aaa2fea))
 - 2026-10-20 — Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill) ([`aab0bb2`](https://github.com/MartaCondeDesign/helixds/commit/aab0bb2))

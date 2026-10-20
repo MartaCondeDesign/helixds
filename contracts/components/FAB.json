@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "FAB",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial.",
   "import": "import { FAB } from '@helixds/react';",

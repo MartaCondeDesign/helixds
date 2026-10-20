@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Toast",
   "version": "0.2.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
   "import": "import { Toast, toast } from '@helixds/react';",
