@@ -332,6 +332,15 @@ const SPECS: Record<string, Spec> = {
     target: 'toast',
     scope: v => `[data-helix-part="toast"][data-variant="${v.variant}"]`,
   },
+  ChartLegendItem: {
+    story: 'components-chart--bar',
+    axes: { pressed: ['true'] },  // pressed=false needs a click (LegendToggle's play), so only the shown state is measured
+    states: ['default', 'hover', 'press', 'focus'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'chart-legend-item', fill: true, stroke: true }, 'chart-legend-swatch': { part: 'chart-legend-swatch', fill: true }, 'label': { part: 'chart-legend-item', text: true } },
+    target: 'chart-legend-item',
+    scope: () => 'button[data-helix-part="chart-legend-item"]:first-of-type',
+  },
 };
 
 const toHex = (css: string): string => {
@@ -379,7 +388,8 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
     }
     return out;
   }, { parts: spec.parts, scope });
-  if (state === 'press') await page.mouse.up();
+  // release away from the target: down + up on it would be a click (a toggle like Chart's legend flips)
+  if (state === 'press') { await page.mouse.move(0, 0); await page.mouse.up(); }
   return Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([p, c]) => [p, toHex(c)]))]));
 }
 
