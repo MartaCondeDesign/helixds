@@ -96,6 +96,12 @@
       "optional": true
     },
     {
+      "part": "input-spinner",
+      "element": "span",
+      "optional": true,
+      "description": "Loading spinner (isLoading): the same spinner Button draws, at the field's icon size and --helix-input-icon-default, in iconEnd's place. Spins via helix-spin; reduced motion stops it."
+    },
+    {
       "part": "input-description",
       "element": "p",
       "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
@@ -149,7 +155,7 @@
       "name": "isLoading",
       "type": "boolean",
       "default": false,
-      "description": "Async validation in progress."
+      "description": "Async validation in progress: locks the field and shows a spinner where iconEnd sits (aria-busy)."
     },
     {
       "name": "icon",
@@ -265,6 +271,9 @@
           "aria-invalid": [
             "true"
           ],
+          "aria-busy": [
+            "true"
+          ],
           "aria-required": [
             "true"
           ]
@@ -274,7 +283,12 @@
             "alert"
           ]
         },
-        "input-label": {
+        "input-spinner": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "input-required": {
           "aria-hidden": [
             "true"
           ]
@@ -284,8 +298,8 @@
         "textbox \"Email\"",
         "textbox \"Email\" [disabled]: user@company.com",
         "textbox \"Email\" [invalid]: not-an-email",
-        "textbox \"Password\"",
-        "textbox \"Full name\""
+        "textbox \"Username\" [disabled]: marta",
+        "textbox \"Password\""
       ],
       "contrast": {
         "input-label": {
@@ -297,14 +311,18 @@
           "dark": "16.29:1 — #f1f5f9 on #0f172a"
         },
         "input-description": {
-          "light": "7.24:1 — #475569 on #f8fafc",
-          "dark": "5.7:1 — #94a3b8 on #1e293b"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "input-error": {
           "light": "6.47:1 — #b91c1c on #ffffff",
           "dark": "12.65:1 — #fecdd3 on #0f172a"
         },
         "input-icon (icon m)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "input-spinner (icon m)": {
           "light": "7.58:1 — #475569 on #ffffff",
           "dark": "6.96:1 — #94a3b8 on #0f172a"
         },
@@ -330,7 +348,7 @@
         }
       },
       "targetSize": {
-        "input-field": "smallest 156×22 px"
+        "input-field": "smallest 169×22 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"

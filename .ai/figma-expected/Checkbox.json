@@ -170,7 +170,7 @@
       "light": {
         "checkbox-control": {
           "fill": "#ffffff",
-          "stroke": "#94a3b8"
+          "stroke": "#dc2626"
         },
         "checkbox-text": {
           "fill": "#0f172a"
@@ -185,7 +185,7 @@
       "dark": {
         "checkbox-control": {
           "fill": "#0f172a",
-          "stroke": "#475569"
+          "stroke": "#f87171"
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
@@ -394,7 +394,7 @@
       "light": {
         "checkbox-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#dc2626"
         },
         "checkbox-text": {
           "fill": "#0f172a"
@@ -409,7 +409,7 @@
       "dark": {
         "checkbox-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#f87171"
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
@@ -618,7 +618,7 @@
       "light": {
         "checkbox-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#dc2626"
         },
         "checkbox-text": {
           "fill": "#0f172a"
@@ -633,7 +633,7 @@
       "dark": {
         "checkbox-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#f87171"
         },
         "checkbox-text": {
           "fill": "#f1f5f9"

@@ -117,6 +117,18 @@ export const Disabled: Story = {
   },
 };
 
+export const Loading: Story = {
+  args: {
+    label:        'Username',
+    isLoading:    true,
+    defaultValue: 'marta',
+    description:  'Checking that the name is free…',
+  },
+  parameters: {
+    docs: { description: { story: '`isLoading` locks the field and shows a spinner where `iconEnd` sits — the same spinner Button uses — while an async check runs (`aria-busy`).' } },
+  },
+};
+
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>

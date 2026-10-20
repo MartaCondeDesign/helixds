@@ -45,8 +45,8 @@ export function MultiSelect({
   const uid    = React.useRef(`helix-multi-select-${++idCounter}`).current;
   const id     = idProp ?? uid;
   const menuId = `${id}-menu`;
-  const descId = description  ? `${id}-desc` : undefined;
-  const errId  = errorMessage ? `${id}-err`  : undefined;
+  const descId = description && !invalid ? `${id}-desc` : undefined;
+  const errId  = invalid && errorMessage ? `${id}-err`  : undefined;
   const describedby = [descId, errId].filter(Boolean).join(' ') || undefined;
 
   const isControlled = value !== undefined;
@@ -276,12 +276,12 @@ export function MultiSelect({
         )}
       </div>
 
-      {description && !errorMessage && (
+      {description && !invalid && (
         <span id={descId} data-helix-part="multi-select-description">
           {description}
         </span>
       )}
-      {errorMessage && (
+      {invalid && errorMessage && (
         <span id={errId} data-helix-part="multi-select-error" role="alert">
           {errorMessage}
         </span>

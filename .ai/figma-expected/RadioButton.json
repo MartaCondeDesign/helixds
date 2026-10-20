@@ -170,7 +170,7 @@
       "light": {
         "radio-control": {
           "fill": "#ffffff",
-          "stroke": "#94a3b8"
+          "stroke": "#dc2626"
         },
         "radio-item-label": {
           "fill": "#0f172a"
@@ -185,7 +185,7 @@
       "dark": {
         "radio-control": {
           "fill": "#0f172a",
-          "stroke": "#475569"
+          "stroke": "#f87171"
         },
         "radio-item-label": {
           "fill": "#f1f5f9"
@@ -424,7 +424,7 @@
       "light": {
         "radio-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#dc2626"
         },
         "radio-dot": {
           "fill": "#ffffff"
@@ -442,7 +442,7 @@
       "dark": {
         "radio-control": {
           "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
+          "stroke": "#f87171"
         },
         "radio-dot": {
           "fill": "#ffffff"

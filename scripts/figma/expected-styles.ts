@@ -44,6 +44,8 @@ type Spec = {
   layoutPerState?: boolean;
   // Combinations code can't show (and Figma doesn't draw), e.g. a disabled checkbox with hover: not measured.
   skip?: (v: Record<string, string>, state: State) => boolean;
+  /** A different story for some variants that still takes the URL args (unlike locate) — e.g. one with a selection. */
+  storyOf?: (v: Record<string, string>) => string | undefined;
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -61,20 +63,39 @@ const SPECS: Record<string, Spec> = {
   },
   Input: {
     story: 'components-input--default',
-    axes: { size: ['m'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'input-wrapper', fill: true, stroke: true }, 'input-field': { part: 'input-field', placeholder: true } },
+    axes: { size: ['s', 'm', 'l'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message',
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', isLoading: v.isLoading === 'true' }),
+    parts: {
+      '(root)': { part: 'input-root' },
+      'input-label': { part: 'input-label', text: true },
+      'input-required': { part: 'input-required', text: true },
+      'input-wrapper': { part: 'input-wrapper', fill: true, stroke: true },
+      'input-field': { part: 'input-field', placeholder: true },
+      'input-spinner': { part: 'input-spinner', text: true },
+      'input-description': { part: 'input-description', text: true },
+      'input-error': { part: 'input-error', text: true },
+    },
     target: 'input-field',
   },
   Textarea: {
-    story: 'components-textarea--default',
-    axes: { size: ['m'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'textarea-wrapper', fill: true, stroke: true }, 'textarea-field': { part: 'textarea-field', placeholder: true } },
+    story: 'components-textarea--with-character-count',
+    axes: { size: ['s', 'm', 'l'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true,
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', resize: v.resize! }),
+    parts: {
+      '(root)': { part: 'textarea-root' },
+      'textarea-label': { part: 'textarea-label', text: true },
+      'textarea-required': { part: 'textarea-required', text: true },
+      'textarea-wrapper': { part: 'textarea-wrapper', fill: true, stroke: true },
+      'textarea-field': { part: 'textarea-field', placeholder: true },
+      'textarea-counter': { part: 'textarea-counter', text: true },
+      'textarea-description': { part: 'textarea-description', text: true },
+      'textarea-error': { part: 'textarea-error', text: true },
+    },
     target: 'textarea-field',
-    storyFor: { disabled: 'components-textarea--disabled' }, // the Default story ignores a URL `disabled` arg
   },
   Button: {
     story: 'components-button--full-width',
@@ -94,13 +115,22 @@ const SPECS: Record<string, Spec> = {
   },
   Select: {
     story: 'components-select--default',
-    axes: {},
-    states: ['default', 'hover', 'focus', 'open', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Role', placeholder: 'Choose a role…', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'select-trigger', fill: true, stroke: true }, 'select-trigger-label': { part: 'select-trigger-label', text: true } },
+    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'open'],
+    args: v => ({ label: 'Role', placeholder: 'Choose a role…', required: true, description: 'Helper text', errorMessage: 'Error message',
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: {
+      '(root)': { part: 'select-root' },
+      'select-label': { part: 'select-label', text: true },
+      'select-required': { part: 'select-required', text: true },
+      'select-trigger': { part: 'select-trigger', fill: true, stroke: true },
+      'select-trigger-label': { part: 'select-trigger-label', text: true },
+      'select-chevron': { part: 'select-chevron', text: true },
+      'select-description': { part: 'select-description', text: true },
+      'select-error': { part: 'select-error', text: true },
+    },
     target: 'select-trigger',
   },
-  // Exact parity (root CLAUDE.md rule 16): every look-changing boolean is its own false/true axis, like the props.
   Checkbox: {
     story: 'components-checkbox--with-description',
     axes: { checked: ['false', 'true'], indeterminate: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
@@ -246,17 +276,22 @@ const SPECS: Record<string, Spec> = {
   },
   MultiSelect: {
     story: 'components-multiselect--default',
-    axes: { value: ['empty', 'selected'] },
-    states: ['default', 'hover', 'focus', 'open', 'invalid', 'disabled'],
-    args: () => ({}),
-    parts: { '(root)': { part: 'multi-select-field', fill: true, stroke: true }, 'multi-select-placeholder': { part: 'multi-select-placeholder', text: true }, 'multi-select-chevron': { part: 'multi-select-chevron', text: true } },
-    target: 'multi-select-trigger',
-    borderOutsideLayout: true,
-    locate: (v, s) => {
-      const scope = '[data-helix-part="multi-select-root"]';
-      if (v.value === 'selected') return ['invalid', 'disabled'].includes(s) ? null : { story: 'components-multiselect--with-selection', scope };
-      return { story: s === 'invalid' ? 'components-multiselect--invalid' : s === 'disabled' ? 'components-multiselect--disabled' : 'components-multiselect--default', scope };
+    storyOf: v => v.value === 'selected' ? 'components-multiselect--with-selection' : undefined,
+    axes: { value: ['empty', 'selected'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'open'],
+    args: v => ({ label: 'Skills', placeholder: 'Choose skills…', required: true, description: 'Helper text', errorMessage: 'Error message',
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: {
+      '(root)': { part: 'multi-select-root' },
+      'multi-select-label': { part: 'multi-select-label', text: true },
+      'multi-select-required': { part: 'multi-select-required', text: true },
+      'multi-select-field': { part: 'multi-select-field', fill: true, stroke: true },
+      'multi-select-placeholder': { part: 'multi-select-placeholder', text: true },
+      'multi-select-chevron': { part: 'multi-select-chevron', text: true },
+      'multi-select-description': { part: 'multi-select-description', text: true },
+      'multi-select-error': { part: 'multi-select-error', text: true },
     },
+    target: 'multi-select-trigger',
   },
   RadioButton: {
     story: 'components-radiobutton--with-description',
@@ -383,7 +418,9 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       const cs = getComputedStyle(el);
       // not rendered in this combination (e.g. Radio's dot at scale 0 when unchecked) → no Figma layer to compare
       const box = el.getBoundingClientRect();
-      if (box.width <= 1 || box.height <= 1 || cs.visibility === 'hidden' || cs.opacity === '0') continue; // (1px = sr-only, e.g. hideLabel)
+      // (1px = sr-only, e.g. hideLabel — also anything inside a sr-only ancestor, like the label's required *)
+      let srOnly = false; for (let a: Element | null = el; a; a = a.parentElement) { const r = a.getBoundingClientRect(); if (r.width <= 1 && r.height <= 1) { srOnly = true; break; } }
+      if (srOnly || box.width === 0 || box.height === 0 || cs.visibility === 'hidden' || cs.opacity === '0') continue;
       out[layer] = {};
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';
@@ -550,7 +587,7 @@ async function main() {
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');
-    const storyId = loc?.story ?? spec.storyFor?.[state] ?? spec.story;
+    const storyId = loc?.story ?? spec.storyFor?.[state] ?? spec.storyOf?.(v) ?? spec.story;
     await page.goto(`${url}/iframe.html?viewMode=story&id=${storyId}&args=${encodeURIComponent(loc ? '' : args)}`);
     const scopeSel = loc?.scope ?? (spec.scope ? spec.scope(v) : null);
     const vScoped = loc ? { ...spec, scope: () => loc.scope } : spec;

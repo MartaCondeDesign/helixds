@@ -102,7 +102,7 @@
       ],
       "focus": [
         {
-          "part": "select-trigger",
+          "part": "select-wrapper",
           "when": ":focus-visible",
           "border-color": "var(--helix-select-border-hover)"
         },
@@ -148,7 +148,7 @@
             "alert"
           ]
         },
-        "select-label": {
+        "select-required": {
           "aria-hidden": [
             "true"
           ]

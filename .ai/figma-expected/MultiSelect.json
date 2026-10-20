@@ -4,15 +4,19 @@
     "default",
     "hover",
     "focus",
-    "open",
-    "invalid",
-    "disabled"
+    "open"
   ],
-  "borderOutsideLayout": true,
   "colors": {
-    "value=empty, state=default": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#e2e8f0"
         },
@@ -21,10 +25,20 @@
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#334155"
         },
@@ -33,12 +47,22 @@
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=empty, state=hover": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#94a3b8"
         },
@@ -47,10 +71,20 @@
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#475569"
         },
@@ -59,12 +93,22 @@
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=empty, state=focus": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#3b82f6"
         },
@@ -73,10 +117,20 @@
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
@@ -85,12 +139,22 @@
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=empty, state=open": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=open": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#3b82f6"
         },
@@ -99,10 +163,20 @@
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
@@ -111,12 +185,148 @@
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=empty, state=invalid": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=default": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "multi-select-placeholder": {
+          "fill": "#64748b"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "multi-select-placeholder": {
+          "fill": "#64748b"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-required": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-field": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#475569"
+        },
+        "multi-select-required": {
+          "fill": "#475569"
+        },
+        "multi-select-field": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "multi-select-placeholder": {
+          "fill": "#475569"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#dc2626"
         },
@@ -125,10 +335,20 @@
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#f87171"
         },
@@ -137,148 +357,633 @@
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
         }
       }
     },
-    "value=empty, state=disabled": {
+    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
       "light": {
-        "(root)": {
-          "fill": "#f1f5f9",
-          "stroke": "#f1f5f9"
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "multi-select-placeholder": {
+          "fill": "#64748b"
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
         }
       },
       "dark": {
-        "(root)": {
-          "fill": "#1e293b",
-          "stroke": "#1e293b"
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
         }
       }
     },
-    "value=selected, state=default": {
+    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "multi-select-placeholder": {
+          "fill": "#64748b"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "multi-select-placeholder": {
+          "fill": "#64748b"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "multi-select-placeholder": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#e2e8f0"
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#334155"
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=selected, state=hover": {
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#94a3b8"
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#475569"
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=selected, state=focus": {
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#3b82f6"
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "value=selected, state=open": {
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=open": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
           "fill": "#ffffff",
           "stroke": "#3b82f6"
         },
         "multi-select-chevron": {
           "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
           "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
         "multi-select-chevron": {
           "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-required": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-field": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#475569"
+        },
+        "multi-select-required": {
+          "fill": "#475569"
+        },
+        "multi-select-field": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#0f172a"
+        },
+        "multi-select-required": {
+          "fill": "#b91c1c"
+        },
+        "multi-select-field": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "multi-select-chevron": {
+          "fill": "#475569"
+        },
+        "multi-select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "multi-select-label": {
+          "fill": "#f1f5f9"
+        },
+        "multi-select-required": {
+          "fill": "#fecdd3"
+        },
+        "multi-select-field": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "multi-select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "multi-select-error": {
+          "fill": "#fecdd3"
         }
       }
     }
   },
   "layout": {
-    "value=empty": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
       "(root)": {
-        "height": {
-          "value": 32,
-          "token": null,
-          "figma": null
-        },
-        "paddingTop": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
-        "paddingRight": {
-          "value": 40,
-          "token": null,
-          "figma": null
-        },
-        "paddingBottom": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
-        "paddingLeft": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
         "itemSpacing": {
-          "value": 4,
-          "token": "semantic.spacing.2xs",
-          "figma": "semantic.spacing.2xs"
-        },
-        "cornerRadius": {
-          "value": 6,
-          "token": "component.select.radius",
-          "figma": "semantic.radius.m"
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
         }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
       },
       "multi-select-placeholder": {
         "fontSize": {
@@ -314,45 +1019,107 @@
           "token": null,
           "figma": null
         }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
       }
     },
-    "value=selected": {
+    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true": {
       "(root)": {
-        "height": {
-          "value": 32,
-          "token": null,
-          "figma": null
-        },
-        "paddingTop": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
-        "paddingRight": {
-          "value": 40,
-          "token": null,
-          "figma": null
-        },
-        "paddingBottom": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
-        "paddingLeft": {
-          "value": 3,
-          "token": null,
-          "figma": null
-        },
         "itemSpacing": {
-          "value": 4,
-          "token": "semantic.spacing.2xs",
-          "figma": "semantic.spacing.2xs"
-        },
-        "cornerRadius": {
-          "value": 6,
-          "token": "component.select.radius",
-          "figma": "semantic.radius.m"
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
         }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-placeholder": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
       },
       "multi-select-chevron": {
         "width": {
@@ -365,6 +1132,818 @@
           "token": null,
           "figma": null
         }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-placeholder": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-placeholder": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-placeholder": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "multi-select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "multi-select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "multi-select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
       }
     }
   }

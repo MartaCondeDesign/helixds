@@ -139,12 +139,12 @@
           "dark": "5.17:1 — #ffffff on #2563eb"
         },
         "fab-action (icon)": {
-          "light": "17.85:1 — #0f172a on #ffffff",
+          "light": "3.45:1 — #0f172a on #2563eb",
           "dark": "16.3:1 — #f1f5f9 on #0f172a"
         }
       },
       "targetSize": {
-        "fab-root": "smallest 44×44 px",
+        "fab-root": "smallest 45×45 px",
         "fab-action": "smallest 18×18 px"
       },
       "motion": [

@@ -106,7 +106,7 @@
             "alert"
           ]
         },
-        "checkbox-group-legend": {
+        "checkbox-group-required": {
           "aria-hidden": [
             "true"
           ]
@@ -119,8 +119,8 @@
       ],
       "contrast": {
         "checkbox-group-legend": {
-          "light": "17.85:1 — #0f172a on #ffffff",
-          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "checkbox-group-error": {
           "light": "6.47:1 — #b91c1c on #ffffff",

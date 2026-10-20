@@ -18,6 +18,9 @@ const meta: Meta<typeof Textarea> = {
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
     rows:      { control: { type: 'number', min: 2, max: 10 } },
     maxLength: { control: 'number' },
+    // native <textarea> attributes the docs can't infer — declared so they get a control (and URL args work)
+    disabled:  { control: 'boolean' },
+    required:  { control: 'boolean' },
   },
 };
 

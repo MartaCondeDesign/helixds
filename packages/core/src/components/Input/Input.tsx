@@ -9,6 +9,15 @@ let idCounter = 0;
 // matches Select's chevron (also 16) in the same row.
 const ICON_SIZE_BY_FIELD_SIZE = { s: 16, m: 16, l: 18 } as const;
 
+// isLoading: the same spinner Button and IconButton draw, at the field's icon size, where iconEnd sits
+// (owner's decision 2026-10-20 — before it the field only locked silently).
+const Spinner = ({ size }: { size: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+  </svg>
+);
+
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -32,8 +41,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const [uid] = React.useState(() => id ?? `helix-input-${++idCounter}`);
-    const descId  = description  ? `${uid}-desc`  : undefined;
-    const errorId = errorMessage ? `${uid}-error` : undefined;
+    const descId  = description && !invalid ? `${uid}-desc`  : undefined;
+    const errorId = invalid && errorMessage ? `${uid}-error` : undefined;
     const describedBy = [descId, errorId].filter(Boolean).join(' ') || undefined;
 
     const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -109,7 +118,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             }}
           />
 
-          {iconEnd && (
+          {isLoading ? (
+            <span data-helix-part="input-spinner">
+              <Spinner size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+            </span>
+          ) : iconEnd && (
             <span data-helix-part="input-icon-end">
               <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
             </span>

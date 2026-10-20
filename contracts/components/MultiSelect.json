@@ -105,7 +105,8 @@
     "applied": {
       "nativeElement": "div",
       "innerComponents": [
-        "Chip"
+        "Chip",
+        "Menu"
       ],
       "focus": [
         {
@@ -156,7 +157,7 @@
             "alert"
           ]
         },
-        "multi-select-label": {
+        "multi-select-required": {
           "aria-hidden": [
             "true"
           ]
@@ -184,7 +185,7 @@
         }
       },
       "targetSize": {
-        "multi-select-trigger": "smallest 67×24 px"
+        "multi-select-trigger": "smallest 68×24 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"

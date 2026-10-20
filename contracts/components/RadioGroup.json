@@ -125,7 +125,7 @@
             "alert"
           ]
         },
-        "radio-legend": {
+        "radio-required": {
           "aria-hidden": [
             "true"
           ]
@@ -137,8 +137,8 @@
       ],
       "contrast": {
         "radio-legend": {
-          "light": "17.85:1 — #0f172a on #ffffff",
-          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "radio-item-label": {
           "light": "17.85:1 — #0f172a on #ffffff",
@@ -154,7 +154,7 @@
         }
       },
       "targetSize": {
-        "radio-input": "smallest 75×21 px"
+        "radio-input": "smallest 77×21 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"

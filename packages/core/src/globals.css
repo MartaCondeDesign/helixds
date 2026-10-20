@@ -696,13 +696,15 @@
   [data-helix-part="input-field"]::placeholder {
     color: var(--helix-input-text-placeholder);
   }
-  [data-helix-part="input-field"]:disabled {
+  [data-helix-part="input-field"]:disabled,
+  [data-helix-part="input-field"]:disabled::placeholder {
     cursor: not-allowed;
     color:  var(--helix-input-text-disabled);
   }
 
   [data-helix-part="input-icon"],
-  [data-helix-part="input-icon-end"] {
+  [data-helix-part="input-icon-end"],
+  [data-helix-part="input-spinner"] {
     display:     flex;
     align-items: center;
     color:       var(--helix-input-icon-default);
@@ -713,20 +715,24 @@
     padding-left: var(--helix-primitive-spacing-75);
     padding-right: var(--helix-primitive-spacing-25);
   }
-  [data-helix-part="input-icon-end"] {
+  [data-helix-part="input-icon-end"],
+  [data-helix-part="input-spinner"] {
     padding-right: var(--helix-primitive-spacing-75);
     padding-left:  var(--helix-primitive-spacing-25);
+  }
+  [data-helix-part="input-spinner"] > svg {
+    animation: helix-spin 0.7s linear infinite; /* reduced motion: the global rule stops it after one turn */
   }
 
   [data-helix-part="input-description"] {
     font-size:   var(--helix-input-text-descriptionFontSize);
     color:       var(--helix-input-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="input-error"] {
     font-size:   var(--helix-input-text-errorFontSize);
     color:       var(--helix-input-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
     display:     flex;
     align-items: center;
     gap:         var(--helix-primitive-spacing-25);
@@ -1072,8 +1078,14 @@
     color:       var(--helix-textarea-text-label);
     line-height: var(--helix-textStyle-body-m-medium-lineHeight);
   }
+  [data-helix-part="textarea-required"],
+  [data-helix-part="select-required"],
+  [data-helix-part="multi-select-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
   /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
-  [data-helix-part="textarea-root"][data-disabled] :is([data-helix-part="textarea-label"], [data-helix-part="textarea-required"], [data-helix-part="textarea-description"]) {
+  [data-helix-part="textarea-root"][data-disabled] :is([data-helix-part="textarea-label"], [data-helix-part="textarea-required"], [data-helix-part="textarea-description"], [data-helix-part="textarea-counter"]) {
     color: var(--helix-textarea-text-disabled);
   }
 
@@ -1129,7 +1141,8 @@
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
   [data-helix-part="textarea-field"][data-resize="both"]       { resize: both; }
   [data-helix-part="textarea-field"]::placeholder { color: var(--helix-textarea-text-placeholder); }
-  [data-helix-part="textarea-field"]:disabled     { cursor: not-allowed; color: var(--helix-textarea-text-disabled); }
+  [data-helix-part="textarea-field"]:disabled,
+  [data-helix-part="textarea-field"]:disabled::placeholder { cursor: not-allowed; color: var(--helix-textarea-text-disabled); }
 
   [data-helix-part="textarea-counter"] {
     position:   absolute;
@@ -1143,12 +1156,12 @@
   [data-helix-part="textarea-description"] {
     font-size:   var(--helix-textarea-text-descriptionFontSize);
     color:       var(--helix-textarea-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="textarea-error"] {
     font-size:   var(--helix-textarea-text-errorFontSize);
     color:       var(--helix-textarea-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1240,7 +1253,7 @@
   /* :not([aria-expanded="true"]) and :not(:focus-visible) — without them, hover's higher
      specificity (3 compound selectors vs. 2) silently beat the open/focus rule below whenever the
      mouse stayed over an opened trigger, turning the border gray instead of staying blue. */
-  [data-helix-part="select-trigger"]:hover:not(:disabled):not([aria-expanded="true"]):not(:focus-visible) {
+  [data-helix-part="select-wrapper"]:not([data-invalid]) [data-helix-part="select-trigger"]:hover:not(:disabled):not([aria-expanded="true"]):not(:focus-visible) {
     border-color: var(--helix-select-border-hover);
   }
   /* Same focus treatment on open as on focus — a hand-rolled trigger's "open" state IS its focus
@@ -1262,6 +1275,9 @@
   }
   [data-helix-part="select-trigger"][data-placeholder] {
     color: var(--helix-select-text-placeholder);
+  }
+  [data-helix-part="select-trigger"][data-placeholder]:disabled {
+    color: var(--helix-select-text-disabled);
   }
 
   [data-helix-part="select-chevron"] {
@@ -1287,12 +1303,12 @@
   [data-helix-part="select-description"] {
     font-size:   var(--helix-select-text-descriptionFontSize);
     color:       var(--helix-select-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="select-error"] {
     font-size:   var(--helix-select-text-errorFontSize);
     color:       var(--helix-select-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1350,7 +1366,7 @@
   }
   [data-helix-part="multi-select-root"][data-full-width] [data-helix-part="multi-select-field"] { width: 100%; }
 
-  [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
+  [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-invalid]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
     border-color: var(--helix-select-border-hover);
   }
   /* Focus/open = Select's treatment (blue border + glow). The border keeps its width — only its color
@@ -1391,7 +1407,8 @@
     outline:     none;
   }
   [data-helix-part="multi-select-field"][data-has-value] [data-helix-part="multi-select-trigger"] { padding-left: 0; }
-  [data-helix-part="multi-select-trigger"]:disabled { cursor: not-allowed; color: var(--helix-select-text-disabled); }
+  [data-helix-part="multi-select-trigger"]:disabled,
+  [data-helix-part="multi-select-trigger"]:disabled [data-helix-part="multi-select-placeholder"] { cursor: not-allowed; color: var(--helix-select-text-disabled); }
 
   [data-helix-part="multi-select-placeholder"] {
     display:       block;
@@ -1437,12 +1454,12 @@
   [data-helix-part="multi-select-description"] {
     font-size:   var(--helix-select-text-descriptionFontSize);
     color:       var(--helix-select-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="multi-select-error"] {
     font-size:   var(--helix-select-text-errorFontSize);
     color:       var(--helix-select-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1660,8 +1677,9 @@
     outline-offset: 2px;
   }
 
-  /* Invalid */
-  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-control"] {
+  /* Invalid — hover never takes the invalid border away (the fill still darkens when checked) */
+  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-control"],
+  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:not(:disabled) + [data-helix-part="checkbox-control"] {
     border-color: var(--helix-checkbox-border-invalid);
   }
 
@@ -1917,7 +1935,9 @@
     outline-offset: 2px;
   }
   [data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-control"],
-  [data-helix-part="radio-item"][data-invalid] [data-helix-part="radio-control"] {
+  [data-helix-part="radio-item"][data-invalid] [data-helix-part="radio-control"],
+  /* hover never takes the invalid border away (the fill still darkens when checked) */
+  :is([data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-item"], [data-helix-part="radio-item"][data-invalid]):hover [data-helix-part="radio-input"]:not(:disabled) + [data-helix-part="radio-control"] {
     border-color: var(--helix-radio-border-invalid);
   }
 

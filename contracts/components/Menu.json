@@ -79,13 +79,16 @@
     "wcag": ["1.3.1 Info and Relationships", "2.1.1 Keyboard", "2.4.7 Focus Visible", "4.1.2 Name Role Value"],
     "applied": {
       "nativeElement": "div",
+      "innerComponents": [
+        "Button"
+      ],
       "focus": [
         {
-          "part": "(any focusable element)",
-          "when": ":focus-visible",
-          "inherited": "global rule",
-          "outline": "2px solid var(--helix-color-border-focus)",
-          "outline-offset": "2px"
+          "part": "(its inner controls)",
+          "delegatedTo": [
+            "Button"
+          ],
+          "note": "focus is drawn by Button — see their a11y.applied.focus"
         }
       ],
       "aria": {
@@ -94,7 +97,8 @@
             "listbox"
           ],
           "aria-label": [
-            "Open menu"
+            "Open menu",
+            "pear"
           ]
         },
         "menu-item": {
@@ -102,7 +106,8 @@
             "option"
           ],
           "aria-selected": [
-            "false"
+            "false",
+            "true"
           ]
         },
         "menu-group-divider": {
@@ -115,7 +120,8 @@
         }
       },
       "announced": [
-        "listbox \"Open menu\""
+        "listbox \"Open menu\"",
+        "listbox \"pear\""
       ],
       "contrast": {
         "menu-group-label": {
@@ -123,12 +129,12 @@
           "dark": "6.96:1 — #94a3b8 on #0f172a"
         },
         "menu-item": {
-          "light": "17.85:1 — #0f172a on #ffffff",
-          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+          "light": "4.74:1 — #2563eb on #eff6ff",
+          "dark": "5.74:1 — #93c5fd on #1e3a8a"
         }
       },
       "targetSize": {
-        "menu-item": "smallest 140×32 px"
+        "menu-item": "smallest 136×31 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"

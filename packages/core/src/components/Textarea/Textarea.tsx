@@ -29,8 +29,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const uid         = `helix-textarea-${++idCounter}`;
     const id          = rest.id ?? uid;
-    const descId      = description  ? `${id}-desc`  : undefined;
-    const errId       = errorMessage ? `${id}-err`   : undefined;
+    const descId      = description && !invalid ? `${id}-desc`  : undefined;
+    const errId       = invalid && errorMessage ? `${id}-err`   : undefined;
     const describedby = [descId, errId].filter(Boolean).join(' ') || undefined;
 
     const [count, setCount] = useState(
@@ -93,12 +93,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
         </div>
 
-        {description && !errorMessage && (
+        {description && !invalid && (
           <span id={descId} data-helix-part="textarea-description">
             {description}
           </span>
         )}
-        {errorMessage && (
+        {invalid && errorMessage && (
           <span id={errId} data-helix-part="textarea-error" role="alert">
             {errorMessage}
           </span>

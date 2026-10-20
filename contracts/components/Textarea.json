@@ -305,7 +305,7 @@
         }
       },
       "targetSize": {
-        "textarea-field": "smallest 165×96 px"
+        "textarea-field": "smallest 179×96 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"

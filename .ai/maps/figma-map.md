@@ -291,7 +291,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-icon-end`, `input-description`, `input-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-spinner`, `input-icon-end`, `input-description`, `input-error`
 
 ### Menu (`v0.3.0`, beta)
 

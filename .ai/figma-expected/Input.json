@@ -3,125 +3,1318 @@
   "states": [
     "default",
     "hover",
-    "focus",
-    "invalid",
-    "disabled"
+    "focus"
   ],
   "colors": {
-    "size=m, state=default": {
+    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
           "fill": "#ffffff",
           "stroke": "#e2e8f0"
         },
         "input-field": {
           "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
           "fill": "#0f172a",
           "stroke": "#334155"
         },
         "input-field": {
           "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "size=m, state=hover": {
+    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
           "fill": "#ffffff",
           "stroke": "#94a3b8"
         },
         "input-field": {
           "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
           "fill": "#0f172a",
           "stroke": "#475569"
         },
         "input-field": {
           "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "size=m, state=focus": {
+    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
           "fill": "#ffffff",
           "stroke": "#3b82f6"
         },
         "input-field": {
           "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
           "fill": "#0f172a",
           "stroke": "#60a5fa"
         },
         "input-field": {
           "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
         }
       }
     },
-    "size=m, state=invalid": {
+    "size=s, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#94a3b8"
+        },
+        "input-required": {
+          "fill": "#94a3b8"
+        },
+        "input-wrapper": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#475569"
+        },
+        "input-required": {
+          "fill": "#475569"
+        },
+        "input-wrapper": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "input-field": {
+          "fill": "#475569"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
           "fill": "#ffffff",
           "stroke": "#dc2626"
         },
         "input-field": {
           "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
           "fill": "#0f172a",
           "stroke": "#f87171"
         },
         "input-field": {
           "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
         }
       }
     },
-    "size=m, state=disabled": {
+    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
       "light": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-spinner": {
+          "fill": "#475569"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "input-field": {
+          "fill": "#475569"
+        },
+        "input-spinner": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=true, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=m, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#94a3b8"
+        },
+        "input-required": {
+          "fill": "#94a3b8"
+        },
+        "input-wrapper": {
           "fill": "#f1f5f9",
           "stroke": "#f1f5f9"
         },
         "input-field": {
-          "fill": "#64748b"
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
         }
       },
       "dark": {
-        "(root)": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#475569"
+        },
+        "input-required": {
+          "fill": "#475569"
+        },
+        "input-wrapper": {
           "fill": "#1e293b",
           "stroke": "#1e293b"
         },
         "input-field": {
+          "fill": "#475569"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
           "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "size=l, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#94a3b8"
+        },
+        "input-required": {
+          "fill": "#94a3b8"
+        },
+        "input-wrapper": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#475569"
+        },
+        "input-required": {
+          "fill": "#475569"
+        },
+        "input-wrapper": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "input-field": {
+          "fill": "#475569"
+        },
+        "input-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#0f172a"
+        },
+        "input-required": {
+          "fill": "#b91c1c"
+        },
+        "input-wrapper": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "input-field": {
+          "fill": "#64748b"
+        },
+        "input-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "input-label": {
+          "fill": "#f1f5f9"
+        },
+        "input-required": {
+          "fill": "#fecdd3"
+        },
+        "input-wrapper": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "input-field": {
+          "fill": "#94a3b8"
+        },
+        "input-error": {
+          "fill": "#fecdd3"
         }
       }
     }
   },
   "layout": {
-    "size=m": {
+    "size=s, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
       "(root)": {
-        "height": {
-          "value": 32,
-          "token": "component.input.height.m",
-          "figma": "semantic.size.m"
-        },
-        "cornerRadius": {
-          "value": 6,
-          "token": "component.input.radius",
-          "figma": "semantic.radius.m"
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
         }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 12,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=s, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 12,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=s, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 12,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
       },
       "input-field": {
         "fontSize": {
@@ -144,6 +1337,851 @@
           "token": "primitive.fontFamily.sans",
           "figma": null
         }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-spinner": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=false, fullWidth=true, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=false, disabled=false, hideLabel=true, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=m, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 14,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=l, invalid=false, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 18,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 27,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=l, invalid=false, disabled=true, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 18,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 27,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "size=l, invalid=true, disabled=false, hideLabel=false, fullWidth=false, isLoading=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.input.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "input-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.input.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.input.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "input-field": {
+        "fontSize": {
+          "value": 18,
+          "token": "primitive.fontSize.m",
+          "figma": null
+        },
+        "lineHeight": {
+          "value": 27,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        }
+      },
+      "input-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.input.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
       }
     }
   }
