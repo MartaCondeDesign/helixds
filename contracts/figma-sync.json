@@ -190,6 +190,33 @@
       }
     },
     {
+      "name": "Chart",
+      "inFigma": true,
+      "figmaNodeId": "577:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "BUILT + AUDITED 2026-10-20 (first time in Figma): page 'Chart' between Card and Checkbox. Chart set (578:199) = variant line/area/bar/stacked-bar/donut/timeline, each a static token-bound drawing of its story (series chart/series/1…6, axes/split lines border/neutral, labels Body / s / Regular text/neutral/light, stacked/donut gaps fill/page, area at 15% layer opacity — no gradient, Figma can't bind a stop), legend of ChartLegendItem instances (swatch overridden per series). ChartLegendItem set (577:27) = pressed (true/false) × state (default/hover/press/focus), colors light+dark from .ai/figma-expected/ChartLegendItem.json, focus ring as bound spread shadows. Structural audit on Chart + full audit on ChartLegendItem passed; Propstar tables 580:26 and 580:45.",
+      "compSetId": "578:199",
+      "syncedCommit": "0a391337c9c3e1f5f8f75a60ec1c595ad5789468",
+      "audit": {
+        "pass": true,
+        "commit": "0a391337c9c3e1f5f8f75a60ec1c595ad5789468",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
       "name": "Checkbox",
       "inFigma": true,
       "figmaNodeId": "295:3",
@@ -247,14 +274,14 @@
       "figmaNodeId": "288:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Rebuilt from scratch 2026-08-24 (twice — first attempt tried to add a `disabled` VARIANT axis by renaming .name on components still parented inside the old COMPONENT_SET, which silently corrupted their names into '=Chip, =neutral, =s, =false, =false' garbage and left the set in an unrecoverable error state — variantProperties threw 'Component set for node has existing errors'. Deleted it and rebuilt as plain page-level components first, renamed freely, THEN combined once — that's the safe order, confirmed working). Now variant x size x checked x disabled (40 total), matching ChipVariant/ChipSize/checked/disabled exactly. Full anatomy: chip-icon and chip-icon-end (real 'Filter' icon instances, hidden by default) and chip-dismiss (real 'X' icon instance, hidden by default) as true layers, not just theoretical properties. Properties added, in Storybook's Controls order: label (TEXT), icon (BOOLEAN -> chip-icon visibility), iconEnd (BOOLEAN -> chip-icon-end visibility), dismissible (BOOLEAN -> chip-dismiss visibility), then variant/size/checked/disabled (VARIANT, in that order too). All 40/40 wired for every property. onClick/onDismiss have no Figma equivalent (JS handlers, not visual) and are intentionally not represented. Fill/text/border bound to real variables for every variant x state combination, including the new disabled treatment (fill/disabled, text/disabled, border/neutral/light, opacity 0.72 — matches globals.css exactly). RESYNCED 2026-10-01 in place (no re-combine, so instances elsewhere follow): s 24px / m 32px (size/s, size/m), padding 12px both sizes (spacing/75), label 'Body / s / Medium'. The root component is now the pill (fill, border, radius, height; strokesIncludedInLayout so padding sits inside the border like CSS border-box); 'chip' is the transparent content row. chip-dismiss is a 24px button inside the pill after chip-icon-end (was a 12px X outside the pill): the root's itemSpacing is negative (-10 s / -8 m) so the button overlaps the chip's own 12px end padding, giving label->button 2px (s) / 4px (m) as in code, and paddingRight 0 (s) / 4px (m). Known 1px gap vs code: Figma's border-box puts the dismiss button 1px further in than code's absolutely-positioned button. Colors from code's computed styles: disabled keeps its variant colors at opacity 0.72 (was fill/disabled grays); neutral checked = fill/secondary/interactive/press, no border; colored checked = {v}-light fill + a 'checked-fill' rectangle of {v}/interactive/default at 60% layer opacity (models CSS color-mix 60%; a 60%-opacity paint is lost on instances, layer opacity isn't), text/neutral, no border. Light mode only for the checked mix: code drops it to 40% in dark mode, which Figma can't vary per mode. Icons re-created pre-colored (nested instance children aren't editable): icon/neutral on neutral/checked, text/{variant} on tints (rule 10 exception), 14px at 1.4 stroke; dismiss X icon/neutral/light at 12px/1.3. REBUILT FROM SCRATCH + AUDITED 2026-10-02 (new set): variant × size × dismissible × state = 100 variants; no checked state (removed from code). Root = pill (fill, 1px stroke always, radius/full, height size/s|m, padding spacing/75, gap spacing/2xs); chip-icon / chip-icon-end are frames with spacing/3xs on the label side (code's 4+2 = 6px); chip-dismiss a 20px (s) / 24px (m) frame with the X, inside the pill — dismissible is a VARIANT because it changes the end padding (12 → 0 s / 4 m). Colored hover/press = fill + 'state-layer' (fill/page at 16% / 28% layer opacity = code's color-mix); focus = two spread shadows bound to border/focus + fill/page (clipsContent on); disabled = variant colors at 0.72. Known 1px: dismiss sits 1px further in than code (border counted in layout). Propstar property table. Audit passed incl. color parity light+dark for every state. REBUILT AGAIN 2026-10-02 (show/hide rule): 50 variants (variant × size × state); icon, iconEnd and dismissible are BOOLEAN properties on chip-icon / chip-icon-end / chip-dismiss, each a frame carrying its own spacing/3xs on the label side — the pill keeps spacing/75 on both ends with or without them (code mirrors it: pill on chip-shell, × in the row). Propstar table with dismissible expanded. Audit passed incl. fallback colors.",
-      "compSetId": "415:618",
-      "syncedCommit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
+      "lastChecked": "2026-10-20",
+      "notes": "Rebuilt from scratch 2026-08-24 (twice — first attempt tried to add a `disabled` VARIANT axis by renaming .name on components still parented inside the old COMPONENT_SET, which silently corrupted their names into '=Chip, =neutral, =s, =false, =false' garbage and left the set in an unrecoverable error state — variantProperties threw 'Component set for node has existing errors'. Deleted it and rebuilt as plain page-level components first, renamed freely, THEN combined once — that's the safe order, confirmed working). Now variant x size x checked x disabled (40 total), matching ChipVariant/ChipSize/checked/disabled exactly. Full anatomy: chip-icon and chip-icon-end (real 'Filter' icon instances, hidden by default) and chip-dismiss (real 'X' icon instance, hidden by default) as true layers, not just theoretical properties. Properties added, in Storybook's Controls order: label (TEXT), icon (BOOLEAN -> chip-icon visibility), iconEnd (BOOLEAN -> chip-icon-end visibility), dismissible (BOOLEAN -> chip-dismiss visibility), then variant/size/checked/disabled (VARIANT, in that order too). All 40/40 wired for every property. onClick/onDismiss have no Figma equivalent (JS handlers, not visual) and are intentionally not represented. Fill/text/border bound to real variables for every variant x state combination, including the new disabled treatment (fill/disabled, text/disabled, border/neutral/light, opacity 0.72 — matches globals.css exactly). RESYNCED 2026-10-01 in place (no re-combine, so instances elsewhere follow): s 24px / m 32px (size/s, size/m), padding 12px both sizes (spacing/75), label 'Body / s / Medium'. The root component is now the pill (fill, border, radius, height; strokesIncludedInLayout so padding sits inside the border like CSS border-box); 'chip' is the transparent content row. chip-dismiss is a 24px button inside the pill after chip-icon-end (was a 12px X outside the pill): the root's itemSpacing is negative (-10 s / -8 m) so the button overlaps the chip's own 12px end padding, giving label->button 2px (s) / 4px (m) as in code, and paddingRight 0 (s) / 4px (m). Known 1px gap vs code: Figma's border-box puts the dismiss button 1px further in than code's absolutely-positioned button. Colors from code's computed styles: disabled keeps its variant colors at opacity 0.72 (was fill/disabled grays); neutral checked = fill/secondary/interactive/press, no border; colored checked = {v}-light fill + a 'checked-fill' rectangle of {v}/interactive/default at 60% layer opacity (models CSS color-mix 60%; a 60%-opacity paint is lost on instances, layer opacity isn't), text/neutral, no border. Light mode only for the checked mix: code drops it to 40% in dark mode, which Figma can't vary per mode. Icons re-created pre-colored (nested instance children aren't editable): icon/neutral on neutral/checked, text/{variant} on tints (rule 10 exception), 14px at 1.4 stroke; dismiss X icon/neutral/light at 12px/1.3. REBUILT FROM SCRATCH + AUDITED 2026-10-02 (new set): variant × size × dismissible × state = 100 variants; no checked state (removed from code). Root = pill (fill, 1px stroke always, radius/full, height size/s|m, padding spacing/75, gap spacing/2xs); chip-icon / chip-icon-end are frames with spacing/3xs on the label side (code's 4+2 = 6px); chip-dismiss a 20px (s) / 24px (m) frame with the X, inside the pill — dismissible is a VARIANT because it changes the end padding (12 → 0 s / 4 m). Colored hover/press = fill + 'state-layer' (fill/page at 16% / 28% layer opacity = code's color-mix); focus = two spread shadows bound to border/focus + fill/page (clipsContent on); disabled = variant colors at 0.72. Known 1px: dismiss sits 1px further in than code (border counted in layout). Propstar property table. Audit passed incl. color parity light+dark for every state. REBUILT AGAIN 2026-10-02 (show/hide rule): 50 variants (variant × size × state); icon, iconEnd and dismissible are BOOLEAN properties on chip-icon / chip-icon-end / chip-dismiss, each a frame carrying its own spacing/3xs on the label side — the pill keeps spacing/75 on both ends with or without them (code mirrors it: pill on chip-shell, × in the row). Propstar table with dismissible expanded. Audit passed incl. fallback colors. REBUILT 2026-10-20 (set 581:885, old 415:618 deleted): the old set's 'dimissable' VARIANT was really the disabled state (its true variants were the 0.72-opacity ones) and the BOOLEAN named 'disabled' toggled the × — crossed and misnamed. Rebuilt in one combineAsVariants from detached instances of the old variants (no component clones): variant × size × state (default/hover/press/focus/disabled) = 50, BOOLEANs label/icon/iconEnd/dismissible re-wired. ChipGroup (16) and MultiSelect (12) instances swapped onto it with their labels and × kept. Paddings rebound to Semantic spacing/component/m (code's chip.padding-x). Code: chip-shell line-height 1 → Body / s / Medium's (height stays 24/32). Full audit (colors light+dark, layout, binding) passed; Propstar table 581:1338.",
+      "compSetId": "581:885",
+      "syncedCommit": "214d93fd3c9f098250168df40630842eaaee9bbd",
       "audit": {
         "pass": true,
-        "commit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-        "date": "2026-10-02",
+        "commit": "214d93fd3c9f098250168df40630842eaaee9bbd",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -262,7 +289,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -273,19 +302,23 @@
       "compSetId": "416:952",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "syncedCommit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-      "notes": "Built 2026-10-01 on its own page ('ChipGroup', right after Chip) — hideLabel x size x disabled (8 variants), each a vertical stack: chip-group-legend ('Body / m / Medium', text/neutral), chip-group-options (wrapping row of 4 real neutral Chip instances — Active checked, Paused, Draft, Archived — 4px apart both ways, spacing/2xs), chip-group-description ('Body / s / Regular', text/neutral/light, hidden by default); 8px between them (spacing/xs). hideLabel is a VARIANT, not a BOOLEAN: a Figma boolean can only show a layer when true, and hideLabel=true has to hide it. Properties: label (TEXT), description (BOOLEAN, shows the description) and descriptionText (TEXT) — Figma won't give a BOOLEAN and a TEXT property the same name. onChange/options/value are behavior or data, not represented. REBUILT FROM SCRATCH + AUDITED 2026-10-02: just the chips — size × state (default/disabled), 4 neutral Chip instances wrapping 4px apart (spacing/2xs both ways), no header/description/selection (removed from code). Disabled = every chip state=disabled. Colors come from the Chip instances (audited with Chip). Propstar property table. Rebuilt on the 50-variant Chip set (2026-10-02).",
+      "lastChecked": "2026-10-20",
+      "syncedCommit": "214d93fd3c9f098250168df40630842eaaee9bbd",
+      "notes": "Built 2026-10-01 on its own page ('ChipGroup', right after Chip) — hideLabel x size x disabled (8 variants), each a vertical stack: chip-group-legend ('Body / m / Medium', text/neutral), chip-group-options (wrapping row of 4 real neutral Chip instances — Active checked, Paused, Draft, Archived — 4px apart both ways, spacing/2xs), chip-group-description ('Body / s / Regular', text/neutral/light, hidden by default); 8px between them (spacing/xs). hideLabel is a VARIANT, not a BOOLEAN: a Figma boolean can only show a layer when true, and hideLabel=true has to hide it. Properties: label (TEXT), description (BOOLEAN, shows the description) and descriptionText (TEXT) — Figma won't give a BOOLEAN and a TEXT property the same name. onChange/options/value are behavior or data, not represented. REBUILT FROM SCRATCH + AUDITED 2026-10-02: just the chips — size × state (default/disabled), 4 neutral Chip instances wrapping 4px apart (spacing/2xs both ways), no header/description/selection (removed from code). Disabled = every chip state=disabled. Colors come from the Chip instances (audited with Chip). Propstar property table. Rebuilt on the 50-variant Chip set (2026-10-02). RE-AUDITED 2026-10-20: its 16 Chip instances now point at the rebuilt Chip set (581:885), labels and disabled state kept; structural audit (colors, spacing, states default/disabled) passed.",
       "audit": {
         "pass": true,
-        "commit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-        "date": "2026-10-02",
+        "commit": "214d93fd3c9f098250168df40630842eaaee9bbd",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
           "spacers": 0,
           "states": 0,
-          "border": 0
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
