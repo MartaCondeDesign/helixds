@@ -45,7 +45,7 @@
     color:      var(--helix-color-text-neutral);
     font-size:  var(--helix-primitive-fontSize-m);
     line-height: var(--helix-primitive-lineHeight-normal);
-    font-family: var(--font-sans, system-ui, sans-serif);
+    font-family: var(--helix-primitive-fontFamily-sans);
   }
 
   :focus-visible {

@@ -536,8 +536,8 @@
           "figma": "caption-semibold"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "caption-semibold"
@@ -588,8 +588,8 @@
           "figma": "caption-semibold"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "caption-semibold"
@@ -640,8 +640,8 @@
           "figma": "caption-semibold"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "caption-semibold"
@@ -692,8 +692,8 @@
           "figma": "caption-semibold"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "caption-semibold"

@@ -160,7 +160,11 @@ if (EXPECTED.colors && theme) {
             const close = (a, b) => a && b && [1, 3, 5].every(i => Math.abs(parseInt(a.slice(i, i + 2), 16) - parseInt(b.slice(i, i + 2), 16)) <= 5);
             // A transparent border in code is still a border (border-always.md): in Figma it's a stroke in the
             // same color as the fill underneath, so it's invisible but keeps the size — accept that too.
-            const transparentOk = hex === 'none' && (got === null || (key === 'strokes' && close(got, await resolvedColor(node, 'fills'))));
+            // A transparent fill sits on the page, so fill/page reads the same — and Figma needs a fill there to
+            // cast a focus ring's spread shadow (ghost Button/IconButton focus). Accepted only bound to fill/page.
+            const pagePaint = key === 'fills' && (node.fills || []).find(x => x.type === 'SOLID' && x.visible !== false);
+            const onPage = !!pagePaint && varById[pagePaint.boundVariables?.color?.id]?.name === 'fill/page';
+            const transparentOk = hex === 'none' && (got === null || onPage || (key === 'strokes' && close(got, await resolvedColor(node, 'fills'))));
             if (hex === 'none' ? !transparentOk : !close(got, hex)) issues.parity.push(`${mode} ${variantName} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${hex}`);
           }
         }
