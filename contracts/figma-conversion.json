@@ -1,12 +1,13 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "approved": "2026-10-20",
 
   "naming": {
     "property": "Figma property name = code prop name, unchanged (isLoading, not loading; children, not label).",
     "values": "VARIANT values = code values, unchanged (primary, stacked-bar, false).",
     "optionalText": "{name} text — the TEXT property that holds an optional string's content (description text).",
+    "iconSwap": "{name} swap — the INSTANCE_SWAP of an icon prop next to its BOOLEAN {name} (icon swap): Figma refuses two properties with one name.",
     "layers": "Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers."
   },
 
@@ -14,7 +15,7 @@
     { "id": "skip", "when": "handlers (on*), default* twins, aria-*, ids, refs, data arrays and wiring props", "figma": [], "why": "behaviour or data, nothing to draw" },
     { "id": "nested", "when": "a ReactElement, or ReactNode children of a component that isn't in textChildren", "figma": [], "why": "another component or free content, not a property" },
     { "id": "overlay-expanded", "when": "expanded on an overlay (overlays)", "figma": [], "why": "closed = not on screen; Figma draws it open" },
-    { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name} (only when optional)", "INSTANCE_SWAP {name}"], "why": "shows the icon · which icon" },
+    { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name} (only when optional)", "INSTANCE_SWAP {name} swap"], "why": "shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name} swap — owner's decision 2026-10-20)" },
     { "id": "union", "when": "a union of string or number literals", "figma": ["VARIANT {name} = the same values"], "why": "same values as code" },
     { "id": "show-hide-boolean", "when": "a boolean listed in showHideBooleans — it only shows or hides one part", "figma": ["BOOLEAN {name}"], "why": "shows / hides a part" },
     { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
@@ -55,7 +56,7 @@
     {
       "id": "form-field",
       "components": ["Input", "Textarea", "Select", "MultiSelect"],
-      "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN + TEXT description text", "errorMessage": "BOOLEAN + TEXT errorMessage text", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP" },
+      "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN + TEXT description text", "errorMessage": "BOOLEAN + TEXT errorMessage text", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP {name} swap" },
       "states": ["default", "hover", "focus"],
       "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error"
     },
@@ -76,7 +77,7 @@
     {
       "id": "action",
       "components": ["Button", "IconButton", "FAB", "Chip", "SegmentedControl", "NavItem"],
-      "props": { "children / label": "TEXT", "variant / size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP", "isLoading": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true" },
+      "props": { "children / label": "TEXT", "variant / size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP {name} swap", "isLoading": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true" },
       "states": ["default", "hover", "press", "focus"]
     },
     {

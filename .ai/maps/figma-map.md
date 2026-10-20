@@ -5,11 +5,11 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 99 of 185 code props match Figma exactly.**
+**Parity today: 114 of 185 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.1.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.2.0 (owner-approved 2026-10-20; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -19,7 +19,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `skip` | handlers (on*), default* twins, aria-*, ids, refs, data arrays and wiring props | — | behaviour or data, nothing to draw |
 | `nested` | a ReactElement, or ReactNode children of a component that isn't in textChildren | — | another component or free content, not a property |
 | `overlay-expanded` | expanded on an overlay (overlays) | — | closed = not on screen; Figma draws it open |
-| `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name} (only when optional)` + `INSTANCE_SWAP {name}` | shows the icon · which icon |
+| `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name} (only when optional)` + `INSTANCE_SWAP {name} swap` | shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name} swap — owner's decision 2026-10-20) |
 | `union` | a union of string or number literals | `VARIANT {name} = the same values` | same values as code |
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
 | `look-boolean` | any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer) | `VARIANT {name} = false / true` | changes the look → false/true toggle |
@@ -32,6 +32,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 - Figma property name = code prop name, unchanged (isLoading, not loading; children, not label).
 - VARIANT values = code values, unchanged (primary, stacked-bar, false).
 - {name} text — the TEXT property that holds an optional string's content (description text).
+- {name} swap — the INSTANCE_SWAP of an icon prop next to its BOOLEAN {name} (icon swap): Figma refuses two properties with one name.
 - Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers.
 - **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the
   Figma MCP after changing a component in Figma, then `pnpm docs:figma-map`).
@@ -97,10 +98,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'xs' \| 's'` | `VARIANT` `size` = `xs` / `s` | same values as code · `union` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ is BOOLEAN |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-
-**Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
@@ -115,9 +114,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ is BOOLEAN |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✗ missing |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✗ missing |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
 
@@ -201,9 +200,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ is BOOLEAN |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✗ missing |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✗ is BOOLEAN |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✗ missing |
 | `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part · `show-hide-boolean` | ✓ |
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
@@ -271,25 +270,25 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ is BOOLEAN |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✗ is BOOLEAN |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
-**Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
+**Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-spinner`, `input-icon-end`, `input-description`, `input-error`
 
@@ -354,10 +353,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ is BOOLEAN |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-
-**Only in Figma (no code prop of that name and type):** `icon swap` (INSTANCE_SWAP)
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 

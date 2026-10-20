@@ -1945,7 +1945,7 @@
           "figma": null
         },
         "lineHeight": {
-          "value": 27,
+          "value": 29.7,
           "token": "primitive.lineHeight.normal",
           "figma": null
         },
@@ -2045,7 +2045,7 @@
           "figma": null
         },
         "lineHeight": {
-          "value": 27,
+          "value": 29.7,
           "token": "primitive.lineHeight.normal",
           "figma": null
         },
@@ -2145,7 +2145,7 @@
           "figma": null
         },
         "lineHeight": {
-          "value": 27,
+          "value": 29.7,
           "token": "primitive.lineHeight.normal",
           "figma": null
         },

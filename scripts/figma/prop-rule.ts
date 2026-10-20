@@ -43,7 +43,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
   if (name === 'expanded' && has(STANDARD.overlays, currentComponent)) return [];
   const optional = !prop.required && /undefined/.test(type);
   if (/TablerIcon|HelixIconComponent/.test(type)) return optional
-    ? out('icon', [{ name, type: 'BOOLEAN' }, { name, type: 'INSTANCE_SWAP' }], ['shows the icon', 'which icon'])
+    ? out('icon', [{ name, type: 'BOOLEAN' }, { name: `${name} swap`, type: 'INSTANCE_SWAP' }], ['shows the icon', 'which icon'])
     : out('icon', [{ name, type: 'INSTANCE_SWAP' }], ['which icon']);
   const literals = type.split('|').map(t => t.trim()).filter(t => t !== 'undefined');
   if (literals.length > 1 && literals.every(t => /^'[^']*'$/.test(t) || /^\d+$/.test(t)))

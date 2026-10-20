@@ -27,7 +27,7 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
 | Required string (`label`), `placeholder`, the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name | text field | `text` |
 | Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name` + `TEXT` `name text` | toggle + text field | `optional-text` |
-| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `name` (a required icon: only the swap) | toggle + icon picker | `icon` |
+| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `name swap` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
 
@@ -40,7 +40,8 @@ pseudo-classes, not props. `disabled`, `invalid`, `checked`, `isLoading`… are 
 
 **Naming:** the Figma property is the code prop name, unchanged (`isLoading`, not `loading`); VARIANT values are
 the code values, unchanged; an optional string's text property is `{name} text`; layer names are the
-`data-helix-part` values in the TSX.
+`data-helix-part` values in the TSX. An optional icon's picker is `{name} swap` (`icon swap`) — Figma refuses two
+properties with the same name, so it can't share `icon` with the toggle.
 
 ## 2. How variants are drawn
 

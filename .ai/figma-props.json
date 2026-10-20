@@ -516,12 +516,36 @@
       ]
     },
     "Input": {
-      "nodeId": "303:45",
+      "nodeId": "609:525",
       "type": "COMPONENT_SET",
       "page": "Input",
       "properties": [
         {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
           "name": "value",
+          "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
           "type": "TEXT"
         },
         {
@@ -529,8 +553,16 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
           "name": "iconEnd",
           "type": "BOOLEAN"
+        },
+        {
+          "name": "iconEnd swap",
+          "type": "INSTANCE_SWAP"
         },
         {
           "name": "size",
@@ -542,12 +574,50 @@
           ]
         },
         {
+          "name": "invalid",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "hideLabel",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "fullWidth",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "isLoading",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
-            "invalid",
-            "disabled",
             "hover",
             "focus"
           ]

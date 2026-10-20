@@ -142,7 +142,7 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    with the same values; a code boolean is an on/off toggle — a BOOLEAN when it only shows/hides a part
    (`required`, `dismissible`…), a `false`/`true` VARIANT when it changes the look (`disabled`, `invalid`,
    `checked`, `isLoading`…: a Figma BOOLEAN can't change a color); a string is TEXT (`children` stays `children`);
-   an optional string part is BOOLEAN `name` + TEXT `name text`; an icon is BOOLEAN + INSTANCE_SWAP. The only
+   an optional string part is BOOLEAN `name` + TEXT `name text`; an icon is BOOLEAN `name` + INSTANCE_SWAP `name swap`. The only
    Figma-only property is `state` (hover / press / focus / open) — CSS pseudo-classes, never `disabled`/`invalid`.
    **The conversion standard** — every rule by type, how variants are drawn (disabled only at `state=default`…) and
    the common patterns (form-field, checkable, group, action, overlay, layout-slot) — is

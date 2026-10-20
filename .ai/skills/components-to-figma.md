@@ -75,7 +75,7 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    same name and the same kind of control: union → VARIANT (same values); boolean that changes the look →
    `false`/`true` VARIANT (shown as a toggle — a BOOLEAN can only toggle a layer's visibility); boolean that
    only shows/hides a part → BOOLEAN; string → TEXT (`children` stays `children`); optional string part →
-   BOOLEAN + TEXT `name text`; icon → BOOLEAN + INSTANCE_SWAP. **Read `.ai/maps/figma-conversion.md` first** — the
+   BOOLEAN + TEXT `name text`; icon → BOOLEAN `name` + INSTANCE_SWAP `name swap`. **Read `.ai/maps/figma-conversion.md` first** — the
    standard (rules, variant drawing, common patterns; source `contracts/figma-conversion.json`): find the
    component's pattern there and build it like its siblings. `.ai/maps/figma-map.md` lists every prop with its
    status in Figma today — every row must be ✓. After changing a component in Figma, refresh

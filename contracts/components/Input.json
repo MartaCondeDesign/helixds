@@ -379,14 +379,14 @@
     }
   },
   "figma": {
-    "states": ["default", "hover", "focus", "invalid", "disabled"],
+    "states": ["default", "hover", "focus"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": ["default", "hover", "focus", "invalid", "disabled"],
+        "values": ["default", "hover", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,  disabled and the secondary toggles are their own false/true variants (contracts/figma-conversion.json,  pattern form-field)."
       }
     ],
     "propertyMap": {
@@ -396,6 +396,8 @@
         "approved": "2026-10-20",
         "reason": "the text in the field: without it a designer can only draw an empty field (owner-approved exception)"
       }
-    }
+    },
+    "structure": "input-root (8px gap) > input-label (input-label-text Body/m/Medium + input-required),  input-wrapper (input-icon,  input-field,  input-icon-end,  input-spinner),  input-description,  input-error (Body/s/Regular).",
+    "variantCombinations": "24 variants (2026-10-20): size s/m/l × invalid false/true × state default/hover/focus = 18,  disabled per size at default = 3,  and hideLabel / fullWidth / isLoading drawn once each at size m,  default,  valid,  enabled = 3 (the standard rules). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads)."
   }
 }

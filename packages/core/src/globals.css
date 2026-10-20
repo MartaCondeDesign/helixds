@@ -686,11 +686,15 @@
        fixed height, so it can never make the wrapper taller than its token. */
     height:           100%;
   }
+  /* line height from the shared scale per size (lineHeight-s/m/l = Figma's lineHeight/s/m/l) — owner's choice 2026-10-20 */
+  [data-helix-part="input-field"]                  { line-height: var(--helix-lineHeight-m); }
   [data-helix-part="input-field"][data-size="s"] {
-    font-size: var(--helix-input-text-valueFontSize-s);
+    font-size:   var(--helix-input-text-valueFontSize-s);
+    line-height: var(--helix-lineHeight-s);
   }
   [data-helix-part="input-field"][data-size="l"] {
     font-size: var(--helix-input-text-valueFontSize-l);
+    line-height: var(--helix-lineHeight-l);
     padding:   0 var(--helix-primitive-spacing-100);
   }
   [data-helix-part="input-field"]::placeholder {
@@ -1128,15 +1132,15 @@
     color:       var(--helix-textarea-text-value);
     font-family: inherit;
     font-size:   var(--helix-textarea-text-valueFontSize-m);
-    line-height: var(--helix-primitive-lineHeight-normal);
+    line-height: var(--helix-lineHeight-m);
     padding:     var(--helix-primitive-spacing-75);
     min-width:   0;
     min-height:  var(--helix-textarea-height);
     box-sizing:  border-box;
     resize:      vertical;
   }
-  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-textarea-text-valueFontSize-s); }
-  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-textarea-text-valueFontSize-l); }
+  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-textarea-text-valueFontSize-s); line-height: var(--helix-lineHeight-s); }
+  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-textarea-text-valueFontSize-l); line-height: var(--helix-lineHeight-l); }
   [data-helix-part="textarea-field"][data-resize="none"]       { resize: none; }
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
   [data-helix-part="textarea-field"][data-resize="both"]       { resize: both; }
@@ -1278,6 +1282,10 @@
   }
   [data-helix-part="select-trigger"][data-placeholder]:disabled {
     color: var(--helix-select-text-disabled);
+  }
+  [data-helix-part="select-trigger"]:disabled ~ [data-helix-part="select-chevron"],
+  [data-helix-part="multi-select-field"][data-disabled] [data-helix-part="multi-select-chevron"] {
+    color: var(--helix-select-icon-disabled);
   }
 
   [data-helix-part="select-chevron"] {
