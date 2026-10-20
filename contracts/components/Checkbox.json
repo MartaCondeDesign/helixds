@@ -6,11 +6,11 @@
   "purpose": "Lets users select one or more independent options from a set, or confirm a single binary choice.",
   "import": "import { Checkbox } from '@helixds/react';",
   "neverUseFor": [
-    "Multiple mutually exclusive choices \u2014 use RadioGroup instead",
-    "A single on/off setting applied immediately \u2014 use Switch instead",
-    "Triggering an action \u2014 use Button instead"
+    "Multiple mutually exclusive choices — use RadioGroup instead",
+    "A single on/off setting applied immediately — use Switch instead",
+    "Triggering an action — use Button instead"
   ],
-  "rationale": "Checkbox wraps a native <input type='checkbox'> so Space-to-toggle, focus and the checked state come from the browser. It deliberately has one fixed 16px control and no size prop \u2014 it does not follow the ADR-004 field scale, because a selection mark doesn't need density variants and a single size keeps forms visually consistent.",
+  "rationale": "Checkbox wraps a native <input type='checkbox'> so Space-to-toggle, focus and the checked state come from the browser. It deliberately has one fixed 16px control and no size prop — it does not follow the ADR-004 field scale, because a selection mark doesn't need density variants and a single size keeps forms visually consistent.",
   "governance": {
     "mayExtendLocally": [
       "Write the label and helper text per usage",
@@ -46,8 +46,8 @@
       },
       {
         "name": "indeterminate",
-        "description": "Mixed state \u2014 neither fully checked nor unchecked (e.g. a 'select all' controlling a partial selection).",
-        "aria": "indeterminate is a native DOM property, not an HTML attribute \u2014 set imperatively via ref"
+        "description": "Mixed state — neither fully checked nor unchecked (e.g. a 'select all' controlling a partial selection).",
+        "aria": "indeterminate is a native DOM property, not an HTML attribute — set imperatively via ref"
       }
     ]
   },
@@ -70,7 +70,7 @@
     {
       "part": "checkbox-control",
       "element": "span",
-      "description": "Visual box \u2014 reflects checked/indeterminate state via CSS.",
+      "description": "Visual box — reflects checked/indeterminate state via CSS.",
       "optional": false
     },
     {
@@ -87,12 +87,12 @@
       "part": "checkbox-required",
       "element": "span",
       "optional": true,
-      "description": "The required indicator (*), text/danger, 2px (spacing/3xs) after the label \u2014 shown by `required`."
+      "description": "The required indicator (*), text/danger, 2px (spacing/3xs) after the label — shown by `required`."
     },
     {
       "part": "checkbox-description",
       "element": "span",
-      "description": "Helper text below the control. Sits exactly 8px below it \u2014 see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Helper text below the control. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
       "optional": true
     },
     {
@@ -181,7 +181,7 @@
         "default": 16
       },
       "unit": "px",
-      "note": "No size prop exists \u2014 Checkbox has one fixed control size (--helix-checkbox-size, 16px). Unlike Input/Select/Textarea, it does not follow the ADR-004 field scale."
+      "note": "No size prop exists — Checkbox has one fixed control size (--helix-checkbox-size, 16px). Unlike Input/Select/Textarea, it does not follow the ADR-004 field scale."
     },
     "width": {
       "default": "hug"
@@ -203,8 +203,8 @@
   "a11y": {
     "role": "checkbox (native input)",
     "keyboardNav": [
-      "Space \u2014 toggles checked state",
-      "Tab \u2014 moves focus"
+      "Space — toggles checked state",
+      "Tab — moves focus"
     ],
     "wcag": [
       "2.1.1 Keyboard",
@@ -258,20 +258,20 @@
       ],
       "contrast": {
         "checkbox-text": {
-          "light": "17.85:1 \u2014 #0f172a on #ffffff",
-          "dark": "16.29:1 \u2014 #f1f5f9 on #0f172a"
+          "light": "17.85:1 — #0f172a on #ffffff",
+          "dark": "16.29:1 — #f1f5f9 on #0f172a"
         },
         "checkbox-error": {
-          "light": "6.47:1 \u2014 #b91c1c on #ffffff",
-          "dark": "12.65:1 \u2014 #fecdd3 on #0f172a"
+          "light": "6.47:1 — #b91c1c on #ffffff",
+          "dark": "12.65:1 — #fecdd3 on #0f172a"
         },
         "checkbox-description": {
-          "light": "7.57:1 \u2014 #475569 on #ffffff",
-          "dark": "6.96:1 \u2014 #94a3b8 on #0f172a"
+          "light": "7.57:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
         }
       },
       "targetSize": {
-        "checkbox-input": "smallest 71\u00d721 px"
+        "checkbox-input": "smallest 71×21 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -460,6 +460,7 @@
         "figma": [],
         "approved": "2026-10-20"
       }
-    }
+    },
+    "variantCombinations": "21 variants, only the ones code can show (owner-approved 2026-10-20). Enabled: mark (unchecked = checked false + indeterminate false · checked = checked true + indeterminate false · indeterminate = checked false + indeterminate true) × invalid false/true × state default/hover/focus = 18. Disabled: the 3 marks with invalid false and state default = 3 — a disabled checkbox takes no hover or focus, and disabled overrides invalid. checked + indeterminate together is not drawn: indeterminate wins in code, it would duplicate the indeterminate variant. Disabled dims the label, the required * and the description (text/disabled)."
   }
 }

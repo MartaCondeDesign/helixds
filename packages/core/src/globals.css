@@ -1701,6 +1701,12 @@
   [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-text"] {
     color: var(--helix-checkbox-text-disabled);
   }
+  /* Disabled dims everything the checkbox says, not just its label: the required mark and the description
+     (both kept their normal colors before — owner's review 2026-10-20). Inactive UI: no contrast minimum (1.4.3). */
+  [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-required"],
+  [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-description"] {
+    color: var(--helix-checkbox-text-disabled);
+  }
 
   [data-helix-part="checkbox-description"] {
     padding-left: calc(var(--helix-checkbox-size) + var(--helix-primitive-spacing-50));

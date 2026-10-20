@@ -42,6 +42,8 @@ type Spec = {
   borderOutsideLayout?: boolean;
   // Typography that changes by state (MenuItem: selected is medium): measure layout in every state, keyed with it.
   layoutPerState?: boolean;
+  // Combinations code can't show (and Figma doesn't draw), e.g. a disabled checkbox with hover: not measured.
+  skip?: (v: Record<string, string>, state: State) => boolean;
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -100,13 +102,20 @@ const SPECS: Record<string, Spec> = {
   },
   // Exact parity (root CLAUDE.md rule 16): every look-changing boolean is its own false/true axis, like the props.
   Checkbox: {
-    story: 'components-checkbox--invalid',
+    story: 'components-checkbox--with-description',
     axes: { checked: ['false', 'true'], indeterminate: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ checked: v.checked === 'true', indeterminate: v.indeterminate === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true' }),
-    parts: { 'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true }, 'checkbox-text': { part: 'checkbox-text', text: true } },
+    args: v => ({ checked: v.checked === 'true', indeterminate: v.indeterminate === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true }),
+    parts: {
+      'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true },
+      'checkbox-text': { part: 'checkbox-text', text: true },
+      'checkbox-required': { part: 'checkbox-required', text: true },
+      'checkbox-description': { part: 'checkbox-description', text: true },
+    },
     target: 'checkbox-label',
     focusTarget: 'checkbox-input',
+    // contracts/components/Checkbox.json → figma.variantCombinations: 21 variants
+    skip: (v, s) => (v.checked === 'true' && v.indeterminate === 'true') || (v.disabled === 'true' && (s !== 'default' || v.invalid === 'true')),
   },
   RadioGroup: {
     story: 'components-radiogroup--default',
@@ -518,6 +527,7 @@ async function main() {
   await cdp.send('DOM.enable');
   await cdp.send('CSS.enable');
   for (const v of combos) for (const state of spec.states) {
+    if (spec.skip?.(v, state)) continue;
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');

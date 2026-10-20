@@ -14,6 +14,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -23,6 +29,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -34,6 +46,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -43,6 +61,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -54,6 +78,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -63,6 +93,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -74,25 +110,11 @@
         },
         "checkbox-text": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
         },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=false, invalid=false, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
+        "checkbox-required": {
+          "fill": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#94a3b8"
         }
       },
@@ -103,25 +125,11 @@
         },
         "checkbox-text": {
           "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=false, invalid=false, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
+        "checkbox-required": {
+          "fill": "#475569"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#475569"
         }
       }
@@ -134,6 +142,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -143,6 +157,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -154,6 +174,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -163,6 +189,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -174,6 +206,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -183,66 +221,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=false, indeterminate=false, invalid=true, disabled=true, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=false, invalid=true, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=false, invalid=true, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
         }
       }
     },
@@ -254,6 +238,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -263,6 +253,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -274,6 +270,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -283,6 +285,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -294,6 +302,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -303,6 +317,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -314,25 +334,11 @@
         },
         "checkbox-text": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
         },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=true, invalid=false, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
+        "checkbox-required": {
+          "fill": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#94a3b8"
         }
       },
@@ -343,25 +349,11 @@
         },
         "checkbox-text": {
           "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=true, invalid=false, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
+        "checkbox-required": {
+          "fill": "#475569"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#475569"
         }
       }
@@ -374,6 +366,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -383,6 +381,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -394,6 +398,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -403,6 +413,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -414,6 +430,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -423,66 +445,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=false, indeterminate=true, invalid=true, disabled=true, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=true, invalid=true, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=false, indeterminate=true, invalid=true, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
         }
       }
     },
@@ -494,6 +462,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -503,6 +477,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -514,6 +494,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -523,6 +509,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -534,6 +526,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -543,6 +541,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -554,25 +558,11 @@
         },
         "checkbox-text": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
         },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=false, invalid=false, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
+        "checkbox-required": {
+          "fill": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#94a3b8"
         }
       },
@@ -583,25 +573,11 @@
         },
         "checkbox-text": {
           "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=false, invalid=false, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
+        "checkbox-required": {
+          "fill": "#475569"
         },
-        "checkbox-text": {
+        "checkbox-description": {
           "fill": "#475569"
         }
       }
@@ -614,6 +590,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -623,6 +605,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -634,6 +622,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -643,6 +637,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
+        },
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
+          "fill": "#94a3b8"
         }
       }
     },
@@ -654,6 +654,12 @@
         },
         "checkbox-text": {
           "fill": "#0f172a"
+        },
+        "checkbox-required": {
+          "fill": "#b91c1c"
+        },
+        "checkbox-description": {
+          "fill": "#475569"
         }
       },
       "dark": {
@@ -663,306 +669,12 @@
         },
         "checkbox-text": {
           "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=false, invalid=true, disabled=true, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
         },
-        "checkbox-text": {
+        "checkbox-required": {
+          "fill": "#fecdd3"
+        },
+        "checkbox-description": {
           "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=false, invalid=true, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=false, invalid=true, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=false, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=false, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=false, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=true, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=false, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#dc2626"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#f87171"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=false, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1d4ed8",
-          "stroke": "#1d4ed8"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=false, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#dc2626"
-        },
-        "checkbox-text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#2563eb",
-          "stroke": "#f87171"
-        },
-        "checkbox-text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=true, state=default": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=true, state=hover": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=true, state=focus": {
-      "light": {
-        "checkbox-control": {
-          "fill": "#f1f5f9",
-          "stroke": "#94a3b8"
-        },
-        "checkbox-text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "checkbox-control": {
-          "fill": "#1e293b",
-          "stroke": "#475569"
-        },
-        "checkbox-text": {
-          "fill": "#475569"
         }
       }
     }
@@ -991,6 +703,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=false, indeterminate=false, invalid=false, disabled=true": {
@@ -1016,6 +774,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=false, indeterminate=false, invalid=true, disabled=false": {
@@ -1041,10 +845,8 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
-      }
-    },
-    "checked=false, indeterminate=false, invalid=true, disabled=true": {
-      "checkbox-text": {
+      },
+      "checkbox-required": {
         "fontSize": {
           "value": 14,
           "token": "component.checkbox.text.labelFontSize",
@@ -1066,6 +868,29 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=false, indeterminate=true, invalid=false, disabled=false": {
@@ -1091,6 +916,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=false, indeterminate=true, invalid=false, disabled=true": {
@@ -1116,6 +987,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=false, indeterminate=true, invalid=true, disabled=false": {
@@ -1141,10 +1058,8 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
-      }
-    },
-    "checked=false, indeterminate=true, invalid=true, disabled=true": {
-      "checkbox-text": {
+      },
+      "checkbox-required": {
         "fontSize": {
           "value": 14,
           "token": "component.checkbox.text.labelFontSize",
@@ -1166,6 +1081,29 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=true, indeterminate=false, invalid=false, disabled=false": {
@@ -1191,6 +1129,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=true, indeterminate=false, invalid=false, disabled=true": {
@@ -1216,6 +1200,52 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
+      },
+      "checkbox-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.checkbox.text.labelFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "component.checkbox.text.labelLineHeight",
+          "figma": "body-m-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.labelFontWeight",
+          "figma": "body-m-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.labelFontFamily",
+          "figma": "body-m-regular"
+        },
+        "textStyle": "body-m-regular"
+      },
+      "checkbox-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
+        },
+        "textStyle": "body-s-regular"
       }
     },
     "checked=true, indeterminate=false, invalid=true, disabled=false": {
@@ -1241,10 +1271,8 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
-      }
-    },
-    "checked=true, indeterminate=false, invalid=true, disabled=true": {
-      "checkbox-text": {
+      },
+      "checkbox-required": {
         "fontSize": {
           "value": 14,
           "token": "component.checkbox.text.labelFontSize",
@@ -1266,106 +1294,29 @@
           "figma": "body-m-regular"
         },
         "textStyle": "body-m-regular"
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=false": {
-      "checkbox-text": {
+      },
+      "checkbox-description": {
         "fontSize": {
-          "value": 14,
-          "token": "component.checkbox.text.labelFontSize",
-          "figma": "body-m-regular"
+          "value": 12,
+          "token": "component.checkbox.text.descriptionFontSize",
+          "figma": "body-s-regular"
         },
         "lineHeight": {
-          "value": 21,
-          "token": "component.checkbox.text.labelLineHeight",
-          "figma": "body-m-regular"
+          "value": 18,
+          "token": "component.checkbox.text.descriptionLineHeight",
+          "figma": "body-s-regular"
         },
         "fontWeight": {
           "value": 400,
-          "token": "component.checkbox.text.labelFontWeight",
-          "figma": "body-m-regular"
+          "token": "component.checkbox.text.descriptionFontWeight",
+          "figma": "body-s-regular"
         },
         "fontFamily": {
           "value": "Inter",
-          "token": "component.checkbox.text.labelFontFamily",
-          "figma": "body-m-regular"
+          "token": "component.checkbox.text.descriptionFontFamily",
+          "figma": "body-s-regular"
         },
-        "textStyle": "body-m-regular"
-      }
-    },
-    "checked=true, indeterminate=true, invalid=false, disabled=true": {
-      "checkbox-text": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.checkbox.text.labelFontSize",
-          "figma": "body-m-regular"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "component.checkbox.text.labelLineHeight",
-          "figma": "body-m-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": "component.checkbox.text.labelFontWeight",
-          "figma": "body-m-regular"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "component.checkbox.text.labelFontFamily",
-          "figma": "body-m-regular"
-        },
-        "textStyle": "body-m-regular"
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=false": {
-      "checkbox-text": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.checkbox.text.labelFontSize",
-          "figma": "body-m-regular"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "component.checkbox.text.labelLineHeight",
-          "figma": "body-m-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": "component.checkbox.text.labelFontWeight",
-          "figma": "body-m-regular"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "component.checkbox.text.labelFontFamily",
-          "figma": "body-m-regular"
-        },
-        "textStyle": "body-m-regular"
-      }
-    },
-    "checked=true, indeterminate=true, invalid=true, disabled=true": {
-      "checkbox-text": {
-        "fontSize": {
-          "value": 14,
-          "token": "component.checkbox.text.labelFontSize",
-          "figma": "body-m-regular"
-        },
-        "lineHeight": {
-          "value": 21,
-          "token": "component.checkbox.text.labelLineHeight",
-          "figma": "body-m-regular"
-        },
-        "fontWeight": {
-          "value": 400,
-          "token": "component.checkbox.text.labelFontWeight",
-          "figma": "body-m-regular"
-        },
-        "fontFamily": {
-          "value": "Inter",
-          "token": "component.checkbox.text.labelFontFamily",
-          "figma": "body-m-regular"
-        },
-        "textStyle": "body-m-regular"
+        "textStyle": "body-s-regular"
       }
     }
   }

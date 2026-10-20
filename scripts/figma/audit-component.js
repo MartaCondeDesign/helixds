@@ -164,6 +164,10 @@ if (EXPECTED.colors && theme) {
         const comp = VARIANTS.find(c => c.name === variantName) ?? (variantName === '' && VARIANTS.length === 1 ? VARIANTS[0] : null);
         if (!comp) { issues.parity.push(`variant "${variantName}" not found`); continue; }
         const inst = comp.createInstance(); frame.appendChild(inst);
+        // optional parts hidden by a BOOLEAN property don't exist in an instance — show them all so they're checked too
+        const owner = comp.parent?.type === 'COMPONENT_SET' ? comp.parent : comp;
+        const on = Object.fromEntries(Object.entries(owner.componentPropertyDefinitions).filter(([, d]) => d.type === 'BOOLEAN').map(([k]) => [k, true]));
+        if (Object.keys(on).length) inst.setProperties(on);
         const want = mode === 'light' ? parts.light : parts.dark;
         for (const [layer, props] of Object.entries(want || {})) {
           const node = layer === '(root)' ? inst : inst.findOne(n => n.name === layer);
