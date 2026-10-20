@@ -101,6 +101,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped
   - verify:stable: all 33 components stable (Figma ✓ for every one)
   - Exact Figma property parity (CLAUDE.md rule 16): figma-map.md lists every code prop, the Figma property it must be (same name, same kind) and what Figma has today (.ai/figma-props.json snapshot); figma-drift fails a component with any mismatch
+  - Checkbox: owner-approved Figma conversion in its contract (figma.propertyMap); required indicator gets its own part (checkbox-required, tokens instead of inline style); pnpm figma:props proposes and records conversions, pre-commit blocks unapproved ones; figma:expected measures every checked × indeterminate × invalid × disabled combination
+  - Figma: Checkbox rebuilt with the code props one to one (checked, indeterminate, invalid, disabled toggles; required; description/errorMessage) — 10/10 rows ✓ in figma-map.md
+  - docs-figma-map reads the shared prop rule (scripts/figma/prop-rule.ts) and each contract's approved figma.propertyMap
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
