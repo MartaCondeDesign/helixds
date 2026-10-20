@@ -36,6 +36,10 @@ type Spec = {
   storyFor?: Partial<Record<State, string>>;       // a different story for a state whose prop the main story won't take from the URL
   focusTarget?: string;                            // data-helix-part that takes keyboard focus, when it isn't `target` (e.g. Checkbox's hidden input)
   locate?: (v: Record<string, string>, state: State) => { story: string; scope: string } | null; // full control over where each combo lives (null = not shown in any story, skipped)
+  // The root's border is drawn inside its box and NOT counted in Figma's auto layout, so Figma's padding is
+  // measured from the outer edge (code's padding + border). Only where code's padding is a calc() around the
+  // border that no scale token can express (MultiSelect: (32 − 24) / 2 − 1px = 3px) — owner's decision 2026-10-20.
+  borderOutsideLayout?: boolean;
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -194,6 +198,94 @@ const SPECS: Record<string, Spec> = {
     target: 'badge',
     scope: v => `[data-helix-part="badge"][data-variant="${v.variant}"]`,
   },
+  Accordion: {
+    story: 'components-accordion--default',
+    axes: { expanded: ['false', 'true'] },
+    states: ['default', 'focus', 'disabled'],
+    args: (v, s) => ({ defaultExpanded: v.expanded === 'true', disabled: s === 'disabled' }),
+    parts: {
+      '(root)': { part: 'accordion-root', fill: true, stroke: true },
+      'accordion-title': { part: 'accordion-title', text: true },
+      'accordion-chevron': { part: 'accordion-chevron', text: true },
+    },
+    target: 'accordion-header',
+  },
+  AvatarGroup: {
+    story: 'components-avatargroup--with-overflow',
+    axes: { size: ['s', 'm', 'l'] },
+    states: ['default'],
+    args: v => ({ size: v.size! }),
+    parts: { '(root)': { part: 'avatar-group-root' }, 'avatar-group-overflow': { part: 'avatar-group-overflow', fill: true }, 'count': { part: 'avatar-group-overflow', text: true } },
+    target: 'avatar-group-root',
+  },
+  CheckboxGroup: {
+    story: 'components-checkboxgroup--default',
+    axes: { orientation: ['vertical', 'horizontal'] },
+    states: ['default', 'invalid', 'disabled'],
+    args: (v, s) => ({ orientation: v.orientation!, invalid: s === 'invalid', errorMessage: s === 'invalid' ? 'Choose at least one.' : '', disabled: s === 'disabled' }),
+    parts: { '(root)': { part: 'checkbox-group' }, 'legend': { part: 'checkbox-group-legend', text: true } },
+    target: 'checkbox-group',
+  },
+  FAB: {
+    story: 'components-fab--default',
+    axes: { expanded: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus', 'disabled'],
+    args: (v, s) => ({ disabled: s === 'disabled' }),
+    parts: { 'fab-root': { part: 'fab-root', fill: true }, 'fab-icon': { part: 'fab-icon', text: true } },
+    target: 'fab-root',
+    locate: (v, s) => v.expanded === 'true' ? (s === 'default' ? { story: 'components-fab--expanded', scope: '[data-helix-part="fab-root-wrapper"]' } : null)
+      : { story: s === 'disabled' ? 'components-fab--disabled' : 'components-fab--default', scope: '[data-helix-part="fab-root-wrapper"]' },
+  },
+  MultiSelect: {
+    story: 'components-multiselect--default',
+    axes: { value: ['empty', 'selected'] },
+    states: ['default', 'hover', 'focus', 'open', 'invalid', 'disabled'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'multi-select-field', fill: true, stroke: true }, 'multi-select-placeholder': { part: 'multi-select-placeholder', text: true }, 'multi-select-chevron': { part: 'multi-select-chevron', text: true } },
+    target: 'multi-select-trigger',
+    borderOutsideLayout: true,
+    locate: (v, s) => {
+      const scope = '[data-helix-part="multi-select-root"]';
+      if (v.value === 'selected') return ['invalid', 'disabled'].includes(s) ? null : { story: 'components-multiselect--with-selection', scope };
+      return { story: s === 'invalid' ? 'components-multiselect--invalid' : s === 'disabled' ? 'components-multiselect--disabled' : 'components-multiselect--default', scope };
+    },
+  },
+  RadioButton: {
+    story: 'components-radiobutton--all-types',
+    axes: { checked: ['unchecked', 'checked'] },
+    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
+    args: () => ({}),
+    parts: { 'radio-control': { part: 'radio-control', fill: true, stroke: true }, 'radio-item-label': { part: 'radio-item-label', text: true } },
+    target: 'radio-item',
+    focusTarget: 'radio-input',
+    locate: (v, s) => {
+      const nth = (n: number) => `[data-helix-part="radio-item"]:nth-of-type(${n})`;
+      const i = v.checked === 'checked' ? 2 : 1;
+      if (s === 'disabled') return { story: 'components-radiobutton--disabled', scope: nth(i) };
+      if (s === 'invalid') return v.checked === 'unchecked' ? { story: 'components-radiobutton--invalid', scope: nth(1) } : null;
+      return { story: 'components-radiobutton--all-types', scope: nth(i) };
+    },
+  },
+  SegmentedControlItem: {
+    story: 'components-segmentedcontrol--default',
+    axes: { checked: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'disabled'],
+    args: () => ({}),
+    parts: { 'segmented-control-item-label': { part: 'segmented-control-item-label', text: true } },
+    target: 'segmented-control-item',
+    locate: (v, s) => {
+      const sel = v.checked === 'true' ? '[data-helix-part="segmented-control-item"][aria-checked="true"]' : '[data-helix-part="segmented-control-item"][aria-checked="false"]';
+      return { story: s === 'disabled' ? 'components-segmentedcontrol--disabled' : 'components-segmentedcontrol--default', scope: sel };
+    },
+  },
+  Tooltip: {
+    story: 'components-tooltip--always-expanded',
+    axes: {},
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'tooltip-content', fill: true }, 'tooltip-label': { part: 'tooltip-content', text: true } },
+    target: 'tooltip-content',
+  },
 };
 
 const toHex = (css: string): string => {
@@ -296,7 +388,8 @@ async function declaredVar(page: Page, cdp: CDPSession, prop: string): Promise<s
 async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: string | null) {
   const out: Record<string, Record<string, Measured | string>> = {};
   for (const [layer, p] of Object.entries(spec.parts)) {
-    const kinds = { box: layer === '(root)', icon: /icon/.test(p.part), type: !!(p.text || p.placeholder) && !/icon/.test(p.part) };
+    const isIcon = /icon|chevron|indicator-mark/.test(p.part); // a chevron is an icon too (Accordion, Select, MultiSelect)
+    const kinds = { box: layer === '(root)', icon: isIcon, type: !!(p.text || p.placeholder) && !isIcon };
     if (!kinds.box && !kinds.icon && !kinds.type) continue;
     const found = await page.evaluate(({ part, scope }) => {
       document.querySelectorAll('[data-figma-measure]').forEach(e => e.removeAttribute('data-figma-measure'));
@@ -394,7 +487,7 @@ async function main() {
   await browser.close();
   const out = path.resolve(__dirname, '../../.ai/figma-expected', `${name}.json`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, colors, layout }, null, 2) + '\n');
+  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, ...(spec.borderOutsideLayout ? { borderOutsideLayout: true } : {}), colors, layout }, null, 2) + '\n');
   const props = Object.values(layout).flatMap(l => Object.values(l as object).flatMap(e => Object.values(e as object))).filter(x => typeof x === 'object');
   console.log(`✅ ${path.relative(process.cwd(), out)} — ${Object.keys(colors).length} variants × light/dark colors; ${props.length} layout values (${props.filter((x: any) => x.token).length} from a token)`);
 }

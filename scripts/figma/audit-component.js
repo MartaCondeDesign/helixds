@@ -41,6 +41,8 @@ if (set.type === 'PAGE') { await figma.setCurrentPageAsync(set); set = set.findA
 let page = PAGE_ID.startsWith('__') ? set : await figma.getNodeByIdAsync(PAGE_ID);
 while (page && page.type !== 'PAGE') page = page.parent;
 await figma.setCurrentPageAsync(page);
+// A plain COMPONENT (Tooltip, Modal, a layout composition) is its own single variant.
+const VARIANTS = set.type === 'COMPONENT_SET' ? set.children : [set];
 const cols = await figma.variables.getLocalVariableCollectionsAsync();
 const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
@@ -91,11 +93,11 @@ function walk(variant, node) {
   if (node !== variant && node.name !== 'state-layer' && isSpacer(node)) issues.spacers.push(`${where(variant, node)}: empty ${node.type} used as spacing — use padding/gap bound to a spacing variable`);
   if ('children' in node && node.type !== 'INSTANCE') for (const c of node.children) walk(variant, c);
 }
-for (const variant of set.children) walk(variant, variant);
+for (const variant of VARIANTS) walk(variant, variant);
 
 // 6 border — per layer name: present everywhere at one weight, or nowhere
 const strokeByLayer = {};
-for (const variant of set.children) {
+for (const variant of VARIANTS) {
   const visit = n => {
     const key = n === variant ? '(root)' : n.name;
     // a hidden stroke still counts as a border: code's transparent border keeps the size (border-always.md)
@@ -106,7 +108,7 @@ for (const variant of set.children) {
     // code is border-box: the border takes space (1 border + padding = the distance to the content). An
     // auto-layout frame whose stroke sits outside the layout is 2px narrower and its content 1px closer to
     // the edge than in code — Badge, Input and Textarea had exactly this.
-    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false)
+    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false && !(EXPECTED.borderOutsideLayout && n === variant))
       issues.border.push(`${where(variant, n)}: border not included in the auto layout — set strokesIncludedInLayout = true (CSS border-box)`);
     if ('children' in n && n.type !== 'INSTANCE') n.children.forEach(visit);
   };
@@ -118,7 +120,7 @@ for (const [layer, weights] of Object.entries(strokeByLayer)) {
 }
 
 // 4 states
-const axes = set.componentPropertyDefinitions;
+const axes = set.type === 'COMPONENT_SET' ? set.componentPropertyDefinitions : {};
 const stateAxis = axes.state?.variantOptions ?? [];
 // a component with no states but its resting one (PageHeader, Card…) needs no state axis
 const onlyDefault = (EXPECTED.states ?? []).every(s => s === 'default');
@@ -158,7 +160,7 @@ if (EXPECTED.colors && theme) {
       const modeId = theme.modes.find(m => m.name === mode).modeId;
       frame.setExplicitVariableModeForCollection(theme, modeId);
       for (const [variantName, parts] of Object.entries(EXPECTED.colors)) {
-        const comp = set.children.find(c => c.name === variantName);
+        const comp = VARIANTS.find(c => c.name === variantName) ?? (variantName === '' && VARIANTS.length === 1 ? VARIANTS[0] : null);
         if (!comp) { issues.parity.push(`variant "${variantName}" not found`); continue; }
         const inst = comp.createInstance(); frame.appendChild(inst);
         const want = mode === 'light' ? parts.light : parts.dark;
@@ -202,7 +204,7 @@ async function figmaValue(node, prop) {
 if (EXPECTED.layout) {
   const pairs = key => key.split(', ').filter(Boolean);
   for (const [key, layers] of Object.entries(EXPECTED.layout)) {
-    const variants = set.children.filter(v => pairs(key).every(p => v.name.split(', ').includes(p)));
+    const variants = VARIANTS.filter(v => pairs(key).every(p => v.name.split(', ').includes(p)));
     if (!variants.length) { issues.layout.push(`no variant matches "${key}"`); continue; }
     for (const variant of variants) {
       for (const [layer, props] of Object.entries(layers)) {
@@ -219,7 +221,11 @@ if (EXPECTED.layout) {
             continue;
           }
           const got = await figmaValue(node, prop);
-          const ok = typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
+          // borderOutsideLayout (see expected-styles.ts): Figma's root padding counts from the outer edge, code's
+          // from inside the border — compare against code + border, within the 1px a token can't split.
+          const outer = EXPECTED.borderOutsideLayout && layer === '(root)' && /^padding/.test(prop) && typeof want.value === 'number';
+          const ok = outer ? typeof got === 'number' && Math.abs(got - (want.value + (typeof node.strokeWeight === 'number' ? node.strokeWeight : 1))) <= 1
+            : typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
           if (!ok) issues.layout.push(`${variant.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${want.value}${want.token ? ` (${want.token})` : ''}`);
           // Typography binds through the Text Style above; boxes and icons bind each property to a variable.
           if (want.figma && FIGMA_KEY[prop]) {
@@ -235,4 +241,4 @@ if (EXPECTED.layout) {
 }
 
 const counts = Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.length]));
-return { set: set.name, variants: set.children.length, stateAxis, pass: Object.values(counts).every(n => n === 0), counts, issues: Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.slice(0, 25)])) };
+return { set: set.name, variants: VARIANTS.length, stateAxis, pass: Object.values(counts).every(n => n === 0), counts, issues: Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.slice(0, 25)])) };
