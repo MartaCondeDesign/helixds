@@ -336,14 +336,14 @@
     }
   },
   "figma": {
-    "states": ["default", "hover", "focus", "invalid", "disabled"],
+    "states": ["default", "hover", "focus"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": ["default", "hover", "focus", "invalid", "disabled"],
+        "values": ["default", "hover", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,  disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,  pattern form-field)."
       }
     ],
     "propertyMap": {
@@ -353,6 +353,8 @@
         "approved": "2026-10-20",
         "reason": "the text in the field: without it a designer can only draw an empty field (owner-approved exception)"
       }
-    }
+    },
+    "structure": "textarea-root (8px gap) > textarea-label (text + textarea-required),  textarea-wrapper 300px wide (textarea-field 4 rows tall = code default rows; textarea-counter and the native resize handle anchored bottom-right),  textarea-description,  textarea-error. The native resize handle is drawn by the browser (no data-helix-part); its layer is named native resize handle and hides with resize=none.",
+    "variantCombinations": "26 variants (2026-10-20): size s/m/l × invalid × state default/hover/focus = 18,  disabled per size = 3,  and hideLabel / fullWidth / resize none / horizontal / both once each at size m,  default,  valid,  enabled = 5 (the standard rules). Invalid focus keeps the red border with a 20% red ring."
   }
 }

@@ -1066,12 +1066,40 @@
       ]
     },
     "Textarea": {
-      "nodeId": "303:56",
+      "nodeId": "613:444",
       "type": "COMPONENT_SET",
       "page": "Textarea",
       "properties": [
         {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
           "name": "value",
+          "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "showCount",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
           "type": "TEXT"
         },
         {
@@ -1084,12 +1112,52 @@
           ]
         },
         {
+          "name": "invalid",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "hideLabel",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "fullWidth",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "resize",
+          "type": "VARIANT",
+          "values": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
-            "invalid",
-            "disabled",
             "hover",
             "focus"
           ]
