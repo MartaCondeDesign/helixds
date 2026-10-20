@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "CheckboxGroup",
   "version": "0.1.0",
-  "status": "stable",
+  "status": "draft",
 
   "purpose": "Lets users choose zero or more options from a small, visible set of independent choices.",
   "import": "import { CheckboxGroup } from '@helixds/react';",

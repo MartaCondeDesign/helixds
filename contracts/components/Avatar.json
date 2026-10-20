@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Avatar",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "beta",
 
   "purpose": "Represents a person or entity as a small circular image or initials indicator — a table row, a nav footer, a comment author.",
   "import": "import { Avatar } from '@helixds/react';",

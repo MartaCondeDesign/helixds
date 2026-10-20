@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "IconButton",
   "version": "2.0.0",
-  "status": "stable",
+  "status": "beta",
   "purpose": "Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control.",
   "import": "import { IconButton } from '@helixds/react';",
   "neverUseFor": [

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "SidePanel",
   "version": "0.1.0",
-  "status":  "stable",
+  "status":  "beta",
 
   "purpose": "A modal panel anchored to the right edge of the viewport, for a persistent secondary task alongside — but still blocking — the main page (details, a form, a filter builder).",
   "import": "import { SidePanel } from '@helixds/react';",

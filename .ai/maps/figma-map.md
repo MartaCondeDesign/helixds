@@ -42,7 +42,7 @@ disagree this table wins and the skill needs fixing.
 
 <!-- helix:figma-map-components — GENERATED, do not edit -->
 
-### Accordion (`v0.1.0`, stable)
+### Accordion (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -57,7 +57,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, stable)
+### AppShell (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -66,7 +66,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
-### Avatar (`v1.0.0`, stable)
+### Avatar (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -88,7 +88,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
-### Badge (`v1.0.0`, stable)
+### Badge (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -102,7 +102,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
-### Button (`v2.1.0`, stable)
+### Button (`v2.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -123,7 +123,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
-### Card (`v1.0.0`, stable)
+### Card (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -136,7 +136,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
-### Chart (`v1.2.0`, stable)
+### Chart (`v1.2.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -164,7 +164,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
-### CheckboxGroup (`v0.1.0`, stable)
+### CheckboxGroup (`v0.1.0`, draft)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -182,7 +182,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
-### Chip (`v2.0.0`, stable)
+### Chip (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -200,7 +200,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
 
-### ChipGroup (`v0.1.0`, stable)
+### ChipGroup (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -212,7 +212,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
-### FAB (`v2.0.0`, stable)
+### FAB (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -225,7 +225,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
-### Icon (`v1.0.0`, stable)
+### Icon (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -234,7 +234,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
-### IconButton (`v2.0.0`, stable)
+### IconButton (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -249,7 +249,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
-### Input (`v2.0.0`, stable)
+### Input (`v2.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -276,7 +276,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-wrapper`, `input-icon`, `input-field`, `input-icon-end`, `input-description`, `input-error`
 
-### Menu (`v0.3.0`, stable)
+### Menu (`v0.3.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -284,7 +284,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
-### Modal (`v0.1.0`, stable)
+### Modal (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -302,7 +302,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
-### MultiSelect (`v0.1.0`, stable)
+### MultiSelect (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -324,7 +324,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
-### NavItem (`v1.0.0`, stable)
+### NavItem (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -351,7 +351,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
-### RadioButton (`v0.1.0`, stable)
+### RadioButton (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -369,7 +369,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-item-error`
 
-### RadioGroup (`v0.1.0`, stable)
+### RadioGroup (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -389,7 +389,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
-### SegmentedControl (`v0.2.0`, stable)
+### SegmentedControl (`v0.2.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -400,7 +400,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
-### Select (`v1.1.0`, stable)
+### Select (`v1.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -431,7 +431,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
-### SidePanel (`v0.1.0`, stable)
+### SidePanel (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -444,7 +444,7 @@ disagree this table wins and the skill needs fixing.
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
-### Switch (`v0.1.1`, stable)
+### Switch (`v0.1.1`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -466,7 +466,7 @@ _No design props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
-### Textarea (`v1.0.0`, stable)
+### Textarea (`v1.0.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -498,7 +498,7 @@ _No design props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
-### Tooltip (`v0.1.0`, stable)
+### Tooltip (`v0.1.0`, beta)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
