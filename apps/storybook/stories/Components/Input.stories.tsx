@@ -130,6 +130,7 @@ export const Loading: Story = {
 };
 
 export const Sizes: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
       <Input label="Small"  size="s" placeholder="size=s" icon={IconSearch} onChange={() => {}} />
@@ -204,6 +205,7 @@ export const LoginFormPattern: Story = {
     );
   },
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story: 'Login form pattern. Try submitting with an invalid email.',

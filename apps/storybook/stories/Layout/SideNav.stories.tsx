@@ -25,6 +25,7 @@ const NAV_ITEMS = [
 ];
 
 export const Default: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ height: 480, display: 'flex' }}>
       <SideNav

@@ -41,6 +41,7 @@ export const Placements: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'All 4 placements, hover any trigger.' } },
   },
 };

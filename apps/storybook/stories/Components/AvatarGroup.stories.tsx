@@ -58,6 +58,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Initials-only avatars (no photos) across the s/m/l scale.' } },
   },
 };

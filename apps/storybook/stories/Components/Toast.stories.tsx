@@ -28,6 +28,7 @@ export const Default: Story = {
     </>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Fire a few in a row to see the stack (newest on top, older ones peek behind). Hover the stack to spread them apart and read the older ones — the stack expands downward, since it\'s pinned to the top of the screen. Each auto-dismisses after 4s unless hovered.' } },
   },
 };
@@ -83,6 +84,7 @@ export const KeyboardReach: Story = {
     await expect(page.getAllByRole('button', { name: 'Dismiss' })).toHaveLength(2);
   },
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Tab reaches each visible toast’s close button; with focus inside, the stack spreads and the toasts stay past the 4s auto-dismiss.' } },
   },
 };
@@ -101,6 +103,7 @@ export const Opened: Story = {
   // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
   // other story leaves on screen: their play tests open and close it again.
   tags: ['!autodocs'],
+  parameters: { controls: { disable: true } },
   render: () => (
     <>
       <NoAutoDismiss />

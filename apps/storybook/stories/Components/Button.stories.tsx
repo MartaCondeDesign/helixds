@@ -82,6 +82,7 @@ export const AllVariants: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: {
       description: { story: 'The four variants, size m (default), side by side.' },
     },
@@ -98,6 +99,7 @@ export const Loading: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story: '`isLoading` shows a spinner and sets `aria-busy="true"` — each variant keeps its own color, it never grays out.',
@@ -116,6 +118,7 @@ export const Disabled: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: {
       description: { story: 'A solid gray disabled state via dedicated disabled tokens — not opacity.' },
     },
@@ -123,6 +126,7 @@ export const Disabled: Story = {
 };
 
 export const WithLeadingIcon: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
       <Button variant="primary" icon={IconPlus}>New item</Button>
@@ -134,6 +138,7 @@ export const WithLeadingIcon: Story = {
 };
 
 export const WithTrailingIcon: Story = {
+  parameters: { controls: { disable: true } },
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
       <Button variant="primary" iconEnd={IconArrowRight}>Continue</Button>
@@ -153,6 +158,7 @@ export const Sizes: Story = {
     </div>
   ),
   parameters: {
+    controls: { disable: true },
     docs: { description: { story: 'All size variants. Default is `m`.' } },
   },
 };
@@ -211,6 +217,7 @@ export const SwapInPlace: Story = {
     await waitFor(() => expect(canvasElement.querySelector('[data-swapping]')).toBeNull());
   },
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story: 'Content that changes in place swaps instead of cutting: the icon cross-fades (copy → check, save → spinner) and the label cross-blurs while the button eases to its new width. Click either button. Under reduced motion the swap is instant.',
