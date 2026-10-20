@@ -9,7 +9,6 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-20 — Disabled is exempt from color contrast (owner's decision, WCAG 1.4.3 inactive components): CLAUDE.md rule 9 says so, and the test-runner drops color-contrast nodes inside [disabled]/[data-disabled]/[aria-disabled=true] — axe alone only exempted a disabled control's own label, so a disabled Checkbox description dropped CheckboxGroup to draft ([`7e1c81f`](https://github.com/MartaCondeDesign/helixds/commit/7e1c81f))
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
   - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
@@ -89,27 +88,26 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — figma-sync: Checkbox syncedCommit follows the rebased commit (latest commit)
-- 2026-10-20 — figma-sync: Checkbox synced at 21 variants (audit passed, Propstar table 589:652) ([`2c11734`](https://github.com/MartaCondeDesign/helixds/commit/2c11734))
-- 2026-10-20 — Checkbox: disabled dims the required * and the description too (code); Figma reduced to the 21 real combinations (18 enabled + 3 disabled — no hover/focus/invalid when disabled, no checked+indeterminate); figma:expected gets a skip rule; the audit turns every BOOLEAN on so optional parts are checked ([`995e683`](https://github.com/MartaCondeDesign/helixds/commit/995e683))
-- 2026-10-20 — Update CHANGELOG.md for #19 ([`b97f0ce`](https://github.com/MartaCondeDesign/helixds/commit/b97f0ce))
-- 2026-10-20 — docs-figma-map reads the shared prop rule (scripts/figma/prop-rule.ts) and each contract's approved figma.propertyMap ([`4218703`](https://github.com/MartaCondeDesign/helixds/commit/4218703))
-- 2026-10-20 — Figma: Checkbox rebuilt with the code props one to one (checked, indeterminate, invalid, disabled toggles; required; description/errorMessage) — 10/10 rows ✓ in figma-map.md ([`661e1ab`](https://github.com/MartaCondeDesign/helixds/commit/661e1ab))
-- 2026-10-20 — Checkbox: owner-approved Figma conversion in its contract (figma.propertyMap); required indicator gets its own part (checkbox-required, tokens instead of inline style); pnpm figma:props proposes and records conversions, pre-commit blocks unapproved ones; figma:expected measures every checked × indeterminate × invalid × disabled combination ([`a85df08`](https://github.com/MartaCondeDesign/helixds/commit/a85df08))
-- 2026-10-20 — Update CHANGELOG.md for #19 ([`0a38727`](https://github.com/MartaCondeDesign/helixds/commit/0a38727))
-- 2026-10-20 — Exact Figma property parity (CLAUDE.md rule 16): figma-map.md lists every code prop, the Figma property it must be (same name, same kind) and what Figma has today (.ai/figma-props.json snapshot); figma-drift fails a component with any mismatch ([`25a5fdc`](https://github.com/MartaCondeDesign/helixds/commit/25a5fdc))
-- 2026-10-20 — Update CHANGELOG.md for #19 ([`d7b6350`](https://github.com/MartaCondeDesign/helixds/commit/d7b6350))
-- 2026-10-20 — verify:stable: all 33 components stable (Figma ✓ for every one) ([`37137b0`](https://github.com/MartaCondeDesign/helixds/commit/37137b0))
-- 2026-10-20 — Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped ([`792b183`](https://github.com/MartaCondeDesign/helixds/commit/792b183))
-- 2026-10-20 — Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma ([`214d93f`](https://github.com/MartaCondeDesign/helixds/commit/214d93f))
-- 2026-10-20 — Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip ([`0a39133`](https://github.com/MartaCondeDesign/helixds/commit/0a39133))
-- 2026-10-20 — Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected) ([`f7c8e42`](https://github.com/MartaCondeDesign/helixds/commit/f7c8e42))
-- 2026-10-20 — Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height ([`aaa2fea`](https://github.com/MartaCondeDesign/helixds/commit/aaa2fea))
-- 2026-10-20 — Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill) ([`aab0bb2`](https://github.com/MartaCondeDesign/helixds/commit/aab0bb2))
-- 2026-10-20 — Figma: Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControl, Tooltip audited and recorded; Input, Select, Textarea, RadioGroup re-recorded at c210161 ([`06fcf0d`](https://github.com/MartaCondeDesign/helixds/commit/06fcf0d))
-- 2026-10-20 — Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout ([`c210161`](https://github.com/MartaCondeDesign/helixds/commit/c210161))
-- 2026-10-20 — Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components ([`f5c5426`](https://github.com/MartaCondeDesign/helixds/commit/f5c5426))
-- 2026-10-20 — Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading ([`ad48e00`](https://github.com/MartaCondeDesign/helixds/commit/ad48e00))
+- 2026-10-20 — Figma in sync with code: all 33 components stable (#19) ([#19](https://github.com/MartaCondeDesign/helixds/pull/19))
+  - Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading
+  - Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components
+  - Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout
+  - Figma: Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControl, Tooltip audited and recorded; Input, Select, Textarea, RadioGroup re-recorded at c210161
+  - Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill)
+  - Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height
+  - Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected)
+  - Chart contract: figma section (variant, ChartLegendItem pressed × state, structure); figma:expected spec for the legend item; press is released off the target so a toggle doesn't flip
+  - Chip label uses Body / s / Medium's line-height (was line-height: 1), as in Figma
+  - Figma: Chart built and recorded; Chip rebuilt (state gains disabled, dismissible BOOLEAN — the old axes were crossed), ChipGroup/MultiSelect instances swapped
+  - verify:stable: all 33 components stable (Figma ✓ for every one)
+  - Exact Figma property parity (CLAUDE.md rule 16): figma-map.md lists every code prop, the Figma property it must be (same name, same kind) and what Figma has today (.ai/figma-props.json snapshot); figma-drift fails a component with any mismatch
+  - Checkbox: owner-approved Figma conversion in its contract (figma.propertyMap); required indicator gets its own part (checkbox-required, tokens instead of inline style); pnpm figma:props proposes and records conversions, pre-commit blocks unapproved ones; figma:expected measures every checked × indeterminate × invalid × disabled combination
+  - Figma: Checkbox rebuilt with the code props one to one (checked, indeterminate, invalid, disabled toggles; required; description/errorMessage) — 10/10 rows ✓ in figma-map.md
+  - docs-figma-map reads the shared prop rule (scripts/figma/prop-rule.ts) and each contract's approved figma.propertyMap
+  - Checkbox: disabled dims the required * and the description too (code); Figma reduced to the 21 real combinations (18 enabled + 3 disabled — no hover/focus/invalid when disabled, no checked+indeterminate); figma:expected gets a skip rule; the audit turns every BOOLEAN on so optional parts are checked
+  - figma-sync: Checkbox synced at 21 variants (audit passed, Propstar table 589:652)
+  - Disabled is exempt from color contrast (owner's decision, WCAG 1.4.3 inactive components): CLAUDE.md rule 9 says so, and the test-runner drops color-contrast nodes inside [disabled]/[data-disabled]/[aria-disabled=true] — axe alone only exempted a disabled control's own label, so a disabled Checkbox description dropped CheckboxGroup to draft
+  - figma-sync: Checkbox syncedCommit follows the rebased commit
 - 2026-10-20 — Docs in their launch wording: npm install, MCP via npx (#18) ([`b6245d9`](https://github.com/MartaCondeDesign/helixds/commit/b6245d9))
   - Docs in their launch wording: npm install, MCP via npx
 - 2026-10-19 — Open-source readiness: releases, contributing, public Storybook (#17) ([`b0d236c`](https://github.com/MartaCondeDesign/helixds/commit/b0d236c))
