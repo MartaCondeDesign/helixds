@@ -21,6 +21,8 @@ packages/helix-storybook-addon-tokens/
 apps/storybook/eval-gallery/
 evals/proof/
 apps/storybook/.proof/
+# Sabotaged copy of the Foundation stories (scripts/storybook-tokens.test.ts), outside stories/ so Storybook never indexes it
+apps/storybook/.gate-test/
 
 # Copied from the root AGENTS.md at build (packages/core/scripts/copy-agent-docs.mjs)
 packages/core/AGENTS.md
