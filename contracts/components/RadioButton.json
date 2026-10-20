@@ -42,8 +42,8 @@
     { "part": "radio-control", "element": "span", "description": "Visual circle — reflects checked state via CSS." },
     { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when checked.", "optional": true },
     { "part": "radio-item-content", "element": "span", "description": "Wraps the label and description." },
-    { "part": "radio-item-label", "element": "span", "description": "Visible label." },
-    { "part": "radio-item-description", "element": "span", "description": "Helper text. Sits exactly 4px below the label — same structure as Checkbox's own description.", "optional": true },
+    { "part": "radio-item-label", "element": "span", "description": "Visible label. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text. Sits exactly 4px below the label — same structure as Checkbox's own description. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "radio-item-error", "element": "span", "description": "Error text, shown instead of the description when `errorMessage` is set — identical structure to Checkbox's own error message.", "optional": true }
   ],
 

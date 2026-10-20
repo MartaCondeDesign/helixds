@@ -138,6 +138,12 @@ Figma component properties come in exactly 4 types: `BOOLEAN`, `TEXT`, `INSTANCE
 | `onClick`, `onChange`, `onDismiss` | event handler | *(no Figma property — skipped)* | JS-only behavior, nothing to represent visually |
 | `required` (when no asterisk rendered) | `boolean` | *(no Figma property — skipped)* | No visual difference in the anatomy |
 
+**Disabled variants** (owner's decision 2026-10-20, `.ai/maps/patterns/disabled-state.md`): with `disabled=true`
+draw only `state=default` and `invalid=false` — a disabled control has no hover, focus or validation — and bind
+every text layer (label, description, required `*`, legend) to `text/disabled`. Combinations code can't render
+(e.g. Checkbox `checked` + `indeterminate`) aren't drawn either; list what's left in the contract's
+`figma.variantCombinations`, and skip the rest in `scripts/figma/expected-styles.ts` (`skip`).
+
 **Naming rule:** prop name in Figma = prop name in code. Lowercase. No capitalization changes.
 - `variant=primary` not `Variant=Primary`
 - `size=xs` not `Size=XS`

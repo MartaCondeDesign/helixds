@@ -57,7 +57,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' } : undefined}
         >
           {label}
-          {required && <span aria-hidden="true"> *</span>}
+          {required && <span data-helix-part="textarea-required" aria-hidden="true"> *</span>}
         </label>
 
         <div

@@ -588,9 +588,13 @@
     color:       var(--helix-input-text-label);
     line-height: var(--helix-textStyle-body-m-medium-lineHeight);
   }
-  [data-helix-part="input-label"] span[aria-hidden] {
+  [data-helix-part="input-required"] {
     color:       var(--helix-color-text-danger);
-    margin-left: 2px;
+    margin-left: var(--helix-spacing-3xs);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="input-root"][data-disabled] :is([data-helix-part="input-label"], [data-helix-part="input-required"], [data-helix-part="input-description"]) {
+    color: var(--helix-input-text-disabled);
   }
 
   [data-helix-part="input-wrapper"] {
@@ -1068,6 +1072,10 @@
     color:       var(--helix-textarea-text-label);
     line-height: var(--helix-textStyle-body-m-medium-lineHeight);
   }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="textarea-root"][data-disabled] :is([data-helix-part="textarea-label"], [data-helix-part="textarea-required"], [data-helix-part="textarea-description"]) {
+    color: var(--helix-textarea-text-disabled);
+  }
 
   [data-helix-part="textarea-wrapper"] {
     position:         relative;
@@ -1167,6 +1175,10 @@
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
     line-height: var(--helix-textStyle-body-m-medium-lineHeight);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="select-root"][data-disabled] :is([data-helix-part="select-label"], [data-helix-part="select-required"], [data-helix-part="select-description"]) {
+    color: var(--helix-select-text-disabled);
   }
 
   [data-helix-part="select-wrapper"] {
@@ -1307,6 +1319,10 @@
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
     line-height: var(--helix-textStyle-body-m-medium-lineHeight);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md (MultiSelect shares Select's tokens) */
+  [data-helix-part="multi-select-root"][data-disabled] :is([data-helix-part="multi-select-label"], [data-helix-part="multi-select-required"], [data-helix-part="multi-select-description"]) {
+    color: var(--helix-select-text-disabled);
   }
 
   [data-helix-part="multi-select-field"] {
@@ -1756,6 +1772,10 @@
     width:       100%;
   }
   [data-helix-part="checkbox-group-legend"] + * { clear: left; }
+  [data-helix-part="checkbox-group-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
 
   [data-helix-part="checkbox-group-options"] {
     display: flex;
@@ -1779,6 +1799,10 @@
   }
   [data-helix-part="checkbox-group-description"] { color: var(--helix-checkbox-text-description); }
   [data-helix-part="checkbox-group-error"]       { color: var(--helix-checkbox-text-error); }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="checkbox-group"][data-disabled] :is([data-helix-part="checkbox-group-legend"], [data-helix-part="checkbox-group-required"], [data-helix-part="checkbox-group-description"]) {
+    color: var(--helix-checkbox-text-disabled);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1810,6 +1834,10 @@
     width:       100%;
   }
   [data-helix-part="radio-legend"] + * { clear: left; }
+  [data-helix-part="radio-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
 
   [data-helix-part="radio-options"] {
     display: flex;
@@ -1952,6 +1980,10 @@
   }
   [data-helix-part="radio-description"] { color: var(--helix-radio-text-description); }
   [data-helix-part="radio-error"]       { color: var(--helix-radio-text-error); }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="radio-group"][data-disabled] :is([data-helix-part="radio-legend"], [data-helix-part="radio-required"], [data-helix-part="radio-description"]) {
+    color: var(--helix-radio-text-disabled);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════

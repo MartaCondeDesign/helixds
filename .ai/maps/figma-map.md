@@ -180,7 +180,7 @@ disagree this table wins and the skill needs fixing.
 
 **Figma-only `state`:** `default` / `invalid` / `disabled`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
 ### Chip (`v2.0.0`, beta)
 
@@ -274,7 +274,7 @@ disagree this table wins and the skill needs fixing.
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-wrapper`, `input-icon`, `input-field`, `input-icon-end`, `input-description`, `input-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-icon-end`, `input-description`, `input-error`
 
 ### Menu (`v0.3.0`, beta)
 
@@ -322,7 +322,7 @@ disagree this table wins and the skill needs fixing.
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open` / `invalid` / `disabled`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
 ### NavItem (`v1.0.0`, beta)
 
@@ -387,7 +387,7 @@ disagree this table wins and the skill needs fixing.
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
 ### SegmentedControl (`v0.2.0`, beta)
 
@@ -420,7 +420,7 @@ disagree this table wins and the skill needs fixing.
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus` / `open`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 
 ### SideNav (`v1.0.0`, stable)
 
@@ -488,7 +488,7 @@ _No design props._
 
 **Figma-only `state`:** `default` / `invalid` / `disabled` / `hover` / `focus`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `textarea-root`, `textarea-label`, `textarea-wrapper`, `textarea-field`, `textarea-counter`, `textarea-description`, `textarea-error`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `textarea-root`, `textarea-label`, `textarea-required`, `textarea-wrapper`, `textarea-field`, `textarea-counter`, `textarea-description`, `textarea-error`
 
 ### Toast (`v0.2.0`, stable)
 

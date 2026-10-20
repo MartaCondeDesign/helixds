@@ -64,6 +64,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div
         data-helix-part="input-root"
         data-full-width={fullWidth ? 'true' : undefined}
+        data-disabled={disabled ? 'true' : undefined}
         className={cn(className)}
       >
         <label
@@ -72,7 +73,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' } : undefined}
         >
           {label}
-          {props.required && <span aria-hidden="true"> *</span>}
+          {props.required && <span data-helix-part="input-required" aria-hidden="true"> *</span>}
         </label>
 
         <div

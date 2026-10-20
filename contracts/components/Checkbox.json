@@ -81,18 +81,18 @@
     {
       "part": "checkbox-text",
       "element": "span",
-      "description": "Visible label text."
+      "description": "Visible label text. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
     },
     {
       "part": "checkbox-required",
       "element": "span",
       "optional": true,
-      "description": "The required indicator (*), text/danger, 2px (spacing/3xs) after the label — shown by `required`."
+      "description": "The required indicator (*), text/danger, 2px (spacing/3xs) after the label — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
     },
     {
       "part": "checkbox-description",
       "element": "span",
-      "description": "Helper text below the control. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Helper text below the control. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
     },
     {

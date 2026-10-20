@@ -64,8 +64,14 @@
     {
       "part": "input-label",
       "element": "label",
-      "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
+    },
+    {
+      "part": "input-required",
+      "element": "span",
+      "optional": true,
+      "description": "The required indicator (*) inside the label, text/danger, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
     },
     {
       "part": "input-wrapper",
@@ -92,7 +98,7 @@
     {
       "part": "input-description",
       "element": "p",
-      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
     },
     {

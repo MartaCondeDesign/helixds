@@ -63,6 +63,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      BOOLEAN property in Figma, not a VARIANT (`.ai/maps/patterns/show-hide-parts.md`).
    - **Border always:** a component with a border has it in every variant and state, same width — states
      change only its color (`.ai/maps/patterns/border-always.md`), in code and in Figma.
+   - **Disabled dims everything:** a disabled component turns all its text — label, description, required `*`,
+     a group's legend — to its `text.disabled` token (the error message keeps its danger color), with real colors,
+     never opacity; in Figma disabled has no hover/focus/invalid variants (`.ai/maps/patterns/disabled-state.md`).
 
    Token names live in `.ai/maps/prop-map.md`.
 4. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).

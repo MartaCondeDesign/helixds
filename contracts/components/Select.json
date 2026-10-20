@@ -39,12 +39,13 @@
 
   "anatomy": [
     { "part": "select-root", "element": "div", "description": "Layout wrapper for label, field, and messages." },
-    { "part": "select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the trigger — see .ai/maps/patterns/form-field-spacing.md." },
+    { "part": "select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the trigger — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "select-required", "element": "span", "optional": true, "description": "The required indicator (*) inside the label, the label color, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
     { "part": "select-wrapper", "element": "div", "description": "Positions the trigger button and chevron." },
     { "part": "select-trigger", "element": "button", "description": "The visible control. Real DOM focus stays here at all times — see ADR-013. `role` is implicit (button); `aria-haspopup=\"listbox\"`, `aria-expanded`, `aria-controls`, `aria-activedescendant` wire it to the portaled Menu." },
     { "part": "select-trigger-label", "element": "span", "description": "Wraps the trigger's own displayed text (selected option's label, or placeholder). Truncates with an ellipsis at a fixed/narrow consumer-set width instead of overflowing or forcing the trigger to grow — matches a native <select>'s own behavior." },
     { "part": "select-chevron", "element": "slot", "description": "Trailing chevron icon. Flips via `aria-expanded` on the trigger, same scaleY treatment as Accordion's chevron (.ai/maps/patterns/expand-collapse-chevron.md) — now real, not the earlier documented exception, since the trigger's own React state knows whether it's open.", "optional": true },
-    { "part": "select-description", "element": "span", "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
+    { "part": "select-description", "element": "span", "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "select-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 

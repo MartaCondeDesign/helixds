@@ -39,8 +39,8 @@
     { "part": "switch-row", "element": "div", "description": "Horizontal layout for the track and label." },
     { "part": "switch-track", "element": "button", "description": "The interactive element — role='switch', carries aria-checked." },
     { "part": "switch-thumb", "element": "span", "description": "The moving indicator inside the track.", "optional": false },
-    { "part": "switch-label", "element": "label", "description": "Visible label text, linked via htmlFor." },
-    { "part": "switch-description", "element": "span", "description": "Helper text below the row.", "optional": true }
+    { "part": "switch-label", "element": "label", "description": "Visible label text, linked via htmlFor. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "switch-description", "element": "span", "description": "Helper text below the row. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true }
   ],
 
   "props": [

@@ -188,7 +188,7 @@ export function MultiSelect({
         style={hideLabel ? VISUALLY_HIDDEN : undefined}
       >
         {label}
-        {required && <span aria-hidden="true"> *</span>}
+        {required && <span data-helix-part="multi-select-required" aria-hidden="true"> *</span>}
       </label>
 
       <div
