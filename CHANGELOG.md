@@ -92,7 +92,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Figma: MultiSelect rebuilt as a full field (pattern form-field), one size — label (+ required), field with Chips or placeholder (hugs like code), description, error; value empty/selected, 22 variants, audit passed (incl. the focus-ring clip check) (latest commit)
+- 2026-10-20 — figma-sync: MultiSelect synced (latest commit)
+- 2026-10-20 — Figma: MultiSelect rebuilt as a full field (pattern form-field), one size — label (+ required), field with Chips or placeholder (hugs like code), description, error; value empty/selected, 22 variants, audit passed (incl. the focus-ring clip check) ([`c4f6c30`](https://github.com/MartaCondeDesign/helixds/commit/c4f6c30))
 - 2026-10-20 — Merge remote-tracking branch 'origin/claude/affectionate-swartz-794ede' into claude/affectionate-swartz-794ede ([`a780eb9`](https://github.com/MartaCondeDesign/helixds/commit/a780eb9))
 - 2026-10-20 — Merge remote-tracking branch 'origin/main' into claude/affectionate-swartz-794ede ([`3593b9a`](https://github.com/MartaCondeDesign/helixds/commit/3593b9a))
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))

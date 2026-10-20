@@ -491,12 +491,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): value (empty/selected) × state (default/hover/focus/open/invalid/disabled). Field = padding 4/40/4/4 (Semantic spacing/2xs, Primitives spacing/250) with the border inside and NOT in the auto layout — code's padding is calc((32 − 24)/2 − 1px) = 3px inside a 1px border, which no token expresses; owner's decision 2026-10-20 (figma:expected marks it borderOutsideLayout, the audit compares padding + border). Known 1px: right padding / placeholder start are 1px closer to the edge than code. Empty variants now hold the placeholder in a multi-select-trigger frame (size/s, 8px left = Primitives spacing/50), chevron absolute 13px from the right. Disabled chevron rebound icon/disabled → icon/neutral/light (what code renders). Passed.",
-      "compSetId": "464:192",
-      "syncedCommit": "c2101617de74d2d9532a62d2dedbde1fb1614db6",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): value (empty/selected) × state (default/hover/focus/open/invalid/disabled). Field = padding 4/40/4/4 (Semantic spacing/2xs, Primitives spacing/250) with the border inside and NOT in the auto layout — code's padding is calc((32 − 24)/2 − 1px) = 3px inside a 1px border, which no token expresses; owner's decision 2026-10-20 (figma:expected marks it borderOutsideLayout, the audit compares padding + border). Known 1px: right padding / placeholder start are 1px closer to the edge than code. Empty variants now hold the placeholder in a multi-select-trigger frame (size/s, 8px left = Primitives spacing/50), chevron absolute 13px from the right. Disabled chevron rebound icon/disabled → icon/neutral/light (what code renders). Passed. REBUILT 2026-10-20 by the conversion standard v1.3 (pattern form-field): the old set was only the field. Set 625:792 = multi-select-root > label (+ required), multi-select-field (Chips or trigger > placeholder, chevron), description, error; 22 variants. Properties: label, placeholder, required, description + text, errorMessage + text; value empty/selected (approved exception). Audit passed light/dark. Propstar table 625:908.",
+      "compSetId": "625:792",
+      "syncedCommit": "c4f6c304b8978256775b59b138efda4701b9e612",
       "audit": {
         "pass": true,
-        "commit": "c2101617de74d2d9532a62d2dedbde1fb1614db6",
+        "commit": "c4f6c304b8978256775b59b138efda4701b9e612",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
