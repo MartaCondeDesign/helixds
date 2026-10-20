@@ -29,6 +29,9 @@
  *                (EXPECTED.layout.*.figma, scripts/figma/token-chain.ts) — and each text layer uses the named
  *                Text Style code's typography comes from. Being bound to *a* variable with the same number
  *                isn't enough: change the token and Figma wouldn't follow.
+ *  10 clip       in a variant that draws the focus ring (state=focus / open) every frame around the ring layer has
+ *                Clip Content off (a clipping parent cuts the ring) and the ring layer keeps it on (Figma only draws a
+ *                shadow's spread on a clipping frame) — contracts/figma-conversion.json → variants.focusClip
  */
 const SET_ID = '__SET_ID__';
 const PAGE_ID = '__PAGE_ID__';
@@ -48,7 +51,7 @@ const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -94,6 +97,21 @@ function walk(variant, node) {
   if ('children' in node && node.type !== 'INSTANCE') for (const c of node.children) walk(variant, c);
 }
 for (const variant of VARIANTS) walk(variant, variant);
+// 10 clip — the focus ring is a spread shadow outside the control: the frames around it must not clip it, and the
+// ring layer itself must (Figma only draws a shadow's spread on a clipping frame)
+const hasRing = n => (n.effects || []).some(e => e.type === 'DROP_SHADOW' && e.visible !== false && (e.spread || 0) > 0);
+for (const variant of VARIANTS) {
+  const st = variant.variantProperties?.state;
+  if (st !== 'focus' && st !== 'open') continue;
+  const rings = [variant, ...variant.findAll(n => 'clipsContent' in n && n.type !== 'INSTANCE')].filter(hasRing);
+  for (const r of rings) {
+    if (!r.clipsContent) issues.clip.push(`${where(variant, r)}: the ring layer has Clip Content off — Figma drops the shadow's spread; turn it on`);
+    for (let a = r.parent; a && a !== variant.parent; a = a.parent) {
+      if (a.clipsContent) issues.clip.push(`${where(variant, a)}: Clip Content is on around the focus ring — it cuts the ring; turn it off`);
+      if (a === variant) break;
+    }
+  }
+}
 
 // 6 border — per layer name: present everywhere at one weight, or nowhere
 const strokeByLayer = {};

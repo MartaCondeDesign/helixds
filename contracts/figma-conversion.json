@@ -1,6 +1,6 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "approved": "2026-10-20",
 
   "naming": {
@@ -49,6 +49,7 @@
     "disabled": "disabled=true is drawn only with state=default and invalid=false — a disabled control doesn't hover, take focus or validate. Every text layer (label, description, required *, legend) binds text/disabled (.ai/maps/patterns/disabled-state.md).",
     "secondary": "Secondary look toggles — the ones in secondaryAxes — are drawn ONCE each: on, with every other secondary off, state=default, invalid=false, disabled=false and size at its code default. The main axes (checked, variant, value…) keep all their values. They change width, the label or one icon, which looks the same in every state (owner's decision 2026-10-20).",
     "impossible": "A combination code can't render isn't drawn (Checkbox checked + indeterminate). List what's left in the contract's figma.variantCombinations.",
+    "focusClip": "In a variant that draws the focus ring (state=focus, and state=open where open shares the ring), every frame AROUND the ring layer has Clip Content OFF — the ring is a 3px spread shadow outside the control and a clipping parent cuts it — while the ring layer itself keeps Clip Content ON, because Figma only draws a shadow's spread on a clipping frame (owner's decision 2026-10-20). The Figma audit fails otherwise.",
     "propstar": "The set sits in a Propstar table: rows = the main look axis, columns = the remaining axes grouped (invalid false/true × state, then disabled). Booleans are toggled in the panel, never expanded into columns."
   },
 

@@ -146,6 +146,11 @@ every text layer (label, description, required `*`, legend) to `text/disabled`. 
 (e.g. Checkbox `checked` + `indeterminate`) aren't drawn either; list what's left in the contract's
 `figma.variantCombinations`, and skip the rest in `scripts/figma/expected-styles.ts` (`skip`).
 
+**Focus ring:** in every `state=focus` (and `state=open` with the ring) variant, **Clip Content is off on every
+frame around the ring layer** (the variant and its frames up to the ring) or they cut the ring, and **on on the
+ring layer itself** — Figma only renders a drop shadow's spread on a clipping frame. Set `clipsContent` explicitly;
+`figma.createAutoLayout` / detaching leave it unpredictable. The audit's `clip` check fails otherwise.
+
 **Naming rule:** prop name in Figma = prop name in code. Lowercase. No capitalization changes.
 - `variant=primary` not `Variant=Primary`
 - `size=xs` not `Size=XS`

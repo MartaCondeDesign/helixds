@@ -54,6 +54,11 @@ properties with the same name, so it can't share `icon` with the toggle.
   in every state, so crossing them with everything would only multiply copies.
 - **Impossible combinations aren't drawn** (Checkbox `checked` + `indeterminate`: code shows indeterminate). The
   contract's `figma.variantCombinations` lists what's left.
+- **Focus ring never clipped:** in a variant that draws the focus ring (`state=focus`, and `state=open` where it
+  shares the ring) **every frame around the ring layer has Clip Content off** — the ring is a 3px spread shadow
+  outside the control, and a clipping parent cuts it. The **ring layer itself keeps Clip Content on**: Figma only
+  draws a shadow's spread on a clipping frame (with it off the ring disappears). The audit fails otherwise
+  (owner's decision 2026-10-20).
 - **Booleans are toggled in the panel**, never expanded into extra variants or table columns.
 - **Propstar table:** rows = the main look axis (`checked`, `variant`…), columns = the other axes grouped
   (`invalid: false` × state · `invalid: true` × state · `disabled: true`).
