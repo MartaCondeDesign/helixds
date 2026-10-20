@@ -1,5 +1,5 @@
 {
-  "$comment": "Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read through the Figma MCP (list_file_components_for_code_connect). Refresh it with the same read after changing a component in Figma, then run pnpm docs:figma-map. Read on 2026-10-20.",
+  "$comment": "Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read through the Figma MCP (list_file_components_for_code_connect). Refresh it with the same read after changing a component in Figma, then run pnpm docs:figma-map. Read on 2026-10-20; Checkbox updated after its rebuild.",
   "components": {
     "Accordion": {
       "nodeId": "468:42",
@@ -245,13 +245,17 @@
       ]
     },
     "Checkbox": {
-      "nodeId": "424:86",
+      "nodeId": "587:1122",
       "type": "COMPONENT_SET",
       "page": "Checkbox",
       "properties": [
         {
           "name": "label",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "description",
@@ -273,9 +277,32 @@
           "name": "checked",
           "type": "VARIANT",
           "values": [
-            "unchecked",
-            "checked",
-            "indeterminate"
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "indeterminate",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "invalid",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
           ]
         },
         {
@@ -284,9 +311,7 @@
           "values": [
             "default",
             "hover",
-            "focus",
-            "invalid",
-            "disabled"
+            "focus"
           ]
         }
       ]

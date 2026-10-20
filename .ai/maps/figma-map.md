@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 75 of 181 code props match Figma exactly.**
+**Parity today: 80 of 181 code props match Figma exactly.**
 
 <!-- helix:figma-map-conventions — stable, hand-maintained -->
 ## Code prop → Figma property: the exact rule
@@ -154,13 +154,13 @@ disagree this table wins and the skill needs fixing.
 | `description` | `string \| undefined` | `TEXT` `description text` | approved 2026-10-20 | ✓ |
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | approved 2026-10-20 | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | approved 2026-10-20 | ✓ |
-| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | approved 2026-10-20 | ✗ values unchecked / checked / indeterminate |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | approved 2026-10-20 | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | approved 2026-10-20 | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | approved 2026-10-20 | ✗ a value of `state` |
-| `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | approved 2026-10-20 | ✗ a value of `checked` |
+| `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | approved 2026-10-20 | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | approved 2026-10-20 | ✓ |
+| `required` | `boolean` | `BOOLEAN` `required` | approved 2026-10-20 | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | approved 2026-10-20 | ✓ |
+| `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | approved 2026-10-20 | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `focus` / `invalid` / `disabled`
+**Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
