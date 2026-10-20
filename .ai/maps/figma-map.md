@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 137 of 185 code props match Figma exactly.**
+**Parity today: 147 of 185 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -328,20 +328,20 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
-| `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,  selected shows chips — the field's two looks (owner-approved exception) | ✓ |
+| `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception) | ✓ |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✗ missing |
-| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✗ missing |
-| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✗ missing |
-| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
+| `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `focus` / `open` / `invalid` / `disabled`
+**Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 

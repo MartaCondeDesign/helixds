@@ -683,12 +683,36 @@
       ]
     },
     "MultiSelect": {
-      "nodeId": "464:192",
+      "nodeId": "625:792",
       "type": "COMPONENT_SET",
       "page": "MultiSelect",
       "properties": [
         {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
           "name": "placeholder",
+          "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "errorMessage",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "errorMessage text",
           "type": "TEXT"
         },
         {
@@ -700,15 +724,45 @@
           ]
         },
         {
+          "name": "invalid",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "hideLabel",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "fullWidth",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover",
             "focus",
-            "open",
-            "invalid",
-            "disabled"
+            "open"
           ]
         }
       ]

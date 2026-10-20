@@ -217,32 +217,25 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "open", "invalid", "disabled"],
+    "states": ["default", "hover", "focus", "open"],
     "properties": [
-      {
-        "name": "value",
-        "type": "VARIANT",
-        "values": ["empty", "selected"],
-        "codeProp": "value",
-        "description": "empty = placeholder (Select's geometry: 12px inside the border); selected = dismissible Chip s instances,  wrapping,  4px from the outer edge."
-      },
       {
         "name": "state",
         "type": "VARIANT",
-        "values": ["default", "hover", "focus", "open", "invalid", "disabled"],
+        "values": ["default", "hover", "focus", "open"],
         "figmaOnly": true,
-        "description": "Same treatment as Select — colors,  focus/open glow (shadow / focus) and chevron copied from the audited Select set."
-      },
-      { "name": "placeholder", "type": "TEXT", "codeProp": "placeholder" }
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes,  open is the listbox showing. invalid,  disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,  pattern form-field)."
+      }
     ],
-    "structure": "The field only,  like Select. selected: the chip padding in code is (32 − 24)/2 − 1px border = 3px — off the scale — so Figma uses 4px padding (spacing/2xs) with the border drawn over it (strokesIncludedInLayout off): chips land 4px from the outer edge,  exactly like code. The chevron is absolute,  12px inside the border,  like code's position: absolute; right: 12px.",
+    "structure": "multi-select-root (8px gap) > multi-select-label (text + multi-select-required),  multi-select-field (hugs its content like code — 151px empty,  chips side by side; fullWidth drawn at 480px and wraps): chosen options as Chip instances or multi-select-trigger > multi-select-placeholder,  multi-select-chevron; multi-select-description,  multi-select-error. One size (m).",
     "propertyMap": {
       "value": {
         "codeType": "string[] | undefined",
         "figma": [{"name": "value", "type": "VARIANT", "values": ["empty", "selected"]}],
         "approved": "2026-10-20",
-        "reason": "empty shows the placeholder,  selected shows chips — the field's two looks (owner-approved exception)"
+        "reason": "empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception)"
       }
-    }
+    },
+    "variantCombinations": "22 variants (2026-10-20): value empty/selected × invalid × state default/hover/focus/open = 16,  and disabled / hideLabel / fullWidth once per value = 6 (the standard rules). Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open)."
   }
 }
