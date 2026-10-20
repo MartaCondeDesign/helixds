@@ -40,6 +40,8 @@ type Spec = {
   // measured from the outer edge (code's padding + border). Only where code's padding is a calc() around the
   // border that no scale token can express (MultiSelect: (32 − 24) / 2 − 1px = 3px) — owner's decision 2026-10-20.
   borderOutsideLayout?: boolean;
+  // Typography that changes by state (MenuItem: selected is medium): measure layout in every state, keyed with it.
+  layoutPerState?: boolean;
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -293,6 +295,7 @@ const SPECS: Record<string, Spec> = {
     args: () => ({}),
     parts: { '(root)': { part: 'menu-item', fill: true }, 'menu-item-label': { part: 'menu-item', text: true } }, // the label span only renders next to a labelEnd
     target: 'menu-item',
+    layoutPerState: true,
     locate: (_v, s) => ({
       story: 'components-menu--states',
       scope: s === 'selected' ? '[data-helix-part="menu-item"][aria-selected="true"]'
@@ -488,7 +491,9 @@ async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: str
       entry[figmaProp] = { value, token: chain[0] ?? null, figma: figmaTarget(chain, kinds.type && figmaProp in TYPE ? 'textStyle' : 'variable') };
     }
     if (kinds.type) {
-      const style = Object.values(entry).map(e => (typeof e === 'object' ? e.figma : null)).find(Boolean);
+      // The weight decides between two styles of the same size (MenuItem selected: regular's size, medium's weight)
+      const fw = entry.fontWeight;
+      const style = (typeof fw === 'object' && fw.figma) || Object.values(entry).map(e => (typeof e === 'object' ? e.figma : null)).find(Boolean);
       if (style) entry.textStyle = style; // the named Text Style the layer must use
     }
     out[layer] = entry;
@@ -521,8 +526,8 @@ async function main() {
     const variantName = [...Object.entries(v).map(([k, x]) => `${k}=${x}`), ...(spec.states.length > 1 ? [`state=${state}`] : [])].join(', ');
     colors[variantName] = { light: await measure(page, vScoped, v, state, 'light'), dark: await measure(page, vScoped, v, state, 'dark') };
     // Layout doesn't change by state or theme: measured once per variant, at its first state, light.
-    const layoutKey = Object.entries(v).map(([k, x]) => `${k}=${x}`).join(', ');
-    if (!(layoutKey in layout) && state === spec.states[0]) {
+    const layoutKey = spec.layoutPerState ? variantName : Object.entries(v).map(([k, x]) => `${k}=${x}`).join(', ');
+    if (!(layoutKey in layout) && (spec.layoutPerState || state === spec.states[0])) {
       await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
       await page.mouse.move(0, 0);
       await page.mouse.up();

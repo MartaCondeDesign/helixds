@@ -555,8 +555,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
@@ -607,8 +607,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
@@ -659,8 +659,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
@@ -711,8 +711,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"
@@ -763,8 +763,8 @@
           "figma": "body-s-medium"
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         },
         "textStyle": "body-s-medium"

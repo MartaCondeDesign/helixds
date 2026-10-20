@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height (latest commit)
+- 2026-10-20 — Figma: Menu, Modal, SidePanel, Toast audited and recorded; figma:expected measures state-dependent typography (MenuItem selected) (latest commit)
+- 2026-10-20 — Modal and SidePanel titles use Heading / xl / Bold (24px, owner's choice); MenuItem text uses Body / m / Regular's line-height ([`aaa2fea`](https://github.com/MartaCondeDesign/helixds/commit/aaa2fea))
 - 2026-10-20 — Menu stories take every prop from args (Controls work); Toast Playground story with variant/label/description controls; Menu States story; figma:expected specs for MenuItem, Modal, SidePanel, Toast (icon color read from the svg's stroke or fill) ([`aab0bb2`](https://github.com/MartaCondeDesign/helixds/commit/aab0bb2))
 - 2026-10-20 — Figma: Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControl, Tooltip audited and recorded; Input, Select, Textarea, RadioGroup re-recorded at c210161 ([`06fcf0d`](https://github.com/MartaCondeDesign/helixds/commit/06fcf0d))
 - 2026-10-20 — Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout ([`c210161`](https://github.com/MartaCondeDesign/helixds/commit/c210161))

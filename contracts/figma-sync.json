@@ -396,6 +396,60 @@
       }
     },
     {
+      "name": "Menu",
+      "inFigma": true,
+      "figmaNodeId": "470:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision).",
+      "compSetId": "470:14",
+      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "audit": {
+        "pass": true,
+        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Modal",
+      "inFigma": true,
+      "figmaNodeId": "471:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): title Heading / xl / Bold (24px — owner raised it from l, tokens + Figma); footer gap rebound to spacing/2xs (code's modal.footerGap). Colors light+dark from .ai/figma-expected/Modal.json (Opened story). Passed.",
+      "compSetId": "471:6",
+      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "audit": {
+        "pass": true,
+        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
       "name": "MultiSelect",
       "inFigma": true,
       "figmaNodeId": "464:8",
@@ -612,6 +666,33 @@
       }
     },
     {
+      "name": "SidePanel",
+      "inFigma": true,
+      "figmaNodeId": "472:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): placement right/bottom, title Heading / xl / Bold (24px, like Modal — owner's choice). Colors light+dark from .ai/figma-expected/SidePanel.json. Passed.",
+      "compSetId": "472:29",
+      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "audit": {
+        "pass": true,
+        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
       "name": "Switch",
       "inFigma": true,
       "figmaNodeId": "296:3",
@@ -674,6 +755,33 @@
       "audit": {
         "pass": true,
         "commit": "c2101617de74d2d9532a62d2dedbde1fb1614db6",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Toast",
+      "inFigma": true,
+      "figmaNodeId": "467:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): variant × description; filled status icon colored like code's --helix-toast-icon-* (measured from the svg fill), 24px bound to Semantic size/s (code's toast.iconSize); padding/gap/radius bound. Passed.",
+      "compSetId": "467:62",
+      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "audit": {
+        "pass": true,
+        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
