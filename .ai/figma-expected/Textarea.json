@@ -135,8 +135,8 @@
           "figma": null
         },
         "fontFamily": {
-          "value": "system-ui",
-          "token": null,
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
           "figma": null
         }
       }
