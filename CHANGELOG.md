@@ -88,7 +88,11 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — AppShell: divider on the SideNav and a collapsed SideNav below 768px (latest commit)
+- 2026-10-21 — Merge remote-tracking branch 'origin/main' into claude/appshell-divider-collapse (latest commit)
+- 2026-10-21 — AppShell: divider on the SideNav and a collapsed SideNav below 768px ([`631d34d`](https://github.com/MartaCondeDesign/helixds/commit/631d34d))
+- 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
+  - Figma sync ends with updating the Community copy
+  - Layout components and Pages aren't built in Figma for now
 - 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([`3129b32`](https://github.com/MartaCondeDesign/helixds/commit/3129b32))
   - View in Figma links open the public Figma Community file; README links it next to Storybook
 - 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))
