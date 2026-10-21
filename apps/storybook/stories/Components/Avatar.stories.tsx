@@ -24,12 +24,13 @@ type Story = StoryObj<typeof Avatar>;
 export const Default: Story = { args: {} };
 
 export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  // The story fixes size (s / m / l) — label and src apply to all three
+  argTypes: { size: { control: false } },
+  render: ({ label, src }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center' }}>
-      <Avatar label="Ana García" size="s" />
-      <Avatar label="Ana García" size="m" />
-      <Avatar label="Ana García" size="l" />
+      <Avatar label={label} src={src} size="s" />
+      <Avatar label={label} src={src} size="m" />
+      <Avatar label={label} src={src} size="l" />
     </div>
   ),
 };
@@ -46,14 +47,15 @@ export const BrokenImageFallsBackToInitials: Story = {
 };
 
 export const MemberList: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => {
+  // The story fixes each member's name (no photo) — size applies to every avatar
+  argTypes: { label: { control: false }, src: { control: false } },
+  render: ({ size }) => {
     const members = ['Ana García', 'Pau Torres', 'Marta Conde', 'Jordi Puig'];
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
         {members.map(m => (
           <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
-            <Avatar label={m} size="m" />
+            <Avatar label={m} size={size} />
             <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)' }}>{m}</span>
           </div>
         ))}

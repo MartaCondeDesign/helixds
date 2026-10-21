@@ -16,18 +16,20 @@ export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
 export const AllTypes: Story = {
-  render: () => {
+  // The story fixes each checkbox's label and checked/indeterminate state — the rest applies to all three
+  argTypes: { label: { control: false }, checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false } },
+  render: ({ description, disabled, required, invalid, errorMessage }) => {
     const [checked, setChecked] = useState(false);
+    const shared = { description, disabled, required, invalid, errorMessage };
     return (
       <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
-        <Checkbox label="Default" checked={checked} onChange={setChecked} />
-        <Checkbox label="Checked" checked />
-        <Checkbox label="Indeterminate" indeterminate />
+        <Checkbox {...shared} label="Default" checked={checked} onChange={setChecked} />
+        <Checkbox {...shared} label="Checked" checked />
+        <Checkbox {...shared} label="Indeterminate" indeterminate />
       </div>
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Default (interactive), Checked, and Indeterminate — indeterminate is used in a parent checkbox when only some children are checked.' } },
   },
 };
@@ -49,17 +51,25 @@ export const Invalid: Story = {
 };
 
 export const Disabled: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-      <Checkbox label="Disabled unchecked" disabled />
-      <Checkbox label="Disabled checked"   disabled checked />
-    </div>
-  ),
+  args: { label: 'Disabled' },
+  // The story fixes disabled (on) and checked (off / on) — label, description… apply to both
+  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false } },
+  render: ({ label, description, required, invalid, errorMessage, indeterminate }) => {
+    const shared = { label, description, required, invalid, errorMessage, indeterminate };
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
+        <Checkbox {...shared} disabled />
+        <Checkbox {...shared} disabled checked />
+      </div>
+    );
+  },
 };
 
 export const Group: Story = {
-  render: () => {
+  args: { label: 'Select all' },
+  // The story drives checked/indeterminate itself (parent follows its children)
+  argTypes: { checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false } },
+  render: ({ label, disabled }) => {
     const options = ['Design tokens', 'Component library', 'Pattern docs', 'Storybook setup'];
     const [selected, setSelected] = useState<string[]>(['Design tokens', 'Component library']);
 
@@ -76,7 +86,8 @@ export const Group: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-25)' }}>
         <Checkbox
-          label="Select all"
+          label={label}
+          disabled={disabled}
           checked={allChecked}
           indeterminate={someChecked}
           onChange={toggleAll}
@@ -85,14 +96,13 @@ export const Group: Story = {
             directly under "Select all"'s label text, not just under its checkbox square. */}
         <div style={{ paddingLeft: 'var(--helix-primitive-spacing-150)', display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-25)' }}>
           {options.map(opt => (
-            <Checkbox key={opt} label={opt} checked={selected.includes(opt)} onChange={() => toggle(opt)} />
+            <Checkbox key={opt} label={opt} disabled={disabled} checked={selected.includes(opt)} onChange={() => toggle(opt)} />
           ))}
         </div>
       </div>
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Parent–child checkbox group with indeterminate state on the parent.' } },
   },
 };

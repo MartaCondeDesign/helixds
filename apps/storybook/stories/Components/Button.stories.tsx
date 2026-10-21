@@ -12,7 +12,9 @@ import {
   IconDeviceFloppy,
 } from '@tabler/icons-react';
 import { Button, ButtonDoc } from '@helixds/react';
+import type { ButtonProps } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+import { mapped } from '../_shared/mapped-arg';
 
 const meta: Meta<typeof Button> = {
   title:     'Components/Button',
@@ -73,16 +75,17 @@ export default meta;
 type Story = StoryObj<typeof Button>;
 
 export const AllVariants: Story = {
-  render: () => (
+  // The story fixes variant and each button's label — size, icons, isLoading… apply to all four
+  argTypes: { variant: { control: false }, children: { control: false } },
+  render: ({ variant: _variant, children: _children, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary">Primary</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="danger">Danger</Button>
+      <Button {...args} variant="primary">Primary</Button>
+      <Button {...args} variant="secondary">Secondary</Button>
+      <Button {...args} variant="ghost">Ghost</Button>
+      <Button {...args} variant="danger">Danger</Button>
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: {
       description: { story: 'The four variants, size m (default), side by side.' },
     },
@@ -90,16 +93,18 @@ export const AllVariants: Story = {
 };
 
 export const Loading: Story = {
-  render: () => (
+  args: { children: 'Saving…' },
+  // The story fixes isLoading (on) and variant (one of each) — label, size, icons apply to all four
+  argTypes: { variant: { control: false }, isLoading: { control: false } },
+  render: ({ variant: _variant, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary" isLoading>Saving…</Button>
-      <Button variant="secondary" isLoading>Saving…</Button>
-      <Button variant="ghost" isLoading>Saving…</Button>
-      <Button variant="danger" isLoading>Saving…</Button>
+      <Button {...args} variant="primary" isLoading />
+      <Button {...args} variant="secondary" isLoading />
+      <Button {...args} variant="ghost" isLoading />
+      <Button {...args} variant="danger" isLoading />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: '`isLoading` shows a spinner and sets `aria-busy="true"` — each variant keeps its own color, it never grays out.',
@@ -109,16 +114,18 @@ export const Loading: Story = {
 };
 
 export const Disabled: Story = {
-  render: () => (
+  args: { children: 'Not available' },
+  // The story fixes disabled (on) and variant (one of each) — label, size, icons apply to all four
+  argTypes: { variant: { control: false }, disabled: { control: false } },
+  render: ({ variant: _variant, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary" disabled>Not available</Button>
-      <Button variant="secondary" disabled>Not available</Button>
-      <Button variant="ghost" disabled>Not available</Button>
-      <Button variant="danger" disabled>Not available</Button>
+      <Button {...args} variant="primary" disabled />
+      <Button {...args} variant="secondary" disabled />
+      <Button {...args} variant="ghost" disabled />
+      <Button {...args} variant="danger" disabled />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: {
       description: { story: 'A solid gray disabled state via dedicated disabled tokens — not opacity.' },
     },
@@ -126,39 +133,44 @@ export const Disabled: Story = {
 };
 
 export const WithLeadingIcon: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  args: { children: 'New item', icon: mapped('IconPlus') },
+  // The story fixes variant (one of each) — label, icon, size… apply to all four
+  argTypes: { variant: { control: false } },
+  render: ({ variant: _variant, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary" icon={IconPlus}>New item</Button>
-      <Button variant="secondary" icon={IconPlus}>New item</Button>
-      <Button variant="ghost" icon={IconPlus}>New item</Button>
-      <Button variant="danger" icon={IconPlus}>New item</Button>
+      <Button {...args} variant="primary" />
+      <Button {...args} variant="secondary" />
+      <Button {...args} variant="ghost" />
+      <Button {...args} variant="danger" />
     </div>
   ),
 };
 
 export const WithTrailingIcon: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  args: { children: 'Continue', iconEnd: mapped('IconArrowRight') },
+  // The story fixes variant (one of each) — label, iconEnd, size… apply to all four
+  argTypes: { variant: { control: false } },
+  render: ({ variant: _variant, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button variant="primary" iconEnd={IconArrowRight}>Continue</Button>
-      <Button variant="secondary" iconEnd={IconArrowRight}>Continue</Button>
-      <Button variant="ghost" iconEnd={IconArrowRight}>Continue</Button>
-      <Button variant="danger" iconEnd={IconArrowRight}>Continue</Button>
+      <Button {...args} variant="primary" />
+      <Button {...args} variant="secondary" />
+      <Button {...args} variant="ghost" />
+      <Button {...args} variant="danger" />
     </div>
   ),
 };
 
 export const Sizes: Story = {
-  render: () => (
+  // The story fixes size and each button's label — variant, icons, isLoading… apply to all three
+  argTypes: { size: { control: false }, children: { control: false } },
+  render: ({ size: _size, children: _children, ...args }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap' }}>
-      <Button size="s">Small</Button>
-      <Button size="m">Medium (default)</Button>
-      <Button size="l">Large</Button>
+      <Button {...args} size="s">Small</Button>
+      <Button {...args} size="m">Medium (default)</Button>
+      <Button {...args} size="l">Large</Button>
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'All size variants. Default is `m`.' } },
   },
 };
@@ -174,7 +186,9 @@ export const FullWidth: Story = {
   ],
 };
 
-function CopyButton() {
+type SwapProps = { size: ButtonProps['size'] };
+
+function CopyButton({ size }: SwapProps) {
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -182,13 +196,13 @@ function CopyButton() {
     return () => window.clearTimeout(timer);
   }, [copied]);
   return (
-    <Button variant="secondary" icon={copied ? IconCheck : IconCopy} onClick={() => setCopied(true)}>
+    <Button size={size} variant="secondary" icon={copied ? IconCheck : IconCopy} onClick={() => setCopied(true)}>
       {copied ? 'Copied' : 'Copy link'}
     </Button>
   );
 }
 
-function SaveButton() {
+function SaveButton({ size }: SwapProps) {
   const [saving, setSaving] = useState(false);
   useEffect(() => {
     if (!saving) return;
@@ -196,17 +210,24 @@ function SaveButton() {
     return () => window.clearTimeout(timer);
   }, [saving]);
   return (
-    <Button icon={IconDeviceFloppy} isLoading={saving} onClick={() => setSaving(true)}>
+    <Button size={size} icon={IconDeviceFloppy} isLoading={saving} onClick={() => setSaving(true)}>
       {saving ? 'Saving' : 'Save'}
     </Button>
   );
 }
 
 export const SwapInPlace: Story = {
-  render: () => (
+  // Each button drives its own label, icon, variant and isLoading — size applies to both. disabled stays
+  // off: the play test clicks "Copy link", and a disabled button can't swap.
+  argTypes: {
+    variant: { control: false }, children: { control: false }, icon: { control: false },
+    iconEnd: { control: false }, isLoading: { control: false }, fullWidth: { control: false },
+    disabled: { control: false },
+  },
+  render: ({ size }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-      <CopyButton />
-      <SaveButton />
+      <CopyButton size={size} />
+      <SaveButton size={size} />
     </div>
   ),
   play: async ({ canvasElement }) => {
@@ -217,7 +238,6 @@ export const SwapInPlace: Story = {
     await waitFor(() => expect(canvasElement.querySelector('[data-swapping]')).toBeNull());
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: 'Content that changes in place swaps instead of cutting: the icon cross-fades (copy → check, save → spinner) and the label cross-blurs while the button eases to its new width. Click either button. Under reduced motion the swap is instant.',
