@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma list-count: FAB actions 2–7 (expanded=true, 29 variants) and Menu options 2–7 (flat Default-story list × multiple, 12 variants); Propstar tables regenerated, figma-props snapshot and figma-map ✓ (latest commit)
+- 2026-10-21 — FAB and Menu audited after list-count (Phase 6 pass, 0 issues) and recorded in figma-sync.json at bc0e404 (latest commit)
+- 2026-10-21 — Figma list-count: FAB actions 2–7 (expanded=true, 29 variants) and Menu options 2–7 (flat Default-story list × multiple, 12 variants); Propstar tables regenerated, figma-props snapshot and figma-map ✓ ([`bc0e404`](https://github.com/MartaCondeDesign/helixds/commit/bc0e404))
 - 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))
 - 2026-10-21 — list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop ([`6997dc5`](https://github.com/MartaCondeDesign/helixds/commit/6997dc5))
 - 2026-10-21 — Figma conversion v1.8: list-count rule — a list of drawn items (options, actions, avatars, items) is a VARIANT of how many (1–7, per-contract range in figma.listCount); prop-map and the conversion doc say so ([`36a5374`](https://github.com/MartaCondeDesign/helixds/commit/36a5374))
