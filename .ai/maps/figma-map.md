@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 211 of 218 code props match Figma exactly.**
+**Parity today: 215 of 218 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
