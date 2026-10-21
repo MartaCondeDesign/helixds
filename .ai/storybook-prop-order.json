@@ -44,10 +44,10 @@
     ],
     "Chart": [
       "variant",
-      "label",
-      "description",
       "categories",
       "series",
+      "label",
+      "description",
       "height"
     ],
     "Checkbox": [

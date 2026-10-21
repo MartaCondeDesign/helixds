@@ -291,21 +291,40 @@
           ]
         },
         {
+          "name": "categories",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        },
+        {
+          "name": "series",
+          "type": "VARIANT",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover"
-          ]
-        },
-        {
-          "name": "placement.",
-          "type": "VARIANT",
-          "values": [
-            "right",
-            "top",
-            "bottom",
-            "left"
           ]
         }
       ]
@@ -335,6 +354,39 @@
             "hover",
             "press",
             "focus"
+          ]
+        }
+      ]
+    },
+    "ChartTooltip": {
+      "nodeId": "711:2994",
+      "type": "COMPONENT_SET",
+      "page": "Chart 🚫",
+      "properties": [
+        {
+          "name": "line.",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "placement.",
+          "type": "VARIANT",
+          "values": [
+            "top",
+            "right",
+            "bottom",
+            "left"
+          ]
+        },
+        {
+          "name": "series",
+          "type": "VARIANT",
+          "values": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6"
           ]
         }
       ]

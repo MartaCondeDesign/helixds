@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 223 of 225 code props match Figma exactly.**
+**Parity today: 225 of 225 code props match Figma exactly.**
 **Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
@@ -247,8 +247,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code · `union` | ✓ |
-| `categories` | `string[]` | `VARIANT` `categories` = `2` / `3` / `4` / `5` / `6` / `7` / `8` / `9` / `10` / `11` / `12` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
-| `series` | `ChartSeries[]` | `VARIANT` `series` = `1` / `2` / `3` / `4` / `5` / `6` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `categories` | `string[]` | `VARIANT` `categories` = `2` / `3` / `4` / `5` / `6` / `7` / `8` / `9` / `10` / `11` / `12` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
+| `series` | `ChartSeries[]` | `VARIANT` `series` = `1` / `2` / `3` / `4` / `5` / `6` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `label` | `string` | — no Figma property | exception, approved 2026-10-21 — the chart's accessible name — aria-label of the canvas and the caption of the hidden data table, never drawn; the visible legend texts are each series' name (series → ChartLegendItem label) | — |
 | `description` | `string \| undefined` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
 | `height` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
@@ -256,11 +256,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `categories`, `series` — Storybook variant, label, description, categories, series, height (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Storybook props:** ✓ the same props as the contract
-
-**Only in Figma (approved):** `placement.` (VARIANT: right / top / bottom / left) — where the hover box sits from the pointer line (top / right / bottom / left) — ECharts places it next to the cursor, Figma needs a fixed choice (approved 2026-10-21)
 
 **Figma-only `state`:** `default` / `hover`
 
