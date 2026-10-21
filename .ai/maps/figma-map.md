@@ -5,12 +5,12 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 223 of 223 code props match Figma exactly.**
+**Parity today: 223 of 225 code props match Figma exactly.**
 **Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.15.0 (owner-approved 2026-10-21; explained with the
+From `contracts/figma-conversion.json` v1.16.0 (owner-approved 2026-10-21; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -22,7 +22,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `overlay-expanded` | expanded on an overlay (overlays) | — | closed = not on screen; Figma draws it open |
 | `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name}. (only when optional)` + `INSTANCE_SWAP {name}` | shows the icon (helper.) · which icon |
 | `list-delegated` | a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count | — | the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21) |
-| `list-count` | a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array | `VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) |
+| `list-count` | a list of items the component draws one after another — any array-typed prop (options, avatars, actions, items, categories, series…) except listCount.exclude (selected values) | `VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) |
 | `union` | a union of string or number literals | `VARIANT {name} = the same values` | same values as code |
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
 | `look-boolean` | any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer) | `VARIANT {name} = false / true` | changes the look → false/true toggle |
@@ -247,8 +247,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code · `union` | ✓ |
-| `categories` | `string[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
-| `series` | `ChartSeries[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `categories` | `string[]` | `VARIANT` `categories` = `2` / `3` / `4` / `5` / `6` / `7` / `8` / `9` / `10` / `11` / `12` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `series` | `ChartSeries[]` | `VARIANT` `series` = `1` / `2` / `3` / `4` / `5` / `6` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
 | `label` | `string` | — no Figma property | exception, approved 2026-10-21 — the chart's accessible name — aria-label of the canvas and the caption of the hidden data table, never drawn; the visible legend texts are each series' name (series → ChartLegendItem label) | — |
 | `description` | `string \| undefined` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
 | `height` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
@@ -256,7 +256,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✓ Figma variants first, then the rest
+**Storybook order:** ✗ variant props after the rest: `categories`, `series` — Storybook variant, label, description, categories, series, height (reorder the story file's meta.args: Figma variants first)
 
 **Storybook props:** ✓ the same props as the contract
 

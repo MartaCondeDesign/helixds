@@ -26,6 +26,7 @@
   "props": [{ "name": "variant", "type": "'line' | 'area' | 'bar' | 'stacked-bar' | 'donut' | 'timeline'", "required": true, "description": "Metric relationship to visualize." }, { "name": "categories", "type": "string[]", "required": true, "description": "Ordered labels." }, { "name": "series", "type": "ChartSeries[]", "required": true, "description": "Named numeric series." }, { "name": "label", "type": "string", "required": true, "description": "Accessible chart name." }, { "name": "description", "type": "string | undefined", "description": "Optional accessible takeaway." }, { "name": "height", "type": "number | undefined", "description": "Chart drawing height." },
   { "name": "className", "type": "string | undefined", "description": "Additional className for the root element." }],
   "figma": {
+    "listCount": { "categories": { "min": 2, "max": 12 }, "series": { "min": 1, "max": 6 } },
     "propertyMap": {
       "label": { "codeType": "string", "figma": [], "approved": "2026-10-21", "reason": "the chart's accessible name — aria-label of the canvas and the caption of the hidden data table, never drawn; the visible legend texts are each series' name (series → ChartLegendItem label)" }
     },

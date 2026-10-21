@@ -563,10 +563,28 @@
       },
       "categories": {
         "description": "Ordered labels.",
-        "figma": null,
+        "figma": [
+          {
+            "name": "categories",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12"
+            ]
+          }
+        ],
         "codeOnly": false,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property",
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
         "inChild": [
           {
             "component": "ChartLegendItem",
@@ -583,10 +601,23 @@
       },
       "series": {
         "description": "Named numeric series.",
-        "figma": null,
+        "figma": [
+          {
+            "name": "series",
+            "type": "VARIANT",
+            "values": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          }
+        ],
         "codeOnly": false,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property",
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
         "inChild": [
           {
             "component": "ChartLegendItem",

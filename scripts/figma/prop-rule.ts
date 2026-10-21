@@ -45,6 +45,11 @@ export function patternOf(component: string) { return STANDARD.patterns.find(p =
 
 /** No rule matched: the standard has to learn this kind of prop (the owner extends figma-conversion.json). */
 export const UNMATCHED = 'unmatched';
+/** list-count applies by type: an array prop that isn't a handler or a selected-values prop (listCount.exclude). */
+export function isList(name: string, type: string) {
+  const lc = (STANDARD as any).listCount as { exclude?: string[] } | undefined;
+  return !!lc && /\[\]|Array</.test(type) && !/^on[A-Z]/.test(name) && !(lc.exclude ?? []).includes(name);
+}
 /** Suffix of a Figma-only helper property — the extra toggle Figma needs next to the property named like the code prop (errorMessage. before errorMessage). */
 export const HELPER: string = (STANDARD as any).naming?.helperSuffix ?? '.';
 
@@ -55,8 +60,8 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
     list.map((e, i) => ({ ...e, rule, why: why?.[i] ?? WHY[rule] }));
   const sk = STANDARD.skip;
   // list-count: a list of drawn items → VARIANT {name} = 1 … N (checked before skip, which drops other arrays as data)
-  const lc = (STANDARD as any).listCount as { props: string[]; min: number; max: number } | undefined;
-  if (lc && has(lc.props, name) && /\[\]|Array</.test(type)) {
+  const lc = (STANDARD as any).listCount as { exclude?: string[]; min: number; max: number } | undefined;
+  if (lc && isList(name, type)) {
     if (delegateOf(name)) return []; // list-delegated: the nested component owns the count (whyNone says which)
     const r = currentListCount[name] ?? {}; const min = r.min ?? lc.min, max = r.max ?? lc.max;
     return out('list-count', [{ name, type: 'VARIANT', values: Array.from({ length: max - min + 1 }, (_, i) => String(min + i)) }]);
@@ -94,8 +99,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
 export function whyNone(prop: Prop): string {
   const name = prop.name, type = (prop.type ?? '').replace(/\s+/g, ' ').trim();
   const sk = STANDARD.skip as typeof STANDARD.skip & { why?: Record<string, string> };
-  const lc = (STANDARD as any).listCount as { props: string[] } | undefined;
-  const to = lc && has(lc.props, name) ? delegateOf(name) : undefined;
+  const to = isList(name, (prop.type ?? '')) ? delegateOf(name) : undefined;
   if (to) return `drawn by the nested ${to}: this component holds an exposed ${to} instance and the designer picks how many items on it — the count is ${to}'s property, not this one's (owner's rule 2026-10-21) · \`list-delegated\``;
   const own = sk.why?.[name] ?? (name.startsWith('aria-') ? sk.why?.['aria-*'] : undefined);
   if (own) return `${own} · \`skip\``;

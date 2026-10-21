@@ -135,7 +135,7 @@ function variantValues(propName: string, codeType: string): string {
     .join(', ');
 }
 
-import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone, delegateOf } from './figma/prop-rule.ts';
+import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone, delegateOf, isList } from './figma/prop-rule.ts';
 
 type FigmaProp = { name: string; type: string; values?: string[] };
 const snapshotPath = path.join(root, '.ai/figma-props.json');
@@ -211,7 +211,7 @@ function run() {
   // Machine-readable twin (.ai/maps/figma-map.json): per component, per code prop, the Figma property it becomes —
   // or codeOnly + why. Storybook shows it on every prop (preview.tsx argTypesEnhancers).
   // a list prop handed to a nested Helix component (list-delegated) lives on that child in Figma
-  const childOf = (name: string) => ((STANDARD as any).listCount?.props ?? []).includes(name) ? delegateOf(name) : undefined;
+  const childOf = (name: string, type = '') => isList(name, type) ? delegateOf(name) : undefined;
   type Child = { component: string; property: string | null; note?: string; figma?: Conv['figma'] };
   type Conv = { description?: string; inChild?: Child | Child[]; figma: { name: string; type: string; values?: string[] }[] | null; codeOnly: boolean; rule: string; why: string };
   const jsonMap: Record<string, Record<string, Conv>> = {};
@@ -236,11 +236,11 @@ function run() {
       const conv = (jsonMap[contract.name] ??= {});
       if (!list.length) {
         const why = exception ? `${exception.reason ?? ''} (approved ${exception.approved})` : whyNone(prop);
-        const child = !exception ? childOf(prop.name) : undefined;
+        const child = !exception ? childOf(prop.name, prop.type ?? '') : undefined;
         if (child) conv[prop.name] = { description: prop.description, figma: null, codeOnly: false, inChild: { component: child, property: prop.name }, rule: 'list-delegated', why: plain(why) };
         else conv[prop.name] = { description: prop.description, figma: null, codeOnly: true, rule: exception ? 'exception' : (whyNone(prop).match(/`([^`]+)`$/)?.[1] ?? 'skip'), why: plain(why) };
       } else conv[prop.name] = { description: prop.description, figma: list.map(e => ({ name: e.name, type: e.type, ...(e.values ? { values: e.values } : {}) })), codeOnly: false, rule: exception ? 'exception' : list[0].rule ?? '', why: list.map(e => plain(e.why)).filter((w, i, a) => a.indexOf(w) === i).join(' · ') };
-      if (!list.length) rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | ${!exception && childOf(prop.name) ? `— on the child \`${childOf(prop.name)}\` › \`${prop.name}\`` : '— no Figma property'} | ${exception ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : whyNone(prop)} | — |`);
+      if (!list.length) rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | ${!exception && childOf(prop.name, prop.type ?? '') ? `— on the child \`${childOf(prop.name, prop.type ?? '')}\` › \`${prop.name}\`` : '— no Figma property'} | ${exception ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : whyNone(prop)} | — |`);
       for (const e of list) {
         const status = compare(e, figma);
         total++; if (status === '✓') ok++;

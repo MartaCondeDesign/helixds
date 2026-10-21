@@ -12,10 +12,11 @@ const meta: Meta<typeof Chart> = {
   parameters: createComponentDocsParameters(ChartDoc),
   args: {
     variant: 'line',
-    label: 'Monthly active users',
-    description: 'Active users grew steadily through the first half of the year.',
+    // categories and series are Figma variants too (how many points / slices, how many series) — so they lead
     categories: months,
     series: [{ name: 'Active users', data: [1200, 1350, 1310, 1580, 1720, 1900] }],
+    label: 'Monthly active users',
+    description: 'Active users grew steadily through the first half of the year.',
     height: 280,
   },
   argTypes: {
