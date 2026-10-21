@@ -6,8 +6,11 @@
     "focus",
     "open"
   ],
+  "delegates": {
+    "options": "Menu"
+  },
   "colors": {
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -53,7 +56,7 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -99,7 +102,7 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -145,7 +148,7 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=open": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -191,7 +194,7 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=default": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=default": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -237,7 +240,145 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=default": {
       "light": {
         "(root)": {},
         "select-trigger": {
@@ -271,7 +412,245 @@
         }
       }
     },
-    "value=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false, state=default": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -317,7 +696,121 @@
         }
       }
     },
-    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+    "value.=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#94a3b8"
+        },
+        "select-required": {
+          "fill": "#94a3b8"
+        },
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#475569"
+        },
+        "select-required": {
+          "fill": "#475569"
+        },
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -363,7 +856,7 @@
         }
       }
     },
-    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -409,7 +902,7 @@
         }
       }
     },
-    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -455,7 +948,7 @@
         }
       }
     },
-    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=open": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -501,7 +994,463 @@
         }
       }
     },
-    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#64748b"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {},
         "select-label": {
@@ -546,10 +1495,1404 @@
           "fill": "#94a3b8"
         }
       }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#94a3b8"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#475569"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#3b82f6"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#60a5fa"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#94a3b8"
+        },
+        "select-required": {
+          "fill": "#94a3b8"
+        },
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#475569"
+        },
+        "select-required": {
+          "fill": "#475569"
+        },
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#94a3b8"
+        },
+        "select-required": {
+          "fill": "#94a3b8"
+        },
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#475569"
+        },
+        "select-required": {
+          "fill": "#475569"
+        },
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "select-trigger-label": {
+          "fill": "#94a3b8"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-description": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "select-trigger-label": {
+          "fill": "#475569"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-description": {
+          "fill": "#475569"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#0f172a"
+        },
+        "select-required": {
+          "fill": "#b91c1c"
+        },
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-required": {
+          "fill": "#fecdd3"
+        },
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=false, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=hover": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=focus": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=true, state=open": {
+      "light": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#ffffff",
+          "stroke": "#dc2626"
+        },
+        "select-trigger-label": {
+          "fill": "#0f172a"
+        },
+        "select-chevron": {
+          "fill": "#475569"
+        },
+        "select-error": {
+          "fill": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {},
+        "select-trigger": {
+          "fill": "#0f172a",
+          "stroke": "#f87171"
+        },
+        "select-trigger-label": {
+          "fill": "#f1f5f9"
+        },
+        "select-chevron": {
+          "fill": "#94a3b8"
+        },
+        "select-error": {
+          "fill": "#fecdd3"
+        }
+      }
     }
   },
   "layout": {
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -662,7 +3005,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=false, fullWidth=true": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -775,7 +3118,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "value=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=false": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -888,7 +3231,7 @@
         "textStyle": "body-s-regular"
       }
     },
-    "value=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false": {
+    "value.=empty, invalid=false, disabled=false, hideLabel=true, fullWidth=true": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1001,7 +3344,459 @@
         "textStyle": "body-s-regular"
       }
     },
-    "value=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false": {
+    "value.=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=false, disabled=true, hideLabel=true, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=false": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1114,7 +3909,346 @@
         "textStyle": "body-s-regular"
       }
     },
-    "value=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
+    "value.=empty, invalid=true, disabled=false, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=empty, invalid=true, disabled=false, hideLabel=true, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=false": {
       "(root)": {
         "itemSpacing": {
           "value": 8,
@@ -1207,6 +4341,1249 @@
         "fontSize": {
           "value": 12,
           "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=false, hideLabel=true, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=false, disabled=true, hideLabel=true, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-description": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.descriptionFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=false, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=false": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
+          "figma": "body-s-regular"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "semantic.textStyle.body-s-regular.lineHeight",
+          "figma": "body-s-regular"
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-s-regular"
+      }
+    },
+    "value.=selected, invalid=true, disabled=false, hideLabel=true, fullWidth=true": {
+      "(root)": {
+        "itemSpacing": {
+          "value": 8,
+          "token": "component.select.gap",
+          "figma": "semantic.spacing.component-s"
+        }
+      },
+      "select-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-required": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.labelFontSize",
+          "figma": "body-m-medium"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "semantic.textStyle.body-m-medium.lineHeight",
+          "figma": "body-m-medium"
+        },
+        "fontWeight": {
+          "value": 500,
+          "token": "component.select.text.labelFontWeight",
+          "figma": "body-m-medium"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "semantic.textStyle.body-m-medium.fontFamily",
+          "figma": "body-m-medium"
+        },
+        "textStyle": "body-m-medium"
+      },
+      "select-trigger-label": {
+        "fontSize": {
+          "value": 14,
+          "token": "component.select.text.valueFontSize",
+          "figma": "body-m-regular"
+        },
+        "lineHeight": {
+          "value": 21,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 400,
+          "token": null,
+          "figma": null
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "body-m-regular"
+      },
+      "select-chevron": {
+        "width": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 16,
+          "token": null,
+          "figma": null
+        }
+      },
+      "select-error": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.select.text.errorFontSize",
           "figma": "body-s-regular"
         },
         "lineHeight": {

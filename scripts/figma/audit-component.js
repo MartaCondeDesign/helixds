@@ -131,7 +131,9 @@ for (const variant of VARIANTS) {
     // code is border-box: the border takes space (1 border + padding = the distance to the content). An
     // auto-layout frame whose stroke sits outside the layout is 2px narrower and its content 1px closer to
     // the edge than in code — Badge, Input and Textarea had exactly this.
-    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false && !(EXPECTED.borderOutsideLayout && n === variant))
+    // EXPECTED.borderOutsideLayout: true = the root, a string = the layer of that name (owner-approved, expected-styles.ts)
+    const outsideOk = EXPECTED.borderOutsideLayout === true ? n === variant : n.name === EXPECTED.borderOutsideLayout;
+    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false && !outsideOk)
       issues.border.push(`${where(variant, n)}: border not included in the auto layout — set strokesIncludedInLayout = true (CSS border-box)`);
     if ('children' in n && n.type !== 'INSTANCE') n.children.forEach(visit);
   };
@@ -256,7 +258,8 @@ if (EXPECTED.layout) {
           const got = await figmaValue(node, prop);
           // borderOutsideLayout (see expected-styles.ts): Figma's root padding counts from the outer edge, code's
           // from inside the border — compare against code + border, within the 1px a token can't split.
-          const outer = EXPECTED.borderOutsideLayout && layer === '(root)' && /^padding/.test(prop) && typeof want.value === 'number';
+          const outerLayer = EXPECTED.borderOutsideLayout === true ? '(root)' : EXPECTED.borderOutsideLayout;
+          const outer = !!outerLayer && layer === outerLayer && /^padding/.test(prop) && typeof want.value === 'number';
           const ok = outer ? typeof got === 'number' && Math.abs(got - (want.value + (typeof node.strokeWeight === 'number' ? node.strokeWeight : 1))) <= 1
             : typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
           if (!ok) issues.layout.push(`${variant.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${want.value}${want.token ? ` (${want.token})` : ''}`);

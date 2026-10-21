@@ -8,10 +8,10 @@
 - text: Checked
 
 # Disabled
-- radio "Disabled unchecked" [disabled]
-- text: Disabled unchecked
-- radio "Disabled checked" [checked] [disabled]
-- text: Disabled checked
+- radio "Disabled" [disabled]
+- text: Disabled
+- radio "Disabled" [checked] [disabled]
+- text: Disabled
 
 # Group
 - radio "Free" [checked]

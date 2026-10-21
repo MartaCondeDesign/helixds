@@ -248,7 +248,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
-### Chart (`v1.2.0`, beta)
+### Chart (`v1.2.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -460,7 +460,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
-### Icon (`v1.0.0`, beta)
+### Icon (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -1093,7 +1093,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
-### Tooltip (`v0.1.0`, beta)
+### Tooltip (`v0.1.0`, stable)
 
 **Pattern:** `overlay` (.ai/maps/figma-conversion.md)
 

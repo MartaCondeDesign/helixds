@@ -215,18 +215,7 @@ story that builds its own custom header instead of going through `createComponen
 
 ## Illustrations
 
-`Illustrations.stories.tsx` (sidebar: **Assets → Illustrations**, next to Assets → Icons) holds animated explainers for design-system concepts —
-see [ADR-024](../../docs/ADR/ADR-024-illustration-motion.md). Each illustration is a file in
-`stories/Illustrations/` that exports a component built on `<Illustration card={…}>`: an SVG plus a `Card`
-(`reset` / `script` / `still`) run by `runtime.ts`. Rules:
+There are none. The animated explainers (Assets → Illustrations) were removed on 2026-10-21 at the
+owner's request. Their motion tokens stay in `tokens.json` (`component.illustration.motion.*`,
+[ADR-024](../../docs/ADR/ADR-024-illustration-motion.md)) to be reused by the next illustrations.
 
-- **Only the animation in the box** — no title, caption or button inside it, on a `fill.page` background.
-  The story itself still opens with a `StoryHeader`, like every story.
-- **Timing comes from `--helix-illustration-motion-*`** (`component.illustration.motion.*` in `tokens.json`,
-  which aliases `semantic.duration`/`easing` where a value is shared — ADR-024, amended 2026-10-12). Colors are
-  Helix tokens as everywhere else.
-- **Motion animates every effect**, including SVG strokes (`b.draw` / `b.undraw`); it is the single clock.
-- **Never real component names in a "list of components"** — use ghost bars (`.bar`), like the Status
-  Health illustration.
-- `still()` is what reduced motion shows (OS setting or the toolbar's "Motion: reduced"): the finished
-  picture, not a blank box.
