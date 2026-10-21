@@ -40,8 +40,10 @@ const MEMBERS = [
 ];
 
 export const Default: Story = {
-  render: () => (
-    <Table>
+  // Table's only props are its content (fixed by the story) and className
+  argTypes: { children: { control: false } },
+  render: ({ className }) => (
+    <Table className={className}>
       <TableHead>
         <TableRow>
           <TableHeaderCell>Member</TableHeaderCell>
@@ -68,7 +70,6 @@ export const Default: Story = {
     </Table>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Row hover is CSS-only. Cells hold real Helix components (Avatar, Badge, Button), not raw markup.' } },
   },
 };
@@ -115,12 +116,13 @@ function DragRow({ member, index, total, onMove, announce }: { member: DragMembe
 }
 
 export const DragReorder: Story = {
-  render: () => {
+  argTypes: { children: { control: false } },
+  render: ({ className }) => {
     const [members, setMembers] = useState(DRAG_MEMBERS);
     const { announce, region } = useReorderAnnouncer();
     return (
       <>
-        <Table>
+        <Table className={className}>
           <TableHead>
             <TableRow>
               <TableHeaderCell><span style={VISUALLY_HIDDEN}>Reorder</span></TableHeaderCell>
@@ -143,7 +145,6 @@ export const DragReorder: Story = {
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: 'Drag a row by its grip ⋮⋮ — or, without dragging, use its ⋯ menu (Move to top / up / down / to bottom), or the keyboard: Space on the grip picks the row up, ↑/↓ move it, Space drops, Escape cancels (WCAG 2.1.1 and 2.5.7). Focus stays on the moved row and the new position is announced. Not a Table prop — real rows composed with Motion\'s Reorder.Group/Reorder.Item (as="tbody"/as="tr"), see the "dragReorder" entry above and .ai/maps/patterns/motion-effects.md.',
