@@ -145,7 +145,7 @@
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
       { "name": "avatars", "type": "VARIANT", "values": ["1", "2", "3", "4", "5", "6", "7"], "codeProp": "avatars", "description": "How many avatars the group draws — code draws one per entry in avatars." },
-      { "name": "withImage", "type": "VARIANT", "values": ["false", "true"], "description": "false = initials, true = photos, in every item." },
+      { "name": "withImage", "type": "VARIANT", "values": ["false", "true"], "description": "false = initials, true = photos, in every item — a different portrait per avatar (the 6 Pexels samples in apps/storybook/public/avatars, in order: pau, ana, jordi, leo, marta, sara)." },
       { "name": "withOverflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
       { "name": "max", "type": "TEXT", "codeProp": "max", "description": "The +N text — code computes it from avatars and max." }
     ],

@@ -25,7 +25,12 @@ const meta: Meta<typeof Badge> = {
       options: ['xs', 's'],
     },
     label: { control: 'text' },
-    icon:  { control: false },
+    // icon takes the Tabler component itself — the control picks one by name
+    icon: {
+      control: 'select',
+      options: ['none', 'Check', 'AlertTriangle', 'X', 'InfoCircle', 'Clock'],
+      mapping: { none: undefined, Check: IconCheck, AlertTriangle: IconAlertTriangle, X: IconX, InfoCircle: IconInfoCircle, Clock: IconClock },
+    },
   },
 };
 
@@ -33,51 +38,53 @@ export default meta;
 type Story = StoryObj<typeof Badge>;
 
 export const AllVariants: Story = {
-  render: () => (
+  argTypes: { variant: { control: false }, label: { control: false } },
+  render: ({ size, icon }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="neutral" label="Draft" />
-      <Badge variant="info"    label="Scheduled" />
-      <Badge variant="success" label="Active" />
-      <Badge variant="warning" label="Pending" />
-      <Badge variant="danger"  label="Failed" />
+      <Badge size={size} icon={icon} variant="neutral" label="Draft" />
+      <Badge size={size} icon={icon} variant="info" label="Scheduled" />
+      <Badge size={size} icon={icon} variant="success" label="Active" />
+      <Badge size={size} icon={icon} variant="warning" label="Pending" />
+      <Badge size={size} icon={icon} variant="danger" label="Failed" />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: {
-      description: { story: 'All variants. Each must communicate its meaning through the label text, not color alone.' },
+      description: { story: 'All variants — size and icon apply to every badge. Each must communicate its meaning through the label text, not color alone.' },
     },
   },
 };
 
 export const WithIcons: Story = {
-  render: () => (
+  argTypes: { variant: { control: false }, label: { control: false }, icon: { control: false } },
+  render: ({ size }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap', alignItems: 'center' }}>
-      <Badge variant="success" icon={IconCheck}         label="Verified" />
-      <Badge variant="warning" icon={IconAlertTriangle} label="Review" />
-      <Badge variant="danger"  icon={IconX}             label="Rejected" />
-      <Badge variant="info"    icon={IconClock}         label="Queued" />
-      <Badge variant="neutral" icon={IconInfoCircle}    label="Unknown" />
+      <Badge size={size} variant="success" icon={IconCheck}         label="Verified" />
+      <Badge size={size} variant="warning" icon={IconAlertTriangle} label="Review" />
+      <Badge size={size} variant="danger"  icon={IconX}             label="Rejected" />
+      <Badge size={size} variant="info"    icon={IconClock}         label="Queued" />
+      <Badge size={size} variant="neutral" icon={IconInfoCircle}    label="Unknown" />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
-    docs: { description: { story: 'Leading icon at 10px. Icon is `aria-hidden` — label still required.' } },
+    docs: { description: { story: 'Leading icon at 10px — size applies to every badge. Icon is `aria-hidden` — label still required.' } },
   },
 };
 
 export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  args: { variant: 'success', label: 'Active' },
+  argTypes: { size: { control: false } },
+  render: ({ variant, label, icon }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
-      <Badge size="xs" variant="success" label="Active" />
-      <Badge size="s" variant="success" label="Active" />
+      <Badge size="xs" variant={variant} label={label} icon={icon} />
+      <Badge size="s" variant={variant} label={label} icon={icon} />
     </div>
   ),
 };
 
 export const StatusRowPattern: Story = {
-  render: () => {
+  argTypes: { variant: { control: false }, label: { control: false }, icon: { control: false } },
+  render: ({ size }) => {
     const rows = [
       { label: 'Deploy to production', status: 'success' as const, meta: '2m ago' },
       { label: 'Run test suite',        status: 'warning' as const, meta: '5m ago' },
@@ -122,7 +129,7 @@ export const StatusRowPattern: Story = {
             <span style={{ flex: 1, fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)', fontWeight: 'var(--helix-primitive-fontWeight-medium)' }}>
               {row.label}
             </span>
-            <Badge variant={row.status} label={config[row.status].label} />
+            <Badge size={size} variant={row.status} label={config[row.status].label} />
             <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-lightest)', justifySelf: 'end', textAlign: 'right' }}>
               {row.meta}
             </span>
@@ -132,7 +139,6 @@ export const StatusRowPattern: Story = {
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: 'Status row pattern. Badge communicates status in both color and text.',
