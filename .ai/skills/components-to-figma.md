@@ -91,8 +91,9 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    `{ "figma": null, "reason": "…", "approved": "date" }` (behaviour only — a controlled demo — or not drawn on purpose). A keyboard story is
    never `null`: focus is drawn, so it maps to `state=focus` (owner's decision 2026-10-21). Never fill `figma.stories` without the owner's answer: it's a contract edit.
 9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
-   components A→Z after `Icons`, layout components A→Z after the last `-` separator — the same order as
-   Storybook's sidebar (root `CLAUDE.md` rule 11). On the page, the doc frame holding the title, description
+   components A→Z after `Icons` — the same order as Storybook's sidebar (root `CLAUDE.md` rule 11). **Storybook's
+   Layout components and Pages are not built in Figma for now** (rule 11b, owner decision 2026-10-21): don't
+   create, rebuild or audit AppShell, PageHeader, SideNav, TopBar or any page story there. On the page, the doc frame holding the title, description
    and `❖` table has **no fill** (transparent, never white) and is at least as wide as its widest text, so the
    description is never clipped.
 
@@ -692,6 +693,20 @@ column headers with brackets, dashed `#9747FF` cells with 24px padding, the real
 the all-booleans-false cells and instances in the rest. Labels are Propstar's purple annotation chrome, not
 design tokens.
 
+### Phase 8 — Update the Figma Community copy (owner)
+
+The file people open from Storybook's **View in Figma** and the README is **not** the file this skill edits.
+`contracts/figma-sync.json` has both: `figmaFileKey` / `figmaFileUrl` is the working file (account
+martacondedesign) that every script, audit and `use_figma` call reads and writes; `figmaCommunityUrl` is a
+**duplicate** published on Figma Community from another account (martacondedieguez). The duplicate is a
+snapshot — nothing updates it, so after every sync it falls behind the working file and the code.
+
+So after a sync is done and merged, the owner brings the changes over to the Community file and publishes an
+update there. An agent can't do it (different account, no access): **end the sync by reminding the owner,
+naming which component pages changed**, and don't report the work as finished until they confirm it. The
+4 layout components (AppShell, PageHeader, SideNav, TopBar) are not in the Community file by the owner's
+choice (rule 11b) — changes to those don't need copying.
+
 ## Output
 
 A single Figma COMPONENT_SET per Helix component, with one COMPONENT per variant×size (and
@@ -714,6 +729,7 @@ After building the component:
 - [ ] No negative `itemSpacing`, no spacer frames, every padding/gap/radius bound to a variable
 - [ ] Every bordered layer has its stroke in every variant, same weight (border-always.md)
 - [ ] The set sits in a Propstar property table (Phase 7)
+- [ ] The owner was told which pages to copy to the Figma Community file and publish (Phase 8)
 
 - [ ] Component name matches code: PascalCase (`Button`, not `button`)
 - [ ] VARIANT property names are lowercase (`variant`, `size`, `disabled`) — match code exactly

@@ -59,7 +59,7 @@ const CRITERIA: Record<CriterionKey, { label: string; description: string }> = {
   motion:   { label: 'Motion',   description: 'Reduced motion — with the OS “reduce motion” setting on, nothing moves: CSS motion is neutralized globally, and any Motion (JS) animation sits inside <MotionConfig reducedMotion="user">.' },
   eval:     { label: 'Eval',     description: 'Eval — an automated test (evals/prompts) checks that an AI agent asked to build something with this component uses it correctly: right props, no anti-synonyms.' },
 };
-const FIGMA = { label: 'Figma', description: 'In Figma and aligned with code. ✓ aligned · ⚠ in Figma but out of date — tokens, CSS, props or anatomy changed in code since the last sync (scripts/figma-drift.ts) · ✗ not in Figma. The one manual step, done on request. Beta + aligned in Figma = stable.' };
+const FIGMA = { label: 'Figma', description: 'In Figma and aligned with code. ✓ aligned · ⚠ in Figma but out of date — tokens, CSS, props or anatomy changed in code since the last sync (scripts/figma-drift.ts) · ✗ not in Figma · – not required (Layout components, not built in Figma for now). The one manual step, done on request. Beta + aligned in Figma = stable.' };
 
 // ── 0. Browser run (criteria 4–6) ────────────────────────────────────────────
 if (!skipBrowser) {
@@ -238,13 +238,16 @@ for (const c of manifest.components) {
 
   const allPass = Object.values(checks).every(ch => ch.pass);
   let figma = figmaCheck(name, c.contract, figmaEntry.get(name));
+  // Owner's decision (2026-10-21): Storybook's Layout components aren't built in Figma for now, so Figma
+  // isn't a criterion for them — all 8 automatic criteria passing makes them stable.
+  if (c.category === 'layout') figma = { state: 'exempt', details: ['Layout component — not built in Figma for now (owner decision 2026-10-21)'] };
   // The automatic audit (pnpm figma:audit, Figma REST): sizes, typography and — when Figma allows it —
   // variable bindings. A difference there means Figma isn't aligned with code, even if the last sync was.
   const restAudit = figmaAudit?.components?.[name];
   const restDiffs = restAudit ? [...restAudit.layout, ...restAudit.textStyle, ...restAudit.variables] : [];
-  if (restDiffs.length && figma.state !== 'missing')
+  if (restDiffs.length && figma.state !== 'missing' && figma.state !== 'exempt')
     figma = { ...figma, state: 'drift', details: [...(figma.state === 'drift' ? figma.details : []), `pnpm figma:audit (${figmaAudit.auditedAt.slice(0, 10)}): ${restDiffs.slice(0, 3).join('; ')}${restDiffs.length > 3 ? ` (+${restDiffs.length - 3} more)` : ''}`] };
-  const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma.state === 'synced' ? 'stable' : 'beta';
+  const status = contract.status === 'deprecated' ? 'deprecated' : !allPass ? 'draft' : figma.state === 'synced' || figma.state === 'exempt' ? 'stable' : 'beta';
   const humanReviews = contract.a11y?.humanReview ?? [];
   const aiFile = path.join(root, '.ai/a11y-visual', `${name}.json`);
   const ai = fs.existsSync(aiFile) ? JSON.parse(fs.readFileSync(aiFile, 'utf-8')) : null;
@@ -252,7 +255,7 @@ for (const c of manifest.components) {
     human: humanReviews.at(-1) ?? null,
     ai: ai && { date: ai.reviewedAt.slice(0, 10), model: ai.model, findings: ai.answers.filter((a: any) => a.pass === false).map((a: any) => `${a.id}: ${a.reason}`) },
   };
-  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma.state !== 'missing', figma, checks, reviews });
+  rows.push({ name, category: c.category, previousStatus: contract.status, status, inFigma: figma.state === 'synced' || figma.state === 'drift', figma, checks, reviews });
 }
 
 // ── Report ───────────────────────────────────────────────────────────────────
@@ -262,7 +265,7 @@ console.log(`\n${'Component'.padEnd(18)}${keys.map((_, i) => String(i + 1).padSt
 for (const r of rows) {
   const marks = keys.map(k => (r.checks[k].pass ? '  ✓' : '  ✗')).join('');
   const change = r.previousStatus !== r.status ? `  (was ${r.previousStatus})` : '';
-  const fig = { synced: '✓', drift: '⚠', missing: '✗' }[r.figma.state];
+  const fig = { synced: '✓', drift: '⚠', missing: '✗', exempt: '–' }[r.figma.state];
   console.log(`${r.name.padEnd(18)}${marks}    ${fig}    ${r.status}${change}`);
 }
 console.log(`\n${keys.map((k, i) => `${i + 1} ${CRITERIA[k].label}`).join(' · ')}`);

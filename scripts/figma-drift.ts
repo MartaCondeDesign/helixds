@@ -24,7 +24,7 @@ import path from 'path';
 import { execSync } from 'child_process';
 import { isAlias, toCss } from '../packages/tokens/src/dtcg.mjs';
 
-export type FigmaState = 'synced' | 'drift' | 'missing';
+export type FigmaState = 'synced' | 'drift' | 'missing' | 'exempt';
 export type FigmaCheck = { state: FigmaState; details: string[]; syncedAt?: string };
 
 const root = path.resolve(__dirname, '..');
