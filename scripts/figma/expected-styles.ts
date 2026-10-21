@@ -577,7 +577,7 @@ async function main() {
   // every size and state (owner's decision 2026-10-21); a loading Button/IconButton is disabled in code → default, enabled only
   const loadingDisables = ((STD.variants?.loadingDisables ?? []) as string[]).includes(name);
   const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}])
-    .filter(v => !(loadingDisables && v.isLoading === 'true' && v.disabled === 'true'));
+    .filter(v => !(loadingDisables && v.isLoading === 'true' && (v.disabled === 'true' || v.invalid === 'true')));
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   const layout: Record<string, unknown> = {};
   const cdp = await page.context().newCDPSession(page);

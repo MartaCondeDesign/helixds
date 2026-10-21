@@ -82,8 +82,8 @@ values instances already had.
   every `size` and in every state the code can reach — `fullWidth` with default / hover / press / focus and
   disabled (owner's decision 2026-10-21; until then each was drawn once, at the default size and state, which left
   `fullWidth` and `isLoading` with no hover, focus or other sizes). The one limit is what code can't show: a loading
-  Button or IconButton is disabled (`disabled={disabled || isLoading}`), so `isLoading=true` is drawn at
-  `state=default`, enabled, only (`variants.loadingDisables`).
+  Button, IconButton or Input is disabled (`disabled={disabled || isLoading}`), so `isLoading=true` is drawn at
+  `state=default`, enabled and valid, only (`variants.loadingDisables`).
 - **Impossible combinations aren't drawn** (Checkbox `checked` + `indeterminate`: code shows indeterminate). The
   contract's `figma.variantCombinations` lists what's left.
 - **Focus ring never clipped:** in a variant that draws the focus ring (`state=focus`, and `state=open` where it
