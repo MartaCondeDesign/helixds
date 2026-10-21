@@ -423,6 +423,18 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "orientation",
           "type": "VARIANT",
           "values": [
@@ -521,6 +533,18 @@
       "type": "COMPONENT_SET",
       "page": "ChipGroup",
       "properties": [
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         {
           "name": "size",
           "type": "VARIANT",
@@ -842,6 +866,18 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "value",
           "type": "VARIANT",
           "values": [
@@ -1054,6 +1090,18 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "orientation",
           "type": "VARIANT",
           "values": [
@@ -1084,6 +1132,18 @@
       "type": "COMPONENT_SET",
       "page": "SegmentedControl",
       "properties": [
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         {
           "name": "disabled",
           "type": "VARIANT",
@@ -1159,6 +1219,18 @@
         {
           "name": "required",
           "type": "BOOLEAN"
+        },
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
         },
         {
           "name": "value",

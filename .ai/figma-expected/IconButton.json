@@ -7,6 +7,90 @@
     "focus"
   ],
   "colors": {
+    "variant=primary, size=s, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#1e40af",
+          "stroke": "#1e40af"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e40af",
+          "stroke": "#1e40af"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
     "variant=primary, size=m, disabled=false, isLoading=false, state=default": {
       "light": {
         "(root)": {
@@ -78,6 +162,174 @@
       }
     },
     "variant=primary, size=m, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1d4ed8",
+          "stroke": "#1d4ed8"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#1e40af",
+          "stroke": "#1e40af"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e40af",
+          "stroke": "#1e40af"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#e2e8f0",
+          "stroke": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#334155",
+          "stroke": "#475569"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#cbd5e1",
+          "stroke": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#475569",
+          "stroke": "#475569"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=true, isLoading=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
@@ -175,6 +427,174 @@
         }
       }
     },
+    "variant=secondary, size=l, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#e2e8f0",
+          "stroke": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#334155",
+          "stroke": "#475569"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#cbd5e1",
+          "stroke": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#475569",
+          "stroke": "#475569"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#e2e8f0"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#334155"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#e2e8f0",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#334155",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
     "variant=ghost, size=m, disabled=false, isLoading=false, state=default": {
       "light": {
         "(root)": {
@@ -246,6 +666,174 @@
       }
     },
     "variant=ghost, size=m, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#e2e8f0",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#334155",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "none",
+          "stroke": "none"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=true, isLoading=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
@@ -342,9 +930,150 @@
           "stroke": "#1e293b"
         }
       }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=true, isLoading=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        }
+      }
     }
   },
   "layout": {
+    "variant=primary, size=s, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=primary, size=s, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
     "variant=primary, size=m, disabled=false, isLoading=false": {
       "(root)": {
         "height": {
@@ -399,6 +1128,120 @@
           "value": 32,
           "token": "component.iconButton.height.m",
           "figma": "semantic.size.m"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=primary, size=l, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=secondary, size=s, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
         }
       }
     },
@@ -459,6 +1302,120 @@
         }
       }
     },
+    "variant=secondary, size=l, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=secondary, size=l, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=ghost, size=s, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
     "variant=ghost, size=m, disabled=false, isLoading=false": {
       "(root)": {
         "height": {
@@ -516,6 +1473,120 @@
         }
       }
     },
+    "variant=ghost, size=l, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=ghost, size=l, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
+    "variant=danger, size=s, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 24,
+          "token": "component.iconButton.height.s",
+          "figma": "semantic.size.s"
+        }
+      }
+    },
     "variant=danger, size=m, disabled=false, isLoading=false": {
       "(root)": {
         "height": {
@@ -570,6 +1641,63 @@
           "value": 32,
           "token": "component.iconButton.height.m",
           "figma": "semantic.size.m"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=false, isLoading=true": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        }
+      }
+    },
+    "variant=danger, size=l, disabled=true, isLoading=false": {
+      "(root)": {
+        "height": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.iconButton.radius",
+          "figma": "semantic.radius.m"
+        },
+        "width": {
+          "value": 40,
+          "token": "component.iconButton.height.l",
+          "figma": "semantic.size.l"
         }
       }
     }

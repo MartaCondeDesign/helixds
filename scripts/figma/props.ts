@@ -64,7 +64,7 @@ for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) 
   const p = path.join(dir, file);
   const text = fs.readFileSync(p, 'utf8');
   const c = JSON.parse(text);
-  setComponent(c.name);
+  setComponent(c.name, c as any);
   const map = c.figma?.propertyMap ?? {};
   const parts = [...(c.anatomy ?? []).map((a: { part: string }) => a.part)];
   const unmatched: Prop[] = [], stale: Prop[] = [];

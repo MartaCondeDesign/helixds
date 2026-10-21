@@ -349,6 +349,6 @@
       }
     },
     "structure": "textarea-root (8px gap) > textarea-label (text + textarea-required),  textarea-wrapper as wide as code default 20 native columns (194px; fullWidth drawn at 480px,  filling its container),  textarea-field 4 rows tall = code default rows,  textarea-counter and the native resize handle anchored bottom-right,  textarea-description,  textarea-error. One size (m). The native resize handle is drawn by the browser (no data-helix-part); its layer is named native resize handle and hides with resize=none.",
-    "variantCombinations": "12 variants (2026-10-20,  one size since the owner removed s and l): invalid × state default/hover/focus = 6,  disabled = 1,  and hideLabel / fullWidth / resize none / horizontal / both once each = 5 (the standard rules). Invalid focus keeps the red border with a 20% red ring."
+    "variantCombinations": "112 variants (2026-10-21,  one size since the owner removed s and l): invalid × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with fullWidth false/true × hideLabel false/true × resize vertical/none/horizontal/both = 7 × 16 = 112 (secondary toggles at every state,  owner's decision 2026-10-21). Invalid focus keeps the red border with a 20% red ring."
   }
 }

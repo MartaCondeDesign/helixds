@@ -7,8 +7,8 @@ import figmaMap from '../../../.ai/maps/figma-map.json';
 type FigmaConv = { figma: { name: string; type: string; values?: string[] }[] | null; codeOnly: boolean; rule: string; why: string };
 const MAP = figmaMap.components as Record<string, Record<string, FigmaConv>>;
 
-const cell: React.CSSProperties = { padding: '10px 15px', borderTop: '1px solid hsla(203, 50%, 30%, 0.15)', verticalAlign: 'top', fontSize: 13, lineHeight: '20px' };
-const code: React.CSSProperties = { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 12, background: 'hsla(203, 50%, 30%, 0.06)', border: '1px solid hsla(203, 50%, 30%, 0.12)', borderRadius: 3, padding: '1px 4px', whiteSpace: 'nowrap' };
+const cell: React.CSSProperties = { padding: 'var(--helix-spacing-s) var(--helix-spacing-m)', borderTop: '1px solid hsla(203, 50%, 30%, 0.15)', verticalAlign: 'top', fontSize: 13, lineHeight: '20px' };
+const code: React.CSSProperties = { fontFamily: 'ui-monospace, Menlo, monospace', fontSize: 12, background: 'hsla(203, 50%, 30%, 0.06)', border: '1px solid hsla(203, 50%, 30%, 0.12)', borderRadius: 3, padding: '0 var(--helix-spacing-2xs)', whiteSpace: 'nowrap' };
 
 /** Every prop of the component, with the Figma property it becomes — or "Code only" and why. */
 function CodeToFigma() {

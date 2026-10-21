@@ -212,7 +212,7 @@ function run() {
   const jsonStories: Record<string, Record<string, StoryConv>> = {};
   for (const file of contractFiles) {
     const contract = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf-8')) as Contract;
-    setComponent(contract.name);
+    setComponent(contract.name, contract as any);
     const parts = extractAnatomyParts(contract.name);
     const figma = snapshot[contract.name]?.properties;
     const rows: string[] = [];
