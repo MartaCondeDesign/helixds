@@ -184,6 +184,13 @@ converts exactly like its siblings.
 | **overlay** | Modal, SidePanel, Menu, Tooltip | drawn open (`expanded` has no property) · `children` TEXT · `*ActionLabel` BOOLEAN + TEXT · `showCloseButton` BOOLEAN · `placement` VARIANT | default |
 | **layout-slot** | AppShell, PageHeader, Card, TopBar, SideNav | slots (`header`, `actions`, `footer`, `sidenav`, `topbar`) BOOLEAN · `title`/`description` TEXT, or BOOLEAN + TEXT when optional | default |
 
+**Form fields share one width** (owner's rule 2026-10-21, `patterns.form-field.width`): Input, Select, MultiSelect,
+Textarea — and any new form field — are **320px** wide in code (`width: 320px; max-width: 100%`) and in Figma (fixed
+320), whatever their label, placeholder or value; content never widens or narrows them. `fullWidth`: 100% of the
+container in code; in Figma drawn at **600px** with the field, description, error and the open menu on Fill /
+Stretch, so stretching an instance stretches them all. A narrower field (a number stepper…) is an exception written
+in its contract's `sizing.width.exceptions`. `pnpm verify:field-sizes` (pre-commit) checks the contracts.
+
 **Shared anatomy in a pattern:** a label row is `{prefix}-label` holding the text plus `{prefix}-required` (the
 `*`, text/danger, 2px = spacing/3xs after the text); then `{prefix}-description` and `{prefix}-error`. That is
 what lets one rule convert `required`, `description` and `errorMessage` the same way in every component.

@@ -703,6 +703,7 @@ collection semantic variable — never a hardcoded hex value.
 
 After building the component:
 
+- [ ] A form field (form-field pattern) is fixed 320px wide in every variant, 600px with fullWidth=true, with its field / description / error on Fill and the open menu on Stretch (`.ai/maps/figma-conversion.md` → Form fields share one width)
 - [ ] Prop order (CLAUDE.md rule 6a): Storybook's `meta.args` lists the Figma variants first, then the rest; Figma's
       properties follow the same order — `pnpm figma:story-order` + `pnpm docs:figma-map` show **Property order** ✓
       and **Storybook order** ✓. Re-check it on every change to a component's props, not only when building it
