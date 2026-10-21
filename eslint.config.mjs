@@ -11,4 +11,11 @@ export default [
     files: ['apps/**/*.{js,jsx,ts,tsx}'],
     languageOptions: { parser: tseslint.parser, parserOptions: { ecmaFeatures: { jsx: true } } },
   },
+  // Helix's own component stories: every one has working Controls (helix/story-has-controls). Claude Code's
+  // lint hook hands a violation back to the agent, which fixes it in the same turn; `pnpm lint:stories` in
+  // pre-commit stops anyone else's.
+  {
+    files: ['apps/storybook/stories/{Components,Layout}/**/*.stories.tsx'],
+    rules: { 'helix/story-has-controls': 'error' },
+  },
 ];

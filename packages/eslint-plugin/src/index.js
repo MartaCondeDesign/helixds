@@ -12,6 +12,7 @@ import noRawSpacing from './rules/no-raw-spacing.js';
 import noRawControl from './rules/no-raw-control.js';
 import importSource from './rules/import-source.js';
 import unknownProp from './rules/unknown-prop.js';
+import storyHasControls from './rules/story-has-controls.js';
 
 const plugin = {
   meta: { name: '@helixds/eslint-plugin', version: '0.1.0' },
@@ -22,6 +23,8 @@ const plugin = {
     'no-raw-color': noRawColor,
     'no-raw-spacing': noRawSpacing,
     'no-raw-control': noRawControl,
+    // Helix's own Storybook only (eslint.config.mjs) — not in `recommended`, apps don't follow its story rules
+    'story-has-controls': storyHasControls,
   },
   configs: {},
 };

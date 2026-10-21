@@ -179,7 +179,8 @@ pnpm test:storybook-tokens  tests behind it (pre-commit too): every var a page c
                             prints equals the CSS (light and dark shadows), every hand-written var() exists, every story
                             renders, a new category shows on its own, and the gate fails on a sabotaged copy
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
-                            raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
+                            raw colors, raw spacing, native controls, component stories without working Controls
+                            (helix/story-has-controls; `pnpm lint:stories` runs it in pre-commit) — also live in the editor via eslint.config.mjs.
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
                             `pnpm --filter @helixds/eslint-plugin build:data` (its tests fail while stale).
                             Claude Code runs it on every file it edits (.claude/settings.json →

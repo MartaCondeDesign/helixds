@@ -25,6 +25,7 @@ With the ESLint extension in VS Code / Cursor, the warnings show up as you type.
 | `helix/no-raw-color` | `'#1d4ed8'`, `` `1px solid #e2e8f0` ``, `bg-blue-600` | suggests the semantic tokens with that exact color, e.g. `var(--helix-color-fill-primary-interactive-hover)` |
 | `helix/no-raw-spacing` | `padding: '16px'`, `marginTop: '2rem'`, `gap: 8` (padding, margin, gap — not sizes) | suggests the spacing tokens with that exact value, t-shirt scale first, e.g. `var(--helix-spacing-m)` |
 | `helix/no-raw-control` | `<button>`, `<input>`, `<select>`, `<textarea>` | points to the Helix component; allowed in files marked `// [CUSTOM] reason: …` |
+| `helix/story-has-controls` | a component story with `controls: { disable: true }` or a `render` that takes no args | Helix's own Storybook only (not in `recommended`); an open overlay keeps them off with `// controls-off: <reason>` |
 
 `prop-vocabulary` only checks components imported from Helix (or a look-alike path), and only when the
 component documents the canonical prop — `onPress` on a `Card`, which has no `onClick`, is left alone.
