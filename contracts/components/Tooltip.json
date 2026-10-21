@@ -128,6 +128,7 @@
   },
 
   "figma": {
+    "triggers": ["IconButton", "Button", "Avatar"],
     "states": ["default"],
     "properties": [
       { "name": "label", "type": "TEXT", "codeProp": "label" },

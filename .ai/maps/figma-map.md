@@ -10,7 +10,7 @@ today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · 
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.13.0 (owner-approved 2026-10-21; explained with the
+From `contracts/figma-conversion.json` v1.14.0 (owner-approved 2026-10-21; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.

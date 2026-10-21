@@ -191,6 +191,11 @@ container in code; in Figma drawn at **600px** with the field, description, erro
 Stretch, so stretching an instance stretches them all. A narrower field (a number stepper…) is an exception written
 in its contract's `sizing.width.exceptions`. `pnpm verify:field-sizes` (pre-commit) checks the contracts.
 
+**Floating elements carry what they accompany** (owner's rule 2026-10-21): a Tooltip, a Popover or any future
+element that floats next to another component draws that component as `children` — an INSTANCE_SWAP whose preferred
+values are every Helix component it can accompany, listed in the contract's `figma.triggers` (Tooltip: IconButton,
+Button, Avatar). The designer picks the one they need in the properties panel instead of detaching.
+
 **Shared anatomy in a pattern:** a label row is `{prefix}-label` holding the text plus `{prefix}-required` (the
 `*`, text/danger, 2px = spacing/3xs after the text); then `{prefix}-description` and `{prefix}-error`. That is
 what lets one rule convert `required`, `description` and `errorMessage` the same way in every component.

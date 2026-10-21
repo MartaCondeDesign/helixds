@@ -99,7 +99,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Code → Figma table in the props table's order (primary story's argTypes, live) — rule in apps/storybook/CLAUDE.md; Toast: its call's arguments (variant, label, description) in figma.callArgs convert like props, Playground first so the docs page shows them — Toast's Figma-only ✗ gone (latest commit)
+- 2026-10-21 — Rule: a floating element (Tooltip, Popover…) draws what it accompanies as children, an INSTANCE_SWAP whose preferred values are the contract's figma.triggers — Tooltip offers IconButton, Button and Avatar in Figma (standard v1.14, conversion doc, Figma checklist) (latest commit)
+- 2026-10-21 — Code → Figma table in the props table's order (primary story's argTypes, live) — rule in apps/storybook/CLAUDE.md; Toast: its call's arguments (variant, label, description) in figma.callArgs convert like props, Playground first so the docs page shows them — Toast's Figma-only ✗ gone ([`332b345`](https://github.com/MartaCondeDesign/helixds/commit/332b345))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' of https://github.com/MartaCondeDesign/helixds into claude/affectionate-swartz-794ede ([`5fc7ffb`](https://github.com/MartaCondeDesign/helixds/commit/5fc7ffb))
 - 2026-10-21 — Figma: Input, Textarea, Select and MultiSelect fixed 320px (600px with fullWidth), field/description/error on Fill and the open menu stretching with the field; Propstar tables regenerated; form-width rule in the conversion doc and the Figma checklist ([`e76e6be`](https://github.com/MartaCondeDesign/helixds/commit/e76e6be))
 - 2026-10-21 — Update CHANGELOG.md for #19 ([`081ddf3`](https://github.com/MartaCondeDesign/helixds/commit/081ddf3))

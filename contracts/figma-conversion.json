@@ -1,6 +1,6 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "approved": "2026-10-21",
 
   "naming": {
@@ -101,6 +101,7 @@
     {
       "id": "overlay",
       "components": ["Modal", "SidePanel", "Menu", "Tooltip"],
+      "trigger": "A floating element that accompanies another component — Tooltip, Popover, and any future one — draws the element it wraps as its children: an INSTANCE_SWAP named children whose preferred values are every Helix component it can accompany, listed in the contract's figma.triggers (Tooltip: IconButton, Button, Avatar), so the designer swaps it in the panel (owner's rule 2026-10-21).",
       "props": { "expanded": "— (drawn open)", "children": "TEXT (Modal, SidePanel)", "*ActionLabel": "BOOLEAN {name}. + TEXT {name}", "showCloseButton": "BOOLEAN", "placement": "VARIANT" },
       "states": ["default"]
     },
