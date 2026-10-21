@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import { IconLayoutDashboard, IconUsers, IconSettings, IconSearch, IconBell, IconBolt } from '@tabler/icons-react';
 import {
   AppShell, AppShellDoc, SideNav, TopBar, NavItem, Avatar, Input, IconButton, PageHeader, Icon,
@@ -62,30 +63,97 @@ const CONTENT = (
   <PageHeader label="Team" description="Manage members and their access to the Helix workspace." />
 );
 
+// Below 768px of its own width the shell collapses the SideNav (a size container, not a media query),
+// so a 375px frame shows the phone layout at any viewport.
+const PHONE_WIDTH = 375;
+
 const meta: Meta<typeof AppShell> = {
   title:     'Layout/AppShell',
   component:  AppShell,
   tags:      ['autodocs'],
   parameters: { ...createComponentDocsParameters(AppShellDoc), layout: 'fullscreen' },
+  // Figma variant first (sidenavExpanded), then the rest — same order as the Figma properties.
+  args: {
+    sidenavExpanded:         undefined,
+    sidenav:                 mapped('SideNav'),
+    topbar:                  mapped('TopBar'),
+    children:                CONTENT,
+    defaultSidenavExpanded:  false,
+    onSidenavExpandedChange: undefined,
+  },
   // sidenav / topbar are slots — each control picks what fills it, or leaves it empty
   argTypes: {
     sidenav:  { control: 'select', options: ['SideNav', 'none'], mapping: { SideNav: SIDENAV, none: undefined } },
     topbar:   { control: 'select', options: ['TopBar', 'none'], mapping: { TopBar: TOPBAR, none: undefined } },
     children: { control: false },
+    sidenavExpanded:         { control: 'boolean' },
+    defaultSidenavExpanded:  { control: 'boolean' },
+    onSidenavExpandedChange: { control: false },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof AppShell>;
 
+const renderShell = (width?: number): Story['render'] => (args) => (
+  <div style={{ height: '100vh', maxWidth: width }}>
+    {/* key: defaultSidenavExpanded is only read on mount — remount when its control changes */}
+    <AppShell key={String(args.defaultSidenavExpanded)} {...args} />
+  </div>
+);
+
 export const Default: Story = {
-  args: { sidenav: mapped('SideNav'), topbar: mapped('TopBar'), children: CONTENT },
-  render: ({ sidenav, topbar, children, className }) => (
-    <div style={{ height: '100vh' }}>
-      <AppShell sidenav={sidenav} topbar={topbar} className={className}>{children}</AppShell>
-    </div>
-  ),
+  render: renderShell(),
   parameters: {
     docs: { description: { story: 'The full page shell — SideNav + TopBar + scrollable main content, no hand-rolled display:flex anywhere.' } },
+  },
+};
+
+export const Collapsed: Story = {
+  render: renderShell(PHONE_WIDTH),
+  parameters: {
+    docs: { description: { story: 'Below 768px the SideNav collapses out of view and the TopBar shows a menu button (IconMenu2). The page gets the whole width.' } },
+  },
+};
+
+export const Expanded: Story = {
+  args: { defaultSidenavExpanded: true },
+  render: renderShell(PHONE_WIDTH),
+  parameters: {
+    docs: { description: { story: 'The collapsed SideNav opened from the menu button: it slides in over the content, under the TopBar (aria-expanded="true" on the button).' } },
+  },
+};
+
+export const KeyboardNavigation: Story = {
+  render: renderShell(PHONE_WIDTH),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const menu = canvas.getByRole('button', { name: 'Navigation menu' });
+    // Hidden while collapsed, so not reachable by role/name yet — the current page's link
+    const current = canvasElement.querySelector<HTMLElement>('[aria-current="page"]')!;
+    await expect(menu).toHaveAttribute('aria-expanded', 'false');
+
+    // Enter opens it and moves focus to the current page's link
+    menu.focus();
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => expect(menu).toHaveAttribute('aria-expanded', 'true'));
+    await waitFor(() => expect(current).toHaveFocus());
+
+    // Escape closes it and returns focus to the menu button
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => expect(menu).toHaveAttribute('aria-expanded', 'false'));
+    await expect(menu).toHaveFocus();
+
+    // Space opens it again; Tab past its last link closes it and lands on the menu button
+    await userEvent.keyboard('[Space]');
+    await waitFor(() => expect(current).toHaveFocus());
+    await userEvent.tab();
+    await expect(canvas.getByRole('link', { name: 'Settings' })).toHaveFocus();
+    await userEvent.tab();
+    await waitFor(() => expect(menu).toHaveAttribute('aria-expanded', 'false'));
+    await expect(menu).toHaveFocus();
+  },
+  parameters: {
+    docs: { description: { story: 'Keyboard test (contract `a11y.keyboardNav`): Enter and Space on the menu button open the collapsed SideNav and focus its current link; Escape closes it and returns focus to the button; tabbing past its last link closes it.' } },
   },
 };

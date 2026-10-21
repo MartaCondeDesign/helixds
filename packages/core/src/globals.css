@@ -2969,6 +2969,12 @@
     border-bottom:  1px solid var(--helix-topBar-border);
   }
 
+  /* Menu button of the collapsed SideNav — only inside an AppShell, only below its 768px (see APP SHELL). */
+  [data-helix-part="topbar-menu"] {
+    display:     none;
+    flex-shrink: 0;
+  }
+
   [data-helix-part="topbar-start"] {
     flex:      1;
     min-width: 0;   /* WCAG 1.4.10 Reflow: the search gives way on a narrow screen instead of pushing the end slot off it */
@@ -3004,7 +3010,8 @@
     width:            var(--helix-sideNav-width);
     flex-shrink:      0;
     background-color: var(--helix-sideNav-fill);
-    /* No divider against the main content — the sidebar sits flush with the page. */
+    /* Divider against the content — same tone as the TopBar's bottom border, so the two lines meet. */
+    border-right:     1px solid var(--helix-sideNav-border);
     padding:          var(--helix-primitive-spacing-75) 0;
   }
 
@@ -3037,11 +3044,20 @@
 
   /* Exactly one viewport tall (the contract's "full-viewport-height" root), not min-height: with
      min-height the whole page grew with its content and main's overflow-y never kicked in. Now the
-     SideNav and TopBar stay put and only main scrolls. */
+     SideNav and TopBar stay put and only main scrolls.
+     It's also the size container the SideNav collapse answers to — the shell's own width, not the
+     viewport's, so a shell in a narrow frame (a story, an embed) collapses too. */
   [data-helix-part="app-shell-root"] {
+    container:        app-shell / inline-size;
+    position:         relative;
     display:          flex;
     height:           100vh;
     background-color: var(--helix-color-fill-page);
+  }
+
+  [data-helix-part="app-shell-nav"] {
+    display:     flex;
+    flex-shrink: 0;
   }
 
   [data-helix-part="app-shell-content"] {
@@ -3059,19 +3075,46 @@
     padding:    var(--helix-spacing-l);
   }
 
-  /* WCAG 1.4.10 Reflow: below primitive.breakpoint.tablet (768px — media queries can't read a var()) the
-     224px side nav would leave ~96px for the page at 320px. The shell stacks instead: nav on top, full
-     width, then the content, and the page scrolls as one column. Desktop and tablet are unchanged. */
+  /* WCAG 1.4.10 Reflow: below primitive.breakpoint.tablet (768px — container queries can't read a var())
+     the 224px side nav would leave ~96px for the page at 320px. With a TopBar, the nav collapses out of
+     the flow and the TopBar's menu button slides it in over the content, under the TopBar. Hidden
+     (visibility) while collapsed so its links leave the Tab order; visibility flips at the end of the
+     slide-out and at the start of the slide-in. */
+  @container app-shell (max-width: 767px) {
+    [data-helix-part="app-shell-root"][data-collapsible="true"] [data-helix-part="topbar-menu"] {
+      display: flex;
+    }
+    [data-helix-part="app-shell-root"][data-collapsible="true"] > [data-helix-part="app-shell-nav"] {
+      position:   absolute;
+      top:        var(--helix-topBar-height);
+      bottom:     0;
+      left:       0;
+      z-index:    var(--helix-primitive-zIndex-overlay);
+      transform:  translateX(-100%);
+      visibility: hidden;
+      transition: transform var(--helix-duration-slow) var(--helix-easing-base),
+                  visibility 0s linear var(--helix-duration-slow);
+    }
+    [data-helix-part="app-shell-root"][data-collapsible="true"] > [data-helix-part="app-shell-nav"][data-expanded="true"] {
+      transform:  none;
+      visibility: visible;
+      transition: transform var(--helix-duration-slow) var(--helix-easing-base), visibility 0s;
+    }
+  }
+
+  /* No TopBar, so no menu button to bring a collapsed nav back: below 768px the shell stacks instead —
+     nav on top, full width, then the content, and the page scrolls as one column. */
   @media (max-width: 767px) {
-    [data-helix-part="app-shell-root"] {
+    [data-helix-part="app-shell-root"]:not([data-collapsible="true"]) {
       flex-direction: column;
       height:         auto;
       min-height:     100vh;
     }
-    [data-helix-part="app-shell-root"] > [data-helix-part="side-nav-root"] {
+    [data-helix-part="app-shell-root"]:not([data-collapsible="true"]) > [data-helix-part="app-shell-nav"],
+    [data-helix-part="app-shell-root"]:not([data-collapsible="true"]) [data-helix-part="side-nav-root"] {
       width: 100%;
     }
-    [data-helix-part="app-shell-main"] {
+    [data-helix-part="app-shell-root"]:not([data-collapsible="true"]) [data-helix-part="app-shell-main"] {
       overflow-y: visible;
     }
   }

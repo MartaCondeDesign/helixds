@@ -90,9 +90,21 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma in sync: form fields and NavItem audited — 33 of 33 stable (#28) ([#28](https://github.com/MartaCondeDesign/helixds/pull/28))
+- 2026-10-21 — AppShell: SideNav divider + collapsed SideNav with a menu button (#26) ([#26](https://github.com/MartaCondeDesign/helixds/pull/26))
+  - AppShell: divider on the SideNav and a collapsed SideNav below 768px
+  - AppShell, SideNav, TopBar back to stable: Layout is exempt from Figma since #24
+- 2026-10-21 — Figma in sync: form fields and NavItem audited — 33 of 33 stable (#28) ([`3c76de7`](https://github.com/MartaCondeDesign/helixds/commit/3c76de7))
   - Figma expected styles measure what code really renders; Avatar and Card back to passing
+  - figma:expected: Input/Textarea `disabled` never reached the story (native attribute, docgen typed it
+  - figma:expected: Input's spinner is measured as the 16px icon it is, not as text in its padded slot
+  - borderOutsideLayout can name a layer — MultiSelect's bordered box is multi-select-field since the
+  - verify:types reads quoted keys ('aria-describedby' in Avatar.types.ts)
+  - Card › CardGrid passes header/className to every card (its header control did nothing)
   - Figma in sync: Input, Textarea, Select, MultiSelect and NavItem audited and recorded — 33 of 33 stable
+  - Phase 6 audit pass: true, light and dark, recorded at cdafea2 (syncedCommit + audit in figma-sync.json)
+  - Figma fixes: Select's 36 value.=selected variants and 2 Input filled ones had the description/error
+  - NavItem: the indicator's square left corners were already drawn — re-audited at the current code
+  - Status computed by verify:stable: Input, Textarea, Select, MultiSelect, NavItem beta → stable,
 - 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([`2001210`](https://github.com/MartaCondeDesign/helixds/commit/2001210))
   - Changelog bot re-runs CI on its own commit, so main can require CI
 - 2026-10-21 — Storybook deploy builds @helixds/tokens before @helixds/react (#27) ([`7628d2e`](https://github.com/MartaCondeDesign/helixds/commit/7628d2e))
