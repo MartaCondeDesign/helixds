@@ -25,7 +25,7 @@ import { figmaTarget, tokenChain } from './token-chain.ts';
 import { setComponent, delegateOf } from './prop-rule.ts';
 
 type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid' | 'loading' | 'open' | 'checked' | 'indeterminate';
-type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean };
+type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean; svg?: boolean }; // svg: size is the icon inside the slot, not the padded slot
 type Spec = {
   story: string;                              // a story rendering exactly one instance from its args
   axes: Record<string, string[]>;             // Figma variant axes (besides state) -> values
@@ -40,7 +40,9 @@ type Spec = {
   // The root's border is drawn inside its box and NOT counted in Figma's auto layout, so Figma's padding is
   // measured from the outer edge (code's padding + border). Only where code's padding is a calc() around the
   // border that no scale token can express (MultiSelect: (32 − 24) / 2 − 1px = 3px) — owner's decision 2026-10-20.
-  borderOutsideLayout?: boolean;
+  // `true` = the root; a layer name = that layer (MultiSelect's bordered box is multi-select-field since the
+  // form-field rebuild, not the root).
+  borderOutsideLayout?: boolean | string;
   // Typography that changes by state (MenuItem: selected is medium): measure layout in every state, keyed with it.
   layoutPerState?: boolean;
   // Combinations code can't show (and Figma doesn't draw), e.g. a disabled checkbox with hover: not measured.
@@ -74,7 +76,7 @@ const SPECS: Record<string, Spec> = {
       'input-required': { part: 'input-required', text: true },
       'input-wrapper': { part: 'input-wrapper', fill: true, stroke: true },
       'input-field': { part: 'input-field', placeholder: true },
-      'input-spinner': { part: 'input-spinner', text: true },
+      'input-spinner': { part: 'input-spinner', text: true, svg: true },
       'input-description': { part: 'input-description', text: true },
       'input-error': { part: 'input-error', text: true },
     },
@@ -84,7 +86,7 @@ const SPECS: Record<string, Spec> = {
     story: 'components-textarea--with-character-count',
     axes: { 'value.': ['empty', 'filled'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true, ...(v['value.'] === 'filled' ? { value: 'Some text the user wrote.' } : {}),
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true, ...(v['value.'] === 'filled' ? { value: 'Some text the user wrote' } : {}),
       invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', resize: v.resize! }),
     parts: {
       '(root)': { part: 'textarea-root' },
@@ -296,6 +298,7 @@ const SPECS: Record<string, Spec> = {
       'multi-select-error': { part: 'multi-select-error', text: true },
     },
     target: 'multi-select-trigger',
+    borderOutsideLayout: 'multi-select-field',
   },
   RadioButton: {
     story: 'components-radiobutton--with-description',
@@ -500,17 +503,18 @@ async function declaredVar(page: Page, cdp: CDPSession, prop: string): Promise<s
 async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: string | null) {
   const out: Record<string, Record<string, Measured | string>> = {};
   for (const [layer, p] of Object.entries(spec.parts)) {
-    const isIcon = /icon|chevron|indicator-mark/.test(p.part); // a chevron is an icon too (Accordion, Select, MultiSelect)
+    const isIcon = /icon|chevron|indicator-mark|spinner/.test(p.part); // a chevron is an icon too (Accordion, Select, MultiSelect), and so is a spinner (Input)
     const kinds = { box: layer === '(root)', icon: isIcon, type: !!(p.text || p.placeholder) && !isIcon };
     if (!kinds.box && !kinds.icon && !kinds.type) continue;
-    const found = await page.evaluate(({ part, scope }) => {
+    const found = await page.evaluate(({ part, scope, svg }) => {
       document.querySelectorAll('[data-figma-measure]').forEach(e => e.removeAttribute('data-figma-measure'));
       const sc = scope ? document.querySelector(scope) : null;
-      const el = sc?.matches(`[data-helix-part="${part}"]`) ? sc : (sc ?? document).querySelector(`[data-helix-part="${part}"]`);
+      const slot = sc?.matches(`[data-helix-part="${part}"]`) ? sc : (sc ?? document).querySelector(`[data-helix-part="${part}"]`);
+      const el = svg ? slot?.querySelector('svg') : slot;
       if (!el) return false;
       el.setAttribute('data-figma-measure', '');
       return true;
-    }, { part: p.part, scope });
+    }, { part: p.part, scope, svg: !!p.svg });
     if (!found) continue;
     const props: Record<string, string> = { ...(kinds.box ? BOX : {}), ...(kinds.icon ? ICON : {}), ...(kinds.type ? TYPE : {}) };
     const entry: Record<string, Measured | string> = {};
@@ -619,7 +623,7 @@ async function main() {
   const contract = fs.existsSync(contractFile) ? JSON.parse(fs.readFileSync(contractFile, 'utf8')) : {};
   setComponent(name, contract);
   const delegates = Object.fromEntries(((contract.props ?? []) as { name: string }[]).filter(p => ((STD.listCount?.props ?? []) as string[]).includes(p.name)).map(p => [p.name, delegateOf(p.name)]).filter(([, to]) => to));
-  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, ...(spec.borderOutsideLayout ? { borderOutsideLayout: true } : {}), ...(Object.keys(delegates).length ? { delegates } : {}), colors, layout }, null, 2) + '\n');
+  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, ...(spec.borderOutsideLayout ? { borderOutsideLayout: spec.borderOutsideLayout } : {}), ...(Object.keys(delegates).length ? { delegates } : {}), colors, layout }, null, 2) + '\n');
   const props = Object.values(layout).flatMap(l => Object.values(l as object).flatMap(e => Object.values(e as object))).filter(x => typeof x === 'object');
   console.log(`✅ ${path.relative(process.cwd(), out)} — ${Object.keys(colors).length} variants × light/dark colors; ${props.length} layout values (${props.filter((x: any) => x.token).length} from a token)`);
 }

@@ -66,14 +66,15 @@ export const CardGrid = {
       description: 'Array of { label, value } — edit here to change the card texts.',
     },
   },
-  render: (args: { items: GridItem[]; padding: 'default' | 'none' }) => (
+  // header / className are shared args: every card in the grid gets them (empty header = no header row)
+  render: (args: { items: GridItem[]; padding: 'default' | 'none'; header?: string; className?: string }) => (
     <div style={{
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
       gap: 'var(--helix-primitive-spacing-100)',
     }}>
       {args.items.map(item => (
-        <Card key={item.label} padding={args.padding}>
+        <Card key={item.label} padding={args.padding} header={args.header || undefined} className={args.className}>
           <div style={{
             fontFamily: 'var(--helix-textStyle-caption-semibold-fontFamily)',
             fontSize: 'var(--helix-textStyle-caption-semibold-fontSize)',

@@ -10,10 +10,10 @@
 - text: Indeterminate
 
 # Disabled
-- checkbox "Disabled unchecked" [disabled]
-- text: Disabled unchecked
-- checkbox "Disabled checked" [checked] [disabled]
-- text: Disabled checked
+- checkbox "Disabled" [disabled]
+- text: Disabled
+- checkbox "Disabled" [checked] [disabled]
+- text: Disabled
 
 # Group
 - checkbox "Select all" [checked=mixed]

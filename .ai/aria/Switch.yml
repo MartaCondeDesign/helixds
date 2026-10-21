@@ -10,10 +10,10 @@
 - text: Dark mode
 
 # Disabled
-- switch "Disabled off" [disabled]
-- text: Disabled off
-- switch "Disabled on" [checked] [disabled]
-- text: Disabled on
+- switch "Disabled" [disabled]
+- text: Disabled
+- switch "Disabled" [checked] [disabled]
+- text: Disabled
 
 # Keyboard Toggle
 - switch "Enable notifications"

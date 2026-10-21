@@ -39,7 +39,8 @@ const meta: Meta<typeof Input> = {
   },
   argTypes: {
     invalid:   { control: 'boolean' },
-    disabled:  { control: 'boolean' },
+    // native attribute (not in InputProps): docgen infers no type, and Storybook then drops a URL `disabled:!true`
+    disabled:  { control: 'boolean', type: { name: 'boolean' } },
     required:  { control: 'boolean' },
     isLoading:   { control: 'boolean' },
     fullWidth: { control: 'boolean' },
