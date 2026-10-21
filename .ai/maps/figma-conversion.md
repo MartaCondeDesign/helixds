@@ -70,6 +70,16 @@ properties with the same name, so it can't share `icon` with the toggle.
 
 ## 2. Property order
 
+**Variants first, on both sides** (owner's rule 2026-10-21): Figma's panel always lists VARIANT properties first
+and can't interleave them with the rest, so Storybook does the same — the props that are Figma variants first, then
+everything else, each group in the same order. Storybook takes its table order from the keys of each story file's
+`meta.args`, so that's where the order is set. figma-map's **Storybook order** line fails (and the component drifts)
+when a variant prop comes after a non-variant one.
+
+**The reference is what Storybook shows**, read from its props table by `pnpm figma:story-order`
+(`.ai/storybook-prop-order.json`) — never the contract's prop order, which Storybook doesn't follow (Chip: `label`
+first in Storybook, fourth in the contract; that gap left 9 components out of order while the check said ✓).
+
 Figma's properties come in **the code's order** — the order of the contract's props, which is the order Storybook's
 Controls list them in (owner's decision 2026-10-21). One Figma limitation: the properties panel always shows the
 VARIANT properties first. So each group follows the code order on its own:

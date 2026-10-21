@@ -65,20 +65,20 @@
           "type": "TEXT"
         },
         {
-          "name": "withImage",
-          "type": "VARIANT",
-          "values": [
-            "false",
-            "true"
-          ]
-        },
-        {
           "name": "size",
           "type": "VARIANT",
           "values": [
             "s",
             "m",
             "l"
+          ]
+        },
+        {
+          "name": "withImage",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
           ]
         }
       ]
@@ -134,16 +134,16 @@
       "page": "Badge",
       "properties": [
         {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
           "name": "icon",
           "type": "BOOLEAN"
         },
         {
           "name": "iconSwap",
           "type": "INSTANCE_SWAP"
-        },
-        {
-          "name": "label",
-          "type": "TEXT"
         },
         {
           "name": "variant",
@@ -172,6 +172,10 @@
       "page": "Button",
       "properties": [
         {
+          "name": "children",
+          "type": "TEXT"
+        },
+        {
           "name": "icon",
           "type": "BOOLEAN"
         },
@@ -186,10 +190,6 @@
         {
           "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
-        },
-        {
-          "name": "children",
-          "type": "TEXT"
         },
         {
           "name": "variant",
@@ -219,7 +219,7 @@
           ]
         },
         {
-          "name": "disabled",
+          "name": "fullWidth",
           "type": "VARIANT",
           "values": [
             "false",
@@ -227,7 +227,7 @@
           ]
         },
         {
-          "name": "fullWidth",
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
             "false",
@@ -252,15 +252,15 @@
       "page": "Card",
       "properties": [
         {
+          "name": "children",
+          "type": "TEXT"
+        },
+        {
           "name": "showHeader",
           "type": "BOOLEAN"
         },
         {
           "name": "headerText",
-          "type": "TEXT"
-        },
-        {
-          "name": "children",
           "type": "TEXT"
         },
         {
@@ -470,6 +470,10 @@
           "type": "TEXT"
         },
         {
+          "name": "dismissible",
+          "type": "BOOLEAN"
+        },
+        {
           "name": "icon",
           "type": "BOOLEAN"
         },
@@ -484,10 +488,6 @@
         {
           "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
-        },
-        {
-          "name": "dismissible",
-          "type": "BOOLEAN"
         },
         {
           "name": "variant",
@@ -534,6 +534,18 @@
       "page": "ChipGroup",
       "properties": [
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "size",
           "type": "VARIANT",
           "values": [
@@ -559,6 +571,18 @@
         {
           "name": "icon",
           "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "actions",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
         },
         {
           "name": "expanded",
@@ -694,14 +718,6 @@
           "type": "TEXT"
         },
         {
-          "name": "hideLabel",
-          "type": "VARIANT",
-          "values": [
-            "false",
-            "true"
-          ]
-        },
-        {
           "name": "size",
           "type": "VARIANT",
           "values": [
@@ -711,7 +727,7 @@
           ]
         },
         {
-          "name": "invalid",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
             "false",
@@ -719,7 +735,7 @@
           ]
         },
         {
-          "name": "disabled",
+          "name": "invalid",
           "type": "VARIANT",
           "values": [
             "false",
@@ -743,6 +759,14 @@
           ]
         },
         {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
@@ -758,6 +782,18 @@
       "type": "COMPONENT_SET",
       "page": "Menu",
       "properties": [
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         {
           "name": "multiple",
           "type": "VARIANT",
@@ -1109,6 +1145,18 @@
       "page": "SegmentedControl",
       "properties": [
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "disabled",
           "type": "VARIANT",
           "values": [
@@ -1157,11 +1205,11 @@
           "type": "TEXT"
         },
         {
-          "name": "valueText",
+          "name": "placeholder",
           "type": "TEXT"
         },
         {
-          "name": "placeholder",
+          "name": "valueText",
           "type": "TEXT"
         },
         {
@@ -1296,6 +1344,14 @@
           "type": "TEXT"
         },
         {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m"
+          ]
+        },
+        {
           "name": "hideLabel",
           "type": "VARIANT",
           "values": [
@@ -1317,14 +1373,6 @@
           "values": [
             "false",
             "true"
-          ]
-        },
-        {
-          "name": "size",
-          "type": "VARIANT",
-          "values": [
-            "s",
-            "m"
           ]
         },
         {
@@ -1427,14 +1475,6 @@
           ]
         },
         {
-          "name": "disabled",
-          "type": "VARIANT",
-          "values": [
-            "false",
-            "true"
-          ]
-        },
-        {
           "name": "fullWidth",
           "type": "VARIANT",
           "values": [
@@ -1458,6 +1498,14 @@
             "none",
             "horizontal",
             "both"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
           ]
         },
         {

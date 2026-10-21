@@ -15,6 +15,7 @@
     "dev:wc": "pnpm --dir apps/wc-sandbox dev",
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint apps",
+    "lint:stories": "eslint apps/storybook/stories/Components apps/storybook/stories/Layout",
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",
@@ -91,7 +92,8 @@
     "release:first": "pnpm release",
     "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run",
     "figma:props": "tsx scripts/figma/props.ts",
-    "figma:snapshot": "tsx scripts/figma/snapshot.ts"
+    "figma:snapshot": "tsx scripts/figma/snapshot.ts",
+    "figma:story-order": "tsx scripts/figma/story-order.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",

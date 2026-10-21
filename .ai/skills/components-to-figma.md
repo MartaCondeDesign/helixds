@@ -691,6 +691,9 @@ collection semantic variable — never a hardcoded hex value.
 
 After building the component:
 
+- [ ] Prop order (CLAUDE.md rule 6a): Storybook's `meta.args` lists the Figma variants first, then the rest; Figma's
+      properties follow the same order — `pnpm figma:story-order` + `pnpm docs:figma-map` show **Property order** ✓
+      and **Storybook order** ✓. Re-check it on every change to a component's props, not only when building it
 - [ ] Phase 6 audit returned `pass: true` and is recorded in `figma-sync.json` with `syncedCommit`
 - [ ] `state` axis has every value in the contract's `figma.states`; figma-only properties are declared in
       the contract's `figma.properties`

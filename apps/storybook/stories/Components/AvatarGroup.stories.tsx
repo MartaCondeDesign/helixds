@@ -50,15 +50,17 @@ export const WithOverflow: Story = {
 };
 
 export const Sizes: Story = {
-  render: () => (
+  args: { avatars: PEOPLE_INITIALS, max: 3 },
+  // The story fixes size (s / m / l) — avatars and max apply to all three
+  argTypes: { size: { control: false } },
+  render: ({ avatars, max }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-150)', alignItems: 'center' }}>
-      <AvatarGroup avatars={PEOPLE_INITIALS} max={3} size="s" />
-      <AvatarGroup avatars={PEOPLE_INITIALS} max={3} size="m" />
-      <AvatarGroup avatars={PEOPLE_INITIALS} max={3} size="l" />
+      <AvatarGroup avatars={avatars} max={max} size="s" />
+      <AvatarGroup avatars={avatars} max={max} size="m" />
+      <AvatarGroup avatars={avatars} max={max} size="l" />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Initials-only avatars (no photos) across the s/m/l scale.' } },
   },
 };

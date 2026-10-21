@@ -10,6 +10,7 @@ import {
 } from '@tabler/icons-react';
 import { Input, Button, Badge, InputDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+import { mapped } from '../_shared/mapped-arg';
 
 const meta: Meta<typeof Input> = {
   title:     'Components/Input',
@@ -34,8 +35,17 @@ const meta: Meta<typeof Input> = {
     isLoading:   { control: 'boolean' },
     fullWidth: { control: 'boolean' },
     hideLabel: { control: 'boolean' },
-    icon:      { table: { disable: true } },
-    iconEnd:   { table: { disable: true } },
+    // icon / iconEnd take the Tabler component itself — the control picks one by name
+    icon: {
+      control: 'select',
+      options: ['none', 'Mail', 'Lock', 'Search', 'User'],
+      mapping: { none: undefined, Mail: IconMail, Lock: IconLock, Search: IconSearch, User: IconUser },
+    },
+    iconEnd: {
+      control: 'select',
+      options: ['none', 'Eye', 'Search'],
+      mapping: { none: undefined, Eye: IconEye, Search: IconSearch },
+    },
   },
 };
 
@@ -58,7 +68,7 @@ export const WithLeadingIcon: Story = {
   args: {
     label:       'Email',
     type:        'email',
-    icon:        IconMail,
+    icon:        mapped('Mail'),
     placeholder: 'you@example.com',
   },
 };
@@ -67,7 +77,7 @@ export const WithTrailingIcon: Story = {
   args: {
     label:   'Password',
     type:    'password',
-    iconEnd: IconEye,
+    iconEnd: mapped('Eye'),
   },
 };
 
@@ -75,7 +85,7 @@ export const SearchInput: Story = {
   args: {
     label:       'Search',
     hideLabel:   true,
-    icon:        IconSearch,
+    icon:        mapped('Search'),
     placeholder: 'Search projects…',
     type:        'search',
     fullWidth:   true,
@@ -93,7 +103,7 @@ export const Invalid: Story = {
   args: {
     label:        'Email',
     type:         'email',
-    icon:         IconMail,
+    icon:         mapped('Mail'),
     invalid:      true,
     errorMessage: 'Enter a valid email address',
     defaultValue: 'not-an-email',
@@ -104,7 +114,7 @@ export const Required: Story = {
   args: {
     label:    'Full name',
     required: true,
-    icon:     IconUser,
+    icon:     mapped('User'),
   },
 };
 
@@ -130,18 +140,27 @@ export const Loading: Story = {
 };
 
 export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  args: { icon: mapped('Search'), className: undefined },
+  // The story fixes size and each field's label — icon, invalid, disabled… apply to all three
+  argTypes: { size: { control: false }, label: { control: false } },
+  render: ({ size: _size, label: _label, ...args }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
-      <Input label="Small"  size="s" placeholder="size=s" icon={IconSearch} onChange={() => {}} />
-      <Input label="Medium" size="m" placeholder="size=m (default)" icon={IconSearch} onChange={() => {}} />
-      <Input label="Large"  size="l" placeholder="size=l" icon={IconSearch} onChange={() => {}} />
+      <Input {...args} label="Small"  size="s" placeholder="size=s" />
+      <Input {...args} label="Medium" size="m" placeholder="size=m (default)" />
+      <Input {...args} label="Large"  size="l" placeholder="size=l" />
     </div>
   ),
 };
 
 export const LoginFormPattern: Story = {
-  render: () => {
+  // The form fixes each field's label, icon, validation and loading — size, disabled and hideLabel apply to both fields
+  argTypes: {
+    label: { control: false }, icon: { control: false }, iconEnd: { control: false },
+    description: { control: false }, errorMessage: { control: false }, invalid: { control: false },
+    invalidAttempt: { control: false }, required: { control: false }, isLoading: { control: false },
+    fullWidth: { control: false },
+  },
+  render: ({ size, disabled, hideLabel }) => {
     const [email, setEmail]               = useState('');
     const [password, setPassword]         = useState('');
     const [emailInvalid, setEmailInvalid] = useState(false);
@@ -186,6 +205,7 @@ export const LoginFormPattern: Story = {
         {formError && <Badge variant="danger" label={formError} />}
 
         <Input
+          size={size} disabled={disabled} hideLabel={hideLabel}
           label="Email" type="email" required autoComplete="email"
           icon={IconMail}
           value={email} onChange={e => setEmail(e.target.value)}
@@ -193,6 +213,7 @@ export const LoginFormPattern: Story = {
         />
 
         <Input
+          size={size} disabled={disabled} hideLabel={hideLabel}
           label="Password" type="password" required autoComplete="current-password"
           icon={IconLock} description="Min. 8 characters"
           value={password} onChange={e => setPassword(e.target.value)} fullWidth
@@ -205,7 +226,6 @@ export const LoginFormPattern: Story = {
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: 'Login form pattern. Try submitting with an invalid email.',

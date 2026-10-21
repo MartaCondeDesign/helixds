@@ -15,7 +15,8 @@ export default meta;
 type Story = StoryObj<typeof Toast>;
 
 export const Default: Story = {
-  render: () => (
+  // What each toast says is the call (fixed per button); <Toast /> itself only takes className
+  render: ({ className }) => (
     <>
       <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', flexWrap: 'wrap' }}>
         <Button variant="secondary" onClick={() => toast.neutral('Draft saved', 'Your changes were saved automatically.')}>Neutral</Button>
@@ -24,11 +25,10 @@ export const Default: Story = {
         <Button variant="secondary" onClick={() => toast.warning('Session expiring', 'You’ll be signed out in 5 minutes.')}>Warning</Button>
         <Button variant="secondary" onClick={() => toast.danger('Connection lost', 'Could not reach the server — check your network.')}>Danger</Button>
       </div>
-      <Toast />
+      <Toast className={className} />
     </>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Fire a few in a row to see the stack (newest on top, older ones peek behind). Hover the stack to spread them apart and read the older ones — the stack expands downward, since it\'s pinned to the top of the screen. Each auto-dismisses after 4s unless hovered.' } },
   },
 };
@@ -54,6 +54,7 @@ export const Playground: StoryObj<PlaygroundArgs> = {
   },
 };
 
+// controls-off: the play test opens two toasts and checks the keyboard reaches them — an overlay test, nothing to set
 export const KeyboardReach: Story = {
   render: () => (
     <>
@@ -93,11 +94,12 @@ function NoAutoDismiss() {
   // Long enough for the browser checks to finish before the toast leaves; restored on unmount.
   useEffect(() => {
     document.documentElement.style.setProperty('--helix-toast-autoDismissMs', '600000');
-    return () => document.documentElement.style.removeProperty('--helix-toast-autoDismissMs');
+    return () => { document.documentElement.style.removeProperty('--helix-toast-autoDismissMs'); };
   }, []);
   return null;
 }
 
+// controls-off: an open overlay, kept on screen only for the browser checks
 export const Opened: Story = {
   // Not in the docs page (an open overlay would cover it) — this story exists so the browser checks
   // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
