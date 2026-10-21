@@ -46,12 +46,12 @@ const meta: Meta<typeof Select> = {
   // token) — this is the demonstrated example default.
   // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    options: ROLES,
     value: undefined,
     invalid: undefined,
     disabled: undefined,
     fullWidth: undefined,
     hideLabel: undefined,
+    options: ROLES, // drawn by the nested Menu in Figma (list-delegated) — not a variant here
     label: 'Role',
     placeholder: 'Choose a role…',
     defaultValue: undefined,

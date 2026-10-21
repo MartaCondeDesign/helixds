@@ -4,7 +4,8 @@ import { Title, Subtitle, Description, Primary, Controls, Stories, useOf } from 
 // each contract's approved exceptions) — never written by hand.
 import figmaMap from '../../../.ai/maps/figma-map.json';
 
-type FigmaConv = { figma: { name: string; type: string; values?: string[] }[] | null; codeOnly: boolean; rule: string; why: string };
+type FigmaProp = { name: string; type: string; values?: string[] };
+type FigmaConv = { figma: FigmaProp[] | null; codeOnly: boolean; rule: string; why: string; inChild?: { component: string; property: string; figma?: FigmaProp[] | null } };
 const MAP = figmaMap.components as Record<string, Record<string, FigmaConv>>;
 
 const cell: React.CSSProperties = { padding: 'var(--helix-spacing-s) var(--helix-spacing-m)', borderTop: '1px solid hsla(203, 50%, 30%, 0.15)', verticalAlign: 'top', fontSize: 13, lineHeight: '20px' };
@@ -19,7 +20,7 @@ function CodeToFigma() {
   return (
     <>
       <h3 id="code-to-figma">Code → Figma</h3>
-      <p style={{ fontSize: 14 }}>How each prop reaches Figma: 🎨 the Figma property it becomes, or ⌨️ code only — no design property, and why. Generated from <code>contracts/figma-conversion.json</code> by <code>pnpm docs:figma-map</code>.</p>
+      <p style={{ fontSize: 14 }}>How each prop reaches Figma: 🎨 the Figma property it becomes — on the component itself, or on the nested child component that holds it — or 👾 code only: no design property, and why. Generated from <code>contracts/figma-conversion.json</code> by <code>pnpm docs:figma-map</code>.</p>
       <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
         <thead>
           <tr>{['Prop', 'Figma', 'Why'].map(h => <th key={h} style={{ ...cell, borderTop: 'none', fontWeight: 700 }}>{h}</th>)}</tr>
@@ -29,7 +30,11 @@ function CodeToFigma() {
             <tr key={prop}>
               <td style={{ ...cell, fontWeight: 700 }}>{prop}</td>
               <td style={cell}>
-                {c.codeOnly ? <span>⌨️ Code only</span> : c.figma!.map(f => (
+                {c.inChild ? (
+                  <div>🎨 On the child <strong>{c.inChild.component}</strong>{(c.inChild.figma ?? []).map(f => (
+                    <div key={f.name}><span style={code}>{f.type} {f.name}</span>{f.values ? ` = ${f.values.join(' / ')}` : ''}</div>
+                  ))}</div>
+                ) : c.codeOnly ? <span>👾 Code only</span> : c.figma!.map(f => (
                   <div key={f.name}>🎨 <span style={code}>{f.type} {f.name}</span>{f.values ? ` = ${f.values.join(' / ')}` : ''}</div>
                 ))}
               </td>

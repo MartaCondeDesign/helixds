@@ -734,14 +734,6 @@
           ]
         },
         {
-          "name": "invalid",
-          "type": "VARIANT",
-          "values": [
-            "false",
-            "true"
-          ]
-        },
-        {
           "name": "isLoading",
           "type": "VARIANT",
           "values": [
@@ -1231,15 +1223,15 @@
       "page": "Select",
       "properties": [
         {
+          "name": "valueText",
+          "type": "TEXT"
+        },
+        {
           "name": "label",
           "type": "TEXT"
         },
         {
           "name": "placeholder",
-          "type": "TEXT"
-        },
-        {
-          "name": "valueText",
           "type": "TEXT"
         },
         {

@@ -5,11 +5,12 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 214 of 218 code props match Figma exactly.**
+**Parity today: 214 of 215 code props match Figma exactly.**
+**Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.8.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.10.0 (owner-approved 2026-10-21; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -20,6 +21,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `nested` | a ReactElement, or ReactNode children of a component that isn't in textChildren | — | another component or free content, not a property |
 | `overlay-expanded` | expanded on an overlay (overlays) | — | closed = not on screen; Figma draws it open |
 | `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name} (only when optional)` + `INSTANCE_SWAP {name}Swap` | shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name}Swap — owner's decision 2026-10-20) |
+| `list-delegated` | a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count | — | the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21) |
 | `list-count` | a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array | `VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) |
 | `union` | a union of string or number literals | `VARIANT {name} = the same values` | same values as code |
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
@@ -61,6 +63,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `focus`
 
+**Stories → Figma:** ✓ all 6 stories
+
+- `Default` → ✓ `expanded=false`
+- `OpenByDefault` → ✓ `expanded=true`
+- `Disabled` → ✓ `disabled=true`
+- `Stack` → ✓ layout of existing variants
+- `Controlled` → ✓ not drawn in Figma — controlled-state demo — behaviour only, same look as another story (approved 2026-10-21)
+- `KeyboardToggle` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
 ### AppShell (`v1.0.0`, stable)
@@ -78,6 +89,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 1 stories
+
+- `Default` → ✓ `sidenav=true, topbar=true`
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
 ### Avatar (`v1.0.0`, stable)
@@ -92,6 +107,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 5 stories
+
+- `Default` → ✓ `withImage=false`
+- `Sizes` → ✓ layout of existing variants
+- `WithImage` → ✓ `withImage=true`
+- `BrokenImageFallsBackToInitials` → ✓ `withImage=false`
+- `MemberList` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-root`, `avatar-image`, `avatar-initials`
 
@@ -110,6 +133,12 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21); `withImage` (VARIANT: false / true) — like Avatar's withImage: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar (approved 2026-10-21)
 
+**Stories → Figma:** ✓ all 3 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `WithOverflow` → ✓ `withOverflow=true, withImage=true`
+- `Sizes` → ✓ layout of existing variants
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
 ### Badge (`v1.0.0`, stable)
@@ -126,6 +155,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 4 stories
+
+- `AllVariants` → ✓ layout of existing variants
+- `WithIcons` → ✓ `icon=true`
+- `Sizes` → ✓ layout of existing variants
+- `StatusRowPattern` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
@@ -153,6 +189,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
+**Stories → Figma:** ✓ all 9 stories
+
+- `AllVariants` → ✓ layout of existing variants
+- `Loading` → ✓ `isLoading=true`
+- `Disabled` → ✓ `disabled=true`
+- `WithLeadingIcon` → ✓ `icon=true`
+- `WithTrailingIcon` → ✓ `iconEnd=true`
+- `Sizes` → ✓ layout of existing variants
+- `FullWidth` → ✓ `fullWidth=true`
+- `SwapInPlace` → ✓ not drawn in Figma — label/icon swap animation on click — behaviour; each end state is an ordinary variant (children / iconSwap) (approved 2026-10-21)
+- `KeyboardActivation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
 ### Card (`v1.0.0`, stable)
@@ -171,6 +219,11 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 2 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `CardGrid` → ✓ layout of existing variants
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
 ### Chart (`v1.2.0`, beta)
@@ -188,6 +241,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 9 stories
+
+- `Default` → ✓ `variant=line`
+- `Line` → ✓ `variant=line`
+- `Area` → ✓ `variant=area`
+- `Bar` → ✓ `variant=bar`
+- `LegendToggle` → ✓ not drawn in Figma — click on a legend item hides its series — behaviour test (approved 2026-10-21)
+- `SingleSeriesLegend` → ✓ `variant=area`
+- `StackedBar` → ✓ `variant=stacked-bar`
+- `Donut` → ✓ `variant=donut`
+- `Timeline` → ✓ `variant=timeline`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chart-root`, `chart-canvas`, `chart-legend`, `chart-legend-swatch`, `chart-legend-item`, `chart-data`
 
@@ -219,6 +284,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 7 stories
+
+- `AllTypes` → ✓ layout of existing variants
+- `WithDescription` → ✓ `description=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true`
+- `Group` → ✓ layout of existing variants
+- `Required` → ✓ `required=true`
+- `KeyboardToggle` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-root`, `checkbox-label`, `checkbox-control`, `checkbox-indicator`, `checkbox-text`, `checkbox-required`, `checkbox-description`, `checkbox-error`
 
 ### CheckboxGroup (`v0.1.0`, stable)
@@ -246,6 +321,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 7 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `Horizontal` → ✓ `orientation=horizontal`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true`
+- `WithDisabledOption` → ✓ layout of existing variants
+- `Required` → ✓ `required=true`
+- `KeyboardToggle` → ✓ layout of existing variants — keyboard focus is drawn on the Checkbox inside it (state=focus)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
 ### Chip (`v2.0.0`, stable)
@@ -272,6 +357,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
+**Stories → Figma:** ✓ all 5 stories
+
+- `Dismissible` → ✓ `dismissible=true`
+- `Variants` → ✓ layout of existing variants
+- `WithIcons` → ✓ `icon=true, iconEnd=true`
+- `Sizes` → ✓ layout of existing variants
+- `KeyboardActivation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
 
 ### ChipGroup (`v0.1.0`, stable)
@@ -288,6 +381,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 5 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `WithIcons` → ✓ layout of existing variants
+- `Wrapping` → ✓ layout of existing variants
+- `Disabled` → ✓ `disabled=true`
+- `KeyboardNavigation` → ✓ layout of existing variants — keyboard focus is drawn on the Chip inside it (state=focus)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
@@ -313,6 +414,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
+**Stories → Figma:** ✓ all 5 stories
+
+- `Default` → ✓ `expanded=false`
+- `SpeedDial` → ✓ `expanded=false`
+- `Expanded` → ✓ `expanded=true`
+- `Disabled` → ✓ `disabled=true`
+- `KeyboardSpeedDial` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
 ### Icon (`v1.0.0`, beta)
@@ -328,6 +437,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 6 stories
+
+- `Default` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
+- `IconOnly` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
+- `Sizes` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
+- `Colors` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
+- `CustomIconSet` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
+- `InlineWithText` → ✓ not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
@@ -352,6 +470,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
+**Stories → Figma:** ✓ all 9 stories
+
+- `Ghost` → ✓ `variant=ghost`
+- `Secondary` → ✓ `variant=secondary`
+- `Primary` → ✓ `variant=primary`
+- `Danger` → ✓ `variant=danger`
+- `Sizes` → ✓ layout of existing variants
+- `Loading` → ✓ `isLoading=true`
+- `Disabled` → ✓ `disabled=true`
+- `AllVariants` → ✓ layout of existing variants
+- `KeyboardActivation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
 ### Input (`v2.0.0`, stable)
@@ -362,7 +492,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
@@ -386,6 +515,20 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 11 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `WithDescription` → ✓ `description=true`
+- `WithLeadingIcon` → ✓ `icon=true`
+- `WithTrailingIcon` → ✓ `iconEnd=true`
+- `SearchInput` → ✓ `hideLabel=true, icon=true, fullWidth=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true, icon=true`
+- `Required` → ✓ `required=true, icon=true`
+- `Disabled` → ✓ `disabled=true, description=true`
+- `Loading` → ✓ `isLoading=true, description=true`
+- `LoginFormPattern` → ✓ layout of existing variants
+- `KeyboardFocus` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-spinner`, `input-icon-end`, `input-description`, `input-error`
 
 ### Menu (`v0.3.0`, stable)
@@ -408,6 +551,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 4 stories
+
+- `Default` → ✓ `multiple=false`
+- `Grouped` → ✓ layout of existing variants — MenuGroupLabel (divider=false, then divider=true) before each group's MenuItems — drawn in the child (owner 2026-10-21)
+- `Opened` → ✓ not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)
+- `States` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
@@ -435,6 +585,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 6 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `WithFooterActions` → ✓ `primaryActionLabel=true, secondaryActionLabel=true`
+- `WithTertiaryAction` → ✓ `primaryActionLabel=true, secondaryActionLabel=true, tertiaryActionLabel=true`
+- `WithoutCloseButton` → ✓ `showCloseButton=false`
+- `KeyboardDismiss` → ✓ layout of existing variants — keyboard focus is drawn on the close IconButton inside it (state=focus)
+- `Opened` → ✓ not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
 ### MultiSelect (`v0.1.0`, stable)
@@ -444,7 +603,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | — on the child `Menu` › `options` | drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21) · `list-delegated` | — |
 | `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception) | ✓ |
 | `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `(values: string[]) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
@@ -468,6 +627,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
+**Stories → Figma:** ✓ all 9 stories
+
+- `Default` → ✓ `value=empty`
+- `WithSelection` → ✓ `value=selected`
+- `Wrapping` → ✓ `value=selected`
+- `WithGroups` → ✓ `state=open`
+- `WithDescription` → ✓ `description=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Required` → ✓ `required=true`
+- `Disabled` → ✓ `disabled=true, value=selected`
+- `KeyboardNavigation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
 ### NavItem (`v1.0.0`, stable)
@@ -489,6 +660,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 4 stories
+
+- `Default` → ✓ `current=false`
+- `Current` → ✓ `current=true`
+- `NavList` → ✓ layout of existing variants
+- `KeyboardActivation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `nav-item`, `nav-item-indicator`, `nav-item-icon`, `nav-item-label`
 
 ### PageHeader (`v1.0.0`, stable)
@@ -507,6 +685,12 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 3 stories
+
+- `Default` → ✓ `description=true`
+- `WithActions` → ✓ `actions=true, description=true`
+- `SectionLevel` → ✓ `level=2, description=true`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
@@ -537,6 +721,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 6 stories
+
+- `AllTypes` → ✓ layout of existing variants
+- `WithDescription` → ✓ `description=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true`
+- `Group` → ✓ layout of existing variants
+- `KeyboardSelect` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-required`, `radio-item-description`, `radio-item-error`
 
 ### RadioGroup (`v0.1.0`, stable)
@@ -564,6 +757,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 7 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `Horizontal` → ✓ `orientation=horizontal`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true`
+- `WithDisabledOption` → ✓ layout of existing variants
+- `Required` → ✓ `required=true`
+- `KeyboardNavigation` → ✓ layout of existing variants — keyboard focus is drawn on the RadioButton inside it (state=focus)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
 ### SegmentedControl (`v0.2.0`, stable)
@@ -585,6 +788,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 6 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `FourOptions` → ✓ `options=4`
+- `WithDisabledOption` → ✓ layout of existing variants — one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)
+- `IconOnly` → ✓ layout of existing variants — SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)
+- `Disabled` → ✓ `disabled=true`
+- `KeyboardNavigation` → ✓ layout of existing variants — keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
 ### Select (`v1.1.0`, stable)
@@ -594,7 +806,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(SelectOption \| SelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `(SelectOption \| SelectOptionGroup)[]` | — on the child `Menu` › `options` | drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21) · `list-delegated` | — |
 | `value` | `string \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `value` | `string \| undefined` | `TEXT` `valueText` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
@@ -613,11 +825,25 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
-**Property order:** ✗ Figma value, invalid, disabled, fullWidth, hideLabel, state, ·, label, placeholder, valueText, description, descriptionText, errorMessage, errorMessageText, required — code value, invalid, disabled, fullWidth, hideLabel, state, ·, valueText, label, placeholder, description, descriptionText, errorMessage, errorMessageText, required
+**Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
+
+**Stories → Figma:** ✓ all 11 stories
+
+- `Default` → ✓ `value=empty`
+- `Controlled` → ✓ `value=selected`
+- `WithGroups` → ✓ `state=open`
+- `WithLabelEnd` → ✓ `state=open`
+- `WithDescription` → ✓ `description=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true, value=selected`
+- `MinimumWidth` → ✓ not drawn in Figma — min-width behaviour — same look as Default (approved 2026-10-21)
+- `Required` → ✓ `required=true`
+- `Open` → ✓ `state=open`
+- `KeyboardNavigation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 
@@ -635,6 +861,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 1 stories
+
+- `Default` → ✓ `brand=true, footer=true`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
@@ -656,6 +886,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 5 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `BottomPlacement` → ✓ `placement=bottom`
+- `RightPlacement` → ✓ `placement=right`
+- `KeyboardDismiss` → ✓ layout of existing variants — keyboard focus is drawn on the close IconButton inside it (state=focus)
+- `Opened` → ✓ not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
@@ -683,6 +921,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 7 stories
+
+- `Default` → ✓ `checked=false`
+- `Checked` → ✓ `checked=true, description=true`
+- `WithDescription` → ✓ `description=true`
+- `Disabled` → ✓ `disabled=true`
+- `Sizes` → ✓ layout of existing variants
+- `SettingsGroup` → ✓ layout of existing variants
+- `KeyboardToggle` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `switch-root`, `switch-row`, `switch-track`, `switch-thumb`, `switch-label`, `switch-description`
 
 ### Table (`v1.0.0`, stable)
@@ -693,6 +941,11 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 2 stories
+
+- `Default` → ✓ not drawn in Figma — Table has no Figma properties yet — map its stories when the set is built (approved 2026-10-21)
+- `DragReorder` → ✓ not drawn in Figma — Table has no Figma properties yet — map its stories when the set is built (approved 2026-10-21)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
@@ -725,6 +978,17 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
+**Stories → Figma:** ✓ all 8 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `WithDescription` → ✓ `description=true`
+- `WithCharacterCount` → ✓ `showCount=true`
+- `Invalid` → ✓ `invalid=true, errorMessage=true`
+- `Disabled` → ✓ `disabled=true`
+- `NoResize` → ✓ `resize=none`
+- `FullWidth` → ✓ `fullWidth=true`
+- `KeyboardFocus` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `textarea-root`, `textarea-label`, `textarea-required`, `textarea-wrapper`, `textarea-field`, `textarea-counter`, `textarea-description`, `textarea-error`
 
 ### Toast (`v0.2.0`, stable)
@@ -734,6 +998,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Only in Figma:** ✗ `label` (TEXT), `description` (BOOLEAN), `descriptionText` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
+
+**Stories → Figma:** ✓ all 4 stories
+
+- `Default` → ✓ layout of existing variants
+- `Playground` → ✓ `variant=success, description=true`
+- `KeyboardReach` → ✓ layout of existing variants — keyboard focus is drawn on the close IconButton inside it (state=focus)
+- `Opened` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
@@ -753,6 +1024,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Stories → Figma:** ✓ all 5 stories
+
+- `Default` → ✓ `default` — every Figma property at its default value
+- `Placements` → ✓ layout of existing variants
+- `OnAvatar` → ✓ layout of existing variants
+- `AlwaysExpanded` → ✓ `expanded=true`
+- `KeyboardFocus` → ✓ `expanded=true` — keyboard focus on the trigger shows the tooltip; the trigger draws its own focus
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
 ### TopBar (`v1.0.0`, stable)
@@ -768,6 +1047,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Stories → Figma:** ✓ all 1 stories
+
+- `Default` → ✓ `start=true, end=true`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-start`, `topbar-end`
 

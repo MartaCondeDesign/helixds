@@ -152,14 +152,14 @@ export const Loading: Story = {
 };
 
 export const LoginFormPattern: Story = {
-  // The form fixes each field's label, icon, validation and loading — size, disabled and hideLabel apply to both fields
+  // The form fixes each field's label, icon, validation and loading — disabled and hideLabel apply to both fields
   argTypes: {
     label: { control: false }, icon: { control: false }, iconEnd: { control: false },
     description: { control: false }, errorMessage: { control: false }, invalid: { control: false },
     invalidAttempt: { control: false }, required: { control: false }, isLoading: { control: false },
     fullWidth: { control: false },
   },
-  render: ({ size, disabled, hideLabel }) => {
+  render: ({ disabled, hideLabel }) => {
     const [email, setEmail]               = useState('');
     const [password, setPassword]         = useState('');
     const [emailInvalid, setEmailInvalid] = useState(false);
@@ -204,7 +204,7 @@ export const LoginFormPattern: Story = {
         {formError && <Badge variant="danger" label={formError} />}
 
         <Input
-          size={size} disabled={disabled} hideLabel={hideLabel}
+          disabled={disabled} hideLabel={hideLabel}
           label="Email" type="email" required autoComplete="email"
           icon={IconMail}
           value={email} onChange={e => setEmail(e.target.value)}
@@ -212,7 +212,7 @@ export const LoginFormPattern: Story = {
         />
 
         <Input
-          size={size} disabled={disabled} hideLabel={hideLabel}
+          disabled={disabled} hideLabel={hideLabel}
           label="Password" type="password" required autoComplete="current-password"
           icon={IconLock} description="Min. 8 characters"
           value={password} onChange={e => setPassword(e.target.value)} fullWidth

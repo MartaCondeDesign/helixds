@@ -38,12 +38,12 @@ const meta: Meta<typeof MultiSelect> = {
   // Fixed width like Select's own stories, so the chips wrap inside it instead of stretching the field.
   // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    options: SKILLS,
     value: undefined,
     invalid: undefined,
     disabled: undefined,
     fullWidth: undefined,
     hideLabel: undefined,
+    options: SKILLS, // drawn by the nested Menu in Figma (list-delegated) — not a variant here
     label: 'Skills',
     placeholder: 'Choose skills…',
     defaultValue: undefined,

@@ -249,7 +249,7 @@ pnpm figma:story-order      read every component's prop order from the running S
                             (not the contract's order, which Storybook doesn't follow)
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
                             and .ai/maps/figma-map.json (machine-readable: each prop's Figma property, or codeOnly + why),
-                            shown on every docs page as a "Code → Figma" table (Prop · Figma · Why — 🎨 … / ⌨️ Code only)
+                            shown on every docs page as a "Code → Figma" table (Prop · Figma · Why — 🎨 … / 👾 Code only)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json (git-ignored) from `git log`, shown in Storybook's Changelog page
 pnpm docs:readme            sync component counts in README.md + the component lists in AGENTS.md and llms.txt

@@ -126,7 +126,6 @@
       "onClick"
     ],
     "Input": [
-      "size",
       "hideLabel",
       "invalid",
       "isLoading",
@@ -167,12 +166,12 @@
       "onTertiaryAction"
     ],
     "MultiSelect": [
-      "options",
       "value",
       "invalid",
       "disabled",
       "fullWidth",
       "hideLabel",
+      "options",
       "label",
       "placeholder",
       "defaultValue",
@@ -226,12 +225,12 @@
       "name"
     ],
     "Select": [
-      "options",
       "value",
       "invalid",
       "disabled",
       "fullWidth",
       "hideLabel",
+      "options",
       "label",
       "placeholder",
       "defaultValue",

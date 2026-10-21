@@ -105,7 +105,6 @@ function ChangelogPage() {
               hideLabel
               icon={IconSearch}
               placeholder="Search by word or hash…"
-              size="m"
               fullWidth
               value={query}
               onChange={e => setQuery(e.target.value)}
@@ -127,7 +126,6 @@ function ChangelogPage() {
               hideLabel
               type="date"
               icon={IconCalendar}
-              size="m"
               fullWidth
               value={dateFilter}
               onChange={e => setDateFilter(e.target.value)}
