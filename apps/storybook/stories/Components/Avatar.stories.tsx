@@ -7,7 +7,13 @@ const meta: Meta<typeof Avatar> = {
   component:  Avatar,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(AvatarDoc),
-  args: { label: 'Ana García', size: 'm' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    size: 'm',
+    src: undefined,
+    label: 'Ana García',
+    'aria-describedby': undefined,
+  },
   argTypes: {
     size: {
       control: 'select',

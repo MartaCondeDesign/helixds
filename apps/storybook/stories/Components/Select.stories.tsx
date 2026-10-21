@@ -44,7 +44,25 @@ const meta: Meta<typeof Select> = {
   // growing the box, matching a native <select>'s own behavior at a fixed width. Select has no
   // built-in default per CLAUDE.md's min-width policy (a consumer/pattern decision, not a system
   // token) — this is the demonstrated example default.
-  args: { label: 'Role', options: ROLES, placeholder: 'Choose a role…', className: 'w-[300px]' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: ROLES,
+    value: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    fullWidth: undefined,
+    hideLabel: undefined,
+    label: 'Role',
+    placeholder: 'Choose a role…',
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    id: undefined,
+    name: undefined,
+    className: 'w-[300px]',
+  },
 };
 
 export default meta;

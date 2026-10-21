@@ -9,7 +9,20 @@ const meta: Meta<typeof RadioButton> = {
   component:  RadioButton,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(RadioButtonDoc),
-  args: { label: 'Free' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    checked: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    label: 'Free',
+    name: undefined,
+    value: undefined,
+    defaultChecked: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+  },
 };
 
 export default meta;

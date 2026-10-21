@@ -21,10 +21,24 @@ const meta: Meta<typeof Input> = {
   // longer typed content). Input has no built-in default per CLAUDE.md's min-width policy (a
   // consumer/pattern decision, not a system token) — this is the demonstrated example default,
   // matching Select/Textarea's own stories.
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    label:    'Label',
     size:     'm',
+    hideLabel: undefined,
+    invalid: undefined,
+    isLoading: undefined,
+    fullWidth: undefined,
+    disabled: undefined,
+    label:    'Label',
     onChange: fn(),
+    type: undefined,
+    placeholder: undefined,
+    required: undefined,
+    icon: undefined,
+    iconEnd: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    invalidAttempt: undefined,
     className: 'w-[300px]',
   },
   argTypes: {

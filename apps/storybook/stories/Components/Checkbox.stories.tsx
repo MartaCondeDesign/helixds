@@ -9,7 +9,22 @@ const meta: Meta<typeof Checkbox> = {
   component:  Checkbox,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(CheckboxDoc),
-  args: { label: 'Accept terms of service' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    checked: undefined,
+    disabled: undefined,
+    invalid: undefined,
+    indeterminate: undefined,
+    label: 'Accept terms of service',
+    description: undefined,
+    errorMessage: undefined,
+    defaultChecked: undefined,
+    onChange: undefined,
+    required: undefined,
+    id: undefined,
+    name: undefined,
+    value: undefined,
+  },
 };
 
 export default meta;

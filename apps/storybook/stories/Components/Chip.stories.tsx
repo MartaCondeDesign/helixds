@@ -16,11 +16,17 @@ const meta: Meta<typeof Chip> = {
   component: Chip,
   tags: ['autodocs'],
   parameters: createComponentDocsParameters(ChipDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    label: 'Chip',
     variant: 'neutral',
     size: 's',
+    disabled: undefined,
+    label: 'Chip',
     onClick: () => {},
+    dismissible: undefined,
+    icon: undefined,
+    iconEnd: undefined,
+    onDismiss: undefined,
   },
   argTypes: {
     variant: {

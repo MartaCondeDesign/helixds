@@ -17,11 +17,14 @@ const meta: Meta<typeof IconButton> = {
   component:  IconButton,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(IconButtonDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    icon:    mapped('IconTrash'),
-    label:   'Delete item',
     variant: 'ghost',
     size:    'm',
+    isLoading: undefined,
+    disabled: undefined,
+    icon:    mapped('IconTrash'),
+    label:   'Delete item',
     onClick: fn(),
   },
   argTypes: {

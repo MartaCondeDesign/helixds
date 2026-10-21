@@ -10,7 +10,13 @@ const meta: Meta<typeof NavItem> = {
   component:  NavItem,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(NavItemDoc),
-  args: { label: 'Dashboard', href: '#', icon: mapped('LayoutDashboard'), current: false },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    current: false,
+    label: 'Dashboard',
+    href: '#',
+    icon: mapped('LayoutDashboard'),
+  },
   argTypes: {
     // icon takes the Tabler component itself — the control picks one by name
     icon: {

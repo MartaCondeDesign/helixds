@@ -9,7 +9,10 @@ const meta: Meta<typeof Tooltip> = {
   component:  Tooltip,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TooltipDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    placement: undefined,
+    expanded: undefined,
     label: 'Delete',
     children: <IconButton icon={IconTrash} label="Delete" />,
     // No explicit placement — defaults to 'top' and auto-flips on its own if that would clip the

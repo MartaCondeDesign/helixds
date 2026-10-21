@@ -16,7 +16,13 @@ const meta: Meta<typeof ChipGroup> = {
   component:  ChipGroup,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(ChipGroupDoc),
-  args: { label: 'Status', options: STATUS, size: 's' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: STATUS,
+    size: 's',
+    disabled: undefined,
+    label: 'Status',
+  },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },
   },

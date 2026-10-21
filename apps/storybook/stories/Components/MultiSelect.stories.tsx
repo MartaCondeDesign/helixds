@@ -36,7 +36,25 @@ const meta: Meta<typeof MultiSelect> = {
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(MultiSelectDoc),
   // Fixed width like Select's own stories, so the chips wrap inside it instead of stretching the field.
-  args: { label: 'Skills', options: SKILLS, placeholder: 'Choose skills…', className: 'w-[300px]' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: SKILLS,
+    value: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    fullWidth: undefined,
+    hideLabel: undefined,
+    label: 'Skills',
+    placeholder: 'Choose skills…',
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    id: undefined,
+    name: undefined,
+    className: 'w-[300px]',
+  },
 };
 
 export default meta;

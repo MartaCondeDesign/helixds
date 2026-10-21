@@ -21,11 +21,17 @@ const meta: Meta<typeof Button> = {
   component:  Button,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(ButtonDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    children: 'Button',
     variant:  'primary',
     size:     'm',
+    isLoading: undefined,
+    fullWidth: undefined,
+    disabled: undefined,
+    children: 'Button',
     onClick:  fn(),
+    icon: undefined,
+    iconEnd: undefined,
   },
   argTypes: {
     variant: {

@@ -23,7 +23,21 @@ const meta: Meta<typeof RadioGroup> = {
   component:  RadioGroup,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(RadioGroupDoc),
-  args: { label: 'Plan', options: PLAN_OPTIONS },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: PLAN_OPTIONS,
+    orientation: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    label: 'Plan',
+    value: undefined,
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    name: undefined,
+  },
   argTypes: {
     orientation: { control: 'select', options: ['vertical', 'horizontal'] },
   },

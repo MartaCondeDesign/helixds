@@ -23,7 +23,16 @@ const meta: Meta<typeof SegmentedControl> = {
   component:  SegmentedControl,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SegmentedControlDoc),
-  args: { label: 'Mode', options: MODE_OPTIONS },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: MODE_OPTIONS,
+    disabled: undefined,
+    label: 'Mode',
+    value: undefined,
+    defaultValue: undefined,
+    onChange: undefined,
+    name: undefined,
+  },
 };
 
 export default meta;

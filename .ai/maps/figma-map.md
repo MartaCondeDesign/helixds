@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 215 of 218 code props match Figma exactly.**
+**Parity today: 214 of 218 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -57,7 +57,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `expanded`, `disabled` — Storybook label, children, expanded, defaultExpanded, onExpandedChange, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `focus`
 
@@ -91,7 +91,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `size`, `src` — Storybook label, size, src, aria-describedby (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-root`, `avatar-image`, `avatar-initials`
 
@@ -149,7 +149,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `variant`, `size`, `isLoading`, `fullWidth`, `disabled` — Storybook children, variant, size, onClick, isLoading, icon, iconEnd, fullWidth, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -215,7 +215,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `checked`, `disabled`, `invalid`, `indeterminate` — Storybook label, description, errorMessage, checked, defaultChecked, onChange, disabled, required, invalid, indeterminate, id, name, value (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -244,7 +244,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `orientation`, `invalid`, `disabled` — Storybook label, options, value, defaultValue, onChange, orientation, description, errorMessage, invalid, disabled, required, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
@@ -268,7 +268,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `variant`, `size`, `disabled` — Storybook label, variant, size, onClick, dismissible, disabled, icon, iconEnd, onDismiss (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -287,7 +287,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `size`, `disabled` — Storybook label, options, size, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
@@ -309,7 +309,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `actions`, `expanded`, `disabled` — Storybook icon, label, onClick, actions, expanded, defaultExpanded, onExpandedChange, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -348,7 +348,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `variant`, `size`, `isLoading`, `disabled` — Storybook icon, label, variant, size, onClick, isLoading, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -382,7 +382,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `size`, `hideLabel`, `invalid`, `isLoading`, `fullWidth`, `disabled` — Storybook label, size, onChange, type, placeholder, hideLabel, invalid, required, isLoading, icon, iconEnd, description, errorMessage, invalidAttempt, fullWidth, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -407,7 +407,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `multiple` — Storybook id, options, expanded, multiple, onSelect, value, values (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
@@ -464,7 +464,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `value`, `invalid`, `disabled`, `fullWidth`, `hideLabel` — Storybook label, options, placeholder, value, defaultValue, onChange, description, errorMessage, invalid, disabled, required, fullWidth, hideLabel, id, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
@@ -485,7 +485,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `current` — Storybook label, href, icon, current (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -506,7 +506,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `level` — Storybook label, level, description, actions (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
@@ -533,7 +533,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `checked`, `invalid`, `disabled` — Storybook label, name, value, checked, defaultChecked, onChange, description, errorMessage, invalid, disabled, required (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -562,7 +562,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `orientation`, `invalid`, `disabled` — Storybook label, options, value, defaultValue, onChange, orientation, description, errorMessage, invalid, disabled, required, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
@@ -583,7 +583,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `options`, `disabled` — Storybook label, options, value, defaultValue, onChange, disabled, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
@@ -613,9 +613,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
-**Property order:** ✓ same as code
+**Property order:** ✗ Figma value, invalid, disabled, fullWidth, hideLabel, state, ·, label, placeholder, valueText, description, descriptionText, errorMessage, errorMessageText, required — code value, invalid, disabled, fullWidth, hideLabel, state, ·, valueText, label, placeholder, description, descriptionText, errorMessage, errorMessageText, required
 
-**Storybook order:** ✗ variant props after the rest: `options`, `value`, `invalid`, `disabled`, `fullWidth`, `hideLabel` — Storybook label, options, placeholder, value, defaultValue, onChange, description, errorMessage, invalid, disabled, required, fullWidth, hideLabel, id, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
@@ -655,7 +655,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `placement` — Storybook label, children, placement, expanded, onDismiss, showCloseButton, closeOnBackdropClick (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
@@ -679,7 +679,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `size`, `hideLabel`, `checked`, `disabled` — Storybook label, size, hideLabel, description, checked, defaultChecked, onChange, disabled, id, name (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -721,7 +721,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `invalid`, `fullWidth`, `hideLabel`, `resize`, `disabled` — Storybook label, placeholder, description, errorMessage, invalid, required, fullWidth, hideLabel, rows, maxLength, resize, showCount, disabled (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -751,7 +751,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Storybook order:** ✗ variant props after the rest: `placement`, `expanded` — Storybook label, children, placement, expanded (reorder the story file's meta.args: Figma variants first)
+**Storybook order:** ✓ Figma variants first, then the rest
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
