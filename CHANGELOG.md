@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Badge stories: every story has controls (size, icon, variant, label where they apply); AvatarGroup photos: a different portrait per avatar (latest commit)
+- 2026-10-21 — Figma property names in camelCase (iconSwap, descriptionText…, standard v1.7) across all sets; Card: showHeader + headerText instead of header (owner's choice) (latest commit)
+- 2026-10-21 — Badge stories: every story has controls (size, icon, variant, label where they apply); AvatarGroup photos: a different portrait per avatar ([`999adc0`](https://github.com/MartaCondeDesign/helixds/commit/999adc0))
 - 2026-10-21 — Avatar and AvatarGroup: withImage false/true variant (photo or initials, owner's choice), AvatarGroup avatars 1–7 variant ([`63d5482`](https://github.com/MartaCondeDesign/helixds/commit/63d5482))
 - 2026-10-21 — Figma properties harness: use_figma hook asks the owner with the code-vs-Figma table; figma-map lists props with no Figma property and why; AvatarGroup withOverflow + max (owner's choice) ([`26a0336`](https://github.com/MartaCondeDesign/helixds/commit/26a0336))
 - 2026-10-21 — Figma conversion v1.6: property order rule, Figma-only properties fail, Avatar label/src, Icon code-only, Tooltip trigger slot ([`fe43b98`](https://github.com/MartaCondeDesign/helixds/commit/fe43b98))

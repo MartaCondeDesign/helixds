@@ -13,7 +13,7 @@
     "Submitting a form implicitly — always set type='submit' explicitly"
   ],
 
-  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight. Content that changes in place swaps instead of cutting (transitions.dev icon swap + text morph): with an icon, icon ↔ spinner and icon ↔ icon cross-fade with blur and scale over semantic.duration.enter; a plain-text label cross-blurs over semantic.duration.exit while its width eases to the new text's. The outgoing label is aria-hidden, so only the new one is read; under prefers-reduced-motion the swap is instant.",
+  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight. Content that changes in place swaps instead of cutting (transitions.dev iconSwap + text morph): with an icon, icon ↔ spinner and icon ↔ icon cross-fade with blur and scale over semantic.duration.enter; a plain-text label cross-blurs over semantic.duration.exit while its width eases to the new text's. The outgoing label is aria-hidden, so only the new one is read; under prefers-reduced-motion the swap is instant.",
 
   "governance": {
     "mayExtendLocally": [

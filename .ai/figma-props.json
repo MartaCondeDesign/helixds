@@ -138,7 +138,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon swap",
+          "name": "iconSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -176,7 +176,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon swap",
+          "name": "iconSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -184,7 +184,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEnd swap",
+          "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -252,11 +252,11 @@
       "page": "Card",
       "properties": [
         {
-          "name": "header",
+          "name": "showHeader",
           "type": "BOOLEAN"
         },
         {
-          "name": "header text",
+          "name": "headerText",
           "type": "TEXT"
         },
         {
@@ -335,7 +335,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -343,7 +343,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -407,7 +407,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -415,7 +415,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -462,7 +462,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon swap",
+          "name": "iconSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -470,7 +470,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEnd swap",
+          "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -650,7 +650,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon swap",
+          "name": "iconSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -658,7 +658,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEnd swap",
+          "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -666,7 +666,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -674,7 +674,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -826,7 +826,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -834,7 +834,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -907,7 +907,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon swap",
+          "name": "iconSwap",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -943,7 +943,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -974,7 +974,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -982,7 +982,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -1038,7 +1038,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -1046,7 +1046,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -1133,7 +1133,7 @@
           "type": "TEXT"
         },
         {
-          "name": "value text",
+          "name": "valueText",
           "type": "TEXT"
         },
         {
@@ -1145,7 +1145,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -1153,7 +1153,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -1268,7 +1268,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -1371,7 +1371,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {
@@ -1379,7 +1379,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessage text",
+          "name": "errorMessageText",
           "type": "TEXT"
         },
         {
@@ -1461,7 +1461,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "description text",
+          "name": "descriptionText",
           "type": "TEXT"
         },
         {

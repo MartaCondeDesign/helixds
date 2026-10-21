@@ -121,7 +121,7 @@
       { "name": "level", "type": "VARIANT", "values": ["1", "2"], "codeProp": "level", "description": "1 = h1, Heading / 2xl / Bold · 2 = h2, Heading / xl / Bold." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 4px top (spacing/2xs), so hiding it changes nothing else." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" },
+      { "name": "descriptionText", "type": "TEXT", "codeProp": "description" },
       { "name": "actions", "type": "BOOLEAN", "codeProp": "actions", "description": "Shows the actions slot (a primary Button instance as a placeholder; 8px gap — the slot can mix groups, e.g. Badge + Button)." }
     ]
   }

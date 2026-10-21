@@ -202,14 +202,14 @@
         "codeProp": "description",
         "description": "Show/hide part: indented 24px (16px circle + 8px) to line up with the option text."
       },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" },
+      { "name": "descriptionText", "type": "TEXT", "codeProp": "description" },
       {
         "name": "errorMessage",
         "type": "BOOLEAN",
         "codeProp": "errorMessage",
         "description": "Show/hide part: same indent; code shows it instead of the description."
       },
-      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+      { "name": "errorMessageText", "type": "TEXT", "codeProp": "errorMessage" }
     ],
     "structure": "radio-group (8px gap) > radio-legend (text + radio-required),  radio-options (12px gap,  real RadioButton instances: Free,  Pro checked,  Team,  Enterprise),  radio-description,  radio-error. Options are a fixed sample — options[] and value have no Figma property.",
     "variantCombinations": "6 variants (2026-10-20): orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each RadioButton option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."

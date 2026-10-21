@@ -26,8 +26,8 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
 | Required string a part renders (`label` → `{prefix}-label` / `-legend`), `placeholder`, the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name | text field | `text` |
-| Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name` + `TEXT` `name text` | toggle + text field | `optional-text` |
-| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `name swap` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
+| Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name` + `TEXT` `nameText` | toggle + text field | `optional-text` |
+| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name` + `INSTANCE_SWAP` `nameSwap` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
 | A string no part renders — the `aria-label` `label` of IconButton, FAB, ChipGroup, SegmentedControl; Chart's `description` | — | not a design property: nothing to draw | `aria-text` |
@@ -54,9 +54,9 @@ the component isn't ✓ synced until it's renamed to the code prop, removed, or 
 **`state` is the only Figma-only property:** `default` / `hover` / `press` / `focus` (+ `open`, `selected`) — CSS
 pseudo-classes, not props. `disabled`, `invalid`, `checked`, `isLoading`… are never values of `state`.
 
-**Naming:** the Figma property is the code prop name, unchanged (`isLoading`, not `loading`); VARIANT values are
-the code values, unchanged; an optional string's text property is `{name} text`; layer names are the
-`data-helix-part` values in the TSX. An optional icon's picker is `{name} swap` (`icon swap`) — Figma refuses two
+**Naming:** every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21). The Figma property is the code prop name, unchanged (`isLoading`, not `loading`); VARIANT values are
+the code values, unchanged; an optional string's text property is `{name}Text`; layer names are the
+`data-helix-part` values in the TSX. An optional icon's picker is `{name}Swap` (`iconSwap`) — Figma refuses two
 properties with the same name, so it can't share `icon` with the toggle.
 
 ## 2. Property order
@@ -66,7 +66,7 @@ Controls list them in (owner's decision 2026-10-21). One Figma limitation: the p
 VARIANT properties first. So each group follows the code order on its own:
 
 1. the variants, in code order, with `state` last;
-2. every other property, in code order — a BOOLEAN's `{name} text` / `{name} swap` right after it, approved exceptions
+2. every other property, in code order — a BOOLEAN's `{name}Text` / `{name}Swap` right after it, approved exceptions
    for native attributes (`value` on Input/Textarea) last.
 
 `figma-map.md` shows a **Property order** line per component and `figma-drift` fails a component that breaks it.
@@ -99,7 +99,7 @@ values instances already had.
 size, derives the stroke weight from that size (ADR-017 — a 12px and a 32px icon read the same weight) and handles
 the color and the accessible label. In Figma that work is already done where icons are used: every component variant
 places its icon instance at the right size with its stroke set for that size (a Button `s` and `l` each carry their
-own). Designers take icons from the **Icons** page; the consuming component's `icon swap` property changes which one.
+own). Designers take icons from the **Icons** page; the consuming component's `iconSwap` property changes which one.
 A loose icon scaled by hand doesn't re-derive its stroke the way code does — pick the icon at its size instead of
 scaling it. The contract records it (`figma.codeOnly`, `figma.propertyMap` with no properties).
 

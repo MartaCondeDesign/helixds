@@ -108,11 +108,14 @@
 
   "figma": {
     "states": ["default"],
+    "propertyMap": {
+      "header": { "codeType": "React.ReactNode | undefined", "figma": [{ "name": "showHeader", "type": "BOOLEAN" }, { "name": "headerText", "type": "TEXT" }], "approved": "2026-10-21", "reason": "header is a free slot in code (no Storybook control): Figma has no property named header — showHeader shows the title row, headerText is its text" }
+    },
     "properties": [
       { "name": "padding", "type": "VARIANT", "values": ["default", "none"], "codeProp": "padding", "description": "none: the body goes edge to edge (root has no top padding; a header keeps its own 24px top)." },
-      { "name": "header", "type": "BOOLEAN", "codeProp": "header", "description": "Show/hide part (show-hide-parts.md): the title row. With padding=default the 24px top lives on the root, the header carries only its 8px bottom, so toggling it never moves the body." },
-      { "name": "header text", "type": "TEXT", "codeProp": "header" },
-      { "name": "content", "type": "TEXT", "codeProp": "children" }
+      { "name": "showHeader", "type": "BOOLEAN", "codeProp": "header", "description": "Show/hide part (show-hide-parts.md): the title row. With padding=default the 24px top lives on the root, the header carries only its 8px bottom, so toggling it never moves the body." },
+      { "name": "headerText", "type": "TEXT", "codeProp": "header" },
+      { "name": "children", "type": "TEXT", "codeProp": "children" }
     ]
   }
 }

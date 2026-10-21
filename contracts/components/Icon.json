@@ -202,7 +202,7 @@
         "codeType": "HelixIconComponent",
         "figma": [],
         "approved": "2026-10-21",
-        "reason": "code-only wrapper: Figma swaps the icon on the consuming component (icon swap),  never on an Icon set"
+        "reason": "code-only wrapper: Figma swaps the icon on the consuming component (iconSwap),  never on an Icon set"
       },
       "size": {
         "codeType": "12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40",

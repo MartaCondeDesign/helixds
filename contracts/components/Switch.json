@@ -185,7 +185,7 @@
         "codeProp": "description",
         "description": "Show/hide part (show-hide-parts.md): the helper line under the row. It carries its own left padding (track width + 12px = spacing/250 on s,   spacing/300 on m),   so the row never moves."
       },
-      { "name": "description text", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }
+      { "name": "descriptionText", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }
     ],
     "variantCombinations": "18 variants (2026-10-20): checked false/true × size s/m × state default/hover/focus = 12,  plus disabled at state default for each checked × size = 4,  plus hideLabel=true drawn once per checked (size m,  state default,  enabled) = 2 — the standard rules for disabled and secondary toggles. hideLabel hides the switch-label layer (code keeps it for screen readers only); disabled dims label and description (text/disabled)."
   }
