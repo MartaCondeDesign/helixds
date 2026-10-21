@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Chip",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
   "purpose": "Represents a compact selectable label for filters, categories, or short choices.",
   "import": "import { Chip } from '@helixds/react';",
   "neverUseFor": [

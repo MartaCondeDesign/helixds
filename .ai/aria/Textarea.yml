@@ -34,17 +34,6 @@
 - textbox "Description":
   - /placeholder: Write something…
 
-# Sizes
-- text: Small
-- textbox "Small":
-  - /placeholder: size=s
-- text: Medium
-- textbox "Medium":
-  - /placeholder: size=m (default)
-- text: Large
-- textbox "Large":
-  - /placeholder: size=l
-
 # With Character Count
 - text: Description
 - textbox "Description":

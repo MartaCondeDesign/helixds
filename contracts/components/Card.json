@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Card",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Groups related content in a visually distinct, flat surface — a dashboard widget, a settings group, a gallery tile.",
   "import": "import { Card } from '@helixds/react';",

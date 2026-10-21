@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "SegmentedControl",
   "version": "0.2.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
   "import": "import { SegmentedControl } from '@helixds/react';",

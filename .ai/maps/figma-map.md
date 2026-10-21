@@ -43,7 +43,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 <!-- helix:figma-map-components — GENERATED, do not edit -->
 
-### Accordion (`v0.1.0`, beta)
+### Accordion (`v0.1.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -56,7 +56,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, beta)
+### AppShell (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -67,7 +67,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
-### Avatar (`v1.0.0`, beta)
+### Avatar (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -88,7 +88,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
-### Badge (`v1.0.0`, beta)
+### Badge (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -100,7 +100,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
-### Button (`v2.1.0`, beta)
+### Button (`v2.1.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -121,7 +121,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
-### Card (`v1.0.0`, beta)
+### Card (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -182,7 +182,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
-### Chip (`v2.0.0`, beta)
+### Chip (`v2.0.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -202,7 +202,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
 
-### ChipGroup (`v0.1.0`, beta)
+### ChipGroup (`v0.1.0`, stable)
 
 **Pattern:** `group` (.ai/maps/figma-conversion.md)
 
@@ -213,7 +213,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
-### FAB (`v2.0.0`, beta)
+### FAB (`v2.0.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -236,7 +236,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
-### IconButton (`v2.0.0`, beta)
+### IconButton (`v2.0.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -252,7 +252,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
-### Input (`v2.0.0`, beta)
+### Input (`v2.0.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -280,7 +280,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-spinner`, `input-icon-end`, `input-description`, `input-error`
 
-### Menu (`v0.3.0`, beta)
+### Menu (`v0.3.0`, stable)
 
 **Pattern:** `overlay` (.ai/maps/figma-conversion.md)
 
@@ -290,7 +290,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
-### Modal (`v0.1.0`, beta)
+### Modal (`v0.1.0`, stable)
 
 **Pattern:** `overlay` (.ai/maps/figma-conversion.md)
 
@@ -305,7 +305,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
-### MultiSelect (`v0.1.0`, beta)
+### MultiSelect (`v0.1.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -328,7 +328,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
-### NavItem (`v1.0.0`, beta)
+### NavItem (`v1.0.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -377,7 +377,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-required`, `radio-item-description`, `radio-item-error`
 
-### RadioGroup (`v0.1.0`, stable)
+### RadioGroup (`v0.1.0`, beta)
 
 **Pattern:** `group` (.ai/maps/figma-conversion.md)
 
@@ -395,7 +395,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
-### SegmentedControl (`v0.2.0`, beta)
+### SegmentedControl (`v0.2.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -405,7 +405,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
-### Select (`v1.1.0`, beta)
+### Select (`v1.1.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -440,7 +440,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
-### SidePanel (`v0.1.0`, beta)
+### SidePanel (`v0.1.0`, stable)
 
 **Pattern:** `overlay` (.ai/maps/figma-conversion.md)
 
@@ -477,7 +477,7 @@ _No design props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
-### Textarea (`v1.0.0`, beta)
+### Textarea (`v1.0.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 

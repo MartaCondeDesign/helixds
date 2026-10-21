@@ -22,6 +22,11 @@
   - /placeholder: you@example.com
   - text: ana@helix.dev
 
+# Loading
+- text: Username
+- textbox "Username" [disabled]: marta
+- paragraph: Checking that the name is free…
+
 # Login Form Pattern
 - heading "Sign in" [level=2]
 - text: Email
