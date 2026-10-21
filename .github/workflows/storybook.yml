@@ -29,7 +29,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile --ignore-scripts
-      - run: pnpm --filter @helixds/react build
+      # react plus what it depends on (@helixds/tokens), in order: react alone fails without tokens' dist/.
+      - run: pnpm --filter "@helixds/react..." build
       - run: pnpm --filter @helixds/storybook build
         env: { CI: 'true', HELIX_TRACES: 'off' }
       - uses: actions/upload-pages-artifact@v3

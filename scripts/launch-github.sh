@@ -28,23 +28,21 @@ else
 fi
 echo "✓ Pages source: GitHub Actions"
 
-# main: CI's `checks` job must pass and code owners must approve. enforce_admins=false so the
-# maintainer — the only code owner, who can't approve her own pull requests — can still merge hers.
+# main: CI's `checks` job must pass (the Changelog workflow re-runs CI on its own bot commit, so PR heads
+# always get a result), no force pushes, no deletion. No required review: the maintainer is the only code
+# owner and GitHub doesn't let anyone approve their own PR — CODEOWNERS still requests her review on
+# outside contributors' PRs, which they can't merge anyway. enforce_admins=false keeps an admin bypass.
 gh api -X PUT "repos/$REPO/branches/main/protection" --input - >/dev/null <<'JSON'
 {
   "required_status_checks": { "strict": false, "contexts": ["checks"] },
   "enforce_admins": false,
-  "required_pull_request_reviews": {
-    "required_approving_review_count": 1,
-    "require_code_owner_reviews": true,
-    "dismiss_stale_reviews": true
-  },
+  "required_pull_request_reviews": null,
   "restrictions": null,
   "allow_force_pushes": false,
   "allow_deletions": false
 }
 JSON
-echo "✓ main protected: CI required, code owner review required (admins can bypass)"
+echo "✓ main protected: CI required, no force push or deletion (admins can bypass)"
 
 # SECURITY.md points reporters at GitHub's private advisory form.
 gh api -X PUT "repos/$REPO/private-vulnerability-reporting" >/dev/null
