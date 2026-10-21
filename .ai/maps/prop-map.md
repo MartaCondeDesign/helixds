@@ -53,6 +53,7 @@ The `verify:props` script rejects any prop name in the "Never" column found in `
 | `iconEnd`   | `rightIcon`, `endIcon`, `trailingIcon`  | Trailing icon — same reference convention as `icon`  |
 | `labelEnd`  | `meta`, `suffix`, `trailingText`, `rightText`, `secondaryText` | Short secondary text aligned to the end of an option (a value, a count, a percentage) — same `End` convention as `iconEnd` |
 | `children`  | `content`, `body`, `slot`        | React children slot                               |
+| `options`   | `items`, `choices`, `list`       | The items a group, select or menu draws — an array of `{ value, label }`. In Figma: a VARIANT `options` = how many (2…7), `list-count` rule in contracts/figma-conversion.json |
 
 ## Width + alignment
 

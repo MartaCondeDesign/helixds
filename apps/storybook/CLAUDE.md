@@ -132,6 +132,14 @@ Enforced twice:
   the toast its button opens; Modal's `closeOnBackdropClick` changes behaviour) is listed in the story's
   `parameters.controlsCheck: { skip: ['name'], reason: '…' }` — the reason is required, like `controls-off`.
 
+## Props in Figma's order: variants first
+
+The props table lists the props that are Figma VARIANTs first (variant, size, checked, disabled… —
+`.ai/maps/figma-map.json` says which), then all the rest, each group in the same order as Figma's properties panel
+(Figma can't interleave variants with other properties, so Storybook follows it). Storybook orders the table by the
+keys of the file's `meta.args`, so list them in that order — adding a prop to `args` (its default) if it has to move.
+Checked by `pnpm figma:story-order` + `pnpm docs:figma-map` (**Storybook order** line, owner's rule 2026-10-21).
+
 ## Token-driven stories must read from `tokens.json`, not hardcode a list
 
 See `packages/tokens/CLAUDE.md` → "Adding a token" step 6. A story that shows tokens never lists them by

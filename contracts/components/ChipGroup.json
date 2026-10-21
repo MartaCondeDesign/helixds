@@ -169,6 +169,6 @@
   "figma": {
     "states": ["default"],
     "properties": [],
-    "variantCombinations": "4 variants (2026-10-21): size × disabled,  no state axis (pattern group). label is the aria-label: no Figma property."
+    "variantCombinations": "24 variants (2026-10-21): options (2–7 Chip instances, list-count) × size × disabled,  no state axis (pattern group). label is the aria-label: no Figma property."
   }
 }

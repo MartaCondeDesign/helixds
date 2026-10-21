@@ -22,6 +22,7 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 
 | Code prop | Figma property | Panel | Rule |
 |---|---|---|---|
+| List of drawn items (`options`, `actions`, `avatars`, `items` — an array) | `VARIANT` same name = how many items: `2` / `3` / … / `7` | dropdown | `list-count` |
 | Union `'a' \| 'b'`, `1 \| 2` | `VARIANT`, same name, same values | dropdown | `union` |
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
@@ -31,6 +32,14 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
 | A string no part renders — the `aria-label` `label` of IconButton, FAB, ChipGroup, SegmentedControl; Chart's `description` | — | not a design property: nothing to draw | `aria-text` |
+
+**Lists become a count** (owner's rule 2026-10-21, `listCount` in the JSON): Figma can't loop over data, so a
+list the component draws item by item — CheckboxGroup's and RadioGroup's `options`, AvatarGroup's `avatars`,
+FAB's `actions`… — is a VARIANT named like the prop whose values are how many items show (`options` = 2 … 7, named exactly like the component's code prop;
+each item an instance of the item component with its own example text). The range is 2–7 unless the contract's
+`figma.listCount` sets another (`{ "avatars": { "min": 1, "max": 7 } }` — AvatarGroup, built before the rule). A list
+that only shows inside an overlay (Select, MultiSelect, Menu) is drawn open. Selected values (`value`, `values`,
+`defaultValue`) and chart data (`categories`, `series`) aren't items on screen: code only.
 
 **Why a look-changing boolean is a VARIANT, not a BOOLEAN:** a Figma BOOLEAN can only show or hide a layer. It
 can't change a color or a size, and `true` always means "visible" — so `hideLabel=true` could never hide the
@@ -61,6 +70,16 @@ properties with the same name, so it can't share `icon` with the toggle.
 
 ## 2. Property order
 
+**Variants first, on both sides** (owner's rule 2026-10-21): Figma's panel always lists VARIANT properties first
+and can't interleave them with the rest, so Storybook does the same — the props that are Figma variants first, then
+everything else, each group in the same order. Storybook takes its table order from the keys of each story file's
+`meta.args`, so that's where the order is set. figma-map's **Storybook order** line fails (and the component drifts)
+when a variant prop comes after a non-variant one.
+
+**The reference is what Storybook shows**, read from its props table by `pnpm figma:story-order`
+(`.ai/storybook-prop-order.json`) — never the contract's prop order, which Storybook doesn't follow (Chip: `label`
+first in Storybook, fourth in the contract; that gap left 9 components out of order while the check said ✓).
+
 Figma's properties come in **the code's order** — the order of the contract's props, which is the order Storybook's
 Controls list them in (owner's decision 2026-10-21). One Figma limitation: the properties panel always shows the
 VARIANT properties first. So each group follows the code order on its own:
@@ -82,8 +101,8 @@ values instances already had.
   every `size` and in every state the code can reach — `fullWidth` with default / hover / press / focus and
   disabled (owner's decision 2026-10-21; until then each was drawn once, at the default size and state, which left
   `fullWidth` and `isLoading` with no hover, focus or other sizes). The one limit is what code can't show: a loading
-  Button or IconButton is disabled (`disabled={disabled || isLoading}`), so `isLoading=true` is drawn at
-  `state=default`, enabled, only (`variants.loadingDisables`).
+  Button, IconButton or Input is disabled (`disabled={disabled || isLoading}`), so `isLoading=true` is drawn at
+  `state=default`, enabled and valid, only (`variants.loadingDisables`).
 - **Impossible combinations aren't drawn** (Checkbox `checked` + `indeterminate`: code shows indeterminate). The
   contract's `figma.variantCombinations` lists what's left.
 - **Focus ring never clipped:** in a variant that draws the focus ring (`state=focus`, and `state=open` where it

@@ -76,6 +76,12 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    a story per variant, size and authored state; a keyboard `play` test per key in `a11y.keyboardNav`;
    `<MotionConfig reducedMotion="user">` around any Motion animation; an eval prompt. Then run
    `pnpm verify:stable` (Storybook running).
+6a. **One prop order, in Storybook and in Figma — every time a component is created or its props change**
+   (owner's rule 2026-10-21): first the props that are Figma VARIANTs, then all the rest, each group in the same
+   order on both sides. In Storybook it's the key order of the story file's `meta.args`; in Figma it's the variant-name
+   order and the order the other properties are created in (`scripts/figma/reorder-props.js`). Adding, renaming or
+   removing a prop means updating both, then `pnpm figma:story-order` (Storybook running) and `pnpm docs:figma-map`:
+   the component's **Property order** and **Storybook order** lines must both be ✓ before it's done.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA
@@ -149,8 +155,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    `contracts/figma-conversion.json` (read by the scripts; owner-gated) explained in `.ai/maps/figma-conversion.md`.
    It's approved once: a new component or prop converts by it with no per-component approval; the owner is asked
    only for a prop no rule covers (`pnpm figma:props`, pre-commit) or a component exception (`figma.propertyMap`).
-   Figma's properties also come in **the code's order** (as Storybook's Controls list them: variants first — a Figma
-   limitation — then the rest, each group in code order). Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
+   Figma's properties also come in **the same order as Storybook's props table**, and both list the props that are
+   Figma variants first, then the rest (Figma can't interleave them; Storybook follows via each story's `meta.args` order —
+   `pnpm figma:story-order`, figma-map's **Storybook order** line). Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
    the snapshot `.ai/figma-props.json`). A component isn't synced until all its rows are ✓.
 
 ## Workflow commands
@@ -232,6 +239,9 @@ pnpm helix scaffold:custom <Name> --reason "<why>" [--dir <path>]
                             scaffold a local [CUSTOM] component for a consuming app (governance header,
                             semantic tokens, accessible base, story with a play test) — refuses Helix names and overwrites
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
+pnpm figma:story-order      read every component's prop order from the running Storybook's props table into
+                            .ai/storybook-prop-order.json — the reference figma-map checks Figma's property order against
+                            (not the contract's order, which Storybook doesn't follow)
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
                             and .ai/maps/figma-map.json (machine-readable: each prop's Figma property, or codeOnly + why),
                             shown on every docs page as a "Code → Figma" table (Prop · Figma · Why — 🎨 … / ⌨️ Code only)

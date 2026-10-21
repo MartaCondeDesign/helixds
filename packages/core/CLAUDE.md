@@ -68,6 +68,12 @@ A component's `icon`/`iconEnd` prop takes the icon **component reference**, type
 never `icon={<IconPlus size={16} />}`. See `Button`, `Badge`, `Chip`, `Input` for the pattern, and
 `contracts/components/Icon.json` for the full contract (allowed sizes, color rules, a11y).
 
+## Prop order
+
+When a component is created or its props change, the order its story lists them in is the order Figma uses: the
+props that are Figma VARIANTs first, then the rest (root CLAUDE.md rule 6a). Update the story's `meta.args` and the
+Figma set together, then check `pnpm figma:story-order` + `pnpm docs:figma-map` (Property order ✓, Storybook order ✓).
+
 ## State pattern
 
 | State     | How to apply                             |

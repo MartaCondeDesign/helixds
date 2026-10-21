@@ -139,6 +139,8 @@ import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone 
 
 type FigmaProp = { name: string; type: string; values?: string[] };
 const snapshotPath = path.join(root, '.ai/figma-props.json');
+const storyOrderPath = path.join(root, '.ai/storybook-prop-order.json');
+const storybookOrder: Record<string, string[]> = fs.existsSync(storyOrderPath) ? JSON.parse(fs.readFileSync(storyOrderPath, 'utf-8')).components : {};
 const snapshot: Record<string, { properties: FigmaProp[] }> = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf-8')).components : {};
 
 function compare(e: Expected, figma: FigmaProp[] | undefined): string {
@@ -182,7 +184,7 @@ function run() {
   let total = 0, ok = 0;
   for (const file of contractFiles) {
     const contract = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf-8')) as Contract;
-    setComponent(contract.name);
+    setComponent(contract.name, contract as any);
     const parts = extractAnatomyParts(contract.name);
     const figma = snapshot[contract.name]?.properties;
     const rows: string[] = [];
@@ -220,12 +222,27 @@ function run() {
     }
     // Property order (contracts/figma-conversion.json → propertyOrder): the code order, as Storybook's Controls list it.
     // Figma always shows VARIANT properties first, so each group is compared on its own; state closes the variants.
-    const expected = rows.map(r => r.match(/\| `(?:VARIANT|BOOLEAN|TEXT|INSTANCE_SWAP)` `([^`]+)`/)?.[1]).filter(Boolean) as string[];
+    // The reference order is Storybook's (pnpm figma:story-order → .ai/storybook-prop-order.json): the props table the
+    // owner compares Figma against — not the contract's order, which Storybook doesn't follow. Contract order only
+    // breaks ties / covers a component Storybook hasn't been read for.
+    const storyOrder = storybookOrder[contract.name] ?? [];
+    const at = (prop: string) => { const i = storyOrder.indexOf(prop); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
+    const expected = rows
+      .map((r, i) => ({ i, prop: r.match(/^\| `([^`]+)`/)?.[1] ?? '', fig: r.match(/\| `(?:VARIANT|BOOLEAN|TEXT|INSTANCE_SWAP)` `([^`]+)`/)?.[1] }))
+      .filter(x => x.fig)
+      .sort((a, b) => at(a.prop) - at(b.prop) || a.i - b.i)
+      .map(x => x.fig) as string[];
     const kind = (n: string) => figma?.find(f => f.name === n)?.type;
     const dedupe = (a: string[]) => [...new Set(a)];
     const want = { variants: [...dedupe(expected.filter(n => kind(n) === 'VARIANT')), ...(figma?.some(f => f.name === 'state') ? ['state'] : [])], others: dedupe(expected.filter(n => kind(n) && kind(n) !== 'VARIANT')) };
     const have = { variants: (figma ?? []).filter(f => f.type === 'VARIANT' && want.variants.includes(f.name)).map(f => f.name), others: (figma ?? []).filter(f => f.type !== 'VARIANT' && want.others.includes(f.name)).map(f => f.name) };
     const orderOk = JSON.stringify(want) === JSON.stringify(have);
+    // Storybook lists the props that are Figma VARIANTs first, like Figma's panel (owner's rule 2026-10-21): a variant
+    // prop after a non-variant one in Storybook's table breaks it — fix the order of the story file's meta.args.
+    const variantProps = new Set(rows.filter(r => /\| `VARIANT` `/.test(r)).map(r => r.match(/^\| `([^`]+)`/)?.[1]).filter(Boolean) as string[]);
+    const firstOther = storyOrder.findIndex(p => !variantProps.has(p));
+    const late = firstOther < 0 ? [] : storyOrder.slice(firstOther).filter(p => variantProps.has(p));
+    const storyLine = storyOrder.length ? `\n\n**Storybook order:** ${late.length ? `✗ variant props after the rest: ${late.map(p => `\`${p}\``).join(', ')} — Storybook ${storyOrder.join(', ')} (reorder the story file's meta.args: Figma variants first)` : '✓ Figma variants first, then the rest'}` : '';
     const orderLine = figma && expected.length ? `\n\n**Property order:** ${orderOk ? '✓ same as code' : `✗ Figma ${[...have.variants, '·', ...have.others].join(', ')} — code ${[...want.variants, '·', ...want.others].join(', ')}`}` : '';
     if (figma && expected.length) { total++; if (orderOk) ok++; }
     const extra = (figma ?? []).filter(f => !used.has(f.name + f.type) && f.name !== 'state');
@@ -243,7 +260,7 @@ function run() {
     const anatomy = parts.length ? `\n\n**Anatomy layers** (Figma layer name = \`data-helix-part\` value): ${parts.map(p => `\`${p}\``).join(', ')}` : '';
     const pattern = patternOf(contract.name);
     const patternLine = pattern ? `**Pattern:** \`${pattern}\` (.ai/maps/figma-conversion.md)\n\n` : '';
-    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${patternLine}${table}${orderLine}${extraLine}${stateLine}${anatomy}`);
+    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${patternLine}${table}${orderLine}${storyLine}${extraLine}${stateLine}${anatomy}`);
   }
   const out =
     `<!-- GENERATED by scripts/docs-figma-map.ts — do not hand-edit the component sections below.

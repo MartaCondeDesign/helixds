@@ -179,8 +179,12 @@ if (EXPECTED.colors && theme) {
       const modeId = theme.modes.find(m => m.name === mode).modeId;
       frame.setExplicitVariableModeForCollection(theme, modeId);
       for (const [variantName, parts] of Object.entries(EXPECTED.colors)) {
-        const comp = VARIANTS.find(c => c.name === variantName) ?? (variantName === '' && VARIANTS.length === 1 ? VARIANTS[0] : null);
-        if (!comp) { issues.parity.push(`variant "${variantName}" not found`); continue; }
+        // matched by its prop=value pairs, not the exact name: the axis order in a name is the set's, not the measurement's,
+        // and an axis code doesn't measure (a list-count like options=2…7) matches every variant that has the other pairs
+        const pairsOf = n => n.split(', ').filter(Boolean);
+        const comps = variantName === '' && VARIANTS.length === 1 ? VARIANTS : VARIANTS.filter(c => pairsOf(variantName).every(p => pairsOf(c.name).includes(p)));
+        if (!comps.length) { issues.parity.push(`variant "${variantName}" not found`); continue; }
+        for (const comp of comps) {
         const inst = comp.createInstance(); frame.appendChild(inst);
         // optional parts hidden by a BOOLEAN property don't exist in an instance — show them all so they're checked too
         const owner = comp.parent?.type === 'COMPONENT_SET' ? comp.parent : comp;
@@ -201,10 +205,11 @@ if (EXPECTED.colors && theme) {
             const pagePaint = key === 'fills' && (node.fills || []).find(x => x.type === 'SOLID' && x.visible !== false);
             const onPage = !!pagePaint && varById[pagePaint.boundVariables?.color?.id]?.name === 'fill/page';
             const transparentOk = hex === 'none' && (got === null || onPage || (key === 'strokes' && close(got, await resolvedColor(node, 'fills'))));
-            if (hex === 'none' ? !transparentOk : !close(got, hex)) issues.parity.push(`${mode} ${variantName} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${hex}`);
+            if (hex === 'none' ? !transparentOk : !close(got, hex)) issues.parity.push(`${mode} ${comp.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${hex}`);
           }
         }
         inst.remove();
+        }
       }
     }
   } finally { frame.remove(); }
