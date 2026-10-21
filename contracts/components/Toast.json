@@ -163,6 +163,11 @@
   },
 
   "figma": {
+    "callArgs": [
+      { "name": "variant", "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'", "description": "Which call: toast.neutral / info / success / warning / danger — sets the icon and its color." },
+      { "name": "label", "type": "string", "required": true, "description": "First argument — the toast's title." },
+      { "name": "description", "type": "string | undefined", "description": "Second argument — an optional supporting line." }
+    ],
     "states": ["default"],
     "properties": [
       { "name": "variant", "type": "VARIANT", "values": ["neutral", "info", "success", "warning", "danger"], "codeProp": "variant", "description": "Sets the filled icon (InfoCircleFilled, CircleCheckFilled, AlertTriangleFilled, AlertHexagonFilled — added to the Icons page) and its color, toast.icon.{variant}." },

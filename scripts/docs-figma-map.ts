@@ -224,7 +224,9 @@ function run() {
     const figma = snapshot[contract.name]?.properties;
     const rows: string[] = [];
     const used = new Set<string>();
-    for (const prop of contract.props ?? []) {
+    // a component drawn by a call, not props (Toast: toast[variant](label, description)) lists the call's arguments
+    // in figma.callArgs — they convert like props
+    for (const prop of [...(((contract as any).figma?.callArgs ?? []) as typeof contract.props), ...(contract.props ?? [])]) {
       // The standard (contracts/figma-conversion.json) decides; a contract exception (figma.propertyMap) overrides it.
       const exception = (contract as any).figma?.propertyMap?.[prop.name];
       const list: Expected[] = exception

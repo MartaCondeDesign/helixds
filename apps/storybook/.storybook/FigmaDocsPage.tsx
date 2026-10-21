@@ -15,8 +15,17 @@ const code: React.CSSProperties = { fontFamily: 'ui-monospace, Menlo, monospace'
 function CodeToFigma() {
   const meta = useOf('meta', ['meta']);
   const name = String(meta.preparedMeta.title ?? '').split('/').pop() ?? '';
-  const props = MAP[name];
-  if (!props) return null;
+  const conv = MAP[name];
+  if (!conv) return null;
+  // Same order as the props table right above it (Storybook's argTypes for this component), read at render time —
+  // a prop added, removed, renamed or moved shows here in its new place with nothing to update by hand. A prop
+  // Storybook doesn't list (rare) goes at the end, in the generated map's order.
+  // the props table shows the primary story's argTypes, so that's the order to follow (meta's as a fallback)
+  let primary: Record<string, unknown> | undefined;
+  try { primary = (useOf('story', ['story']) as { story: { argTypes?: Record<string, unknown> } }).story.argTypes; } catch { primary = undefined; }
+  const order = Object.keys(primary ?? (meta.preparedMeta as { argTypes?: Record<string, unknown> }).argTypes ?? {});
+  const at = (prop: string) => { const i = order.indexOf(prop); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
+  const props = Object.fromEntries(Object.entries(conv).sort(([a], [b]) => at(a) - at(b)));
   return (
     <>
       <h3 id="code-to-figma">Code → Figma</h3>

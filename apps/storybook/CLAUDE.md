@@ -140,6 +140,16 @@ The props table lists the props that are Figma VARIANTs first (variant, size, ch
 keys of the file's `meta.args`, so list them in that order — adding a prop to `args` (its default) if it has to move.
 Checked by `pnpm figma:story-order` + `pnpm docs:figma-map` (**Storybook order** line, owner's rule 2026-10-21).
 
+## The Code → Figma table follows the props table
+
+Every docs page ends its props section with a **Code → Figma** table (`.storybook/FigmaDocsPage.tsx`): one row per
+prop, in exactly the order of the props table above it (the primary story's argTypes, read at render time), each with
+its Figma property (🎨, on the component or on a nested child) or 👾 code only and why — from
+`.ai/maps/figma-map.json` (`pnpm docs:figma-map`). Nothing is written per story: adding, removing, renaming or moving a
+prop updates both tables. A component drawn by a call rather than props (Toast: `toast[variant](label, description)`)
+lists the call's arguments in its contract's `figma.callArgs`, and its first story takes them as args so both tables
+show them (owner's rule 2026-10-21).
+
 ## Token-driven stories must read from `tokens.json`, not hardcode a list
 
 See `packages/tokens/CLAUDE.md` → "Adding a token" step 6. A story that shows tokens never lists them by

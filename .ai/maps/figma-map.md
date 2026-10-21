@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 214 of 215 code props match Figma exactly.**
+**Parity today: 219 of 220 code props match Figma exactly.**
 **Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
@@ -998,14 +998,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
+| `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code · `union` | ✓ |
+| `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
-**Only in Figma:** ✗ `label` (TEXT), `description.` (BOOLEAN), `description` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
+**Property order:** ✓ same as code
 
 **Stories → Figma:** ✓ all 4 stories
 
-- `Default` → ✓ layout of existing variants
 - `Playground` → ✓ `variant=success, description.=true`
+- `Default` → ✓ layout of existing variants
 - `KeyboardReach` → ✓ layout of existing variants — keyboard focus is drawn on the close IconButton inside it (state=focus)
 - `Opened` → ✓ layout of existing variants
 

@@ -14,28 +14,10 @@ const meta: Meta<typeof Toast> = {
 export default meta;
 type Story = StoryObj<typeof Toast>;
 
-export const Default: Story = {
-  // What each toast says is the call (fixed per button); <Toast /> itself only takes className
-  render: ({ className }) => (
-    <>
-      <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', flexWrap: 'wrap' }}>
-        <Button variant="secondary" onClick={() => toast.neutral('Draft saved', 'Your changes were saved automatically.')}>Neutral</Button>
-        <Button variant="secondary" onClick={() => toast.info('Update available', 'A new version is ready — refresh to update.')}>Info</Button>
-        <Button variant="secondary" onClick={() => toast.success('Published', 'Your changes are now live.')}>Success</Button>
-        <Button variant="secondary" onClick={() => toast.warning('Session expiring', 'You’ll be signed out in 5 minutes.')}>Warning</Button>
-        <Button variant="secondary" onClick={() => toast.danger('Connection lost', 'Could not reach the server — check your network.')}>Danger</Button>
-      </div>
-      <Toast className={className} />
-    </>
-  ),
-  parameters: {
-    docs: { description: { story: 'Fire a few in a row to see the stack (newest on top, older ones peek behind). Hover the stack to spread them apart and read the older ones — the stack expands downward, since it\'s pinned to the top of the screen. Each auto-dismisses after 4s unless hovered.' } },
-  },
-};
-
 // Toast itself only mounts the stack (<Toast />); what a toast shows is the call: toast[variant](label,
 // description). These controls are that call's arguments — the same three properties the Figma component has.
 type PlaygroundArgs = { variant: 'neutral' | 'info' | 'success' | 'warning' | 'danger'; label: string; description: string };
+// First story = the docs page's props table: the call's arguments, the same properties the Figma component has
 export const Playground: StoryObj<PlaygroundArgs> = {
   args: { variant: 'success', label: 'Published', description: 'Your changes are now live.' },
   argTypes: {
@@ -52,6 +34,25 @@ export const Playground: StoryObj<PlaygroundArgs> = {
   parameters: {
     controlsCheck: { reason: 'the args reach the toast the button opens, not the canvas' },
     docs: { description: { story: 'Change the controls, then press the button: it calls `toast[variant](label, description)` with them.' } },
+  },
+};
+
+export const Default: Story = {
+  // What each toast says is the call (fixed per button); <Toast /> itself only takes className
+  render: ({ className }) => (
+    <>
+      <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', flexWrap: 'wrap' }}>
+        <Button variant="secondary" onClick={() => toast.neutral('Draft saved', 'Your changes were saved automatically.')}>Neutral</Button>
+        <Button variant="secondary" onClick={() => toast.info('Update available', 'A new version is ready — refresh to update.')}>Info</Button>
+        <Button variant="secondary" onClick={() => toast.success('Published', 'Your changes are now live.')}>Success</Button>
+        <Button variant="secondary" onClick={() => toast.warning('Session expiring', 'You’ll be signed out in 5 minutes.')}>Warning</Button>
+        <Button variant="secondary" onClick={() => toast.danger('Connection lost', 'Could not reach the server — check your network.')}>Danger</Button>
+      </div>
+      <Toast className={className} />
+    </>
+  ),
+  parameters: {
+    docs: { description: { story: 'Fire a few in a row to see the stack (newest on top, older ones peek behind). Hover the stack to spread them apart and read the older ones — the stack expands downward, since it\'s pinned to the top of the screen. Each auto-dismisses after 4s unless hovered.' } },
   },
 };
 

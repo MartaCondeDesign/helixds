@@ -3071,6 +3071,53 @@
       }
     },
     "Toast": {
+      "variant": {
+        "description": "Which call: toast.neutral / info / success / warning / danger — sets the icon and its color.",
+        "figma": [
+          {
+            "name": "variant",
+            "type": "VARIANT",
+            "values": [
+              "neutral",
+              "info",
+              "success",
+              "warning",
+              "danger"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "union",
+        "why": "same values as code"
+      },
+      "label": {
+        "description": "First argument — the toast's title.",
+        "figma": [
+          {
+            "name": "label",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "text",
+        "why": "its text"
+      },
+      "description": {
+        "description": "Second argument — an optional supporting line.",
+        "figma": [
+          {
+            "name": "description.",
+            "type": "BOOLEAN"
+          },
+          {
+            "name": "description",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "optional-text",
+        "why": "shows the part (Figma-only helper) · its text"
+      },
       "className": {
         "description": "Additional className for the viewport.",
         "figma": null,
@@ -4280,15 +4327,15 @@
       }
     },
     "Toast": {
-      "Default": {
-        "figma": null,
-        "layout": true,
-        "ok": true,
-        "why": ""
-      },
       "Playground": {
         "figma": "variant=success, description.=true",
         "layout": false,
+        "ok": true,
+        "why": ""
+      },
+      "Default": {
+        "figma": null,
+        "layout": true,
         "ok": true,
         "why": ""
       },
