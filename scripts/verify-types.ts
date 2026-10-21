@@ -84,12 +84,13 @@ for (const file of files) {
   // (named import, as in Textarea.types.ts) — both real styles in this codebase.
   const hasNativeExtends = /extends\s+(Omit<)?(React\.)?\w+HTMLAttributes</.test(interfaceHeader);
 
-  // Explicitly declared fields within this interface only: "name?: Type;" or "name: Type;".
+  // Explicitly declared fields within this interface only: "name?: Type;" or "name: Type;",
+  // and quoted keys for names that aren't identifiers: "'aria-describedby'?: string;".
   const declared = new Map<string, { optional: boolean }>();
-  const fieldRe = /^\s*([a-zA-Z_$][\w$]*)(\??):\s*[^;]+;/gm;
+  const fieldRe = /^\s*(?:([a-zA-Z_$][\w$]*)|'([^']+)'|"([^"]+)")(\??):\s*[^;]+;/gm;
   let m: RegExpExecArray | null;
   while ((m = fieldRe.exec(interfaceBody))) {
-    declared.set(m[1]!, { optional: m[2] === '?' });
+    declared.set((m[1] ?? m[2] ?? m[3])!, { optional: m[4] === '?' });
   }
 
   for (const prop of props) {
