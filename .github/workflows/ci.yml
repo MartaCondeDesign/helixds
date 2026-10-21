@@ -6,9 +6,7 @@
 # without the hook, and the job prints what's stale.
 # No agent evals here (eval:generate / eval:judge / a11y:visual cost tokens) — eval:run and eval:calibrate
 # are the free, offline graders pre-commit already runs.
-# workflow_dispatch: the Changelog workflow starts this on a PR branch right after it pushes its
-# CHANGELOG.md commit. GitHub holds runs triggered by that bot push for approval, so without this the PR's
-# head commit would never get a `checks` result — and main requires one.
+# workflow_dispatch: to re-run CI by hand on a branch (`gh workflow run ci.yml --ref <branch>`).
 name: CI
 on:
   pull_request:
