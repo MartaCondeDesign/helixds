@@ -2785,7 +2785,8 @@
     position:       absolute;
     inset:          0;
     z-index:        0;
-    border-radius:  var(--helix-navItem-radius);
+    /* square on the left, where the bar sits; the other states keep all four corners (owner 2026-10-21) */
+    border-radius:  var(--helix-radius-none) var(--helix-navItem-radius) var(--helix-navItem-radius) var(--helix-radius-none);
     background-color: var(--helix-navItem-fill-current);
   }
   /* The blue bar at the left edge of the current item — part of the indicator, so it slides with it. */
