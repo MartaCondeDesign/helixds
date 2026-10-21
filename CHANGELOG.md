@@ -158,6 +158,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Code → Figma table: Helix spacing tokens instead of raw px (lint)
   - Property order is checked against Storybook's real props table (pnpm figma:story-order → .ai/storybook-prop-order.json), not the contract; 9 sets reordered (Avatar, Badge, Button, Card, Chip, Input, Select, Switch, Textarea); Select's stray options axis removed
   - Rule: Storybook lists the props that are Figma variants first, then the rest (like Figma's panel) — set by each story's meta.args order; figma-map's Storybook order check + drift; documented in the standard, conversion doc, CLAUDE.md and apps/storybook/CLAUDE.md
+  - Rule 6a: one prop order in Storybook and Figma (Figma variants first, then the rest) on every new component or prop change — CLAUDE.md, packages/core/CLAUDE.md and the components-to-figma checklist
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
