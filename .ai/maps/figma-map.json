@@ -1519,7 +1519,7 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"
+        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn in every state the empty field has (hover, focus, invalid, disabled — text/disabled there) (owner's rule 2026-10-21: one set of rules for every form field)"
       },
       "type": {
         "figma": null,
@@ -3129,7 +3129,7 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"
+        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn in every state the empty field has (hover, focus, invalid, disabled — text/disabled there) (owner's rule 2026-10-21: one set of rules for every form field)"
       },
       "placeholder": {
         "figma": [

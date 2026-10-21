@@ -377,7 +377,7 @@
       }
     ],
     "propertyMap": {
-      "value": {"codeType": "string (native <input> value)", "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "filled"]}, {"name": "value", "type": "TEXT"}], "approved": "2026-10-21", "reason": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"},
+      "value": {"codeType": "string (native <input> value)", "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "filled"]}, {"name": "value", "type": "TEXT"}], "approved": "2026-10-21", "reason": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn in every state the empty field has (hover, focus, invalid, disabled — text/disabled there) (owner's rule 2026-10-21: one set of rules for every form field)"},
       "type": {"codeType": "string (native <input> type)", "figma": [], "approved": "2026-10-21", "reason": "text, email, password, search… — how the browser treats the input, not a look"},
       "placeholder": {"codeType": "string (native <input> placeholder)", "figma": [{"name": "placeholder", "type": "TEXT"}], "approved": "2026-10-21", "reason": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"}
     },
