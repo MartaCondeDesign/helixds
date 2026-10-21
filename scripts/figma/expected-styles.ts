@@ -64,9 +64,9 @@ const SPECS: Record<string, Spec> = {
   },
   Input: {
     story: 'components-input--default',
-    axes: { size: ['s', 'm', 'l'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
+    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message',
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message',
       invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', isLoading: v.isLoading === 'true' }),
     parts: {
       '(root)': { part: 'input-root' },

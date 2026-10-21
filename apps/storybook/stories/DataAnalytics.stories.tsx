@@ -375,7 +375,7 @@ function EvalDatePicker({ value, onChange, onPreview, dataDates, min, max }: { v
 
   return (
     <div ref={root} style={{ position: 'relative', width: '11rem' }}>
-      <Input size="m" label="Date" hideLabel readOnly fullWidth placeholder="All time" value={value ? new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(fromIso(value)) : ''} iconEnd={IconCalendar}
+      <Input label="Date" hideLabel readOnly fullWidth placeholder="All time" value={value ? new Intl.DateTimeFormat(undefined, { day: 'numeric', month: 'short', year: 'numeric' }).format(fromIso(value)) : ''} iconEnd={IconCalendar}
         aria-haspopup="dialog" aria-expanded={open} style={{ cursor: 'pointer' }}
         onClick={() => (open ? close(false) : openAt())}
         onKeyDown={event => { if (['Enter', ' ', 'ArrowDown'].includes(event.key)) { event.preventDefault(); openAt(); } }} />

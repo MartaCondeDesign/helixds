@@ -5,9 +5,9 @@ import type { InputProps } from './Input.types';
 
 let idCounter = 0;
 
-// Form-field icons never go below 16px — s shares m's 16 so a small field's icon stays legible and
-// matches Select's chevron (also 16) in the same row.
-const ICON_SIZE_BY_FIELD_SIZE = { s: 16, m: 16, l: 18 } as const;
+// Form fields ship one size, m (owner's decision 2026-10-21 — Input, Select, MultiSelect and Textarea share
+// one size set): its icons are 16px, like Select's chevron in the same row.
+const FIELD_ICON_SIZE = 16;
 
 // isLoading: the same spinner Button and IconButton draw, at the field's icon size, where iconEnd sits
 // (owner's decision 2026-10-20 — before it the field only locked silently).
@@ -23,7 +23,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     {
       label,
       hideLabel  = false,
-      size       = 'm',
       invalid    = false,
       isLoading    = false,
       fullWidth  = false,
@@ -88,7 +87,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div
           ref={wrapperRef}
           data-helix-part="input-wrapper"
-          data-size={size}
           data-invalid={invalid ? 'true' : undefined}
           data-disabled={disabled ? 'true' : undefined}
           data-loading={isLoading ? 'true' : undefined}
@@ -96,7 +94,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           {icon && (
             <span data-helix-part="input-icon">
-              <Icon icon={icon} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+              <Icon icon={icon} size={FIELD_ICON_SIZE} />
             </span>
           )}
 
@@ -104,8 +102,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={uid}
             data-helix-part="input-field"
-            data-size={size}
-            disabled={disabled || isLoading}
+              disabled={disabled || isLoading}
             aria-invalid={invalid ? 'true' : undefined}
             aria-required={props.required ? 'true' : undefined}
             aria-busy={isLoading ? 'true' : undefined}
@@ -120,11 +117,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
           {isLoading ? (
             <span data-helix-part="input-spinner">
-              <Spinner size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+              <Spinner size={FIELD_ICON_SIZE} />
             </span>
           ) : iconEnd && (
             <span data-helix-part="input-icon-end">
-              <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+              <Icon icon={iconEnd} size={FIELD_ICON_SIZE} />
             </span>
           )}
         </div>

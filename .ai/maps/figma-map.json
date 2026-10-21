@@ -1341,23 +1341,6 @@
         "rule": "look-boolean",
         "why": "changes the look → false/true toggle"
       },
-      "size": {
-        "description": "Visual size.",
-        "figma": [
-          {
-            "name": "size",
-            "type": "VARIANT",
-            "values": [
-              "s",
-              "m",
-              "l"
-            ]
-          }
-        ],
-        "codeOnly": false,
-        "rule": "union",
-        "why": "same values as code"
-      },
       "invalid": {
         "description": "Shows error state and errorMessage.",
         "figma": [
@@ -1419,7 +1402,7 @@
         "why": "changes the look → false/true toggle"
       },
       "icon": {
-        "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18).",
+        "description": "Leading icon, passed by reference. Rendered via the Icon component at 16px (one field size, m).",
         "figma": [
           {
             "name": "icon",
@@ -1435,7 +1418,7 @@
         "why": "shows the icon · which icon"
       },
       "iconEnd": {
-        "description": "Trailing icon. Same field-size-derived sizing as icon.",
+        "description": "Trailing icon. 16px, like icon.",
         "figma": [
           {
             "name": "iconEnd",

@@ -1,24 +1,20 @@
 import type * as React from 'react';
 import type { HelixIconComponent } from '../Icon';
 
-export type InputSize = 's' | 'm' | 'l';
-
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /** Visible or sr-only label. Required for a11y. */
   label: string;
   /** Hide the label visually (still announced by screen readers). */
   hideLabel?: boolean;
-  /** Visual size. Default: 'm' */
-  size?: InputSize;
   /** Field value fails validation. */
   invalid?: boolean;
   /** Marks field as required. */
   required?: boolean;
   /** Async validation in progress. */
   isLoading?: boolean;
-  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconSearch). Size follows the field's own `size` (s=16, m=16, l=18). */
+  /** Leading icon — a Tabler icon component, passed by reference (e.g. IconSearch). Always 16px — form fields have one size, m. */
   icon?: HelixIconComponent;
-  /** Trailing icon. Same size-derived sizing as `icon`. */
+  /** Trailing icon. 16px, like `icon`. */
   iconEnd?: HelixIconComponent;
   /** Helper text shown below the field. */
   description?: string;

@@ -76,7 +76,7 @@ export type { ButtonProps, ButtonVariant, ButtonSize }               from './com
 export type { IconButtonProps, IconButtonVariant, IconButtonSize }   from './components/IconButton';
 export type { ChipProps, ChipVariant, ChipSize }                     from './components/Chip';
 export type { ChipGroupProps, ChipGroupOption }                       from './components/ChipGroup';
-export type { InputProps, InputSize }                                from './components/Input';
+export type { InputProps }                                           from './components/Input';
 export type { BadgeProps, BadgeVariant, BadgeSize }                  from './components/Badge';
 export type { TextareaProps, TextareaResize }          from './components/Textarea';
 export type { SelectProps, SelectOption, SelectOptionGroup } from './components/Select';

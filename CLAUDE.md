@@ -47,6 +47,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      `.ai/maps/patterns/group-spacing.md`.
    - **Component height:** driven by the shared size scale (see ADR-004) — but documented
      per-component exceptions exist (`Badge`, `Chip` use a local density model, not the control ladder).
+   - **Form fields share one size set** (owner's decision 2026-10-21): Input, Textarea, Select and MultiSelect have
+     one size, `m`, and no `size` prop. If one gets more sizes, all of them get the same ones — code and Figma.
+     `pnpm verify:field-sizes` (pre-commit) enforces it.
    - **min-width / max-width / min-height / max-height:** variable, not tokenized — a per-component
      characteristic decided by the consumer, the component, or the pattern in use (e.g. Modal's
      `min-height: 400px`). There is no system token for this — a hardcoded px value here is correct,
@@ -171,6 +174,8 @@ pnpm verify:dtcg            validate packages/tokens/src/tokens.json against the
                             checking every alias reaches a token of its type. Runs in pre-commit
 pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
+pnpm verify:field-sizes     Input, Textarea, Select and MultiSelect (pattern form-field) share one size set — today m only,
+                            no size prop; one field with more sizes fails it. Runs in pre-commit
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in

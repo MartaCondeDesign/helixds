@@ -23,7 +23,6 @@ const meta: Meta<typeof Input> = {
   // matching Select/Textarea's own stories.
   // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    size:     'm',
     hideLabel: undefined,
     invalid: undefined,
     isLoading: undefined,
@@ -42,7 +41,6 @@ const meta: Meta<typeof Input> = {
     className: 'w-[300px]',
   },
   argTypes: {
-     size:      { control: 'select', options: ['s', 'm', 'l'] },
     invalid:   { control: 'boolean' },
     disabled:  { control: 'boolean' },
     required:  { control: 'boolean' },
@@ -151,19 +149,6 @@ export const Loading: Story = {
   parameters: {
     docs: { description: { story: '`isLoading` locks the field and shows a spinner where `iconEnd` sits — the same spinner Button uses — while an async check runs (`aria-busy`).' } },
   },
-};
-
-export const Sizes: Story = {
-  args: { icon: mapped('Search'), className: undefined },
-  // The story fixes size and each field's label — icon, invalid, disabled… apply to all three
-  argTypes: { size: { control: false }, label: { control: false } },
-  render: ({ size: _size, label: _label, ...args }) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
-      <Input {...args} label="Small"  size="s" placeholder="size=s" />
-      <Input {...args} label="Medium" size="m" placeholder="size=m (default)" />
-      <Input {...args} label="Large"  size="l" placeholder="size=l" />
-    </div>
-  ),
 };
 
 export const LoginFormPattern: Story = {

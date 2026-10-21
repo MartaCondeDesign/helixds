@@ -718,16 +718,15 @@
           "type": "TEXT"
         },
         {
-          "name": "size",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
-            "s",
-            "m",
-            "l"
+            "false",
+            "true"
           ]
         },
         {
-          "name": "hideLabel",
+          "name": "invalid",
           "type": "VARIANT",
           "values": [
             "false",

@@ -110,9 +110,9 @@
     "system": "fixed values — never scale with CSS font-size",
     "values": {
       "12": "xs contexts — dense UI, inline badges",
-      "14": "compact controls — Chip, Input size=s",
-      "16": "default — button slots, form elements, inline text, Input size=m",
-      "18": "Input size=l",
+      "14": "compact controls — Chip",
+      "16": "default — button slots, form elements (Input, Select), inline text",
+      "18": "IconButton size=m",
       "20": "medium emphasis — card headers, section labels",
       "24": "large — native icon size, icon-only buttons, empty states",
       "28": "between large and xlarge",
