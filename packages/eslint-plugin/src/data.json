@@ -116,6 +116,7 @@
     "Avatar": [
       "label",
       "src",
+      "aria-describedby",
       "size",
       "className"
     ],
