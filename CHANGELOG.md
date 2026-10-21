@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Regenerate figma-map after merging the Figma and story-controls branches (latest commit)
+- 2026-10-21 — Code → Figma table: Helix spacing tokens instead of raw px (lint) (latest commit)
+- 2026-10-21 — Regenerate figma-map after merging the Figma and story-controls branches ([`25fc4c5`](https://github.com/MartaCondeDesign/helixds/commit/25fc4c5))
 - 2026-10-21 — Merge branch 'refs/heads/claude/story-controls-814caa' into claude/affectionate-swartz-794ede ([`f3fcee3`](https://github.com/MartaCondeDesign/helixds/commit/f3fcee3))
 - 2026-10-21 — Merge branch 'refs/heads/claude/figma-options-groups-1c3d1b' into claude/affectionate-swartz-794ede ([`006e6af`](https://github.com/MartaCondeDesign/helixds/commit/006e6af))
 - 2026-10-21 — Merge branch 'refs/heads/claude/figma-select-multiselect-a56b2d' into claude/affectionate-swartz-794ede ([`1cd3338`](https://github.com/MartaCondeDesign/helixds/commit/1cd3338))
