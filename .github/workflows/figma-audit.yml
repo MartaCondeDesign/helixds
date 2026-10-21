@@ -1,7 +1,8 @@
 # Figma ↔ code audit without an agent: sizes, typography and (Enterprise only) variable bindings, compared
 # with what code renders (.ai/figma-expected, from `pnpm figma:expected`). Runs every Monday, on demand, and
-# when the expected files change. Needs the repository secret FIGMA_TOKEN (Settings → Secrets → Actions);
-# without it the job stops with an explanation instead of failing silently.
+# when the expected files change. Needs the repository secret FIGMA_TOKEN (Settings → Secrets → Actions) — Figma's
+# API asks for a token even to read a public Community file. Without it (forks, or no token set) the job is skipped
+# with a notice instead of failing: the Figma side is then checked by an agent (scripts/figma/audit-component.js).
 name: Figma audit
 on:
   schedule: [{ cron: '0 7 * * 1' }]
@@ -12,16 +13,25 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    env:
+      HAS_TOKEN: ${{ secrets.FIGMA_TOKEN != '' }}
     steps:
-      - uses: actions/checkout@v4
+      - if: env.HAS_TOKEN != 'true'
+        run: echo "::notice::FIGMA_TOKEN isn't set — skipping the Figma API audit (add the secret to run it)."
+      - if: env.HAS_TOKEN == 'true'
+        uses: actions/checkout@v4
       # No version here: pnpm/action-setup reads package.json's packageManager (pnpm@9.0.0); naming it twice fails.
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - if: env.HAS_TOKEN == 'true'
+        uses: pnpm/action-setup@v4
+      - if: env.HAS_TOKEN == 'true'
+        uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile --ignore-scripts
-      - run: pnpm figma:audit
+      - if: env.HAS_TOKEN == 'true'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - if: env.HAS_TOKEN == 'true'
+        run: pnpm figma:audit
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
-      - if: always()
+      - if: always() && env.HAS_TOKEN == 'true'
         uses: actions/upload-artifact@v4
         with: { name: figma-audit, path: .ai/figma-audit.json, if-no-files-found: ignore }
