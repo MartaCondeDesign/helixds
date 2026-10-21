@@ -658,7 +658,9 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 2. Run `scripts/figma/audit-component.js` through `use_figma`, with `SET_ID`, `PAGE_ID` and `EXPECTED`
    (= that JSON) filled in. It checks: (1) colors bound to Theme, (2) spacing/radius bound, no negative gaps,
    (3) no spacer nodes, (4) every `figma.states` value present, (5) color parity with code in light and dark,
-   (6) the border-always rule.
+   (6) the border-always rule, … (12) lists: the count lives on the component that draws the items — a set that
+   hands its list to another (Select → Menu, `list-delegated`) holds an exposed instance of it instead of a count
+   property, and items inside a list set rest at state=default (contracts/figma-conversion.json → listCount).
 3. Fix and re-run until `pass: true`. Then record in `contracts/figma-sync.json`:
    `"syncedCommit": "<git rev-parse HEAD>", "audit": { "pass": true, "commit": "<same>", "date": "…", "counts": {…} }`.
    `scripts/figma-drift.ts` refuses ✓ without it.
