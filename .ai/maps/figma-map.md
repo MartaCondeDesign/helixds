@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 209 of 218 code props match Figma exactly.**
+**Parity today: 211 of 218 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -275,7 +275,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
 | `label` | `string` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
-| `actions` | `Array<{ icon: TablerIcon; label: string; onClick: () => void }>` | `VARIANT` `actions` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `actions` | `Array<{ icon: TablerIcon; label: string; onClick: () => void }>` | `VARIANT` `actions` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `defaultExpanded` | `boolean` | — no Figma property | the uncontrolled twin of `expanded` — only the starting value, Figma shows that prop · `skip` | — |
 | `onExpandedChange` | `((expanded: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
@@ -365,7 +365,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `id` | `string` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `expanded` | `boolean` | — no Figma property | closed = not on screen; Figma draws it open · `overlay-expanded` | — |
 | `anchorRef` | `React.RefObject<HTMLElement \| null>` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
-| `options` | `(MenuOption \| MenuOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `(MenuOption \| MenuOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
 | `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `values` | `string[] \| undefined` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |

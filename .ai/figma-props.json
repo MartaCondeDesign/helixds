@@ -549,6 +549,18 @@
           "type": "INSTANCE_SWAP"
         },
         {
+          "name": "actions",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "expanded",
           "type": "VARIANT",
           "values": [
@@ -746,6 +758,18 @@
       "type": "COMPONENT_SET",
       "page": "Menu",
       "properties": [
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         {
           "name": "multiple",
           "type": "VARIANT",

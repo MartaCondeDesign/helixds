@@ -181,6 +181,13 @@
     "states": ["default", "hover", "press", "focus"],
     "properties": [
       {
+        "name": "actions",
+        "type": "VARIANT",
+        "values": ["2", "3", "4", "5", "6", "7"],
+        "codeProp": "actions",
+        "description": "How many actions the open speed dial draws (list-count, owner's rule 2026-10-21) — code draws one fab-action per entry. Drawn only with expanded=true; collapsed variants keep actions=2 (the actions aren't on screen)."
+      },
+      {
         "name": "expanded",
         "type": "VARIANT",
         "values": ["false", "true"],
@@ -196,6 +203,6 @@
       }
     ],
     "structure": "fab-root 48px (size/xl,  radius/full,  fill/primary,  shadow / m,  20px icon) and fab-action 36px (fill/page,  1px border/neutral in the layout,  shadow / s,  16px icon). Icons are swapped per instance (icon / actions[].icon).",
-    "variantCombinations": "9 variants (2026-10-21): expanded × state default/hover/press/focus = 8,  plus disabled collapsed = 1 — a disabled FAB cannot open. label is the aria-label: no Figma property."
+    "variantCombinations": "29 variants (2026-10-21): expanded=true × actions 2–7 × state default/hover/press/focus = 24 (extra actions above Share / Pencil: Download, UserPlus, Copy, Trash, Star); expanded=false × state = 4 plus disabled collapsed = 1, all at actions=2 — collapsed draws no actions and a disabled FAB cannot open. label is the aria-label: no Figma property."
   }
 }
