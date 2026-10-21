@@ -23,7 +23,21 @@ const meta: Meta<typeof RadioGroup> = {
   component:  RadioGroup,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(RadioGroupDoc),
-  args: { label: 'Plan', options: PLAN_OPTIONS },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: PLAN_OPTIONS,
+    orientation: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    label: 'Plan',
+    value: undefined,
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    name: undefined,
+  },
   argTypes: {
     orientation: { control: 'select', options: ['vertical', 'horizontal'] },
   },
@@ -33,6 +47,7 @@ export default meta;
 type Story = StoryObj<typeof RadioGroup>;
 
 export const Default: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('pro');
     return <RadioGroup {...args} value={value} onChange={setValue} />;
@@ -41,6 +56,7 @@ export const Default: Story = {
 
 export const Horizontal: Story = {
   args: { options: SIZE_OPTIONS, label: 'Team size', orientation: 'horizontal' },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('');
     return <RadioGroup {...args} value={value} onChange={setValue} />;
@@ -68,6 +84,7 @@ export const WithDisabledOption: Story = {
     value: 'free',
     label: 'Plan',
   },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('free');
     return <RadioGroup {...args} value={value} onChange={setValue} />;

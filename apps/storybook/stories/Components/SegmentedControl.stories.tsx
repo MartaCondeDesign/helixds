@@ -23,13 +23,23 @@ const meta: Meta<typeof SegmentedControl> = {
   component:  SegmentedControl,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SegmentedControlDoc),
-  args: { label: 'Mode', options: MODE_OPTIONS },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: MODE_OPTIONS,
+    disabled: undefined,
+    label: 'Mode',
+    value: undefined,
+    defaultValue: undefined,
+    onChange: undefined,
+    name: undefined,
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof SegmentedControl>;
 
 export const Default: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('plan');
     return <SegmentedControl {...args} value={value} onChange={setValue} />;
@@ -38,6 +48,7 @@ export const Default: Story = {
 
 export const FourOptions: Story = {
   args: { label: 'Period', options: PERIOD_OPTIONS },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('year');
     return <SegmentedControl {...args} value={value} onChange={setValue} />;
@@ -52,6 +63,7 @@ export const WithDisabledOption: Story = {
       { value: 'ask',   label: 'Ask' },
     ],
   },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('plan');
     return <SegmentedControl {...args} value={value} onChange={setValue} />;
@@ -82,6 +94,7 @@ export const Disabled: Story = {
 };
 
 export const KeyboardNavigation: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('plan');
     return <SegmentedControl {...args} value={value} onChange={setValue} />;

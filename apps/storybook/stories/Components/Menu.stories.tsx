@@ -61,12 +61,15 @@ const meta: Meta<typeof Menu> = {
   component:  Menu,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(MenuDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    id:       'demo-menu',
     options:  FRUITS,
-    expanded: false,
     multiple: false,
+    id:       'demo-menu',
+    expanded: false,
     onSelect: fn(),
+    value: undefined,
+    values: undefined,
   },
   argTypes: {
     options:     { control: 'object' },

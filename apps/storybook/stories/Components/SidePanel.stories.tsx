@@ -9,9 +9,15 @@ const meta: Meta<typeof SidePanel> = {
   component:  SidePanel,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SidePanelDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    placement: undefined,
     label: 'Edit filters',
     children: 'Filter builder content goes here.',
+    expanded: undefined,
+    onDismiss: undefined,
+    showCloseButton: undefined,
+    closeOnBackdropClick: undefined,
   },
 };
 

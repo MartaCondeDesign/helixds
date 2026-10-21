@@ -9,9 +9,14 @@ const meta: Meta<typeof Accordion> = {
   component:  Accordion,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(AccordionDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    expanded: undefined,
+    disabled: undefined,
     label: 'Shipping details',
     children: 'Orders ship within 3-5 business days. Express shipping is available at checkout.',
+    defaultExpanded: undefined,
+    onExpandedChange: undefined,
   },
 };
 
@@ -49,6 +54,7 @@ export const Stack: Story = {
 };
 
 export const Controlled: Story = {
+  argTypes: { expanded: { control: false }, defaultExpanded: { control: false } }, // the story holds the open state
   render: args => {
     const [expanded, setExpanded] = useState(true);
     return (

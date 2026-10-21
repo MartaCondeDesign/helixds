@@ -12,7 +12,23 @@ const meta: Meta<typeof Textarea> = {
   // w-[300px] — same width-stability fix as Input/Select's own stories; className previously
   // reached the inner <textarea> field instead of textarea-root, so a consumer couldn't actually
   // constrain the component's width at all until that was fixed.
-  args: { label: 'Description', placeholder: 'Write something…', className: 'w-[300px]' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    invalid: undefined,
+    fullWidth: undefined,
+    hideLabel: undefined,
+    resize: undefined,
+    disabled: undefined,
+    label: 'Description',
+    placeholder: 'Write something…',
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    rows: undefined,
+    maxLength: undefined,
+    showCount: undefined,
+    className: 'w-[300px]',
+  },
   argTypes: {
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
     rows:      { control: { type: 'number', min: 2, max: 10 } },

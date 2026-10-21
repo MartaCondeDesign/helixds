@@ -9,15 +9,30 @@ const meta: Meta<typeof Checkbox> = {
   component:  Checkbox,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(CheckboxDoc),
-  args: { label: 'Accept terms of service' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    checked: undefined,
+    disabled: undefined,
+    invalid: undefined,
+    indeterminate: undefined,
+    label: 'Accept terms of service',
+    description: undefined,
+    errorMessage: undefined,
+    defaultChecked: undefined,
+    onChange: undefined,
+    required: undefined,
+    id: undefined,
+    name: undefined,
+    value: undefined,
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
 export const AllTypes: Story = {
-  // The story fixes each checkbox's label and checked/indeterminate state — the rest applies to all three
-  argTypes: { label: { control: false }, checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false } },
+  // The story fixes each checkbox's label and checked/indeterminate state (and id/name/value, one per instance) — the rest applies to all three
+  argTypes: { label: { control: false }, checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false }, id: { control: false }, name: { control: false }, value: { control: false } },
   render: ({ description, disabled, required, invalid, errorMessage }) => {
     const [checked, setChecked] = useState(false);
     const shared = { description, disabled, required, invalid, errorMessage };
@@ -53,7 +68,7 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   args: { label: 'Disabled' },
   // The story fixes disabled (on) and checked (off / on) — label, description… apply to both
-  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false } },
+  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false }, id: { control: false }, name: { control: false }, value: { control: false } },
   render: ({ label, description, required, invalid, errorMessage, indeterminate }) => {
     const shared = { label, description, required, invalid, errorMessage, indeterminate };
     return (
@@ -67,9 +82,13 @@ export const Disabled: Story = {
 
 export const Group: Story = {
   args: { label: 'Select all' },
-  // The story drives checked/indeterminate itself (parent follows its children)
-  argTypes: { checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false } },
-  render: ({ label, disabled }) => {
+  // The story drives checked/indeterminate itself (parent follows its children); id/name/value are one per
+  // checkbox. label, description, required and the error state go on the parent, disabled on every one.
+  argTypes: {
+    checked: { control: false }, defaultChecked: { control: false }, indeterminate: { control: false },
+    id: { control: false }, name: { control: false }, value: { control: false },
+  },
+  render: ({ label, description, required, invalid, errorMessage, disabled }) => {
     const options = ['Design tokens', 'Component library', 'Pattern docs', 'Storybook setup'];
     const [selected, setSelected] = useState<string[]>(['Design tokens', 'Component library']);
 
@@ -87,6 +106,10 @@ export const Group: Story = {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-25)' }}>
         <Checkbox
           label={label}
+          description={description}
+          required={required}
+          invalid={invalid}
+          errorMessage={errorMessage}
           disabled={disabled}
           checked={allChecked}
           indeterminate={someChecked}

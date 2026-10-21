@@ -9,7 +9,19 @@ const meta: Meta<typeof Switch> = {
   component:  Switch,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SwitchDoc),
-  args: { label: 'Enable notifications', size: 'm' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    size: 'm',
+    hideLabel: undefined,
+    checked: undefined,
+    disabled: undefined,
+    label: 'Enable notifications',
+    description: undefined,
+    defaultChecked: undefined,
+    onChange: undefined,
+    id: undefined,
+    name: undefined,
+  },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },
   },
@@ -20,6 +32,7 @@ type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
   args: { label: 'Dark mode' },
+  argTypes: { checked: { control: false }, defaultChecked: { control: false } }, // the story holds the state
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return <Switch {...args} checked={checked} onChange={setChecked} />;

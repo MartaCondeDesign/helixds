@@ -119,8 +119,18 @@ export const Disabled: Story = {
 - Only a story that is an open overlay (Toast › Opened) keeps them off, with `// controls-off: <reason>` in or right
   above it. Stories tagged `!dev` (test-only, hidden) are skipped.
 
-Enforced by `helix/story-has-controls` (`eslint.config.mjs`): Claude Code's lint hook hands a violation back to the
-agent, which fixes it in the same turn without asking; `pnpm lint:stories` in pre-commit stops the commit otherwise.
+Enforced twice:
+- **Lint** — `helix/story-has-controls` (`eslint.config.mjs`): `controls.disable` or a `render` with no args. Claude
+  Code's lint hook hands a violation back to the agent, which fixes it in the same turn without asking;
+  `pnpm lint:stories` in pre-commit stops the commit otherwise.
+- **Browser** — `.storybook/controls-check.ts`, run by the test-runner on every Components/Layout story (so by
+  `pnpm verify:stable` and `pnpm a11y`): it changes each control the story leaves on and fails the story when the
+  canvas doesn't change — the `render: ({ size }) => …` that silently drops `label`. Fix it the same way, without
+  asking: pass the arg to every instance, or turn that control off because the story fixes it.
+  A control that only shows with another one (`errorMessage` with `invalid`) is retried with each other control
+  changed first, so it passes on its own. A control that works but not on the canvas (Toast › Playground's args reach
+  the toast its button opens; Modal's `closeOnBackdropClick` changes behaviour) is listed in the story's
+  `parameters.controlsCheck: { skip: ['name'], reason: '…' }` — the reason is required, like `controls-off`.
 
 ## Props in Figma's order: variants first
 

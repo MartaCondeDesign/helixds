@@ -50,6 +50,7 @@ export const Playground: StoryObj<PlaygroundArgs> = {
     </>
   ),
   parameters: {
+    controlsCheck: { reason: 'the args reach the toast the button opens, not the canvas' },
     docs: { description: { story: 'Change the controls, then press the button: it calls `toast[variant](label, description)` with them.' } },
   },
 };

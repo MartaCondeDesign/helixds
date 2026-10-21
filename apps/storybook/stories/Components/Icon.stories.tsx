@@ -97,10 +97,11 @@ export const Colors: Story = {
 export const CustomIconSet: Story = {
   args: { size: 24 },
   // The story fixes the icon (the adapted foreign set) and each one's color — size applies to both. The
-  // foreign set only takes size / strokeWidth / className, so decorative and label have nothing to reach.
+  // foreign set only takes size / strokeWidth / className, so decorative and label have nothing to reach, and
+  // its stroke follows the size (ADR-017).
   argTypes: {
     icon: { control: false }, color: { control: false }, className: { control: false },
-    decorative: { control: false }, label: { control: false },
+    decorative: { control: false }, label: { control: false }, stroke: { control: false },
   },
   render: ({ size }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-100)', alignItems: 'center' }}>
