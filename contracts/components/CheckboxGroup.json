@@ -160,6 +160,7 @@
   "figma": {
     "states": ["default"],
     "properties": [
+      { "name": "options", "type": "VARIANT", "values": ["2", "3", "4", "5", "6", "7"], "codeProp": "options", "description": "How many options the group draws (list-count, owner's rule 2026-10-21) — code draws one Checkbox per entry in options." },
       { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       {
@@ -183,7 +184,7 @@
       },
       { "name": "errorMessageText", "type": "TEXT", "codeProp": "errorMessage" }
     ],
-    "structure": "checkbox-group (8px gap) > checkbox-group-legend,  checkbox-group-options (12px gap,  real Checkbox instances),  description,  error. Options are a fixed sample of three — options[] has no Figma property.",
-    "variantCombinations": "6 variants (2026-10-20): orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
+    "structure": "checkbox-group (8px gap) > checkbox-group-legend,  checkbox-group-options (12px gap,  real Checkbox instances),  description,  error. options = how many Checkbox instances it draws (2–7): Comments (checked), Mentions, Weekly digest, Security alerts, Product updates, Billing, Newsletter.",
+    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many Checkbox instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
   }
 }
