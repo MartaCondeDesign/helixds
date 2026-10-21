@@ -156,6 +156,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Regenerate figma-map after merging the Figma and story-controls branches
   - helix/story-has-controls: lint rule for Components/Layout stories — no controls.disable, no render that ignores args (an open overlay keeps them off with // controls-off: <reason>); the Claude lint hook hands a violation back to the agent to fix in the same turn, pnpm lint:stories in pre-commit; documented in apps/storybook/CLAUDE.md
   - Code → Figma table: Helix spacing tokens instead of raw px (lint)
+  - Property order is checked against Storybook's real props table (pnpm figma:story-order → .ai/storybook-prop-order.json), not the contract; 9 sets reordered (Avatar, Badge, Button, Card, Chip, Input, Select, Switch, Textarea); Select's stray options axis removed
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
