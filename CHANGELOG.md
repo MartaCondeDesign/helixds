@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma in sync with code: all 33 components stable (#19) ([#19](https://github.com/MartaCondeDesign/helixds/pull/19))
+- 2026-10-21 — eslint-plugin: regenerate data.json after today's contract and prop-map changes (its tests failed on main while stale) (latest commit)
+- 2026-10-21 — Figma in sync with code: all 33 components stable (#19) ([`05c8ff9`](https://github.com/MartaCondeDesign/helixds/commit/05c8ff9))
   - Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading
   - Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components
   - Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout
@@ -185,6 +186,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Props that live on a child in Figma are shown as such: figma.childProps in 13 contracts (options → Checkbox/RadioButton/Chip/MenuItem/SegmentedControlItem label, avatars → Avatar, series/categories → ChartLegendItem, Modal actions → Button, slots → their components, Table → cells); the Code → Figma table shows the component's own property and 🎨 On the child X; Chart label is code only (screen-reader name) — last ✗ gone; rule in CLAUDE.md 6a
   - list-count by type, not by name (standard v1.16): every array prop except selected values (value, values, defaultValue) becomes a count variant — Chart's categories (2–12) and series (1–6) now covered; Chart story lists them with the variants
   - Chart in Figma: categories 2–12 × series 1–6 at rest for every type (donut: slices 2–12), drawn from deterministic sample data with chart/series tokens and a legend entry per series; the hover box is a child component, ChartTooltip (placement. × series 1–6, line.), exposed in Chart's state=hover — Chart loses placement.; contract and Propstar tables updated; figma-map all ✓
+  - figma:expected: Input/Textarea measure value. (empty/filled) and the typed text's color when filled; Select measures value.=selected in every state
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
