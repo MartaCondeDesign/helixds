@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([#22](https://github.com/MartaCondeDesign/helixds/pull/22))
+- 2026-10-21 — View in Figma links open the public Figma Community file; README links it next to Storybook (latest commit)
+- 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))
   - eslint-plugin: regenerate data.json after today's contract and prop-map changes (its tests failed on main while stale)
   - Figma audit workflow: skip with a notice when FIGMA_TOKEN isn't set (forks, or no token) instead of failing main
 - 2026-10-21 — Figma in sync with code: all 33 components stable (#19) ([`05c8ff9`](https://github.com/MartaCondeDesign/helixds/commit/05c8ff9))

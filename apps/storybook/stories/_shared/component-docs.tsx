@@ -4,11 +4,13 @@ import figmaSync from '../../../../contracts/figma-sync.json';
 // Every Components/* and Layout/* story must show a link to its Figma component — see
 // apps/storybook/CLAUDE.md's "Every component story links to Figma" rule. Looked up from
 // contracts/figma-sync.json by name so it can't drift from the actual node id on file; renders
-// nothing (not a broken link) for a component not yet modeled in Figma.
+// nothing (not a broken link) for a component not yet modeled in Figma. The link opens the public
+// Figma Community file (figmaCommunityUrl): the working file is private, and a Community page takes
+// no node-id, so every component links to the same page.
 function findFigmaUrl(name: string): string | undefined {
   const entry = figmaSync.components.find(c => c.name === name);
   if (!entry?.inFigma || !entry.figmaNodeId) return undefined;
-  return `${figmaSync.figmaFileUrl}?node-id=${entry.figmaNodeId.replace(':', '-')}`;
+  return figmaSync.figmaCommunityUrl;
 }
 
 export function createComponentDocsParameters(doc: Pick<ComponentDoc, 'name' | 'purpose' | 'tokens'>) {

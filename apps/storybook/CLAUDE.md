@@ -204,7 +204,8 @@ Every `Components/*` and `Layout/*` story's autodocs page shows a "View in Figma
 purpose description — sourced from `contracts/figma-sync.json` by component name, never hand-typed per
 story. This is automatic: `createComponentDocsParameters(XDoc)` (`_shared/component-docs.tsx`) looks the
 component up in `figma-sync.json` and appends the link to `docs.description.component` when
-`inFigma: true`; it renders nothing for a component not yet modeled in Figma, rather than a broken link.
+`inFigma: true` — it opens the public Figma Community file (`figmaCommunityUrl`), the same page for every
+component, since the working file is private and a Community page takes no node-id; it renders nothing for a component not yet modeled in Figma, rather than a broken link.
 Nothing to do per-component — the link appears automatically the moment `figma-sync.json` marks that
 component `inFigma: true`, and disappears just as automatically if that ever flips back to `false`.
 
