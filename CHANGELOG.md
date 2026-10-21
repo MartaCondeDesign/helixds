@@ -88,9 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma in sync: form fields and NavItem audited — 33 of 33 stable (#28) ([#28](https://github.com/MartaCondeDesign/helixds/pull/28))
-  - Figma expected styles measure what code really renders; Avatar and Card back to passing
-  - Figma in sync: Input, Textarea, Select, MultiSelect and NavItem audited and recorded — 33 of 33 stable
+- 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([#29](https://github.com/MartaCondeDesign/helixds/pull/29))
+  - Changelog bot re-runs CI on its own commit, so main can require CI
 - 2026-10-21 — Storybook deploy builds @helixds/tokens before @helixds/react (#27) ([`7628d2e`](https://github.com/MartaCondeDesign/helixds/commit/7628d2e))
 - 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
   - Figma sync ends with updating the Community copy
