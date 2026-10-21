@@ -260,6 +260,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook props:** ✓ the same props as the contract
 
+**Only in Figma (approved):** `placement.` (VARIANT: right / top / bottom / left) — where the hover box sits from the pointer line (top / right / bottom / left) — ECharts places it next to the cursor, Figma needs a fixed choice (approved 2026-10-21)
+
+**Figma-only `state`:** `default` / `hover`
+
 **Stories → Figma:** ✓ all 9 stories
 
 - `Default` → ✓ `variant=line`

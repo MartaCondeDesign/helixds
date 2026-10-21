@@ -276,7 +276,7 @@
     "Chart": {
       "nodeId": "578:199",
       "type": "COMPONENT_SET",
-      "page": "Chart",
+      "page": "Chart 🚫",
       "properties": [
         {
           "name": "variant",
@@ -288,6 +288,24 @@
             "stacked-bar",
             "donut",
             "timeline"
+          ]
+        },
+        {
+          "name": "state",
+          "type": "VARIANT",
+          "values": [
+            "default",
+            "hover"
+          ]
+        },
+        {
+          "name": "placement.",
+          "type": "VARIANT",
+          "values": [
+            "right",
+            "top",
+            "bottom",
+            "left"
           ]
         }
       ]

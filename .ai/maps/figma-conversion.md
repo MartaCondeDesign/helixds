@@ -196,6 +196,13 @@ element that floats next to another component draws that component as `children`
 values are every Helix component it can accompany, listed in the contract's `figma.triggers` (Tooltip: IconButton,
 Button, Avatar). The designer picks the one they need in the properties panel instead of detaching.
 
+**A look code only shows on interaction can be drawn as a state** (owner's decision 2026-10-21, first case: Chart):
+Chart's hover — the dashed axis line and the floating box with the category and each series' value — exists in code
+only while the pointer is over the chart, but it's part of the design, so Figma draws it as `state=hover`, with a
+Figma-only `placement.` (top / right / bottom / left) for where the box sits, and the pointer moved along the axis by
+a spacing variable. Code and Figma use the same tokens for it (`Chart.tsx`: ECharts tooltip and axisPointer). The
+reason is written in the contract (`figma.hover`), so it isn't mistaken for drift.
+
 **Shared anatomy in a pattern:** a label row is `{prefix}-label` holding the text plus `{prefix}-required` (the
 `*`, text/danger, 2px = spacing/3xs after the text); then `{prefix}-description` and `{prefix}-error`. That is
 what lets one rule convert `required`, `description` and `errorMessage` the same way in every component.
