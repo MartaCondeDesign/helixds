@@ -232,6 +232,8 @@ pnpm helix scaffold:custom <Name> --reason "<why>" [--dir <path>]
                             semantic tokens, accessible base, story with a play test) — refuses Helix names and overwrites
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
+                            and .ai/maps/figma-map.json (machine-readable: each prop's Figma property, or codeOnly + why),
+                            which Storybook prints under every prop (🎨 Figma: … / ⌨️ Code only — …)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json (git-ignored) from `git log`, shown in Storybook's Changelog page
 pnpm docs:readme            sync component counts in README.md + the component lists in AGENTS.md and llms.txt

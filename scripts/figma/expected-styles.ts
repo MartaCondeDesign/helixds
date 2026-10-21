@@ -99,7 +99,7 @@ const SPECS: Record<string, Spec> = {
   },
   Button: {
     story: 'components-button--full-width',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'], disabled: ['false', 'true'], isLoading: ['false', 'true'], fullWidth: ['false', 'true'] },
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['s', 'm', 'l'], disabled: ['false', 'true'], isLoading: ['false', 'true'], fullWidth: ['false', 'true'] },
     states: ['default', 'hover', 'press', 'focus'],
     args: v => ({ children: 'Label', variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true', fullWidth: v.fullWidth === 'true' }),
     parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'button-label': { part: 'button-label', text: true } },
@@ -568,16 +568,16 @@ async function main() {
   const url = process.env.STORYBOOK_URL ?? 'http://localhost:6006';
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  // The standard's variant rules (contracts/figma-conversion.json → variants): a secondary toggle is drawn once —
-  // on alone, at the default size, valid and enabled (its state=default rule is applied in the loop below)
+  // The standard's variant rules (contracts/figma-conversion.json → variants)
   const STD = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../contracts/figma-conversion.json'), 'utf8'));
   const contractFile = path.resolve(import.meta.dirname, `../../contracts/components/${name}.json`);
   const defaults: Record<string, unknown> = fs.existsSync(contractFile)
     ? Object.fromEntries((JSON.parse(fs.readFileSync(contractFile, 'utf8')).props ?? []).map((p: { name: string; default?: unknown }) => [p.name, p.default])) : {};
   const def = (k: string) => String(defaults[k] ?? (k === 'size' ? 'm' : 'false'));
-  const secondaryOn = (v: Record<string, string>) => (STD.secondaryAxes as string[]).filter(k => k in v && v[k] !== def(k));
+  // every size and state (owner's decision 2026-10-21); a loading Button/IconButton is disabled in code → default, enabled only
+  const loadingDisables = ((STD.variants?.loadingDisables ?? []) as string[]).includes(name);
   const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}])
-    .filter(v => { const on = secondaryOn(v); return on.length === 0 || (on.length === 1 && (!v.size || v.size === def('size')) && v.invalid !== 'true' && v.disabled !== 'true'); });
+    .filter(v => !(loadingDisables && v.isLoading === 'true' && v.disabled === 'true'));
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   const layout: Record<string, unknown> = {};
   const cdp = await page.context().newCDPSession(page);
@@ -587,7 +587,7 @@ async function main() {
     if (spec.skip?.(v, state)) continue;
     // the standard's variant rules: disabled only at state=default and valid; a secondary toggle only at state=default
     if (v.disabled === 'true' && (state !== 'default' || v.invalid === 'true')) continue;
-    if (secondaryOn(v).length && state !== 'default') continue;
+    if (loadingDisables && v.isLoading === 'true' && state !== 'default') continue;
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');

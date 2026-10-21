@@ -665,6 +665,14 @@ layer.fills = [newFill]; // MUST reassign — setBoundVariableForPaint returns a
 
 ### Phase 7 — Property table (Propstar layout)
 
+**Regenerate it every time a variant or a property changes — in the same step, never later** (owner's rule
+2026-10-21). A new axis, a new value, a renamed property or a rebuilt variant leaves the old table's labels and
+cells wrong (Avatar and AvatarGroup shipped with stale labels before this rule). Run `scripts/figma/propstar.js`
+(CONFIG: `setId`, `rows`, `cols`, optional `groups`, labels written `prop=value` so the audit can check them); it
+replaces the old table in place. The Phase 6 audit's `propstar` check fails when a label names a value the set
+doesn't have, or a variant sits outside the table.
+
+
 Run `scripts/figma/property-table.js` through `use_figma` (`PAGE_ID`, `SET_ID`, `BOOLEANS` = `[]` — see rule
 6: no boolean expansion, the table shows only the real set). It reproduces Propstar's "Create property table": a `❖ {Name}`
 GRID frame, values of the first variant axis as row labels, the other axes (booleans outermost) as nested

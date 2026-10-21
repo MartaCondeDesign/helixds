@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma property names in camelCase (iconSwap, descriptionText…, standard v1.7) across all sets; Card: showHeader + headerText instead of header (owner's choice) (latest commit)
+- 2026-10-21 — Code-only props, visible: docs:figma-map writes .ai/maps/figma-map.json and Storybook prints each prop's Figma property (or 'Code only' + why); Propstar regenerated on every change (audit check 11); Button: isLoading at every size, fullWidth at every size and state (144 variants, standard rule changed) (latest commit)
+- 2026-10-21 — Figma property names in camelCase (iconSwap, descriptionText…, standard v1.7) across all sets; Card: showHeader + headerText instead of header (owner's choice) ([`f5a0dee`](https://github.com/MartaCondeDesign/helixds/commit/f5a0dee))
 - 2026-10-21 — Badge stories: every story has controls (size, icon, variant, label where they apply); AvatarGroup photos: a different portrait per avatar ([`999adc0`](https://github.com/MartaCondeDesign/helixds/commit/999adc0))
 - 2026-10-21 — Avatar and AvatarGroup: withImage false/true variant (photo or initials, owner's choice), AvatarGroup avatars 1–7 variant ([`63d5482`](https://github.com/MartaCondeDesign/helixds/commit/63d5482))
 - 2026-10-21 — Figma properties harness: use_figma hook asks the owner with the code-vs-Figma table; figma-map lists props with no Figma property and why; AvatarGroup withOverflow + max (owner's choice) ([`26a0336`](https://github.com/MartaCondeDesign/helixds/commit/26a0336))

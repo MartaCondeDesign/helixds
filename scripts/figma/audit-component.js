@@ -51,7 +51,7 @@ const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -260,6 +260,21 @@ if (EXPECTED.layout) {
         }
       }
     }
+  }
+}
+
+// 11 propstar — the ❖ {Name} table is regenerated whenever a variant or property changes (scripts/figma/propstar.js):
+// every variant has a cell, and every row/column label names an axis value the set really has (no stale labels).
+{
+  const table = set.parent?.name?.startsWith('❖') ? set.parent : null;
+  const axes = Object.fromEntries(Object.entries(set.componentPropertyDefinitions).filter(([, d]) => d.type === 'VARIANT').map(([k, d]) => [k, d.variantOptions]));
+  if (!table) { if (Object.keys(axes).length) issues.propstar.push('no ❖ property table around the set — run scripts/figma/propstar.js'); }
+  else {
+    const labels = table.findAll(n => n.type === 'TEXT' && n.parent?.name === 'Label').map(t => t.characters);
+    for (const l of labels) for (const [, k, v] of l.matchAll(/(\w+)=([\w-]+)/g))
+      if (!axes[k]?.includes(v)) issues.propstar.push(`label "${l}": ${k}=${v} is not a value of the set — regenerate the table`);
+    const placed = set.children.filter(v => v.x >= 0 && v.y >= 0).length;
+    if (placed < set.children.length) issues.propstar.push(`${set.children.length - placed} variant(s) outside the table`);
   }
 }
 

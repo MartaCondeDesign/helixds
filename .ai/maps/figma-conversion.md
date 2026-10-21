@@ -78,10 +78,12 @@ values instances already had.
 - **Disabled:** `disabled=true` only with `state=default` and `invalid=false` — a disabled control doesn't hover,
   take focus or validate. All its text (label, description, required `*`, legend) binds `text/disabled`
   ([disabled-state.md](patterns/disabled-state.md)).
-- **Secondary toggles** (`fullWidth`, `hideLabel`, `isLoading`, `resize`): each is drawn **once** — on, with the
-  other secondaries off, `state=default`, valid, enabled and the default `size`. The main axes (`checked`,
-  `variant`, `value`…) keep all their values. They change the width, the label or one icon, which looks the same
-  in every state, so crossing them with everything would only multiply copies.
+- **Secondary toggles** (`fullWidth`, `hideLabel`, `isLoading`, `resize`) are drawn like every other variant: at
+  every `size` and in every state the code can reach — `fullWidth` with default / hover / press / focus and
+  disabled (owner's decision 2026-10-21; until then each was drawn once, at the default size and state, which left
+  `fullWidth` and `isLoading` with no hover, focus or other sizes). The one limit is what code can't show: a loading
+  Button or IconButton is disabled (`disabled={disabled || isLoading}`), so `isLoading=true` is drawn at
+  `state=default`, enabled, only (`variants.loadingDisables`).
 - **Impossible combinations aren't drawn** (Checkbox `checked` + `indeterminate`: code shows indeterminate). The
   contract's `figma.variantCombinations` lists what's left.
 - **Focus ring never clipped:** in a variant that draws the focus ring (`state=focus`, and `state=open` where it
@@ -122,6 +124,14 @@ converts exactly like its siblings.
 what lets one rule convert `required`, `description` and `errorMessage` the same way in every component.
 
 ## 5. Where it shows
+
+- **Every prop says how it reaches Figma — generated, never hand-written** (owner's rule 2026-10-21):
+  `pnpm docs:figma-map` writes `.ai/maps/figma-map.json` — per component, per code prop, the Figma property it
+  becomes, or `codeOnly: true` with the rule and why (`defaultChecked`: the uncontrolled twin of `checked`; `id`,
+  `name`, `value`: form wiring; `on*`: behaviour). Storybook prints it under every prop in the docs table
+  (`🎨 Figma: VARIANT checked = false / true` or `⌨️ Code only — …`, `.storybook/preview.tsx` → `argTypesEnhancers`).
+  A contract never lists this per prop — it holds only the approved exceptions (`figma.propertyMap`, `figmaOnly`),
+  so the listing can't drift from the standard.
 
 - [`.ai/maps/figma-map.md`](figma-map.md) — generated: every component's props, the Figma property each must be,
   the rule (or exception) that says so, and what the Figma file has today (`.ai/figma-props.json`).
