@@ -176,6 +176,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - NavItem current: square left corners (radius-none) under the bar, right corners keep navItem.radius — code, Figma (bound to radius/none) and contract; other states unchanged
   - Helper properties end in a dot instead of ↳ (owner's change): errorMessage. before errorMessage, icon. before icon, Select value. — standard, converter, audit, contracts, docs and the 15 Figma sets
   - Form fields share one 320px width (code: root width 320px, max-width 100%, fullWidth 100%; stories drop their 300px className; contracts sizing.width fixed 320, verify:field-sizes checks it); Figma-only properties end in a dot: Avatar/AvatarGroup withImage → src., SegmentedControl gets icon. (icon-only segments, 24 variants) and its item icon./icon (standard v1.13)
+  - Figma: Input, Textarea, Select and MultiSelect fixed 320px (600px with fullWidth), field/description/error on Fill and the open menu stretching with the field; Propstar tables regenerated; form-width rule in the conversion doc and the Figma checklist
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
