@@ -23,10 +23,23 @@ export const STANDARD = JSON.parse(fs.readFileSync(STANDARD_PATH, 'utf8')) as {
 const WHY = Object.fromEntries(STANDARD.rules.map(r => [r.id, r.why]));
 const has = (list: string[], v: string) => list.includes(v);
 
+const ROOT = path.resolve(import.meta.dirname, '../..');
+const HELIX = fs.readdirSync(path.join(ROOT, 'contracts/components')).filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, ''));
 let currentComponent = '';
+let currentSource = '';
 let currentListCount: Record<string, { min?: number; max?: number }> = {};
-/** The component being converted (and its contract's figma.listCount ranges, if any). */
-export function setComponent(name: string, contract?: { figma?: { listCount?: Record<string, { min?: number; max?: number }> } }) { currentComponent = name; currentListCount = contract?.figma?.listCount ?? {}; }
+/** The component being converted (and its contract's figma.listCount ranges, if any) — its TSX is read for list-delegated. */
+export function setComponent(name: string, contract?: { figma?: { listCount?: Record<string, { min?: number; max?: number }> } }) {
+  currentComponent = name; currentListCount = contract?.figma?.listCount ?? {};
+  const file = ['components', 'layout'].map(d => path.join(ROOT, `packages/core/src/${d}/${name}/${name}.tsx`)).find(f => fs.existsSync(f));
+  currentSource = file ? fs.readFileSync(file, 'utf8') : '';
+}
+/** list-delegated: the Helix component this one hands a list prop to (`<Menu options={options}>` → 'Menu'), if any.
+ *  That component draws the items and owns the count; this one only holds an exposed instance of it. */
+export function delegateOf(name: string): string | undefined {
+  const m = currentSource.match(new RegExp(`<([A-Z]\\w*)\\b[^>]*?\\b${name}=\\{${name}\\}`));
+  return m && HELIX.includes(m[1]) && m[1] !== currentComponent ? m[1] : undefined;
+}
 /** The standard's pattern this component follows, if any (form-field, checkable, group…). */
 export function patternOf(component: string) { return STANDARD.patterns.find(p => p.components.includes(component))?.id; }
 
@@ -42,6 +55,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
   // list-count: a list of drawn items → VARIANT {name} = 1 … N (checked before skip, which drops other arrays as data)
   const lc = (STANDARD as any).listCount as { props: string[]; min: number; max: number } | undefined;
   if (lc && has(lc.props, name) && /\[\]|Array</.test(type)) {
+    if (delegateOf(name)) return []; // list-delegated: the nested component owns the count (whyNone says which)
     const r = currentListCount[name] ?? {}; const min = r.min ?? lc.min, max = r.max ?? lc.max;
     return out('list-count', [{ name, type: 'VARIANT', values: Array.from({ length: max - min + 1 }, (_, i) => String(min + i)) }]);
   }
@@ -78,6 +92,9 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
 export function whyNone(prop: Prop): string {
   const name = prop.name, type = (prop.type ?? '').replace(/\s+/g, ' ').trim();
   const sk = STANDARD.skip as typeof STANDARD.skip & { why?: Record<string, string> };
+  const lc = (STANDARD as any).listCount as { props: string[] } | undefined;
+  const to = lc && has(lc.props, name) ? delegateOf(name) : undefined;
+  if (to) return `drawn by the nested ${to}: this component holds an exposed ${to} instance and the designer picks how many items on it — the count is ${to}'s property, not this one's (owner's rule 2026-10-21) · \`list-delegated\``;
   const own = sk.why?.[name] ?? (name.startsWith('aria-') ? sk.why?.['aria-*'] : undefined);
   if (own) return `${own} · \`skip\``;
   if (/^on[A-Z]/.test(name)) return 'an event handler — behaviour, nothing to draw · `skip`';

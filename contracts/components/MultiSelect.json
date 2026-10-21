@@ -229,12 +229,6 @@
     ],
     "structure": "multi-select-root (8px gap) > multi-select-label (text + multi-select-required),  multi-select-field (hugs its content like code — 151px empty,  chips side by side; fullWidth drawn at 320px and wraps): chosen options as Chip instances or multi-select-trigger > multi-select-placeholder,  multi-select-chevron; multi-select-description,  multi-select-error. state=open holds the listbox as a nested Menu instance named menu (multiple=true,  options=5,  exposed so its options 2–7 are picked from the MultiSelect's panel): absolute,  4px below multi-select-field at its width,  150px minimum,  like Menu.tsx; its MenuItems read Design,  Research,  Frontend,  Backend,  Writing (Storybook Default),  none selected (owner's decision 2026-10-21). One size (m).",
     "propertyMap": {
-      "options": {
-        "codeType": "(MultiSelectOption | MultiSelectOptionGroup)[]",
-        "figma": [],
-        "approved": "2026-10-21",
-        "reason": "the options are drawn by the nested Menu, not by the MultiSelect: state=open holds an exposed Menu instance and the designer picks how many options it lists on that Menu (its own options = 2 \u2026 7 VARIANT) \u2014 the MultiSelect itself has no options property (owner's decision 2026-10-21)"
-      },
       "value": {
         "codeType": "string[] | undefined",
         "figma": [{"name": "value", "type": "VARIANT", "values": ["empty", "selected"]}],

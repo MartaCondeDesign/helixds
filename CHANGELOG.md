@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Select and MultiSelect: no options property — state=open holds an exposed nested Menu instance and the count is picked on the Menu (owner's decision); Menu set: no MenuItem selected inside it; listCount rule says so (latest commit)
+- 2026-10-21 — Figma conversion v1.9: the count belongs to the component that draws the items — list-delegated rule found in code (<Menu options={options}>: Select, MultiSelect hold an exposed Menu instance, no options property), items inside a list rest at default; audit check 12 enforces both (latest commit)
+- 2026-10-21 — Select and MultiSelect: no options property — state=open holds an exposed nested Menu instance and the count is picked on the Menu (owner's decision); Menu set: no MenuItem selected inside it; listCount rule says so ([`6df2cad`](https://github.com/MartaCondeDesign/helixds/commit/6df2cad))
 - 2026-10-21 — Select and MultiSelect: options = 2–7 VARIANT (listCount) — state=open draws the listbox (Menu part, MenuItem rows) with that many options, other states options=5; Select 80 variants, MultiSelect 152; propstar.js sizes rows by absolute layers too ([`792cc27`](https://github.com/MartaCondeDesign/helixds/commit/792cc27))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' into claude/figma-select-multiselect-a56b2d ([`7fc9565`](https://github.com/MartaCondeDesign/helixds/commit/7fc9565))
 - 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))

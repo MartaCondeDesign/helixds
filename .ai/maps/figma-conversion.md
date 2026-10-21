@@ -23,6 +23,7 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Code prop | Figma property | Panel | Rule |
 |---|---|---|---|
 | List of drawn items (`options`, `actions`, `avatars`, `items` — an array) | `VARIANT` same name = how many items: `2` / `3` / … / `7` | dropdown | `list-count` |
+| A list the component hands to another Helix component (`<Menu options={options}>` — Select, MultiSelect) | — on this component: an exposed nested instance of that component, whose own count VARIANT is picked | the nested component's properties, inside this one's panel | `list-delegated` |
 | Union `'a' \| 'b'`, `1 \| 2` | `VARIANT`, same name, same values | dropdown | `union` |
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
@@ -38,11 +39,20 @@ list the component draws item by item — CheckboxGroup's and RadioGroup's `opti
 FAB's `actions`… — is a VARIANT named like the prop whose values are how many items show (`options` = 2 … 7, named exactly like the component's code prop;
 each item an instance of the item component with its own example text). The range is 2–7 unless the contract's
 `figma.listCount` sets another (`{ "avatars": { "min": 1, "max": 7 } }` — AvatarGroup, built before the rule). A list
-that only shows inside an overlay is drawn open, and the count belongs to the component that draws the items:
-Menu has `options` = 2 … 7 (no MenuItem inside the Menu set is selected — selected is MenuItem's own state); Select
-and MultiSelect have no `options` property — their `state=open` variants hold an exposed nested Menu instance and the
-designer picks the count on that Menu (owner's decision 2026-10-21). Selected values (`value`, `values`,
+that only shows inside an overlay is drawn open. Selected values (`value`, `values`,
 `defaultValue`) and chart data (`categories`, `series`) aren't items on screen: code only.
+
+**The count belongs to the component that draws the items** (owner's rule 2026-10-21, `listCount.owner`), never to a
+component that contains it. AvatarGroup draws its avatars, Menu its options, FAB its actions — each has the count
+VARIANT. Select and MultiSelect hand their `options` to Menu (`<Menu options={options}>` in the TSX), so they have **no
+`options` property**: their `state=open` variants hold an exposed nested Menu instance (`isExposedInstance`) and the
+designer picks how many options on that Menu, from the Select's own panel. It applies to any component the same way:
+`scripts/figma/prop-rule.ts` finds the delegation in the code (rule `list-delegated` — no per-contract exception), and
+the Figma audit's check 12 fails a delegating set with a count property or without the exposed instance.
+
+**Items inside a list rest at default** (`listCount.itemsAtRest`): in a list component's own set (Menu, CheckboxGroup…)
+no nested item is hovered, pressed or selected — those are the item component's own states (MenuItem `state=selected`),
+drawn on the item, never inside the list. Audit check 12.
 
 **Why a look-changing boolean is a VARIANT, not a BOOLEAN:** a Figma BOOLEAN can only show or hide a layer. It
 can't change a color or a size, and `true` always means "visible" — so `hideLabel=true` could never hide the

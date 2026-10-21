@@ -9,7 +9,7 @@ today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · 
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.8.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.9.0 (owner-approved 2026-10-20; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -20,6 +20,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `nested` | a ReactElement, or ReactNode children of a component that isn't in textChildren | — | another component or free content, not a property |
 | `overlay-expanded` | expanded on an overlay (overlays) | — | closed = not on screen; Figma draws it open |
 | `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name} (only when optional)` + `INSTANCE_SWAP {name}Swap` | shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name}Swap — owner's decision 2026-10-20) |
+| `list-delegated` | a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count | — | the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21) |
 | `list-count` | a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array | `VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) |
 | `union` | a union of string or number literals | `VARIANT {name} = the same values` | same values as code |
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
@@ -408,7 +409,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | — no Figma property | exception, approved 2026-10-21 — the options are drawn by the nested Menu, not by the MultiSelect: state=open holds an exposed Menu instance and the designer picks how many options it lists on that Menu (its own options = 2 … 7 VARIANT) — the MultiSelect itself has no options property (owner's decision 2026-10-21) | — |
+| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | — no Figma property | drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21) · `list-delegated` | — |
 | `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception) | ✓ |
 | `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `(values: string[]) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
@@ -546,7 +547,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(SelectOption \| SelectOptionGroup)[]` | — no Figma property | exception, approved 2026-10-21 — the options are drawn by the nested Menu, not by the Select: state=open holds an exposed Menu instance and the designer picks how many options it lists on that Menu (its own options = 2 … 7 VARIANT) — the Select itself has no options property (owner's decision 2026-10-21) | — |
+| `options` | `(SelectOption \| SelectOptionGroup)[]` | — no Figma property | drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21) · `list-delegated` | — |
 | `value` | `string \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `value` | `string \| undefined` | `TEXT` `valueText` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |

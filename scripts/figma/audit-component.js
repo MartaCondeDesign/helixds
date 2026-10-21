@@ -32,6 +32,11 @@
  *  10 clip       in a variant that draws the focus ring (state=focus / open) every frame around the ring layer has
  *                Clip Content off (a clipping parent cuts the ring) and the ring layer keeps it on (Figma only draws a
  *                shadow's spread on a clipping frame) — contracts/figma-conversion.json → variants.focusClip
+ *  12 lists      contracts/figma-conversion.json → listCount: the count belongs to the component that draws the items.
+ *                In a list set (a VARIANT named in listCount.props: Menu, CheckboxGroup…) every nested item instance
+ *                rests at state=default — hover/press/selected are the item's own states (itemsAtRest). A component
+ *                that hands its list to another (EXPECTED.delegates, e.g. { options: 'Menu' } for Select) has no count
+ *                property and holds an exposed instance of that component in every open variant (owner).
  */
 const SET_ID = '__SET_ID__';
 const PAGE_ID = '__PAGE_ID__';
@@ -51,7 +56,7 @@ const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [], lists: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -277,6 +282,26 @@ if (EXPECTED.layout) {
       if (!axes[k]?.includes(v)) issues.propstar.push(`label "${l}": ${k}=${v} is not a value of the set — regenerate the table`);
     const placed = set.children.filter(v => v.x >= 0 && v.y >= 0).length;
     if (placed < set.children.length) issues.propstar.push(`${set.children.length - placed} variant(s) outside the table`);
+  }
+}
+
+// 12 lists — the count belongs to the component that draws the items (listCount.owner / itemsAtRest)
+{
+  const LIST_PROPS = ['options', 'actions', 'avatars', 'items'];
+  const axes = set.type === 'COMPONENT_SET' ? Object.entries(set.componentPropertyDefinitions).filter(([, d]) => d.type === 'VARIANT').map(([k]) => k) : [];
+  if (axes.some(a => LIST_PROPS.includes(a)))
+    for (const v of VARIANTS) for (const it of v.findAll(n => n.type === 'INSTANCE')) {
+      let st; try { st = it.componentProperties?.state?.value; } catch (e) {}
+      if (['hover', 'press', 'selected'].includes(st)) issues.lists.push(`${where(v, it)}: nested item at state=${st} — items inside a list rest at default; ${st} is the item's own state (itemsAtRest)`);
+    }
+  for (const [prop, to] of Object.entries(EXPECTED.delegates ?? {})) {
+    if (axes.includes(prop)) issues.lists.push(`${prop} is a property of the set — ${to} draws the items and owns the count (list-delegated): remove it`);
+    const open = VARIANTS.filter(v => v.variantProperties?.state === 'open');
+    for (const v of open.length ? open : VARIANTS) {
+      const n = v.findOne(n => n.type === 'INSTANCE' && (n.mainComponent?.parent?.type === 'COMPONENT_SET' ? n.mainComponent.parent.name : n.mainComponent?.name) === to);
+      if (!n) issues.lists.push(`${v.name}: no nested ${to} instance — the list is drawn by ${to} (list-delegated)`);
+      else if (!n.isExposedInstance) issues.lists.push(`${where(v, n)}: the ${to} instance isn't exposed — the designer can't pick its ${prop} count`);
+    }
   }
 }
 
