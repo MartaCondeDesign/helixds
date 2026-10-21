@@ -1,7 +1,11 @@
 # Launch checklist
 
-Everything that can be done while the repository is private is done. These are the steps for the day
-Helix goes public, in order. Nothing here needs to happen before that day.
+> **Launched on 2026-10-21.** The repo is public, Storybook is live at
+> https://martacondedesign.github.io/helixds/, the six packages are on npm at 0.1.0, Trusted Publishing was
+> set up with `npm trust github` and `RELEASE_ENABLED` is on. The steps below are kept as the record of how
+> it was done. The first release through `release.yml` is what confirms Trusted Publishing works.
+
+These are the steps for launch day, in order.
 
 ## Already in place
 
@@ -29,8 +33,8 @@ Lists the packages and versions that will be published, publishing nothing. CI o
 ```bash
 scripts/launch-github.sh
 ```
-It asks before making the repo public, then enables GitHub Pages (Storybook), protects `main` (CI and
-code owner review required; you can still merge your own PRs as admin), turns on private
+It asks before making the repo public, then enables GitHub Pages (Storybook), protects `main` (CI required,
+no force push or deletion; you can still merge as admin), turns on private
 vulnerability reporting, and starts the first Storybook deploy.
 
 ### 3. First npm publish, from your machine
