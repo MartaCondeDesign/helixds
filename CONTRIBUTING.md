@@ -76,6 +76,11 @@ The Figma library is generated **from** code and kept in sync by the maintainer
 to touch Figma: a component reaches `beta` without it, and the maintainer takes it to `stable`
 ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)).
 
+The public file on [Figma Community](https://www.figma.com/community/file/1694774234251657372/ai-ready-design-system-helix)
+is a published **copy** of the working file, not the file the sync scripts edit (both are in
+`contracts/figma-sync.json`). After every Figma sync, the maintainer copies the changed pages to it and
+publishes an update on Community, so the public file never falls behind the code.
+
 ## Conduct and security
 
 Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues go through
