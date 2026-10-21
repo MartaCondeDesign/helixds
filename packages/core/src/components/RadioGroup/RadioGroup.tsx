@@ -36,7 +36,7 @@ export function RadioGroup({
     >
       <legend data-helix-part="radio-legend">
         {label}
-        {required && <span aria-hidden="true" style={{ color: 'var(--helix-color-text-danger)', marginLeft: 2 }}>*</span>}
+        {required && <span data-helix-part="radio-required" aria-hidden="true">*</span>}
       </legend>
 
       <div data-helix-part="radio-options" data-orientation={orientation}>

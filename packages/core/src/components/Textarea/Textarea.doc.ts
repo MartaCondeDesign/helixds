@@ -10,7 +10,7 @@ export const doc: ComponentDoc = {
     'Pair `invalid` with `errorMessage` and keep the counter meaningful when `showCount` is enabled.',
   ],
   variants: [],
-  sizes: ['s', 'm', 'l'],
+  sizes: [],
   tokens: [
     { part: 'textarea-wrapper', label: 'Default fill', token: '--helix-textarea-fill-default', kind: 'color' },
     { part: 'textarea-wrapper', label: 'Default border', token: '--helix-textarea-border-default', kind: 'color' },
@@ -24,9 +24,7 @@ export const doc: ComponentDoc = {
     { part: 'textarea-counter', label: 'Counter text', token: '--helix-textarea-text-counter', kind: 'color' },
     { part: 'textarea-label', label: 'label', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Label' },
     { part: 'textarea-label', label: 'label.weight', token: '--helix-primitive-fontWeight-medium', kind: 'typography', meta: 'Medium' },
-    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body xsmall', size: 's' },
-    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small', size: 'm' },
-    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-m', kind: 'typography', meta: 'Body base', size: 'l' },
+    { part: 'textarea-field', label: 'value', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body small' },
     { part: 'textarea-description', label: 'description', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea-error', label: 'error', token: '--helix-primitive-fontSize-s', kind: 'typography', meta: 'Body xsmall' },
     { part: 'textarea-root', label: 'gap.label.field', token: '--helix-primitive-spacing-25', kind: 'space', axis: 'vertical' },
@@ -51,7 +49,7 @@ export const doc: ComponentDoc = {
   ],
   features: [
     'label / hideLabel — accessible label support',
-    'size — changes font-size only (s/m/l); min-height is a single 32px floor (--helix-textarea-height), not a per-size ladder',
+    'one size only (the field scale\'s m, owner\'s decision 2026-10-20 — like Select and MultiSelect); min-height is a single 32px floor (--helix-textarea-height), visible height is rows-driven',
     'rows — controls visible height',
     'showCount + maxLength — live character counter',
     'resize — native resize behavior',

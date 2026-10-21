@@ -11,7 +11,7 @@
     "File uploads - use FileInput"
   ],
 
-  "rationale": "Textarea wraps a native <textarea> with a 32px min-height floor (semantic.size.m) instead of a height ladder, because its height is driven by rows. `size` only changes font size, keeping it aligned with Input and Select in the same form.",
+  "rationale": "Textarea wraps a native <textarea> with a 32px min-height floor (semantic.size.m) instead of a height ladder, because its height is driven by rows. It has one size — the field scale's m (owner's decision 2026-10-20: s and l removed, like Select and MultiSelect, which never had them).",
 
   "governance": {
     "mayExtendLocally": [
@@ -57,7 +57,13 @@
     {
       "part": "textarea-label",
       "element": "label",
-      "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md."
+      "description": "Accessible label. Always rendered - visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
+    },
+    {
+      "part": "textarea-required",
+      "element": "span",
+      "optional": true,
+      "description": "The required indicator (*) inside the label, the label color, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
     },
     {
       "part": "textarea-wrapper",
@@ -78,7 +84,7 @@
     {
       "part": "textarea-description",
       "element": "span",
-      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
     },
     {
@@ -136,12 +142,6 @@
       "description": "Hides the label visually but keeps it accessible."
     },
     {
-      "name": "size",
-      "type": "'s' | 'm' | 'l'",
-      "default": "m",
-      "description": "Field size. Uses the shared field scale for density and typography."
-    },
-    {
       "name": "rows",
       "type": "number | undefined",
       "description": "Controls the visible row count."
@@ -178,14 +178,7 @@
       "unit": "px",
       "note": "component.textarea.height aliases semantic.size.m (32px) and is applied as min-height on textarea-field — a floor, not a per-size ladder like Input/Select. `size` itself only changes font-size (s: --helix-primitive-fontSize-s, m: base/default, l: --helix-primitive-fontSize-m); the visible height above the floor is controlled by the native `rows` attribute and `resize`."
     },
-    "width": {
-      "default": "hug",
-      "modes": {
-        "hug": "Width shrinks to content or container constraints.",
-        "fill": "Width expands to 100% when fullWidth=true.",
-        "fixed": "Explicit width set by the consumer."
-      }
-    }
+    "width": {"default": "fixed", "value": 320, "unit": "px", "modes": {"fixed": "320px — every form field shares it and never grows or shrinks with its content (owner's rule 2026-10-21, form-field pattern); max-width 100% so a narrow container can still hold it.", "fill": "fullWidth=true: 100% of the container (Figma: drawn at 600px, the field and its popup on Fill so they stretch)."}, "exceptions": "A field that must be narrower (a number stepper, a short code) says so here, with its width and why — the only way off 320px."}
   },
   "tokenPolicy": {
     "allowed": [
@@ -299,7 +292,7 @@
         }
       },
       "targetSize": {
-        "textarea-field": "smallest 165×96 px"
+        "textarea-field": "smallest 179×96 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -330,27 +323,31 @@
     }
   },
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "invalid",
-      "disabled"
-    ],
+    "states": ["default", "hover", "focus"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "invalid",
-          "disabled"
-        ],
+        "values": ["default", "hover", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,    disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,    pattern form-field)."
       }
-    ]
+    ],
+    "propertyMap": {
+      "value": {"codeType": "string (native <textarea> value)", "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "filled"]}, {"name": "value", "type": "TEXT"}], "approved": "2026-10-21", "reason": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn in every state the empty field has (hover, focus, invalid, disabled — text/disabled there) (owner's rule 2026-10-21: one set of rules for every form field)"},
+      "placeholder": {"codeType": "string (native <textarea> placeholder)", "figma": [{"name": "placeholder", "type": "TEXT"}], "approved": "2026-10-21", "reason": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"}
+    },
+    "structure": "textarea-root (8px gap) > textarea-label (text + textarea-required),  textarea-wrapper as wide as code default 20 native columns (194px; fullWidth drawn at 480px,  filling its container),  textarea-field 4 rows tall = code default rows,  textarea-counter and the native resize handle anchored bottom-right,  textarea-description,  textarea-error. One size (m). The native resize handle is drawn by the browser (no data-helix-part); its layer is named native resize handle and hides with resize=none.",
+    "variantCombinations": "112 variants (2026-10-21,  one size since the owner removed s and l): invalid × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with fullWidth false/true × hideLabel false/true × resize vertical/none/horizontal/both = 7 × 16 = 112 (secondary toggles at every state,  owner's decision 2026-10-21). Invalid focus keeps the red border with a 20% red ring.",
+    "stories": {
+      "Default": "default",
+      "WithDescription": "description.=true",
+      "WithCharacterCount": "showCount=true",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Disabled": "disabled=true",
+      "NoResize": "resize=none",
+      "FullWidth": "fullWidth=true",
+      "KeyboardFocus": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

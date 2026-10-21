@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "RadioButton",
   "version": "0.1.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "A single radio input — the individual option unit RadioGroup renders per choice, exposed on its own for cases that need one radio outside a full group (e.g. a single option embedded in a custom layout, or a hand-assembled set sharing `name`).",
   "import": "import { RadioButton } from '@helixds/react';",
@@ -42,8 +42,9 @@
     { "part": "radio-control", "element": "span", "description": "Visual circle — reflects checked state via CSS." },
     { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when checked.", "optional": true },
     { "part": "radio-item-content", "element": "span", "description": "Wraps the label and description." },
-    { "part": "radio-item-label", "element": "span", "description": "Visible label." },
-    { "part": "radio-item-description", "element": "span", "description": "Helper text. Sits exactly 4px below the label — same structure as Checkbox's own description.", "optional": true },
+    { "part": "radio-item-label", "element": "span", "description": "Visible label. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "radio-item-required", "element": "span", "optional": true, "description": "The required indicator (*) inside the label, text/danger, 2px (spacing/3xs) after the text — shown by `required`, like Checkbox. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text. Sits exactly 4px below the label — same structure as Checkbox's own description. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "radio-item-error", "element": "span", "description": "Error text, shown instead of the description when `errorMessage` is set — identical structure to Checkbox's own error message.", "optional": true }
   ],
 
@@ -165,16 +166,37 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "invalid", "disabled"],
+    "states": ["default", "hover", "focus"],
     "properties": [
-      { "name": "checked", "type": "VARIANT", "values": ["unchecked", "checked"], "codeProp": "checked" },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "invalid", "disabled"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props." },
-      { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: a line in radio-item-content (4px gap only between shown lines)." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" },
-      { "name": "errorMessage", "type": "BOOLEAN", "codeProp": "errorMessage", "description": "Show/hide part: the error line. Code shows it instead of the description — turn description off when it's on." },
-      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "focus"],
+        "figmaOnly": true,
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. checked,  invalid and disabled are their own false/true toggles (contracts/figma-conversion.json,  pattern checkable)."
+      },
+      {
+        "name": "description.",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part: a line in radio-item-content (4px gap only between shown lines)."
+      },
+      {
+        "name": "errorMessage.",
+        "type": "BOOLEAN",
+        "codeProp": "errorMessage",
+        "description": "Show/hide part: the error line. Code shows it instead of the description — turn description off when it is on."
+      }
     ],
-    "structure": "radio-item > radio-control-box (21px = lineHeight/m, the circle centered on the label's first line — code's token-derived margin-top) + radio-item-content (label, description, error)."
+    "structure": "radio-item > radio-control-box (21px = lineHeight/m,  the circle centered on the label first line) + radio-item-content (radio-item-label [text + radio-item-required],  description,  error).",
+    "variantCombinations": "14 variants (2026-10-20): checked false/true × invalid false/true × state default/hover/focus = 12,  plus disabled for each checked value at state default,  valid = 2 — the standard rule for disabled. Disabled dims label,  required * and description (text/disabled).",
+    "stories": {
+      "AllTypes": "layout",
+      "WithDescription": "description.=true",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Disabled": "disabled=true",
+      "Group": "layout",
+      "KeyboardSelect": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

@@ -41,6 +41,7 @@
   "props": [
     { "name": "label",  "type": "string", "required": true, "description": "The person's full name — source for the initials fallback, and the accessible name (image alt / aria-label)." },
     { "name": "src",    "type": "string | undefined", "description": "Image URL. When present, renders avatar-image; falls back to initials on load error." },
+    { "name": "aria-describedby", "type": "string | undefined", "description": "Forwarded to the root — set by Tooltip when Avatar is its trigger (e.g. inside AvatarGroup). Screen-reader only." },
     { "name": "size",   "type": "'s' | 'm' | 'l'", "default": "m", "description": "Physical size. Shares the field scale with Input/Select (s=24, m=32, l=40)." },
     { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
   ],
@@ -135,10 +136,22 @@
 
   "figma": {
     "states": ["default"],
+    "variantCombinations": "6 variants (2026-10-21): src. false/true × size s/m/l.",
+    "noProperty": "aria-describedby has no Figma property (owner's decision 2026-10-21, contracts/figma-conversion.json → skip.why): screen-reader only, set by Tooltip when Avatar is its trigger.",
+    "propertyMap": {
+      "src": { "codeType": "string | undefined", "figma": [{ "name": "src.", "type": "VARIANT", "values": ["false", "true"] }], "approved": "2026-10-21", "reason": "Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both" }
+    },
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
-      { "name": "initials", "type": "TEXT", "codeProp": "label", "description": "The first letter of `label` — code derives it, Figma takes it typed." },
-      { "name": "src", "type": "BOOLEAN", "codeProp": "src", "description": "Shows avatar-image (an image fill covering the circle) over the initials — code renders one or the other. Swap the photo per instance with the image fill. The photo is one of the Pexels portraits in apps/storybook/public/avatars (flat-color backgrounds) — it lives only inside the component, not as loose images on the canvas." }
-    ]
+      { "name": "label", "type": "TEXT", "codeProp": "label", "description": "Type the initial here — code derives it from the full name in `label` (the layer is avatar-initials)." },
+      { "name": "src.", "type": "VARIANT", "values": ["false", "true"], "codeProp": "src", "description": "false = initials, true = the photo (avatar-image)." }
+    ],
+    "stories": {
+      "Default": "src.=false",
+      "Sizes": "layout",
+      "WithImage": "src.=true",
+      "BrokenImageFallsBackToInitials": "src.=false",
+      "MemberList": "layout"
+    }
   }
 }

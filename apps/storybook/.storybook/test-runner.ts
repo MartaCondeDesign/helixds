@@ -3,6 +3,7 @@ import path from 'path';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { injectAxe, getViolations } from 'axe-playwright';
 import { checkFocusVisible, checkReflow, checkTargetSize, collectAria, collectContrast, collectTargets } from './a11y-extra-checks';
+import { checkControls } from './controls-check';
 
 // Stability criteria 4 (a11y) and 6 (contrast, light + dark) — see docs/ADR/ADR-018-stability-criteria.md.
 // Beyond axe, criterion 4 also gets three checks axe can't do (a11y-extra-checks.ts): target size
@@ -15,6 +16,7 @@ import { checkFocusVisible, checkReflow, checkTargetSize, collectAria, collectCo
 // not here — setup() runs once per parallel worker, so clearing here wiped other workers' results.
 const RESULTS_DIR = path.resolve(__dirname, '../.test-results/a11y');
 const THEMES = ['light', 'dark'] as const;
+const DISABLED = '[disabled], [data-disabled], [aria-disabled="true"]';
 const AXE_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 const config: TestRunnerConfig = {
@@ -38,7 +40,14 @@ const config: TestRunnerConfig = {
       const violations = await getViolations(page, 'body', { // body: portaled overlays (Menu, Toast) live outside #storybook-root
         runOnly: { type: 'tag', values: AXE_TAGS },
       });
-      byTheme[theme] = violations.map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
+      // WCAG 1.4.3 exempts text that is part of an inactive (disabled) component — root CLAUDE.md rule 9.
+      // axe only knows it for a disabled control's own <label>; a description, hint or required * outside it
+      // still gets flagged, so drop contrast nodes inside any disabled component.
+      for (const v of violations) if (v.id === 'color-contrast') {
+        const inactive = await page.evaluate(([targets, sel]) => targets.map(t => !!document.querySelector(t)?.closest(sel)), [v.nodes.map(n => n.target.join(' ')), DISABLED] as const);
+        v.nodes = v.nodes.filter((_, i) => !inactive[i]);
+      }
+      byTheme[theme] = violations.filter(v => v.nodes.length).map(v => ({ rule: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
       applied.contrast[theme] = await collectContrast(page);
       focusVisible[theme] = await checkFocusVisible(page);
     }
@@ -54,6 +63,19 @@ const config: TestRunnerConfig = {
       path.join(RESULTS_DIR, `${context.id}.json`),
       JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow, aria, applied }, null, 2),
     );
+
+    // Every control changes the canvas (controls-check.ts). Last, after the a11y report is written, and thrown:
+    // a dead control is a broken story, not a finding to aggregate.
+    if (/^(Components|Layout)\//.test(context.title)) {
+      const dead = await checkControls(page, context.id);
+      if (dead.length) {
+        throw new Error(
+          `${context.title} › ${context.name}: ${dead.map(d => `\`${d.arg}\``).join(', ')} ${dead.length > 1 ? 'controls change' : 'control changes'} nothing on the canvas — ` +
+          'the story\'s render drops ' + (dead.length > 1 ? 'those args' : 'that arg') + '. Fix it without asking: apply the shared args to every instance, ' +
+          'or turn off only the controls the story fixes per instance (`argTypes: { x: { control: false } }`). See apps/storybook/CLAUDE.md → "Every story has Controls".',
+        );
+      }
+    }
   },
 };
 

@@ -1,0 +1,117 @@
+{
+  "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
+  "version": "1.16.0",
+  "approved": "2026-10-21",
+
+  "naming": {
+    "property": "Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).",
+    "values": "VARIANT values = code values, unchanged (primary, stacked-bar, false).",
+    "helperSuffix": ".",
+    "figmaOnly": "A property that exists only in Figma — no code prop of that name: the toggle of an optional part, or a look a story shows that comes from each item rather than the component (Avatar's photo: src., SegmentedControl's icon-only: icon.) — is named after the code field it stands for with the same dot at the end, so it's never mistaken for a real prop (owner's rule 2026-10-21). Approved per component in figma.figmaOnly.",
+    "helper": "The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with a dot at the end — BOOLEAN errorMessage., icon. — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.",
+    "layers": "Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers."
+  },
+
+  "rules": [
+    { "id": "skip", "when": "handlers (on*), default* twins, aria-*, ids, refs, data arrays and wiring props", "figma": [], "why": "behaviour or data, nothing to draw" },
+    { "id": "nested", "when": "a ReactElement, or ReactNode children of a component that isn't in textChildren", "figma": [], "why": "another component or free content, not a property" },
+    { "id": "overlay-expanded", "when": "expanded on an overlay (overlays)", "figma": [], "why": "closed = not on screen; Figma draws it open" },
+    { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name}. (only when optional)", "INSTANCE_SWAP {name}"], "why": "shows the icon (helper.) · which icon" },
+    { "id": "list-delegated", "when": "a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count", "figma": [], "why": "the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21)" },
+    { "id": "list-count", "when": "a list of items the component draws one after another — any array-typed prop (options, avatars, actions, items, categories, series…) except listCount.exclude (selected values)", "figma": ["VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)"], "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)" },
+    { "id": "union", "when": "a union of string or number literals", "figma": ["VARIANT {name} = the same values"], "why": "same values as code" },
+    { "id": "show-hide-boolean", "when": "a boolean listed in showHideBooleans — it only shows or hides one part", "figma": ["BOOLEAN {name}"], "why": "shows / hides a part" },
+    { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
+    { "id": "slot", "when": "an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…)", "figma": ["BOOLEAN {name} (or {name}. + TEXT {name} for slotsWithText)"], "why": "shows the slot" },
+    { "id": "text", "when": "a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component", "figma": ["TEXT {name}"], "why": "its text" },
+    { "id": "optional-text", "when": "an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop)", "figma": ["BOOLEAN {name}.", "TEXT {name}"], "why": "shows the part · its text" },
+    { "id": "aria-text", "when": "a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title, -content or -initials part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description", "figma": [], "why": "read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20)" }
+  ],
+
+  "skip": {
+    "namePatterns": ["^on[A-Z]", "^default[A-Z]", "^aria-"],
+    "names": ["className", "id", "name", "href", "ref", "anchorRef", "activeValue", "invalidAttempt", "closeOnBackdropClick", "decorative", "rows", "maxLength", "max", "height", "stroke", "color", "values", "src"],
+    "why": {
+      "src": "an image URL: Figma can't load an image from a URL, so there is never a src property. The look it decides — photo or initials — is a src. false/true VARIANT (Avatar, AvatarGroup), approved in the contract's figma.propertyMap / figmaOnly (owner's decision 2026-10-21).",
+      "aria-*": "aria-describedby, aria-label… are read by screen readers only and are set by code (Tooltip sets aria-describedby on its trigger) — nothing to draw, never a Figma property (owner's decision 2026-10-21). Components on a native element accept them without declaring them; only Avatar (a <span>) and Tooltip declare aria-describedby, so it can be a Tooltip trigger."
+    },
+    "typePatterns": ["\\[\\]", "Array<", "RefObject"],
+    "nonStringValue": true
+  },
+  "listCount": {
+    "props": "every list prop — any array type (options, avatars, actions, items, categories, series…) — except the ones in exclude, which hold selected values rather than items on screen (owner's rule 2026-10-21: by type, not by name, so a new list prop is never missed)",
+    "exclude": ["value", "values", "defaultValue"],
+    "min": 2,
+    "max": 7,
+    "owner": "The count belongs to the component that draws the items, never to a component that contains it (owner's rule 2026-10-21). AvatarGroup draws its avatars, Menu its options, FAB its actions: each has the count VARIANT. Select and MultiSelect hand their options to Menu (<Menu options={options}>): they have no options property — their state=open variants hold an exposed nested Menu instance (isExposedInstance) and the designer picks the count on it. Detected from the code (rule list-delegated, scripts/figma/prop-rule.ts) and checked by the Figma audit (check 12): a delegating set must hold an exposed instance of the component it delegates to.",
+    "itemsAtRest": "Inside a list component's own set (Menu, CheckboxGroup…), every nested item instance is at state=default — hover, press and selected are the item component's own states (MenuItem state=selected), drawn on the item, never inside the list (owner's rule 2026-10-21). Audit check 12.",
+    "rule": "Every list of drawn items converts to a VARIANT named like the prop whose values are the item counts (options = 2 / 3 / … / 7) — the Figma property is named exactly like that component's code prop — one variant per count, each item an instance of the item component, with its own example text. The range is 2…7 (owner's decision 2026-10-21) unless the contract's figma.listCount sets { \"<prop>\": { \"min\": n, \"max\": n } } (AvatarGroup's avatars keep 1–7, built before the rule). A list shown only inside an overlay is drawn in the open state. Data that isn't drawn item by item — selected values (value, values, defaultValue), chart categories and series — stays code only (skip)."
+  },
+  "showHideBooleans": ["required", "showCloseButton", "showCount", "dismissible"],
+  "textChildren": ["Button", "Accordion", "Modal", "SidePanel", "Card"],
+  "overlays": ["Modal", "SidePanel", "Menu", "Tooltip"],
+  "slotsWithText": ["header"],
+  "secondaryAxes": ["fullWidth", "hideLabel", "isLoading", "resize"],
+  "partSuffix": { "errorMessage": "error" },
+
+  "storyCoverage": "Every Storybook story of a component (each export of apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx) says how Figma represents it, or carries the owner's decision that it doesn't (owner's rule 2026-10-21 — Avatar's With image / Initials stories had no Figma counterpart until src. was added). The contract's figma.stories maps each export: \"prop=value, prop=value\" (the Figma properties/values that draw it, each a property of the set or state), \"default\" (the set's default variant), \"layout\" (a showcase that only arranges existing variants), or { figma: null, reason, approved } (behaviour only, or not drawn on purpose). A keyboard story is a focus state and focus is drawn: it maps to state=focus, or to layout when the ring belongs to a child instance (owner's decision 2026-10-21). pnpm docs:figma-map prints a Stories → Figma block per component (✗ = no approved representation, or a stale entry) and figma-drift fails a component with a ✗. Filling figma.stories is the owner's decision: an agent shows each ✗ story with a proposal and asks.",
+  "propertyOrder": "Figma properties come in the code's order — the contract's props order, which is the order Storybook's Controls list them in (owner's decision 2026-10-21). Figma always shows VARIANT properties first, so each group follows the code order on its own: the variants in code order with state last, then every other property in code order — a helper {name}. right before the property it shows, approved exceptions for native attributes last. pnpm docs:figma-map checks it (Property order line) and figma-drift fails a component that breaks it. The reference is the order Storybook's props table really shows, read by pnpm figma:story-order into .ai/storybook-prop-order.json — not the contract's order (Storybook doesn't follow it: Chip's label comes first in Storybook, fourth in the contract). Re-run it whenever a story or a component's props change. Both sides list the same way: Figma can't interleave VARIANT properties with the rest, so Storybook lists the props that are Figma variants first, then the rest (the order of each story file's meta.args sets it) — every group in the same order on both sides (owner's rule 2026-10-21; figma-map's **Storybook order** check).",
+  "state": {
+    "values": ["default", "hover", "press", "focus", "open", "selected"],
+    "rule": "The only Figma-only property: CSS pseudo-classes. disabled, invalid, checked, isLoading… are never values of state — each is its own false/true VARIANT."
+  },
+
+  "variants": {
+    "disabled": "disabled=true is drawn only with state=default and invalid=false — a disabled control doesn't hover, take focus or validate. Every text layer (label, description, required *, legend) binds text/disabled (.ai/maps/patterns/disabled-state.md).",
+    "secondary": "Secondary look toggles (secondaryAxes) are drawn at every size and in every state the code can reach — fullWidth with default/hover/press/focus and disabled, like any other variant (owner's decision 2026-10-21, replacing 'drawn once'). Except where code makes a state impossible: isLoading disables Button, IconButton and Input (disabled={disabled || isLoading}), so a loading one is drawn at state=default only, enabled and valid. hideLabel is drawn in every state too.",
+    "loadingDisables": ["Button", "IconButton", "Input"],
+    "impossible": "A combination code can't render isn't drawn (Checkbox checked + indeterminate). List what's left in the contract's figma.variantCombinations.",
+    "focusClip": "In a variant that draws the focus ring (state=focus, and state=open where open shares the ring), every frame AROUND the ring layer has Clip Content OFF — the ring is a 3px spread shadow outside the control and a clipping parent cuts it — while the ring layer itself keeps Clip Content ON, because Figma only draws a shadow's spread on a clipping frame (owner's decision 2026-10-20). The Figma audit fails otherwise.",
+    "propstar": "The set sits in a Propstar table: rows = the main look axis, columns = the remaining axes grouped (invalid false/true × state, then disabled). Booleans are toggled in the panel, never expanded into columns. Regenerate the table (scripts/figma/propstar.js) in the same step every time a variant or property changes — labels written prop=value, checked by the audit (owner's rule 2026-10-21)."
+  },
+
+  "patterns": [
+    {
+      "id": "form-field",
+      "components": ["Input", "Textarea", "Select", "MultiSelect"],
+      "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN description. + TEXT description", "errorMessage": "BOOLEAN errorMessage. + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN {name}. + INSTANCE_SWAP {name}" },
+      "states": ["default", "hover", "focus"],
+      "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error",
+      "text": "Every form field draws its text the same way, like Select: placeholder (TEXT, the grey hint, text/neutral/lightest), value (TEXT, the typed or chosen text, text/neutral) and the helper value. (VARIANT empty / filled — Select: empty / selected) that picks which one shows; value.=filled / selected drawn in every state the empty field has — hover, focus, invalid, disabled (its text then text/disabled) — for every fullWidth / hideLabel / resize (owner's rule 2026-10-21: one set of rules for every form field).",
+      "width": "320px for every form field, in code (root width 320px, max-width 100%) and in Figma (fixed 320) — never content-driven: a long label, placeholder or value never widens it. fullWidth: code 100% of the container; Figma drawn at 600px with the field and its popup on Fill, so stretching the instance stretches them. An exception (a number stepper, a short code) is written in that contract's sizing.width.exceptions. A new form field follows it (owner's rule 2026-10-21; pnpm verify:field-sizes checks the contracts)."
+    },
+    {
+      "id": "checkable",
+      "components": ["Checkbox", "RadioButton", "Switch"],
+      "props": { "label": "TEXT", "checked": "VARIANT false/true", "indeterminate": "VARIANT false/true (Checkbox)", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN description. + TEXT description", "errorMessage": "BOOLEAN errorMessage. + TEXT errorMessage" },
+      "states": ["default", "hover", "focus"],
+      "anatomy": "control · label row (text + {prefix}-required) · description · error"
+    },
+    {
+      "id": "group",
+      "components": ["CheckboxGroup", "RadioGroup", "ChipGroup"],
+      "props": { "label": "TEXT (the legend)", "orientation": "VARIANT", "required": "BOOLEAN", "description": "BOOLEAN description. + TEXT description", "errorMessage": "BOOLEAN errorMessage. + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true" },
+      "states": ["default"],
+      "anatomy": "legend (text + {prefix}-required) · options as instances of the item component · description · error — no state axis: hover/focus live in each item"
+    },
+    {
+      "id": "action",
+      "components": ["Button", "IconButton", "FAB", "Chip", "SegmentedControl", "NavItem"],
+      "props": { "children / label": "TEXT", "variant / size": "VARIANT", "icon / iconEnd": "BOOLEAN {name}. + INSTANCE_SWAP {name}", "isLoading": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true" },
+      "states": ["default", "hover", "press", "focus"]
+    },
+    {
+      "id": "overlay",
+      "components": ["Modal", "SidePanel", "Menu", "Tooltip"],
+      "trigger": "A floating element that accompanies another component — Tooltip, Popover, and any future one — draws the element it wraps as its children: an INSTANCE_SWAP named children whose preferred values are every Helix component it can accompany, listed in the contract's figma.triggers (Tooltip: IconButton, Button, Avatar), so the designer swaps it in the panel (owner's rule 2026-10-21).",
+      "props": { "expanded": "— (drawn open)", "children": "TEXT (Modal, SidePanel)", "*ActionLabel": "BOOLEAN {name}. + TEXT {name}", "showCloseButton": "BOOLEAN", "placement": "VARIANT" },
+      "states": ["default"]
+    },
+    {
+      "id": "layout-slot",
+      "components": ["AppShell", "PageHeader", "Card", "TopBar", "SideNav"],
+      "props": { "header / actions / footer / sidenav / topbar": "BOOLEAN", "title / description": "TEXT, or BOOLEAN {name}. + TEXT {name} when optional" },
+      "states": ["default"]
+    }
+  ]
+}

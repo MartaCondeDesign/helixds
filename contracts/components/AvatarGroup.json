@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "AvatarGroup",
   "version": "0.1.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Shows several people or entities associated with the same record as a compact overlapping stack of Avatars, collapsing whatever doesn't fit into a '+N' count.",
   "import": "import { AvatarGroup } from '@helixds/react';",
@@ -141,12 +141,29 @@
   },
 
   "figma": {
+    "childProps": {"avatars": [{"component": "Avatar", "property": "label", "note": "each avatar's label (and its src. photo)"}]},
     "states": ["default"],
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
-      { "name": "overflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
-      { "name": "overflow count", "type": "TEXT", "codeProp": "max", "description": "The +N text." }
+      { "name": "avatars", "type": "VARIANT", "values": ["1", "2", "3", "4", "5", "6", "7"], "codeProp": "avatars", "description": "How many avatars the group draws — code draws one per entry in avatars." },
+      { "name": "src.", "type": "VARIANT", "values": ["false", "true"], "description": "false = initials, true = photos, in every item — a different portrait per avatar (the 6 Pexels samples in apps/storybook/public/avatars, in order: pau, ana, jordi, leo, marta, sara)." },
+      { "name": "withOverflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
+      { "name": "max", "type": "TEXT", "codeProp": "max", "description": "The +N text — code computes it from avatars and max." }
     ],
-    "structure": "Avatar instances in avatar-group-item rings (2px, fill/page). The 8px overlap (avatarGroup.overlap) is modeled without a negative gap: every item after the first sits in a slot 8px narrower than itself, offset 8px left, so it paints over the previous one and the group's width matches code (m, 3 avatars: 92px). The hover lift is a motion effect, not modeled."
+    "propertyMap": {
+      "avatars": { "codeType": "{ label: string; src?: string }[]", "figma": [{ "name": "avatars", "type": "VARIANT", "values": ["1", "2", "3", "4", "5", "6", "7"] }], "approved": "2026-10-21", "reason": "code takes the list of people; Figma draws how many there are — 1 to 7, like Storybook's examples (owner's request)" },
+      "max": { "codeType": "number | undefined", "figma": [{ "name": "max", "type": "TEXT" }], "approved": "2026-10-21", "reason": "code takes a number (how many avatars show before +N); Figma can't count, so max holds the +N text it produces" }
+    },
+    "figmaOnly": {
+      "src.": { "approved": "2026-10-21", "reason": "like Avatar's src.: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar" },
+      "withOverflow": { "approved": "2026-10-21", "reason": "shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after" }
+    },
+    "variantCombinations": "42 variants (2026-10-21): avatars 1–7 × src. false/true × size s/m/l. withOverflow and max are toggled per instance.",
+    "structure": "Avatar instances in avatar-group-item rings (2px, fill/page). The 8px overlap (avatarGroup.overlap) is modeled without a negative gap: every item after the first sits in a slot 8px narrower than itself, offset 8px left, so it paints over the previous one and the group's width matches code (m, 3 avatars: 92px). The hover lift is a motion effect, not modeled.",
+    "stories": {
+      "Default": "default",
+      "WithOverflow": "withOverflow=true, src.=true",
+      "Sizes": "layout"
+    }
   }
 }

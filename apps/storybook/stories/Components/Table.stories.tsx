@@ -21,7 +21,7 @@ const meta: Meta<typeof Table> = {
     // buried in a .ts file nobody opens.
     dragReorder: {
       control: false,
-      table: { category: 'Behavior', type: { summary: 'pattern, not a prop' } },
+      table: { disable: true }, // not a prop: the props table lists Table's props only — the pattern is in the DragReorder story
       description: 'Not a Table prop. Rows can be composed with Motion\'s `Reorder.Group`/`Reorder.Item` (`as="tbody"`/`as="tr"`) for drag-to-reorder — see Pages/Team Dashboard for a live example and `.ai/maps/patterns/motion-effects.md` for the pattern.',
     },
     // The `as any` below is required, not a shortcut: TableProps has no `dragReorder` key (correctly —
@@ -40,8 +40,10 @@ const MEMBERS = [
 ];
 
 export const Default: Story = {
-  render: () => (
-    <Table>
+  // Table's only props are its content (fixed by the story) and className
+  argTypes: { children: { control: false } },
+  render: ({ className }) => (
+    <Table className={className}>
       <TableHead>
         <TableRow>
           <TableHeaderCell>Member</TableHeaderCell>
@@ -68,7 +70,6 @@ export const Default: Story = {
     </Table>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Row hover is CSS-only. Cells hold real Helix components (Avatar, Badge, Button), not raw markup.' } },
   },
 };
@@ -115,12 +116,13 @@ function DragRow({ member, index, total, onMove, announce }: { member: DragMembe
 }
 
 export const DragReorder: Story = {
-  render: () => {
+  argTypes: { children: { control: false } },
+  render: ({ className }) => {
     const [members, setMembers] = useState(DRAG_MEMBERS);
     const { announce, region } = useReorderAnnouncer();
     return (
       <>
-        <Table>
+        <Table className={className}>
           <TableHead>
             <TableRow>
               <TableHeaderCell><span style={VISUALLY_HIDDEN}>Reorder</span></TableHeaderCell>
@@ -143,7 +145,6 @@ export const DragReorder: Story = {
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: {
         story: 'Drag a row by its grip ⋮⋮ — or, without dragging, use its ⋯ menu (Move to top / up / down / to bottom), or the keyboard: Space on the grip picks the row up, ↑/↓ move it, Space drops, Escape cancels (WCAG 2.1.1 and 2.5.7). Focus stays on the moved row and the new position is announced. Not a Table prop — real rows composed with Motion\'s Reorder.Group/Reorder.Item (as="tbody"/as="tr"), see the "dragReorder" entry above and .ai/maps/patterns/motion-effects.md.',

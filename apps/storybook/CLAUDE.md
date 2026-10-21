@@ -94,6 +94,62 @@ export const MyStory: Story = {
 just token content, with any explanation buried in `parameters.docs.description.story` (only visible in
 the separate "Docs" tab, never in "Canvas" view, which is what most people actually look at first).
 
+## Every story has Controls
+
+Every `Components/*` and `Layout/*` story shows a working Controls panel — changing a control changes the canvas.
+A story with several instances (all variants, all sizes, disabled on/off…) applies the shared args (size, variant,
+label, icon…) to every instance and turns off only the controls it fixes per instance:
+
+```tsx
+export const Disabled: Story = {
+  args: { label: 'Disabled' },
+  argTypes: { disabled: { control: false }, checked: { control: false } }, // what the story fixes
+  render: ({ label, description }) => (
+    <>
+      <Checkbox label={label} description={description} disabled />
+      <Checkbox label={label} description={description} disabled checked />
+    </>
+  ),
+};
+```
+
+- Never `parameters: { controls: { disable: true } }`, never a `render: () => …` that ignores args.
+- Icon and slot props get a select with a `mapping` (Tabler icons, slot elements); set their default by name with
+  `mapped('IconPlus')` (`_shared/mapped-arg.ts`) — passing the component itself leaves the select blank.
+- Only a story that is an open overlay (Toast › Opened) keeps them off, with `// controls-off: <reason>` in or right
+  above it. Stories tagged `!dev` (test-only, hidden) are skipped.
+
+Enforced twice:
+- **Lint** — `helix/story-has-controls` (`eslint.config.mjs`): `controls.disable` or a `render` with no args. Claude
+  Code's lint hook hands a violation back to the agent, which fixes it in the same turn without asking;
+  `pnpm lint:stories` in pre-commit stops the commit otherwise.
+- **Browser** — `.storybook/controls-check.ts`, run by the test-runner on every Components/Layout story (so by
+  `pnpm verify:stable` and `pnpm a11y`): it changes each control the story leaves on and fails the story when the
+  canvas doesn't change — the `render: ({ size }) => …` that silently drops `label`. Fix it the same way, without
+  asking: pass the arg to every instance, or turn that control off because the story fixes it.
+  A control that only shows with another one (`errorMessage` with `invalid`) is retried with each other control
+  changed first, so it passes on its own. A control that works but not on the canvas (Toast › Playground's args reach
+  the toast its button opens; Modal's `closeOnBackdropClick` changes behaviour) is listed in the story's
+  `parameters.controlsCheck: { skip: ['name'], reason: '…' }` — the reason is required, like `controls-off`.
+
+## Props in Figma's order: variants first
+
+The props table lists the props that are Figma VARIANTs first (variant, size, checked, disabled… —
+`.ai/maps/figma-map.json` says which), then all the rest, each group in the same order as Figma's properties panel
+(Figma can't interleave variants with other properties, so Storybook follows it). Storybook orders the table by the
+keys of the file's `meta.args`, so list them in that order — adding a prop to `args` (its default) if it has to move.
+Checked by `pnpm figma:story-order` + `pnpm docs:figma-map` (**Storybook order** line, owner's rule 2026-10-21).
+
+## The Code → Figma table follows the props table
+
+Every docs page ends its props section with a **Code → Figma** table (`.storybook/FigmaDocsPage.tsx`): one row per
+prop, in exactly the order of the props table above it (the primary story's argTypes, read at render time), each with
+its Figma property (🎨, on the component or on a nested child) or 👾 code only and why — from
+`.ai/maps/figma-map.json` (`pnpm docs:figma-map`). Nothing is written per story: adding, removing, renaming or moving a
+prop updates both tables. A component drawn by a call rather than props (Toast: `toast[variant](label, description)`)
+lists the call's arguments in its contract's `figma.callArgs`, and its first story takes them as args so both tables
+show them (owner's rule 2026-10-21).
+
 ## Token-driven stories must read from `tokens.json`, not hardcode a list
 
 See `packages/tokens/CLAUDE.md` → "Adding a token" step 6. A story that shows tokens never lists them by

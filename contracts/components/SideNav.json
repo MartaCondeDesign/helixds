@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "SideNav",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "The persistent vertical navigation rail of an app shell — brand mark, primary nav entries, and a footer slot for the current user.",
   "import": "import { SideNav } from '@helixds/react';",
@@ -124,11 +124,15 @@
   },
 
   "figma": {
+    "childProps": {"children": [{"component": "NavItem", "property": "label", "note": "each link"}]},
     "states": ["default"],
     "properties": [
       { "name": "brand", "type": "BOOLEAN", "codeProp": "brand", "description": "Show/hide part: the brand row carries its own 12px bottom (code's margin-bottom), so hiding it leaves the items where the root's 12px top puts them." },
       { "name": "footer", "type": "BOOLEAN", "codeProp": "footer", "description": "Show/hide part: 8px margin + top border + 8px padding all live on the footer." }
     ],
-    "structure": "No variants — a single component: side-nav-brand > brand-content, side-nav-items (NavItem instances, fills the height), side-nav-footer > footer-content (Avatar instance + name/role)."
+    "structure": "No variants — a single component: side-nav-brand > brand-content, side-nav-items (NavItem instances, fills the height), side-nav-footer > footer-content (Avatar instance + name/role).",
+    "stories": {
+      "Default": "brand=true, footer=true"
+    }
   }
 }

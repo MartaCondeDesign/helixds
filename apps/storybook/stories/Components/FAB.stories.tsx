@@ -9,10 +9,16 @@ const meta: Meta<typeof FAB> = {
   component:  FAB,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(FABDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    actions: undefined,
+    expanded: undefined,
+    disabled: undefined,
     icon:  IconPlus,
     label: 'Add',
     onClick: fn(),
+    defaultExpanded: undefined,
+    onExpandedChange: undefined,
   },
   argTypes: {
     icon: {

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Icon",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "beta",
 
   "purpose": "Communicates meaning, action, or status through a recognizable visual symbol. Always supplemental to text — never the sole conveyor of information without a tooltip or label.",
   "import": "import { Icon, createIconAdapter, iconStrokeForSize } from '@helixds/react';",
@@ -110,9 +110,9 @@
     "system": "fixed values — never scale with CSS font-size",
     "values": {
       "12": "xs contexts — dense UI, inline badges",
-      "14": "compact controls — Chip, Input size=s",
-      "16": "default — button slots, form elements, inline text, Input size=m",
-      "18": "Input size=l",
+      "14": "compact controls — Chip",
+      "16": "default — button slots, form elements (Input, Select), inline text",
+      "18": "IconButton size=m",
       "20": "medium emphasis — card headers, section labels",
       "24": "large — native icon size, icon-only buttons, empty states",
       "28": "between large and xlarge",
@@ -189,13 +189,36 @@
   ],
 
   "figma": {
-    "page":        "Icons",
-    "layout":      "Flat grid — COMPONENT nodes directly on page, no row frames",
-    "cell":        40,
+    "page": "Icons",
+    "layout": "Flat grid — COMPONENT nodes directly on page,  no row frames",
+    "cell": 40,
     "componentSize": 24,
-    "naming":      "Bare PascalCase — 'Plus', not 'IconPlus', not 'tabler/Plus'",
-    "vector":      "Named 'vector', constraints: SCALE/SCALE",
-    "skill":       ".ai/skills/icons-to-figma.md"
+    "naming": "Bare PascalCase — 'Plus',  not 'IconPlus',  not 'tabler/Plus'",
+    "vector": "Named 'vector',  constraints: SCALE/SCALE",
+    "skill": ".ai/skills/icons-to-figma.md",
+    "codeOnly": "Icon is a code-only wrapper (owner's decision 2026-10-21,  option A): in code it sets the size,  derives the stroke weight from it (ADR-017) and handles color and aria; in Figma every component already places its icon instance at the right size and stroke per variant,  so there is nothing for an Icon set to add. Designers use the icon components on the Icons page directly. A loose icon scaled by hand in Figma does not re-derive its stroke like code does — pick the size from the icon component,  don't scale it.",
+    "propertyMap": {
+      "icon": {
+        "codeType": "HelixIconComponent",
+        "figma": [],
+        "approved": "2026-10-21",
+        "reason": "code-only wrapper: Figma swaps the icon on the consuming component (iconSwap),  never on an Icon set"
+      },
+      "size": {
+        "codeType": "12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40",
+        "figma": [],
+        "approved": "2026-10-21",
+        "reason": "code-only wrapper: each component variant already draws its icon at the size and stroke ADR-017 gives that size"
+      }
+    },
+    "stories": {
+      "Default": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "IconOnly": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "Sizes": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "Colors": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "CustomIconSet": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "InlineWithText": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"}
+    }
   },
 
   "interop": {

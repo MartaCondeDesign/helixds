@@ -16,3 +16,10 @@
   - text: Vegetable
   - option "Carrot"
   - option "Kale"
+
+# States
+- button "pear"
+- listbox "pear":
+  - option "Apple"
+  - option "Pear" [selected]
+  - option "Kiwi" [disabled]

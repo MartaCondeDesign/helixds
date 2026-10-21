@@ -73,7 +73,7 @@ export function Checkbox({
 
         <span data-helix-part="checkbox-text">
           {label}
-          {required && <span aria-hidden="true" style={{ color: 'var(--helix-color-text-danger)', marginLeft: 2 }}>*</span>}
+          {required && <span data-helix-part="checkbox-required" aria-hidden="true">*</span>}
         </span>
       </label>
 

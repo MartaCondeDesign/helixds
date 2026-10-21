@@ -9,7 +9,19 @@ const meta: Meta<typeof Switch> = {
   component:  Switch,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SwitchDoc),
-  args: { label: 'Enable notifications', size: 'm' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    size: 'm',
+    hideLabel: undefined,
+    checked: undefined,
+    disabled: undefined,
+    label: 'Enable notifications',
+    description: undefined,
+    defaultChecked: undefined,
+    onChange: undefined,
+    id: undefined,
+    name: undefined,
+  },
   argTypes: {
     size: { control: 'select', options: ['s', 'm'] },
   },
@@ -20,6 +32,7 @@ type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
   args: { label: 'Dark mode' },
+  argTypes: { checked: { control: false }, defaultChecked: { control: false } }, // the story holds the state
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return <Switch {...args} checked={checked} onChange={setChecked} />;
@@ -45,27 +58,42 @@ export const WithDescription: Story = {
 };
 
 export const Disabled: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
-      <Switch label="Disabled off" disabled />
-      <Switch label="Disabled on"  disabled checked />
-    </div>
-  ),
+  args: { label: 'Disabled' },
+  // The story fixes disabled (on) and checked (off / on) — label, size… apply to both
+  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false } },
+  render: ({ label, hideLabel, description, size }) => {
+    const shared = { label, hideLabel, description, size };
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-75)' }}>
+        <Switch {...shared} disabled />
+        <Switch {...shared} disabled checked />
+      </div>
+    );
+  },
 };
 
 export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
-      <Switch size="s" label="Small"             defaultChecked />
-      <Switch size="m" label="Medium (default)"  defaultChecked />
-    </div>
-  ),
+  // The story fixes size (s / m) and each one's label — checked, disabled… apply to both
+  argTypes: { size: { control: false }, label: { control: false } },
+  args: { checked: true },
+  render: ({ checked, disabled, hideLabel, description }) => {
+    const shared = { checked, disabled, hideLabel, description };
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
+        <Switch {...shared} size="s" label="Small" />
+        <Switch {...shared} size="m" label="Medium (default)" />
+      </div>
+    );
+  },
 };
 
 export const SettingsGroup: Story = {
-  render: () => {
+  // The story fixes each row's label and on/off state — size and disabled apply to every switch
+  argTypes: {
+    label: { control: false }, hideLabel: { control: false }, description: { control: false },
+    checked: { control: false }, defaultChecked: { control: false },
+  },
+  render: ({ size, disabled }) => {
     const [state, setState] = useState({
       updates:     true,
       marketing:   false,
@@ -96,14 +124,13 @@ export const SettingsGroup: Story = {
               <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--helix-color-text-neutral)' }}>{label}</div>
               <div style={{ fontSize: 13, color: 'var(--helix-color-text-neutral-light)', marginTop: 'var(--helix-spacing-3xs)' }}>{desc}</div>
             </div>
-            <Switch label={label} hideLabel checked={state[key]} onChange={() => toggle(key)} />
+            <Switch size={size} disabled={disabled} label={label} hideLabel checked={state[key]} onChange={() => toggle(key)} />
           </div>
         ))}
       </div>
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Settings panel pattern: label + description on the left, switch on the right.' } },
   },
 };

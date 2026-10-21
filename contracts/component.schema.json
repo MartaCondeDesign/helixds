@@ -403,6 +403,52 @@
           "type": "string",
           "format": "date"
         },
+        "propertyMap": {
+          "type": "object",
+          "description": "EXCEPTIONS to the code → Figma conversion standard (contracts/figma-conversion.json, root CLAUDE.md rule 16), each approved by the design-system owner. Keyed by code prop name — or by a native attribute the component passes through that isn't one of its props (Input's `value`). Everything not listed here converts by the standard. `pnpm figma:props` flags an exception whose prop type changed since it was approved; `--prune` removes entries that only repeat the standard. An empty `figma` list = no Figma property.",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["codeType", "figma", "approved"],
+            "additionalProperties": false,
+            "properties": {
+              "codeType": { "type": "string", "description": "The prop's type when it was approved — a type change asks again." },
+              "reason": { "type": "string", "description": "Why this component departs from the standard." },
+              "figma": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "type"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": { "type": "string" },
+                    "type": { "enum": ["VARIANT", "BOOLEAN", "TEXT", "INSTANCE_SWAP"] },
+                    "values": { "type": "array", "items": { "type": "string" } }
+                  }
+                }
+              },
+              "approved": { "type": "string", "format": "date" }
+            }
+          }
+        },
+        "stories": {
+          "type": "object",
+          "description": "How Figma represents each Storybook story (contracts/figma-conversion.json → storyCoverage, owner's rule 2026-10-21). Keyed by the story's export name in apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx. A string \"prop=value, prop=value\" = the Figma properties/values that draw it; \"default\" = the set's default variant; \"layout\" = a showcase that only arranges existing variants; { figma: null, reason, approved } = the owner decided Figma doesn't draw it. A story with no entry is ✗ in .ai/maps/figma-map.md and keeps the component from synced (figma-drift). Filled only with the owner's answer.",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["figma"],
+                "additionalProperties": false,
+                "properties": {
+                  "figma": { "type": ["string", "null"] },
+                  "reason": { "type": "string" },
+                  "approved": { "type": "string", "format": "date" }
+                }
+              }
+            ]
+          }
+        },
         "states": {
           "type": "array",
           "items": {

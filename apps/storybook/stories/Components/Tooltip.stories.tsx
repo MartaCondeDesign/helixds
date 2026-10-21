@@ -9,7 +9,10 @@ const meta: Meta<typeof Tooltip> = {
   component:  Tooltip,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TooltipDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    placement: undefined,
+    expanded: undefined,
     label: 'Delete',
     children: <IconButton icon={IconTrash} label="Delete" />,
     // No explicit placement — defaults to 'top' and auto-flips on its own if that would clip the
@@ -32,16 +35,17 @@ export const Default: Story = {
 };
 
 export const Placements: Story = {
-  render: () => (
+  // The story fixes placement and each tooltip's label — expanded applies to all four (on = every tooltip shown)
+  argTypes: { placement: { control: false }, label: { control: false }, children: { control: false } },
+  render: ({ expanded }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-300)', alignItems: 'center', padding: 'var(--helix-primitive-spacing-150)' }}>
-      <Tooltip label="Top placement" placement="top"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
-      <Tooltip label="Bottom placement" placement="bottom"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
-      <Tooltip label="Left placement" placement="left"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
-      <Tooltip label="Right placement" placement="right"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
+      <Tooltip expanded={expanded} label="Top placement" placement="top"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
+      <Tooltip expanded={expanded} label="Bottom placement" placement="bottom"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
+      <Tooltip expanded={expanded} label="Left placement" placement="left"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
+      <Tooltip expanded={expanded} label="Right placement" placement="right"><IconButton icon={IconTrash} label="Delete" /></Tooltip>
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'All 4 placements, hover any trigger.' } },
   },
 };

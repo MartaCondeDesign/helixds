@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "CheckboxGroup",
   "version": "0.1.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users choose zero or more options from a small, visible set of independent choices.",
   "import": "import { CheckboxGroup } from '@helixds/react';",
@@ -38,9 +38,10 @@
 
   "anatomy": [
     { "part": "checkbox-group", "element": "fieldset", "description": "Root element — groups the legend and options for assistive tech." },
-    { "part": "checkbox-group-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md." },
+    { "part": "checkbox-group-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "checkbox-group-required", "element": "span", "optional": true, "description": "The required indicator (*) inside the legend, text/danger, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
     { "part": "checkbox-group-options", "element": "div", "description": "Layout wrapper for the option list. Each option renders a real `Checkbox`." },
-    { "part": "checkbox-group-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
+    { "part": "checkbox-group-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "checkbox-group-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 
@@ -105,7 +106,7 @@
             "alert"
           ]
         },
-        "checkbox-group-legend": {
+        "checkbox-group-required": {
           "aria-hidden": [
             "true"
           ]
@@ -118,8 +119,8 @@
       ],
       "contrast": {
         "checkbox-group-legend": {
-          "light": "17.85:1 — #0f172a on #ffffff",
-          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "checkbox-group-error": {
           "light": "6.47:1 — #b91c1c on #ffffff",
@@ -157,17 +158,43 @@
   },
 
   "figma": {
-    "states": ["default", "invalid", "disabled"],
+    "childProps": {"options": [{"component": "Checkbox", "property": "label", "note": "each option's label"}]},
+    "states": ["default"],
     "properties": [
+      { "name": "options", "type": "VARIANT", "values": ["2", "3", "4", "5", "6", "7"], "codeProp": "options", "description": "How many options the group draws (list-count, owner's rule 2026-10-21) — code draws one Checkbox per entry in options." },
       { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
-      { "name": "state", "type": "VARIANT", "values": ["default", "invalid", "disabled"], "figmaOnly": true, "description": "The group's invalid/disabled props, passed down to every option (hover/focus live on each Checkbox)." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "required", "type": "BOOLEAN", "codeProp": "required", "description": "Shows the danger * after the legend (2px apart)." },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: indented 24px (16px box + 8px) to line up with the option text." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" },
-      { "name": "errorMessage", "type": "BOOLEAN", "codeProp": "errorMessage", "description": "Show/hide part: same indent; code shows it instead of the description." },
-      { "name": "errorMessage text", "type": "TEXT", "codeProp": "errorMessage" }
+      {
+        "name": "required",
+        "type": "BOOLEAN",
+        "codeProp": "required",
+        "description": "Shows the danger * (checkbox-group-required) after the legend,  2px apart; text/disabled when disabled."
+      },
+      {
+        "name": "description.",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part: indented 24px (16px box + 8px) to line up with the option text."
+      },
+      { "name": "description", "type": "TEXT", "codeProp": "description" },
+      {
+        "name": "errorMessage.",
+        "type": "BOOLEAN",
+        "codeProp": "errorMessage",
+        "description": "Show/hide part: same indent; code shows it instead of the description."
+      },
+      { "name": "errorMessage", "type": "TEXT", "codeProp": "errorMessage" }
     ],
-    "structure": "checkbox-group (8px gap) > checkbox-group-legend, checkbox-group-options (12px gap, real Checkbox instances), description, error. Options are a fixed sample of three — options[] has no Figma property."
+    "structure": "checkbox-group (8px gap) > checkbox-group-legend,  checkbox-group-options (12px gap,  real Checkbox instances),  description,  error. options = how many Checkbox instances it draws (2–7): Comments (checked), Mentions, Weekly digest, Security alerts, Product updates, Billing, Newsletter.",
+    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many Checkbox instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled).",
+    "stories": {
+      "Default": "default",
+      "Horizontal": "orientation=horizontal",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Disabled": "disabled=true",
+      "WithDisabledOption": "layout",
+      "Required": "required=true",
+      "KeyboardToggle": {"figma": "layout", "reason": "keyboard focus is drawn on the Checkbox inside it (state=focus)"}
+    }
   }
 }

@@ -36,8 +36,8 @@ export function Select({
   const uid    = React.useRef(`helix-select-${++idCounter}`).current;
   const id     = idProp ?? uid;
   const menuId = `${id}-menu`;
-  const descId = description  ? `${id}-desc` : undefined;
-  const errId  = errorMessage ? `${id}-err`  : undefined;
+  const descId = description && !invalid ? `${id}-desc` : undefined;
+  const errId  = invalid && errorMessage ? `${id}-err`  : undefined;
   const describedby = [descId, errId].filter(Boolean).join(' ') || undefined;
 
   const isControlled = value !== undefined;
@@ -154,7 +154,7 @@ export function Select({
         style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' } : undefined}
       >
         {label}
-        {required && <span aria-hidden="true"> *</span>}
+        {required && <span data-helix-part="select-required" aria-hidden="true"> *</span>}
       </label>
 
       <div
@@ -228,12 +228,12 @@ export function Select({
         )}
       </div>
 
-      {description && !errorMessage && (
+      {description && !invalid && (
         <span id={descId} data-helix-part="select-description">
           {description}
         </span>
       )}
-      {errorMessage && (
+      {invalid && errorMessage && (
         <span id={errId} data-helix-part="select-error" role="alert">
           {errorMessage}
         </span>

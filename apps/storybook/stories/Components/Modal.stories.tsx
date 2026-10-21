@@ -8,7 +8,13 @@ const meta: Meta<typeof Modal> = {
   title:     'Components/Modal',
   component:  Modal,
   tags:      ['autodocs'],
-  parameters: createComponentDocsParameters(ModalDoc),
+  parameters: {
+    ...createComponentDocsParameters(ModalDoc),
+    // closeOnBackdropClick changes what a backdrop click does, nothing the canvas shows
+    controlsCheck: { skip: ['closeOnBackdropClick'], reason: 'it changes what a backdrop click does, not what shows' },
+  },
+  // every story holds the open state and sets its own primary action
+  argTypes: { expanded: { control: false }, primaryActionLabel: { control: false } },
   args: {
     label: 'Project settings',
     children: 'Modal content goes here — centered on screen, with a backdrop and focus trapped inside until dismissed.',
@@ -39,6 +45,7 @@ export const Default: Story = {
 };
 
 export const WithFooterActions: Story = {
+  argTypes: { secondaryActionLabel: { control: false } }, // the story sets these actions itself
   args: {
     label: 'Delete project',
     children: "This can't be undone. The project and all its data will be permanently removed.",
@@ -63,6 +70,7 @@ export const WithFooterActions: Story = {
 };
 
 export const WithTertiaryAction: Story = {
+  argTypes: { secondaryActionLabel: { control: false }, tertiaryActionLabel: { control: false } }, // the story sets these actions itself
   args: {
     label: 'Delete project',
     children: "This can't be undone. The project and all its data will be permanently removed.",
@@ -92,6 +100,7 @@ export const WithTertiaryAction: Story = {
 };
 
 export const WithoutCloseButton: Story = {
+  argTypes: { secondaryActionLabel: { control: false }, showCloseButton: { control: false } }, // the story sets these actions itself
   args: {
     label: 'Confirm subscription',
     children: 'Choose an option below to continue — this dialog has no close (X) button, so a footer action is required.',

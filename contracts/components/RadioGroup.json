@@ -38,16 +38,17 @@
 
   "anatomy": [
     { "part": "radio-group", "element": "fieldset", "description": "Root element — groups the legend and options for assistive tech." },
-    { "part": "radio-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md." },
+    { "part": "radio-legend", "element": "legend", "description": "Accessible group label. Sits exactly 8px above the options — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "radio-required", "element": "span", "optional": true, "description": "The required indicator (*) inside the legend, text/danger, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
     { "part": "radio-options", "element": "div", "description": "Layout wrapper for the option list." },
     { "part": "radio-item", "element": "label", "description": "Wraps one option's input, visual control, and content." },
     { "part": "radio-input", "element": "input", "description": "The native radio input for one option." },
     { "part": "radio-control", "element": "span", "description": "Visual circle — reflects checked state via CSS." },
     { "part": "radio-dot", "element": "span", "description": "Inner filled dot shown when the option is checked.", "optional": true },
     { "part": "radio-item-content", "element": "span", "description": "Wraps one option's label and description." },
-    { "part": "radio-item-label", "element": "span", "description": "Visible label for one option." },
-    { "part": "radio-item-description", "element": "span", "description": "Helper text for one option. Sits exactly 8px below the label — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
-    { "part": "radio-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md.", "optional": true },
+    { "part": "radio-item-label", "element": "span", "description": "Visible label for one option. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "radio-item-description", "element": "span", "description": "Helper text for one option. Sits exactly 8px below the label — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
+    { "part": "radio-description", "element": "span", "description": "Helper text for the whole group. Sits exactly 8px below the options — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "radio-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 
@@ -124,7 +125,7 @@
             "alert"
           ]
         },
-        "radio-legend": {
+        "radio-required": {
           "aria-hidden": [
             "true"
           ]
@@ -136,8 +137,8 @@
       ],
       "contrast": {
         "radio-legend": {
-          "light": "17.85:1 — #0f172a on #ffffff",
-          "dark": "16.29:1 — #f1f5f9 on #0f172a"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "radio-item-label": {
           "light": "17.85:1 — #0f172a on #ffffff",
@@ -153,7 +154,7 @@
         }
       },
       "targetSize": {
-        "radio-input": "smallest 75×21 px"
+        "radio-input": "smallest 77×21 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -185,43 +186,43 @@
   },
 
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "invalid",
-      "disabled"
-    ],
+    "childProps": {"options": [{"component": "RadioButton", "property": "label", "note": "each option's label"}]},
+    "states": ["default"],
     "properties": [
+      { "name": "options", "type": "VARIANT", "values": ["2", "3", "4", "5", "6", "7"], "codeProp": "options", "description": "How many options the group draws (list-count, owner's rule 2026-10-21) — code draws one RadioButton per entry in options." },
+      { "name": "orientation", "type": "VARIANT", "values": ["vertical", "horizontal"], "codeProp": "orientation" },
+      { "name": "label", "type": "TEXT", "codeProp": "label", "description": "The legend." },
       {
-        "name": "checked",
-        "type": "VARIANT",
-        "values": [
-          "unchecked",
-          "checked"
-        ],
-        "codeProp": "value",
-        "description": "One option of the group: checked when its value equals the group `value`."
+        "name": "required",
+        "type": "BOOLEAN",
+        "codeProp": "required",
+        "description": "Shows the danger * (radio-required) after the legend,  2px apart; text/disabled when disabled."
       },
       {
-        "name": "state",
-        "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "invalid",
-          "disabled"
-        ],
-        "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "name": "description.",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part: indented 24px (16px circle + 8px) to line up with the option text."
       },
+      { "name": "description", "type": "TEXT", "codeProp": "description" },
       {
-        "name": "label",
-        "type": "TEXT",
-        "codeProp": "options[].label",
-        "description": "The option label text."
-      }
-    ]
+        "name": "errorMessage.",
+        "type": "BOOLEAN",
+        "codeProp": "errorMessage",
+        "description": "Show/hide part: same indent; code shows it instead of the description."
+      },
+      { "name": "errorMessage", "type": "TEXT", "codeProp": "errorMessage" }
+    ],
+    "structure": "radio-group (8px gap) > radio-legend (text + radio-required),  radio-options (12px gap,  real RadioButton instances: Free,  Pro checked,  Team,  Enterprise,  Education,  Nonprofit,  Custom),  radio-description,  radio-error. options = how many RadioButton instances it draws (2–7); value has no Figma property.",
+    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many RadioButton instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each RadioButton option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled).",
+    "stories": {
+      "Default": "default",
+      "Horizontal": "orientation=horizontal",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Disabled": "disabled=true",
+      "WithDisabledOption": "layout",
+      "Required": "required=true",
+      "KeyboardNavigation": {"figma": "layout", "reason": "keyboard focus is drawn on the RadioButton inside it (state=focus)"}
+    }
   }
 }

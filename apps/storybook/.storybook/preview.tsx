@@ -8,6 +8,7 @@ import '@helixds/tokens/helix.css';
 import '@helixds/react/globals.css';
 // 3. Storybook-only "Reduced motion" toolbar control — see withReducedMotion below.
 import './reduced-motion.css';
+import { FigmaDocsPage } from './FigmaDocsPage';
 
 // Toggles a class mirroring `@media (prefers-reduced-motion: reduce)` on <html> — a real OS setting
 // can't be flipped from the browser, so this simulates it the same way the theme switcher below
@@ -68,6 +69,8 @@ const preview: Preview = {
     // Docs page settings
     docs: {
       toc: true, // Table of contents in Docs
+      // the default page + a "Code → Figma" table under the props (.storybook/FigmaDocsPage.tsx)
+      page: FigmaDocsPage,
     },
     // a11y addon: WCAG 2.2 AA baseline
     a11y: {

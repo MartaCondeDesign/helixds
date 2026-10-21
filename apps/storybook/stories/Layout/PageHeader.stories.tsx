@@ -8,7 +8,13 @@ const meta: Meta<typeof PageHeader> = {
   component:  PageHeader,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(PageHeaderDoc),
-  args: { label: 'Team', level: 1 },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    level: 1,
+    label: 'Team',
+    description: undefined,
+    actions: undefined,
+  },
   argTypes: {
     level: {
       control: 'select',

@@ -45,7 +45,7 @@
     color:      var(--helix-color-text-neutral);
     font-size:  var(--helix-primitive-fontSize-m);
     line-height: var(--helix-primitive-lineHeight-normal);
-    font-family: var(--font-sans, system-ui, sans-serif);
+    font-family: var(--helix-primitive-fontFamily-sans);
   }
 
   :focus-visible {
@@ -575,7 +575,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-input-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="input-root"][data-full-width] {
     width: 100%;
@@ -586,11 +590,15 @@
     font-size:   var(--helix-input-text-labelFontSize);
     font-weight: var(--helix-input-text-labelFontWeight);
     color:       var(--helix-input-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
   }
-  [data-helix-part="input-label"] span[aria-hidden] {
+  [data-helix-part="input-required"] {
     color:       var(--helix-color-text-danger);
-    margin-left: 2px;
+    margin-left: var(--helix-spacing-3xs);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="input-root"][data-disabled] :is([data-helix-part="input-label"], [data-helix-part="input-required"], [data-helix-part="input-description"]) {
+    color: var(--helix-input-text-disabled);
   }
 
   [data-helix-part="input-wrapper"] {
@@ -611,9 +619,6 @@
       border-width var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-  [data-helix-part="input-wrapper"][data-size="s"] { height: var(--helix-input-height-s); }
-  [data-helix-part="input-wrapper"][data-size="m"] { height: var(--helix-input-height-m); }
-  [data-helix-part="input-wrapper"][data-size="l"] { height: var(--helix-input-height-l); }
   /* :not(:focus-within) — without it, hover's own specificity (4 compound selectors) beats the
      focus rule below (3), so a focused-AND-hovered field silently fell back to the gray hover
      border instead of staying blue. Hover must yield whenever the field is actually focused. */
@@ -682,23 +687,20 @@
        fixed height, so it can never make the wrapper taller than its token. */
     height:           100%;
   }
-  [data-helix-part="input-field"][data-size="s"] {
-    font-size: var(--helix-input-text-valueFontSize-s);
-  }
-  [data-helix-part="input-field"][data-size="l"] {
-    font-size: var(--helix-input-text-valueFontSize-l);
-    padding:   0 var(--helix-primitive-spacing-100);
-  }
+  /* line height from the shared scale (lineHeight-m = Figma's lineHeight/m) — one size, m: form fields share one size set */
+  [data-helix-part="input-field"]                  { line-height: var(--helix-lineHeight-m); }
   [data-helix-part="input-field"]::placeholder {
     color: var(--helix-input-text-placeholder);
   }
-  [data-helix-part="input-field"]:disabled {
+  [data-helix-part="input-field"]:disabled,
+  [data-helix-part="input-field"]:disabled::placeholder {
     cursor: not-allowed;
     color:  var(--helix-input-text-disabled);
   }
 
   [data-helix-part="input-icon"],
-  [data-helix-part="input-icon-end"] {
+  [data-helix-part="input-icon-end"],
+  [data-helix-part="input-spinner"] {
     display:     flex;
     align-items: center;
     color:       var(--helix-input-icon-default);
@@ -709,20 +711,24 @@
     padding-left: var(--helix-primitive-spacing-75);
     padding-right: var(--helix-primitive-spacing-25);
   }
-  [data-helix-part="input-icon-end"] {
+  [data-helix-part="input-icon-end"],
+  [data-helix-part="input-spinner"] {
     padding-right: var(--helix-primitive-spacing-75);
     padding-left:  var(--helix-primitive-spacing-25);
+  }
+  [data-helix-part="input-spinner"] > svg {
+    animation: helix-spin 0.7s linear infinite; /* reduced motion: the global rule stops it after one turn */
   }
 
   [data-helix-part="input-description"] {
     font-size:   var(--helix-input-text-descriptionFontSize);
     color:       var(--helix-input-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="input-error"] {
     font-size:   var(--helix-input-text-errorFontSize);
     color:       var(--helix-input-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
     display:     flex;
     align-items: center;
     gap:         var(--helix-primitive-spacing-25);
@@ -841,7 +847,7 @@
     color:          var(--helix-color-text-neutral);
     font-size:      var(--helix-chip-fontSize-m);
     font-weight:    var(--helix-chip-fontWeight);
-    line-height:    1;
+    line-height:    var(--helix-textStyle-body-s-medium-lineHeight); /* Body / s / Medium, as in Figma (the 24/32px height keeps the label centered) */
     white-space:    nowrap;
     user-select:    none;
     transition:
@@ -1057,7 +1063,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-textarea-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="textarea-root"][data-full-width] { width: 100%; }
 
@@ -1066,7 +1076,17 @@
     font-size:   var(--helix-textarea-text-labelFontSize);
     font-weight: var(--helix-textarea-text-labelFontWeight);
     color:       var(--helix-textarea-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
+  }
+  [data-helix-part="textarea-required"],
+  [data-helix-part="select-required"],
+  [data-helix-part="multi-select-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="textarea-root"][data-disabled] :is([data-helix-part="textarea-label"], [data-helix-part="textarea-required"], [data-helix-part="textarea-description"], [data-helix-part="textarea-counter"]) {
+    color: var(--helix-textarea-text-disabled);
   }
 
   [data-helix-part="textarea-wrapper"] {
@@ -1108,20 +1128,19 @@
     color:       var(--helix-textarea-text-value);
     font-family: inherit;
     font-size:   var(--helix-textarea-text-valueFontSize-m);
-    line-height: var(--helix-primitive-lineHeight-normal);
+    line-height: var(--helix-lineHeight-m);
     padding:     var(--helix-primitive-spacing-75);
     min-width:   0;
     min-height:  var(--helix-textarea-height);
     box-sizing:  border-box;
     resize:      vertical;
   }
-  [data-helix-part="textarea-field"][data-size="s"] { font-size: var(--helix-textarea-text-valueFontSize-s); }
-  [data-helix-part="textarea-field"][data-size="l"] { font-size: var(--helix-textarea-text-valueFontSize-l); }
   [data-helix-part="textarea-field"][data-resize="none"]       { resize: none; }
   [data-helix-part="textarea-field"][data-resize="horizontal"] { resize: horizontal; }
   [data-helix-part="textarea-field"][data-resize="both"]       { resize: both; }
   [data-helix-part="textarea-field"]::placeholder { color: var(--helix-textarea-text-placeholder); }
-  [data-helix-part="textarea-field"]:disabled     { cursor: not-allowed; color: var(--helix-textarea-text-disabled); }
+  [data-helix-part="textarea-field"]:disabled,
+  [data-helix-part="textarea-field"]:disabled::placeholder { cursor: not-allowed; color: var(--helix-textarea-text-disabled); }
 
   [data-helix-part="textarea-counter"] {
     position:   absolute;
@@ -1135,12 +1154,12 @@
   [data-helix-part="textarea-description"] {
     font-size:   var(--helix-textarea-text-descriptionFontSize);
     color:       var(--helix-textarea-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="textarea-error"] {
     font-size:   var(--helix-textarea-text-errorFontSize);
     color:       var(--helix-textarea-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1157,7 +1176,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-select-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
 
@@ -1166,7 +1189,11 @@
     font-size:   var(--helix-select-text-labelFontSize);
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="select-root"][data-disabled] :is([data-helix-part="select-label"], [data-helix-part="select-required"], [data-helix-part="select-description"]) {
+    color: var(--helix-select-text-disabled);
   }
 
   [data-helix-part="select-wrapper"] {
@@ -1228,7 +1255,7 @@
   /* :not([aria-expanded="true"]) and :not(:focus-visible) — without them, hover's higher
      specificity (3 compound selectors vs. 2) silently beat the open/focus rule below whenever the
      mouse stayed over an opened trigger, turning the border gray instead of staying blue. */
-  [data-helix-part="select-trigger"]:hover:not(:disabled):not([aria-expanded="true"]):not(:focus-visible) {
+  [data-helix-part="select-wrapper"]:not([data-invalid]) [data-helix-part="select-trigger"]:hover:not(:disabled):not([aria-expanded="true"]):not(:focus-visible) {
     border-color: var(--helix-select-border-hover);
   }
   /* Same focus treatment on open as on focus — a hand-rolled trigger's "open" state IS its focus
@@ -1250,6 +1277,13 @@
   }
   [data-helix-part="select-trigger"][data-placeholder] {
     color: var(--helix-select-text-placeholder);
+  }
+  [data-helix-part="select-trigger"][data-placeholder]:disabled {
+    color: var(--helix-select-text-disabled);
+  }
+  [data-helix-part="select-trigger"]:disabled ~ [data-helix-part="select-chevron"],
+  [data-helix-part="multi-select-field"][data-disabled] [data-helix-part="multi-select-chevron"] {
+    color: var(--helix-select-icon-disabled);
   }
 
   [data-helix-part="select-chevron"] {
@@ -1275,12 +1309,12 @@
   [data-helix-part="select-description"] {
     font-size:   var(--helix-select-text-descriptionFontSize);
     color:       var(--helix-select-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="select-error"] {
     font-size:   var(--helix-select-text-errorFontSize);
     color:       var(--helix-select-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1296,7 +1330,10 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-select-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
     max-width:      100%;
   }
   [data-helix-part="multi-select-root"][data-full-width] { width: 100%; }
@@ -1306,7 +1343,11 @@
     font-size:   var(--helix-select-text-labelFontSize);
     font-weight: var(--helix-select-text-labelFontWeight);
     color:       var(--helix-select-text-label);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
+  }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md (MultiSelect shares Select's tokens) */
+  [data-helix-part="multi-select-root"][data-disabled] :is([data-helix-part="multi-select-label"], [data-helix-part="multi-select-required"], [data-helix-part="multi-select-description"]) {
+    color: var(--helix-select-text-disabled);
   }
 
   [data-helix-part="multi-select-field"] {
@@ -1334,7 +1375,7 @@
   }
   [data-helix-part="multi-select-root"][data-full-width] [data-helix-part="multi-select-field"] { width: 100%; }
 
-  [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
+  [data-helix-part="multi-select-field"]:hover:not([data-disabled]):not([data-invalid]):not([data-open]):not(:has([data-helix-part="multi-select-trigger"]:focus-visible)) {
     border-color: var(--helix-select-border-hover);
   }
   /* Focus/open = Select's treatment (blue border + glow). The border keeps its width — only its color
@@ -1375,7 +1416,8 @@
     outline:     none;
   }
   [data-helix-part="multi-select-field"][data-has-value] [data-helix-part="multi-select-trigger"] { padding-left: 0; }
-  [data-helix-part="multi-select-trigger"]:disabled { cursor: not-allowed; color: var(--helix-select-text-disabled); }
+  [data-helix-part="multi-select-trigger"]:disabled,
+  [data-helix-part="multi-select-trigger"]:disabled [data-helix-part="multi-select-placeholder"] { cursor: not-allowed; color: var(--helix-select-text-disabled); }
 
   [data-helix-part="multi-select-placeholder"] {
     display:       block;
@@ -1421,12 +1463,12 @@
   [data-helix-part="multi-select-description"] {
     font-size:   var(--helix-select-text-descriptionFontSize);
     color:       var(--helix-select-text-description);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
   [data-helix-part="multi-select-error"] {
     font-size:   var(--helix-select-text-errorFontSize);
     color:       var(--helix-select-text-error);
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-s-regular-lineHeight);
   }
 
 
@@ -1518,7 +1560,7 @@
     font-family:   inherit;
     font-size:     var(--helix-menu-item-fontSize);
     font-weight:   var(--helix-menu-item-fontWeight);
-    line-height:   var(--helix-primitive-lineHeight-snug);
+    line-height:   var(--helix-textStyle-body-m-regular-lineHeight); /* Body / m / Regular, as in Figma */
     text-align:    left;
     width:         100%;
     cursor:        pointer;
@@ -1644,8 +1686,9 @@
     outline-offset: 2px;
   }
 
-  /* Invalid */
-  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-control"] {
+  /* Invalid — hover never takes the invalid border away (the fill still darkens when checked) */
+  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-control"],
+  [data-helix-part="checkbox-root"][data-invalid] [data-helix-part="checkbox-label"]:hover [data-helix-part="checkbox-input"]:not(:disabled) + [data-helix-part="checkbox-control"] {
     border-color: var(--helix-checkbox-border-invalid);
   }
 
@@ -1692,8 +1735,19 @@
     line-height: var(--helix-checkbox-text-labelLineHeight);
     color:       var(--helix-checkbox-text-label);
   }
+  /* The required indicator (the `required` prop) — its own part so Figma has a layer for the BOOLEAN. */
+  [data-helix-part="checkbox-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
   /* checkbox-text sets its own color, so the disabled color on checkbox-label above never reached it. */
   [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-text"] {
+    color: var(--helix-checkbox-text-disabled);
+  }
+  /* Disabled dims everything the checkbox says, not just its label: the required mark and the description
+     (both kept their normal colors before — owner's review 2026-10-20). Inactive UI: no contrast minimum (1.4.3). */
+  [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-required"],
+  [data-helix-part="checkbox-root"][data-disabled] [data-helix-part="checkbox-description"] {
     color: var(--helix-checkbox-text-disabled);
   }
 
@@ -1736,15 +1790,19 @@
     font-size:   var(--helix-checkbox-text-legendFontSize);
     font-weight: var(--helix-checkbox-text-legendFontWeight);
     /* Same label as every form field (input-label, select-label, multi-select-label...): body-m-medium,
-       text-neutral, snug line-height. No margin-bottom — the group's own 8px gap already separates it
+       text-neutral, the text style's own line-height (as in Figma). No margin-bottom — the group's own 8px gap already separates it
        from the options (a margin here stacked on top of it, giving 16px). */
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
     color:       var(--helix-checkbox-text-label);
     padding:     0;
     float:       left;
     width:       100%;
   }
   [data-helix-part="checkbox-group-legend"] + * { clear: left; }
+  [data-helix-part="checkbox-group-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
 
   [data-helix-part="checkbox-group-options"] {
     display: flex;
@@ -1768,6 +1826,10 @@
   }
   [data-helix-part="checkbox-group-description"] { color: var(--helix-checkbox-text-description); }
   [data-helix-part="checkbox-group-error"]       { color: var(--helix-checkbox-text-error); }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="checkbox-group"][data-disabled] :is([data-helix-part="checkbox-group-legend"], [data-helix-part="checkbox-group-required"], [data-helix-part="checkbox-group-description"]) {
+    color: var(--helix-checkbox-text-disabled);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -1790,15 +1852,19 @@
     font-size:   var(--helix-radio-text-legendFontSize);
     font-weight: var(--helix-radio-text-legendFontWeight);
     /* Same label as every form field (input-label, select-label, multi-select-label...): body-m-medium,
-       text-neutral, snug line-height. No margin-bottom — the group's own 8px gap already separates it
+       text-neutral, the text style's own line-height (as in Figma). No margin-bottom — the group's own 8px gap already separates it
        from the options (a margin here stacked on top of it, giving 16px). */
-    line-height: var(--helix-primitive-lineHeight-snug);
+    line-height: var(--helix-textStyle-body-m-medium-lineHeight);
     color:       var(--helix-radio-text-label);
     padding:     0;
     float:       left;
     width:       100%;
   }
   [data-helix-part="radio-legend"] + * { clear: left; }
+  [data-helix-part="radio-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
 
   [data-helix-part="radio-options"] {
     display: flex;
@@ -1821,7 +1887,12 @@
   [data-helix-part="radio-item"][data-disabled] {
     cursor: not-allowed;
   }
+  [data-helix-part="radio-item-required"] {
+    color:       var(--helix-color-text-danger);
+    margin-left: var(--helix-spacing-3xs);
+  }
   [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-label"],
+  [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-required"],
   [data-helix-part="radio-item"][data-disabled] [data-helix-part="radio-item-description"] {
     color: var(--helix-radio-text-disabled);
   }
@@ -1873,7 +1944,9 @@
     outline-offset: 2px;
   }
   [data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-control"],
-  [data-helix-part="radio-item"][data-invalid] [data-helix-part="radio-control"] {
+  [data-helix-part="radio-item"][data-invalid] [data-helix-part="radio-control"],
+  /* hover never takes the invalid border away (the fill still darkens when checked) */
+  :is([data-helix-part="radio-group"][data-invalid] [data-helix-part="radio-item"], [data-helix-part="radio-item"][data-invalid]):hover [data-helix-part="radio-input"]:not(:disabled) + [data-helix-part="radio-control"] {
     border-color: var(--helix-radio-border-invalid);
   }
 
@@ -1941,6 +2014,10 @@
   }
   [data-helix-part="radio-description"] { color: var(--helix-radio-text-description); }
   [data-helix-part="radio-error"]       { color: var(--helix-radio-text-error); }
+  /* Disabled dims every text part — .ai/maps/patterns/disabled-state.md */
+  [data-helix-part="radio-group"][data-disabled] :is([data-helix-part="radio-legend"], [data-helix-part="radio-required"], [data-helix-part="radio-description"]) {
+    color: var(--helix-radio-text-disabled);
+  }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -2183,14 +2260,13 @@
     align-items:      center;
     justify-content:  center;
     border-radius:    var(--helix-radius-full);
-    line-height:      1;
     user-select:      none;
     background-color: var(--helix-avatarGroup-overflow-fill);
     color:            var(--helix-avatarGroup-overflow-text);
   }
-  [data-helix-part="avatar-group-root"][data-size="s"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-s); height: var(--helix-avatar-height-s); font-size: var(--helix-avatar-fontSize-s); font-weight: var(--helix-avatar-fontWeight-s); }
-  [data-helix-part="avatar-group-root"][data-size="m"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-m); height: var(--helix-avatar-height-m); font-size: var(--helix-avatar-fontSize-m); font-weight: var(--helix-avatar-fontWeight-m); }
-  [data-helix-part="avatar-group-root"][data-size="l"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-l); height: var(--helix-avatar-height-l); font-size: var(--helix-avatar-fontSize-l); font-weight: var(--helix-avatar-fontWeight-l); }
+  [data-helix-part="avatar-group-root"][data-size="s"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-s); height: var(--helix-avatar-height-s); font-size: var(--helix-avatar-fontSize-s); font-weight: var(--helix-avatar-fontWeight-s); line-height: var(--helix-textStyle-caption-semibold-lineHeight); }
+  [data-helix-part="avatar-group-root"][data-size="m"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-m); height: var(--helix-avatar-height-m); font-size: var(--helix-avatar-fontSize-m); font-weight: var(--helix-avatar-fontWeight-m); line-height: var(--helix-textStyle-caption-semibold-lineHeight); }
+  [data-helix-part="avatar-group-root"][data-size="l"] [data-helix-part="avatar-group-overflow"] { width: var(--helix-avatar-height-l); height: var(--helix-avatar-height-l); font-size: var(--helix-avatar-fontSize-l); font-weight: var(--helix-avatar-fontWeight-l); line-height: var(--helix-textStyle-body-m-semibold-lineHeight); }
 
 
   /* ════════════════════════════════════════════════════════════════════════
@@ -2454,10 +2530,10 @@
   }
   [data-helix-part="modal-title"] {
     margin:      0;
-    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma */
+    font-family: var(--helix-textStyle-heading-xl-bold-fontFamily); /* "Heading / xl / Bold" in Figma */
     font-size:   var(--helix-modal-titleFontSize);
     font-weight: var(--helix-modal-titleFontWeight);
-    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
+    line-height: var(--helix-textStyle-heading-xl-bold-lineHeight);
   }
   [data-helix-part="modal-close"] {
     position: absolute;
@@ -2571,10 +2647,10 @@
   }
   [data-helix-part="side-panel-title"] {
     margin:      0;
-    font-family: var(--helix-textStyle-heading-l-bold-fontFamily); /* "Heading / l / Bold" in Figma, like Modal's */
+    font-family: var(--helix-textStyle-heading-xl-bold-fontFamily); /* "Heading / xl / Bold" in Figma, like Modal's */
     font-size:   var(--helix-sidePanel-titleFontSize);
     font-weight: var(--helix-sidePanel-titleFontWeight);
-    line-height: var(--helix-textStyle-heading-l-bold-lineHeight);
+    line-height: var(--helix-textStyle-heading-xl-bold-lineHeight);
   }
   [data-helix-part="side-panel-close"] {
     position: absolute;
@@ -2724,7 +2800,8 @@
     position:       absolute;
     inset:          0;
     z-index:        0;
-    border-radius:  var(--helix-navItem-radius);
+    /* square on the left, where the bar sits; the other states keep all four corners (owner 2026-10-21) */
+    border-radius:  var(--helix-radius-none) var(--helix-navItem-radius) var(--helix-navItem-radius) var(--helix-radius-none);
     background-color: var(--helix-navItem-fill-current);
   }
   /* The blue bar at the left edge of the current item — part of the indicator, so it slides with it. */

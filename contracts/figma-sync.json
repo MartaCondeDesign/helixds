@@ -7,19 +7,19 @@
   "iconRule": "STANDING RULE when building any component whose anatomy includes an icon: use a real instance from the Icons page (id 35:2) in this Figma file, never a placeholder shape (a dot/rect stand-in was used for IconButton's first draft and had to be redone). Icon components there are named by their Tabler name with the \"Icon\" prefix stripped (e.g. \"Plus\" for IconPlus, \"Trash\" for IconTrash) and default to a 24x24 box with a single stroke-only VECTOR child bound to icon/neutral. To use one: get the component via figma.getNodeByIdAsync(iconNodeId), call component.createInstance(), resize() to the target pixel size, then find the instance's VECTOR child and override its stroke's bound variable to the icon color actually needed (icon/inverse, icon/neutral, etc. per component.<name>.icon.* tokens) — do not leave it on the default icon/neutral binding when the component needs a different color per variant/state.",
   "components": [
     {
-      "name": "AppShell",
+      "name": "Accordion",
       "inFigma": true,
-      "figmaNodeId": "334:4",
+      "figmaNodeId": "468:2",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances. UPDATED IN PLACE 2026-10-03: layers renamed to the code anatomy (app-shell-right-col -> app-shell-content, app-shell-content -> app-shell-main), main gets its 24px padding (spacing/l, was 0 with a centered placeholder), root fill/page bound; sample content is now a PageHeader + Card instance. SideNav/TopBar instances follow their rebuilt components. Audit passed (colors, spacing, fallbacks).",
-      "compSetId": "334:4",
-      "syncedCommit": "fed7988440cca8532034fc22a0c9cde556d014cb",
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state (default/focus/disabled), colors from .ai/figma-expected/Accordion.json light+dark incl. the real disabled tokens, layout + binding passed. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children; disabled out of state (6 variants).",
+      "compSetId": "468:42",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "fed7988440cca8532034fc22a0c9cde556d014cb",
-        "date": "2026-10-03",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -27,7 +27,36 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "AppShell",
+      "inFigma": true,
+      "figmaNodeId": "334:4",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances. UPDATED IN PLACE 2026-10-03: layers renamed to the code anatomy (app-shell-right-col -> app-shell-content, app-shell-content -> app-shell-main), main gets its 24px padding (spacing/l, was 0 with a centered placeholder), root fill/page bound; sample content is now a PageHeader + Card instance. SideNav/TopBar instances follow their rebuilt components. Audit passed (colors, spacing, fallbacks). RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks). UPDATED 2026-10-21 by the conversion standard v1.4: sidenav / topbar booleans show or hide the SideNav and TopBar instances.",
+      "compSetId": "334:4",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+      "audit": {
+        "pass": true,
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -53,6 +82,33 @@
           "parity": 0,
           "border": 0,
           "fallback": 0
+        }
+      }
+    },
+    {
+      "name": "AvatarGroup",
+      "inFigma": true,
+      "figmaNodeId": "461:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): size s/m/l, overflow BOOLEAN; +N counter uses Caption / Semibold (s, m) and Body / m / Semibold (l) — code's line-height: 1 replaced by the text style's line-height (owner's decision). Passed.",
+      "compSetId": "461:63",
+      "syncedCommit": "c2101617de74d2d9532a62d2dedbde1fb1614db6",
+      "audit": {
+        "pass": true,
+        "commit": "c2101617de74d2d9532a62d2dedbde1fb1614db6",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -87,14 +143,14 @@
       "figmaNodeId": "30:2",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "16 stale xs/xl size variants (across variant x disabled) removed 2026-08-23 — Figma now matches ButtonSize = 's'|'m'|'l' exactly. Fill/text/border/radius/height/padding-x verified via get_variable_defs against component.button.*. Label typography retrofitted 2026-08-24 to use real Figma text styles instead of loose fontSize/lineHeight bindings: \"Caption / Semibold\" for s/m, \"Body / m / Semibold\" for l (that style didn't exist in Figma until this session — created it, see the file-level typographyGap note). Not verifiable from Figma: component.button.icon.* (no icon instances in the symbols) and border.focus (no focus-state variant). Checked 2026-08-24: already a proper COMPONENT_SET with correct button-label anatomy naming from an earlier session — no restructuring needed, unlike the 10 components above. PHASE 4 2026-08-24: added TEXT property 'label' wired to button-label (24/24 variants). Still missing (needs new anatomy first, not just a property): BOOLEAN loading/icon/iconEnd, BOOLEAN fullWidth — no spinner or icon-slot layers exist yet to wire visibility to.REBUILT FROM SCRATCH 2026-08-24 (twice — first attempt tried to add button-icon/button-icon-end/button-spinner anatomy by extracting children from the existing COMPONENT_SET onto the page then calling combineAsVariants AGAIN, which corrupted it into the same 'Component set for node has existing errors' state as Chip's first failure, even though .name was never touched this time — see combineAsVariantsCorruptionRule below for the real root cause). Deleted and rebuilt clean in one pass: 24 variants (variant x size x disabled), with button-spinner/button-icon/button-icon-end as real hidden-by-default anatomy layers (Reload icon as the spinner stand-in, Plus for icon slots). Properties in Storybook order: label (TEXT), loading (BOOLEAN), icon (BOOLEAN), iconEnd (BOOLEAN), then variant/size/disabled (VARIANT). fullWidth still not represented — no meaningful single-component way to demo 100%-of-container width without a container context. RESYNCED 2026-10-02: secondary fill -> fill/page; l padding 16px (spacing/100, was 20); button-label is now a frame (the <span>) holding the text, with 4px padding on l (spacing/25), 0 otherwise; disabled = fill/disabled + border/neutral/light + text/disabled + icon/disabled, opacity 1 (was 0.5 opacity). Icons re-created pre-colored at 16px/1.5. REBUILT + AUDITED 2026-10-03: variant × size × state (default/hover/press/focus/disabled/loading) = 72 variants; every color auto-matched to the Theme variable whose light AND dark values equal code's computed colors (none unmatched). icon/iconEnd BOOLEAN show/hide; loading swaps the leading icon for the spinner and drops iconEnd, as in code. Ghost keeps a hidden 1px stroke (border-always). Focus = spread shadows (border/focus 4, fill/page 2). Known differences: code's focus also has a faint 20% blue box-shadow in the 2px gap (Figma shows the page color there); ghost focus gets a fill/page fill because Figma casts no shadow from an empty frame. Propstar table.",
+      "lastChecked": "2026-10-20",
+      "notes": "16 stale xs/xl size variants (across variant x disabled) removed 2026-08-23 — Figma now matches ButtonSize = 's'|'m'|'l' exactly. Fill/text/border/radius/height/padding-x verified via get_variable_defs against component.button.*. Label typography retrofitted 2026-08-24 to use real Figma text styles instead of loose fontSize/lineHeight bindings: \"Caption / Semibold\" for s/m, \"Body / m / Semibold\" for l (that style didn't exist in Figma until this session — created it, see the file-level typographyGap note). Not verifiable from Figma: component.button.icon.* (no icon instances in the symbols) and border.focus (no focus-state variant). Checked 2026-08-24: already a proper COMPONENT_SET with correct button-label anatomy naming from an earlier session — no restructuring needed, unlike the 10 components above. PHASE 4 2026-08-24: added TEXT property 'label' wired to button-label (24/24 variants). Still missing (needs new anatomy first, not just a property): BOOLEAN loading/icon/iconEnd, BOOLEAN fullWidth — no spinner or icon-slot layers exist yet to wire visibility to.REBUILT FROM SCRATCH 2026-08-24 (twice — first attempt tried to add button-icon/button-icon-end/button-spinner anatomy by extracting children from the existing COMPONENT_SET onto the page then calling combineAsVariants AGAIN, which corrupted it into the same 'Component set for node has existing errors' state as Chip's first failure, even though .name was never touched this time — see combineAsVariantsCorruptionRule below for the real root cause). Deleted and rebuilt clean in one pass: 24 variants (variant x size x disabled), with button-spinner/button-icon/button-icon-end as real hidden-by-default anatomy layers (Reload icon as the spinner stand-in, Plus for icon slots). Properties in Storybook order: label (TEXT), loading (BOOLEAN), icon (BOOLEAN), iconEnd (BOOLEAN), then variant/size/disabled (VARIANT). fullWidth still not represented — no meaningful single-component way to demo 100%-of-container width without a container context. RESYNCED 2026-10-02: secondary fill -> fill/page; l padding 16px (spacing/100, was 20); button-label is now a frame (the <span>) holding the text, with 4px padding on l (spacing/25), 0 otherwise; disabled = fill/disabled + border/neutral/light + text/disabled + icon/disabled, opacity 1 (was 0.5 opacity). Icons re-created pre-colored at 16px/1.5. REBUILT + AUDITED 2026-10-03: variant × size × state (default/hover/press/focus/disabled/loading) = 72 variants; every color auto-matched to the Theme variable whose light AND dark values equal code's computed colors (none unmatched). icon/iconEnd BOOLEAN show/hide; loading swaps the leading icon for the spinner and drops iconEnd, as in code. Ghost keeps a hidden 1px stroke (border-always). Focus = spread shadows (border/focus 4, fill/page 2). Known differences: code's focus also has a faint 20% blue box-shadow in the 2px gap (Figma shows the page color there); ghost focus gets a fill/page fill because Figma casts no shadow from an empty frame. Propstar table. RE-AUDITED 2026-10-20 with the layout + binding checks: paddings rebound to Semantic spacing/component/m (s) and spacing/component/l (m, l), gap to Primitives spacing/50, l label padding to spacing/component/xs — the variables code's tokens resolve to (the spacing/component/* and spacing/layout/* variables were added to Figma's Semantic collection this pass). Code's body now uses Inter (primitive.fontFamily.sans), the same family as the Text Styles. Code changes since the last sync were motion-only (icon/label swap). Ghost focus keeps fill/page (the audit accepts it for a transparent fill) so the focus ring renders. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 68 variants, audit passed (colors incl. transparent ghost, size/padding/gap/radius bindings, text style, focus clip).",
       "compSetId": "417:482",
-      "syncedCommit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
       "audit": {
         "pass": true,
-        "commit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
-        "date": "2026-10-03",
+        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -102,7 +158,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -112,14 +170,14 @@
       "figmaNodeId": "326:20",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content. REBUILT 2026-10-03: padding (default/none) VARIANT x header BOOLEAN; 340px wide (story width), fill/page, border/neutral, radius/l, Heading / l / Bold header, Body / m / Regular body. Code restructured in the same pass so the header is a real show/hide part: the 24px top padding moved from header/body onto card-root, header 0 24 8 24, body 0 24 24 24 (padding=none: root 0, header keeps 24 top, body 0) — geometry measured identical before/after in all four combos. Audit passed; Propstar table 430:818.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content. REBUILT 2026-10-03: padding (default/none) VARIANT x header BOOLEAN; 340px wide (story width), fill/page, border/neutral, radius/l, Heading / l / Bold header, Body / m / Regular body. Code restructured in the same pass so the header is a real show/hide part: the 24px top padding moved from header/body onto card-root, header 0 24 8 24, body 0 24 24 24 (padding=none: root 0, header keeps 24 top, body 0) — geometry measured identical before/after in all four combos. Audit passed; Propstar table 430:818. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children.",
       "compSetId": "429:28",
-      "syncedCommit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
-        "date": "2026-10-03",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -127,7 +185,36 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Chart",
+      "inFigma": true,
+      "figmaNodeId": "577:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "BUILT + AUDITED 2026-10-20 (first time in Figma): page 'Chart' between Card and Checkbox. Chart set (578:199) = variant line/area/bar/stacked-bar/donut/timeline, each a static token-bound drawing of its story (series chart/series/1…6, axes/split lines border/neutral, labels Body / s / Regular text/neutral/light, stacked/donut gaps fill/page, area at 15% layer opacity — no gradient, Figma can't bind a stop), legend of ChartLegendItem instances (swatch overridden per series). ChartLegendItem set (577:27) = pressed (true/false) × state (default/hover/press/focus), colors light+dark from .ai/figma-expected/ChartLegendItem.json, focus ring as bound spread shadows. Structural audit on Chart + full audit on ChartLegendItem passed; Propstar tables 580:26 and 580:45.",
+      "compSetId": "578:199",
+      "syncedCommit": "0a391337c9c3e1f5f8f75a60ec1c595ad5789468",
+      "audit": {
+        "pass": true,
+        "commit": "0a391337c9c3e1f5f8f75a60ec1c595ad5789468",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -137,14 +224,14 @@
       "figmaNodeId": "295:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Checkbox\") — unchecked/checked/indeterminate x disabled, plus a separate invalid cell (6 total), matching Checkbox's checked/indeterminate/disabled/invalid props. Fill, border, radius, size bound to real variables against component.checkbox.*; the check/minus mark uses real \"CircleCheck\"/\"Minus\" instances from the Icons page recolored to icon/inverse, matching component.checkbox.icon.color. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:33) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: this page originally modeled ONLY checkbox-control (the box) with no label — real Checkbox always has a required `label` prop. Added a checkbox-text layer to all 6 variants and wired a TEXT property 'label' to it (6/6). Grid reflowed after the rows grew wider. Reviewed 2026-08-24: `required` has no visual difference in this component's anatomy (no asterisk rendered) — nothing further to add. ICON FIX 2026-08-25: the checked-state indicator was originally the plain \"Check\" icon (just a checkmark stroke, low visual weight against the small 20px box) — swapped to \"CircleCheck\" (a filled-circle-outline check) on both checked-state variants for better visibility, per explicit feedback. indeterminate keeps \"Minus\". REBUILT 2026-10-02 from scratch (old set had the box and label merged into one frame): checkbox-root > checkbox-label > [checkbox-control 16px, radius/s, 1px border; checkbox-indicator Check/Minus 12px/1.5 icon/inverse] + checkbox-text 'Body / m / Regular', 8px gap. state (unchecked/checked/indeterminate) x disabled, plus unchecked invalid (7). Disabled: fill/disabled, border text/disabled, icon/disabled, text/disabled. Indeterminate filled like checked — this exposed a code bug (it rendered as an empty box) fixed in the same pass, as was the disabled label never dimming. REBUILT 2026-10-03 as checked (unchecked/checked/indeterminate) x state (default/hover/focus/invalid/disabled), 15 variants, colors from .ai/figma-expected/Checkbox.json; audit passed; Propstar table 424:895. Found and fixed in code: indeterminate hover border used the unchecked hover rule.",
-      "compSetId": "424:86",
-      "syncedCommit": "1f511632f250d39ac0618e4f13b8eb3a598878b1",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Checkbox\") — unchecked/checked/indeterminate x disabled, plus a separate invalid cell (6 total), matching Checkbox's checked/indeterminate/disabled/invalid props. Fill, border, radius, size bound to real variables against component.checkbox.*; the check/minus mark uses real \"CircleCheck\"/\"Minus\" instances from the Icons page recolored to icon/inverse, matching component.checkbox.icon.color. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:33) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: this page originally modeled ONLY checkbox-control (the box) with no label — real Checkbox always has a required `label` prop. Added a checkbox-text layer to all 6 variants and wired a TEXT property 'label' to it (6/6). Grid reflowed after the rows grew wider. Reviewed 2026-08-24: `required` has no visual difference in this component's anatomy (no asterisk rendered) — nothing further to add. ICON FIX 2026-08-25: the checked-state indicator was originally the plain \"Check\" icon (just a checkmark stroke, low visual weight against the small 20px box) — swapped to \"CircleCheck\" (a filled-circle-outline check) on both checked-state variants for better visibility, per explicit feedback. indeterminate keeps \"Minus\". REBUILT 2026-10-02 from scratch (old set had the box and label merged into one frame): checkbox-root > checkbox-label > [checkbox-control 16px, radius/s, 1px border; checkbox-indicator Check/Minus 12px/1.5 icon/inverse] + checkbox-text 'Body / m / Regular', 8px gap. state (unchecked/checked/indeterminate) x disabled, plus unchecked invalid (7). Disabled: fill/disabled, border text/disabled, icon/disabled, text/disabled. Indeterminate filled like checked — this exposed a code bug (it rendered as an empty box) fixed in the same pass, as was the disabled label never dimming. REBUILT 2026-10-03 as checked (unchecked/checked/indeterminate) x state (default/hover/focus/invalid/disabled), 15 variants, colors from .ai/figma-expected/Checkbox.json; audit passed; Propstar table 424:895. Found and fixed in code: indeterminate hover border used the unchecked hover rule. REBUILT 2026-10-20 for exact property parity (root CLAUDE.md rule 16, owner-approved figma.propertyMap): set 587:1122 = checked × indeterminate × invalid × disabled (false/true toggles, like the props) × state (default/hover/focus, Figma-only) = 48 variants, from detached instances of the old 15 (no component clones). Properties: label, required (new checkbox-required part — the * in text/danger, spacing/3xs), description + description text, errorMessage + errorMessage text. Every color re-matched to the Theme variable whose light AND dark values equal code's computed color (.ai/figma-expected/Checkbox.json, 48 combinations measured). CheckboxGroup's 18 instances swapped onto it. Full audit passed; Propstar table 587:1427. REDUCED 2026-10-20 (owner review): 48 → 21 variants — the 18 enabled combinations (unchecked/checked/indeterminate × invalid × default/hover/focus) plus one disabled per mark (state=default, invalid=false); checked+indeterminate isn't drawn (indeterminate wins in code). Disabled now dims label, required * and description (text/disabled), in code and Figma. Propstar table 589:652 (rows: mark; columns: invalid false/true × state, then disabled). Full audit passed with every BOOLEAN on (126 text colors + control fill/stroke, light and dark). UPDATED 2026-10-20: invalid + hover keeps border/danger (code fix, owner-approved).",
+      "compSetId": "587:1122",
+      "syncedCommit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
       "audit": {
         "pass": true,
-        "commit": "1f511632f250d39ac0618e4f13b8eb3a598878b1",
-        "date": "2026-10-03",
+        "commit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -152,7 +239,38 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "CheckboxGroup",
+      "inFigma": true,
+      "figmaNodeId": "460:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-21",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): orientation × state (default/invalid/disabled); root gap rebound to Semantic spacing/component/s; legend Body / m / Medium at 21px — code's legend now uses that text style's line-height instead of snug (owner's decision). Colors light+dark from .ai/figma-expected/CheckboxGroup.json; passed. REBUILT 2026-10-20 by the conversion standard (pattern group): state default/invalid/disabled → invalid and disabled false/true toggles (6 variants), required layer renamed checkbox-group-required, disabled dims legend, * and description (text/disabled). Audit passed light/dark. Propstar table 599:143. OPTIONS 2026-10-21: options 2–7 list-count VARIANT (owner's rule) — 36 variants, each built from its twin (detach + createComponentFromNode), Checkbox instances Comments (checked), Mentions, Weekly digest, Security alerts, Product updates, Billing, Newsletter. Propstar regenerated (rows options, cols invalid/disabled by orientation). Audit passed light/dark on all 36.",
+      "compSetId": "460:147",
+      "syncedCommit": "3defb1bfa52348e54bc4abfa0fa1d97240d196cb",
+      "audit": {
+        "pass": true,
+        "commit": "3defb1bfa52348e54bc4abfa0fa1d97240d196cb",
+        "date": "2026-10-21",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
         }
       }
     },
@@ -162,14 +280,14 @@
       "figmaNodeId": "288:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "notes": "Rebuilt from scratch 2026-08-24 (twice — first attempt tried to add a `disabled` VARIANT axis by renaming .name on components still parented inside the old COMPONENT_SET, which silently corrupted their names into '=Chip, =neutral, =s, =false, =false' garbage and left the set in an unrecoverable error state — variantProperties threw 'Component set for node has existing errors'. Deleted it and rebuilt as plain page-level components first, renamed freely, THEN combined once — that's the safe order, confirmed working). Now variant x size x checked x disabled (40 total), matching ChipVariant/ChipSize/checked/disabled exactly. Full anatomy: chip-icon and chip-icon-end (real 'Filter' icon instances, hidden by default) and chip-dismiss (real 'X' icon instance, hidden by default) as true layers, not just theoretical properties. Properties added, in Storybook's Controls order: label (TEXT), icon (BOOLEAN -> chip-icon visibility), iconEnd (BOOLEAN -> chip-icon-end visibility), dismissible (BOOLEAN -> chip-dismiss visibility), then variant/size/checked/disabled (VARIANT, in that order too). All 40/40 wired for every property. onClick/onDismiss have no Figma equivalent (JS handlers, not visual) and are intentionally not represented. Fill/text/border bound to real variables for every variant x state combination, including the new disabled treatment (fill/disabled, text/disabled, border/neutral/light, opacity 0.72 — matches globals.css exactly). RESYNCED 2026-10-01 in place (no re-combine, so instances elsewhere follow): s 24px / m 32px (size/s, size/m), padding 12px both sizes (spacing/75), label 'Body / s / Medium'. The root component is now the pill (fill, border, radius, height; strokesIncludedInLayout so padding sits inside the border like CSS border-box); 'chip' is the transparent content row. chip-dismiss is a 24px button inside the pill after chip-icon-end (was a 12px X outside the pill): the root's itemSpacing is negative (-10 s / -8 m) so the button overlaps the chip's own 12px end padding, giving label->button 2px (s) / 4px (m) as in code, and paddingRight 0 (s) / 4px (m). Known 1px gap vs code: Figma's border-box puts the dismiss button 1px further in than code's absolutely-positioned button. Colors from code's computed styles: disabled keeps its variant colors at opacity 0.72 (was fill/disabled grays); neutral checked = fill/secondary/interactive/press, no border; colored checked = {v}-light fill + a 'checked-fill' rectangle of {v}/interactive/default at 60% layer opacity (models CSS color-mix 60%; a 60%-opacity paint is lost on instances, layer opacity isn't), text/neutral, no border. Light mode only for the checked mix: code drops it to 40% in dark mode, which Figma can't vary per mode. Icons re-created pre-colored (nested instance children aren't editable): icon/neutral on neutral/checked, text/{variant} on tints (rule 10 exception), 14px at 1.4 stroke; dismiss X icon/neutral/light at 12px/1.3. REBUILT FROM SCRATCH + AUDITED 2026-10-02 (new set): variant × size × dismissible × state = 100 variants; no checked state (removed from code). Root = pill (fill, 1px stroke always, radius/full, height size/s|m, padding spacing/75, gap spacing/2xs); chip-icon / chip-icon-end are frames with spacing/3xs on the label side (code's 4+2 = 6px); chip-dismiss a 20px (s) / 24px (m) frame with the X, inside the pill — dismissible is a VARIANT because it changes the end padding (12 → 0 s / 4 m). Colored hover/press = fill + 'state-layer' (fill/page at 16% / 28% layer opacity = code's color-mix); focus = two spread shadows bound to border/focus + fill/page (clipsContent on); disabled = variant colors at 0.72. Known 1px: dismiss sits 1px further in than code (border counted in layout). Propstar property table. Audit passed incl. color parity light+dark for every state. REBUILT AGAIN 2026-10-02 (show/hide rule): 50 variants (variant × size × state); icon, iconEnd and dismissible are BOOLEAN properties on chip-icon / chip-icon-end / chip-dismiss, each a frame carrying its own spacing/3xs on the label side — the pill keeps spacing/75 on both ends with or without them (code mirrors it: pill on chip-shell, × in the row). Propstar table with dismissible expanded. Audit passed incl. fallback colors.",
-      "compSetId": "415:618",
-      "syncedCommit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
+      "lastChecked": "2026-10-20",
+      "notes": "Rebuilt from scratch 2026-08-24 (twice — first attempt tried to add a `disabled` VARIANT axis by renaming .name on components still parented inside the old COMPONENT_SET, which silently corrupted their names into '=Chip, =neutral, =s, =false, =false' garbage and left the set in an unrecoverable error state — variantProperties threw 'Component set for node has existing errors'. Deleted it and rebuilt as plain page-level components first, renamed freely, THEN combined once — that's the safe order, confirmed working). Now variant x size x checked x disabled (40 total), matching ChipVariant/ChipSize/checked/disabled exactly. Full anatomy: chip-icon and chip-icon-end (real 'Filter' icon instances, hidden by default) and chip-dismiss (real 'X' icon instance, hidden by default) as true layers, not just theoretical properties. Properties added, in Storybook's Controls order: label (TEXT), icon (BOOLEAN -> chip-icon visibility), iconEnd (BOOLEAN -> chip-icon-end visibility), dismissible (BOOLEAN -> chip-dismiss visibility), then variant/size/checked/disabled (VARIANT, in that order too). All 40/40 wired for every property. onClick/onDismiss have no Figma equivalent (JS handlers, not visual) and are intentionally not represented. Fill/text/border bound to real variables for every variant x state combination, including the new disabled treatment (fill/disabled, text/disabled, border/neutral/light, opacity 0.72 — matches globals.css exactly). RESYNCED 2026-10-01 in place (no re-combine, so instances elsewhere follow): s 24px / m 32px (size/s, size/m), padding 12px both sizes (spacing/75), label 'Body / s / Medium'. The root component is now the pill (fill, border, radius, height; strokesIncludedInLayout so padding sits inside the border like CSS border-box); 'chip' is the transparent content row. chip-dismiss is a 24px button inside the pill after chip-icon-end (was a 12px X outside the pill): the root's itemSpacing is negative (-10 s / -8 m) so the button overlaps the chip's own 12px end padding, giving label->button 2px (s) / 4px (m) as in code, and paddingRight 0 (s) / 4px (m). Known 1px gap vs code: Figma's border-box puts the dismiss button 1px further in than code's absolutely-positioned button. Colors from code's computed styles: disabled keeps its variant colors at opacity 0.72 (was fill/disabled grays); neutral checked = fill/secondary/interactive/press, no border; colored checked = {v}-light fill + a 'checked-fill' rectangle of {v}/interactive/default at 60% layer opacity (models CSS color-mix 60%; a 60%-opacity paint is lost on instances, layer opacity isn't), text/neutral, no border. Light mode only for the checked mix: code drops it to 40% in dark mode, which Figma can't vary per mode. Icons re-created pre-colored (nested instance children aren't editable): icon/neutral on neutral/checked, text/{variant} on tints (rule 10 exception), 14px at 1.4 stroke; dismiss X icon/neutral/light at 12px/1.3. REBUILT FROM SCRATCH + AUDITED 2026-10-02 (new set): variant × size × dismissible × state = 100 variants; no checked state (removed from code). Root = pill (fill, 1px stroke always, radius/full, height size/s|m, padding spacing/75, gap spacing/2xs); chip-icon / chip-icon-end are frames with spacing/3xs on the label side (code's 4+2 = 6px); chip-dismiss a 20px (s) / 24px (m) frame with the X, inside the pill — dismissible is a VARIANT because it changes the end padding (12 → 0 s / 4 m). Colored hover/press = fill + 'state-layer' (fill/page at 16% / 28% layer opacity = code's color-mix); focus = two spread shadows bound to border/focus + fill/page (clipsContent on); disabled = variant colors at 0.72. Known 1px: dismiss sits 1px further in than code (border counted in layout). Propstar property table. Audit passed incl. color parity light+dark for every state. REBUILT AGAIN 2026-10-02 (show/hide rule): 50 variants (variant × size × state); icon, iconEnd and dismissible are BOOLEAN properties on chip-icon / chip-icon-end / chip-dismiss, each a frame carrying its own spacing/3xs on the label side — the pill keeps spacing/75 on both ends with or without them (code mirrors it: pill on chip-shell, × in the row). Propstar table with dismissible expanded. Audit passed incl. fallback colors. REBUILT 2026-10-20 (set 581:885, old 415:618 deleted): the old set's 'dimissable' VARIANT was really the disabled state (its true variants were the 0.72-opacity ones) and the BOOLEAN named 'disabled' toggled the × — crossed and misnamed. Rebuilt in one combineAsVariants from detached instances of the old variants (no component clones): variant × size × state (default/hover/press/focus/disabled) = 50, BOOLEANs label/icon/iconEnd/dismissible re-wired. ChipGroup (16) and MultiSelect (12) instances swapped onto it with their labels and × kept. Paddings rebound to Semantic spacing/component/m (code's chip.padding-x). Code: chip-shell line-height 1 → Body / s / Medium's (height stays 24/32). Full audit (colors light+dark, layout, binding) passed; Propstar table 581:1338. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 50 variants, audit passed (hover/press composited with state-layer; disabled at 0.72 opacity like code).",
+      "compSetId": "581:885",
+      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
       "audit": {
         "pass": true,
-        "commit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-        "date": "2026-10-02",
+        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -177,7 +295,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -188,19 +308,52 @@
       "compSetId": "416:952",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-02",
-      "syncedCommit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-      "notes": "Built 2026-10-01 on its own page ('ChipGroup', right after Chip) — hideLabel x size x disabled (8 variants), each a vertical stack: chip-group-legend ('Body / m / Medium', text/neutral), chip-group-options (wrapping row of 4 real neutral Chip instances — Active checked, Paused, Draft, Archived — 4px apart both ways, spacing/2xs), chip-group-description ('Body / s / Regular', text/neutral/light, hidden by default); 8px between them (spacing/xs). hideLabel is a VARIANT, not a BOOLEAN: a Figma boolean can only show a layer when true, and hideLabel=true has to hide it. Properties: label (TEXT), description (BOOLEAN, shows the description) and descriptionText (TEXT) — Figma won't give a BOOLEAN and a TEXT property the same name. onChange/options/value are behavior or data, not represented. REBUILT FROM SCRATCH + AUDITED 2026-10-02: just the chips — size × state (default/disabled), 4 neutral Chip instances wrapping 4px apart (spacing/2xs both ways), no header/description/selection (removed from code). Disabled = every chip state=disabled. Colors come from the Chip instances (audited with Chip). Propstar property table. Rebuilt on the 50-variant Chip set (2026-10-02).",
+      "lastChecked": "2026-10-20",
+      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+      "notes": "Built 2026-10-01 on its own page ('ChipGroup', right after Chip) — hideLabel x size x disabled (8 variants), each a vertical stack: chip-group-legend ('Body / m / Medium', text/neutral), chip-group-options (wrapping row of 4 real neutral Chip instances — Active checked, Paused, Draft, Archived — 4px apart both ways, spacing/2xs), chip-group-description ('Body / s / Regular', text/neutral/light, hidden by default); 8px between them (spacing/xs). hideLabel is a VARIANT, not a BOOLEAN: a Figma boolean can only show a layer when true, and hideLabel=true has to hide it. Properties: label (TEXT), description (BOOLEAN, shows the description) and descriptionText (TEXT) — Figma won't give a BOOLEAN and a TEXT property the same name. onChange/options/value are behavior or data, not represented. REBUILT FROM SCRATCH + AUDITED 2026-10-02: just the chips — size × state (default/disabled), 4 neutral Chip instances wrapping 4px apart (spacing/2xs both ways), no header/description/selection (removed from code). Disabled = every chip state=disabled. Colors come from the Chip instances (audited with Chip). Propstar property table. Rebuilt on the 50-variant Chip set (2026-10-02). RE-AUDITED 2026-10-20: its 16 Chip instances now point at the rebuilt Chip set (581:885), labels and disabled state kept; structural audit (colors, spacing, states default/disabled) passed. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 4 variants (size × disabled), Chips inside follow.",
       "audit": {
         "pass": true,
-        "commit": "3c2bbc11fe9cdea2790855f1e27a351027cd9ce3",
-        "date": "2026-10-02",
+        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
           "spacers": 0,
           "states": 0,
-          "border": 0
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "FAB",
+      "inFigma": true,
+      "figmaNodeId": "469:43",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-21",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state, colors light+dark from .ai/figma-expected/FAB.json, 20px icon; passed. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 9 variants (expanded open hover/press/focus added, disabled collapsed only), audit passed. LIST-COUNT 2026-10-21: actions 2–7 VARIANT (expanded=true at every count × 4 states; collapsed and disabled at actions=2) — 29 variants, Propstar regenerated; audit passed (colors light+dark, clip, propstar).",
+      "compSetId": "469:84",
+      "syncedCommit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+      "audit": {
+        "pass": true,
+        "commit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+        "date": "2026-10-21",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
         }
       }
     },
@@ -235,14 +388,14 @@
       "figmaNodeId": "293:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"IconButton\") — variant x size x disabled grid (4 variants x s/m/l x true/false), matching IconButtonVariant/IconButtonSize exactly. Fill, border, radius, width/height bound to real variables, same values as component.button.* (IconButton reuses Button's fill scale). Icon shown as a real instance of the \"Plus\" icon from the Icons page (35:2), resized to 16/18/20px per size (matching ICON_SIZE_BY_BUTTON_SIZE in IconButton.tsx) and recolored per variant via the instance's vector stroke, bound to icon/inverse or icon/neutral matching component.iconButton.icon.*. Disabled modeled as 50% opacity, matching the CSS rule exactly. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:29) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added INSTANCE_SWAP property 'icon' wired to all 24 variants, with all 161 Icons-page components as swappable options (was hardcoded to 'Plus' before). Still missing: BOOLEAN 'loading' — no spinner layer built yet. PHASE 4b 2026-08-24: added icon-button-spinner anatomy (Reload icon, hidden by default) directly to the existing 24 children, wired a BOOLEAN 'loading' property. Property order: icon (INSTANCE_SWAP), loading (BOOLEAN), then variant/size/disabled (VARIANT). RESYNCED 2026-10-02: disabled = fill/disabled + border/neutral/light + icon/disabled at opacity 1 (was 0.5 opacity); icons re-created pre-colored, INSTANCE_SWAP refs kept. REBUILT + AUDITED 2026-10-03: variant × size × state = 72 variants, colors auto-matched like Button; icon INSTANCE_SWAP, 16/18/20px at 1.5/1.5/1.7; loading = spinner. TopBar's two instances swapped to the new set (variant=ghost, size=m, state=default) keeping their icons. Propstar table.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"IconButton\") — variant x size x disabled grid (4 variants x s/m/l x true/false), matching IconButtonVariant/IconButtonSize exactly. Fill, border, radius, width/height bound to real variables, same values as component.button.* (IconButton reuses Button's fill scale). Icon shown as a real instance of the \"Plus\" icon from the Icons page (35:2), resized to 16/18/20px per size (matching ICON_SIZE_BY_BUTTON_SIZE in IconButton.tsx) and recolored per variant via the instance's vector stroke, bound to icon/inverse or icon/neutral matching component.iconButton.icon.*. Disabled modeled as 50% opacity, matching the CSS rule exactly. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:29) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added INSTANCE_SWAP property 'icon' wired to all 24 variants, with all 161 Icons-page components as swappable options (was hardcoded to 'Plus' before). Still missing: BOOLEAN 'loading' — no spinner layer built yet. PHASE 4b 2026-08-24: added icon-button-spinner anatomy (Reload icon, hidden by default) directly to the existing 24 children, wired a BOOLEAN 'loading' property. Property order: icon (INSTANCE_SWAP), loading (BOOLEAN), then variant/size/disabled (VARIANT). RESYNCED 2026-10-02: disabled = fill/disabled + border/neutral/light + icon/disabled at opacity 1 (was 0.5 opacity); icons re-created pre-colored, INSTANCE_SWAP refs kept. REBUILT + AUDITED 2026-10-03: variant × size × state = 72 variants, colors auto-matched like Button; icon INSTANCE_SWAP, 16/18/20px at 1.5/1.5/1.7; loading = spinner. TopBar's two instances swapped to the new set (variant=ghost, size=m, state=default) keeping their icons. Propstar table. RE-AUDITED 2026-10-20 with layout + binding checks: passed unchanged (code changes since the last sync were the loading→isLoading / onPress→onClick renames — no visual change; loading stays a state value). RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 64 variants, audit passed.",
       "compSetId": "419:242",
-      "syncedCommit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
+      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
       "audit": {
         "pass": true,
-        "commit": "d3d63e21399ae548bf3c9bc481be30f071c3e89b",
-        "date": "2026-10-03",
+        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -250,7 +403,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -260,14 +415,14 @@
       "figmaNodeId": "298:8",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Input\") — size s/m/l x default/invalid/disabled (9 total), matching InputSize and invalid/disabled props. Fill, border, icon color, placeholder/disabled text color, height, radius bound to real variables against component.input.*; leading icon is a real \"Search\" instance from the Icons page; label uses \"Body / s / Regular\"/\"Body / m / Regular\" text styles. Not modeled: focus/hover states, description/error text rows. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:45) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to input-field (9/9), and BOOLEAN property 'icon' wired to input-icon's visibility (9/9) — the icon was always-on before, now optional like the real `icon?` prop. PHASE 4b 2026-08-24: added input-icon-end anatomy (Eye icon, hidden by default) directly to the existing 9 children, wired a BOOLEAN 'iconEnd' property. Property order: value, icon, iconEnd (Boolean/Text group), size, state (Variant group). RESYNCED 2026-10-02: 1px border (was 1.5), padding 12/12/16 (s/m/l), value text 'Body / s|m|l / Regular' per size (loose bindings removed), icons 16/16/18 icon/neutral/light; disabled fill/disabled + border/neutral/light + text/disabled at opacity 1. Still the field box only (no label row), as before — TopBar uses it label-less. REBUILT STATES + AUDITED 2026-10-02: state axis default/hover/focus/invalid/disabled × s/m/l (hover/focus added by duplicating variants into the set, so TopBar's instance keeps working). hover border/neutral/dark, focus border/focus + 'shadow / focus' effect style (clipsContent on so the spread renders), invalid border/danger, disabled fill/disabled + border/neutral/light; placeholder text/neutral/lightest in every state (code keeps it when disabled). Gap bound spacing/2xs. Propstar property table. Audit passed incl. color parity light+dark. FIX 2026-10-03: border now counts in the auto layout (strokesIncludedInLayout) — content sits 1px border + 12px from the edge like code's border-box; variants 2px wider.",
-      "compSetId": "303:45",
-      "syncedCommit": "8f81df64db7f83b962ef6c47f8058c3852d8d9f3",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Input\") — size s/m/l x default/invalid/disabled (9 total), matching InputSize and invalid/disabled props. Fill, border, icon color, placeholder/disabled text color, height, radius bound to real variables against component.input.*; leading icon is a real \"Search\" instance from the Icons page; label uses \"Body / s / Regular\"/\"Body / m / Regular\" text styles. Not modeled: focus/hover states, description/error text rows. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:45) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to input-field (9/9), and BOOLEAN property 'icon' wired to input-icon's visibility (9/9) — the icon was always-on before, now optional like the real `icon?` prop. PHASE 4b 2026-08-24: added input-icon-end anatomy (Eye icon, hidden by default) directly to the existing 9 children, wired a BOOLEAN 'iconEnd' property. Property order: value, icon, iconEnd (Boolean/Text group), size, state (Variant group). RESYNCED 2026-10-02: 1px border (was 1.5), padding 12/12/16 (s/m/l), value text 'Body / s|m|l / Regular' per size (loose bindings removed), icons 16/16/18 icon/neutral/light; disabled fill/disabled + border/neutral/light + text/disabled at opacity 1. Still the field box only (no label row), as before — TopBar uses it label-less. REBUILT STATES + AUDITED 2026-10-02: state axis default/hover/focus/invalid/disabled × s/m/l (hover/focus added by duplicating variants into the set, so TopBar's instance keeps working). hover border/neutral/dark, focus border/focus + 'shadow / focus' effect style (clipsContent on so the spread renders), invalid border/danger, disabled fill/disabled + border/neutral/light; placeholder text/neutral/lightest in every state (code keeps it when disabled). Gap bound spacing/2xs. Propstar property table. Audit passed incl. color parity light+dark. FIX 2026-10-03: border now counts in the auto layout (strokesIncludedInLayout) — content sits 1px border + 12px from the edge like code's border-box; variants 2px wider. RE-AUDITED 2026-10-20 with layout + binding checks. Theme's text/neutral/lightest dark was gray-500-ish (#8391a7) in Figma vs gray-400 in code — realigned (the whole Theme collection was re-synced to helix.css this pass: 11 aliases). Code changes since the last sync: loading→isLoading rename, shake animation, TopBar-only width rules — nothing visual in the field itself. RE-RECORDED at c210161: form labels/legends now use their text style's line-height (owner's decision 2026-10-20) — the label isn't part of this Figma set, so its audit (re-run with layout + binding) is unchanged and passes. REBUILT 2026-10-20 by the conversion standard v1.2 (pattern form-field): the old set was only the wrapper. Set 609:525 = input-root > input-label (+ input-required), input-wrapper (input-icon, input-field, input-icon-end, input-spinner), input-description, input-error; size × invalid × state + disabled per size + hideLabel/fullWidth/isLoading once = 24 variants. Properties: label, value (approved exception), required, description + text, errorMessage + text, icon + icon swap, iconEnd + iconEnd swap. TopBar's search instance swapped onto it (hideLabel=true, same 104×32). Audit passed light/dark. Propstar table 609:1461.",
+      "compSetId": "609:525",
+      "syncedCommit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
       "audit": {
         "pass": true,
-        "commit": "8f81df64db7f83b962ef6c47f8058c3852d8d9f3",
-        "date": "2026-10-03",
+        "commit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -275,7 +430,92 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Menu",
+      "inFigma": true,
+      "figmaNodeId": "470:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-21",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision). UPDATED 2026-10-21 by the conversion standard v1.4: now a set with multiple false/true (2 variants). LIST-COUNT 2026-10-21: options 2–7 × multiple — 12 variants, the flat Default-story list (Apple…Grape) instead of the Grouped drawing; Propstar regenerated; container structural audit passed (MenuItem 470:14 unchanged, its audit stands).",
+      "compSetId": "635:990",
+      "syncedCommit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+      "audit": {
+        "pass": true,
+        "commit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+        "date": "2026-10-21",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
+        }
+      }
+    },
+    {
+      "name": "Modal",
+      "inFigma": true,
+      "figmaNodeId": "471:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): title Heading / xl / Bold (24px — owner raised it from l, tokens + Figma); footer gap rebound to spacing/2xs (code's modal.footerGap). Colors light+dark from .ai/figma-expected/Modal.json (Opened story). Passed. UPDATED 2026-10-21 by the conversion standard v1.4: props renamed to code (children, *ActionLabel) and the three action Buttons exposed.",
+      "compSetId": "471:6",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+      "audit": {
+        "pass": true,
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "MultiSelect",
+      "inFigma": true,
+      "figmaNodeId": "464:8",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): value (empty/selected) × state (default/hover/focus/open/invalid/disabled). Field = padding 4/40/4/4 (Semantic spacing/2xs, Primitives spacing/250) with the border inside and NOT in the auto layout — code's padding is calc((32 − 24)/2 − 1px) = 3px inside a 1px border, which no token expresses; owner's decision 2026-10-20 (figma:expected marks it borderOutsideLayout, the audit compares padding + border). Known 1px: right padding / placeholder start are 1px closer to the edge than code. Empty variants now hold the placeholder in a multi-select-trigger frame (size/s, 8px left = Primitives spacing/50), chevron absolute 13px from the right. Disabled chevron rebound icon/disabled → icon/neutral/light (what code renders). Passed. REBUILT 2026-10-20 by the conversion standard v1.3 (pattern form-field): the old set was only the field. Set 625:792 = multi-select-root > label (+ required), multi-select-field (Chips or trigger > placeholder, chevron), description, error; 22 variants. Properties: label, placeholder, required, description + text, errorMessage + text; value empty/selected (approved exception). Audit passed light/dark. Propstar table 625:908.",
+      "compSetId": "625:792",
+      "syncedCommit": "c4f6c304b8978256775b59b138efda4701b9e612",
+      "audit": {
+        "pass": true,
+        "commit": "c4f6c304b8978256775b59b138efda4701b9e612",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -285,14 +525,14 @@
       "figmaNodeId": "327:12",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"NavItem\") — current true/false, matching the `current` prop. Fill, text, icon color, radius bound to real variables against component.navItem.*; icon is a real \"Home\" instance from the Icons page. Property: label (TEXT). REVIEWED 2026-10-02: code moved the current-state fill onto an animated nav-item-indicator layer (same token, same look) — no visual change, nothing to update. REBUILT 2026-10-03 as current (false/true) x state (default/hover/focus), 6 variants; icon BOOLEAN (default true) + icon swap INSTANCE_SWAP; padding 8/12 (spacing/xs, spacing/s), gap spacing/xs, radius/m, Body / s / Medium; current fill on the root (code: sliding indicator); colors from .ai/figma-expected/NavItem.json; audit passed; Propstar table 432:897. SideNav's 4 NavItem instances swapped onto the new set (labels kept) before the old set 327:12 was deleted. FIX 2026-10-03: nav-item-icon instances resized 24 -> 16px (code renders Icon size 16); height now 34, same as code.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"NavItem\") — current true/false, matching the `current` prop. Fill, text, icon color, radius bound to real variables against component.navItem.*; icon is a real \"Home\" instance from the Icons page. Property: label (TEXT). REVIEWED 2026-10-02: code moved the current-state fill onto an animated nav-item-indicator layer (same token, same look) — no visual change, nothing to update. REBUILT 2026-10-03 as current (false/true) x state (default/hover/focus), 6 variants; icon BOOLEAN (default true) + icon swap INSTANCE_SWAP; padding 8/12 (spacing/xs, spacing/s), gap spacing/xs, radius/m, Body / s / Medium; current fill on the root (code: sliding indicator); colors from .ai/figma-expected/NavItem.json; audit passed; Propstar table 432:897. SideNav's 4 NavItem instances swapped onto the new set (labels kept) before the old set 327:12 was deleted. FIX 2026-10-03: nav-item-icon instances resized 24 -> 16px (code renders Icon size 16); height now 34, same as code. UPDATED 2026-10-20 to the tinted current item with a blue bar (code b266608): current=true root is transparent; a nav-item-indicator frame (absolute, stretches, radius/m, fill/primary/interactive/light/hover) holds a 4px nav-item-indicator-bar (width Semantic spacing/2xs, radius/full, fill/primary/interactive/default) at the left edge — code's indicator + its ::before; current label text/link/hover. Paddings/gap rebound to Primitives spacing/50 + spacing/75 (code uses the primitives directly). Audit (with layout + binding) passed; the icon color is now read from the icon's vector stroke.",
       "compSetId": "432:28",
-      "syncedCommit": "94221a942030c166549585f2245c9ca1d1be0904",
+      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
       "audit": {
         "pass": true,
-        "commit": "94221a942030c166549585f2245c9ca1d1be0904",
-        "date": "2026-10-03",
+        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -300,7 +540,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -310,14 +552,14 @@
       "figmaNodeId": "328:26",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"PageHeader\") — level 1/2 x actions true/false (4 total), matching PageHeaderLevel and the optional `actions` prop. Title uses \"Heading / 2xl / Bold\" (level 1, 32px) vs \"Heading / xl / Bold\" (level 2, 24px) real text styles — verified via API (fontSize 32 vs 24, distinct textStyleId), not just eyeballed off a screenshot. Description uses \"Body / s / Regular\". Actions slot is a stubbed action-button shape (not a real Button instance — out of scope to nest a full component here) shown only on actions=true. Properties: label (TEXT, title) and description (TEXT). REBUILT 2026-10-03: level (1/2) VARIANT x description BOOLEAN (default true, own 4px top) x actions BOOLEAN (primary Button instance as placeholder, 8px gap); 720px wide; title Heading / 2xl|xl / Bold text/neutral, description Body / s / Regular text/neutral/light; audit passed; Propstar table 435:226. Code changed in the same pass so title/description use the same text styles (line-height 1.2 -> 1.35, dropped the raw -0.02em letter-spacing; description line-height 1.5).",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"PageHeader\") — level 1/2 x actions true/false (4 total), matching PageHeaderLevel and the optional `actions` prop. Title uses \"Heading / 2xl / Bold\" (level 1, 32px) vs \"Heading / xl / Bold\" (level 2, 24px) real text styles — verified via API (fontSize 32 vs 24, distinct textStyleId), not just eyeballed off a screenshot. Description uses \"Body / s / Regular\". Actions slot is a stubbed action-button shape (not a real Button instance — out of scope to nest a full component here) shown only on actions=true. Properties: label (TEXT, title) and description (TEXT). REBUILT 2026-10-03: level (1/2) VARIANT x description BOOLEAN (default true, own 4px top) x actions BOOLEAN (primary Button instance as placeholder, 8px gap); 720px wide; title Heading / 2xl|xl / Bold text/neutral, description Body / s / Regular text/neutral/light; audit passed; Propstar table 435:226. Code changed in the same pass so title/description use the same text styles (line-height 1.2 -> 1.35, dropped the raw -0.02em letter-spacing; description line-height 1.5). RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks). Typography checked inside the description's wrapper frame (layout + binding pass).",
       "compSetId": "435:24",
-      "syncedCommit": "17a55e464b75383d8bfa49abf2359ea10b31cdc6",
+      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
       "audit": {
         "pass": true,
-        "commit": "17a55e464b75383d8bfa49abf2359ea10b31cdc6",
-        "date": "2026-10-03",
+        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -325,7 +567,36 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "RadioButton",
+      "inFigma": true,
+      "figmaNodeId": "459:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): checked × state (default/hover/focus/invalid/disabled), colors light+dark from .ai/figma-expected/RadioButton.json, Body / m / Regular label; passed. REBUILT 2026-10-20 by the conversion standard (contracts/figma-conversion.json, pattern checkable): set 595:282 = checked × invalid × disabled (false/true) × state (default/hover/focus) = 14 variants (disabled only at default, valid), from detached instances of the old 10. New radio-item-required part (* text/danger, spacing/3xs; text/disabled when disabled), label in a radio-item-label row. Properties: label, required, description + description text, errorMessage + errorMessage text. Full audit passed in light and dark with every BOOLEAN on. Propstar table 595:283. UPDATED 2026-10-20: invalid + hover keeps border/danger (code fix, owner-approved).",
+      "compSetId": "595:282",
+      "syncedCommit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
+      "audit": {
+        "pass": true,
+        "commit": "25f8b55926c024959c3ada0a7109e76dc39cbfb1",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -335,14 +606,14 @@
       "figmaNodeId": "297:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"RadioGroup\") — a single radio control (the option-level unit RadioGroup renders per RadioOption): unchecked/checked x disabled, plus invalid (5 total). Fill, border, dot color, size bound to real variables against component.radio.*. Not modeled: the group-level layout (orientation, multiple options) — only the individual radio control's states. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:35) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap — only radio-control (the circle) existed, no label. Added a radio-item-label layer to all 5 variants and wired a TEXT property 'label' (5/5). Grid reflowed. Reviewed 2026-08-24: `description` (per-option secondary text) not built — same class of gap as Switch. The bigger structural gap remains unchanged: this models one radio option, not the full group (label/options/orientation). REBUILT 2026-10-02 from scratch (old set merged control and label): radio-item > [radio-control 16px circle, 1px border, radio-dot 6px] + radio-item-label 'Body / m / Regular', 8px gap. Disabled: fill/disabled, border text/disabled, dot icon/disabled, label text/disabled. Still models one option, not the group. REBUILT 2026-10-03 as checked (unchecked/checked) x state (default/hover/focus/invalid/disabled), 10 variants, colors from .ai/figma-expected/RadioGroup.json; audit passed; Propstar table 426:2. Still one option, not the group.",
-      "compSetId": "425:699",
-      "syncedCommit": "1f511632f250d39ac0618e4f13b8eb3a598878b1",
+      "lastChecked": "2026-10-21",
+      "notes": "Built 2026-08-24 on its own Figma page (\"RadioGroup\") — a single radio control (the option-level unit RadioGroup renders per RadioOption): unchecked/checked x disabled, plus invalid (5 total). Fill, border, dot color, size bound to real variables against component.radio.*. Not modeled: the group-level layout (orientation, multiple options) — only the individual radio control's states. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:35) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap — only radio-control (the circle) existed, no label. Added a radio-item-label layer to all 5 variants and wired a TEXT property 'label' (5/5). Grid reflowed. Reviewed 2026-08-24: `description` (per-option secondary text) not built — same class of gap as Switch. The bigger structural gap remains unchanged: this models one radio option, not the full group (label/options/orientation). REBUILT 2026-10-02 from scratch (old set merged control and label): radio-item > [radio-control 16px circle, 1px border, radio-dot 6px] + radio-item-label 'Body / m / Regular', 8px gap. Disabled: fill/disabled, border text/disabled, dot icon/disabled, label text/disabled. Still models one option, not the group. REBUILT 2026-10-03 as checked (unchecked/checked) x state (default/hover/focus/invalid/disabled), 10 variants, colors from .ai/figma-expected/RadioGroup.json; audit passed; Propstar table 426:2. Still one option, not the group. RE-AUDITED 2026-10-20 with layout + binding checks — passed. RE-RECORDED at c210161: form labels/legends now use their text style's line-height (owner's decision 2026-10-20) — the label isn't part of this Figma set, so its audit (re-run with layout + binding) is unchanged and passes. REBUILT 2026-10-20 by the conversion standard (pattern group): the old set was a single radio option, not a group. Set 600:1218 = orientation × invalid × disabled (6 variants, no state axis), built from detached CheckboxGroup variants with the options swapped to RadioButton instances (Free, Pro checked, Team, Enterprise). radio-legend (text + radio-required), radio-options 12px, radio-description / radio-error indented 24px. Properties: label, required, description + text, errorMessage + text. Audit passed light/dark. Propstar table 600:1219. RE-SYNCED 2026-10-21: the invalid-hover CSS fix touches radio-group selectors but the group draws no hover of its own (each RadioButton carries it) — nothing to change in Figma. OPTIONS 2026-10-21: options 2–7 list-count VARIANT (owner's rule) — 36 variants, each built from its twin (detach + createComponentFromNode), RadioButton instances Free, Pro (checked), Team, Enterprise, Education, Nonprofit, Custom. Propstar regenerated (rows options, cols invalid/disabled by orientation). Audit passed light/dark on all 36.",
+      "compSetId": "600:1218",
+      "syncedCommit": "3defb1bfa52348e54bc4abfa0fa1d97240d196cb",
       "audit": {
         "pass": true,
-        "commit": "1f511632f250d39ac0618e4f13b8eb3a598878b1",
-        "date": "2026-10-03",
+        "commit": "3defb1bfa52348e54bc4abfa0fa1d97240d196cb",
+        "date": "2026-10-21",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -350,7 +621,38 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
+        }
+      }
+    },
+    {
+      "name": "SegmentedControl",
+      "inFigma": true,
+      "figmaNodeId": "462:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful SegmentedControlItem set (462:22: checked × default/hover/focus/disabled, label colors light+dark from .ai/figma-expected/SegmentedControlItem.json); the SegmentedControl set (462:37) composes 3 items on fill/secondary/interactive/default. Passed. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 2 variants (disabled), items inside follow.",
+      "compSetId": "462:37",
+      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+      "audit": {
+        "pass": true,
+        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -360,14 +662,14 @@
       "figmaNodeId": "299:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Select\") — size s/m/l x default/invalid/disabled (9 total), matching SelectSize and invalid/disabled props. Fill, border, icon color, text color, height, radius bound to real variables against component.select.*; trailing icon is a real \"ChevronDown\" instance from the Icons page. Not modeled: focus/hover states, option list/dropdown. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:55) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to select-trigger (9/9). Reviewed 2026-08-24: value (TEXT) + size/state (VARIANT) cover everything visually representable in a closed-state mockup — the open dropdown/option list isn't modeled (out of scope for a static component grid). REBUILT 2026-10-02: Select has no size prop anymore (one 32px size), so the size axis couldn't be removed in place — rebuilt as state=default/invalid/disabled. Trigger 32px (size/m), 12px padding both sides, 12px label-to-chevron, select-trigger-label 'Body / m / Regular' in the placeholder color, select-chevron 16px icon/neutral/light. REBUILT 2026-10-03 with a figma-only state axis (default/hover/focus/open/invalid/disabled), colors auto-matched to Theme vars from .ai/figma-expected/Select.json (light+dark), focus/open ring as bound spread shadows; audit passed; Propstar table 423:711.",
-      "compSetId": "390:23",
-      "syncedCommit": "c620576b728ef10010f1473dc2d72197f319013c",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Select\") — size s/m/l x default/invalid/disabled (9 total), matching SelectSize and invalid/disabled props. Fill, border, icon color, text color, height, radius bound to real variables against component.select.*; trailing icon is a real \"ChevronDown\" instance from the Icons page. Not modeled: focus/hover states, option list/dropdown. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:55) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to select-trigger (9/9). Reviewed 2026-08-24: value (TEXT) + size/state (VARIANT) cover everything visually representable in a closed-state mockup — the open dropdown/option list isn't modeled (out of scope for a static component grid). REBUILT 2026-10-02: Select has no size prop anymore (one 32px size), so the size axis couldn't be removed in place — rebuilt as state=default/invalid/disabled. Trigger 32px (size/m), 12px padding both sides, 12px label-to-chevron, select-trigger-label 'Body / m / Regular' in the placeholder color, select-chevron 16px icon/neutral/light. REBUILT 2026-10-03 with a figma-only state axis (default/hover/focus/open/invalid/disabled), colors auto-matched to Theme vars from .ai/figma-expected/Select.json (light+dark), focus/open ring as bound spread shadows; audit passed; Propstar table 423:711. RE-AUDITED 2026-10-20 with layout + binding checks: select-chevron is now absolutely positioned 12px from the right (constraint MAX) and the root's right padding is 40px bound to Primitives spacing/250, exactly like code (padding 0 40 0 12, chevron absolute). labelEnd (new prop) only shows on options in the open list, not on the trigger — nothing to model. RE-RECORDED at c210161: form labels/legends now use their text style's line-height (owner's decision 2026-10-20) — the label isn't part of this Figma set, so its audit (re-run with layout + binding) is unchanged and passes. REBUILT 2026-10-20 by the conversion standard v1.2 (pattern form-field): the old set was only the trigger. Set 618:225 = select-root > label (+ required), select-wrapper > select-trigger (hugs its text), description, error; 12 variants; value empty/selected exception (option A). Audit passed light/dark. Propstar table 618:1145.",
+      "compSetId": "618:225",
+      "syncedCommit": "7c4c16c7255e520abb414420e2ff452979f8b9f0",
       "audit": {
         "pass": true,
-        "commit": "c620576b728ef10010f1473dc2d72197f319013c",
-        "date": "2026-10-03",
+        "commit": "7c4c16c7255e520abb414420e2ff452979f8b9f0",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -375,7 +677,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -385,14 +689,14 @@
       "figmaNodeId": "332:4",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"SideNav\") — a single static composition: side-nav-brand (logo box + \"Helix\" text) + side-nav-items (4 real NavItem INSTANCES, reusing the actual NavItem component built earlier — not redrawn) + side-nav-footer (avatar stub + name). No variant/size prop of its own. Fill, border, width (224px literal, matches the hardcoded value in component.sideNav.width) bound to real variables against component.sideNav.*. RESYNCED 2026-10-02: right border removed (code dropped it). REBUILT IN PLACE 2026-10-03 (same component, so AppShell's instance follows): 224x480, 12px top/bottom (spacing/s), no side padding; brand BOOLEAN = side-nav-brand (12px bottom) > brand-content (8/12 padding, 28px logo box fill/primary/interactive/light/default + Bolt icon icon/primary, 'Helix DS' Heading / m / Bold); side-nav-items 4px gap (spacing/2xs), 0/8 padding, fills the height (old version used a spacer frame and 16/12 padding); footer BOOLEAN = 8px outer padding > footer-content (top border border/neutral/light, 8px padding, Avatar m + name Body / s / Medium + role Body / s / Regular text/neutral/lightest). Brand 56 / footer 69 px, same as code. Audit passed (colors, spacing, fallbacks); no variant axis, so no property table.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"SideNav\") — a single static composition: side-nav-brand (logo box + \"Helix\" text) + side-nav-items (4 real NavItem INSTANCES, reusing the actual NavItem component built earlier — not redrawn) + side-nav-footer (avatar stub + name). No variant/size prop of its own. Fill, border, width (224px literal, matches the hardcoded value in component.sideNav.width) bound to real variables against component.sideNav.*. RESYNCED 2026-10-02: right border removed (code dropped it). REBUILT IN PLACE 2026-10-03 (same component, so AppShell's instance follows): 224x480, 12px top/bottom (spacing/s), no side padding; brand BOOLEAN = side-nav-brand (12px bottom) > brand-content (8/12 padding, 28px logo box fill/primary/interactive/light/default + Bolt icon icon/primary, 'Helix DS' Heading / m / Bold); side-nav-items 4px gap (spacing/2xs), 0/8 padding, fills the height (old version used a spacer frame and 16/12 padding); footer BOOLEAN = 8px outer padding > footer-content (top border border/neutral/light, 8px padding, Avatar m + name Body / s / Medium + role Body / s / Regular text/neutral/lightest). Brand 56 / footer 69 px, same as code. Audit passed (colors, spacing, fallbacks); no variant axis, so no property table. RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks). Its NavItem instances follow the updated current state (tint + bar).",
       "compSetId": "332:4",
-      "syncedCommit": "d9aae51950c7687799fe22ccd85cf702a256cb61",
+      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
       "audit": {
         "pass": true,
-        "commit": "d9aae51950c7687799fe22ccd85cf702a256cb61",
-        "date": "2026-10-03",
+        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -400,7 +704,36 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "SidePanel",
+      "inFigma": true,
+      "figmaNodeId": "472:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): placement right/bottom, title Heading / xl / Bold (24px, like Modal — owner's choice). Colors light+dark from .ai/figma-expected/SidePanel.json. Passed. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children.",
+      "compSetId": "472:29",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+      "audit": {
+        "pass": true,
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -410,14 +743,14 @@
       "figmaNodeId": "296:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Switch\") — on/off x size s/m x disabled (8 total), matching SwitchSize and checked/disabled props. Track fill, thumb fill, track height, thumb size all bound to real variables against component.switch.*; width (28/36px) is a hardcoded literal in code too, so a literal in Figma is a match, not a gap. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:34) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap as Checkbox — only switch-track existed, no label. Rebuilt each of the 8 variants as a row (track + switch-label) since the track uses absolute positioning for the thumb and can't itself be an auto-layout parent holding a label; added TEXT property 'label' wired to all 8. Grid reflowed. Reviewed 2026-08-24: `description` (secondary text below label) not built — real but low-value gap, not added this pass. RESYNCED 2026-10-02: track-to-label gap 12px (spacing/75, was 8); disabled label text/disabled at opacity 1. REBUILT 2026-10-03 as checked (unchecked/checked) x size (s/m) x state (default/hover/focus/disabled), 16 variants; track is auto-layout with 2px (spacing/3xs) padding and the thumb aligned MIN/MAX; description is a BOOLEAN with its own left padding (spacing/250 s, spacing/300 m); colors from .ai/figma-expected/Switch.json; audit passed; Propstar table 428:532. Code: label/description now use the body-s-regular text style (line-height 1.5, was snug 1.35) so code and Figma share one style. UPDATED 2026-10-03: unchecked track was gray-100/gray-800 (~1.1:1 against the page, fails WCAG 1.4.11) and had no hover. New semantic tokens fill/secondary/interactive/dark/default (gray-500 both themes: 4.76 light / 3.75 dark vs page, white thumb 4.76) and /hover (gray-600 light 7.58; #8391a7 dark 5.59 page / 3.19 thumb), wired through component switch.track.fill.off / off-hover. Theme variables added in Figma with the same descriptions; unchecked default/focus/hover tracks rebound; parity re-checked light+dark.",
-      "compSetId": "428:114",
-      "syncedCommit": "8bd804b84227277695bbc72f33aa101faaeb1811",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Switch\") — on/off x size s/m x disabled (8 total), matching SwitchSize and checked/disabled props. Track fill, thumb fill, track height, thumb size all bound to real variables against component.switch.*; width (28/36px) is a hardcoded literal in code too, so a literal in Figma is a match, not a gap. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:34) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: same gap as Checkbox — only switch-track existed, no label. Rebuilt each of the 8 variants as a row (track + switch-label) since the track uses absolute positioning for the thumb and can't itself be an auto-layout parent holding a label; added TEXT property 'label' wired to all 8. Grid reflowed. Reviewed 2026-08-24: `description` (secondary text below label) not built — real but low-value gap, not added this pass. RESYNCED 2026-10-02: track-to-label gap 12px (spacing/75, was 8); disabled label text/disabled at opacity 1. REBUILT 2026-10-03 as checked (unchecked/checked) x size (s/m) x state (default/hover/focus/disabled), 16 variants; track is auto-layout with 2px (spacing/3xs) padding and the thumb aligned MIN/MAX; description is a BOOLEAN with its own left padding (spacing/250 s, spacing/300 m); colors from .ai/figma-expected/Switch.json; audit passed; Propstar table 428:532. Code: label/description now use the body-s-regular text style (line-height 1.5, was snug 1.35) so code and Figma share one style. UPDATED 2026-10-03: unchecked track was gray-100/gray-800 (~1.1:1 against the page, fails WCAG 1.4.11) and had no hover. New semantic tokens fill/secondary/interactive/dark/default (gray-500 both themes: 4.76 light / 3.75 dark vs page, white thumb 4.76) and /hover (gray-600 light 7.58; #8391a7 dark 5.59 page / 3.19 thumb), wired through component switch.track.fill.off / off-hover. Theme variables added in Figma with the same descriptions; unchecked default/focus/hover tracks rebound; parity re-checked light+dark. REBUILT 2026-10-20 by the conversion standard (pattern checkable): set 602:362 = checked × size × hideLabel × disabled (false/true) × state default/hover/focus = 24 variants (disabled and hideLabel only at default), from detached instances of the old 16. hideLabel hides switch-label; disabled dims label and description. Properties: label, description + description text. Audit passed light/dark. Propstar table 602:363. TRIMMED 2026-10-20 to 18 variants by the standard's secondary rule (v1.1): hideLabel=true drawn once per checked (size m, default, enabled). Propstar table 606:2.",
+      "compSetId": "602:362",
+      "syncedCommit": "7767abf66ba500d79d44a1edc728fc511847ce22",
       "audit": {
         "pass": true,
-        "commit": "8bd804b84227277695bbc72f33aa101faaeb1811",
-        "date": "2026-10-03",
+        "commit": "7767abf66ba500d79d44a1edc728fc511847ce22",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -425,7 +758,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -460,14 +795,14 @@
       "figmaNodeId": "300:3",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-24 on its own Figma page (\"Textarea\") — size s/m/l x default/invalid/disabled (9 total). Correctly matches a real code quirk: size only changes font-size (s/m share 12px, l is 14px) — min-height uses one single shared component.textarea.height token regardless of size, not a per-size scale like Input/Select. Fill, border, text color, min-height, radius all bound to real variables. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:56) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to textarea-field (9/9). Reviewed 2026-08-24: `showCount`/`resize`/`rows`/`maxLength` have no meaningful static-mockup representation — value (TEXT) + size/state (VARIANT) cover the rest. RESYNCED 2026-10-02: 1px border, 12px padding all round, value text per size ('Body / s|m|l / Regular'), hugs height with the 32px minimum; disabled tokens instead of opacity. REBUILT STATES + AUDITED 2026-10-02: same state axis and colors as Input (default/hover/focus/invalid/disabled × s/m/l), 'shadow / focus' on focus. Propstar property table. Audit passed incl. color parity light+dark. FIX 2026-10-03: border now counts in the auto layout — m is 47px tall like code (1 + 12 + 21 + 12 + 1), was 45.",
-      "compSetId": "303:56",
-      "syncedCommit": "8f81df64db7f83b962ef6c47f8058c3852d8d9f3",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-24 on its own Figma page (\"Textarea\") — size s/m/l x default/invalid/disabled (9 total). Correctly matches a real code quirk: size only changes font-size (s/m share 12px, l is 14px) — min-height uses one single shared component.textarea.height token regardless of size, not a per-size scale like Input/Select. Fill, border, text color, min-height, radius all bound to real variables. STRUCTURAL FIX 2026-08-24: originally built as loose independent COMPONENT nodes (violating .ai/skills/components-to-figma.md Phase 3) with title/description nested inside the clipping frame (clipsContent defaults true, so anything above y=0 was invisible) and, for Input/Select, missing counterAxisAlignItems (text top-aligned instead of centered) plus a fixed width instead of hug. Fixed: combined into a single COMPONENT_SET (303:56) via figma.combineAsVariants, anatomy layers renamed to match {Name}.tsx's real data-helix-part values, title/description shifted into positive-Y space, and (Input/Select/Textarea) sizing corrected to hug-width per the code's actual fit-content default. PHASE 4 2026-08-24: added TEXT property 'value' wired to textarea-field (9/9). Reviewed 2026-08-24: `showCount`/`resize`/`rows`/`maxLength` have no meaningful static-mockup representation — value (TEXT) + size/state (VARIANT) cover the rest. RESYNCED 2026-10-02: 1px border, 12px padding all round, value text per size ('Body / s|m|l / Regular'), hugs height with the 32px minimum; disabled tokens instead of opacity. REBUILT STATES + AUDITED 2026-10-02: same state axis and colors as Input (default/hover/focus/invalid/disabled × s/m/l), 'shadow / focus' on focus. Propstar property table. Audit passed incl. color parity light+dark. FIX 2026-10-03: border now counts in the auto layout — m is 47px tall like code (1 + 12 + 21 + 12 + 1), was 45. RE-AUDITED 2026-10-20 with layout + binding checks (Inter, Body / m / Regular placeholder) — passed. RE-RECORDED at c210161: form labels/legends now use their text style's line-height (owner's decision 2026-10-20) — the label isn't part of this Figma set, so its audit (re-run with layout + binding) is unchanged and passes. REBUILT 2026-10-20 by the conversion standard v1.2 (pattern form-field): the old set was only the wrapper. Set 613:444 = textarea-root > textarea-label (+ required), textarea-wrapper (field 4 rows, counter, native resize handle), description, error; 26 variants. Properties: label, value (approved exception), required, showCount, description + text, errorMessage + text. Audit passed light/dark. Propstar table 613:1338. WIDTH 2026-10-20: default width = code's 20 native columns (173/194/241), fullWidth drawn at 480. ONE SIZE 2026-10-20 (owner's decision): s and l removed in code and Figma — 12 variants, Propstar table 621:2.",
+      "compSetId": "613:444",
+      "syncedCommit": "bd845cd293fac90733e33bb34d3f5e353a329266",
       "audit": {
         "pass": true,
-        "commit": "8f81df64db7f83b962ef6c47f8058c3852d8d9f3",
-        "date": "2026-10-03",
+        "commit": "bd845cd293fac90733e33bb34d3f5e353a329266",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -475,7 +810,63 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Toast",
+      "inFigma": true,
+      "figmaNodeId": "467:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): variant × description; filled status icon colored like code's --helix-toast-icon-* (measured from the svg fill), 24px bound to Semantic size/s (code's toast.iconSize); padding/gap/radius bound. Passed.",
+      "compSetId": "467:62",
+      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "audit": {
+        "pass": true,
+        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
+        }
+      }
+    },
+    {
+      "name": "Tooltip",
+      "inFigma": true,
+      "figmaNodeId": "465:2",
+      "variantsMatch": true,
+      "tokensMatch": true,
+      "lastChecked": "2026-10-20",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): fill/inverse bubble, text/inverse Caption / Regular; paddings rebound to Semantic spacing/component/xs (4) and spacing/component/s (8), the tokens code uses. Passed.",
+      "compSetId": "465:6",
+      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+      "audit": {
+        "pass": true,
+        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "date": "2026-10-20",
+        "counts": {
+          "colors": 0,
+          "spacing": 0,
+          "spacers": 0,
+          "states": 0,
+          "parity": 0,
+          "border": 0,
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -485,14 +876,14 @@
       "figmaNodeId": "333:4",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"TopBar\") — a single static composition: topbar-start holds a real Input instance (size=m default), topbar-end holds two real ghost/m IconButton instances — reusing the actual components, not redrawn. No variant/size prop of its own. Fill, border, height (semantic.size.2xl = 56px) bound to real variables against component.topBar.*. UPDATED IN PLACE 2026-10-03 (AppShell's instance follows): padding 0/16 -> 0/24 (spacing/l, code's spacing-150), gap 0 -> 12 (spacing/s), end gap 8 -> 4 (spacing/2xs, code's component-xs), border bottom only (border/neutral/light), start slot 320px (max-width), Bell/Help icons like the story; start/end BOOLEANs. The TopBar and AppShell stories had the search Input at size s next to m IconButtons — fixed to m (same-row-sizing.md). Audit passed; no variant axis, so no property table.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"TopBar\") — a single static composition: topbar-start holds a real Input instance (size=m default), topbar-end holds two real ghost/m IconButton instances — reusing the actual components, not redrawn. No variant/size prop of its own. Fill, border, height (semantic.size.2xl = 56px) bound to real variables against component.topBar.*. UPDATED IN PLACE 2026-10-03 (AppShell's instance follows): padding 0/16 -> 0/24 (spacing/l, code's spacing-150), gap 0 -> 12 (spacing/s), end gap 8 -> 4 (spacing/2xs, code's component-xs), border bottom only (border/neutral/light), start slot 320px (max-width), Bell/Help icons like the story; start/end BOOLEANs. The TopBar and AppShell stories had the search Input at size s next to m IconButtons — fixed to m (same-row-sizing.md). Audit passed; no variant axis, so no property table. RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks).",
       "compSetId": "333:4",
-      "syncedCommit": "689bcb60308ee52cc959637d1301c22a98433986",
+      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
       "audit": {
         "pass": true,
-        "commit": "689bcb60308ee52cc959637d1301c22a98433986",
-        "date": "2026-10-03",
+        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -500,7 +891,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     }

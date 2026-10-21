@@ -1,6 +1,5 @@
 import type { TextareaHTMLAttributes } from 'react';
 
-export type TextareaSize   = 's' | 'm' | 'l';
 export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 
 export interface TextareaProps
@@ -12,7 +11,6 @@ export interface TextareaProps
   required?:    boolean;
   fullWidth?:   boolean;
   hideLabel?:   boolean;
-  size?:        TextareaSize;
   rows?:        number;
   maxLength?:   number;
   resize?:      TextareaResize;

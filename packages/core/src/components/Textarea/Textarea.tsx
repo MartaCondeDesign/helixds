@@ -14,7 +14,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       required = false,
       fullWidth = false,
       hideLabel = false,
-      size = 'm',
       rows = 4,
       maxLength,
       resize = 'vertical',
@@ -29,8 +28,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const uid         = `helix-textarea-${++idCounter}`;
     const id          = rest.id ?? uid;
-    const descId      = description  ? `${id}-desc`  : undefined;
-    const errId       = errorMessage ? `${id}-err`   : undefined;
+    const descId      = description && !invalid ? `${id}-desc`  : undefined;
+    const errId       = invalid && errorMessage ? `${id}-err`   : undefined;
     const describedby = [descId, errId].filter(Boolean).join(' ') || undefined;
 
     const [count, setCount] = useState(
@@ -45,7 +44,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div
         data-helix-part="textarea-root"
-        data-size={size}
         {...(fullWidth  ? { 'data-full-width': '' } : {})}
         {...(disabled   ? { 'data-disabled':   '' } : {})}
         {...(invalid    ? { 'data-invalid':     '' } : {})}
@@ -57,7 +55,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' } : undefined}
         >
           {label}
-          {required && <span aria-hidden="true"> *</span>}
+          {required && <span data-helix-part="textarea-required" aria-hidden="true"> *</span>}
         </label>
 
         <div
@@ -69,7 +67,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             ref={ref}
             id={id}
             data-helix-part="textarea-field"
-            data-size={size}
             data-resize={resize}
             rows={rows}
             maxLength={maxLength}
@@ -93,12 +90,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
         </div>
 
-        {description && !errorMessage && (
+        {description && !invalid && (
           <span id={descId} data-helix-part="textarea-description">
             {description}
           </span>
         )}
-        {errorMessage && (
+        {invalid && errorMessage && (
           <span id={errId} data-helix-part="textarea-error" role="alert">
             {errorMessage}
           </span>

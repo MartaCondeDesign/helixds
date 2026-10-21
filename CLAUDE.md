@@ -47,6 +47,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      `.ai/maps/patterns/group-spacing.md`.
    - **Component height:** driven by the shared size scale (see ADR-004) — but documented
      per-component exceptions exist (`Badge`, `Chip` use a local density model, not the control ladder).
+   - **Form fields share one size set** (owner's decision 2026-10-21): Input, Textarea, Select and MultiSelect have
+     one size, `m`, and no `size` prop. If one gets more sizes, all of them get the same ones — code and Figma.
+     `pnpm verify:field-sizes` (pre-commit) enforces it.
    - **min-width / max-width / min-height / max-height:** variable, not tokenized — a per-component
      characteristic decided by the consumer, the component, or the pattern in use (e.g. Modal's
      `min-height: 400px`). There is no system token for this — a hardcoded px value here is correct,
@@ -63,6 +66,9 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
      BOOLEAN property in Figma, not a VARIANT (`.ai/maps/patterns/show-hide-parts.md`).
    - **Border always:** a component with a border has it in every variant and state, same width — states
      change only its color (`.ai/maps/patterns/border-always.md`), in code and in Figma.
+   - **Disabled dims everything:** a disabled component turns all its text — label, description, required `*`,
+     a group's legend — to its `text.disabled` token (the error message keeps its danger color), with real colors,
+     never opacity; in Figma disabled has no hover/focus/invalid variants (`.ai/maps/patterns/disabled-state.md`).
 
    Token names live in `.ai/maps/prop-map.md`.
 4. **Component hierarchy** — Helix core wraps a native HTML element directly (`<button>`, `<select>`, `<input>`, ...) and adds ARIA by hand where the native element doesn't already cover it. Components with **no native equivalent** (Dialog, Popover, Menu, Combobox, Tooltip, ...) need their own ADR and an explicit primitive choice before implementation — see [ADR-001](docs/ADR/ADR-001-primitive-foundation.md).
@@ -73,6 +79,22 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    a story per variant, size and authored state; a keyboard `play` test per key in `a11y.keyboardNav`;
    `<MotionConfig reducedMotion="user">` around any Motion animation; an eval prompt. Then run
    `pnpm verify:stable` (Storybook running).
+6a. **One prop order, in Storybook and in Figma — every time a component is created or its props change**
+   (owner's rule 2026-10-21): first the props that are Figma VARIANTs, then all the rest, each group in the same
+   order on both sides. In Storybook it's the key order of the story file's `meta.args`; in Figma it's the variant-name
+   order and the order the other properties are created in (`scripts/figma/reorder-props.js`). Adding, renaming or
+   removing a prop means updating both, then `pnpm figma:story-order` (Storybook running) and `pnpm docs:figma-map`:
+   the component's **Property order**, **Storybook order** and **Storybook props** lines must all be ✓ before it's done.
+   Storybook's props table, the contract and the docs page's Code → Figma table list **the same props, no more, no less**
+   (className is hidden from Storybook on purpose): a prop the table shows is in the contract (a native attribute goes in
+   `figma.propertyMap`), a contract prop shows in the table (`control: false` when it can't be edited), and a story never
+   invents args that aren't props. The Code → Figma table is built from the props table at render time, so it follows
+   every add, remove, rename or move on its own.
+   **A prop that lives on a child component in Figma is shown as such** (owner's rule 2026-10-21): each option's label
+   on Checkbox, the action texts on Modal's Buttons, a series' name on ChartLegendItem… The contract records it in
+   `figma.childProps` (`{ "<prop>": [{ "component", "property", "note" }] }`; a list handed to another Helix component is
+   found in the code), and the Code → Figma table shows `🎨 On the child X · property` under the component's own one.
+   A new component with children, or a prop that moves into one, isn't done until its childProps are written.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA
@@ -99,6 +121,11 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    not guaranteed to pass in the other (dark mode's values come from `packages/tokens/src/tokens.dark.json`,
    the DTCG resolver's dark context, which picks its own value per token; check each theme's actual resolved
    pair, don't assume symmetry).
+   **Disabled is exempt** (owner's decision 2026-10-20, WCAG 1.4.3 "incidental": text or icons that are part of an
+   inactive component). Everything inside a disabled component — label, description, required *, icon — uses
+   `text/disabled` / `icon/disabled` and is never held to 4.5:1 or 3:1; it never drops a component's status. The
+   contrast criterion skips any node inside `[disabled]`, `[data-disabled]` or `[aria-disabled="true"]`
+   (`apps/storybook/.storybook/test-runner.ts`) — axe alone only exempts a disabled control's own `<label>`.
 10. **Status icons use `--helix-color-icon-*`, never `--helix-color-text-*`** — the two diverge in dark
    mode on purpose: `text-{info,success,warning,danger}` is a pale tone tuned for text on a colored tint
    (Badge, Chip), `icon-*` is the saturated tone for an icon on the plain page/surface (Toast, Status,
@@ -129,6 +156,23 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    which story and element, why it fails (WCAG criterion), and the options to make it pass (per rule 13, with
    the tokens to choose from). Don't publish it silently as if it passed.
 
+16. **Figma properties = code props, exactly** (owner's decision 2026-10-20). Every prop a designer can see has a
+   Figma property with the **same name**, shown the **same way** in the properties panel: a code union is a VARIANT
+   with the same values; a code boolean is an on/off toggle — a BOOLEAN when it only shows/hides a part
+   (`required`, `dismissible`…), a `false`/`true` VARIANT when it changes the look (`disabled`, `invalid`,
+   `checked`, `isLoading`…: a Figma BOOLEAN can't change a color); a string is TEXT (`children` stays `children`);
+   an optional string part is BOOLEAN `name.` + TEXT `name`; an icon is BOOLEAN `name.` + INSTANCE_SWAP `name` — the property that is the code prop keeps its name, the Figma-only helper toggle gets a `.` at the end and comes first. The only
+   Figma-only property is `state` (hover / press / focus / open) — CSS pseudo-classes, never `disabled`/`invalid`.
+   **The conversion standard** — every rule by type, how variants are drawn (disabled only at `state=default`…) and
+   the common patterns (form-field, checkable, group, action, overlay, layout-slot) — is
+   `contracts/figma-conversion.json` (read by the scripts; owner-gated) explained in `.ai/maps/figma-conversion.md`.
+   It's approved once: a new component or prop converts by it with no per-component approval; the owner is asked
+   only for a prop no rule covers (`pnpm figma:props`, pre-commit) or a component exception (`figma.propertyMap`).
+   Figma's properties also come in **the same order as Storybook's props table**, and both list the props that are
+   Figma variants first, then the rest (Figma can't interleave them; Storybook follows via each story's `meta.args` order —
+   `pnpm figma:story-order`, figma-map's **Storybook order** line). Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
+   the snapshot `.ai/figma-props.json`). A component isn't synced until all its rows are ✓.
+
 ## Workflow commands
 
 ```
@@ -140,6 +184,8 @@ pnpm verify:dtcg            validate packages/tokens/src/tokens.json against the
                             checking every alias reaches a token of its type. Runs in pre-commit
 pnpm verify:contract        validate a contract's own structure against component.schema.json + prop-map
                             (schema/naming only — does NOT read the implementation; see verify:types for that)
+pnpm verify:field-sizes     Input, Textarea, Select and MultiSelect (pattern form-field) share one size set — today m only,
+                            no size prop; one field with more sizes fails it. Runs in pre-commit
 pnpm generate:types <Name>  scaffold {Name}.types.ts from an approved, props-filled contract
                             (--dry-run prints instead of writing; refuses to overwrite an existing file)
 pnpm verify:stable          compute every component's status (draft/beta/stable) from the 8 criteria in
@@ -155,7 +201,8 @@ pnpm test:storybook-tokens  tests behind it (pre-commit too): every var a page c
                             prints equals the CSS (light and dark shadows), every hand-written var() exists, every story
                             renders, a new category shows on its own, and the gate fails on a sabotaged copy
 pnpm lint                   @helixds/eslint-plugin over apps/ — wrong import path, anti-synonym props/values,
-                            raw colors, raw spacing, native controls (also live in the editor via eslint.config.mjs).
+                            raw colors, raw spacing, native controls, component stories without working Controls
+                            (helix/story-has-controls; `pnpm lint:stories` runs it in pre-commit) — also live in the editor via eslint.config.mjs.
                             After editing prop-map.md, a contract, tokens.json or core's index.ts, run
                             `pnpm --filter @helixds/eslint-plugin build:data` (its tests fail while stale).
                             Claude Code runs it on every file it edits (.claude/settings.json →
@@ -169,6 +216,12 @@ pnpm test:contract-hook     test that Claude Code contract hook
                             or prop-map.md — by Edit/Write, `pnpm token:add`, `pnpm contract`, or a shell write — and
                             asks the design-system owner to approve it (rule 13 as a gate, not just a sentence)
 pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
+                            scripts/claude-figma-props-hook.mjs (PreToolUse on the Figma MCP's use_figma) stops any Figma
+                            script that adds, renames or deletes a component property, combines variants or renames a
+                            variant, and asks the owner with that component's code-vs-Figma table from figma-map.md
+                            (every code prop, the Figma property it must be, what Figma has, order, Figma-only extras) —
+                            rule 16's naming is approved by the owner, never chosen by the agent
+pnpm test:figma-props-hook  test that Figma properties hook
 pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
                             the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
                             In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json
@@ -201,7 +254,12 @@ pnpm helix scaffold:custom <Name> --reason "<why>" [--dir <path>]
                             scaffold a local [CUSTOM] component for a consuming app (governance header,
                             semantic tokens, accessible base, story with a play test) — refuses Helix names and overwrites
 pnpm docs:token-exceptions  regenerate .ai/maps/component-token-exceptions.md from tokens.json
+pnpm figma:story-order      read every component's prop order from the running Storybook's props table into
+                            .ai/storybook-prop-order.json — the reference figma-map checks Figma's property order against
+                            (not the contract's order, which Storybook doesn't follow)
 pnpm docs:figma-map         regenerate .ai/maps/figma-map.md — prop → Figma property map for every component (auto-runs in pre-commit)
+                            and .ai/maps/figma-map.json (machine-readable: each prop's Figma property, or codeOnly + why),
+                            shown on every docs page as a "Code → Figma" table (Prop · Figma · Why — 🎨 … / 👾 Code only)
 pnpm docs:manifest          regenerate contracts/manifest.json — the single index of every component
 pnpm docs:changelog         regenerate .ai/maps/changelog.json (git-ignored) from `git log`, shown in Storybook's Changelog page
 pnpm docs:readme            sync component counts in README.md + the component lists in AGENTS.md and llms.txt

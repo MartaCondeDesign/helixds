@@ -39,8 +39,8 @@
     { "part": "switch-row", "element": "div", "description": "Horizontal layout for the track and label." },
     { "part": "switch-track", "element": "button", "description": "The interactive element — role='switch', carries aria-checked." },
     { "part": "switch-thumb", "element": "span", "description": "The moving indicator inside the track.", "optional": false },
-    { "part": "switch-label", "element": "label", "description": "Visible label text, linked via htmlFor." },
-    { "part": "switch-description", "element": "span", "description": "Helper text below the row.", "optional": true }
+    { "part": "switch-label", "element": "label", "description": "Visible label text, linked via htmlFor. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "switch-description", "element": "span", "description": "Helper text below the row. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true }
   ],
 
   "props": [
@@ -168,14 +168,34 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "disabled"],
+    "states": ["default", "hover", "focus"],
     "properties": [
-      { "name": "checked", "type": "VARIANT", "values": ["unchecked", "checked"], "codeProp": "checked", "description": "Thumb on the left (unchecked) or right (checked); the track takes the on fill." },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "focus"],
+        "figmaOnly": true,
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code (hover darkens the track). checked,   hideLabel and disabled are their own false/true toggles (contracts/figma-conversion.json,   pattern checkable)."
+      },
       { "name": "size", "type": "VARIANT", "values": ["s", "m"], "codeProp": "size" },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "disabled"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code (hover darkens the track: off-hover unchecked, on-hover checked); disabled is the `disabled` prop." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part (show-hide-parts.md): the helper line under the row. It carries its own left padding (track width + 12px = spacing/250 on s, spacing/300 on m), so the row never moves." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }
-    ]
+      {
+        "name": "description.",
+        "type": "BOOLEAN",
+        "codeProp": "description",
+        "description": "Show/hide part (show-hide-parts.md): the helper line under the row. It carries its own left padding (track width + 12px = spacing/250 on s,   spacing/300 on m),   so the row never moves."
+      },
+      { "name": "description", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }
+    ],
+    "variantCombinations": "32 variants (2026-10-21): checked false/true × size s/m × state default/hover/focus = 12,  plus disabled at state default for each checked × size = 4,  each drawn with hideLabel false/true = 16 × 2 = 32 (secondary toggles at every size and state,  owner's decision 2026-10-21). hideLabel hides the switch-label layer (code keeps it for screen readers only); disabled dims label and description (text/disabled).",
+    "stories": {
+      "Default": "checked=false",
+      "Checked": "checked=true, description.=true",
+      "WithDescription": "description.=true",
+      "Disabled": "disabled=true",
+      "Sizes": "layout",
+      "SettingsGroup": "layout",
+      "KeyboardToggle": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

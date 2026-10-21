@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Button",
   "version": "2.1.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Triggers an action or navigates to a destination when pressed by the user.",
   "import": "import { Button } from '@helixds/react';",
@@ -13,7 +13,7 @@
     "Submitting a form implicitly — always set type='submit' explicitly"
   ],
 
-  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight. Content that changes in place swaps instead of cutting (transitions.dev icon swap + text morph): with an icon, icon ↔ spinner and icon ↔ icon cross-fade with blur and scale over semantic.duration.enter; a plain-text label cross-blurs over semantic.duration.exit while its width eases to the new text's. The outgoing label is aria-hidden, so only the new one is read; under prefers-reduced-motion the swap is instant.",
+  "rationale": "Button sizes were consolidated to 's', 'm', 'l' (ADR-004) to avoid fragmented UI scales. The loading state retains button dimensions to prevent layout shift. Icons are fixed size to maintain touch target alignment and visual weight. Content that changes in place swaps instead of cutting (transitions.dev iconSwap + text morph): with an icon, icon ↔ spinner and icon ↔ icon cross-fade with blur and scale over semantic.duration.enter; a plain-text label cross-blurs over semantic.duration.exit while its width eases to the new text's. The outgoing label is aria-hidden, so only the new one is read; under prefers-reduced-motion the swap is instant.",
 
   "governance": {
     "mayExtendLocally": [
@@ -274,6 +274,22 @@
         "human"
       ],
       "changed": "2026-10-13"
+    }
+  },
+  "figma": {
+    "states": ["default", "hover", "press", "focus"],
+    "properties": [],
+    "variantCombinations": "68 variants (2026-10-21): variant × size × state default/hover/press/focus = 48,  disabled per variant × size = 12,  isLoading and fullWidth once per variant at size m = 8 (the standard rules). children is the TEXT property (was label).",
+    "stories": {
+      "AllVariants": "layout",
+      "Loading": "isLoading=true",
+      "Disabled": "disabled=true",
+      "WithLeadingIcon": "icon.=true",
+      "WithTrailingIcon": "iconEnd.=true",
+      "Sizes": "layout",
+      "FullWidth": "fullWidth=true",
+      "SwapInPlace": {"figma": null, "reason": "label/icon swap animation on click — behaviour; each end state is an ordinary variant (children / iconSwap)", "approved": "2026-10-21"},
+      "KeyboardActivation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
     }
   }
 }

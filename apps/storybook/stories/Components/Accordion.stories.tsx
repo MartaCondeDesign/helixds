@@ -9,9 +9,14 @@ const meta: Meta<typeof Accordion> = {
   component:  Accordion,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(AccordionDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
+    expanded: undefined,
+    disabled: undefined,
     label: 'Shipping details',
     children: 'Orders ship within 3-5 business days. Express shipping is available at checkout.',
+    defaultExpanded: undefined,
+    onExpandedChange: undefined,
   },
 };
 
@@ -31,20 +36,25 @@ export const Disabled: Story = {
 };
 
 export const Stack: Story = {
-  render: () => (
+  // The story fixes each Accordion's label, content and open state — disabled applies to all three
+  argTypes: {
+    label: { control: false }, children: { control: false },
+    expanded: { control: false }, defaultExpanded: { control: false },
+  },
+  render: ({ disabled }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-s)', maxWidth: 420 }}>
-      <Accordion label="Shipping">Orders ship within 3-5 business days.</Accordion>
-      <Accordion label="Returns" defaultExpanded>Free returns within 30 days of delivery.</Accordion>
-      <Accordion label="Warranty">Covered for 2 years against manufacturing defects.</Accordion>
+      <Accordion disabled={disabled} label="Shipping">Orders ship within 3-5 business days.</Accordion>
+      <Accordion disabled={disabled} label="Returns" defaultExpanded>Free returns within 30 days of delivery.</Accordion>
+      <Accordion disabled={disabled} label="Warranty">Covered for 2 years against manufacturing defects.</Accordion>
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'Several independent Accordions stacked — each opens/closes on its own, no exclusive-open group behavior.' } },
   },
 };
 
 export const Controlled: Story = {
+  argTypes: { expanded: { control: false }, defaultExpanded: { control: false } }, // the story holds the open state
   render: args => {
     const [expanded, setExpanded] = useState(true);
     return (

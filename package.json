@@ -15,8 +15,10 @@
     "dev:wc": "pnpm --dir apps/wc-sandbox dev",
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint apps",
+    "lint:stories": "eslint apps/storybook/stories/Components apps/storybook/stories/Layout",
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
+    "verify:field-sizes": "tsx scripts/verify-field-sizes.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",
     "a11y": "tsx scripts/a11y.ts",
     "a11y:contract": "tsx scripts/a11y.ts contract",
@@ -45,6 +47,7 @@
     "test:lint-hook": "node --test scripts/claude-lint-hook.test.mjs",
     "test:contract-hook": "node --test scripts/claude-contract-hook.test.mjs",
     "test:owner-gate-hook": "node --test scripts/claude-owner-gate-hook.test.mjs",
+    "test:figma-props-hook": "node --test scripts/claude-figma-props-hook.test.mjs",
     "test:setup-ai": "node --test scripts/setup-ai.test.mjs",
     "test:mcp-installed": "node --test packages/mcp/test/installed.test.mjs",
     "test:traces": "node --test scripts/hook-trace.test.mjs",
@@ -88,7 +91,10 @@
     "changeset": "changeset",
     "release": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs",
     "release:first": "pnpm release",
-    "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run"
+    "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run",
+    "figma:props": "tsx scripts/figma/props.ts",
+    "figma:snapshot": "tsx scripts/figma/snapshot.ts",
+    "figma:story-order": "tsx scripts/figma/story-order.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",

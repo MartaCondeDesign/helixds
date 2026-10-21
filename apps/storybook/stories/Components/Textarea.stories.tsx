@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
 import { Textarea, TextareaDoc } from '@helixds/react';
@@ -9,15 +10,32 @@ const meta: Meta<typeof Textarea> = {
   component:  Textarea,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TextareaDoc),
-  // w-[300px] — same width-stability fix as Input/Select's own stories; className previously
-  // reached the inner <textarea> field instead of textarea-root, so a consumer couldn't actually
-  // constrain the component's width at all until that was fixed.
-  args: { label: 'Description', placeholder: 'Write something…', size: 'm', className: 'w-[300px]' },
+  // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
+  args: {
+    value: undefined, // Figma value. (empty / filled) — a variant, so it leads the props, like Select
+    invalid: undefined,
+    fullWidth: undefined,
+    hideLabel: undefined,
+    resize: undefined,
+    disabled: undefined,
+    label: 'Description',
+    placeholder: 'Write something…',
+    onChange: fn(),
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    rows: undefined,
+    maxLength: undefined,
+    showCount: undefined,
+    className: undefined,
+  },
   argTypes: {
-     size:      { control: 'select', options: ['s', 'm', 'l'] },
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
     rows:      { control: { type: 'number', min: 2, max: 10 } },
     maxLength: { control: 'number' },
+    // native <textarea> attributes the docs can't infer — declared so they get a control (and URL args work)
+    disabled:  { control: 'boolean' },
+    required:  { control: 'boolean' },
   },
 };
 
@@ -55,17 +73,6 @@ export const Disabled: Story = {
 
 export const NoResize: Story = {
   args: { resize: 'none', rows: 5 },
-};
-
-export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-100)' }}>
-      <Textarea label="Small"  size="s" placeholder="size=s"           onChange={() => {}} />
-      <Textarea label="Medium" size="m" placeholder="size=m (default)" onChange={() => {}} />
-      <Textarea label="Large"  size="l" placeholder="size=l"           onChange={() => {}} />
-    </div>
-  ),
 };
 
 export const FullWidth: Story = {

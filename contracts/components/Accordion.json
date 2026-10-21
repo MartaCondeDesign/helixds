@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Accordion",
   "version": "0.1.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "A single collapsible disclosure — a header that expands/collapses a panel of content, with no JS height measurement needed.",
   "import": "import { Accordion } from '@helixds/react';",
@@ -143,11 +143,32 @@
   "figma": {
     "states": ["default", "focus", "disabled"],
     "properties": [
-      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded", "description": "Shows the panel; the chevron flips (scaleY(-1) in code)." },
-      { "name": "state", "type": "VARIANT", "values": ["default", "focus", "disabled"], "figmaOnly": true, "description": "focus = the header's focus ring (global :focus-visible); disabled = the `disabled` prop — fill/disabled, border/neutral/light, text/disabled, icon/disabled on the header (the open panel's content keeps its color, like code). No hover style exists in code." },
+      {
+        "name": "expanded",
+        "type": "VARIANT",
+        "values": ["false", "true"],
+        "codeProp": "expanded",
+        "description": "Shows the panel; the chevron flips (scaleY(-1) in code)."
+      },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "focus", "disabled"],
+        "figmaOnly": true,
+        "description": "focus = the header's focus ring (global :focus-visible); disabled = the `disabled` prop — fill/disabled,  border/neutral/light,  text/disabled,  icon/disabled on the header (the open panel's content keeps its color,  like code). No hover style exists in code."
+      },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       { "name": "content", "type": "TEXT", "codeProp": "children" }
     ],
-    "structure": "Bordered box (radius/l, border in the layout) > accordion-header (12/16 padding, Body / m / Medium, 16px ChevronDown) + accordion-panel-inner (0/16/12, Body / m / Regular)."
+    "structure": "Bordered box (radius/l,  border in the layout) > accordion-header (12/16 padding,  Body / m / Medium,  16px ChevronDown) + accordion-panel-inner (0/16/12,  Body / m / Regular).",
+    "variantCombinations": "6 variants (2026-10-21): expanded × state default/focus = 4,  plus disabled per expanded (state default) = 2. label and children are TEXT.",
+    "stories": {
+      "Default": "expanded=false",
+      "OpenByDefault": "expanded=true",
+      "Disabled": "disabled=true",
+      "Stack": "layout",
+      "Controlled": {"figma": null, "reason": "controlled-state demo — behaviour only, same look as another story", "approved": "2026-10-21"},
+      "KeyboardToggle": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

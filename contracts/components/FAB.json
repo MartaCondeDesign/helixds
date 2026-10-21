@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "FAB",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "A single, prominent floating action reachable from anywhere in the current view — optionally expanding into 1-3 closely related actions via a speed-dial.",
   "import": "import { FAB } from '@helixds/react';",
@@ -139,12 +139,12 @@
           "dark": "5.17:1 — #ffffff on #2563eb"
         },
         "fab-action (icon)": {
-          "light": "17.85:1 — #0f172a on #ffffff",
+          "light": "3.45:1 — #0f172a on #2563eb",
           "dark": "16.3:1 — #f1f5f9 on #0f172a"
         }
       },
       "targetSize": {
-        "fab-root": "smallest 44×44 px",
+        "fab-root": "smallest 45×45 px",
         "fab-action": "smallest 18×18 px"
       },
       "motion": [
@@ -178,11 +178,38 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "press", "focus", "disabled"],
+    "states": ["default", "hover", "press", "focus"],
     "properties": [
-      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded", "description": "true = the speed dial open: actions stacked above the trigger, 8px apart (code's baseOffset/step), the trigger icon turned 45°. Only state=default exists for it — a disabled FAB can't open." },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "press", "focus", "disabled"], "figmaOnly": true, "description": "hover/press/focus are CSS; disabled = the `disabled` prop — fill/disabled + icon/disabled, no shadow (no opacity)." }
+      {
+        "name": "actions",
+        "type": "VARIANT",
+        "values": ["2", "3", "4", "5", "6", "7"],
+        "codeProp": "actions",
+        "description": "How many actions the open speed dial draws (list-count, owner's rule 2026-10-21) — code draws one fab-action per entry. Drawn only with expanded=true; collapsed variants keep actions=2 (the actions aren't on screen)."
+      },
+      {
+        "name": "expanded",
+        "type": "VARIANT",
+        "values": ["false", "true"],
+        "codeProp": "expanded",
+        "description": "true = the speed dial open: actions stacked above the trigger,  8px apart (code's baseOffset/step),  the trigger icon turned 45°. Only state=default exists for it — a disabled FAB can't open."
+      },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "press", "focus"],
+        "figmaOnly": true,
+        "description": "Figma-only axis: CSS pseudo-classes. disabled / isLoading are their own false/true toggles (contracts/figma-conversion.json,  pattern action)."
+      }
     ],
-    "structure": "fab-root 48px (size/xl, radius/full, fill/primary, shadow / m, 20px icon) and fab-action 36px (fill/page, 1px border/neutral in the layout, shadow / s, 16px icon). Icons are swapped per instance (icon / actions[].icon)."
+    "structure": "fab-root 48px (size/xl,  radius/full,  fill/primary,  shadow / m,  20px icon) and fab-action 36px (fill/page,  1px border/neutral in the layout,  shadow / s,  16px icon). Icons are swapped per instance (icon / actions[].icon).",
+    "variantCombinations": "29 variants (2026-10-21): expanded=true × actions 2–7 × state default/hover/press/focus = 24 (extra actions above Share / Pencil: Download, UserPlus, Copy, Trash, Star); expanded=false × state = 4 plus disabled collapsed = 1, all at actions=2 — collapsed draws no actions and a disabled FAB cannot open. label is the aria-label: no Figma property.",
+    "stories": {
+      "Default": "expanded=false",
+      "SpeedDial": "expanded=false",
+      "Expanded": "expanded=true",
+      "Disabled": "disabled=true",
+      "KeyboardSpeedDial": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

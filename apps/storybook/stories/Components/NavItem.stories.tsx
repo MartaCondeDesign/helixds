@@ -3,15 +3,27 @@ import { expect, fn, userEvent, within } from '@storybook/test';
 import { IconLayoutDashboard, IconUsers, IconSettings } from '@tabler/icons-react';
 import { NavItem, NavItemDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+import { mapped } from '../_shared/mapped-arg';
 
 const meta: Meta<typeof NavItem> = {
   title:     'Components/NavItem',
   component:  NavItem,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(NavItemDoc),
-  args: { label: 'Dashboard', href: '#', icon: IconLayoutDashboard, current: false },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    current: false,
+    label: 'Dashboard',
+    href: '#',
+    icon: mapped('LayoutDashboard'),
+  },
   argTypes: {
-    icon:  { control: false },
+    // icon takes the Tabler component itself — the control picks one by name
+    icon: {
+      control: 'select',
+      options: ['none', 'LayoutDashboard', 'Users', 'Settings'],
+      mapping: { none: undefined, LayoutDashboard: IconLayoutDashboard, Users: IconUsers, Settings: IconSettings },
+    },
     label: { control: 'text' },
     href:  { control: 'text' },
     current: { control: 'boolean' },
@@ -26,12 +38,13 @@ export const Default: Story = { args: {} };
 export const Current: Story = { args: { current: true } };
 
 export const NavList: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
+  // The story fixes each item's label, icon and which one is current — href applies to all three
+  argTypes: { label: { control: false }, icon: { control: false }, current: { control: false } },
+  render: ({ href }) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-spacing-3xs)', width: 200 }}>
-      <NavItem label="Dashboard" href="#" icon={IconLayoutDashboard} />
-      <NavItem label="Team" href="#" icon={IconUsers} current />
-      <NavItem label="Settings" href="#" icon={IconSettings} />
+      <NavItem label="Dashboard" href={href} icon={IconLayoutDashboard} />
+      <NavItem label="Team" href={href} icon={IconUsers} current />
+      <NavItem label="Settings" href={href} icon={IconSettings} />
     </div>
   ),
 };

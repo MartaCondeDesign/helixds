@@ -16,11 +16,17 @@ const meta: Meta<typeof Chip> = {
   component: Chip,
   tags: ['autodocs'],
   parameters: createComponentDocsParameters(ChipDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    label: 'Chip',
     variant: 'neutral',
     size: 's',
+    disabled: undefined,
+    label: 'Chip',
     onClick: () => {},
+    dismissible: undefined,
+    icon: undefined,
+    iconEnd: undefined,
+    onDismiss: undefined,
   },
   argTypes: {
     variant: {
@@ -67,6 +73,7 @@ export const Dismissible: Story = {
   // Default is neutral (gray) via meta.args — dismissible chips are a removable-item pattern (recent
   // searches, attached files), not primarily a status/variant showcase.
   args: { dismissible: true },
+  argTypes: { label: { control: false } }, // each chip's label is fixed
   render: args => (
     <div style={ROW}>
       <Chip {...args} label="Recent" onDismiss={() => {}} />
@@ -76,6 +83,7 @@ export const Dismissible: Story = {
 };
 
 export const Variants: Story = {
+  argTypes: { variant: { control: false }, label: { control: false } }, // one chip per variant, labelled by it
   render: args => (
     <div style={ROW}>
       {VARIANTS.map(variant => (
@@ -86,6 +94,7 @@ export const Variants: Story = {
 };
 
 export const WithIcons: Story = {
+  argTypes: { label: { control: false }, icon: { control: false } }, // each chip's label and icon are fixed
   render: args => (
     <div style={ROW}>
       <Chip {...args} label="Filter" icon={IconFilter} onDismiss={() => {}} />
@@ -98,6 +107,7 @@ export const WithIcons: Story = {
 };
 
 export const Sizes: Story = {
+  argTypes: { size: { control: false }, label: { control: false } }, // one chip per size, labelled by it
   render: args => (
     <div style={ROW}>
       <Chip {...args} size="s" label="Small" onDismiss={() => {}} />

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "SegmentedControl",
   "version": "0.2.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users switch between a small, fixed set of mutually exclusive modes or views, with no associated content panel.",
   "import": "import { SegmentedControl } from '@helixds/react';",
@@ -154,12 +154,40 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "disabled"],
+    "childProps": {"options": [{"component": "SegmentedControlItem", "property": "label", "note": "each option's label (icon on icon-only)"}]},
+    "figmaOnly": {
+      "icon.": { "approved": "2026-10-21", "reason": "Storybook's IconOnly story: every option is icon-only (each option's icon in code) — a special case like Avatar's photo, so the set shows it with one toggle (false = text, true = icons); the item's own icon. / icon stay on SegmentedControlItem" }
+    },
+    "states": ["default"],
     "properties": [
-      { "name": "checked", "type": "VARIANT", "values": ["false", "true"], "codeProp": "value", "description": "On SegmentedControlItem: the option whose value equals the group's `value`. Checked = the pill (fill/page) — in code a sliding motion.span." },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "disabled"], "figmaOnly": true, "description": "On SegmentedControlItem: hover/focus are CSS; disabled is the option's or the group's `disabled`. On SegmentedControl: default / disabled (the group prop)." },
-      { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
+      {
+        "name": "checked",
+        "type": "VARIANT",
+        "values": ["false", "true"],
+        "codeProp": "value",
+        "description": "On SegmentedControlItem: the option whose value equals the group's `value`. Checked = the pill (fill/page) — in code a sliding motion.span."
+      },
+      { "name": "label", "type": "TEXT", "codeProp": "options[].label" },
+      { "name": "icon", "type": "VARIANT", "values": ["false", "true"], "codeProp": "options[].icon", "description": "On SegmentedControlItem (owner 2026-10-21): an icon-only option — code sets [data-icon-only] whenever an option has an icon: the icon (16px, the label's color) replaces the visible label (kept as the accessible name) and the sides drop to spacing/xs. A VARIANT, not a BOOLEAN: it also hides the label and changes the padding." },
+      { "name": "iconSwap", "type": "INSTANCE_SWAP", "codeProp": "options[].icon", "description": "On SegmentedControlItem: which icon (segmented-control-item-icon)." }
     ],
-    "structure": "SegmentedControlItem set (checked × state) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled), 4px padding and gap, radius full."
+    "structure": "SegmentedControlItem set (checked × icon × state, 16 variants) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled),   4px padding and gap,   radius full.",
+    "propertyMap": {
+      "label": {
+        "codeType": "string",
+        "figma": [],
+        "approved": "2026-10-20",
+        "reason": "the group's aria-label — never drawn; the visible text is each item's own label (segmented-control-item-label)"
+      }
+    },
+    "variantCombinations": "12 variants (2026-10-21): options (2–7 SegmentedControlItem instances, the first checked; list-count) × disabled false/true,  no state axis (pattern group). label is the aria-label: no Figma property.",
+    "stories": {
+      "Default": "default",
+      "FourOptions": "options=4",
+      "Disabled": "disabled=true",
+      "WithDisabledOption": {"figma": "layout", "reason": "one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)"},
+      "IconOnly": "icon.=true",
+      "KeyboardNavigation": {"figma": "layout", "reason": "keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21"}
+    }
   }
 }

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "MultiSelect",
   "version": "0.1.0",
-  "status": "beta",
+  "status": "stable",
 
   "purpose": "Lets users choose several values from a predefined list, shown as removable chips inside the field.",
   "import": "import { MultiSelect } from '@helixds/react';",
@@ -39,12 +39,13 @@
 
   "anatomy": [
     { "part": "multi-select-root", "element": "div", "description": "Layout wrapper for label, field, and messages." },
-    { "part": "multi-select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. 8px above the field (form-field-spacing pattern)." },
+    { "part": "multi-select-label", "element": "label", "description": "Accessible label. Always rendered - visible or sr-only. 8px above the field (form-field-spacing pattern). Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
+    { "part": "multi-select-required", "element": "span", "optional": true, "description": "The required indicator (*) inside the label, the label color, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)." },
     { "part": "multi-select-field", "element": "div", "description": "The visible field: Select's border, fill and 32px minimum height. Holds the chips and the combobox; grows downward when the chips wrap. Clicking its empty area toggles the menu." },
     { "part": "multi-select-chip", "element": "slot", "description": "One dismissible Chip (size s, 24px) per selected value — 4px from the field's outer edge. Its × removes the value.", "optional": true },
     { "part": "multi-select-trigger", "element": "button", "description": "role=\"combobox\" button filling the rest of the field. Owns real DOM focus (ADR-013/019); shows the placeholder when nothing is selected and announces the selection to assistive tech." },
     { "part": "multi-select-chevron", "element": "slot", "description": "Trailing chevron. Flips on open, same treatment as Select." },
-    { "part": "multi-select-description", "element": "span", "description": "Helper text below the field.", "optional": true },
+    { "part": "multi-select-description", "element": "span", "description": "Helper text below the field. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).", "optional": true },
     { "part": "multi-select-error", "element": "span", "description": "Error text shown when invalid=true.", "optional": true }
   ],
 
@@ -74,15 +75,7 @@
       "unit": "px",
       "note": "32px minimum, same as Select (semantic.size.m). Chip s (24px) is centered in it, 4px from the outer edge on every side. Grows downward when chips wrap (rows 4px apart) — see ADR-019."
     },
-    "width": {
-      "default": "hug",
-      "modes": {
-        "hug": "Width follows the chips and placeholder, or container constraints.",
-        "fill": "Width expands to 100% when fullWidth=true.",
-        "fixed": "Explicit width set by the consumer; chips wrap inside it."
-      },
-      "note": "Like Select, no minimum on the field itself; the popup follows Menu's sizing.width rule (150px for word options)."
-    }
+    "width": {"default": "fixed", "value": 320, "unit": "px", "modes": {"fixed": "320px — every form field shares it and never grows or shrinks with its content (owner's rule 2026-10-21, form-field pattern); max-width 100% so a narrow container can still hold it.", "fill": "fullWidth=true: 100% of the container (Figma: drawn at 600px, the field and its popup on Fill so they stretch)."}, "exceptions": "A field that must be narrower (a number stepper, a short code) says so here, with its width and why — the only way off 320px."}
   },
 
   "tokenPolicy": {
@@ -104,7 +97,8 @@
     "applied": {
       "nativeElement": "div",
       "innerComponents": [
-        "Chip"
+        "Chip",
+        "Menu"
       ],
       "focus": [
         {
@@ -155,7 +149,7 @@
             "alert"
           ]
         },
-        "multi-select-label": {
+        "multi-select-required": {
           "aria-hidden": [
             "true"
           ]
@@ -183,7 +177,7 @@
         }
       },
       "targetSize": {
-        "multi-select-trigger": "smallest 67×24 px"
+        "multi-select-trigger": "smallest 68×24 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -215,12 +209,36 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "open", "invalid", "disabled"],
+    "states": ["default", "hover", "focus", "open"],
     "properties": [
-      { "name": "value", "type": "VARIANT", "values": ["empty", "selected"], "codeProp": "value", "description": "empty = placeholder (Select's geometry: 12px inside the border); selected = dismissible Chip s instances, wrapping, 4px from the outer edge." },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus", "open", "invalid", "disabled"], "figmaOnly": true, "description": "Same treatment as Select — colors, focus/open glow (shadow / focus) and chevron copied from the audited Select set." },
-      { "name": "placeholder", "type": "TEXT", "codeProp": "placeholder" }
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "focus", "open"],
+        "figmaOnly": true,
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes,  open is the listbox showing. invalid,  disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,  pattern form-field)."
+      }
     ],
-    "structure": "The field only, like Select. selected: the chip padding in code is (32 − 24)/2 − 1px border = 3px — off the scale — so Figma uses 4px padding (spacing/2xs) with the border drawn over it (strokesIncludedInLayout off): chips land 4px from the outer edge, exactly like code. The chevron is absolute, 12px inside the border, like code's position: absolute; right: 12px."
+    "structure": "multi-select-root (8px gap) > multi-select-label (text + multi-select-required),  multi-select-field (hugs its content like code — 151px empty,  chips side by side; fullWidth drawn at 320px and wraps): chosen options as Chip instances or multi-select-trigger > multi-select-placeholder,  multi-select-chevron; multi-select-description,  multi-select-error. state=open holds the listbox as a nested Menu instance named menu (multiple=true,  options=5,  exposed so its options 2–7 are picked from the MultiSelect's panel): absolute,  4px below multi-select-field at its width,  150px minimum,  like Menu.tsx; its MenuItems read Design,  Research,  Frontend,  Backend,  Writing (Storybook Default),  none selected (owner's decision 2026-10-21). One size (m).",
+    "propertyMap": {
+      "value": {
+        "codeType": "string[] | undefined",
+        "figma": [{"name": "value", "type": "VARIANT", "values": ["empty", "selected"]}],
+        "approved": "2026-10-20",
+        "reason": "empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception)"
+      }
+    },
+    "variantCombinations": "72 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus/open = 8,  plus disabled = 1) = 18,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 72 (variants.secondary,  owner's decision 2026-10-21). The option count is the nested Menu's options property,  not a MultiSelect variant. Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open).",
+    "stories": {
+      "Default": "value=empty",
+      "WithSelection": "value=selected",
+      "Wrapping": "value=selected",
+      "WithGroups": "state=open",
+      "WithDescription": "description.=true",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Required": "required=true",
+      "Disabled": "disabled=true, value=selected",
+      "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

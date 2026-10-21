@@ -386,7 +386,609 @@
   },
   {
     "date": "2026-10-20",
-    "commit": "80403e1",
+    "commit": "ad48e00",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "f5c5426",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "c210161",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "06fcf0d",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "aab0bb2",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "aaa2fea",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "f7c8e42",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "0a39133",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "214d93f",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "792b183",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "37137b0",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "25a5fdc",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "9586759",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "a7630be",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "4218703",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "4b31e2e",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "368fb9a",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "7e1c81f",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "bbd0965",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "206a9de",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "59cb7ef",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "f76a280",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "4389bbe",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "3206ea1",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "ac59463",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "62bf943",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "3872353",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "0b6a584",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "6a6247e",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "9e878d0",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "c2a1473",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "dff7ba2",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "5227a0f",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "41ce924",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "1a6c389",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "f16cd36",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "2fd106c",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "134d430",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "1d5caa9",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "a780eb9",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "c4f6c30",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "c727cc4",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-20",
+    "commit": "58912d9",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "32aff12",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "551b5d4",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "907801e",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "2b697a9",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "ab3e303",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "794741b",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "fe43b98",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "26a0336",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "63d5482",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "999adc0",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "f5a0dee",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "2d73310",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "148aa95",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "adcd091",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "f33bb81",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "36a5374",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "baac8cc",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "4416c79",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "f3fcee3",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "25fc4c5",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "5694a48",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "a287b29",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "5b900eb",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "b85f440",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "05bbe69",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "044f5ca",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "e21a08e",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "792cc27",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "6df2cad",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "3960349",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "26ff453",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "cadb8fb",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "d5aa2e3",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "77ca547",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "d9e6936",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "5fc7ffb",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "332b345",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "c33c057",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "2edc8a8",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "32fee0c",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "98b11cd",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "e83095c",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "534ea1f",
+    "score": null,
+    "readable": 100,
+    "used": null
+  },
+  {
+    "date": "2026-10-21",
+    "commit": "23a1765",
     "score": null,
     "readable": 100,
     "used": null

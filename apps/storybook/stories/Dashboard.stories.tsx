@@ -241,7 +241,6 @@ function DashboardPage() {
               hideLabel
               icon={IconSearch}
               placeholder="Search members…"
-              size="m"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />

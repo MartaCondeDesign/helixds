@@ -128,10 +128,41 @@
   },
 
   "figma": {
+    "triggers": ["IconButton", "Button", "Avatar"],
     "states": ["default"],
     "properties": [
-      { "name": "label", "type": "TEXT", "codeProp": "label" }
+      { "name": "label", "type": "TEXT", "codeProp": "label" },
+      {
+        "name": "children",
+        "type": "INSTANCE_SWAP",
+        "codeProp": "children",
+        "description": "The trigger slot: any component (IconButton by default)."
+      },
+      { "name": "placement", "type": "VARIANT", "values": ["top", "bottom", "left", "right"], "codeProp": "placement" },
+      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded" }
     ],
-    "structure": "The bubble only (tooltip-content): fill/inverse, text/inverse Caption / Regular, 4/8 padding, radius/s, shadow / s, max-width 240 (wraps). No arrow, no placement variant — it looks the same on every side; placement is runtime (ADR-009)."
+    "structure": "tooltip-root (auto layout,  4px = spacing/component/xs) > tooltip-trigger (children slot) + tooltip-content (the bubble: fill/inverse,  Caption / Regular,  radius/s,  shadow / s) on the placement side. No arrow,  like code.",
+    "variantCombinations": "5 variants (2026-10-21,  owner-approved): placement top/bottom/left/right with expanded=true,  plus expanded=false once (the trigger alone).",
+    "propertyMap": {
+      "children": {
+        "codeType": "React.ReactElement",
+        "figma": [{"name": "children", "type": "INSTANCE_SWAP"}],
+        "approved": "2026-10-21",
+        "reason": "the trigger is a slot: an INSTANCE_SWAP lets the designer put any component under the tooltip (owner's request)"
+      },
+      "expanded": {
+        "codeType": "boolean | undefined",
+        "figma": [{"name": "expanded", "type": "VARIANT", "values": ["false", "true"]}],
+        "approved": "2026-10-21",
+        "reason": "unlike the other overlays,  a tooltip is drawn next to its trigger,  so showing or hiding it is a real look (owner's request)"
+      }
+    },
+    "stories": {
+      "Default": "default",
+      "Placements": "layout",
+      "OnAvatar": "layout",
+      "AlwaysExpanded": "expanded=true",
+      "KeyboardFocus": {"figma": "expanded=true", "reason": "keyboard focus on the trigger shows the tooltip; the trigger draws its own focus"}
+    }
   }
 }

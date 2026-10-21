@@ -5,16 +5,24 @@ import type { InputProps } from './Input.types';
 
 let idCounter = 0;
 
-// Form-field icons never go below 16px — s shares m's 16 so a small field's icon stays legible and
-// matches Select's chevron (also 16) in the same row.
-const ICON_SIZE_BY_FIELD_SIZE = { s: 16, m: 16, l: 18 } as const;
+// Form fields ship one size, m (owner's decision 2026-10-21 — Input, Select, MultiSelect and Textarea share
+// one size set): its icons are 16px, like Select's chevron in the same row.
+const FIELD_ICON_SIZE = 16;
+
+// isLoading: the same spinner Button and IconButton draw, at the field's icon size, where iconEnd sits
+// (owner's decision 2026-10-20 — before it the field only locked silently).
+const Spinner = ({ size }: { size: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+  </svg>
+);
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
       hideLabel  = false,
-      size       = 'm',
       invalid    = false,
       isLoading    = false,
       fullWidth  = false,
@@ -32,8 +40,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref,
   ) => {
     const [uid] = React.useState(() => id ?? `helix-input-${++idCounter}`);
-    const descId  = description  ? `${uid}-desc`  : undefined;
-    const errorId = errorMessage ? `${uid}-error` : undefined;
+    const descId  = description && !invalid ? `${uid}-desc`  : undefined;
+    const errorId = invalid && errorMessage ? `${uid}-error` : undefined;
     const describedBy = [descId, errorId].filter(Boolean).join(' ') || undefined;
 
     const wrapperRef = React.useRef<HTMLDivElement>(null);
@@ -64,6 +72,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div
         data-helix-part="input-root"
         data-full-width={fullWidth ? 'true' : undefined}
+        data-disabled={disabled ? 'true' : undefined}
         className={cn(className)}
       >
         <label
@@ -72,13 +81,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           style={hideLabel ? { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' } : undefined}
         >
           {label}
-          {props.required && <span aria-hidden="true"> *</span>}
+          {props.required && <span data-helix-part="input-required" aria-hidden="true"> *</span>}
         </label>
 
         <div
           ref={wrapperRef}
           data-helix-part="input-wrapper"
-          data-size={size}
           data-invalid={invalid ? 'true' : undefined}
           data-disabled={disabled ? 'true' : undefined}
           data-loading={isLoading ? 'true' : undefined}
@@ -86,7 +94,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           {icon && (
             <span data-helix-part="input-icon">
-              <Icon icon={icon} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+              <Icon icon={icon} size={FIELD_ICON_SIZE} />
             </span>
           )}
 
@@ -94,8 +102,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={uid}
             data-helix-part="input-field"
-            data-size={size}
-            disabled={disabled || isLoading}
+              disabled={disabled || isLoading}
             aria-invalid={invalid ? 'true' : undefined}
             aria-required={props.required ? 'true' : undefined}
             aria-busy={isLoading ? 'true' : undefined}
@@ -108,9 +115,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             }}
           />
 
-          {iconEnd && (
+          {isLoading ? (
+            <span data-helix-part="input-spinner">
+              <Spinner size={FIELD_ICON_SIZE} />
+            </span>
+          ) : iconEnd && (
             <span data-helix-part="input-icon-end">
-              <Icon icon={iconEnd} size={ICON_SIZE_BY_FIELD_SIZE[size]} />
+              <Icon icon={iconEnd} size={FIELD_ICON_SIZE} />
             </span>
           )}
         </div>

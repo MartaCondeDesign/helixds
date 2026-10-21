@@ -1,7 +1,7 @@
 ---
 name: disabled-state
 category: color
-components: [Button, IconButton, Input, Select, Textarea, Menu, Checkbox, CheckboxGroup, RadioButton, RadioGroup, Switch, SegmentedControl, Chip]
+components: [Button, IconButton, Input, Select, MultiSelect, Textarea, Menu, Checkbox, CheckboxGroup, RadioButton, RadioGroup, Switch, SegmentedControl, Chip]
 when: "Building or touching any interactive component's disabled state — the control itself, or a label/text sitting next to it."
 ---
 
@@ -33,6 +33,22 @@ different effective gray per variant and per theme instead of one deliberate, co
 These semantic tokens are already documented as not-WCAG-compliant by design (see
 `semantic.color.text.disabled`'s own `$description`) — a disabled control is expected to read as visibly
 inert, not to pass 4.5:1. Don't chase a contrast fix here; that's the intended contrast.
+
+## Every text part dims — not only the control (owner's decision 2026-10-20)
+
+When a component is disabled, **all of its text goes to `component.{name}.text.disabled`**: the label, the
+description, the required `*`, a group's legend and description. A disabled field whose label or hint stays
+dark reads as half-enabled. The required `*` is its own part (`{name}-required`, never an inline style) so the
+rule can reach it. The error message keeps its danger color — it's still information the user needs.
+
+- **Code:** one rule per component, `[...-root][data-disabled] [...-label | -required | -description]`
+  (a group: the `fieldset[data-disabled]` legend, its `*` and the group description).
+- **Figma:** the same — every disabled variant binds those text layers to `text/disabled`. Disabled has **no**
+  hover / focus / invalid variants (`state` is default only): a disabled control doesn't react or validate.
+- **Contrast:** exempt (WCAG 1.4.3, "part of an inactive user interface component"; root CLAUDE.md rule 9).
+  axe alone only knows that for a disabled control's own `<label>`, so the test-runner drops contrast nodes
+  inside `[disabled]` / `[data-disabled]` / `[aria-disabled="true"]` — a disabled story never lowers a
+  component's status.
 
 ## Loading is not disabled — don't let them share CSS
 

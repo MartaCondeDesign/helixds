@@ -11,7 +11,8 @@
  *   types     {Name}.types.ts — prop names and value unions (comments ignored)
  *   contract  props, anatomy, sizing and states (status/version ignored — verify:stable rewrites status)
  *
- * Behaviour-only changes ({Name}.tsx logic, stories, docs) don't count: they don't change what Figma shows.
+ * Behaviour-only changes ({Name}.tsx logic, stories, docs) don't count: they don't change what Figma shows — but a
+ * story Figma has no approved representation for does (figma-map.md's **Stories → Figma:** ✗, contract figma.stories).
  *
  *   synced   in Figma, audited, nothing visual changed since  ✓
  *   drift    in Figma, but not audited, or something visual
@@ -116,6 +117,26 @@ export function figmaCheck(name: string, contractPath: string, figmaEntry: any |
   const audit = figmaEntry.audit;
   if (!audit?.pass) return { state: 'drift', details: ['Not audited — run scripts/figma/audit-component.js and record the passing result in figma-sync.json (components-to-figma.md, Phase 6)'] };
   if (figmaEntry.syncedCommit && audit.commit !== figmaEntry.syncedCommit) return { state: 'drift', details: [`Audit is for ${String(audit.commit).slice(0, 7)}, not the synced commit ${String(figmaEntry.syncedCommit).slice(0, 7)} — re-run the audit`] };
+  // Exact property parity (root CLAUDE.md rule 16): every code prop has its Figma property with the same name and
+  // kind — read from .ai/maps/figma-map.md (pnpm docs:figma-map, Figma side from .ai/figma-props.json).
+  const map = readNow('.ai/maps/figma-map.md') ?? '';
+  const section = map.split(/^### /m).find(sec => sec.startsWith(`${name} (`)) ?? '';
+  const mismatched = section.split('\n').filter(l => /\| ✗[^|]*\|\s*$/.test(l)).map(l => l.split(/(?<!\\)\|/)[3]?.trim().replace(/`/g, '')).filter(Boolean);
+  if (mismatched.length) return { state: 'drift', details: [`Figma properties differ from the code props (${mismatched.length}): ${mismatched.join(', ')} — see .ai/maps/figma-map.md`] };
+  const figmaOnly = section.split('\n').find(l => l.startsWith('**Only in Figma:** ✗'));
+  if (figmaOnly) return { state: 'drift', details: [`Figma has properties no code prop has — ${figmaOnly.replace('**Only in Figma:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  const propsDiff = section.split('\n').find(l => l.startsWith('**Storybook props:** ✗'));
+  if (propsDiff) return { state: 'drift', details: [`Storybook's props table and the contract list different props — ${propsDiff.replace('**Storybook props:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  const storyOrder = section.split('\n').find(l => l.startsWith('**Storybook order:** ✗'));
+  if (storyOrder) return { state: 'drift', details: [`Storybook doesn't list the Figma variants first — ${storyOrder.replace('**Storybook order:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  const order = section.split('\n').find(l => l.startsWith('**Property order:** ✗'));
+  if (order) return { state: 'drift', details: [`Figma properties are not in the code's order — ${order.replace('**Property order:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  // Story coverage (contracts/figma-conversion.json → storyCoverage): every Storybook story says how Figma draws it.
+  const storiesLine = section.split('\n').find(l => l.startsWith('**Stories → Figma:** ✗'));
+  if (storiesLine) {
+    const unmapped = section.split('\n').filter(l => /^- `[^`]+` → ✗/.test(l)).map(l => l.match(/^- `([^`]+)`/)![1]);
+    return { state: 'drift', details: [`Storybook stories with no approved Figma representation (${unmapped.length}): ${unmapped.join(', ')} — ask the owner, record it in the contract's figma.stories (.ai/maps/figma-map.md)`] };
+  }
   const rev = baselineRev(figmaEntry);
   const syncedAt = figmaEntry.syncedCommit ? `commit ${String(figmaEntry.syncedCommit).slice(0, 7)}` : figmaEntry.lastChecked;
   if (!rev) return { state: 'drift', details: ['No sync point recorded in figma-sync.json — re-check it against code'], syncedAt };

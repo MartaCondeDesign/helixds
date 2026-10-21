@@ -29,6 +29,14 @@
  *                (EXPECTED.layout.*.figma, scripts/figma/token-chain.ts) — and each text layer uses the named
  *                Text Style code's typography comes from. Being bound to *a* variable with the same number
  *                isn't enough: change the token and Figma wouldn't follow.
+ *  10 clip       in a variant that draws the focus ring (state=focus / open) every frame around the ring layer has
+ *                Clip Content off (a clipping parent cuts the ring) and the ring layer keeps it on (Figma only draws a
+ *                shadow's spread on a clipping frame) — contracts/figma-conversion.json → variants.focusClip
+ *  12 lists      contracts/figma-conversion.json → listCount: the count belongs to the component that draws the items.
+ *                In a list set (a VARIANT named in listCount.props: Menu, CheckboxGroup…) every nested item instance
+ *                rests at state=default — hover/press/selected are the item's own states (itemsAtRest). A component
+ *                that hands its list to another (EXPECTED.delegates, e.g. { options: 'Menu' } for Select) has no count
+ *                property and holds an exposed instance of that component in every open variant (owner).
  */
 const SET_ID = '__SET_ID__';
 const PAGE_ID = '__PAGE_ID__';
@@ -41,12 +49,14 @@ if (set.type === 'PAGE') { await figma.setCurrentPageAsync(set); set = set.findA
 let page = PAGE_ID.startsWith('__') ? set : await figma.getNodeByIdAsync(PAGE_ID);
 while (page && page.type !== 'PAGE') page = page.parent;
 await figma.setCurrentPageAsync(page);
+// A plain COMPONENT (Tooltip, Modal, a layout composition) is its own single variant.
+const VARIANTS = set.type === 'COMPONENT_SET' ? set.children : [set];
 const cols = await figma.variables.getLocalVariableCollectionsAsync();
 const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [], lists: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -91,20 +101,37 @@ function walk(variant, node) {
   if (node !== variant && node.name !== 'state-layer' && isSpacer(node)) issues.spacers.push(`${where(variant, node)}: empty ${node.type} used as spacing — use padding/gap bound to a spacing variable`);
   if ('children' in node && node.type !== 'INSTANCE') for (const c of node.children) walk(variant, c);
 }
-for (const variant of set.children) walk(variant, variant);
+for (const variant of VARIANTS) walk(variant, variant);
+// 10 clip — the focus ring is a spread shadow outside the control: the frames around it must not clip it, and the
+// ring layer itself must (Figma only draws a shadow's spread on a clipping frame)
+const hasRing = n => (n.effects || []).some(e => e.type === 'DROP_SHADOW' && e.visible !== false && (e.spread || 0) > 0);
+for (const variant of VARIANTS) {
+  const st = variant.variantProperties?.state;
+  if (st !== 'focus' && st !== 'open') continue;
+  const rings = [variant, ...variant.findAll(n => 'clipsContent' in n && n.type !== 'INSTANCE')].filter(hasRing);
+  for (const r of rings) {
+    if (!r.clipsContent) issues.clip.push(`${where(variant, r)}: the ring layer has Clip Content off — Figma drops the shadow's spread; turn it on`);
+    for (let a = r.parent; a && a !== variant.parent; a = a.parent) {
+      if (a.clipsContent) issues.clip.push(`${where(variant, a)}: Clip Content is on around the focus ring — it cuts the ring; turn it off`);
+      if (a === variant) break;
+    }
+  }
+}
 
 // 6 border — per layer name: present everywhere at one weight, or nowhere
 const strokeByLayer = {};
-for (const variant of set.children) {
+for (const variant of VARIANTS) {
   const visit = n => {
     const key = n === variant ? '(root)' : n.name;
     // a hidden stroke still counts as a border: code's transparent border keeps the size (border-always.md)
     const has = Array.isArray(n.strokes) && n.strokes.length > 0;
-    (strokeByLayer[key] ??= []).push(has ? `${n.strokeWeight}` : 'none');
+    // per-side borders (a bottom-only divider) have a mixed strokeWeight: compare the four sides instead
+    const weight = typeof n.strokeWeight === 'symbol' ? [n.strokeTopWeight, n.strokeRightWeight, n.strokeBottomWeight, n.strokeLeftWeight].join('/') : `${n.strokeWeight}`;
+    (strokeByLayer[key] ??= []).push(has ? weight : 'none');
     // code is border-box: the border takes space (1 border + padding = the distance to the content). An
     // auto-layout frame whose stroke sits outside the layout is 2px narrower and its content 1px closer to
     // the edge than in code — Badge, Input and Textarea had exactly this.
-    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false)
+    if (has && n.layoutMode && n.layoutMode !== 'NONE' && n.type !== 'INSTANCE' && n.strokesIncludedInLayout === false && !(EXPECTED.borderOutsideLayout && n === variant))
       issues.border.push(`${where(variant, n)}: border not included in the auto layout — set strokesIncludedInLayout = true (CSS border-box)`);
     if ('children' in n && n.type !== 'INSTANCE') n.children.forEach(visit);
   };
@@ -116,9 +143,11 @@ for (const [layer, weights] of Object.entries(strokeByLayer)) {
 }
 
 // 4 states
-const axes = set.componentPropertyDefinitions;
+const axes = set.type === 'COMPONENT_SET' ? set.componentPropertyDefinitions : {};
 const stateAxis = axes.state?.variantOptions ?? [];
-for (const s of EXPECTED.states ?? []) if (!stateAxis.includes(s)) issues.states.push(`missing state=${s} (has: ${stateAxis.join(', ') || 'no state axis'})`);
+// a component with no states but its resting one (PageHeader, Card…) needs no state axis
+const onlyDefault = (EXPECTED.states ?? []).every(s => s === 'default');
+for (const s of EXPECTED.states ?? []) if (!(onlyDefault && !stateAxis.length) && !stateAxis.includes(s)) issues.states.push(`missing state=${s} (has: ${stateAxis.join(', ') || 'no state axis'})`);
 
 // 5 parity — resolve colors in light and dark through a temporary instance
 const toHex = c => '#' + [c.r, c.g, c.b].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join('');
@@ -128,8 +157,16 @@ async function paintRgb(node, p) {
   const v = await figma.variables.getVariableByIdAsync(id);
   return v.resolveForConsumer(node).value;
 }
-async function resolvedColor(node, key) {
-  const p = (node[key] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+async function resolvedColor(node, key, part = false) {
+  let p = (node[key] || []).find(x => x.type === 'SOLID' && x.visible !== false);
+  // A part with no fill of its own shows code's `color` through what it holds: an icon instance's vector
+  // stroke (currentColor), or the text inside a wrapper frame that carries the part's own spacing.
+  if (!p && part && key === 'fills' && node.type !== 'TEXT' && 'findOne' in node) {
+    const inner = node.findOne(n => n.type === 'TEXT' || n.type === 'VECTOR');
+    const solid = paints => (paints || []).find(x => x.type === 'SOLID' && x.visible !== false);
+    p = inner && (inner.type === 'TEXT' ? solid(inner.fills) : solid(inner.strokes) ?? solid(inner.fills)); // outline icon: stroke · filled: fill
+    if (p) node = inner;
+  }
   if (!p) return null;
   let c = await paintRgb(node, p);
   // composite: a state-layer child (absolute rectangle, layer opacity) blended over the root fill
@@ -147,24 +184,37 @@ if (EXPECTED.colors && theme) {
       const modeId = theme.modes.find(m => m.name === mode).modeId;
       frame.setExplicitVariableModeForCollection(theme, modeId);
       for (const [variantName, parts] of Object.entries(EXPECTED.colors)) {
-        const comp = set.children.find(c => c.name === variantName);
-        if (!comp) { issues.parity.push(`variant "${variantName}" not found`); continue; }
+        // matched by its prop=value pairs, not the exact name: the axis order in a name is the set's, not the measurement's,
+        // and an axis code doesn't measure (a list-count like options=2…7) matches every variant that has the other pairs
+        const pairsOf = n => n.split(', ').filter(Boolean);
+        const comps = variantName === '' && VARIANTS.length === 1 ? VARIANTS : VARIANTS.filter(c => pairsOf(variantName).every(p => pairsOf(c.name).includes(p)));
+        if (!comps.length) { issues.parity.push(`variant "${variantName}" not found`); continue; }
+        for (const comp of comps) {
         const inst = comp.createInstance(); frame.appendChild(inst);
+        // optional parts hidden by a BOOLEAN property don't exist in an instance — show them all so they're checked too
+        const owner = comp.parent?.type === 'COMPONENT_SET' ? comp.parent : comp;
+        const on = Object.fromEntries(Object.entries(owner.componentPropertyDefinitions).filter(([, d]) => d.type === 'BOOLEAN').map(([k]) => [k, true]));
+        if (Object.keys(on).length) inst.setProperties(on);
         const want = mode === 'light' ? parts.light : parts.dark;
         for (const [layer, props] of Object.entries(want || {})) {
           const node = layer === '(root)' ? inst : inst.findOne(n => n.name === layer);
           if (!node) { issues.parity.push(`${variantName} › ${layer}: layer missing`); continue; }
           for (const [prop, hex] of Object.entries(props)) {
             const key = prop === 'stroke' ? 'strokes' : 'fills';
-            const got = await resolvedColor(node, key);
+            const got = await resolvedColor(node, key, layer !== '(root)');
             const close = (a, b) => a && b && [1, 3, 5].every(i => Math.abs(parseInt(a.slice(i, i + 2), 16) - parseInt(b.slice(i, i + 2), 16)) <= 5);
             // A transparent border in code is still a border (border-always.md): in Figma it's a stroke in the
             // same color as the fill underneath, so it's invisible but keeps the size — accept that too.
-            const transparentOk = hex === 'none' && (got === null || (key === 'strokes' && close(got, await resolvedColor(node, 'fills'))));
-            if (hex === 'none' ? !transparentOk : !close(got, hex)) issues.parity.push(`${mode} ${variantName} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${hex}`);
+            // A transparent fill sits on the page, so fill/page reads the same — and Figma needs a fill there to
+            // cast a focus ring's spread shadow (ghost Button/IconButton focus). Accepted only bound to fill/page.
+            const pagePaint = key === 'fills' && (node.fills || []).find(x => x.type === 'SOLID' && x.visible !== false);
+            const onPage = !!pagePaint && varById[pagePaint.boundVariables?.color?.id]?.name === 'fill/page';
+            const transparentOk = hex === 'none' && (got === null || onPage || (key === 'strokes' && close(got, await resolvedColor(node, 'fills'))));
+            if (hex === 'none' ? !transparentOk : !close(got, hex)) issues.parity.push(`${mode} ${comp.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${hex}`);
           }
         }
         inst.remove();
+        }
       }
     }
   } finally { frame.remove(); }
@@ -187,13 +237,16 @@ async function figmaValue(node, prop) {
 if (EXPECTED.layout) {
   const pairs = key => key.split(', ').filter(Boolean);
   for (const [key, layers] of Object.entries(EXPECTED.layout)) {
-    const variants = set.children.filter(v => pairs(key).every(p => v.name.split(', ').includes(p)));
+    const variants = VARIANTS.filter(v => pairs(key).every(p => v.name.split(', ').includes(p)));
     if (!variants.length) { issues.layout.push(`no variant matches "${key}"`); continue; }
     for (const variant of variants) {
       for (const [layer, props] of Object.entries(layers)) {
-        const node = layer === '(root)' ? variant : variant.findOne(n => n.name === layer);
-        if (!node) { issues.layout.push(`${variant.name} › ${layer}: layer missing`); continue; }
+        const part = layer === '(root)' ? variant : variant.findOne(n => n.name === layer);
+        if (!part) { issues.layout.push(`${variant.name} › ${layer}: layer missing`); continue; }
+        // typography is read off the text itself when the part is a frame wrapping it (its own spacing)
+        const text = part.type === 'TEXT' ? part : ('findOne' in part ? part.findOne(n => n.type === 'TEXT') : null);
         for (const [prop, want] of Object.entries(props)) {
+          const node = (prop === 'textStyle' || ['fontSize', 'lineHeight', 'fontWeight', 'fontFamily'].includes(prop)) && text ? text : part;
           if (prop === 'textStyle') {
             const style = node.textStyleId && typeof node.textStyleId === 'string' ? await figma.getStyleByIdAsync(node.textStyleId) : null;
             if (!style) issues.binding.push(`${variant.name} › ${layer}: no Text Style — code's typography is "${want}"`);
@@ -201,7 +254,11 @@ if (EXPECTED.layout) {
             continue;
           }
           const got = await figmaValue(node, prop);
-          const ok = typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
+          // borderOutsideLayout (see expected-styles.ts): Figma's root padding counts from the outer edge, code's
+          // from inside the border — compare against code + border, within the 1px a token can't split.
+          const outer = EXPECTED.borderOutsideLayout && layer === '(root)' && /^padding/.test(prop) && typeof want.value === 'number';
+          const ok = outer ? typeof got === 'number' && Math.abs(got - (want.value + (typeof node.strokeWeight === 'number' ? node.strokeWeight : 1))) <= 1
+            : typeof want.value === 'number' ? typeof got === 'number' && Math.abs(got - want.value) <= 0.5 : norm(got) === norm(want.value);
           if (!ok) issues.layout.push(`${variant.name} › ${layer} ${prop}: Figma ${got ?? 'none'} ≠ code ${want.value}${want.token ? ` (${want.token})` : ''}`);
           // Typography binds through the Text Style above; boxes and icons bind each property to a variable.
           if (want.figma && FIGMA_KEY[prop]) {
@@ -216,5 +273,40 @@ if (EXPECTED.layout) {
   }
 }
 
+// 11 propstar — the ❖ {Name} table is regenerated whenever a variant or property changes (scripts/figma/propstar.js):
+// every variant has a cell, and every row/column label names an axis value the set really has (no stale labels).
+{
+  const table = set.parent?.name?.startsWith('❖') ? set.parent : null;
+  const axes = Object.fromEntries(Object.entries(set.componentPropertyDefinitions).filter(([, d]) => d.type === 'VARIANT').map(([k, d]) => [k, d.variantOptions]));
+  if (!table) { if (Object.keys(axes).length) issues.propstar.push('no ❖ property table around the set — run scripts/figma/propstar.js'); }
+  else {
+    const labels = table.findAll(n => n.type === 'TEXT' && n.parent?.name === 'Label').map(t => t.characters);
+    for (const l of labels) for (const [, k, v] of l.matchAll(/([\w.]+)=([\w-]+)/g))
+      if (!axes[k]?.includes(v)) issues.propstar.push(`label "${l}": ${k}=${v} is not a value of the set — regenerate the table`);
+    const placed = set.children.filter(v => v.x >= 0 && v.y >= 0).length;
+    if (placed < set.children.length) issues.propstar.push(`${set.children.length - placed} variant(s) outside the table`);
+  }
+}
+
+// 12 lists — the count belongs to the component that draws the items (listCount.owner / itemsAtRest)
+{
+  const LIST_PROPS = ['options', 'actions', 'avatars', 'items'];
+  const axes = set.type === 'COMPONENT_SET' ? Object.entries(set.componentPropertyDefinitions).filter(([, d]) => d.type === 'VARIANT').map(([k]) => k) : [];
+  if (axes.some(a => LIST_PROPS.includes(a)))
+    for (const v of VARIANTS) for (const it of v.findAll(n => n.type === 'INSTANCE')) {
+      let st; try { st = it.componentProperties?.state?.value; } catch (e) {}
+      if (['hover', 'press', 'selected'].includes(st)) issues.lists.push(`${where(v, it)}: nested item at state=${st} — items inside a list rest at default; ${st} is the item's own state (itemsAtRest)`);
+    }
+  for (const [prop, to] of Object.entries(EXPECTED.delegates ?? {})) {
+    if (axes.includes(prop)) issues.lists.push(`${prop} is a property of the set — ${to} draws the items and owns the count (list-delegated): remove it`);
+    const open = VARIANTS.filter(v => v.variantProperties?.state === 'open');
+    for (const v of open.length ? open : VARIANTS) {
+      const n = v.findOne(n => n.type === 'INSTANCE' && (n.mainComponent?.parent?.type === 'COMPONENT_SET' ? n.mainComponent.parent.name : n.mainComponent?.name) === to);
+      if (!n) issues.lists.push(`${v.name}: no nested ${to} instance — the list is drawn by ${to} (list-delegated)`);
+      else if (!n.isExposedInstance) issues.lists.push(`${where(v, n)}: the ${to} instance isn't exposed — the designer can't pick its ${prop} count`);
+    }
+  }
+}
+
 const counts = Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.length]));
-return { set: set.name, variants: set.children.length, stateAxis, pass: Object.values(counts).every(n => n === 0), counts, issues: Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.slice(0, 25)])) };
+return { set: set.name, variants: VARIANTS.length, stateAxis, pass: Object.values(counts).every(n => n === 0), counts, issues: Object.fromEntries(Object.entries(issues).map(([k, v]) => [k, v.slice(0, 25)])) };

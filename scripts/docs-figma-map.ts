@@ -4,7 +4,7 @@
  * anatomy layers extracted from each component's data-helix-part attributes.
  *
  * This file is GENERATED — do not hand-edit the per-component sections.
- * The conventions section at the top is stable and hand-maintained.
+ * The standard section at the top is generated from contracts/figma-conversion.json.
  * Run: pnpm docs:figma-map
  * Wired into .husky/pre-commit so it can never drift from contracts.
  */
@@ -135,100 +135,213 @@ function variantValues(propName: string, codeType: string): string {
     .join(', ');
 }
 
-const CONVENTIONS = `<!-- helix:figma-map-conventions — stable, hand-maintained -->
-## Prop → Figma property: general conventions
+import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone, delegateOf, isList } from './figma/prop-rule.ts';
 
-Summary of \`.ai/skills/components-to-figma.md\` ("Prop taxonomy" + its exceptions) — that skill is the
-authority; if the two ever disagree, the skill wins and this generator needs fixing.
+type FigmaProp = { name: string; type: string; values?: string[] };
+const snapshotPath = path.join(root, '.ai/figma-props.json');
+const storyOrderPath = path.join(root, '.ai/storybook-prop-order.json');
+const storybookOrder: Record<string, string[]> = fs.existsSync(storyOrderPath) ? JSON.parse(fs.readFileSync(storyOrderPath, 'utf-8')).components : {};
+const snapshot: Record<string, { properties: FigmaProp[] }> = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf-8')).components : {};
 
-| Code shape | Figma property | Notes |
-|---|---|---|
-| \`'a' \\| 'b'\` (string union) | \`VARIANT\` | Values exactly as in code — \`variant=primary\`, never \`Variant=Primary\` |
-| \`boolean\` | \`BOOLEAN\` | Except \`disabled\` ↓ |
-| \`disabled\` | \`VARIANT\` (\`false\` / \`true\`) | A BOOLEAN can't express the disabled visual change (skill: "Disabled state rule") |
-| Required label-like \`string\` | \`TEXT\` | \`label\`, \`children\`, and \`placeholder\` (always shown when empty) |
-| Optional label-like \`string\` | \`BOOLEAN\` + \`TEXT\` | A show/hide part (\`description\`, \`errorMessage\`…): BOOLEAN \`description\` on the part's visibility + TEXT \`description text\` for its content. Code stays implicit — passing the prop shows the part (show-hide-parts.md) |
-| Icon component (\`icon\`, \`iconEnd\`) | \`BOOLEAN\` + \`INSTANCE_SWAP\` | Both bound to the same icon layer; BOOLEAN-only fallback if the icon library isn't in Figma yet |
-| Event handlers, refs, callbacks, arrays/objects | — | Not expressed in Figma |
+function compare(e: Expected, figma: FigmaProp[] | undefined): string {
+  if (!figma) return '✗ not in Figma';
+  const same = figma.find(f => f.name === e.name && f.type === e.type);
+  if (same && (e.type !== 'VARIANT' || JSON.stringify([...(same.values ?? [])].sort()) === JSON.stringify([...(e.values ?? [])].sort()))) return '✓';
+  if (same) return `✗ values ${(same.values ?? []).join(' / ')}`;
+  const byName = figma.find(f => f.name === e.name);
+  if (byName) return `✗ is ${byName.type}${byName.values ? ` (${byName.values.join(' / ')})` : ''}`;
+  const inState = figma.find(f => f.type === 'VARIANT' && (f.values ?? []).includes(e.name));
+  if (inState) return `✗ a value of \`${inState.name}\``;
+  return '✗ missing';
+}
 
-Not decidable from types alone — check the skill: \`required\` with no visible indicator is skipped;
-\`children\` that nests other components is a nested layer, not a property.
+// Story coverage (contracts/figma-conversion.json → storyCoverage, owner's rule 2026-10-21): every Storybook story of
+// a component says how Figma represents it — contract `figma.stories[ExportName]` is "prop=value, prop=value" (the
+// variant/properties that draw it), "default" (the set's default variant), "layout" (a showcase that only arranges existing variants), or
+// { figma: null, reason, approved } (the owner decided Figma doesn't draw it). Anything else asks the owner.
+const storiesDirs = ['Components', 'Layout'].map(d => path.join(root, 'apps/storybook/stories', d));
+function storyExports(name: string): string[] | null {
+  const file = storiesDirs.map(d => path.join(d, `${name}.stories.tsx`)).find(p => fs.existsSync(p));
+  if (!file) return null;
+  const src = fs.readFileSync(file, 'utf-8');
+  return [...src.matchAll(/^export (?:const|function) (\w+)/gm)].map(m => m[1]!);
+}
 
-### Naming rules
+type StoryDecision = string | { figma: string | null; reason?: string; approved?: string };
+type StoryConv = { figma: string | null; layout: boolean; ok: boolean; why: string };
+/** One story's Figma representation, checked against the properties the component must have in Figma. */
+function storyConv(decision: StoryDecision | undefined, figmaNames: Set<string>, figmaValues: Map<string, string[]>): StoryConv {
+  if (decision === undefined) return { figma: null, layout: false, ok: false, why: 'no Figma representation recorded — ask the owner (contract figma.stories)' };
+  const d = typeof decision === 'string' ? { figma: decision } as { figma: string | null; reason?: string; approved?: string } : decision;
+  if (d.figma === 'default') return { figma: 'default', layout: false, ok: true, why: d.reason ?? 'every Figma property at its default value' };
+  if (d.figma === 'layout') return { figma: null, layout: true, ok: true, why: d.reason ?? '' };
+  if (d.figma === null) return d.approved
+    ? { figma: null, layout: false, ok: true, why: `not drawn in Figma — ${d.reason ?? ''} (approved ${d.approved})` }
+    : { figma: null, layout: false, ok: false, why: "figma: null needs the owner's `approved` date" };
+  const pairs = d.figma.split(',').map(s => s.trim().split('=').map(x => x.trim())).filter(([n]) => n);
+  const unknown = pairs.filter(([n]) => !figmaNames.has(n!)).map(([n]) => `\`${n}\``);
+  // a value Figma doesn't draw yet (e.g. state=focus on a set with no focus) — the story can't be drawn from the set
+  const undrawn = pairs.filter(([n, v]) => figmaNames.has(n!) && v && figmaValues.get(n!) && !figmaValues.get(n!)!.includes(v)).map(([n, v]) => `\`${n}=${v}\``);
+  return unknown.length || undrawn.length
+    ? { figma: d.figma, layout: false, ok: false, why: [unknown.length ? `no Figma property ${unknown.join(', ')} for this component` : '', undrawn.length ? `Figma doesn't draw ${undrawn.join(', ')} yet` : ''].filter(Boolean).join('; ') }
+    : { figma: d.figma, layout: false, ok: true, why: d.reason ?? '' };
+}
 
-- **Figma property name** = code prop name, **unchanged** (\`variant\`, \`size\`, \`disabled\`).
-- **VARIANT values** = code values, **unchanged** (\`primary\`, \`icon-only\`, \`false\`).
-- **Layer names** = the \`data-helix-part\` values from the TSX — never invented. Visually hidden native
-  inputs (\`checkbox-input\`, \`radio-input\`, \`select-native\`) exist in code but are not layers.
-<!-- /helix:figma-map-conventions -->`;
+// Generated from the standard, so the two can never disagree.
+const CONVENTIONS = [
+  '## Code prop → Figma property: the standard',
+  '',
+  `From \`contracts/figma-conversion.json\` v${STANDARD.version} (owner-approved ${STANDARD.approved}; explained with the`,
+  'common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component',
+  "only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property",
+  'is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.',
+  '',
+  '| Rule | When | Figma property | Why |',
+  '|---|---|---|---|',
+  ...(STANDARD.rules as any[]).map(r => `| \`${r.id}\` | ${r.when.replace(/\|/g, '\\|')} | ${r.figma.length ? r.figma.map((f: string) => `\`${f}\``).join(' + ') : '—'} | ${r.why} |`),
+  '',
+  ...Object.values((STANDARD as any).naming as Record<string, string>).map(n => `- ${n}`),
+  '- **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the',
+  '  Figma MCP after changing a component in Figma, then `pnpm docs:figma-map`).',
+].join('\n');
 
 function run() {
-  const contractFiles = fs.readdirSync(contractsDir)
-    .filter(f => f.endsWith('.json'))
-    .sort();
-
+  const contractFiles = fs.readdirSync(contractsDir).filter(f => f.endsWith('.json')).sort();
   const sections: string[] = [];
-
+  // Machine-readable twin (.ai/maps/figma-map.json): per component, per code prop, the Figma property it becomes —
+  // or codeOnly + why. Storybook shows it on every prop (preview.tsx argTypesEnhancers).
+  // a list prop handed to a nested Helix component (list-delegated) lives on that child in Figma
+  const childOf = (name: string, type = '') => isList(name, type) ? delegateOf(name) : undefined;
+  type Child = { component: string; property: string | null; note?: string; figma?: Conv['figma'] };
+  type Conv = { description?: string; inChild?: Child | Child[]; figma: { name: string; type: string; values?: string[] }[] | null; codeOnly: boolean; rule: string; why: string };
+  const jsonMap: Record<string, Record<string, Conv>> = {};
+  const plain = (t: string) => t.replace(/\*\*/g, '').replace(/\s*·\s*`[^`]+`$/, '').replace(/`/g, '');
+  let total = 0, ok = 0, storiesTotal = 0, storiesOk = 0;
+  const jsonStories: Record<string, Record<string, StoryConv>> = {};
   for (const file of contractFiles) {
-    const contract = JSON.parse(
-      fs.readFileSync(path.join(contractsDir, file), 'utf-8'),
-    ) as Contract;
-
-    if (!contract.props || contract.props.length === 0) continue;
-
-    const rows: PropRow[] = [];
-
+    const contract = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf-8')) as Contract;
+    setComponent(contract.name, contract as any);
     const parts = extractAnatomyParts(contract.name);
-    for (const prop of contract.props) {
-      const kind = inferFigmaKind(prop.name, prop.type ?? '', prop.required === true, parts);
-      if (!kind) continue;
-
-      rows.push({
-        name:         prop.name,
-        codeType:     prop.type ?? '',
-        figmaKind:    kind,
-        // rendered inside backticks: an optional part lists both properties, `description` + `description text`
-        figmaProperty: kind === 'OPTIONAL_TEXT' ? `${prop.name}\` + \`${prop.name} text` : prop.name,
-        values:       kind === 'VARIANT' ? variantValues(prop.name, prop.type ?? '') : '—',
-      });
+    const figma = snapshot[contract.name]?.properties;
+    const rows: string[] = [];
+    const used = new Set<string>();
+    // a component drawn by a call, not props (Toast: toast[variant](label, description)) lists the call's arguments
+    // in figma.callArgs — they convert like props
+    for (const prop of [...(((contract as any).figma?.callArgs ?? []) as typeof contract.props), ...(contract.props ?? [])]) {
+      // The standard (contracts/figma-conversion.json) decides; a contract exception (figma.propertyMap) overrides it.
+      const exception = (contract as any).figma?.propertyMap?.[prop.name];
+      const list: Expected[] = exception
+        ? exception.figma.map((f: Expected) => ({ ...f, why: exception.codeType === (prop.type ?? '') ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : '**stale exception** (pnpm figma:props)' }))
+        : expectedFor(prop, parts).map(e => ({ ...e, why: e.rule === 'unmatched' ? `**${e.why}**` : `${e.why} · \`${e.rule}\`` }));
+      const conv = (jsonMap[contract.name] ??= {});
+      if (!list.length) {
+        const why = exception ? `${exception.reason ?? ''} (approved ${exception.approved})` : whyNone(prop);
+        const child = !exception ? childOf(prop.name, prop.type ?? '') : undefined;
+        if (child) conv[prop.name] = { description: prop.description, figma: null, codeOnly: false, inChild: { component: child, property: prop.name }, rule: 'list-delegated', why: plain(why) };
+        else conv[prop.name] = { description: prop.description, figma: null, codeOnly: true, rule: exception ? 'exception' : (whyNone(prop).match(/`([^`]+)`$/)?.[1] ?? 'skip'), why: plain(why) };
+      } else conv[prop.name] = { description: prop.description, figma: list.map(e => ({ name: e.name, type: e.type, ...(e.values ? { values: e.values } : {}) })), codeOnly: false, rule: exception ? 'exception' : list[0].rule ?? '', why: list.map(e => plain(e.why)).filter((w, i, a) => a.indexOf(w) === i).join(' · ') };
+      if (!list.length) rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | ${!exception && childOf(prop.name, prop.type ?? '') ? `— on the child \`${childOf(prop.name, prop.type ?? '')}\` › \`${prop.name}\`` : '— no Figma property'} | ${exception ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : whyNone(prop)} | — |`);
+      for (const e of list) {
+        const status = compare(e, figma);
+        total++; if (status === '✓') ok++;
+        const m = figma?.find(f => f.name === e.name && f.type === e.type); if (m) used.add(m.name + m.type);
+        const fig = e.type === 'VARIANT' ? `\`${e.name}\` = ${e.values!.map(v => `\`${v}\``).join(' / ')}` : `\`${e.name}\``;
+        rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | \`${e.type}\` ${fig} | ${e.why} | ${status} |`);
+      }
     }
-
-    const anatomyParts = extractAnatomyParts(contract.name);
-
-    if (rows.length === 0 && anatomyParts.length === 0) continue;
-
-    const kindLabel = (r: PropRow) =>
-      r.figmaKind === 'ICON_SLOT' ? '`BOOLEAN` + `INSTANCE_SWAP`'
-        : r.figmaKind === 'OPTIONAL_TEXT' ? '`BOOLEAN` + `TEXT`'
-        : `\`${r.figmaKind}\``;
-
-    const propSection = rows.length > 0
-      ? `| Code prop | Code type | Figma kind | Figma property | Values |\n` +
-        `|---|---|---|---|---|\n` +
-        rows.map(r =>
-          `| \`${r.name}\` | \`${r.codeType.replace(/\|/g, '\\|')}\` | ${kindLabel(r)} | \`${r.figmaProperty}\` | ${r.values} |`,
-        ).join('\n')
-      : '_No Figma-mappable props._';
-
-    const anatomySection = anatomyParts.length > 0
-      ? `**Anatomy layers** (Figma layer name = \`data-helix-part\` value):\n` +
-        anatomyParts.map(p => `- \`${p}\``).join('\n')
-      : '';
-
-    sections.push(
-      `### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n` +
-      propSection +
-      (anatomySection ? '\n\n' + anatomySection : ''),
-    );
+    // exceptions for a native attribute the component passes through (no prop of that name in the contract)
+    for (const [name, ex] of Object.entries(((contract as any).figma?.propertyMap ?? {}) as Record<string, any>)) {
+      if ((contract.props ?? []).some(p => p.name === name)) continue;
+      // native attributes the component passes through are rows in Storybook's props table too
+      (jsonMap[contract.name] ??= {})[name] = ex.figma.length
+        ? { figma: (ex.figma as Expected[]).map(e => ({ name: e.name, type: e.type, ...(e.values ? { values: e.values } : {}) })), codeOnly: false, rule: 'exception', why: plain(ex.reason ?? '') }
+        : { figma: null, codeOnly: true, rule: 'exception', why: plain(ex.reason ?? '') };
+      if (!ex.figma.length) rows.push(`| \`${name}\` (native) | \`${ex.codeType.replace(/\|/g, '\\|')}\` | — no Figma property | exception, approved ${ex.approved} — ${ex.reason ?? ''} | — |`);
+      for (const e of ex.figma as Expected[]) {
+        const status = compare(e, figma);
+        total++; if (status === '✓') ok++;
+        const m = figma?.find(f => f.name === e.name && f.type === e.type); if (m) used.add(m.name + m.type);
+        const fig = e.type === 'VARIANT' ? `\`${e.name}\` = ${e.values!.map(v => `\`${v}\``).join(' / ')}` : `\`${e.name}\``;
+        rows.push(`| \`${name}\` (native) | \`${ex.codeType.replace(/\|/g, '\\|')}\` | \`${e.type}\` ${fig} | exception, approved ${ex.approved}${ex.reason ? ` — ${ex.reason}` : ''} | ${status} |`);
+      }
+    }
+    // Property order (contracts/figma-conversion.json → propertyOrder): the code order, as Storybook's Controls list it.
+    // Figma always shows VARIANT properties first, so each group is compared on its own; state closes the variants.
+    // The reference order is Storybook's (pnpm figma:story-order → .ai/storybook-prop-order.json): the props table the
+    // owner compares Figma against — not the contract's order, which Storybook doesn't follow. Contract order only
+    // breaks ties / covers a component Storybook hasn't been read for.
+    const storyOrder = storybookOrder[contract.name] ?? [];
+    const at = (prop: string) => { const i = storyOrder.indexOf(prop); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
+    const expected = rows
+      .map((r, i) => ({ i, prop: r.match(/^\| `([^`]+)`/)?.[1] ?? '', fig: r.match(/\| `(?:VARIANT|BOOLEAN|TEXT|INSTANCE_SWAP)` `([^`]+)`/)?.[1] }))
+      .filter(x => x.fig)
+      .sort((a, b) => at(a.prop) - at(b.prop) || a.i - b.i)
+      .map(x => x.fig) as string[];
+    const kind = (n: string) => figma?.find(f => f.name === n)?.type;
+    const dedupe = (a: string[]) => [...new Set(a)];
+    const want = { variants: [...dedupe(expected.filter(n => kind(n) === 'VARIANT')), ...(figma?.some(f => f.name === 'state') ? ['state'] : [])], others: dedupe(expected.filter(n => kind(n) && kind(n) !== 'VARIANT')) };
+    const have = { variants: (figma ?? []).filter(f => f.type === 'VARIANT' && want.variants.includes(f.name)).map(f => f.name), others: (figma ?? []).filter(f => f.type !== 'VARIANT' && want.others.includes(f.name)).map(f => f.name) };
+    const orderOk = JSON.stringify(want) === JSON.stringify(have);
+    // Storybook lists the props that are Figma VARIANTs first, like Figma's panel (owner's rule 2026-10-21): a variant
+    // prop after a non-variant one in Storybook's table breaks it — fix the order of the story file's meta.args.
+    const variantProps = new Set(rows.filter(r => /\| `VARIANT` `/.test(r)).map(r => r.match(/^\| `([^`]+)`/)?.[1]).filter(Boolean) as string[]);
+    const firstOther = storyOrder.findIndex(p => !variantProps.has(p));
+    const late = firstOther < 0 ? [] : storyOrder.slice(firstOther).filter(p => variantProps.has(p));
+    // Storybook's props table, the contract and the Code → Figma table list the same props — no more, no less
+    // (owner's rule 2026-10-21). className is hidden from Storybook on purpose (developer-only), so it doesn't count.
+    const known = new Set(Object.keys(jsonMap[contract.name] ?? {}));
+    const notInContract = storyOrder.filter(p => !known.has(p));
+    const notInStorybook = storyOrder.length ? [...known].filter(p => p !== 'className' && !storyOrder.includes(p)) : [];
+    const propsLine = storyOrder.length ? `\n\n**Storybook props:** ${notInContract.length || notInStorybook.length ? `✗${notInContract.length ? ` in Storybook, not in the contract: ${notInContract.map(p => `\`${p}\``).join(', ')}` : ''}${notInStorybook.length ? ` · in the contract, not in Storybook's props table: ${notInStorybook.map(p => `\`${p}\``).join(', ')}` : ''}` : '✓ the same props as the contract'}` : '';
+    const storyLine = storyOrder.length ? `\n\n**Storybook order:** ${late.length ? `✗ variant props after the rest: ${late.map(p => `\`${p}\``).join(', ')} — Storybook ${storyOrder.join(', ')} (reorder the story file's meta.args: Figma variants first)` : '✓ Figma variants first, then the rest'}` : '';
+    const orderLine = figma && expected.length ? `\n\n**Property order:** ${orderOk ? '✓ same as code' : `✗ Figma ${[...have.variants, '·', ...have.others].join(', ')} — code ${[...want.variants, '·', ...want.others].join(', ')}`}` : '';
+    if (figma && expected.length) { total++; if (orderOk) ok++; }
+    const extra = (figma ?? []).filter(f => !used.has(f.name + f.type) && f.name !== 'state');
+    const table = rows.length
+      ? `| Code prop | Code type | Figma property | Why | Figma today |\n|---|---|---|---|---|\n${rows.join('\n')}`
+      : '_No design props._';
+    // A Figma property with no code prop breaks rule 16 unless the owner approved it (contract figma.figmaOnly).
+    const figmaOnly = ((contract as any).figma?.figmaOnly ?? {}) as Record<string, { approved?: string; reason?: string }>;
+    const extraOk = extra.filter(f => figmaOnly[f.name]?.approved);
+    const extraBad = extra.filter(f => !figmaOnly[f.name]?.approved);
+    const fmt = (f: { name: string; type: string; values?: string[] }) => `\`${f.name}\` (${f.type}${f.values ? ': ' + f.values.join(' / ') : ''})`;
+    const extraLine = (extraBad.length ? `\n\n**Only in Figma:** ✗ ${extraBad.map(fmt).join(', ')} — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's \`figma.figmaOnly\`` : '')
+      + (extraOk.length ? `\n\n**Only in Figma (approved):** ${extraOk.map(f => `${fmt(f)} — ${figmaOnly[f.name].reason} (approved ${figmaOnly[f.name].approved})`).join('; ')}` : '');
+    const stateLine = figma?.find(f => f.name === 'state') ? `\n\n**Figma-only \`state\`:** ${figma.find(f => f.name === 'state')!.values!.map(v => `\`${v}\``).join(' / ')}` : '';
+    // Stories → Figma: each story's Figma representation (contract figma.stories), or ✗ — ask the owner.
+    const exports = storyExports(contract.name);
+    const decisions = ((contract as any).figma?.stories ?? {}) as Record<string, StoryDecision>;
+    const figmaNames = new Set([...expected, ...Object.keys(figmaOnly), ...(figma ?? []).map(f => f.name)]);
+    const figmaValues = new Map((figma ?? []).filter(f => f.type === 'VARIANT' && f.values).map(f => [f.name, f.values!] as [string, string[]]));
+    let storiesBlock = '';
+    if (exports?.length) {
+      const conv: Record<string, StoryConv> = {};
+      for (const s of exports) conv[s] = storyConv(decisions[s], figmaNames, figmaValues);
+      // a decision for a story that no longer exists is stale — the owner decided about something else
+      const stale = Object.keys(decisions).filter(s => !exports.includes(s));
+      jsonStories[contract.name] = conv;
+      const unmapped = Object.values(conv).filter(c => !c.ok).length;
+      storiesTotal += exports.length; storiesOk += exports.length - unmapped;
+      const bad = unmapped + stale.length;
+      const lines = Object.entries(conv).map(([s, c]) => `- \`${s}\` → ${c.ok ? '✓' : '✗'} ${[c.layout ? 'layout of existing variants' : c.figma ? `\`${c.figma}\`` : '', c.why].filter(Boolean).join(' — ')}`)
+        .concat(stale.map(s => `- \`${s}\` → ✗ stale — figma.stories has a decision for a story that no longer exists`));
+      storiesBlock = `\n\n**Stories → Figma:** ${bad ? `✗ ${bad} of ${exports.length + stale.length} without an approved Figma representation` : `✓ all ${exports.length} stories`}\n\n${lines.join('\n')}`;
+    }
+    const anatomy = parts.length ? `\n\n**Anatomy layers** (Figma layer name = \`data-helix-part\` value): ${parts.map(p => `\`${p}\``).join(', ')}` : '';
+    const pattern = patternOf(contract.name);
+    const patternLine = pattern ? `**Pattern:** \`${pattern}\` (.ai/maps/figma-conversion.md)\n\n` : '';
+    sections.push(`### ${contract.name} (\`v${contract.version}\`, ${contract.status ?? 'draft'})\n\n${patternLine}${table}${orderLine}${storyLine}${propsLine}${extraLine}${stateLine}${storiesBlock}${anatomy}`);
   }
-
   const out =
     `<!-- GENERATED by scripts/docs-figma-map.ts — do not hand-edit the component sections below.
-     Run \`pnpm docs:figma-map\` to regenerate. The conventions block is stable and hand-maintained. -->
+     Run \`pnpm docs:figma-map\` to regenerate. The standard block comes from contracts/figma-conversion.json. -->
 # Helix → Figma prop map
 
-Maps every Helix component prop to its expected Figma property.
-**Read by:** \`.ai/skills/components-to-figma.md\` (mandatory pre-read) · Figma-parity audit.
+Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
+today. **Read by:** \`.ai/skills/components-to-figma.md\` (mandatory pre-read) · Figma-parity audit.
+
+**Parity today: ${ok} of ${total} code props match Figma exactly.**
+**Story coverage: ${storiesOk} of ${storiesTotal} Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ${CONVENTIONS}
 
@@ -242,9 +355,26 @@ ${sections.join('\n\n')}
 
 <!-- /helix:figma-map-components -->
 `;
-
   fs.writeFileSync(outPath, out, 'utf-8');
-  console.log(`✓ .ai/maps/figma-map.md  —  ${sections.length} components`);
+  // Props that live on a nested child component in Figma — a list handed to another Helix component
+  // (list-delegated), or the contract's figma.childProps — say so, with the child's own Figma property.
+  for (const file of contractFiles) {
+    const c = JSON.parse(fs.readFileSync(path.join(contractsDir, file), 'utf-8'));
+    for (const [prop, kids] of Object.entries((c.figma?.childProps ?? {}) as Record<string, Child[]>)) {
+      const conv = (jsonMap[c.name] ??= {})[prop]; if (!conv) continue;
+      const list = [...(conv.inChild ? [conv.inChild].flat() : []), ...kids];
+      conv.inChild = list; if (conv.codeOnly && list.length) conv.codeOnly = false;
+    }
+  }
+  const childFigma = (k: Child) => {
+    if (!k.property) return [{ name: k.component, type: 'INSTANCE' }];
+    const own = jsonMap[k.component]?.[k.property]?.figma; if (own?.length) return own;
+    const snap = snapshot[k.component]?.properties?.filter(p => p.name === k.property || p.name === `${k.property}.`);
+    return snap?.length ? snap.map(p => ({ name: p.name, type: p.type, ...(p.values ? { values: p.values } : {}) })) : [{ name: k.property, type: 'TEXT' }];
+  };
+  for (const props of Object.values(jsonMap)) for (const c of Object.values(props)) if (c.inChild) c.inChild = [c.inChild].flat().map(k => ({ ...k, figma: childFigma(k) }));
+  fs.writeFileSync(outPath.replace(/\.md$/, '.json'), JSON.stringify({ $comment: 'GENERATED by pnpm docs:figma-map from contracts/figma-conversion.json and each contract\'s figma exceptions — do not edit. Per component, per code prop: the Figma property it becomes, or codeOnly + why. stories: per component, per Storybook story export, its Figma representation (contract figma.stories) — ok false = ask the owner.', components: jsonMap, stories: jsonStories }, null, 2) + '\n', 'utf-8');
+  console.log(`✓ .ai/maps/figma-map.md  —  ${sections.length} components, ${ok}/${total} props match Figma, ${storiesOk}/${storiesTotal} stories mapped`);
 }
 
 run();

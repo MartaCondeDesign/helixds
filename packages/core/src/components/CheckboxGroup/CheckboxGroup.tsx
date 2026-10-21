@@ -43,7 +43,7 @@ export function CheckboxGroup({
     >
       <legend data-helix-part="checkbox-group-legend">
         {label}
-        {required && <span aria-hidden="true" style={{ color: 'var(--helix-color-text-danger)', marginLeft: 2 }}>*</span>}
+        {required && <span data-helix-part="checkbox-group-required" aria-hidden="true">*</span>}
         {/* A group has no ARIA "required" (aria-required isn't allowed on role="group"), so it's
             announced as part of the legend instead — visually hidden, the * above covers sighted users. */}
         {required && (

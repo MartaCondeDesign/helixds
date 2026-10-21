@@ -36,7 +36,25 @@ const meta: Meta<typeof MultiSelect> = {
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(MultiSelectDoc),
   // Fixed width like Select's own stories, so the chips wrap inside it instead of stretching the field.
-  args: { label: 'Skills', options: SKILLS, placeholder: 'Choose skills…', className: 'w-[300px]' },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    value: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    fullWidth: undefined,
+    hideLabel: undefined,
+    options: SKILLS, // drawn by the nested Menu in Figma (list-delegated) — not a variant here
+    label: 'Skills',
+    placeholder: 'Choose skills…',
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    id: undefined,
+    name: undefined,
+    className: undefined,
+  },
 };
 
 export default meta;
@@ -46,6 +64,7 @@ export const Default: Story = {};
 
 export const WithSelection: Story = {
   args: { defaultValue: ['design', 'frontend'] },
+  argTypes: { placeholder: { control: false } }, // chosen values hide the placeholder
   parameters: {
     docs: { description: { story: 'Selected values sit inside the field as dismissible Chips (24px, size s), 4px from its edge and 4px apart. Each × removes one.' } },
   },
@@ -53,6 +72,7 @@ export const WithSelection: Story = {
 
 export const Wrapping: Story = {
   args: { defaultValue: ['design', 'research', 'frontend', 'backend', 'writing'] },
+  argTypes: { placeholder: { control: false } }, // chosen values hide the placeholder
   parameters: {
     docs: { description: { story: 'When the chips don\'t fit on one line the field grows downward — 32px is a minimum, rows sit 4px apart.' } },
   },
@@ -82,6 +102,7 @@ export const Required: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, defaultValue: ['design'] },
+  argTypes: { placeholder: { control: false } }, // the chosen value hides the placeholder
 };
 
 // Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the

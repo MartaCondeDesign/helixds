@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "AppShell",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. Never write `display: flex; min-height: 100vh` by hand again.",
   "import": "import { AppShell } from '@helixds/react';",
@@ -107,8 +107,12 @@
   },
 
   "figma": {
+    "childProps": {"sidenav": [{"component": "SideNav", "property": null, "note": "the side navigation"}], "topbar": [{"component": "TopBar", "property": null, "note": "the top bar"}]},
     "states": ["default"],
     "properties": [],
-    "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances)."
+    "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances).",
+    "stories": {
+      "Default": "sidenav=true, topbar=true"
+    }
   }
 }

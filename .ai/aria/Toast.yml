@@ -28,3 +28,7 @@
   - button "Dismiss"
   - text: Published Your changes are now live.
   - button "Dismiss"
+
+# Playground
+- button "Show toast"
+- region "Notifications"

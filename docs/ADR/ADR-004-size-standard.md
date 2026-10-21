@@ -44,8 +44,10 @@ Use this scale for button-like components: `Button`.
 | `m` | `semantic.size.m` | `primitive.size.200` | `32px` |
 | `l` | `semantic.size.l` | `primitive.size.250` | `40px` |
 
-Use this scale for form fields such as `Input`, `Select`, and `Textarea`. Same tokens as the Control
-scale's `s`/`m`/`l` — one shared source, two components' worth of exposed rungs.
+Use this scale for form fields such as `Input`, `Select`, and `Textarea`. **Form fields share one size set — today a single size, `m`** (owner's decision 2026-10-21): `Input`, `Textarea`, `Select` and
+`MultiSelect` (the `form-field` pattern in `contracts/figma-conversion.json`) have no `size` prop. Textarea's s and l went on
+2026-10-20, Input's on 2026-10-21. If one field ever gets more sizes, every field gets the same ones, in code and in Figma —
+`pnpm verify:field-sizes` (pre-commit) fails otherwise. `m` uses the Control scale's `semantic.size.m`.
 
 ### Compact/status components
 

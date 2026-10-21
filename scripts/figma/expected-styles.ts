@@ -22,6 +22,7 @@ import fs from 'fs';
 import path from 'path';
 import { chromium, type CDPSession, type Page } from 'playwright';
 import { figmaTarget, tokenChain } from './token-chain.ts';
+import { setComponent, delegateOf } from './prop-rule.ts';
 
 type State = 'default' | 'hover' | 'press' | 'focus' | 'disabled' | 'invalid' | 'loading' | 'open' | 'checked' | 'indeterminate';
 type PartSpec = { part: string; fill?: boolean; stroke?: boolean; text?: boolean; placeholder?: boolean };
@@ -36,6 +37,16 @@ type Spec = {
   storyFor?: Partial<Record<State, string>>;       // a different story for a state whose prop the main story won't take from the URL
   focusTarget?: string;                            // data-helix-part that takes keyboard focus, when it isn't `target` (e.g. Checkbox's hidden input)
   locate?: (v: Record<string, string>, state: State) => { story: string; scope: string } | null; // full control over where each combo lives (null = not shown in any story, skipped)
+  // The root's border is drawn inside its box and NOT counted in Figma's auto layout, so Figma's padding is
+  // measured from the outer edge (code's padding + border). Only where code's padding is a calc() around the
+  // border that no scale token can express (MultiSelect: (32 − 24) / 2 − 1px = 3px) — owner's decision 2026-10-20.
+  borderOutsideLayout?: boolean;
+  // Typography that changes by state (MenuItem: selected is medium): measure layout in every state, keyed with it.
+  layoutPerState?: boolean;
+  // Combinations code can't show (and Figma doesn't draw), e.g. a disabled checkbox with hover: not measured.
+  skip?: (v: Record<string, string>, state: State) => boolean;
+  /** A different story for some variants that still takes the URL args (unlike locate) — e.g. one with a selection. */
+  storyOf?: (v: Record<string, string>) => string | undefined;
 };
 
 // Stories with NO `play` function only: a play that fails puts Storybook's error overlay on top of the
@@ -43,9 +54,9 @@ type Spec = {
 const SPECS: Record<string, Spec> = {
   Chip: {
     story: 'components-chip--variants',
-    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled'],
-    args: (v, s) => ({ size: v.size!, disabled: s === 'disabled' }),
+    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ size: v.size!, disabled: v.disabled === 'true' }),
     // the pill is chip-shell (Figma's root); hover/press/focus go to the chip button inside it
     parts: { '(root)': { part: 'chip-shell', fill: true, stroke: true }, 'chip-label': { part: 'chip-label', text: true } },
     target: 'chip',
@@ -53,95 +64,120 @@ const SPECS: Record<string, Spec> = {
   },
   Input: {
     story: 'components-input--default',
-    axes: { size: ['m'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'input-wrapper', fill: true, stroke: true }, 'input-field': { part: 'input-field', placeholder: true } },
+    axes: { 'value.': ['empty', 'filled'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', ...(v['value.'] === 'filled' ? { value: 'Typed text' } : {}),
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', isLoading: v.isLoading === 'true' }),
+    parts: {
+      '(root)': { part: 'input-root' },
+      'input-label': { part: 'input-label', text: true },
+      'input-required': { part: 'input-required', text: true },
+      'input-wrapper': { part: 'input-wrapper', fill: true, stroke: true },
+      'input-field': { part: 'input-field', placeholder: true },
+      'input-spinner': { part: 'input-spinner', text: true },
+      'input-description': { part: 'input-description', text: true },
+      'input-error': { part: 'input-error', text: true },
+    },
     target: 'input-field',
   },
   Textarea: {
-    story: 'components-textarea--default',
-    axes: { size: ['m'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Label', size: v.size!, placeholder: 'Placeholder', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'textarea-wrapper', fill: true, stroke: true }, 'textarea-field': { part: 'textarea-field', placeholder: true } },
+    story: 'components-textarea--with-character-count',
+    axes: { 'value.': ['empty', 'filled'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true, ...(v['value.'] === 'filled' ? { value: 'Some text the user wrote.' } : {}),
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', resize: v.resize! }),
+    parts: {
+      '(root)': { part: 'textarea-root' },
+      'textarea-label': { part: 'textarea-label', text: true },
+      'textarea-required': { part: 'textarea-required', text: true },
+      'textarea-wrapper': { part: 'textarea-wrapper', fill: true, stroke: true },
+      'textarea-field': { part: 'textarea-field', placeholder: true },
+      'textarea-counter': { part: 'textarea-counter', text: true },
+      'textarea-description': { part: 'textarea-description', text: true },
+      'textarea-error': { part: 'textarea-error', text: true },
+    },
     target: 'textarea-field',
-    storyFor: { disabled: 'components-textarea--disabled' }, // the Default story ignores a URL `disabled` arg
   },
   Button: {
     story: 'components-button--full-width',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
-    args: (v, s) => ({ children: 'Label', variant: v.variant!, size: v.size!, fullWidth: false, disabled: s === 'disabled', loading: s === 'loading' }),
-    parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'text': { part: 'button-label', text: true } },
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['s', 'm', 'l'], disabled: ['false', 'true'], isLoading: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ children: 'Label', variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'button-label': { part: 'button-label', text: true } },
     target: 'button',
   },
   IconButton: {
     story: 'components-iconbutton--primary',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
-    args: (v, s) => ({ variant: v.variant!, size: v.size!, disabled: s === 'disabled', loading: s === 'loading' }),
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['s', 'm', 'l'], disabled: ['false', 'true'], isLoading: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true' }),
     parts: { '(root)': { part: 'icon-button', fill: true, stroke: true } },
     target: 'icon-button',
   },
   Select: {
     story: 'components-select--default',
-    axes: {},
-    states: ['default', 'hover', 'focus', 'open', 'invalid', 'disabled'],
-    args: (v, s) => ({ label: 'Role', placeholder: 'Choose a role…', invalid: s === 'invalid', disabled: s === 'disabled' }),
-    parts: { '(root)': { part: 'select-trigger', fill: true, stroke: true }, 'select-trigger-label': { part: 'select-trigger-label', text: true } },
+    axes: { 'value.': ['empty', 'selected'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'open'],
+    // value.=selected is drawn in every state the empty field has (form-field rule, owner 2026-10-21)
+    args: v => ({ label: 'Role', placeholder: 'Choose a role…', required: true, description: 'Helper text', errorMessage: 'Error message',
+      ...(v['value.'] === 'selected' ? { value: 'designer' } : {}), invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: {
+      '(root)': { part: 'select-root' },
+      'select-label': { part: 'select-label', text: true },
+      'select-required': { part: 'select-required', text: true },
+      'select-trigger': { part: 'select-trigger', fill: true, stroke: true },
+      'select-trigger-label': { part: 'select-trigger-label', text: true },
+      'select-chevron': { part: 'select-chevron', text: true },
+      'select-description': { part: 'select-description', text: true },
+      'select-error': { part: 'select-error', text: true },
+    },
     target: 'select-trigger',
   },
   Checkbox: {
-    story: 'components-checkbox--all-types',
-    axes: { checked: ['unchecked', 'checked', 'indeterminate'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: () => ({}),
-    parts: { 'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true }, 'checkbox-text': { part: 'checkbox-text', text: true } },
+    story: 'components-checkbox--with-description',
+    axes: { checked: ['false', 'true'], indeterminate: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', indeterminate: v.indeterminate === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true }),
+    parts: {
+      'checkbox-control': { part: 'checkbox-control', fill: true, stroke: true },
+      'checkbox-text': { part: 'checkbox-text', text: true },
+      'checkbox-required': { part: 'checkbox-required', text: true },
+      'checkbox-description': { part: 'checkbox-description', text: true },
+    },
     target: 'checkbox-label',
     focusTarget: 'checkbox-input',
-    // All Types = unchecked, checked, indeterminate · Disabled = unchecked, checked · Invalid = unchecked
-    locate: (v, state) => {
-      const nth = (n: number) => `[data-helix-part="checkbox-root"]:nth-of-type(${n})`;
-      const i = ['unchecked', 'checked', 'indeterminate'].indexOf(v.checked!) + 1;
-      if (state === 'disabled') return i <= 2 ? { story: 'components-checkbox--disabled', scope: nth(i) } : null;
-      if (state === 'invalid') return i === 1 ? { story: 'components-checkbox--invalid', scope: nth(1) } : null;
-      return { story: 'components-checkbox--all-types', scope: nth(i) };
-    },
+    // contracts/components/Checkbox.json → figma.variantCombinations: 21 variants
+    skip: v => v.checked === 'true' && v.indeterminate === 'true', // code shows indeterminate; disabled: the standard's rule
   },
   RadioGroup: {
     story: 'components-radiogroup--default',
-    axes: { checked: ['unchecked', 'checked'] },
-    states: ['default', 'hover', 'focus', 'invalid', 'disabled'],
-    args: () => ({}),
-    parts: { 'radio-control': { part: 'radio-control', fill: true, stroke: true }, 'radio-item-label': { part: 'radio-item-label', text: true } },
-    target: 'radio-item',
-    focusTarget: 'radio-input',
-    // Default/Invalid/Disabled stories: the 1st option is unchecked, the 2nd checked (Default/Disabled)
-    locate: (v, state) => {
-      const nth = (n: number) => `[data-helix-part="radio-item"]:nth-of-type(${n})`;
-      const i = v.checked === 'checked' ? 2 : 1;
-      if (state === 'disabled') return { story: 'components-radiogroup--disabled', scope: nth(i) };
-      if (state === 'invalid') return v.checked === 'unchecked' ? { story: 'components-radiogroup--invalid', scope: nth(1) } : null;
-      return { story: 'components-radiogroup--default', scope: nth(i) };
+    axes: { orientation: ['vertical', 'horizontal'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default'],
+    args: v => ({ orientation: v.orientation!, invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true,
+      description: 'Helper text', errorMessage: v.invalid === 'true' ? 'Error message' : '' }),
+    parts: {
+      '(root)': { part: 'radio-group' },
+      'radio-options': { part: 'radio-options' },
+      'radio-legend': { part: 'radio-legend', text: true },
+      'radio-required': { part: 'radio-required', text: true },
+      'radio-description': { part: 'radio-description', text: true },
+      'radio-error': { part: 'radio-error', text: true },
     },
+    target: 'radio-group',
   },
   Switch: {
-    story: 'components-switch--default',
-    axes: { checked: ['unchecked', 'checked'] },
-    states: ['default', 'hover', 'focus', 'disabled'],
-    args: () => ({}),
+    story: 'components-switch--checked',
+    axes: { checked: ['false', 'true'], size: ['s', 'm'], hideLabel: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', size: v.size!, hideLabel: v.hideLabel === 'true', disabled: v.disabled === 'true' }),
     parts: {
       'switch-track': { part: 'switch-track', fill: true },
       'switch-thumb': { part: 'switch-thumb', fill: true },
       'switch-label': { part: 'switch-label', text: true },
+      'switch-description': { part: 'switch-description', text: true },
     },
     target: 'switch-track',
-    // Default = unchecked, Checked = checked (both one switch, render-controlled) · Disabled = off, on
-    locate: (v, state) => {
-      if (state === 'disabled') return { story: 'components-switch--disabled', scope: `[data-helix-part="switch-root"]:nth-of-type(${v.checked === 'checked' ? 2 : 1})` };
-      return { story: v.checked === 'checked' ? 'components-switch--checked' : 'components-switch--default', scope: '[data-helix-part="switch-root"]' };
-    },
+    // disabled and hideLabel only at state=default — the standard's variant rules
   },
   Card: {
     story: 'components-card--default',
@@ -194,6 +230,162 @@ const SPECS: Record<string, Spec> = {
     target: 'badge',
     scope: v => `[data-helix-part="badge"][data-variant="${v.variant}"]`,
   },
+  Accordion: {
+    story: 'components-accordion--default',
+    axes: { expanded: ['false', 'true'] },
+    states: ['default', 'focus', 'disabled'],
+    args: (v, s) => ({ defaultExpanded: v.expanded === 'true', disabled: s === 'disabled' }),
+    parts: {
+      '(root)': { part: 'accordion-root', fill: true, stroke: true },
+      'accordion-title': { part: 'accordion-title', text: true },
+      'accordion-chevron': { part: 'accordion-chevron', text: true },
+    },
+    target: 'accordion-header',
+  },
+  AvatarGroup: {
+    story: 'components-avatargroup--with-overflow',
+    axes: { size: ['s', 'm', 'l'] },
+    states: ['default'],
+    args: v => ({ size: v.size! }),
+    parts: { '(root)': { part: 'avatar-group-root' }, 'avatar-group-overflow': { part: 'avatar-group-overflow', fill: true }, 'count': { part: 'avatar-group-overflow', text: true } },
+    target: 'avatar-group-root',
+  },
+  CheckboxGroup: {
+    story: 'components-checkboxgroup--default',
+    axes: { orientation: ['vertical', 'horizontal'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default'],
+    args: v => ({ orientation: v.orientation!, invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true,
+      description: 'Helper text', errorMessage: v.invalid === 'true' ? 'Error message' : '' }),
+    parts: {
+      '(root)': { part: 'checkbox-group' },
+      'checkbox-group-options': { part: 'checkbox-group-options' },
+      'checkbox-group-legend': { part: 'checkbox-group-legend', text: true },
+      'checkbox-group-required': { part: 'checkbox-group-required', text: true },
+      'checkbox-group-description': { part: 'checkbox-group-description', text: true },
+      'checkbox-group-error': { part: 'checkbox-group-error', text: true },
+    },
+    target: 'checkbox-group',
+  },
+  FAB: {
+    story: 'components-fab--default',
+    axes: { expanded: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: () => ({}),
+    parts: { 'fab-root': { part: 'fab-root', fill: true }, 'fab-icon': { part: 'fab-icon', text: true } },
+    target: 'fab-root',
+    // a disabled FAB can't open: disabled exists only collapsed (9 variants)
+    skip: v => v.expanded === 'true' && v.disabled === 'true',
+    locate: (v, s) => v.expanded === 'true' ? { story: 'components-fab--expanded', scope: '[data-helix-part="fab-root-wrapper"]' }
+      : { story: v.disabled === 'true' ? 'components-fab--disabled' : 'components-fab--default', scope: '[data-helix-part="fab-root-wrapper"]' },
+  },
+  MultiSelect: {
+    story: 'components-multiselect--default',
+    storyOf: v => v.value === 'selected' ? 'components-multiselect--with-selection' : undefined,
+    axes: { value: ['empty', 'selected'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'open'],
+    args: v => ({ label: 'Skills', placeholder: 'Choose skills…', required: true, description: 'Helper text', errorMessage: 'Error message',
+      invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: {
+      '(root)': { part: 'multi-select-root' },
+      'multi-select-label': { part: 'multi-select-label', text: true },
+      'multi-select-required': { part: 'multi-select-required', text: true },
+      'multi-select-field': { part: 'multi-select-field', fill: true, stroke: true },
+      'multi-select-placeholder': { part: 'multi-select-placeholder', text: true },
+      'multi-select-chevron': { part: 'multi-select-chevron', text: true },
+      'multi-select-description': { part: 'multi-select-description', text: true },
+      'multi-select-error': { part: 'multi-select-error', text: true },
+    },
+    target: 'multi-select-trigger',
+  },
+  RadioButton: {
+    story: 'components-radiobutton--with-description',
+    axes: { checked: ['false', 'true'], invalid: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'focus'],
+    args: v => ({ checked: v.checked === 'true', invalid: v.invalid === 'true', disabled: v.disabled === 'true', required: true }),
+    parts: {
+      'radio-control': { part: 'radio-control', fill: true, stroke: true },
+      'radio-dot': { part: 'radio-dot', fill: true },
+      'radio-item-label': { part: 'radio-item-label', text: true },
+      'radio-item-required': { part: 'radio-item-required', text: true },
+      'radio-item-description': { part: 'radio-item-description', text: true },
+    },
+    target: 'radio-item',
+    focusTarget: 'radio-input',
+    // 14 variants: disabled only at state=default and valid — the standard's rule, applied below
+  },
+  SegmentedControlItem: {
+    story: 'components-segmentedcontrol--default',
+    axes: { checked: ['false', 'true'] },
+    states: ['default', 'hover', 'focus', 'disabled'],
+    args: () => ({}),
+    parts: { 'segmented-control-item-label': { part: 'segmented-control-item-label', text: true } },
+    target: 'segmented-control-item',
+    locate: (v, s) => {
+      const sel = v.checked === 'true' ? '[data-helix-part="segmented-control-item"][aria-checked="true"]' : '[data-helix-part="segmented-control-item"][aria-checked="false"]';
+      return { story: s === 'disabled' ? 'components-segmentedcontrol--disabled' : 'components-segmentedcontrol--default', scope: sel };
+    },
+  },
+  Tooltip: {
+    story: 'components-tooltip--always-expanded',
+    axes: {},
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'tooltip-content', fill: true }, 'tooltip-label': { part: 'tooltip-content', text: true } },
+    target: 'tooltip-content',
+  },
+  MenuItem: {
+    story: 'components-menu--states',
+    axes: {},
+    states: ['default', 'hover', 'selected', 'disabled'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'menu-item', fill: true }, 'menu-item-label': { part: 'menu-item', text: true } }, // the label span only renders next to a labelEnd
+    target: 'menu-item',
+    layoutPerState: true,
+    locate: (_v, s) => ({
+      story: 'components-menu--states',
+      scope: s === 'selected' ? '[data-helix-part="menu-item"][aria-selected="true"]'
+        : s === 'disabled' ? '[data-helix-part="menu-item"]:disabled'
+        : '[data-helix-part="menu-item"]:not([aria-selected="true"]):not(:disabled)',
+    }),
+  },
+  // Overlays: their Opened stories open them in a play function that only clicks the trigger (it never
+  // fails), so measuring after it is safe.
+  Modal: {
+    story: 'components-modal--opened',
+    axes: {},
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'modal-root', fill: true }, 'modal-title': { part: 'modal-title', text: true }, 'modal-body': { part: 'modal-body', text: true } },
+    target: 'modal-root',
+    scope: () => '[data-helix-part="modal-root"][open]',
+  },
+  SidePanel: {
+    story: 'components-sidepanel--opened',
+    axes: { placement: ['right'] },
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'side-panel-root', fill: true }, 'side-panel-title': { part: 'side-panel-title', text: true }, 'side-panel-body': { part: 'side-panel-body', text: true } },
+    target: 'side-panel-root',
+    scope: () => '[data-helix-part="side-panel-root"][open]',
+  },
+  Toast: {
+    story: 'components-toast--opened',
+    axes: { variant: ['success', 'danger'] },
+    states: ['default'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'toast', fill: true, stroke: true }, 'toast-icon': { part: 'toast-icon', text: true }, 'toast-title': { part: 'toast-title', text: true }, 'toast-description': { part: 'toast-description', text: true } },
+    target: 'toast',
+    scope: v => `[data-helix-part="toast"][data-variant="${v.variant}"]`,
+  },
+  ChartLegendItem: {
+    story: 'components-chart--bar',
+    axes: { pressed: ['true'] },  // pressed=false needs a click (LegendToggle's play), so only the shown state is measured
+    states: ['default', 'hover', 'press', 'focus'],
+    args: () => ({}),
+    parts: { '(root)': { part: 'chart-legend-item', fill: true, stroke: true }, 'chart-legend-swatch': { part: 'chart-legend-swatch', fill: true }, 'label': { part: 'chart-legend-item', text: true } },
+    target: 'chart-legend-item',
+    scope: () => 'button[data-helix-part="chart-legend-item"]:first-of-type',
+  },
 };
 
 const toHex = (css: string): string => {
@@ -228,15 +420,27 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       const el = scope && document.querySelector(scope)?.matches(`[data-helix-part="${p.part}"]`) ? document.querySelector(scope) : (scope ? document.querySelector(scope)?.querySelector(`[data-helix-part="${p.part}"]`) : root.querySelector(`[data-helix-part="${p.part}"]`));
       if (!el) continue;
       const cs = getComputedStyle(el);
+      // not rendered in this combination (e.g. Radio's dot at scale 0 when unchecked) → no Figma layer to compare
+      const box = el.getBoundingClientRect();
+      // (1px = sr-only, e.g. hideLabel — also anything inside a sr-only ancestor, like the label's required *)
+      let srOnly = false; for (let a: Element | null = el; a; a = a.parentElement) { const r = a.getBoundingClientRect(); if (r.width <= 1 && r.height <= 1) { srOnly = true; break; } }
+      if (srOnly || box.width === 0 || box.height === 0 || cs.visibility === 'hidden' || cs.opacity === '0') continue;
       out[layer] = {};
       if (p.fill) out[layer]!.fill = cs.backgroundColor;
       if (p.stroke) out[layer]!.stroke = parseFloat(cs.borderTopWidth) > 0 ? cs.borderTopColor : 'transparent';
-      if (p.text) out[layer]!.fill = cs.color; // a Figma TEXT layer's fill is its text color
-      if (p.placeholder) out[layer]!.fill = getComputedStyle(el, '::placeholder').color; // the Figma layer shows placeholder text
+      // a Figma TEXT layer's fill is its text color; an icon part's is its svg's (Icon can set its own color)
+      const svg = /icon|chevron/.test(p.part) ? el.querySelector('svg') : null;
+      // Tabler's `color` prop is the svg's stroke attribute (currentColor unless Icon is given a color)
+      // (filled icons, e.g. Toast's, carry it in fill instead)
+      const paint = svg ? [getComputedStyle(svg).stroke, getComputedStyle(svg).fill].find(x => /^rgb|^color/.test(x)) : undefined;
+      if (p.text) out[layer]!.fill = svg ? (paint ?? getComputedStyle(svg).color) : cs.color;
+      // the Figma layer shows the placeholder while the field is empty, the typed text once it has a value (value.=filled)
+      if (p.placeholder) out[layer]!.fill = (el as HTMLInputElement).value ? getComputedStyle(el).color : getComputedStyle(el, '::placeholder').color;
     }
     return out;
   }, { parts: spec.parts, scope });
-  if (state === 'press') await page.mouse.up();
+  // release away from the target: down + up on it would be a click (a toggle like Chart's legend flips)
+  if (state === 'press') { await page.mouse.move(0, 0); await page.mouse.up(); }
   return Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, Object.fromEntries(Object.entries(v).map(([p, c]) => [p, toHex(c)]))]));
 }
 
@@ -296,7 +500,8 @@ async function declaredVar(page: Page, cdp: CDPSession, prop: string): Promise<s
 async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: string | null) {
   const out: Record<string, Record<string, Measured | string>> = {};
   for (const [layer, p] of Object.entries(spec.parts)) {
-    const kinds = { box: layer === '(root)', icon: /icon/.test(p.part), type: !!(p.text || p.placeholder) && !/icon/.test(p.part) };
+    const isIcon = /icon|chevron|indicator-mark/.test(p.part); // a chevron is an icon too (Accordion, Select, MultiSelect)
+    const kinds = { box: layer === '(root)', icon: isIcon, type: !!(p.text || p.placeholder) && !isIcon };
     if (!kinds.box && !kinds.icon && !kinds.type) continue;
     const found = await page.evaluate(({ part, scope }) => {
       document.querySelectorAll('[data-figma-measure]').forEach(e => e.removeAttribute('data-figma-measure'));
@@ -347,7 +552,9 @@ async function measureLayout(page: Page, cdp: CDPSession, spec: Spec, scope: str
       entry[figmaProp] = { value, token: chain[0] ?? null, figma: figmaTarget(chain, kinds.type && figmaProp in TYPE ? 'textStyle' : 'variable') };
     }
     if (kinds.type) {
-      const style = Object.values(entry).map(e => (typeof e === 'object' ? e.figma : null)).find(Boolean);
+      // The weight decides between two styles of the same size (MenuItem selected: regular's size, medium's weight)
+      const fw = entry.fontWeight;
+      const style = (typeof fw === 'object' && fw.figma) || Object.values(entry).map(e => (typeof e === 'object' ? e.figma : null)).find(Boolean);
       if (style) entry.textStyle = style; // the named Text Style the layer must use
     }
     out[layer] = entry;
@@ -362,17 +569,30 @@ async function main() {
   const url = process.env.STORYBOOK_URL ?? 'http://localhost:6006';
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}]);
+  // The standard's variant rules (contracts/figma-conversion.json → variants)
+  const STD = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../../contracts/figma-conversion.json'), 'utf8'));
+  const contractFile = path.resolve(import.meta.dirname, `../../contracts/components/${name}.json`);
+  const defaults: Record<string, unknown> = fs.existsSync(contractFile)
+    ? Object.fromEntries((JSON.parse(fs.readFileSync(contractFile, 'utf8')).props ?? []).map((p: { name: string; default?: unknown }) => [p.name, p.default])) : {};
+  const def = (k: string) => String(defaults[k] ?? (k === 'size' ? 'm' : 'false'));
+  // every size and state (owner's decision 2026-10-21); a loading Button/IconButton is disabled in code → default, enabled only
+  const loadingDisables = ((STD.variants?.loadingDisables ?? []) as string[]).includes(name);
+  const combos = Object.entries(spec.axes).reduce<Record<string, string>[]>((acc, [k, vals]) => acc.flatMap(a => vals.map(v => ({ ...a, [k]: v }))), [{}])
+    .filter(v => !(loadingDisables && v.isLoading === 'true' && (v.disabled === 'true' || v.invalid === 'true')));
   const colors: Record<string, { light: unknown; dark: unknown }> = {};
   const layout: Record<string, unknown> = {};
   const cdp = await page.context().newCDPSession(page);
   await cdp.send('DOM.enable');
   await cdp.send('CSS.enable');
   for (const v of combos) for (const state of spec.states) {
+    if (spec.skip?.(v, state)) continue;
+    // the standard's variant rules: disabled only at state=default and valid; a secondary toggle only at state=default
+    if (v.disabled === 'true' && (state !== 'default' || v.invalid === 'true')) continue;
+    if (loadingDisables && v.isLoading === 'true' && state !== 'default') continue;
     const loc = spec.locate ? spec.locate(v, state) : undefined;
     if (loc === null) continue; // combo not shown in any story
     const args = Object.entries(spec.args(v, state)).map(([k, x]) => `${k}:${typeof x === 'boolean' ? '!' + x : x}`).join(';');
-    const storyId = loc?.story ?? spec.storyFor?.[state] ?? spec.story;
+    const storyId = loc?.story ?? spec.storyFor?.[state] ?? spec.storyOf?.(v) ?? spec.story;
     await page.goto(`${url}/iframe.html?viewMode=story&id=${storyId}&args=${encodeURIComponent(loc ? '' : args)}`);
     const scopeSel = loc?.scope ?? (spec.scope ? spec.scope(v) : null);
     const vScoped = loc ? { ...spec, scope: () => loc.scope } : spec;
@@ -380,8 +600,8 @@ async function main() {
     const variantName = [...Object.entries(v).map(([k, x]) => `${k}=${x}`), ...(spec.states.length > 1 ? [`state=${state}`] : [])].join(', ');
     colors[variantName] = { light: await measure(page, vScoped, v, state, 'light'), dark: await measure(page, vScoped, v, state, 'dark') };
     // Layout doesn't change by state or theme: measured once per variant, at its first state, light.
-    const layoutKey = Object.entries(v).map(([k, x]) => `${k}=${x}`).join(', ');
-    if (!(layoutKey in layout) && state === spec.states[0]) {
+    const layoutKey = spec.layoutPerState ? variantName : Object.entries(v).map(([k, x]) => `${k}=${x}`).join(', ');
+    if (!(layoutKey in layout) && (spec.layoutPerState || state === spec.states[0])) {
       await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));
       await page.mouse.move(0, 0);
       await page.mouse.up();
@@ -394,7 +614,12 @@ async function main() {
   await browser.close();
   const out = path.resolve(__dirname, '../../.ai/figma-expected', `${name}.json`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, colors, layout }, null, 2) + '\n');
+  // list-delegated (contracts/figma-conversion.json → listCount.owner): list props this component hands to another Helix
+  // component, which owns the count — audit check 12 wants an exposed instance of it and no count property here
+  const contract = fs.existsSync(contractFile) ? JSON.parse(fs.readFileSync(contractFile, 'utf8')) : {};
+  setComponent(name, contract);
+  const delegates = Object.fromEntries(((contract.props ?? []) as { name: string }[]).filter(p => ((STD.listCount?.props ?? []) as string[]).includes(p.name)).map(p => [p.name, delegateOf(p.name)]).filter(([, to]) => to));
+  fs.writeFileSync(out, JSON.stringify({ $comment: `Generated by pnpm figma:expected ${name} from Storybook computed styles — do not hand-edit.`, states: spec.states, ...(spec.borderOutsideLayout ? { borderOutsideLayout: true } : {}), ...(Object.keys(delegates).length ? { delegates } : {}), colors, layout }, null, 2) + '\n');
   const props = Object.values(layout).flatMap(l => Object.values(l as object).flatMap(e => Object.values(e as object))).filter(x => typeof x === 'object');
   console.log(`✅ ${path.relative(process.cwd(), out)} — ${Object.keys(colors).length} variants × light/dark colors; ${props.length} layout values (${props.filter((x: any) => x.token).length} from a token)`);
 }

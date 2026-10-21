@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "PageHeader",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "Introduces a page or major section: title, optional supporting description, and trailing actions in one consistent row.",
   "import": "import { PageHeader } from '@helixds/react';",
@@ -116,13 +116,19 @@
   },
 
   "figma": {
+    "childProps": {"actions": [{"component": "Button", "property": null, "note": "the buttons placed in the actions slot"}]},
     "states": ["default"],
     "properties": [
       { "name": "level", "type": "VARIANT", "values": ["1", "2"], "codeProp": "level", "description": "1 = h1, Heading / 2xl / Bold · 2 = h2, Heading / xl / Bold." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 4px top (spacing/2xs), so hiding it changes nothing else." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" },
+      { "name": "description.", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 4px top (spacing/2xs), so hiding it changes nothing else." },
+      { "name": "description", "type": "TEXT", "codeProp": "description" },
       { "name": "actions", "type": "BOOLEAN", "codeProp": "actions", "description": "Shows the actions slot (a primary Button instance as a placeholder; 8px gap — the slot can mix groups, e.g. Badge + Button)." }
-    ]
+    ],
+    "stories": {
+      "Default": "description.=true",
+      "WithActions": "actions=true, description.=true",
+      "SectionLevel": "level=2, description.=true"
+    }
   }
 }

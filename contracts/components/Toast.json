@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "Toast",
   "version": "0.2.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "A Sonner-style stacking notification, fixed to the top-right corner, triggered imperatively (toast.success('Saved')) from anywhere — not tied to a piece of UI state the consumer renders conditionally, unlike Modal/SidePanel.",
   "import": "import { Toast, toast } from '@helixds/react';",
@@ -163,13 +163,24 @@
   },
 
   "figma": {
+    "callArgs": [
+      { "name": "variant", "type": "'neutral' | 'info' | 'success' | 'warning' | 'danger'", "description": "Which call: toast.neutral / info / success / warning / danger — sets the icon and its color." },
+      { "name": "label", "type": "string", "required": true, "description": "First argument — the toast's title." },
+      { "name": "description", "type": "string | undefined", "description": "Second argument — an optional supporting line." }
+    ],
     "states": ["default"],
     "properties": [
       { "name": "variant", "type": "VARIANT", "values": ["neutral", "info", "success", "warning", "danger"], "codeProp": "variant", "description": "Sets the filled icon (InfoCircleFilled, CircleCheckFilled, AlertTriangleFilled, AlertHexagonFilled — added to the Icons page) and its color, toast.icon.{variant}." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 2px top (spacing/3xs)." },
-      { "name": "description text", "type": "TEXT", "codeProp": "description" }
+      { "name": "description.", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 2px top (spacing/3xs)." },
+      { "name": "description", "type": "TEXT", "codeProp": "description" }
     ],
-    "structure": "One toast: 340px, 16px padding, 12px gap, radius/l, fill/page, shadow / xl; filled icon 24px; title 12/18 bold (no text style — bound to fontSize/s, fontWeight/bold, lineHeight/s); description Body / s / Regular; IconButton ghost s (X) to dismiss. Stacking, peek and spread are runtime motion, not modeled."
+    "structure": "One toast: 340px, 16px padding, 12px gap, radius/l, fill/page, shadow / xl; filled icon 24px; title 12/18 bold (no text style — bound to fontSize/s, fontWeight/bold, lineHeight/s); description Body / s / Regular; IconButton ghost s (X) to dismiss. Stacking, peek and spread are runtime motion, not modeled.",
+    "stories": {
+      "Default": "layout",
+      "Playground": "variant=success, description.=true",
+      "KeyboardReach": {"figma": "layout", "reason": "keyboard focus is drawn on the close IconButton inside it (state=focus)"},
+      "Opened": "layout"
+    }
   }
 }

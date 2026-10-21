@@ -10,17 +10,21 @@ import {
 } from '@tabler/icons-react';
 import { IconButton, IconButtonDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
+import { mapped } from '../_shared/mapped-arg';
 
 const meta: Meta<typeof IconButton> = {
   title:     'Components/IconButton',
   component:  IconButton,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(IconButtonDoc),
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
   args: {
-    icon:    IconTrash,
-    label:   'Delete item',
     variant: 'ghost',
     size:    'm',
+    isLoading: undefined,
+    disabled: undefined,
+    icon:    mapped('IconTrash'),
+    label:   'Delete item',
     onClick: fn(),
   },
   argTypes: {
@@ -63,37 +67,39 @@ export default meta;
 type Story = StoryObj<typeof IconButton>;
 
 export const Ghost: Story = {
-  args: { variant: 'ghost', icon: IconDots, label: 'More actions' },
+  args: { variant: 'ghost', icon: mapped('IconDots'), label: 'More actions' },
 };
 
 export const Secondary: Story = {
-  args: { variant: 'secondary', icon: IconPencil, label: 'Edit' },
+  args: { variant: 'secondary', icon: mapped('IconPencil'), label: 'Edit' },
 };
 
 export const Primary: Story = {
-  args: { variant: 'primary', icon: IconSettings, label: 'Settings' },
+  args: { variant: 'primary', icon: mapped('IconSettings'), label: 'Settings' },
 };
 
 export const Danger: Story = {
-  args: { variant: 'danger', icon: IconTrash, label: 'Delete account' },
+  args: { variant: 'danger', icon: mapped('IconTrash'), label: 'Delete account' },
 };
 
 export const Sizes: Story = {
-  render: () => (
+  args: { icon: mapped('IconX'), label: 'Dismiss' },
+  // The story fixes size (s / m / l) — icon, label, variant, isLoading… apply to all three
+  argTypes: { size: { control: false } },
+  render: ({ size: _size, ...args }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)', flexWrap: 'wrap' }}>
-      <IconButton size="s" icon={IconX} label="Dismiss" />
-      <IconButton size="m" icon={IconX} label="Dismiss" />
-      <IconButton size="l" icon={IconX} label="Dismiss" />
+      <IconButton {...args} size="s" />
+      <IconButton {...args} size="m" />
+      <IconButton {...args} size="l" />
     </div>
   ),
   parameters: {
-    controls: { disable: true },
     docs: { description: { story: 'All size variants. Default is `m`, same scale as Button.' } },
   },
 };
 
 export const Loading: Story = {
-  args: { isLoading: true, icon: IconRefresh, label: 'Refresh' },
+  args: { isLoading: true, icon: mapped('IconRefresh'), label: 'Refresh' },
   parameters: {
     docs: {
       description: {
@@ -104,26 +110,28 @@ export const Loading: Story = {
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, icon: IconTrash, label: 'Delete item' },
+  args: { disabled: true, icon: mapped('IconTrash'), label: 'Delete item' },
 };
 
 export const AllVariants: Story = {
-  render: () => {
+  args: { icon: mapped('IconSettings') },
+  // The story fixes variant × state (default / loading / disabled) and each one's label — icon and size apply to all
+  argTypes: { variant: { control: false }, label: { control: false }, isLoading: { control: false }, disabled: { control: false } },
+  render: ({ icon, size, onClick }) => {
     const variants = ['primary', 'secondary', 'ghost', 'danger'] as const;
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)' }}>
         {variants.map(variant => (
           <div key={variant} style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
-            <IconButton variant={variant} icon={IconSettings} label={`${variant} default`} />
-            <IconButton variant={variant} icon={IconSettings} label={`${variant} loading`} isLoading />
-            <IconButton variant={variant} icon={IconSettings} label={`${variant} disabled`} disabled />
+            <IconButton size={size} onClick={onClick} variant={variant} icon={icon} label={`${variant} default`} />
+            <IconButton size={size} onClick={onClick} variant={variant} icon={icon} label={`${variant} loading`} isLoading />
+            <IconButton size={size} onClick={onClick} variant={variant} icon={icon} label={`${variant} disabled`} disabled />
           </div>
         ))}
       </div>
     );
   },
   parameters: {
-    controls: { disable: true },
     docs: {
       description: { story: 'Complete matrix: all variants × all states.' },
     },

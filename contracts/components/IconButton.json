@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "IconButton",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
   "purpose": "Triggers an action via a single icon, with no visible text label — a toolbar action, a row action, a close/dismiss control.",
   "import": "import { IconButton } from '@helixds/react';",
   "neverUseFor": [
@@ -192,6 +192,22 @@
         "human"
       ],
       "changed": "2026-10-12"
+    }
+  },
+  "figma": {
+    "states": ["default", "hover", "press", "focus"],
+    "properties": [],
+    "variantCombinations": "64 variants (2026-10-21): variant × size × state = 48,  disabled per variant × size = 12,  isLoading once per variant at size m = 4. label is the aria-label: no Figma property.",
+    "stories": {
+      "Ghost": "variant=ghost",
+      "Secondary": "variant=secondary",
+      "Primary": "variant=primary",
+      "Danger": "variant=danger",
+      "Sizes": "layout",
+      "Loading": "isLoading=true",
+      "Disabled": "disabled=true",
+      "AllVariants": "layout",
+      "KeyboardActivation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
     }
   }
 }

@@ -23,7 +23,21 @@ const meta: Meta<typeof CheckboxGroup> = {
   component:  CheckboxGroup,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(CheckboxGroupDoc),
-  args: { label: 'Notify me about', options: NOTIFICATION_OPTIONS },
+  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  args: {
+    options: NOTIFICATION_OPTIONS,
+    orientation: undefined,
+    invalid: undefined,
+    disabled: undefined,
+    label: 'Notify me about',
+    value: undefined,
+    defaultValue: undefined,
+    onChange: undefined,
+    description: undefined,
+    errorMessage: undefined,
+    required: undefined,
+    name: undefined,
+  },
   argTypes: {
     orientation: { control: 'select', options: ['vertical', 'horizontal'] },
   },

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Input",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
   "purpose": "Allows users to enter a single line of free-form text.",
   "import": "import { Input } from '@helixds/react';",
   "neverUseFor": [
@@ -11,7 +11,7 @@
     "Date/time entry — use DatePicker"
   ],
 
-  "rationale": "Input wraps a native <input> and sits on the shared field scale (24/32/40px) so it aligns with Select and Textarea in any form. Label, helper and error text are wired through the component so 3.3.1 and 3.3.2 hold by default, and width is hug or fill — never a tokenized fixed width.",
+  "rationale": "Input wraps a native <input> and has one size — the field scale's m (32px), like Select, MultiSelect and Textarea (owner's decision 2026-10-21: form fields share one size set; if one gets more sizes, all do) — so it aligns with them in any form. Label, helper and error text are wired through the component so 3.3.1 and 3.3.2 hold by default, and width is hug or fill — never a tokenized fixed width.",
 
   "governance": {
     "mayExtendLocally": [
@@ -64,8 +64,14 @@
     {
       "part": "input-label",
       "element": "label",
-      "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Accessible label. Always rendered — visible or sr-only. Sits exactly 8px above the field — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
+    },
+    {
+      "part": "input-required",
+      "element": "span",
+      "optional": true,
+      "description": "The required indicator (*) inside the label, text/danger, 2px (spacing/3xs) after the text — shown by `required`. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md)."
     },
     {
       "part": "input-wrapper",
@@ -90,9 +96,15 @@
       "optional": true
     },
     {
+      "part": "input-spinner",
+      "element": "span",
+      "optional": true,
+      "description": "Loading spinner (isLoading): the same spinner Button draws, at the field's icon size and --helix-input-icon-default, in iconEnd's place. Spins via helix-spin; reduced motion stops it."
+    },
+    {
       "part": "input-description",
       "element": "p",
-      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md.",
+      "description": "Helper text below the field. Sits exactly 8px below it — see .ai/maps/patterns/form-field-spacing.md. Disabled: dims to text.disabled with the rest of the text (.ai/maps/patterns/disabled-state.md).",
       "optional": true
     },
     {
@@ -116,12 +128,6 @@
       "description": "Hides the label visually while keeping it announced by screen readers."
     },
     {
-      "name": "size",
-      "type": "'s' | 'm' | 'l'",
-      "default": "m",
-      "description": "Visual size."
-    },
-    {
       "name": "invalid",
       "type": "boolean",
       "default": false,
@@ -143,17 +149,17 @@
       "name": "isLoading",
       "type": "boolean",
       "default": false,
-      "description": "Async validation in progress."
+      "description": "Async validation in progress: locks the field and shows a spinner where iconEnd sits (aria-busy)."
     },
     {
       "name": "icon",
       "type": "TablerIcon | undefined",
-      "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18)."
+      "description": "Leading icon, passed by reference. Rendered via the Icon component at 16px (one field size, m)."
     },
     {
       "name": "iconEnd",
       "type": "TablerIcon | undefined",
-      "description": "Trailing icon. Same field-size-derived sizing as icon."
+      "description": "Trailing icon. 16px, like icon."
     },
     {
       "name": "description",
@@ -193,14 +199,7 @@
       "unit": "px",
       "note": "Shared field scale. Keep these values aligned with Select and Textarea density docs."
     },
-    "width": {
-      "default": "hug",
-      "modes": {
-        "hug": "Width shrinks to content or container constraints.",
-        "fill": "Width expands to 100% when fullWidth=true.",
-        "fixed": "Explicit width set by the consumer."
-      }
-    }
+    "width": {"default": "fixed", "value": 320, "unit": "px", "modes": {"fixed": "320px — every form field shares it and never grows or shrinks with its content (owner's rule 2026-10-21, form-field pattern); max-width 100% so a narrow container can still hold it.", "fill": "fullWidth=true: 100% of the container (Figma: drawn at 600px, the field and its popup on Fill so they stretch)."}, "exceptions": "A field that must be narrower (a number stepper, a short code) says so here, with its width and why — the only way off 320px."}
   },
   "tokenPolicy": {
     "allowed": [
@@ -259,6 +258,9 @@
           "aria-invalid": [
             "true"
           ],
+          "aria-busy": [
+            "true"
+          ],
           "aria-required": [
             "true"
           ]
@@ -268,7 +270,12 @@
             "alert"
           ]
         },
-        "input-label": {
+        "input-spinner": {
+          "aria-hidden": [
+            "true"
+          ]
+        },
+        "input-required": {
           "aria-hidden": [
             "true"
           ]
@@ -278,8 +285,8 @@
         "textbox \"Email\"",
         "textbox \"Email\" [disabled]: user@company.com",
         "textbox \"Email\" [invalid]: not-an-email",
-        "textbox \"Password\"",
-        "textbox \"Full name\""
+        "textbox \"Username\" [disabled]: marta",
+        "textbox \"Password\""
       ],
       "contrast": {
         "input-label": {
@@ -291,14 +298,18 @@
           "dark": "16.29:1 — #f1f5f9 on #0f172a"
         },
         "input-description": {
-          "light": "7.24:1 — #475569 on #f8fafc",
-          "dark": "5.7:1 — #94a3b8 on #1e293b"
+          "light": "2.56:1 — #94a3b8 on #ffffff",
+          "dark": "2.35:1 — #475569 on #0f172a"
         },
         "input-error": {
           "light": "6.47:1 — #b91c1c on #ffffff",
           "dark": "12.65:1 — #fecdd3 on #0f172a"
         },
         "input-icon (icon m)": {
+          "light": "7.58:1 — #475569 on #ffffff",
+          "dark": "6.96:1 — #94a3b8 on #0f172a"
+        },
+        "input-spinner (icon m)": {
           "light": "7.58:1 — #475569 on #ffffff",
           "dark": "6.96:1 — #94a3b8 on #0f172a"
         },
@@ -324,7 +335,7 @@
         }
       },
       "targetSize": {
-        "input-field": "smallest 156×22 px"
+        "input-field": "smallest 169×22 px"
       },
       "motion": [
         "CSS transitions/animations: neutralised by the global prefers-reduced-motion rule"
@@ -355,27 +366,35 @@
     }
   },
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "focus",
-      "invalid",
-      "disabled"
-    ],
+    "states": ["default", "hover", "focus"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "focus",
-          "invalid",
-          "disabled"
-        ],
+        "values": ["default", "hover", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code; invalid and disabled are the `invalid`/`disabled` props."
+        "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. invalid,  disabled and the secondary toggles are their own false/true variants (contracts/figma-conversion.json,  pattern form-field)."
       }
-    ]
+    ],
+    "propertyMap": {
+      "value": {"codeType": "string (native <input> value)", "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "filled"]}, {"name": "value", "type": "TEXT"}], "approved": "2026-10-21", "reason": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn in every state the empty field has (hover, focus, invalid, disabled — text/disabled there) (owner's rule 2026-10-21: one set of rules for every form field)"},
+      "type": {"codeType": "string (native <input> type)", "figma": [], "approved": "2026-10-21", "reason": "text, email, password, search… — how the browser treats the input, not a look"},
+      "placeholder": {"codeType": "string (native <input> placeholder)", "figma": [{"name": "placeholder", "type": "TEXT"}], "approved": "2026-10-21", "reason": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"}
+    },
+    "structure": "input-root (8px gap) > input-label (input-label-text Body/m/Medium + input-required),  input-wrapper (input-icon,  input-field,  input-icon-end,  input-spinner),  input-description,  input-error (Body/s/Regular).",
+    "variantCombinations": "32 variants (2026-10-21,  one size since the owner removed s and l — form fields share one size set): invalid false/true × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with hideLabel false/true × fullWidth false/true = 28,  plus isLoading=true at state default,  valid,  enabled for each hideLabel × fullWidth = 4 (code disables the field while it loads). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads).",
+    "stories": {
+      "Default": "default",
+      "WithDescription": "description.=true",
+      "WithLeadingIcon": "icon.=true",
+      "WithTrailingIcon": "iconEnd.=true",
+      "SearchInput": "hideLabel=true, icon.=true, fullWidth=true",
+      "Invalid": "invalid=true, errorMessage.=true, icon.=true",
+      "Required": "required=true, icon.=true",
+      "Disabled": "disabled=true, description.=true",
+      "Loading": "isLoading=true, description.=true",
+      "LoginFormPattern": "layout",
+      "KeyboardFocus": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }
