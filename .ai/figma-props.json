@@ -842,6 +842,18 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "value",
           "type": "VARIANT",
           "values": [
@@ -1159,6 +1171,18 @@
         {
           "name": "required",
           "type": "BOOLEAN"
+        },
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
         },
         {
           "name": "value",

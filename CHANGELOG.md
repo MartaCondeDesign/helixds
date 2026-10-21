@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' into claude/figma-select-multiselect-a56b2d (latest commit)
+- 2026-10-21 — Select and MultiSelect: options = 2–7 VARIANT (listCount) — state=open draws the listbox (Menu part, MenuItem rows) with that many options, other states options=5; Select 80 variants, MultiSelect 152; propstar.js sizes rows by absolute layers too (latest commit)
+- 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' into claude/figma-select-multiselect-a56b2d ([`7fc9565`](https://github.com/MartaCondeDesign/helixds/commit/7fc9565))
 - 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))
 - 2026-10-21 — list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop ([`6997dc5`](https://github.com/MartaCondeDesign/helixds/commit/6997dc5))
 - 2026-10-21 — Select and MultiSelect: fullWidth and hideLabel drawn at every value, invalid, state and disabled in Figma (Select 40 variants, MultiSelect 72; fullWidth at 320px like Input) with their Propstar tables regenerated ([`7e1bfcb`](https://github.com/MartaCondeDesign/helixds/commit/7e1bfcb))
