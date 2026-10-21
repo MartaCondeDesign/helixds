@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma, overlays and rest (owner-approved): Modal (content → children, *Action → *ActionLabel with the nested Buttons exposed — approved exception), SidePanel and Card (content → children), Accordion (disabled out of state), AppShell (sidenav / topbar booleans), Menu becomes a set with multiple false/true. figma:snapshot --merge updates only the components read. 173/177 props match; Chart label, Icon and Tooltip placement wait for the owner (latest commit)
+- 2026-10-21 — figma-sync: overlays and rest synced (latest commit)
+- 2026-10-21 — Figma, overlays and rest (owner-approved): Modal (content → children, *Action → *ActionLabel with the nested Buttons exposed — approved exception), SidePanel and Card (content → children), Accordion (disabled out of state), AppShell (sidenav / topbar booleans), Menu becomes a set with multiple false/true. figma:snapshot --merge updates only the components read. 173/177 props match; Chart label, Icon and Tooltip placement wait for the owner ([`2b697a9`](https://github.com/MartaCondeDesign/helixds/commit/2b697a9))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' of https://github.com/MartaCondeDesign/helixds into claude/affectionate-swartz-794ede ([`907801e`](https://github.com/MartaCondeDesign/helixds/commit/907801e))
 - 2026-10-21 — figma-sync: action batch synced ([`4be496f`](https://github.com/MartaCondeDesign/helixds/commit/4be496f))
 - 2026-10-20 — Update CHANGELOG.md for #19 ([`3917e08`](https://github.com/MartaCondeDesign/helixds/commit/3917e08))

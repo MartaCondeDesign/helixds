@@ -13,12 +13,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state (default/focus/disabled), colors from .ai/figma-expected/Accordion.json light+dark incl. the real disabled tokens, layout + binding passed.",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state (default/focus/disabled), colors from .ai/figma-expected/Accordion.json light+dark incl. the real disabled tokens, layout + binding passed. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children; disabled out of state (6 variants).",
       "compSetId": "468:42",
-      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
@@ -40,12 +40,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances. UPDATED IN PLACE 2026-10-03: layers renamed to the code anatomy (app-shell-right-col -> app-shell-content, app-shell-content -> app-shell-main), main gets its 24px padding (spacing/l, was 0 with a centered placeholder), root fill/page bound; sample content is now a PageHeader + Card instance. SideNav/TopBar instances follow their rebuilt components. Audit passed (colors, spacing, fallbacks). RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks).",
+      "notes": "Built 2026-08-25 on its own Figma page (\"AppShell\") — the full page composition: a real SideNav INSTANCE (left, full height) + a right column with a real TopBar INSTANCE (top) + a content-placeholder area — reusing the actual SideNav/TopBar components built earlier, not redrawn. No variant/size prop of its own; component.appShell has no tokens in code either (pure layout composition, no own colors), matching that Figma has nothing bound at the shell level beyond the content area's fill/page. REVIEWED 2026-10-02: only layout height rules changed (100vh shell, min-height 0) — no visual change; it reuses the updated SideNav/TopBar instances. UPDATED IN PLACE 2026-10-03: layers renamed to the code anatomy (app-shell-right-col -> app-shell-content, app-shell-content -> app-shell-main), main gets its 24px padding (spacing/l, was 0 with a centered placeholder), root fill/page bound; sample content is now a PageHeader + Card instance. SideNav/TopBar instances follow their rebuilt components. Audit passed (colors, spacing, fallbacks). RE-AUDITED 2026-10-20: code changes since the last sync are the WCAG 1.4.10 reflow rules (wrap / stack below 768px, min-width 0) — the desktop composition Figma shows is unchanged. Audit passed (colors, spacing, spacers, borders, fallbacks). UPDATED 2026-10-21 by the conversion standard v1.4: sidenav / topbar booleans show or hide the SideNav and TopBar instances.",
       "compSetId": "334:4",
-      "syncedCommit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "ad48e00c551b0ad7cc55ca9276b37ed732c86456",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
@@ -170,14 +170,14 @@
       "figmaNodeId": "326:20",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-03",
-      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content. REBUILT 2026-10-03: padding (default/none) VARIANT x header BOOLEAN; 340px wide (story width), fill/page, border/neutral, radius/l, Heading / l / Bold header, Body / m / Regular body. Code restructured in the same pass so the header is a real show/hide part: the 24px top padding moved from header/body onto card-root, header 0 24 8 24, body 0 24 24 24 (padding=none: root 0, header keeps 24 top, body 0) — geometry measured identical before/after in all four combos. Audit passed; Propstar table 430:818.",
+      "lastChecked": "2026-10-20",
+      "notes": "Built 2026-08-25 on its own Figma page (\"Card\") — padding (default/none) x header (true/false), matching CardPadding and the optional `header` prop exactly. Fill, border, radius, padding bound to real variables against component.card.*; card-header keeps its own padding always (matches globals.css: only card-body respects padding=none). Properties: children (TEXT, body content) and headerText (TEXT, header content — only meaningful on header=true variants). RESYNCED 2026-10-02: header has no bottom border, paddingBottom 8px (spacing/50), text 'Heading / l / Bold' (new style); body text 'Body / m / Regular'; with a header the body drops its top padding; header/body/root hug content. REBUILT 2026-10-03: padding (default/none) VARIANT x header BOOLEAN; 340px wide (story width), fill/page, border/neutral, radius/l, Heading / l / Bold header, Body / m / Regular body. Code restructured in the same pass so the header is a real show/hide part: the 24px top padding moved from header/body onto card-root, header 0 24 8 24, body 0 24 24 24 (padding=none: root 0, header keeps 24 top, body 0) — geometry measured identical before/after in all four combos. Audit passed; Propstar table 430:818. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children.",
       "compSetId": "429:28",
-      "syncedCommit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "f736b68364ebbe68dccf56d7384815fe6c1ec8b5",
-        "date": "2026-10-03",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+        "date": "2026-10-20",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -185,7 +185,9 @@
           "states": 0,
           "parity": 0,
           "border": 0,
-          "fallback": 0
+          "fallback": 0,
+          "layout": 0,
+          "binding": 0
         }
       }
     },
@@ -437,12 +439,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision).",
-      "compSetId": "470:14",
-      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision). UPDATED 2026-10-21 by the conversion standard v1.4: now a set with multiple false/true (2 variants).",
+      "compSetId": "635:990",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
@@ -464,12 +466,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): title Heading / xl / Bold (24px — owner raised it from l, tokens + Figma); footer gap rebound to spacing/2xs (code's modal.footerGap). Colors light+dark from .ai/figma-expected/Modal.json (Opened story). Passed.",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): title Heading / xl / Bold (24px — owner raised it from l, tokens + Figma); footer gap rebound to spacing/2xs (code's modal.footerGap). Colors light+dark from .ai/figma-expected/Modal.json (Opened story). Passed. UPDATED 2026-10-21 by the conversion standard v1.4: props renamed to code (children, *ActionLabel) and the three action Buttons exposed.",
       "compSetId": "471:6",
-      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
@@ -707,12 +709,12 @@
       "variantsMatch": true,
       "tokensMatch": true,
       "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): placement right/bottom, title Heading / xl / Bold (24px, like Modal — owner's choice). Colors light+dark from .ai/figma-expected/SidePanel.json. Passed.",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): placement right/bottom, title Heading / xl / Bold (24px, like Modal — owner's choice). Colors light+dark from .ai/figma-expected/SidePanel.json. Passed. UPDATED 2026-10-21 by the conversion standard v1.4: content renamed children.",
       "compSetId": "472:29",
-      "syncedCommit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
       "audit": {
         "pass": true,
-        "commit": "aaa2fea09dbd56a053ec59a13446788ea43ba80e",
+        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
         "date": "2026-10-20",
         "counts": {
           "colors": 0,
