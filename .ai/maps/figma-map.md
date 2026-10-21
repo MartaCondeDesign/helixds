@@ -5,8 +5,8 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 225 of 225 code props match Figma exactly.**
-**Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
+**Parity today: 225 of 226 code props match Figma exactly.**
+**Story coverage: 183 of 186 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
 
@@ -77,7 +77,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, stable)
+### AppShell (`v1.0.0`, beta)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -86,6 +86,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot · `slot` | ✓ |
 | `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot · `slot` | ✓ |
 | `children` | `React.ReactNode` | — no Figma property | another component or free content placed inside — not a property · `nested` | — |
+| `sidenavExpanded` | `boolean \| undefined` | `VARIANT` `sidenavExpanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `defaultSidenavExpanded` | `boolean` | — no Figma property | the uncontrolled twin of `sidenavExpanded` — only the starting value, Figma shows that prop · `skip` | — |
+| `onSidenavExpandedChange` | `(expanded: boolean) => void` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
@@ -94,11 +97,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook props:** ✓ the same props as the contract
 
-**Stories → Figma:** ✓ all 1 stories
+**Stories → Figma:** ✗ 3 of 4 without an approved Figma representation
 
 - `Default` → ✓ `sidenav=true, topbar=true`
+- `Collapsed` → ✗ `below 768px — SideNav hidden, menu button in the TopBar, sidenavExpanded=false` — no Figma property `below 768px — SideNav hidden`, `menu button in the TopBar` for this component
+- `Expanded` → ✗ `below 768px — SideNav open over the content, sidenavExpanded=true` — no Figma property `below 768px — SideNav open over the content` for this component
+- `KeyboardNavigation` → ✗ no Figma representation recorded — ask the owner (contract figma.stories)
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-nav`, `app-shell-content`, `app-shell-main`
 
 ### Avatar (`v1.0.0`, stable)
 
@@ -906,7 +912,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 
-### SideNav (`v1.0.0`, stable)
+### SideNav (`v1.0.0`, beta)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -1115,7 +1121,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
-### TopBar (`v1.0.0`, stable)
+### TopBar (`v1.0.0`, beta)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -1135,6 +1141,6 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 - `Default` → ✓ `start=true, end=true`
 
-**Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-start`, `topbar-end`
+**Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-menu`, `topbar-start`, `topbar-end`
 
 <!-- /helix:figma-map-components -->

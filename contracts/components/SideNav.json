@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "SideNav",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "beta",
 
   "purpose": "The persistent vertical navigation rail of an app shell — brand mark, primary nav entries, and a footer slot for the current user.",
   "import": "import { SideNav } from '@helixds/react';",
@@ -33,7 +33,7 @@
   },
 
   "anatomy": [
-    { "part": "side-nav-root",   "element": "nav", "description": "Root — always a native <nav>, fixed width." },
+    { "part": "side-nav-root",   "element": "nav", "description": "Root — always a native <nav>, fixed width, with a 1px right border (sideNav.border) dividing it from the content." },
     { "part": "side-nav-brand",  "element": "div", "description": "Logo/product-name slot at the top.", "optional": true },
     { "part": "side-nav-items",  "element": "div", "description": "Wraps the NavItem list (children)." },
     { "part": "side-nav-footer", "element": "div", "description": "Slot at the bottom — typically the current user row.", "optional": true }

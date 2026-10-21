@@ -1,19 +1,15 @@
 {
   "$schema": "../component.schema.json",
-  "name":    "AppShell",
+  "name": "AppShell",
   "version": "1.0.0",
-  "status":  "stable",
-
+  "status": "beta",
   "purpose": "The top-level page shell — composes a SideNav, a TopBar, and the scrollable main content into one consistent full-height layout. Never write `display: flex; min-height: 100vh` by hand again.",
   "import": "import { AppShell } from '@helixds/react';",
-
   "neverUseFor": [
     "A single content section inside an already-shelled page — AppShell is used once, at the page root",
     "Auth/marketing pages with no persistent nav — a page with no SideNav should just render its content directly, not force an empty shell"
   ],
-
   "rationale": "AppShell exists so no page hand-writes `display: flex; min-height: 100vh` again: it fixes one composition of SideNav, TopBar and a single scrollable <main>, which guarantees exactly one main landmark per page (WCAG 2.4.1 Bypass Blocks) and a consistent scroll container across every product screen.",
-
   "governance": {
     "mayExtendLocally": [
       "Choose which SideNav entries and TopBar actions a product renders",
@@ -23,36 +19,104 @@
     "mustEscalateToDS": [
       "Adding new shell regions (e.g. a right rail or a footer bar)",
       "Changing which element scrolls or rendering more than one <main>",
-      "Nesting AppShell inside another layout or page"
+      "Nesting AppShell inside another layout or page",
+      "Changing the 768px collapse breakpoint or how the collapsed SideNav opens"
     ]
   },
-
   "states": {
     "intrinsic": [],
-    "authored": []
+    "authored": [
+      {
+        "name": "sidenavExpanded",
+        "description": "Below primitive.breakpoint.tablet (768px of the shell's own width) the SideNav collapses out of view and the TopBar shows a menu IconButton (IconMenu2) that opens it over the content. Uncontrolled via `defaultSidenavExpanded`, or controlled via `sidenavExpanded`/`onSidenavExpandedChange` — same pattern as Accordion's `expanded`. At 768px and wider the SideNav is always shown and this state has no visible effect.",
+        "aria": "aria-expanded + aria-controls (the app-shell-nav id) on the TopBar's menu button"
+      }
+    ]
   },
-
   "anatomy": [
-    { "part": "app-shell-root",    "element": "div",  "description": "Root — full-viewport-height flex row." },
-    { "part": "app-shell-content", "element": "div",  "description": "Flex column beside the sidenav — wraps the topbar and main." },
-    { "part": "app-shell-main",    "element": "main", "description": "Scrollable main content region." }
+    {
+      "part": "app-shell-root",
+      "element": "div",
+      "description": "Root — full-viewport-height flex row, and the size container (`app-shell`) the collapse responds to."
+    },
+    {
+      "part": "app-shell-nav",
+      "element": "div",
+      "description": "Wraps the sidenav slot. Below 768px it's taken out of the flow and slides in over the content, under the TopBar, when sidenavExpanded is true; hidden (visibility) when collapsed so its links aren't tabbable.",
+      "optional": true
+    },
+    {
+      "part": "app-shell-content",
+      "element": "div",
+      "description": "Flex column beside the sidenav — wraps the topbar and main."
+    },
+    {
+      "part": "app-shell-main",
+      "element": "main",
+      "description": "Scrollable main content region."
+    }
   ],
-
   "props": [
-    { "name": "sidenav",  "type": "React.ReactNode | undefined", "description": "A SideNav instance, rendered to the left." },
-    { "name": "topbar",   "type": "React.ReactNode | undefined", "description": "A TopBar instance, rendered above the main content." },
-    { "name": "children", "type": "React.ReactNode", "required": true, "description": "The page's main content." },
-    { "name": "className", "type": "string | undefined", "description": "Additional className for the root." }
+    {
+      "name": "sidenav",
+      "type": "React.ReactNode | undefined",
+      "description": "A SideNav instance, rendered to the left."
+    },
+    {
+      "name": "topbar",
+      "type": "React.ReactNode | undefined",
+      "description": "A TopBar instance, rendered above the main content."
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "The page's main content."
+    },
+    {
+      "name": "sidenavExpanded",
+      "type": "boolean | undefined",
+      "description": "Controlled: whether the collapsed SideNav is open (below 768px only). Leave unset for uncontrolled (see `defaultSidenavExpanded`)."
+    },
+    {
+      "name": "defaultSidenavExpanded",
+      "type": "boolean",
+      "default": "false",
+      "description": "Initial open state of the collapsed SideNav, for uncontrolled usage."
+    },
+    {
+      "name": "onSidenavExpandedChange",
+      "type": "(expanded: boolean) => void",
+      "description": "Fires whenever the collapsed SideNav opens or closes — the menu button, Escape, following a nav link or tabbing out of it."
+    },
+    {
+      "name": "className",
+      "type": "string | undefined",
+      "description": "Additional className for the root."
+    }
   ],
-
   "tokenPolicy": {
-    "allowed":   ["color.fill"],
-    "forbidden": ["primitive.color"]
+    "allowed": [
+      "color.fill"
+    ],
+    "forbidden": [
+      "primitive.color"
+    ]
   },
-
   "a11y": {
     "role": "main (implicit from <main> on app-shell-main — exactly one per page)",
-    "wcag": ["1.3.1 Info and Relationships", "2.4.1 Bypass Blocks"],
+    "keyboardNav": [
+      "Enter / Space on the TopBar's menu button — opens/closes the collapsed SideNav (native <button>); opening moves focus to the nav's current (or first) link",
+      "Escape inside the open SideNav or on the menu button — closes it and returns focus to the menu button",
+      "Tab past the open SideNav's last link — closes it and lands on the menu button (focus leaving the nav closes it)"
+    ],
+    "wcag": [
+      "1.3.1 Info and Relationships",
+      "2.4.1 Bypass Blocks",
+      "4.1.2 Name, Role, Value",
+      "2.1.1 Keyboard",
+      "1.4.10 Reflow"
+    ],
     "applied": {
       "nativeElement": "div",
       "innerComponents": [
@@ -86,9 +150,9 @@
       "meetsMinimum": true,
       "checks": {
         "contract": "pass",
-        "keys": "n/a",
-        "focus-return": "n/a",
-        "keyboard": "n/a",
+        "keys": "pass",
+        "focus-return": "pass",
+        "keyboard": "pass",
         "axe": "pass",
         "contrast": "pass",
         "focus-visible": "pass",
@@ -102,17 +166,35 @@
         "ai-visual",
         "human"
       ],
-      "changed": "2026-10-12"
+      "changed": "2026-10-21"
     }
   },
-
   "figma": {
-    "childProps": {"sidenav": [{"component": "SideNav", "property": null, "note": "the side navigation"}], "topbar": [{"component": "TopBar", "property": null, "note": "the top bar"}]},
-    "states": ["default"],
+    "childProps": {
+      "sidenav": [
+        {
+          "component": "SideNav",
+          "property": null,
+          "note": "the side navigation"
+        }
+      ],
+      "topbar": [
+        {
+          "component": "TopBar",
+          "property": null,
+          "note": "the top bar"
+        }
+      ]
+    },
+    "states": [
+      "default"
+    ],
     "properties": [],
     "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances).",
     "stories": {
-      "Default": "sidenav=true, topbar=true"
+      "Default": "sidenav=true, topbar=true",
+      "Collapsed": "below 768px — SideNav hidden, menu button in the TopBar, sidenavExpanded=false",
+      "Expanded": "below 768px — SideNav open over the content, sidenavExpanded=true"
     }
   }
 }

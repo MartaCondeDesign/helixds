@@ -295,9 +295,12 @@
       "children"
     ],
     "AppShell": [
+      "sidenavExpanded",
       "sidenav",
       "topbar",
-      "children"
+      "children",
+      "defaultSidenavExpanded",
+      "onSidenavExpandedChange"
     ],
     "PageHeader": [
       "level",

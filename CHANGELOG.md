@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([#23](https://github.com/MartaCondeDesign/helixds/pull/23))
+- 2026-10-21 — AppShell: divider on the SideNav and a collapsed SideNav below 768px (latest commit)
+- 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([`3129b32`](https://github.com/MartaCondeDesign/helixds/commit/3129b32))
   - View in Figma links open the public Figma Community file; README links it next to Storybook
 - 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))
   - eslint-plugin: regenerate data.json after today's contract and prop-map changes (its tests failed on main while stale)

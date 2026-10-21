@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "TopBar",
   "version": "1.0.0",
-  "status":  "stable",
+  "status":  "beta",
 
   "purpose": "The fixed-height chrome bar at the top of a page — search, quick actions, and the current user, always in the same place.",
   "import": "import { TopBar } from '@helixds/react';",
@@ -34,6 +34,7 @@
 
   "anatomy": [
     { "part": "topbar-root",  "element": "header", "description": "Root — always a native <header>, fixed height." },
+    { "part": "topbar-menu",  "element": "div",    "description": "Wraps the menu IconButton (IconMenu2, ghost, m) that opens/closes the collapsed SideNav. Rendered only inside an AppShell that has a sidenav, and only shown below 768px of the shell's width — see AppShell's sidenavExpanded. Not a prop: the AppShell provides it.", "optional": true },
     { "part": "topbar-start", "element": "div",    "description": "Leading slot — typically a search Input.", "optional": true },
     { "part": "topbar-end",   "element": "div",    "description": "Trailing slot — typically IconButtons (notifications, help, quick actions). The current user lives in SideNav's footer, not here.", "optional": true }
   ],

@@ -111,6 +111,9 @@
       "sidenav",
       "topbar",
       "children",
+      "sidenavExpanded",
+      "defaultSidenavExpanded",
+      "onSidenavExpandedChange",
       "className"
     ],
     "Avatar": [

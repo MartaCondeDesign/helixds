@@ -138,6 +138,36 @@
         "rule": "nested",
         "why": "another component or free content placed inside — not a property"
       },
+      "sidenavExpanded": {
+        "description": "Controlled: whether the collapsed SideNav is open (below 768px only). Leave unset for uncontrolled (see `defaultSidenavExpanded`).",
+        "figma": [
+          {
+            "name": "sidenavExpanded",
+            "type": "VARIANT",
+            "values": [
+              "false",
+              "true"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "look-boolean",
+        "why": "changes the look → false/true toggle"
+      },
+      "defaultSidenavExpanded": {
+        "description": "Initial open state of the collapsed SideNav, for uncontrolled usage.",
+        "figma": null,
+        "codeOnly": true,
+        "rule": "skip",
+        "why": "the uncontrolled twin of sidenavExpanded — only the starting value, Figma shows that prop"
+      },
+      "onSidenavExpandedChange": {
+        "description": "Fires whenever the collapsed SideNav opens or closes — the menu button, Escape, following a nav link or tabbing out of it.",
+        "figma": null,
+        "codeOnly": true,
+        "rule": "skip",
+        "why": "an event handler — behaviour, nothing to draw"
+      },
       "className": {
         "description": "Additional className for the root.",
         "figma": null,
@@ -3620,6 +3650,24 @@
         "layout": false,
         "ok": true,
         "why": ""
+      },
+      "Collapsed": {
+        "figma": "below 768px — SideNav hidden, menu button in the TopBar, sidenavExpanded=false",
+        "layout": false,
+        "ok": false,
+        "why": "no Figma property `below 768px — SideNav hidden`, `menu button in the TopBar` for this component"
+      },
+      "Expanded": {
+        "figma": "below 768px — SideNav open over the content, sidenavExpanded=true",
+        "layout": false,
+        "ok": false,
+        "why": "no Figma property `below 768px — SideNav open over the content` for this component"
+      },
+      "KeyboardNavigation": {
+        "figma": null,
+        "layout": false,
+        "ok": false,
+        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
       }
     },
     "Avatar": {
