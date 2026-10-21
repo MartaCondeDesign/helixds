@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma audit: color parity matches variants by prop pairs too, so an axis code doesn't measure (list-count options=2…7) checks every variant that has the other pairs (latest commit)
+- 2026-10-21 — figma-sync: CheckboxGroup and RadioGroup synced with options 2–7 — Phase 6 audit passed light/dark on all 36 variants each (latest commit)
+- 2026-10-21 — Figma audit: color parity matches variants by prop pairs too, so an axis code doesn't measure (list-count options=2…7) checks every variant that has the other pairs ([`3defb1b`](https://github.com/MartaCondeDesign/helixds/commit/3defb1b))
 - 2026-10-21 — CheckboxGroup and RadioGroup in Figma: options 2–7 list-count variant (36 variants each, built from each variant's twin), Propstar tables regenerated; contracts' figma.variantCombinations updated (owner's rule 2026-10-21) ([`d4da5c8`](https://github.com/MartaCondeDesign/helixds/commit/d4da5c8))
 - 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))
 - 2026-10-21 — list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop ([`6997dc5`](https://github.com/MartaCondeDesign/helixds/commit/6997dc5))
