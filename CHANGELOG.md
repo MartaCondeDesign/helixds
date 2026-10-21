@@ -9,6 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-21 — Remove the illustrations, keep their motion tokens (#25) ([#25](https://github.com/MartaCondeDesign/helixds/pull/25))
+  - Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
   - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
@@ -88,9 +90,6 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma in sync: form fields and NavItem audited — 33 of 33 stable (#28) ([#28](https://github.com/MartaCondeDesign/helixds/pull/28))
-  - Figma expected styles measure what code really renders; Avatar and Card back to passing
-  - Figma in sync: Input, Textarea, Select, MultiSelect and NavItem audited and recorded — 33 of 33 stable
 - 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([`2001210`](https://github.com/MartaCondeDesign/helixds/commit/2001210))
   - Changelog bot re-runs CI on its own commit, so main can require CI
 - 2026-10-21 — Storybook deploy builds @helixds/tokens before @helixds/react (#27) ([`7628d2e`](https://github.com/MartaCondeDesign/helixds/commit/7628d2e))
