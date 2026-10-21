@@ -139,6 +139,8 @@ import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone 
 
 type FigmaProp = { name: string; type: string; values?: string[] };
 const snapshotPath = path.join(root, '.ai/figma-props.json');
+const storyOrderPath = path.join(root, '.ai/storybook-prop-order.json');
+const storybookOrder: Record<string, string[]> = fs.existsSync(storyOrderPath) ? JSON.parse(fs.readFileSync(storyOrderPath, 'utf-8')).components : {};
 const snapshot: Record<string, { properties: FigmaProp[] }> = fs.existsSync(snapshotPath) ? JSON.parse(fs.readFileSync(snapshotPath, 'utf-8')).components : {};
 
 function compare(e: Expected, figma: FigmaProp[] | undefined): string {
@@ -220,7 +222,16 @@ function run() {
     }
     // Property order (contracts/figma-conversion.json → propertyOrder): the code order, as Storybook's Controls list it.
     // Figma always shows VARIANT properties first, so each group is compared on its own; state closes the variants.
-    const expected = rows.map(r => r.match(/\| `(?:VARIANT|BOOLEAN|TEXT|INSTANCE_SWAP)` `([^`]+)`/)?.[1]).filter(Boolean) as string[];
+    // The reference order is Storybook's (pnpm figma:story-order → .ai/storybook-prop-order.json): the props table the
+    // owner compares Figma against — not the contract's order, which Storybook doesn't follow. Contract order only
+    // breaks ties / covers a component Storybook hasn't been read for.
+    const storyOrder = storybookOrder[contract.name] ?? [];
+    const at = (prop: string) => { const i = storyOrder.indexOf(prop); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
+    const expected = rows
+      .map((r, i) => ({ i, prop: r.match(/^\| `([^`]+)`/)?.[1] ?? '', fig: r.match(/\| `(?:VARIANT|BOOLEAN|TEXT|INSTANCE_SWAP)` `([^`]+)`/)?.[1] }))
+      .filter(x => x.fig)
+      .sort((a, b) => at(a.prop) - at(b.prop) || a.i - b.i)
+      .map(x => x.fig) as string[];
     const kind = (n: string) => figma?.find(f => f.name === n)?.type;
     const dedupe = (a: string[]) => [...new Set(a)];
     const want = { variants: [...dedupe(expected.filter(n => kind(n) === 'VARIANT')), ...(figma?.some(f => f.name === 'state') ? ['state'] : [])], others: dedupe(expected.filter(n => kind(n) && kind(n) !== 'VARIANT')) };
