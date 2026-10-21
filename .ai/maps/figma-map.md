@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 209 of 218 code props match Figma exactly.**
+**Parity today: 211 of 218 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -259,7 +259,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
-| `options` | `ChipGroupOption[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `ChipGroupOption[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
@@ -527,7 +527,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | — no Figma property | exception, approved 2026-10-20 — the group's aria-label — never drawn; the visible text is each item's own label (segmented-control-item-label) | — |
-| `options` | `SegmentedControlOption[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `SegmentedControlOption[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `((value: string) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |

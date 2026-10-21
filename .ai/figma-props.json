@@ -522,6 +522,18 @@
       "page": "ChipGroup",
       "properties": [
         {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
+        {
           "name": "size",
           "type": "VARIANT",
           "values": [
@@ -1084,6 +1096,18 @@
       "type": "COMPONENT_SET",
       "page": "SegmentedControl",
       "properties": [
+        {
+          "name": "options",
+          "type": "VARIANT",
+          "values": [
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ]
+        },
         {
           "name": "disabled",
           "type": "VARIANT",

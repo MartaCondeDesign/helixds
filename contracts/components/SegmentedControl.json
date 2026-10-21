@@ -174,6 +174,6 @@
         "reason": "the group's aria-label — never drawn; the visible text is each item's own label (segmented-control-item-label)"
       }
     },
-    "variantCombinations": "2 variants (2026-10-21): disabled false/true,  no state axis (pattern group). label is the aria-label: no Figma property."
+    "variantCombinations": "12 variants (2026-10-21): options (2–7 SegmentedControlItem instances, the first checked; list-count) × disabled false/true,  no state axis (pattern group). label is the aria-label: no Figma property."
   }
 }
