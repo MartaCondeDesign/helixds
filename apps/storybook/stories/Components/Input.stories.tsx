@@ -22,12 +22,10 @@ const meta: Meta<typeof Input> = {
   // matching Select/Textarea's own stories.
   args: {
     label:    'Label',
-    size:     'm',
     onChange: fn(),
     className: 'w-[300px]',
   },
   argTypes: {
-     size:      { control: 'select', options: ['s', 'm', 'l'] },
     invalid:   { control: 'boolean' },
     disabled:  { control: 'boolean' },
     required:  { control: 'boolean' },
@@ -127,17 +125,6 @@ export const Loading: Story = {
   parameters: {
     docs: { description: { story: '`isLoading` locks the field and shows a spinner where `iconEnd` sits — the same spinner Button uses — while an async check runs (`aria-busy`).' } },
   },
-};
-
-export const Sizes: Story = {
-  parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-125)', maxWidth: '360px' }}>
-      <Input label="Small"  size="s" placeholder="size=s" icon={IconSearch} onChange={() => {}} />
-      <Input label="Medium" size="m" placeholder="size=m (default)" icon={IconSearch} onChange={() => {}} />
-      <Input label="Large"  size="l" placeholder="size=l" icon={IconSearch} onChange={() => {}} />
-    </div>
-  ),
 };
 
 export const LoginFormPattern: Story = {

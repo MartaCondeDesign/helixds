@@ -17,6 +17,7 @@
     "lint": "eslint apps",
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
+    "verify:field-sizes": "tsx scripts/verify-field-sizes.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",
     "a11y": "tsx scripts/a11y.ts",
     "a11y:contract": "tsx scripts/a11y.ts contract",

@@ -9,6 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-21 — Form fields share one size set (owner's decision 2026-10-21): Input loses s and l like Textarea, Select and MultiSelect — size prop, InputSize, the s/l CSS and component.input.height/valueFontSize.s/l removed, icons always 16px, Sizes story gone; pnpm verify:field-sizes (pre-commit) fails if one form field gets sizes the others don't; ADR-004 and CLAUDE.md say so. Figma: Input drops its s/l variants and the size axis — 32 variants, Propstar regenerated; propstar.js never makes a column narrower than its label (latest commit)
 - 2026-10-20 — Textarea has one size (owner's decision): size prop, TextareaSize type, the s/l CSS and component.textarea.text.valueFontSize.s/l removed (like Select and MultiSelect, which never had sizes); ADR-004 says so; Sizes story gone. Figma: Textarea drops its s and l variants and the size axis — 12 variants ([`bd845cd`](https://github.com/MartaCondeDesign/helixds/commit/bd845cd))
 - 2026-10-20 — Disabled is exempt from color contrast (owner's decision, WCAG 1.4.3 inactive components): CLAUDE.md rule 9 says so, and the test-runner drops color-contrast nodes inside [disabled]/[data-disabled]/[aria-disabled=true] — axe alone only exempted a disabled control's own label, so a disabled Checkbox description dropped CheckboxGroup to draft ([`7e1c81f`](https://github.com/MartaCondeDesign/helixds/commit/7e1c81f))
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
@@ -93,7 +94,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma: Textarea (112 variants: fullWidth × hideLabel × resize at every state, plus disabled) and Switch (32: hideLabel at every size, checked and state, plus disabled) drawn per the secondary-toggle rule, Propstar tables regenerated; contracts' variantCombinations updated (latest commit)
+- 2026-10-21 — Figma: Textarea (112 variants: fullWidth × hideLabel × resize at every state, plus disabled) and Switch (32: hideLabel at every size, checked and state, plus disabled) drawn per the secondary-toggle rule, Propstar tables regenerated; contracts' variantCombinations updated ([`1dccf68`](https://github.com/MartaCondeDesign/helixds/commit/1dccf68))
 - 2026-10-21 — Merge remote branch ([`adcd091`](https://github.com/MartaCondeDesign/helixds/commit/adcd091))
 - 2026-10-21 — scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table ([`5613263`](https://github.com/MartaCondeDesign/helixds/commit/5613263))
 - 2026-10-21 — Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size ([`148aa95`](https://github.com/MartaCondeDesign/helixds/commit/148aa95))

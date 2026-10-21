@@ -11,7 +11,7 @@
     "Date/time entry — use DatePicker"
   ],
 
-  "rationale": "Input wraps a native <input> and sits on the shared field scale (24/32/40px) so it aligns with Select and Textarea in any form. Label, helper and error text are wired through the component so 3.3.1 and 3.3.2 hold by default, and width is hug or fill — never a tokenized fixed width.",
+  "rationale": "Input wraps a native <input> and has one size — the field scale's m (32px), like Select, MultiSelect and Textarea (owner's decision 2026-10-21: form fields share one size set; if one gets more sizes, all do) — so it aligns with them in any form. Label, helper and error text are wired through the component so 3.3.1 and 3.3.2 hold by default, and width is hug or fill — never a tokenized fixed width.",
 
   "governance": {
     "mayExtendLocally": [
@@ -128,12 +128,6 @@
       "description": "Hides the label visually while keeping it announced by screen readers."
     },
     {
-      "name": "size",
-      "type": "'s' | 'm' | 'l'",
-      "default": "m",
-      "description": "Visual size."
-    },
-    {
       "name": "invalid",
       "type": "boolean",
       "default": false,
@@ -160,12 +154,12 @@
     {
       "name": "icon",
       "type": "TablerIcon | undefined",
-      "description": "Leading icon, passed by reference. Rendered via the Icon component, sized to match field size (s=16, m=16, l=18)."
+      "description": "Leading icon, passed by reference. Rendered via the Icon component at 16px (one field size, m)."
     },
     {
       "name": "iconEnd",
       "type": "TablerIcon | undefined",
-      "description": "Trailing icon. Same field-size-derived sizing as icon."
+      "description": "Trailing icon. 16px, like icon."
     },
     {
       "name": "description",
@@ -398,6 +392,6 @@
       }
     },
     "structure": "input-root (8px gap) > input-label (input-label-text Body/m/Medium + input-required),  input-wrapper (input-icon,  input-field,  input-icon-end,  input-spinner),  input-description,  input-error (Body/s/Regular).",
-    "variantCombinations": "24 variants (2026-10-20): size s/m/l × invalid false/true × state default/hover/focus = 18,  disabled per size at default = 3,  and hideLabel / fullWidth / isLoading drawn once each at size m,  default,  valid,  enabled = 3 (the standard rules). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads)."
+    "variantCombinations": "32 variants (2026-10-21,  one size since the owner removed s and l — form fields share one size set): invalid false/true × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with hideLabel false/true × fullWidth false/true = 28,  plus isLoading=true at state default,  valid,  enabled for each hideLabel × fullWidth = 4 (code disables the field while it loads). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads)."
   }
 }

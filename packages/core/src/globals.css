@@ -615,9 +615,6 @@
       border-width var(--helix-primitive-duration-base) var(--helix-primitive-easing-base),
       box-shadow   var(--helix-primitive-duration-base) var(--helix-primitive-easing-base);
   }
-  [data-helix-part="input-wrapper"][data-size="s"] { height: var(--helix-input-height-s); }
-  [data-helix-part="input-wrapper"][data-size="m"] { height: var(--helix-input-height-m); }
-  [data-helix-part="input-wrapper"][data-size="l"] { height: var(--helix-input-height-l); }
   /* :not(:focus-within) — without it, hover's own specificity (4 compound selectors) beats the
      focus rule below (3), so a focused-AND-hovered field silently fell back to the gray hover
      border instead of staying blue. Hover must yield whenever the field is actually focused. */
@@ -686,17 +683,8 @@
        fixed height, so it can never make the wrapper taller than its token. */
     height:           100%;
   }
-  /* line height from the shared scale per size (lineHeight-s/m/l = Figma's lineHeight/s/m/l) — owner's choice 2026-10-20 */
+  /* line height from the shared scale (lineHeight-m = Figma's lineHeight/m) — one size, m: form fields share one size set */
   [data-helix-part="input-field"]                  { line-height: var(--helix-lineHeight-m); }
-  [data-helix-part="input-field"][data-size="s"] {
-    font-size:   var(--helix-input-text-valueFontSize-s);
-    line-height: var(--helix-lineHeight-s);
-  }
-  [data-helix-part="input-field"][data-size="l"] {
-    font-size: var(--helix-input-text-valueFontSize-l);
-    line-height: var(--helix-lineHeight-l);
-    padding:   0 var(--helix-primitive-spacing-100);
-  }
   [data-helix-part="input-field"]::placeholder {
     color: var(--helix-input-text-placeholder);
   }

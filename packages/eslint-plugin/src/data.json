@@ -234,7 +234,6 @@
     "Input": [
       "label",
       "hideLabel",
-      "size",
       "invalid",
       "disabled",
       "required",
@@ -749,7 +748,6 @@
     "Input",
     "InputDoc",
     "InputProps",
-    "InputSize",
     "Menu",
     "MenuDoc",
     "MenuOption",
