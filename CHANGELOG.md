@@ -135,6 +135,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - figma-sync: action batch synced
   - Figma, overlays and rest (owner-approved): Modal (content → children, *Action → *ActionLabel with the nested Buttons exposed — approved exception), SidePanel and Card (content → children), Accordion (disabled out of state), AppShell (sidenav / topbar booleans), Menu becomes a set with multiple false/true. figma:snapshot --merge updates only the components read. 173/177 props match; Chart label, Icon and Tooltip placement wait for the owner
   - figma-sync: overlays and rest synced
+  - figma-sync: RadioGroup re-synced after the invalid-hover CSS fix
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
