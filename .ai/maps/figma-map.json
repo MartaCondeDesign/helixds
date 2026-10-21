@@ -740,7 +740,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -1013,7 +1012,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -1087,7 +1085,6 @@
             "name": "actions",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -1545,7 +1542,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -1754,7 +1750,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -2226,7 +2221,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -2376,7 +2370,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",
@@ -2462,7 +2455,6 @@
             "name": "options",
             "type": "VARIANT",
             "values": [
-              "1",
               "2",
               "3",
               "4",

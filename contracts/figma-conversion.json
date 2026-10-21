@@ -16,7 +16,7 @@
     { "id": "nested", "when": "a ReactElement, or ReactNode children of a component that isn't in textChildren", "figma": [], "why": "another component or free content, not a property" },
     { "id": "overlay-expanded", "when": "expanded on an overlay (overlays)", "figma": [], "why": "closed = not on screen; Figma draws it open" },
     { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name} (only when optional)", "INSTANCE_SWAP {name}Swap"], "why": "shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name}Swap — owner's decision 2026-10-20)" },
-    { "id": "list-count", "when": "a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array", "figma": ["VARIANT {name} = how many items: listCount.min … listCount.max"], "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)" },
+    { "id": "list-count", "when": "a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array", "figma": ["VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)"], "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)" },
     { "id": "union", "when": "a union of string or number literals", "figma": ["VARIANT {name} = the same values"], "why": "same values as code" },
     { "id": "show-hide-boolean", "when": "a boolean listed in showHideBooleans — it only shows or hides one part", "figma": ["BOOLEAN {name}"], "why": "shows / hides a part" },
     { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
@@ -38,9 +38,9 @@
   },
   "listCount": {
     "props": ["options", "actions", "avatars", "items"],
-    "min": 1,
+    "min": 2,
     "max": 7,
-    "rule": "Every list of drawn items converts to a VARIANT named like the prop whose values are the item counts (options = 1 / 2 / … / 7) — one variant per count, each item an instance of the item component, with its own example text. The range is min…max unless the contract's figma.listCount sets { \"<prop>\": { \"min\": n, \"max\": n } } (SegmentedControl starts at 2: one segment isn't a choice). A list shown only inside an overlay (Select, MultiSelect, Menu) is drawn in the open state. Data that isn't drawn item by item — selected values (value, values, defaultValue), chart categories and series — stays code only (skip)."
+    "rule": "Every list of drawn items converts to a VARIANT named like the prop whose values are the item counts (options = 2 / 3 / … / 7) — the Figma property is named exactly like that component's code prop — one variant per count, each item an instance of the item component, with its own example text. The range is 2…7 (owner's decision 2026-10-21) unless the contract's figma.listCount sets { \"<prop>\": { \"min\": n, \"max\": n } } (AvatarGroup's avatars keep 1–7, built before the rule). A list shown only inside an overlay (Select, MultiSelect, Menu) is drawn in the open state. Data that isn't drawn item by item — selected values (value, values, defaultValue), chart categories and series — stays code only (skip)."
   },
   "showHideBooleans": ["required", "showCloseButton", "showCount", "dismissible"],
   "textChildren": ["Button", "Accordion", "Modal", "SidePanel", "Card"],
