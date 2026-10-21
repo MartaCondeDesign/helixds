@@ -128,8 +128,9 @@ what lets one rule convert `required`, `description` and `errorMessage` the same
 - **Every prop says how it reaches Figma — generated, never hand-written** (owner's rule 2026-10-21):
   `pnpm docs:figma-map` writes `.ai/maps/figma-map.json` — per component, per code prop, the Figma property it
   becomes, or `codeOnly: true` with the rule and why (`defaultChecked`: the uncontrolled twin of `checked`; `id`,
-  `name`, `value`: form wiring; `on*`: behaviour). Storybook prints it under every prop in the docs table
-  (`🎨 Figma: VARIANT checked = false / true` or `⌨️ Code only — …`, `.storybook/preview.tsx` → `argTypesEnhancers`).
+  `name`, `value`: form wiring; `on*`: behaviour). Storybook shows it on every component's docs page as a
+  **Code → Figma** table right under the props (Prop · Figma · Why: `🎨 VARIANT checked = false / true` or
+  `⌨️ Code only` — `.storybook/FigmaDocsPage.tsx`; Storybook's own props table has fixed columns).
   A contract never lists this per prop — it holds only the approved exceptions (`figma.propertyMap`, `figmaOnly`),
   so the listing can't drift from the standard.
 
