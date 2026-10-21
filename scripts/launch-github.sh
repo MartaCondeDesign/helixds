@@ -28,8 +28,8 @@ else
 fi
 echo "✓ Pages source: GitHub Actions"
 
-# main: CI's `checks` job must pass (the Changelog workflow re-runs CI on its own bot commit, so PR heads
-# always get a result), no force pushes, no deletion. No required review: the maintainer is the only code
+# main: CI's `checks` job must pass (needs the changelog GitHub App, docs/github-app.md — otherwise the
+# Changelog workflow's own commit leaves each PR's head without a result), no force pushes, no deletion. No required review: the maintainer is the only code
 # owner and GitHub doesn't let anyone approve their own PR — CODEOWNERS still requests her review on
 # outside contributors' PRs, which they can't merge anyway. enforce_admins=false keeps an admin bypass.
 gh api -X PUT "repos/$REPO/branches/main/protection" --input - >/dev/null <<'JSON'

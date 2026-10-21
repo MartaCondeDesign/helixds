@@ -90,7 +90,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — AppShell: SideNav divider + collapsed SideNav with a menu button (#26) ([#26](https://github.com/MartaCondeDesign/helixds/pull/26))
+- 2026-10-21 — Changelog commits are pushed by a GitHub App, so CI runs on them (#31) ([#31](https://github.com/MartaCondeDesign/helixds/pull/31))
+  - Changelog commits are pushed by a GitHub App, so CI runs on them
+- 2026-10-21 — AppShell: SideNav divider + collapsed SideNav with a menu button (#26) ([`581b200`](https://github.com/MartaCondeDesign/helixds/commit/581b200))
   - AppShell: divider on the SideNav and a collapsed SideNav below 768px
   - AppShell, SideNav, TopBar back to stable: Layout is exempt from Figma since #24
 - 2026-10-21 — Figma in sync: form fields and NavItem audited — 33 of 33 stable (#28) ([`3c76de7`](https://github.com/MartaCondeDesign/helixds/commit/3c76de7))
