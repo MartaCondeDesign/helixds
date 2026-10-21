@@ -163,9 +163,11 @@
         "codeProp": "value",
         "description": "On SegmentedControlItem: the option whose value equals the group's `value`. Checked = the pill (fill/page) — in code a sliding motion.span."
       },
-      { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
+      { "name": "label", "type": "TEXT", "codeProp": "options[].label" },
+      { "name": "icon", "type": "VARIANT", "values": ["false", "true"], "codeProp": "options[].icon", "description": "On SegmentedControlItem (owner 2026-10-21): an icon-only option — code sets [data-icon-only] whenever an option has an icon: the icon (16px, the label's color) replaces the visible label (kept as the accessible name) and the sides drop to spacing/xs. A VARIANT, not a BOOLEAN: it also hides the label and changes the padding." },
+      { "name": "iconSwap", "type": "INSTANCE_SWAP", "codeProp": "options[].icon", "description": "On SegmentedControlItem: which icon (segmented-control-item-icon)." }
     ],
-    "structure": "SegmentedControlItem set (checked × state) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled),   4px padding and gap,   radius full.",
+    "structure": "SegmentedControlItem set (checked × icon × state, 16 variants) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled),   4px padding and gap,   radius full.",
     "propertyMap": {
       "label": {
         "codeType": "string",
@@ -179,7 +181,9 @@
       "Default": "default",
       "FourOptions": "options=4",
       "Disabled": "disabled=true",
-      "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+      "WithDisabledOption": {"figma": "layout", "reason": "one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)"},
+      "IconOnly": {"figma": "layout", "reason": "SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)"},
+      "KeyboardNavigation": {"figma": "layout", "reason": "keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21"}
     }
   }
 }

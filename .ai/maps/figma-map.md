@@ -6,7 +6,7 @@ Every Helix component prop, the Figma property it must be (same name, same kind)
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
 **Parity today: 215 of 218 code props match Figma exactly.**
-**Story coverage: 180 of 184 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
+**Story coverage: 184 of 184 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
 
@@ -519,10 +519,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Stories → Figma:** ✗ 1 of 4 without an approved Figma representation
+**Stories → Figma:** ✓ all 4 stories
 
 - `Default` → ✓ `multiple=false`
-- `Grouped` → ✗ no Figma representation recorded — ask the owner (contract figma.stories)
+- `Grouped` → ✓ layout of existing variants — MenuGroupLabel (divider=false, then divider=true) before each group's MenuItems — drawn in the child (owner 2026-10-21)
 - `Opened` → ✓ not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)
 - `States` → ✓ layout of existing variants
 
@@ -741,14 +741,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
-**Stories → Figma:** ✗ 3 of 6 without an approved Figma representation
+**Stories → Figma:** ✓ all 6 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
 - `FourOptions` → ✓ `options=4`
-- `WithDisabledOption` → ✗ no Figma representation recorded — ask the owner (contract figma.stories)
-- `IconOnly` → ✗ no Figma representation recorded — ask the owner (contract figma.stories)
+- `WithDisabledOption` → ✓ layout of existing variants — one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)
+- `IconOnly` → ✓ layout of existing variants — SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)
 - `Disabled` → ✓ `disabled=true`
-- `KeyboardNavigation` → ✗ `state=focus` — no Figma property `state` for this component
+- `KeyboardNavigation` → ✓ layout of existing variants — keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 

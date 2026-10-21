@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Merge remote-tracking branch 'origin/claude/affectionate-swartz-794ede' into claude/story-coverage-d435ae (latest commit)
+- 2026-10-21 — Figma: the last 4 stories drawn in the child components — 184/184 stories mapped (latest commit)
+- 2026-10-21 — Merge remote-tracking branch 'origin/claude/affectionate-swartz-794ede' into claude/story-coverage-d435ae ([`4a0cbcf`](https://github.com/MartaCondeDesign/helixds/commit/4a0cbcf))
 - 2026-10-21 — Update CHANGELOG.md for #19 ([`552adb8`](https://github.com/MartaCondeDesign/helixds/commit/552adb8))
 - 2026-10-21 — Merge commit '05bbe69' into claude/affectionate-swartz-794ede ([`5694a48`](https://github.com/MartaCondeDesign/helixds/commit/5694a48))
 - 2026-10-21 — Stories → Figma filled for every component (owner's decisions 2026-10-21): 180 of 184 stories mapped ([`33853d2`](https://github.com/MartaCondeDesign/helixds/commit/33853d2))

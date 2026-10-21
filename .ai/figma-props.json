@@ -780,6 +780,25 @@
         }
       ]
     },
+    "MenuGroupLabel": {
+      "nodeId": "670:65",
+      "type": "COMPONENT_SET",
+      "page": "Menu",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "divider",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        }
+      ]
+    },
     "MenuItem": {
       "nodeId": "470:14",
       "type": "COMPONENT_SET",
@@ -1164,7 +1183,19 @@
           "type": "TEXT"
         },
         {
+          "name": "iconSwap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
           "name": "checked",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "icon",
           "type": "VARIANT",
           "values": [
             "false",

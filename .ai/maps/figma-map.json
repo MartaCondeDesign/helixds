@@ -3799,9 +3799,9 @@
       },
       "Grouped": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "MenuGroupLabel (divider=false, then divider=true) before each group's MenuItems — drawn in the child (owner 2026-10-21)"
       },
       "Opened": {
         "figma": null,
@@ -4053,15 +4053,15 @@
       },
       "WithDisabledOption": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)"
       },
       "IconOnly": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)"
       },
       "Disabled": {
         "figma": "disabled=true",
@@ -4070,10 +4070,10 @@
         "why": ""
       },
       "KeyboardNavigation": {
-        "figma": "state=focus",
-        "layout": false,
-        "ok": false,
-        "why": "no Figma property `state` for this component"
+        "figma": null,
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21"
       }
     },
     "Select": {
