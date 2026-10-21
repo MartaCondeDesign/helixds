@@ -227,7 +227,7 @@
         "description": "Figma-only axis: hover/focus are CSS pseudo-classes,  open is the listbox showing. invalid,  disabled and the secondary toggles are their own variants (contracts/figma-conversion.json,  pattern form-field)."
       }
     ],
-    "structure": "multi-select-root (8px gap) > multi-select-label (text + multi-select-required),  multi-select-field (hugs its content like code — 151px empty,  chips side by side; fullWidth drawn at 480px and wraps): chosen options as Chip instances or multi-select-trigger > multi-select-placeholder,  multi-select-chevron; multi-select-description,  multi-select-error. One size (m).",
+    "structure": "multi-select-root (8px gap) > multi-select-label (text + multi-select-required),  multi-select-field (hugs its content like code — 151px empty,  chips side by side; fullWidth drawn at 320px and wraps): chosen options as Chip instances or multi-select-trigger > multi-select-placeholder,  multi-select-chevron; multi-select-description,  multi-select-error. One size (m).",
     "propertyMap": {
       "value": {
         "codeType": "string[] | undefined",
@@ -236,6 +236,6 @@
         "reason": "empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception)"
       }
     },
-    "variantCombinations": "22 variants (2026-10-20): value empty/selected × invalid × state default/hover/focus/open = 16,  and disabled / hideLabel / fullWidth once per value = 6 (the standard rules). Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open)."
+    "variantCombinations": "72 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus/open = 8,  plus disabled = 1) = 18,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 72 (variants.secondary,  owner's decision 2026-10-21). Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open)."
   }
 }

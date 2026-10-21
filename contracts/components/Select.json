@@ -231,6 +231,6 @@
       }
     },
     "structure": "select-root (8px gap) > select-label (text + select-required),  select-wrapper > select-trigger (hugs its text like code: select-trigger-label + select-chevron; open uses an unrotated ChevronUp,  code flips the chevron),  select-description,  select-error. The listbox itself is the Menu component,  not drawn here.",
-    "variantCombinations": "12 variants (2026-10-20): invalid × state default/hover/focus/open = 8,  disabled = 1,  hideLabel and fullWidth once each = 2,  value=selected once (default,  valid,  enabled) = 1. value=empty binds the trigger label to placeholder,  value=selected to valueText."
+    "variantCombinations": "40 variants (2026-10-21): invalid × state default/hover/focus/open = 8,  disabled = 1,  value=selected once (default,  valid,  enabled) = 1 — and each of those 10 drawn with fullWidth (320px) × hideLabel false/true = 40 (variants.secondary,  owner's decision 2026-10-21). value=empty binds the trigger label to placeholder,  value=selected to valueText."
   }
 }
