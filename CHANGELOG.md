@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size (latest commit)
+- 2026-10-21 — scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table (latest commit)
+- 2026-10-21 — Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size ([`148aa95`](https://github.com/MartaCondeDesign/helixds/commit/148aa95))
 - 2026-10-21 — Code-only props, visible: docs:figma-map writes .ai/maps/figma-map.json and Storybook prints each prop's Figma property (or 'Code only' + why); Propstar regenerated on every change (audit check 11); Button: isLoading at every size, fullWidth at every size and state (144 variants, standard rule changed) ([`2d73310`](https://github.com/MartaCondeDesign/helixds/commit/2d73310))
 - 2026-10-21 — Figma property names in camelCase (iconSwap, descriptionText…, standard v1.7) across all sets; Card: showHeader + headerText instead of header (owner's choice) ([`f5a0dee`](https://github.com/MartaCondeDesign/helixds/commit/f5a0dee))
 - 2026-10-21 — Badge stories: every story has controls (size, icon, variant, label where they apply); AvatarGroup photos: a different portrait per avatar ([`999adc0`](https://github.com/MartaCondeDesign/helixds/commit/999adc0))
