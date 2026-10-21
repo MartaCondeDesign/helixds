@@ -44,17 +44,6 @@
 - text: Search
 - searchbox "Search"
 
-# Sizes
-- text: Small
-- textbox "Small":
-  - /placeholder: size=s
-- text: Medium
-- textbox "Medium":
-  - /placeholder: size=m (default)
-- text: Large
-- textbox "Large":
-  - /placeholder: size=l
-
 # With Description
 - text: Password
 - textbox "Password"

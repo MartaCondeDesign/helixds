@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "Input",
   "version": "2.0.0",
-  "status": "beta",
+  "status": "stable",
   "purpose": "Allows users to enter a single line of free-form text.",
   "import": "import { Input } from '@helixds/react';",
   "neverUseFor": [

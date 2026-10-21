@@ -88,7 +88,12 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma expected styles measure what code really renders; Avatar and Card back to passing (latest commit)
+- 2026-10-21 — Figma in sync: Input, Textarea, Select, MultiSelect and NavItem audited and recorded — 33 of 33 stable (latest commit)
+  - Phase 6 audit pass: true, light and dark, recorded at cdafea2 (syncedCommit + audit in figma-sync.json)
+  - Figma fixes: Select's 36 value.=selected variants and 2 Input filled ones had the description/error
+  - NavItem: the indicator's square left corners were already drawn — re-audited at the current code
+  - Status computed by verify:stable: Input, Textarea, Select, MultiSelect, NavItem beta → stable,
+- 2026-10-21 — Figma expected styles measure what code really renders; Avatar and Card back to passing ([`cdafea2`](https://github.com/MartaCondeDesign/helixds/commit/cdafea2))
   - figma:expected: Input/Textarea `disabled` never reached the story (native attribute, docgen typed it
   - figma:expected: Input's spinner is measured as the 16px icon it is, not as text in its padded slot
   - borderOutsideLayout can name a layer — MultiSelect's bordered box is multi-select-field since the

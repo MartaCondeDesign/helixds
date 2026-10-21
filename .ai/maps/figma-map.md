@@ -100,7 +100,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
-### Avatar (`v1.0.0`, draft)
+### Avatar (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -217,7 +217,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
-### Card (`v1.0.0`, draft)
+### Card (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -518,7 +518,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
-### Input (`v2.0.0`, beta)
+### Input (`v2.0.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -639,7 +639,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
-### MultiSelect (`v0.1.0`, beta)
+### MultiSelect (`v0.1.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -686,7 +686,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
-### NavItem (`v1.0.0`, beta)
+### NavItem (`v1.0.0`, stable)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -856,7 +856,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
-### Select (`v1.1.0`, beta)
+### Select (`v1.1.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -1016,7 +1016,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
-### Textarea (`v1.0.0`, beta)
+### Textarea (`v1.0.0`, stable)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
