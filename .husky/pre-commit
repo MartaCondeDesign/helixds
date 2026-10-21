@@ -1,4 +1,4 @@
-pnpm verify:contract && pnpm -s figma:props --staged && pnpm -s verify:a11y-contracts && pnpm verify:props && pnpm verify:tokens && pnpm -s verify:dtcg && pnpm -s verify:storybook-tokens && pnpm -s test:storybook-tokens && pnpm eval:run && pnpm eval:calibrate &&
+pnpm verify:contract && pnpm -s lint:stories && pnpm -s figma:props --staged && pnpm -s verify:a11y-contracts && pnpm verify:props && pnpm verify:tokens && pnpm -s verify:dtcg && pnpm -s verify:storybook-tokens && pnpm -s test:storybook-tokens && pnpm eval:run && pnpm eval:calibrate &&
 pnpm -s docs:contract-imports && git add contracts/components &&
 pnpm docs:token-exceptions && git add .ai/maps/component-token-exceptions.md &&
 pnpm docs:figma-map && git add .ai/maps/figma-map.md &&

@@ -15,6 +15,7 @@
     "dev:wc": "pnpm --dir apps/wc-sandbox dev",
     "typecheck": "pnpm -r typecheck",
     "lint": "eslint apps",
+    "lint:stories": "eslint apps/storybook/stories/Components apps/storybook/stories/Layout",
     "test": "pnpm -r test",
     "verify:contract": "tsx scripts/verify-contract.ts",
     "verify:a11y-contracts": "tsx scripts/verify-a11y-contracts.ts",

@@ -250,6 +250,35 @@ tester.run('unknown-prop', plugin.rules['unknown-prop'], {
   ],
 });
 
+tester.run('story-has-controls', plugin.rules['story-has-controls'], {
+  valid: [
+    "export const A = { args: { label: 'On' } };",
+    'export const A = { render: args => <Checkbox {...args} /> };',
+    'export const A = { render: ({ size }) => <Badge size={size} /> };',
+    'export const A = { render: Default.render };',
+    "export const A = { tags: ['!dev'], render: () => <X />, parameters: { controls: { disable: true } } };", // test-only, hidden
+    '// controls-off: an open overlay would cover the page\nexport const A = { render: () => <X />, parameters: { controls: { disable: true } } };',
+    'export const A = {\n  // controls-off: an open overlay would cover the page\n  render: () => <X />,\n};',
+    'const Demo = () => <X />;\nconst notAStory = { render: () => <X /> };', // not exported
+  ],
+  invalid: [
+    {
+      code: 'export const Disabled = { parameters: { controls: { disable: true } }, render: () => <X disabled /> };',
+      errors: [{ messageId: 'disabled', data: { story: 'Disabled' } }, { messageId: 'noArgs', data: { story: 'Disabled' } }],
+    },
+    { code: 'export const A = { render: function () { return <X />; } };', errors: [{ messageId: 'noArgs' }] },
+    { code: 'export const A = { args: {}, parameters: { controls: { disable: true } } };', errors: [{ messageId: 'disabled' }] },
+    {
+      code: 'const meta = { parameters: { controls: { disable: true } } };\nexport default meta;',
+      errors: [{ messageId: 'disabled', data: { story: 'The meta' } }],
+    },
+    {
+      code: '// controls-off:\nexport const A = { render: () => <X /> };',
+      errors: [{ messageId: 'noReason' }, { messageId: 'noArgs' }],
+    },
+  ],
+});
+
 describe('data.json', () => {
   it('is up to date with prop-map.md, the contracts and tokens.json', () => {
     const file = fileURLToPath(new URL('../src/data.json', import.meta.url));
