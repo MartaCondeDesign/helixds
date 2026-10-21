@@ -89,7 +89,8 @@
     "release": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs",
     "release:first": "pnpm release",
     "release:dry": "pnpm -r --filter './packages/*' build && node scripts/release-publish.mjs --dry-run",
-    "figma:props": "tsx scripts/figma/props.ts"
+    "figma:props": "tsx scripts/figma/props.ts",
+    "figma:snapshot": "tsx scripts/figma/snapshot.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",

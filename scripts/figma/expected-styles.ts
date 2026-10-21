@@ -53,9 +53,9 @@ type Spec = {
 const SPECS: Record<string, Spec> = {
   Chip: {
     story: 'components-chip--variants',
-    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled'],
-    args: (v, s) => ({ size: v.size!, disabled: s === 'disabled' }),
+    axes: { variant: ['neutral', 'info', 'success', 'warning', 'danger'], size: ['s'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ size: v.size!, disabled: v.disabled === 'true' }),
     // the pill is chip-shell (Figma's root); hover/press/focus go to the chip button inside it
     parts: { '(root)': { part: 'chip-shell', fill: true, stroke: true }, 'chip-label': { part: 'chip-label', text: true } },
     target: 'chip',
@@ -99,17 +99,17 @@ const SPECS: Record<string, Spec> = {
   },
   Button: {
     story: 'components-button--full-width',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
-    args: (v, s) => ({ children: 'Label', variant: v.variant!, size: v.size!, fullWidth: false, disabled: s === 'disabled', isLoading: s === 'loading' }),
-    parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'text': { part: 'button-label', text: true } },
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'], disabled: ['false', 'true'], isLoading: ['false', 'true'], fullWidth: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ children: 'Label', variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true', fullWidth: v.fullWidth === 'true' }),
+    parts: { '(root)': { part: 'button', fill: true, stroke: true }, 'button-label': { part: 'button-label', text: true } },
     target: 'button',
   },
   IconButton: {
     story: 'components-iconbutton--primary',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled', 'loading'],
-    args: (v, s) => ({ variant: v.variant!, size: v.size!, disabled: s === 'disabled', isLoading: s === 'loading' }),
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'], disabled: ['false', 'true'], isLoading: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: v => ({ variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true' }),
     parts: { '(root)': { part: 'icon-button', fill: true, stroke: true } },
     target: 'icon-button',
   },
@@ -268,13 +268,15 @@ const SPECS: Record<string, Spec> = {
   },
   FAB: {
     story: 'components-fab--default',
-    axes: { expanded: ['false', 'true'] },
-    states: ['default', 'hover', 'press', 'focus', 'disabled'],
-    args: (v, s) => ({ disabled: s === 'disabled' }),
+    axes: { expanded: ['false', 'true'], disabled: ['false', 'true'] },
+    states: ['default', 'hover', 'press', 'focus'],
+    args: () => ({}),
     parts: { 'fab-root': { part: 'fab-root', fill: true }, 'fab-icon': { part: 'fab-icon', text: true } },
     target: 'fab-root',
-    locate: (v, s) => v.expanded === 'true' ? (s === 'default' ? { story: 'components-fab--expanded', scope: '[data-helix-part="fab-root-wrapper"]' } : null)
-      : { story: s === 'disabled' ? 'components-fab--disabled' : 'components-fab--default', scope: '[data-helix-part="fab-root-wrapper"]' },
+    // a disabled FAB can't open: disabled exists only collapsed (9 variants)
+    skip: v => v.expanded === 'true' && v.disabled === 'true',
+    locate: (v, s) => v.expanded === 'true' ? { story: 'components-fab--expanded', scope: '[data-helix-part="fab-root-wrapper"]' }
+      : { story: v.disabled === 'true' ? 'components-fab--disabled' : 'components-fab--default', scope: '[data-helix-part="fab-root-wrapper"]' },
   },
   MultiSelect: {
     story: 'components-multiselect--default',

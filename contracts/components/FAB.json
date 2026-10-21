@@ -178,11 +178,24 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "press", "focus", "disabled"],
+    "states": ["default", "hover", "press", "focus"],
     "properties": [
-      { "name": "expanded", "type": "VARIANT", "values": ["false", "true"], "codeProp": "expanded", "description": "true = the speed dial open: actions stacked above the trigger, 8px apart (code's baseOffset/step), the trigger icon turned 45°. Only state=default exists for it — a disabled FAB can't open." },
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "press", "focus", "disabled"], "figmaOnly": true, "description": "hover/press/focus are CSS; disabled = the `disabled` prop — fill/disabled + icon/disabled, no shadow (no opacity)." }
+      {
+        "name": "expanded",
+        "type": "VARIANT",
+        "values": ["false", "true"],
+        "codeProp": "expanded",
+        "description": "true = the speed dial open: actions stacked above the trigger,  8px apart (code's baseOffset/step),  the trigger icon turned 45°. Only state=default exists for it — a disabled FAB can't open."
+      },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "press", "focus"],
+        "figmaOnly": true,
+        "description": "Figma-only axis: CSS pseudo-classes. disabled / isLoading are their own false/true toggles (contracts/figma-conversion.json,  pattern action)."
+      }
     ],
-    "structure": "fab-root 48px (size/xl, radius/full, fill/primary, shadow / m, 20px icon) and fab-action 36px (fill/page, 1px border/neutral in the layout, shadow / s, 16px icon). Icons are swapped per instance (icon / actions[].icon)."
+    "structure": "fab-root 48px (size/xl,  radius/full,  fill/primary,  shadow / m,  20px icon) and fab-action 36px (fill/page,  1px border/neutral in the layout,  shadow / s,  16px icon). Icons are swapped per instance (icon / actions[].icon).",
+    "variantCombinations": "9 variants (2026-10-21): expanded × state default/hover/press/focus = 8,  plus disabled collapsed = 1 — a disabled FAB cannot open. label is the aria-label: no Figma property."
   }
 }

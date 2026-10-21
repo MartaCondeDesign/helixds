@@ -1,5 +1,5 @@
 {
-  "$comment": "Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read through the Figma MCP (list_file_components_for_code_connect). Refresh it with the same read after changing a component in Figma, then run pnpm docs:figma-map. Read on 2026-10-20; rebuilt components updated after each rebuild.",
+  "$comment": "Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read by scripts/figma/read-props.js through the Figma MCP and written by pnpm figma:snapshot on 2026-10-21. Never edit by hand: run the read again after changing a component in Figma.",
   "components": {
     "Accordion": {
       "nodeId": "468:42",
@@ -32,6 +32,12 @@
           ]
         }
       ]
+    },
+    "AppShell": {
+      "nodeId": "334:4",
+      "type": "COMPONENT",
+      "page": "AppShell",
+      "properties": []
     },
     "Avatar": {
       "nodeId": "303:4",
@@ -125,7 +131,7 @@
       "page": "Button",
       "properties": [
         {
-          "name": "label",
+          "name": "children",
           "type": "TEXT"
         },
         {
@@ -135,6 +141,14 @@
         {
           "name": "iconEnd",
           "type": "BOOLEAN"
+        },
+        {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "iconEnd swap",
+          "type": "INSTANCE_SWAP"
         },
         {
           "name": "variant",
@@ -156,15 +170,37 @@
           ]
         },
         {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "isLoading",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "fullWidth",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover",
             "press",
-            "focus",
-            "disabled",
-            "loading"
+            "focus"
           ]
         }
       ]
@@ -393,6 +429,14 @@
           "type": "BOOLEAN"
         },
         {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "iconEnd swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
           "name": "variant",
           "type": "VARIANT",
           "values": [
@@ -412,14 +456,21 @@
           ]
         },
         {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover",
             "press",
-            "focus",
-            "disabled"
+            "focus"
           ]
         }
       ]
@@ -438,11 +489,11 @@
           ]
         },
         {
-          "name": "state",
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
-            "default",
-            "disabled"
+            "false",
+            "true"
           ]
         }
       ]
@@ -453,7 +504,19 @@
       "page": "FAB",
       "properties": [
         {
+          "name": "icon",
+          "type": "INSTANCE_SWAP"
+        },
+        {
           "name": "expanded",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
             "false",
@@ -467,8 +530,7 @@
             "default",
             "hover",
             "press",
-            "focus",
-            "disabled"
+            "focus"
           ]
         }
       ]
@@ -502,15 +564,29 @@
           ]
         },
         {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
+          "name": "isLoading",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
             "hover",
             "press",
-            "focus",
-            "disabled",
-            "loading"
+            "focus"
           ]
         }
       ]
@@ -624,6 +700,12 @@
         }
       ]
     },
+    "Menu": {
+      "nodeId": "470:15",
+      "type": "COMPONENT",
+      "page": "Menu",
+      "properties": []
+    },
     "MenuItem": {
       "nodeId": "470:14",
       "type": "COMPONENT_SET",
@@ -644,12 +726,6 @@
           ]
         }
       ]
-    },
-    "Menu": {
-      "nodeId": "470:15",
-      "type": "COMPONENT",
-      "page": "Menu",
-      "properties": []
     },
     "Modal": {
       "nodeId": "471:6",
@@ -803,6 +879,37 @@
         }
       ]
     },
+    "PageHeader": {
+      "nodeId": "435:24",
+      "type": "COMPONENT_SET",
+      "page": "PageHeader",
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "description",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "description text",
+          "type": "TEXT"
+        },
+        {
+          "name": "actions",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "level",
+          "type": "VARIANT",
+          "values": [
+            "1",
+            "2"
+          ]
+        }
+      ]
+    },
     "RadioButton": {
       "nodeId": "595:282",
       "type": "COMPONENT_SET",
@@ -922,6 +1029,21 @@
         }
       ]
     },
+    "SegmentedControl": {
+      "nodeId": "462:37",
+      "type": "COMPONENT_SET",
+      "page": "SegmentedControl",
+      "properties": [
+        {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        }
+      ]
+    },
     "SegmentedControlItem": {
       "nodeId": "462:22",
       "type": "COMPONENT_SET",
@@ -946,21 +1068,6 @@
             "default",
             "hover",
             "focus",
-            "disabled"
-          ]
-        }
-      ]
-    },
-    "SegmentedControl": {
-      "nodeId": "462:37",
-      "type": "COMPONENT_SET",
-      "page": "SegmentedControl",
-      "properties": [
-        {
-          "name": "state",
-          "type": "VARIANT",
-          "values": [
-            "default",
             "disabled"
           ]
         }
@@ -1055,6 +1162,21 @@
         }
       ]
     },
+    "SideNav": {
+      "nodeId": "332:4",
+      "type": "COMPONENT",
+      "page": "SideNav",
+      "properties": [
+        {
+          "name": "brand",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "footer",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
     "SidePanel": {
       "nodeId": "472:29",
       "type": "COMPONENT_SET",
@@ -1142,16 +1264,11 @@
         }
       ]
     },
-    "TableHeaderCell": {
-      "nodeId": "437:2",
+    "Table": {
+      "nodeId": "437:21",
       "type": "COMPONENT",
       "page": "Table",
-      "properties": [
-        {
-          "name": "label",
-          "type": "TEXT"
-        }
-      ]
+      "properties": []
     },
     "TableCell": {
       "nodeId": "437:4",
@@ -1164,11 +1281,16 @@
         }
       ]
     },
-    "Table": {
-      "nodeId": "437:21",
+    "TableHeaderCell": {
+      "nodeId": "437:2",
       "type": "COMPONENT",
       "page": "Table",
-      "properties": []
+      "properties": [
+        {
+          "name": "label",
+          "type": "TEXT"
+        }
+      ]
     },
     "TableRow": {
       "nodeId": "437:20",
@@ -1258,8 +1380,8 @@
           "name": "resize",
           "type": "VARIANT",
           "values": [
-            "none",
             "vertical",
+            "none",
             "horizontal",
             "both"
           ]
@@ -1313,58 +1435,6 @@
         {
           "name": "label",
           "type": "TEXT"
-        }
-      ]
-    },
-    "AppShell": {
-      "nodeId": "334:4",
-      "type": "COMPONENT",
-      "page": "AppShell",
-      "properties": []
-    },
-    "PageHeader": {
-      "nodeId": "435:24",
-      "type": "COMPONENT_SET",
-      "page": "PageHeader",
-      "properties": [
-        {
-          "name": "label",
-          "type": "TEXT"
-        },
-        {
-          "name": "description",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "description text",
-          "type": "TEXT"
-        },
-        {
-          "name": "actions",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "level",
-          "type": "VARIANT",
-          "values": [
-            "1",
-            "2"
-          ]
-        }
-      ]
-    },
-    "SideNav": {
-      "nodeId": "332:4",
-      "type": "COMPONENT",
-      "page": "SideNav",
-      "properties": [
-        {
-          "name": "brand",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "footer",
-          "type": "BOOLEAN"
         }
       ]
     },

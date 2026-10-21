@@ -167,21 +167,8 @@
     }
   },
   "figma": {
-    "states": [
-      "default",
-      "disabled"
-    ],
-    "properties": [
-      {
-        "name": "state",
-        "type": "VARIANT",
-        "values": [
-          "default",
-          "disabled"
-        ],
-        "figmaOnly": true,
-        "description": "Figma-only axis. The group itself has no hover/press/focus — those belong to each Chip instance (swap the instance's own state). disabled is the `disabled` prop."
-      }
-    ]
+    "states": ["default"],
+    "properties": [],
+    "variantCombinations": "4 variants (2026-10-21): size × disabled,  no state axis (pattern group). label is the aria-label: no Figma property."
   }
 }

@@ -292,26 +292,14 @@
     }
   },
   "figma": {
-    "states": [
-      "default",
-      "hover",
-      "press",
-      "focus",
-      "disabled"
-    ],
+    "states": ["default", "hover", "press", "focus"],
     "properties": [
       {
         "name": "state",
         "type": "VARIANT",
-        "values": [
-          "default",
-          "hover",
-          "press",
-          "focus",
-          "disabled"
-        ],
+        "values": ["default", "hover", "press", "focus"],
         "figmaOnly": true,
-        "description": "Figma-only axis. hover/press/focus are CSS pseudo-classes in code (:hover, :active, :focus-visible); disabled is the `disabled` prop, folded into this axis so every visual state sits on one row."
+        "description": "Figma-only axis: CSS pseudo-classes. disabled / isLoading are their own false/true toggles (contracts/figma-conversion.json,  pattern action)."
       },
       {
         "name": "dismissible",
@@ -319,6 +307,7 @@
         "codeProp": "dismissible",
         "description": "Show/hide part (show-hide-parts.md): toggles the chip-dismiss layer. The × carries its own 2px on the label side; the chip keeps 12px on both ends either way."
       }
-    ]
+    ],
+    "variantCombinations": "50 variants (2026-10-21): variant × size × state = 40,  disabled per variant × size = 10. Disabled keeps the variant colors at 0.72 opacity,  like code."
   }
 }

@@ -4,11 +4,10 @@
     "default",
     "hover",
     "press",
-    "focus",
-    "disabled"
+    "focus"
   ],
   "colors": {
-    "expanded=false, state=default": {
+    "expanded=false, disabled=false, state=default": {
       "light": {
         "fab-root": {
           "fill": "#2563eb"
@@ -26,7 +25,7 @@
         }
       }
     },
-    "expanded=false, state=hover": {
+    "expanded=false, disabled=false, state=hover": {
       "light": {
         "fab-root": {
           "fill": "#1d4ed8"
@@ -44,7 +43,7 @@
         }
       }
     },
-    "expanded=false, state=press": {
+    "expanded=false, disabled=false, state=press": {
       "light": {
         "fab-root": {
           "fill": "#1e40af"
@@ -62,7 +61,7 @@
         }
       }
     },
-    "expanded=false, state=focus": {
+    "expanded=false, disabled=false, state=focus": {
       "light": {
         "fab-root": {
           "fill": "#2563eb"
@@ -80,7 +79,7 @@
         }
       }
     },
-    "expanded=false, state=disabled": {
+    "expanded=false, disabled=true, state=default": {
       "light": {
         "fab-root": {
           "fill": "#f1f5f9"
@@ -98,7 +97,61 @@
         }
       }
     },
-    "expanded=true, state=default": {
+    "expanded=true, disabled=false, state=default": {
+      "light": {
+        "fab-root": {
+          "fill": "#2563eb"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "fab-root": {
+          "fill": "#2563eb"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "expanded=true, disabled=false, state=hover": {
+      "light": {
+        "fab-root": {
+          "fill": "#1d4ed8"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "fab-root": {
+          "fill": "#1d4ed8"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "expanded=true, disabled=false, state=press": {
+      "light": {
+        "fab-root": {
+          "fill": "#1e40af"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "fab-root": {
+          "fill": "#1e40af"
+        },
+        "fab-icon": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "expanded=true, disabled=false, state=focus": {
       "light": {
         "fab-root": {
           "fill": "#2563eb"
@@ -118,7 +171,7 @@
     }
   },
   "layout": {
-    "expanded=false": {
+    "expanded=false, disabled=false": {
       "fab-icon": {
         "width": {
           "value": 20,
@@ -132,7 +185,21 @@
         }
       }
     },
-    "expanded=true": {
+    "expanded=false, disabled=true": {
+      "fab-icon": {
+        "width": {
+          "value": 20,
+          "token": null,
+          "figma": null
+        },
+        "height": {
+          "value": 20,
+          "token": null,
+          "figma": null
+        }
+      }
+    },
+    "expanded=true, disabled=false": {
       "fab-icon": {
         "width": {
           "value": 20,

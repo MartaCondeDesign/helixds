@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 147 of 180 code props match Figma exactly.**
+**Parity today: 162 of 180 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -110,18 +110,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✗ missing |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✗ missing |
-| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
+| `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 
-**Only in Figma (no code prop of that name and type):** `label` (TEXT)
-
-**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled` / `loading`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
@@ -196,15 +194,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✗ missing |
+| `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✗ missing |
+| `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
 | `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part · `show-hide-boolean` | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
 
@@ -215,9 +213,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-
-**Figma-only `state`:** `default` / `disabled`
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
@@ -227,11 +223,11 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ missing |
+| `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
@@ -253,10 +249,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
-| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
-**Figma-only `state`:** `default` / `hover` / `press` / `focus` / `disabled` / `loading`
+**Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
@@ -414,9 +410,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
-
-**Figma-only `state`:** `default` / `disabled`
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 

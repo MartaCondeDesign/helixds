@@ -4,18 +4,16 @@
     "default",
     "hover",
     "press",
-    "focus",
-    "disabled",
-    "loading"
+    "focus"
   ],
   "colors": {
-    "variant=primary, size=m, state=default": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#2563eb",
           "stroke": "#2563eb"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       },
@@ -24,18 +22,18 @@
           "fill": "#2563eb",
           "stroke": "#2563eb"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       }
     },
-    "variant=primary, size=m, state=hover": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=false, state=hover": {
       "light": {
         "(root)": {
           "fill": "#1d4ed8",
           "stroke": "#1d4ed8"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       },
@@ -44,18 +42,18 @@
           "fill": "#1d4ed8",
           "stroke": "#1d4ed8"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       }
     },
-    "variant=primary, size=m, state=press": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=false, state=press": {
       "light": {
         "(root)": {
           "fill": "#1e40af",
           "stroke": "#1e40af"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       },
@@ -64,18 +62,18 @@
           "fill": "#1e40af",
           "stroke": "#1e40af"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       }
     },
-    "variant=primary, size=m, state=focus": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=false, state=focus": {
       "light": {
         "(root)": {
           "fill": "#2563eb",
           "stroke": "#2563eb"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       },
@@ -84,18 +82,58 @@
           "fill": "#2563eb",
           "stroke": "#2563eb"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       }
     },
-    "variant=primary, size=m, state=disabled": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=primary, size=m, disabled=false, isLoading=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#2563eb",
+          "stroke": "#2563eb"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=primary, size=m, disabled=true, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
           "stroke": "#f1f5f9"
         },
-        "text": {
+        "button-label": {
           "fill": "#94a3b8"
         }
       },
@@ -104,38 +142,18 @@
           "fill": "#1e293b",
           "stroke": "#1e293b"
         },
-        "text": {
+        "button-label": {
           "fill": "#475569"
         }
       }
     },
-    "variant=primary, size=m, state=loading": {
-      "light": {
-        "(root)": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#2563eb",
-          "stroke": "#2563eb"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      }
-    },
-    "variant=secondary, size=m, state=default": {
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#ffffff",
           "stroke": "#e2e8f0"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -144,18 +162,18 @@
           "fill": "#0f172a",
           "stroke": "#334155"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=secondary, size=m, state=hover": {
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=false, state=hover": {
       "light": {
         "(root)": {
           "fill": "#e2e8f0",
           "stroke": "#94a3b8"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -164,18 +182,18 @@
           "fill": "#334155",
           "stroke": "#475569"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=secondary, size=m, state=press": {
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=false, state=press": {
       "light": {
         "(root)": {
           "fill": "#cbd5e1",
           "stroke": "#94a3b8"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -184,18 +202,18 @@
           "fill": "#475569",
           "stroke": "#475569"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=secondary, size=m, state=focus": {
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=false, state=focus": {
       "light": {
         "(root)": {
           "fill": "#ffffff",
           "stroke": "#e2e8f0"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -204,18 +222,58 @@
           "fill": "#0f172a",
           "stroke": "#334155"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=secondary, size=m, state=disabled": {
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "button-label": {
+          "fill": "#0f172a"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "button-label": {
+          "fill": "#f1f5f9"
+        }
+      }
+    },
+    "variant=secondary, size=m, disabled=false, isLoading=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#ffffff",
+          "stroke": "#e2e8f0"
+        },
+        "button-label": {
+          "fill": "#0f172a"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#0f172a",
+          "stroke": "#334155"
+        },
+        "button-label": {
+          "fill": "#f1f5f9"
+        }
+      }
+    },
+    "variant=secondary, size=m, disabled=true, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
           "stroke": "#f1f5f9"
         },
-        "text": {
+        "button-label": {
           "fill": "#94a3b8"
         }
       },
@@ -224,38 +282,18 @@
           "fill": "#1e293b",
           "stroke": "#1e293b"
         },
-        "text": {
+        "button-label": {
           "fill": "#475569"
         }
       }
     },
-    "variant=secondary, size=m, state=loading": {
-      "light": {
-        "(root)": {
-          "fill": "#ffffff",
-          "stroke": "#e2e8f0"
-        },
-        "text": {
-          "fill": "#0f172a"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#0f172a",
-          "stroke": "#334155"
-        },
-        "text": {
-          "fill": "#f1f5f9"
-        }
-      }
-    },
-    "variant=ghost, size=m, state=default": {
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -264,18 +302,18 @@
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=ghost, size=m, state=hover": {
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=false, state=hover": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -284,18 +322,18 @@
           "fill": "#1e293b",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=ghost, size=m, state=press": {
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=false, state=press": {
       "light": {
         "(root)": {
           "fill": "#e2e8f0",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -304,18 +342,18 @@
           "fill": "#334155",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=ghost, size=m, state=focus": {
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=false, state=focus": {
       "light": {
         "(root)": {
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -324,38 +362,18 @@
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=ghost, size=m, state=disabled": {
-      "light": {
-        "(root)": {
-          "fill": "#f1f5f9",
-          "stroke": "#f1f5f9"
-        },
-        "text": {
-          "fill": "#94a3b8"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#1e293b",
-          "stroke": "#1e293b"
-        },
-        "text": {
-          "fill": "#475569"
-        }
-      }
-    },
-    "variant=ghost, size=m, state=loading": {
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=true, state=default": {
       "light": {
         "(root)": {
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#0f172a"
         }
       },
@@ -364,98 +382,38 @@
           "fill": "none",
           "stroke": "none"
         },
-        "text": {
+        "button-label": {
           "fill": "#f1f5f9"
         }
       }
     },
-    "variant=danger, size=m, state=default": {
+    "variant=ghost, size=m, disabled=false, isLoading=true, fullWidth=false, state=default": {
       "light": {
         "(root)": {
-          "fill": "#dc2626",
-          "stroke": "#dc2626"
+          "fill": "none",
+          "stroke": "none"
         },
-        "text": {
-          "fill": "#ffffff"
+        "button-label": {
+          "fill": "#0f172a"
         }
       },
       "dark": {
         "(root)": {
-          "fill": "#dc2626",
-          "stroke": "#dc2626"
+          "fill": "none",
+          "stroke": "none"
         },
-        "text": {
-          "fill": "#ffffff"
+        "button-label": {
+          "fill": "#f1f5f9"
         }
       }
     },
-    "variant=danger, size=m, state=hover": {
-      "light": {
-        "(root)": {
-          "fill": "#b91c1c",
-          "stroke": "#b91c1c"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#b91c1c",
-          "stroke": "#b91c1c"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      }
-    },
-    "variant=danger, size=m, state=press": {
-      "light": {
-        "(root)": {
-          "fill": "#991b1b",
-          "stroke": "#991b1b"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#991b1b",
-          "stroke": "#991b1b"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      }
-    },
-    "variant=danger, size=m, state=focus": {
-      "light": {
-        "(root)": {
-          "fill": "#dc2626",
-          "stroke": "#dc2626"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      },
-      "dark": {
-        "(root)": {
-          "fill": "#dc2626",
-          "stroke": "#dc2626"
-        },
-        "text": {
-          "fill": "#ffffff"
-        }
-      }
-    },
-    "variant=danger, size=m, state=disabled": {
+    "variant=ghost, size=m, disabled=true, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#f1f5f9",
           "stroke": "#f1f5f9"
         },
-        "text": {
+        "button-label": {
           "fill": "#94a3b8"
         }
       },
@@ -464,18 +422,18 @@
           "fill": "#1e293b",
           "stroke": "#1e293b"
         },
-        "text": {
+        "button-label": {
           "fill": "#475569"
         }
       }
     },
-    "variant=danger, size=m, state=loading": {
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=false, state=default": {
       "light": {
         "(root)": {
           "fill": "#dc2626",
           "stroke": "#dc2626"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
         }
       },
@@ -484,14 +442,134 @@
           "fill": "#dc2626",
           "stroke": "#dc2626"
         },
-        "text": {
+        "button-label": {
           "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=false, state=hover": {
+      "light": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#b91c1c",
+          "stroke": "#b91c1c"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=false, state=press": {
+      "light": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#991b1b",
+          "stroke": "#991b1b"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=false, state=focus": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=true, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=true, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#dc2626",
+          "stroke": "#dc2626"
+        },
+        "button-label": {
+          "fill": "#ffffff"
+        }
+      }
+    },
+    "variant=danger, size=m, disabled=true, isLoading=false, fullWidth=false, state=default": {
+      "light": {
+        "(root)": {
+          "fill": "#f1f5f9",
+          "stroke": "#f1f5f9"
+        },
+        "button-label": {
+          "fill": "#94a3b8"
+        }
+      },
+      "dark": {
+        "(root)": {
+          "fill": "#1e293b",
+          "stroke": "#1e293b"
+        },
+        "button-label": {
+          "fill": "#475569"
         }
       }
     }
   },
   "layout": {
-    "variant=primary, size=m": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=false": {
       "(root)": {
         "height": {
           "value": 32,
@@ -519,7 +597,7 @@
           "figma": "semantic.radius.m"
         }
       },
-      "text": {
+      "button-label": {
         "fontSize": {
           "value": 12,
           "token": "component.button.fontSize.m",
@@ -543,7 +621,7 @@
         "textStyle": "caption-semibold"
       }
     },
-    "variant=secondary, size=m": {
+    "variant=primary, size=m, disabled=false, isLoading=false, fullWidth=true": {
       "(root)": {
         "height": {
           "value": 32,
@@ -571,7 +649,7 @@
           "figma": "semantic.radius.m"
         }
       },
-      "text": {
+      "button-label": {
         "fontSize": {
           "value": 12,
           "token": "component.button.fontSize.m",
@@ -595,7 +673,7 @@
         "textStyle": "caption-semibold"
       }
     },
-    "variant=ghost, size=m": {
+    "variant=primary, size=m, disabled=false, isLoading=true, fullWidth=false": {
       "(root)": {
         "height": {
           "value": 32,
@@ -623,7 +701,7 @@
           "figma": "semantic.radius.m"
         }
       },
-      "text": {
+      "button-label": {
         "fontSize": {
           "value": 12,
           "token": "component.button.fontSize.m",
@@ -647,7 +725,7 @@
         "textStyle": "caption-semibold"
       }
     },
-    "variant=danger, size=m": {
+    "variant=primary, size=m, disabled=true, isLoading=false, fullWidth=false": {
       "(root)": {
         "height": {
           "value": 32,
@@ -675,7 +753,631 @@
           "figma": "semantic.radius.m"
         }
       },
-      "text": {
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=secondary, size=m, disabled=false, isLoading=false, fullWidth=true": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=secondary, size=m, disabled=false, isLoading=true, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=secondary, size=m, disabled=true, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=ghost, size=m, disabled=false, isLoading=false, fullWidth=true": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=ghost, size=m, disabled=false, isLoading=true, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=ghost, size=m, disabled=true, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=false, fullWidth=true": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=m, disabled=false, isLoading=true, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
+        "fontSize": {
+          "value": 12,
+          "token": "component.button.fontSize.m",
+          "figma": "caption-semibold"
+        },
+        "lineHeight": {
+          "value": 18,
+          "token": "primitive.lineHeight.normal",
+          "figma": null
+        },
+        "fontWeight": {
+          "value": 600,
+          "token": "component.button.fontWeight.m",
+          "figma": "caption-semibold"
+        },
+        "fontFamily": {
+          "value": "Inter",
+          "token": "primitive.fontFamily.sans",
+          "figma": null
+        },
+        "textStyle": "caption-semibold"
+      }
+    },
+    "variant=danger, size=m, disabled=true, isLoading=false, fullWidth=false": {
+      "(root)": {
+        "height": {
+          "value": 32,
+          "token": "component.button.height.m",
+          "figma": "semantic.size.m"
+        },
+        "paddingRight": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "paddingLeft": {
+          "value": 16,
+          "token": "component.button.padding.x-m",
+          "figma": "semantic.spacing.component-l"
+        },
+        "itemSpacing": {
+          "value": 8,
+          "token": "primitive.spacing.50",
+          "figma": "primitive.spacing.50"
+        },
+        "cornerRadius": {
+          "value": 6,
+          "token": "component.button.radius",
+          "figma": "semantic.radius.m"
+        }
+      },
+      "button-label": {
         "fontSize": {
           "value": 12,
           "token": "component.button.fontSize.m",

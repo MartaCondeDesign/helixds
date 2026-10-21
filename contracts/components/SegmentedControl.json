@@ -154,7 +154,7 @@
   },
 
   "figma": {
-    "states": ["default", "hover", "focus", "disabled"],
+    "states": ["default"],
     "properties": [
       {
         "name": "checked",
@@ -163,16 +163,9 @@
         "codeProp": "value",
         "description": "On SegmentedControlItem: the option whose value equals the group's `value`. Checked = the pill (fill/page) — in code a sliding motion.span."
       },
-      {
-        "name": "state",
-        "type": "VARIANT",
-        "values": ["default", "hover", "focus", "disabled"],
-        "figmaOnly": true,
-        "description": "On SegmentedControlItem: hover/focus are CSS; disabled is the option's or the group's `disabled`. On SegmentedControl: default / disabled (the group prop)."
-      },
       { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
     ],
-    "structure": "SegmentedControlItem set (checked × state) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled),  4px padding and gap,  radius full.",
+    "structure": "SegmentedControlItem set (checked × state) composed into SegmentedControl (state default/disabled): track fill/secondary/interactive/default (fill/disabled when disabled),   4px padding and gap,   radius full.",
     "propertyMap": {
       "label": {
         "codeType": "string",
@@ -180,6 +173,7 @@
         "approved": "2026-10-20",
         "reason": "the group's aria-label — never drawn; the visible text is each item's own label (segmented-control-item-label)"
       }
-    }
+    },
+    "variantCombinations": "2 variants (2026-10-21): disabled false/true,  no state axis (pattern group). label is the aria-label: no Figma property."
   }
 }

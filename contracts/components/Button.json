@@ -275,5 +275,10 @@
       ],
       "changed": "2026-10-13"
     }
+  },
+  "figma": {
+    "states": ["default", "hover", "press", "focus"],
+    "properties": [],
+    "variantCombinations": "68 variants (2026-10-21): variant × size × state default/hover/press/focus = 48,  disabled per variant × size = 12,  isLoading and fullWidth once per variant at size m = 8 (the standard rules). children is the TEXT property (was label)."
   }
 }

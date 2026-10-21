@@ -193,5 +193,10 @@
       ],
       "changed": "2026-10-12"
     }
+  },
+  "figma": {
+    "states": ["default", "hover", "press", "focus"],
+    "properties": [],
+    "variantCombinations": "64 variants (2026-10-21): variant × size × state = 48,  disabled per variant × size = 12,  isLoading once per variant at size m = 4. label is the aria-label: no Figma property."
   }
 }
