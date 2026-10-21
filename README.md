@@ -24,7 +24,7 @@ Explicit per-component contracts, script-verified tokens, and a canonical prop v
 
 <br><br>
 
-**[Storybook](https://martacondedesign.github.io/helixds/)** · **[Getting started](docs/getting-started.md)** · **[Contributing](CONTRIBUTING.md)**
+**[Storybook](https://martacondedesign.github.io/helixds/)** · **[Figma](https://www.figma.com/community/file/1694774234251657372/ai-ready-design-system-helix)** · **[Getting started](docs/getting-started.md)** · **[Contributing](CONTRIBUTING.md)**
 
 </div>
 
