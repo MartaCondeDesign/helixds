@@ -13,7 +13,9 @@ The owner is asked only when:
 - a prop **no rule covers** (`pnpm figma:props` fails, pre-commit too) → the standard learns a new rule or
   pattern, or
 - a component needs an **exception** → it's recorded in that component's contract, `figma.propertyMap`, with the
-  date it was approved (and re-checked if the prop's type changes later).
+  date it was approved (and re-checked if the prop's type changes later), or
+- a **Storybook story has no Figma representation** yet (§ 2b) → the owner says how Figma draws it, recorded in
+  the contract's `figma.stories`.
 
 ## 1. Rules by type
 
@@ -104,6 +106,29 @@ VARIANT properties first. So each group follows the code order on its own:
 `figma-map.md` shows a **Property order** line per component and `figma-drift` fails a component that breaks it.
 Reordering existing properties means re-creating them: `scripts/figma/reorder-props.js` does it and puts back the
 values instances already had.
+
+## 2b. Every story has a Figma representation
+
+Owner's rule 2026-10-21: every Storybook story of a component that shows a distinct look must say how Figma
+represents it — or carry the owner's decision that it doesn't. (What slipped: Avatar's "With image" and "Initials"
+stories had no Figma counterpart until the `withImage` variant was added.) The contract's `figma.stories` maps each
+story export of `apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx`:
+
+| Value | Means | Example |
+|---|---|---|
+| `"prop=value, prop=value"` | the Figma properties/values that draw it — each name must be a Figma property of the set (or `state`) | `"WithImage": "withImage=true"` |
+| `"default"` | the set's default variant — every property at its default value | `"Default": "default"` |
+| `"layout"` | a showcase that only arranges existing variants (all sizes, all variants side by side, a group) | `"Sizes": "layout"` |
+| `{ "figma": null, "reason": "…", "approved": "date" }` | the owner decided Figma doesn't draw it — behaviour only (keyboard `play` tests, controlled demos) or on purpose | `"KeyboardToggle": { "figma": null, "reason": "keyboard play test", "approved": "2026-10-21" }` |
+
+**Keyboard stories are focus states, and focus is drawn** (owner's decision 2026-10-21): a keyboard `play` story maps to
+`state=focus` — or, when the ring belongs to a child (a group's Checkbox, a Modal's close IconButton), `layout` with
+that child at `state=focus`. A set with no `state=focus` stays ✗ until Figma draws it.
+
+`figma-map.md` prints a **Stories → Figma** block per component (✓ / ✗ per story; a mapping for a story that no
+longer exists is ✗ stale) and `figma-map.json` the same under `stories`. A ✗ makes `figma-drift` fail the
+component, so it can't be ✓ synced. Filling `figma.stories` is the owner's decision — an agent shows the ✗ stories
+and proposes a value for each, never fills it alone.
 
 ## 3. How variants are drawn
 

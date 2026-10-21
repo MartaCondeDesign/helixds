@@ -201,6 +201,12 @@
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       { "name": "icon", "type": "BOOLEAN", "codeProp": "icon", "description": "Show/hide part: the icon sits inside badge-content with its own 4px gap, so the badge's paddings never change." },
       { "name": "iconSwap", "type": "INSTANCE_SWAP", "codeProp": "icon", "description": "Which icon. Default InfoCircle; preferred values are BADGE_ICON_BY_VARIANT's (InfoCircle, CircleCheck, AlertTriangle, AlertHexagon). Like code, the icon isn't tied to the variant — the consumer picks it." }
-    ]
+    ],
+    "stories": {
+      "AllVariants": "layout",
+      "WithIcons": "icon=true",
+      "Sizes": "layout",
+      "StatusRowPattern": "layout"
+    }
   }
 }

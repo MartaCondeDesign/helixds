@@ -236,6 +236,17 @@
         "reason": "empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception)"
       }
     },
-    "variantCombinations": "72 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus/open = 8,  plus disabled = 1) = 18,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 72 (variants.secondary,  owner's decision 2026-10-21). The option count is the nested Menu's options property,  not a MultiSelect variant. Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open)."
+    "variantCombinations": "72 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus/open = 8,  plus disabled = 1) = 18,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 72 (variants.secondary,  owner's decision 2026-10-21). The option count is the nested Menu's options property,  not a MultiSelect variant. Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open).",
+    "stories": {
+      "Default": "value=empty",
+      "WithSelection": "value=selected",
+      "Wrapping": "value=selected",
+      "WithGroups": "state=open",
+      "WithDescription": "description=true",
+      "Invalid": "invalid=true, errorMessage=true",
+      "Required": "required=true",
+      "Disabled": "disabled=true, value=selected",
+      "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

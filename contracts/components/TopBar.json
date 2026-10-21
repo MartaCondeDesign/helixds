@@ -118,6 +118,9 @@
       { "name": "start", "type": "BOOLEAN", "codeProp": "start", "description": "Show/hide the start slot (search Input, size m; the slot is capped at 320px like max-width in code)." },
       { "name": "end", "type": "BOOLEAN", "codeProp": "end", "description": "Show/hide the end slot (ghost IconButtons, size m, 4px apart). The slots sit at both ends (SPACE_BETWEEN = margin-left: auto)." }
     ],
-    "structure": "No variants — a single component. Every control in the row is size m (same-row-sizing.md)."
+    "structure": "No variants — a single component. Every control in the row is size m (same-row-sizing.md).",
+    "stories": {
+      "Default": "start=true, end=true"
+    }
   }
 }

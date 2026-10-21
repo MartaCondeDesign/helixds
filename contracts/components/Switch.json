@@ -187,6 +187,15 @@
       },
       { "name": "descriptionText", "type": "TEXT", "codeProp": "description", "description": "The helper line's text." }
     ],
-    "variantCombinations": "32 variants (2026-10-21): checked false/true × size s/m × state default/hover/focus = 12,  plus disabled at state default for each checked × size = 4,  each drawn with hideLabel false/true = 16 × 2 = 32 (secondary toggles at every size and state,  owner's decision 2026-10-21). hideLabel hides the switch-label layer (code keeps it for screen readers only); disabled dims label and description (text/disabled)."
+    "variantCombinations": "32 variants (2026-10-21): checked false/true × size s/m × state default/hover/focus = 12,  plus disabled at state default for each checked × size = 4,  each drawn with hideLabel false/true = 16 × 2 = 32 (secondary toggles at every size and state,  owner's decision 2026-10-21). hideLabel hides the switch-label layer (code keeps it for screen readers only); disabled dims label and description (text/disabled).",
+    "stories": {
+      "Default": "checked=false",
+      "Checked": "checked=true, description=true",
+      "WithDescription": "description=true",
+      "Disabled": "disabled=true",
+      "Sizes": "layout",
+      "SettingsGroup": "layout",
+      "KeyboardToggle": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

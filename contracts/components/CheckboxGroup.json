@@ -185,6 +185,15 @@
       { "name": "errorMessageText", "type": "TEXT", "codeProp": "errorMessage" }
     ],
     "structure": "checkbox-group (8px gap) > checkbox-group-legend,  checkbox-group-options (12px gap,  real Checkbox instances),  description,  error. options = how many Checkbox instances it draws (2–7): Comments (checked), Mentions, Weekly digest, Security alerts, Product updates, Billing, Newsletter.",
-    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many Checkbox instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
+    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many Checkbox instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each Checkbox option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled).",
+    "stories": {
+      "Default": "default",
+      "Horizontal": "orientation=horizontal",
+      "Invalid": "invalid=true, errorMessage=true",
+      "Disabled": "disabled=true",
+      "WithDisabledOption": "layout",
+      "Required": "required=true",
+      "KeyboardToggle": {"figma": "layout", "reason": "keyboard focus is drawn on the Checkbox inside it (state=focus)"}
+    }
   }
 }

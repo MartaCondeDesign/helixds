@@ -80,6 +80,16 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    component's pattern there and build it like its siblings. `.ai/maps/figma-map.md` lists every prop with its
    status in Figma today — every row must be ✓. After changing a component in Figma, refresh
    `.ai/figma-props.json` (Figma MCP `list_file_components_for_code_connect`) and run `pnpm docs:figma-map`.
+11. **Every Storybook story has a Figma representation (owner's rule 2026-10-21).** A story that shows a distinct
+   look must be drawable from the Figma set — Avatar's "With image" story slipped through with no Figma
+   counterpart until `withImage` was added. `figma-map.md`'s **Stories → Figma** block lists each story of
+   `apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx`: ✓ when the contract's `figma.stories` maps it,
+   ✗ otherwise — and a ✗ keeps the component from ✓ synced (`figma-drift`). **When building or changing a
+   component, show the owner every ✗ story and ask how to represent it**, proposing one of:
+   `"WithImage": "withImage=true"` (the properties/values that draw it — names must be Figma properties of the set),
+   `"Default": "default"` (every property at its default), `"Sizes": "layout"` (a showcase that only arranges existing variants), or
+   `{ "figma": null, "reason": "…", "approved": "date" }` (behaviour only — a controlled demo — or not drawn on purpose). A keyboard story is
+   never `null`: focus is drawn, so it maps to `state=focus` (owner's decision 2026-10-21). Never fill `figma.stories` without the owner's answer: it's a contract edit.
 9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
    components A→Z after `Icons`, layout components A→Z after the last `-` separator — the same order as
    Storybook's sidebar (root `CLAUDE.md` rule 11). On the page, the doc frame holding the title, description
@@ -708,6 +718,7 @@ After building the component:
 - [ ] VARIANT values are lowercase (`primary`, `xs`, `false`, `true`) — match TypeScript unions exactly
 - [ ] `disabled`, `invalid` and every look-changing boolean are their own `false`/`true` VARIANT named like the prop — colors as in the expected file
 - [ ] Every row of the component in `.ai/maps/figma-map.md` is ✓ (exact property parity, rule 10)
+- [ ] Its **Stories → Figma** line is ✓ — every Storybook story mapped in `figma.stories`, as the owner decided (rule 11)
 - [ ] BOOLEAN property names match code (`icon`, `iconEnd`, `loading`) — NOT `disabled`
 - [ ] Icon slots have BOTH a BOOLEAN (visibility) and an INSTANCE_SWAP (which icon) property bound to the
       same layer via a single `componentPropertyReferences = { visible: ..., mainComponent: ... }` call —

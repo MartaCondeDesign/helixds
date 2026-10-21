@@ -144,6 +144,13 @@
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
       { "name": "label", "type": "TEXT", "codeProp": "label", "description": "Type the initial here — code derives it from the full name in `label` (the layer is avatar-initials)." },
       { "name": "withImage", "type": "VARIANT", "values": ["false", "true"], "codeProp": "src", "description": "false = initials, true = the photo (avatar-image)." }
-    ]
+    ],
+    "stories": {
+      "Default": "withImage=false",
+      "Sizes": "layout",
+      "WithImage": "withImage=true",
+      "BrokenImageFallsBackToInitials": "withImage=false",
+      "MemberList": "layout"
+    }
   }
 }

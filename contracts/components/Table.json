@@ -120,6 +120,10 @@
       { "name": "label", "type": "TEXT", "codeProp": "children", "description": "TableHeaderCell's text (Label / Uppercase, uppercased + letterSpacing wide at the call site)." },
       { "name": "content", "type": "TEXT", "codeProp": "children", "description": "TableCell's text (Body / s / Regular)." }
     ],
-    "structure": "Three building blocks — TableHeaderCell, TableCell (components) and TableRow (set: state) — composed into a static Table component. The last body row's instance drops its bottom stroke, like `:last-child { border-bottom: none }` in code."
+    "structure": "Three building blocks — TableHeaderCell, TableCell (components) and TableRow (set: state) — composed into a static Table component. The last body row's instance drops its bottom stroke, like `:last-child { border-bottom: none }` in code.",
+    "stories": {
+      "Default": {"figma": null, "reason": "Table has no Figma properties yet — map its stories when the set is built", "approved": "2026-10-21"},
+      "DragReorder": {"figma": null, "reason": "Table has no Figma properties yet — map its stories when the set is built", "approved": "2026-10-21"}
+    }
   }
 }

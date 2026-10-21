@@ -178,6 +178,14 @@
         "approved": "2026-10-21",
         "reason": "the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text"
       }
+    },
+    "stories": {
+      "Default": "default",
+      "WithFooterActions": "primaryActionLabel=true, secondaryActionLabel=true",
+      "WithTertiaryAction": "primaryActionLabel=true, secondaryActionLabel=true, tertiaryActionLabel=true",
+      "WithoutCloseButton": "showCloseButton=false",
+      "KeyboardDismiss": {"figma": "layout", "reason": "keyboard focus is drawn on the close IconButton inside it (state=focus)"},
+      "Opened": {"figma": null, "reason": "play test that opens it — same look as Default", "approved": "2026-10-21"}
     }
   }
 }

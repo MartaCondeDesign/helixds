@@ -185,6 +185,12 @@
       { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
     ],
     "structure": "MenuItem set composed into a Menu component: 1px border/neutral (in the layout),  4px top/bottom padding,  radius/m,  shadow / m,  240px (menu.width). Groups: menu-group (4px sides) > menu-group-label (Label / Uppercase,  12/12/4 padding; 12px top only on the first group = 16 − the menu's 4) + options 2px apart; menu-group-divider edge to edge with 8px above and 16px below. Measured identical to code (Grouped story,  223px tall). The Menu set draws the flat Default-story list: one menu-group (4px sides) > menu-group-options, no group label or divider (options=2 is 76px tall).",
-    "variantCombinations": "12 variants (2026-10-21): options 2–7 × multiple false/true — false shows Banana selected and Cherry hovered, true marks Apple and Banana selected at once (same selected look,  aria-multiselectable). Drawn open; expanded has no property."
+    "variantCombinations": "12 variants (2026-10-21): options 2–7 × multiple false/true — false shows Banana selected and Cherry hovered, true marks Apple and Banana selected at once (same selected look,  aria-multiselectable). Drawn open; expanded has no property.",
+    "stories": {
+      "Default": "multiple=false",
+      "Opened": {"figma": null, "reason": "play test that opens it — same look as Default", "approved": "2026-10-21"},
+      "Grouped": {"figma": "layout", "reason": "MenuGroupLabel (divider=false, then divider=true) before each group's MenuItems — drawn in the child (owner 2026-10-21)"},
+      "States": "layout"
+    }
   }
 }

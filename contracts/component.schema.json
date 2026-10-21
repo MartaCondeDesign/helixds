@@ -430,6 +430,25 @@
             }
           }
         },
+        "stories": {
+          "type": "object",
+          "description": "How Figma represents each Storybook story (contracts/figma-conversion.json → storyCoverage, owner's rule 2026-10-21). Keyed by the story's export name in apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx. A string \"prop=value, prop=value\" = the Figma properties/values that draw it; \"default\" = the set's default variant; \"layout\" = a showcase that only arranges existing variants; { figma: null, reason, approved } = the owner decided Figma doesn't draw it. A story with no entry is ✗ in .ai/maps/figma-map.md and keeps the component from synced (figma-drift). Filled only with the owner's answer.",
+          "additionalProperties": {
+            "oneOf": [
+              { "type": "string" },
+              {
+                "type": "object",
+                "required": ["figma"],
+                "additionalProperties": false,
+                "properties": {
+                  "figma": { "type": ["string", "null"] },
+                  "reason": { "type": "string" },
+                  "approved": { "type": "string", "format": "date" }
+                }
+              }
+            ]
+          }
+        },
         "states": {
           "type": "array",
           "items": {

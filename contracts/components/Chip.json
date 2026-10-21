@@ -308,6 +308,13 @@
         "description": "Show/hide part (show-hide-parts.md): toggles the chip-dismiss layer. The × carries its own 2px on the label side; the chip keeps 12px on both ends either way."
       }
     ],
-    "variantCombinations": "50 variants (2026-10-21): variant × size × state = 40,  disabled per variant × size = 10. Disabled keeps the variant colors at 0.72 opacity,  like code."
+    "variantCombinations": "50 variants (2026-10-21): variant × size × state = 40,  disabled per variant × size = 10. Disabled keeps the variant colors at 0.72 opacity,  like code.",
+    "stories": {
+      "Dismissible": "dismissible=true",
+      "Variants": "layout",
+      "WithIcons": "icon=true, iconEnd=true",
+      "Sizes": "layout",
+      "KeyboardActivation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }
