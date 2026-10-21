@@ -408,7 +408,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception) | ✓ |
 | `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `(values: string[]) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
@@ -546,7 +546,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `options` | `(SelectOption \| SelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✗ missing |
+| `options` | `(SelectOption \| SelectOptionGroup)[]` | `VARIANT` `options` = `2` / `3` / `4` / `5` / `6` / `7` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) · `list-count` | ✓ |
 | `value` | `string \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `value` | `string \| undefined` | `TEXT` `valueText` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |

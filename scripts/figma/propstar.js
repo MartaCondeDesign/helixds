@@ -12,7 +12,9 @@ if (doc.name?.startsWith('❖')) { const t = doc; doc = t.parent; x = t.x; y = t
 const PURPLE = { r: 151 / 255, g: 71 / 255, b: 1 }; await figma.loadFontAsync({ family: 'Inter', style: 'Medium' });
 const vOf = (r, c) => set.children.find(v => Object.entries({ ...CONFIG.base, ...r.props, ...c.props }).every(([k, x]) => v.variantProperties[k] === x));
 const rows = CONFIG.rows, cols = CONFIG.cols, groups = CONFIG.groups ?? [];
-const colW = cols.map(c => Math.max(0, ...rows.map(r => vOf(r, c)?.width ?? 0)) + 48), rowH = rows.map(r => Math.max(0, ...cols.map(c => vOf(r, c)?.height ?? 0)) + 48);
+// a variant's drawn extent: its own box plus any absolute layer that hangs outside it (an open Select's listbox)
+const ext = v => { if (!v) return { w: 0, h: 0 }; let w = v.width, h = v.height; const o = v.absoluteTransform; for (const n of v.findAll(n => n.layoutPositioning === 'ABSOLUTE')) { const t = n.absoluteTransform; w = Math.max(w, t[0][2] - o[0][2] + n.width); h = Math.max(h, t[1][2] - o[1][2] + n.height); } return { w, h }; };
+const colW = cols.map(c => Math.max(0, ...rows.map(r => ext(vOf(r, c)).w)) + 48), rowH = rows.map(r => Math.max(0, ...cols.map(c => ext(vOf(r, c)).h)) + 48);
 const headerH = groups.length ? [42, 25] : [25];
 const table = figma.createFrame(); table.name = '❖ ' + set.name; table.fills = []; table.clipsContent = false; table.layoutMode = 'GRID';
 table.gridRowCount = headerH.length + rows.length; table.gridColumnCount = 1 + cols.length; table.gridRowGap = 0; table.gridColumnGap = 0;
@@ -27,7 +29,7 @@ table.primaryAxisSizingMode = 'AUTO'; table.counterAxisSizingMode = 'AUTO';
 doc.insertChild(doc.children.indexOf(set), table); table.x = x; table.y = y; table.appendChild(set); set.layoutPositioning = 'ABSOLUTE';
 const colX = i => labelW + colW.slice(0, i).reduce((a, b) => a + b, 0), rowY = i => headerH.reduce((a, b) => a + b, 0) + rowH.slice(0, i).reduce((a, b) => a + b, 0);
 set.x = colX(0); set.y = rowY(0);
-rows.forEach((r, ri) => cols.forEach((c, ci) => { const v = vOf(r, c); if (!v) return; v.x = colX(ci) - colX(0) + 24; v.y = rowY(ri) - rowY(0) + (rowH[ri] - v.height) / 2; }));
+rows.forEach((r, ri) => cols.forEach((c, ci) => { const v = vOf(r, c); if (!v) return; v.x = colX(ci) - colX(0) + 24; v.y = rowY(ri) - rowY(0) + (rowH[ri] - ext(v).h) / 2; }));
 set.resize(colW.reduce((a, b) => a + b, 0), rowH.reduce((a, b) => a + b, 0));
 const unplaced = set.children.filter(v => !rows.some(r => cols.some(c => vOf(r, c) === v))).map(v => v.name);
 if (doc.type === 'FRAME') { const texts = doc.children.filter(n => n.type === 'TEXT').sort((a, b) => a.y - b.y); const d = texts[1]; if (d && set.description) { for (const s of d.getStyledTextSegments(['fontName'])) await figma.loadFontAsync(s.fontName); d.characters = set.description; } doc.resize(Math.max(table.x + table.width, ...texts.map(t => t.width)), table.y + table.height); }
