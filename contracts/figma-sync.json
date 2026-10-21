@@ -334,14 +334,14 @@
       "figmaNodeId": "469:43",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state, colors light+dark from .ai/figma-expected/FAB.json, 20px icon; passed. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 9 variants (expanded open hover/press/focus added, disabled collapsed only), audit passed.",
+      "lastChecked": "2026-10-21",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time): expanded × state, colors light+dark from .ai/figma-expected/FAB.json, 20px icon; passed. RE-AXED 2026-10-21 by the conversion standard v1.4 (pattern action, scripts/figma/reaxis.js): 9 variants (expanded open hover/press/focus added, disabled collapsed only), audit passed. LIST-COUNT 2026-10-21: actions 2–7 VARIANT (expanded=true at every count × 4 states; collapsed and disabled at actions=2) — 29 variants, Propstar regenerated; audit passed (colors light+dark, clip, propstar).",
       "compSetId": "469:84",
-      "syncedCommit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
+      "syncedCommit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
       "audit": {
         "pass": true,
-        "commit": "551b5d44e435795ccdcc5145dc7692b521aa835e",
-        "date": "2026-10-20",
+        "commit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+        "date": "2026-10-21",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -351,7 +351,9 @@
           "border": 0,
           "fallback": 0,
           "layout": 0,
-          "binding": 0
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
         }
       }
     },
@@ -440,14 +442,14 @@
       "figmaNodeId": "470:2",
       "variantsMatch": true,
       "tokensMatch": true,
-      "lastChecked": "2026-10-20",
-      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision). UPDATED 2026-10-21 by the conversion standard v1.4: now a set with multiple false/true (2 variants).",
+      "lastChecked": "2026-10-21",
+      "notes": "AUDITED + RECORDED 2026-10-20 (first time) on the stateful MenuItem set (470:14: default/hover/selected/disabled, colors light+dark from .ai/figma-expected/MenuItem.json measured on the new Menu States story; selected label Body / m / Medium like code's fontWeight-selected). MenuItem's text layer renamed label → menu-item-label (its data-helix-part); vertical padding rebound to spacing/component/xs. Menu container (470:15) structural audit passed. Code: menu-item uses Body / m / Regular's line-height (owner's decision). UPDATED 2026-10-21 by the conversion standard v1.4: now a set with multiple false/true (2 variants). LIST-COUNT 2026-10-21: options 2–7 × multiple — 12 variants, the flat Default-story list (Apple…Grape) instead of the Grouped drawing; Propstar regenerated; container structural audit passed (MenuItem 470:14 unchanged, its audit stands).",
       "compSetId": "635:990",
-      "syncedCommit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
+      "syncedCommit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
       "audit": {
         "pass": true,
-        "commit": "2b697a9af86d486f21537095e08cb5b4c882cbb2",
-        "date": "2026-10-20",
+        "commit": "bc0e404ecc8dacca0f62774377324209bc22f78d",
+        "date": "2026-10-21",
         "counts": {
           "colors": 0,
           "spacing": 0,
@@ -457,7 +459,9 @@
           "border": 0,
           "fallback": 0,
           "layout": 0,
-          "binding": 0
+          "binding": 0,
+          "clip": 0,
+          "propstar": 0
         }
       }
     },
