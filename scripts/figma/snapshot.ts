@@ -1,7 +1,8 @@
 /**
- * `pnpm figma:snapshot <file>` — write the Figma property snapshot (.ai/figma-props.json) from the JSON that
+ * `pnpm figma:snapshot <file> [--merge]` — write the Figma property snapshot (.ai/figma-props.json) from the JSON that
  * scripts/figma/read-props.js returns through the Figma MCP, then regenerate .ai/maps/figma-map.md.
  * Run it after every change to a component in Figma: the code-vs-Figma listing is then never hand-edited.
+ * --merge: the file holds only some components (read-props.js with a NAMES filter) — update those, keep the rest.
  */
 import fs from 'fs';
 import path from 'path';
@@ -16,12 +17,13 @@ if (!read || typeof read !== 'object' || !Object.keys(read).length) { console.er
 const out = path.join(root, '.ai/figma-props.json');
 const prev = fs.existsSync(out) ? JSON.parse(fs.readFileSync(out, 'utf8')).components ?? {} : {};
 const today = new Date().toISOString().slice(0, 10);
+const merged = process.argv.includes('--merge') ? { ...prev, ...read } : read;
 const snapshot = {
   $comment: `Snapshot of every Helix component property in the Figma file (8iTiZ26AvebNtUwkkaKQ7m), read by scripts/figma/read-props.js through the Figma MCP and written by pnpm figma:snapshot on ${today}. Never edit by hand: run the read again after changing a component in Figma.`,
-  components: Object.fromEntries(Object.keys(read).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })).map(k => [k, read[k]])),
+  components: Object.fromEntries(Object.keys(merged).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })).map(k => [k, merged[k]])),
 };
 fs.writeFileSync(out, JSON.stringify(snapshot, null, 2) + '\n');
-const added = Object.keys(read).filter(k => !prev[k]), gone = Object.keys(prev).filter(k => !read[k]);
+const added = Object.keys(read).filter(k => !prev[k]), gone = Object.keys(prev).filter(k => !merged[k]);
 const changed = Object.keys(read).filter(k => prev[k] && JSON.stringify(prev[k].properties) !== JSON.stringify(read[k].properties));
-console.log(`✅ .ai/figma-props.json — ${Object.keys(read).length} components${changed.length ? ` · changed: ${changed.join(', ')}` : ''}${added.length ? ` · new: ${added.join(', ')}` : ''}${gone.length ? ` · gone: ${gone.join(', ')}` : ''}`);
+console.log(`✅ .ai/figma-props.json — ${Object.keys(merged).length} components${changed.length ? ` · changed: ${changed.join(', ')}` : ''}${added.length ? ` · new: ${added.join(', ')}` : ''}${gone.length ? ` · gone: ${gone.join(', ')}` : ''}`);
 execSync('pnpm -s docs:figma-map', { cwd: root, stdio: 'inherit' });

@@ -11,7 +11,7 @@
           "type": "TEXT"
         },
         {
-          "name": "content",
+          "name": "children",
           "type": "TEXT"
         },
         {
@@ -23,12 +23,19 @@
           ]
         },
         {
+          "name": "disabled",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "state",
           "type": "VARIANT",
           "values": [
             "default",
-            "focus",
-            "disabled"
+            "focus"
           ]
         }
       ]
@@ -37,7 +44,16 @@
       "nodeId": "334:4",
       "type": "COMPONENT",
       "page": "AppShell",
-      "properties": []
+      "properties": [
+        {
+          "name": "sidenav",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "topbar",
+          "type": "BOOLEAN"
+        }
+      ]
     },
     "Avatar": {
       "nodeId": "303:4",
@@ -219,7 +235,7 @@
           "type": "TEXT"
         },
         {
-          "name": "content",
+          "name": "children",
           "type": "TEXT"
         },
         {
@@ -701,10 +717,19 @@
       ]
     },
     "Menu": {
-      "nodeId": "470:15",
-      "type": "COMPONENT",
+      "nodeId": "635:990",
+      "type": "COMPONENT_SET",
       "page": "Menu",
-      "properties": []
+      "properties": [
+        {
+          "name": "multiple",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        }
+      ]
     },
     "MenuItem": {
       "nodeId": "470:14",
@@ -737,7 +762,7 @@
           "type": "TEXT"
         },
         {
-          "name": "content",
+          "name": "children",
           "type": "TEXT"
         },
         {
@@ -745,15 +770,15 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "tertiaryAction",
+          "name": "tertiaryActionLabel",
           "type": "BOOLEAN"
         },
         {
-          "name": "secondaryAction",
+          "name": "secondaryActionLabel",
           "type": "BOOLEAN"
         },
         {
-          "name": "primaryAction",
+          "name": "primaryActionLabel",
           "type": "BOOLEAN"
         }
       ]
@@ -1187,7 +1212,7 @@
           "type": "TEXT"
         },
         {
-          "name": "content",
+          "name": "children",
           "type": "TEXT"
         },
         {

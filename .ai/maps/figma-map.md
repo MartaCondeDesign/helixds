@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 162 of 180 code props match Figma exactly.**
+**Parity today: 173 of 177 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -48,13 +48,11 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ a value of `state` |
+| `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
-**Only in Figma (no code prop of that name and type):** `content` (TEXT)
-
-**Figma-only `state`:** `default` / `focus` / `disabled`
+**Figma-only `state`:** `default` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
@@ -64,8 +62,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot · `slot` | ✗ missing |
-| `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot · `slot` | ✗ missing |
+| `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot · `slot` | ✓ |
+| `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot · `slot` | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
@@ -131,10 +129,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `header` | `React.ReactNode \| undefined` | `BOOLEAN` `header` | shows the slot · `slot` | ✓ |
 | `header` | `React.ReactNode \| undefined` | `TEXT` `header text` | its text · `slot` | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code · `union` | ✓ |
-
-**Only in Figma (no code prop of that name and type):** `content` (TEXT)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
@@ -290,7 +286,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✗ missing |
+| `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
@@ -301,16 +297,11 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part · `show-hide-boolean` | ✓ |
-| `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | shows the part · `optional-text` | ✗ missing |
-| `primaryActionLabel` | `string \| undefined` | `TEXT` `primaryActionLabel text` | its text · `optional-text` | ✗ missing |
-| `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | shows the part · `optional-text` | ✗ missing |
-| `secondaryActionLabel` | `string \| undefined` | `TEXT` `secondaryActionLabel text` | its text · `optional-text` | ✗ missing |
-| `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | shows the part · `optional-text` | ✗ missing |
-| `tertiaryActionLabel` | `string \| undefined` | `TEXT` `tertiaryActionLabel text` | its text · `optional-text` | ✗ missing |
-
-**Only in Figma (no code prop of that name and type):** `content` (TEXT), `tertiaryAction` (BOOLEAN), `secondaryAction` (BOOLEAN), `primaryAction` (BOOLEAN)
+| `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | exception, approved 2026-10-21 — the primary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+| `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | exception, approved 2026-10-21 — the secondary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+| `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | exception, approved 2026-10-21 — the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
@@ -456,11 +447,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✗ missing |
+| `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code · `union` | ✓ |
-
-**Only in Figma (no code prop of that name and type):** `content` (TEXT)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 

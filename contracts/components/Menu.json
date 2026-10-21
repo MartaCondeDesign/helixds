@@ -168,9 +168,16 @@
   "figma": {
     "states": ["default", "hover", "selected", "disabled"],
     "properties": [
-      { "name": "state", "type": "VARIANT", "values": ["default", "hover", "selected", "disabled"], "figmaOnly": true, "description": "On MenuItem: hover also covers the keyboard-active option ([data-active]); selected = aria-selected (fill/primary light, text/primary, Body / m / Medium); disabled = text/disabled." },
+      {
+        "name": "state",
+        "type": "VARIANT",
+        "values": ["default", "hover", "selected", "disabled"],
+        "figmaOnly": true,
+        "description": "On MenuItem: hover also covers the keyboard-active option ([data-active]); selected = aria-selected (fill/primary light,  text/primary,  Body / m / Medium); disabled = text/disabled."
+      },
       { "name": "label", "type": "TEXT", "codeProp": "options[].label" }
     ],
-    "structure": "MenuItem set composed into a Menu component: 1px border/neutral (in the layout), 4px top/bottom padding, radius/m, shadow / m, 240px (menu.width). Groups: menu-group (4px sides) > menu-group-label (Label / Uppercase, 12/12/4 padding; 12px top only on the first group = 16 − the menu's 4) + options 2px apart; menu-group-divider edge to edge with 8px above and 16px below. Measured identical to code (Grouped story, 223px tall)."
+    "structure": "MenuItem set composed into a Menu component: 1px border/neutral (in the layout),  4px top/bottom padding,  radius/m,  shadow / m,  240px (menu.width). Groups: menu-group (4px sides) > menu-group-label (Label / Uppercase,  12/12/4 padding; 12px top only on the first group = 16 − the menu's 4) + options 2px apart; menu-group-divider edge to edge with 8px above and 16px below. Measured identical to code (Grouped story,  223px tall).",
+    "variantCombinations": "2 variants (2026-10-21): multiple false/true — true marks several options selected at once (same selected look,  aria-multiselectable). Drawn open; expanded has no property."
   }
 }
