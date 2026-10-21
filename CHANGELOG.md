@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — eslint-plugin: regenerate data.json after today's contract and prop-map changes (its tests failed on main while stale) (latest commit)
+- 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([#22](https://github.com/MartaCondeDesign/helixds/pull/22))
+  - eslint-plugin: regenerate data.json after today's contract and prop-map changes (its tests failed on main while stale)
 - 2026-10-21 — Figma in sync with code: all 33 components stable (#19) ([`05c8ff9`](https://github.com/MartaCondeDesign/helixds/commit/05c8ff9))
   - Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading
   - Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components
