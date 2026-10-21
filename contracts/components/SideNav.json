@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "SideNav",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "The persistent vertical navigation rail of an app shell — brand mark, primary nav entries, and a footer slot for the current user.",
   "import": "import { SideNav } from '@helixds/react';",

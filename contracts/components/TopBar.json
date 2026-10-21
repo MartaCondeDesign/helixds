@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name":    "TopBar",
   "version": "1.0.0",
-  "status":  "beta",
+  "status":  "stable",
 
   "purpose": "The fixed-height chrome bar at the top of a page — search, quick actions, and the current user, always in the same place.",
   "import": "import { TopBar } from '@helixds/react';",

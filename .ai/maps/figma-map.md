@@ -77,7 +77,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
 
-### AppShell (`v1.0.0`, beta)
+### AppShell (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -912,7 +912,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
 
-### SideNav (`v1.0.0`, beta)
+### SideNav (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -1121,7 +1121,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
-### TopBar (`v1.0.0`, beta)
+### TopBar (`v1.0.0`, stable)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 

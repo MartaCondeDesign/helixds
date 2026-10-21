@@ -88,7 +88,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Merge remote-tracking branch 'origin/main' into claude/appshell-divider-collapse (latest commit)
+- 2026-10-21 — AppShell, SideNav, TopBar back to stable: Layout is exempt from Figma since #24 (latest commit)
+- 2026-10-21 — Merge remote-tracking branch 'origin/main' into claude/appshell-divider-collapse ([`31934d1`](https://github.com/MartaCondeDesign/helixds/commit/31934d1))
 - 2026-10-21 — AppShell: divider on the SideNav and a collapsed SideNav below 768px ([`631d34d`](https://github.com/MartaCondeDesign/helixds/commit/631d34d))
 - 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
   - Figma sync ends with updating the Community copy
