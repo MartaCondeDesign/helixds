@@ -135,7 +135,7 @@ function variantValues(propName: string, codeType: string): string {
     .join(', ');
 }
 
-import { expectedFor, setComponent, patternOf, STANDARD, type Expected } from './figma/prop-rule.ts';
+import { expectedFor, setComponent, patternOf, STANDARD, type Expected, whyNone } from './figma/prop-rule.ts';
 
 type FigmaProp = { name: string; type: string; values?: string[] };
 const snapshotPath = path.join(root, '.ai/figma-props.json');
@@ -188,6 +188,7 @@ function run() {
       const list: Expected[] = exception
         ? exception.figma.map((f: Expected) => ({ ...f, why: exception.codeType === (prop.type ?? '') ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : '**stale exception** (pnpm figma:props)' }))
         : expectedFor(prop, parts).map(e => ({ ...e, why: e.rule === 'unmatched' ? `**${e.why}**` : `${e.why} · \`${e.rule}\`` }));
+      if (!list.length) rows.push(`| \`${prop.name}\` | \`${(prop.type ?? '').replace(/\|/g, '\\|')}\` | — no Figma property | ${exception ? `exception, approved ${exception.approved}${exception.reason ? ` — ${exception.reason}` : ''}` : whyNone(prop)} | — |`);
       for (const e of list) {
         const status = compare(e, figma);
         total++; if (status === '✓') ok++;

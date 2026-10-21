@@ -193,6 +193,12 @@ pnpm test:contract-hook     test that Claude Code contract hook
                             or prop-map.md — by Edit/Write, `pnpm token:add`, `pnpm contract`, or a shell write — and
                             asks the design-system owner to approve it (rule 13 as a gate, not just a sentence)
 pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
+                            scripts/claude-figma-props-hook.mjs (PreToolUse on the Figma MCP's use_figma) stops any Figma
+                            script that adds, renames or deletes a component property, combines variants or renames a
+                            variant, and asks the owner with that component's code-vs-Figma table from figma-map.md
+                            (every code prop, the Figma property it must be, what Figma has, order, Figma-only extras) —
+                            rule 16's naming is approved by the owner, never chosen by the agent
+pnpm test:figma-props-hook  test that Figma properties hook
 pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
                             the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
                             In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json

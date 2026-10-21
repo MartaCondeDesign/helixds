@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 206 of 207 code props match Figma exactly.**
+**Parity today: 207 of 208 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -49,7 +49,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `defaultExpanded` | `boolean` | — no Figma property | the uncontrolled twin of `expanded` — only the starting value, Figma shows that prop · `skip` | — |
+| `onExpandedChange` | `(expanded: boolean) => void` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -65,6 +68,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot · `slot` | ✓ |
 | `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot · `slot` | ✓ |
+| `children` | `React.ReactNode` | — no Figma property | another component or free content placed inside — not a property · `nested` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -75,7 +80,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `src` | `string \| undefined` | — no Figma property | an image URL (Avatar's src): Figma can't load an image from a URL, and a BOOLEAN that only toggles a sample photo isn't the prop — no property (owner's decision 2026-10-21). To show a photo in Figma, turn on the hidden avatar-image layer and change its image fill. · `skip` | — |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -85,11 +92,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
+| `avatars` | `{ label: string; src?: string }[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `max` | `number \| undefined` | `TEXT` `max` | exception, approved 2026-10-21 — code takes a number (how many avatars show before +N); Figma can't count, so max holds the +N text it produces | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
-**Only in Figma:** ✗ `overflow` (BOOLEAN), `overflow count` (TEXT) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
+**Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
@@ -102,6 +112,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -122,6 +133,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 
 **Property order:** ✓ same as code
@@ -140,6 +152,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `header` | `React.ReactNode \| undefined` | `TEXT` `header text` | its text · `slot` | ✓ |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code · `union` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -150,7 +163,12 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code · `union` | ✓ |
+| `categories` | `string[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `series` | `ChartSeries[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
+| `description` | `string \| undefined` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
+| `height` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -168,10 +186,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `defaultChecked` | `boolean \| undefined` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((checked: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `id` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -186,6 +209,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `options` | `CheckboxOption[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `value` | `string[] \| undefined` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((values: string[]) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
@@ -194,6 +221,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -213,7 +241,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd` | shows the icon · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
+| `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `onDismiss` | `(() => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -227,6 +257,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
+| `label` | `string` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
+| `options` | `ChipGroupOption[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
@@ -241,8 +273,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
+| `label` | `string` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
+| `actions` | `Array<{ icon: TablerIcon; label: string; onClick: () => void }>` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `defaultExpanded` | `boolean` | — no Figma property | the uncontrolled twin of `expanded` — only the starting value, Figma shows that prop · `skip` | — |
+| `onExpandedChange` | `((expanded: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -252,7 +290,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 ### Icon (`v1.0.0`, beta)
 
-_No design props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `icon` | `HelixIconComponent` | — no Figma property | exception, approved 2026-10-21 — code-only wrapper: Figma swaps the icon on the consuming component (icon swap),  never on an Icon set | — |
+| `size` | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40` | — no Figma property | exception, approved 2026-10-21 — code-only wrapper: each component variant already draws its icon at the size and stroke ADR-017 gives that size | — |
+| `stroke` | `number` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `color` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `label` | `string \| undefined` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
+| `decorative` | `boolean` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
@@ -263,10 +309,13 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `icon` | `TablerIcon` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
+| `label` | `string` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'danger'` | `VARIANT` `variant` = `primary` / `secondary` / `ghost` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -295,7 +344,9 @@ _No design props._
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage text` | its text · `optional-text` | ✓ |
+| `invalidAttempt` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `onChange` | `React.ChangeEventHandler<HTMLInputElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
 **Property order:** ✓ same as code
@@ -310,7 +361,16 @@ _No design props._
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
+| `id` | `string` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `expanded` | `boolean` | — no Figma property | closed = not on screen; Figma draws it open · `overlay-expanded` | — |
+| `anchorRef` | `React.RefObject<HTMLElement \| null>` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `options` | `(MenuOption \| MenuOptionGroup)[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
 | `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `values` | `string[] \| undefined` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `activeValue` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `onSelect` | `(value: string) => void` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -324,10 +384,17 @@ _No design props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
+| `expanded` | `boolean` | — no Figma property | closed = not on screen; Figma draws it open · `overlay-expanded` | — |
+| `onDismiss` | `() => void` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `closeOnBackdropClick` | `boolean` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | exception, approved 2026-10-21 — the primary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+| `onPrimaryAction` | `(() => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | exception, approved 2026-10-21 — the secondary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+| `onSecondaryAction` | `(() => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | exception, approved 2026-10-21 — the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+| `onTertiaryAction` | `(() => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -340,7 +407,10 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `options` | `(MultiSelectOption \| MultiSelectOptionGroup)[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `value` | `string[] \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception) | ✓ |
+| `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `(values: string[]) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
@@ -351,6 +421,9 @@ _No design props._
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `id` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -365,9 +438,11 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `href` | `string` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -386,6 +461,7 @@ _No design props._
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code · `union` | ✓ |
 | `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot · `slot` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -398,7 +474,11 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `defaultChecked` | `boolean` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((checked: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage` | shows the part · `optional-text` | ✓ |
@@ -406,6 +486,7 @@ _No design props._
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -420,6 +501,10 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `options` | `RadioOption[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
+| `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((value: string) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
@@ -428,6 +513,7 @@ _No design props._
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -439,7 +525,14 @@ _No design props._
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
+| `label` | `string` | — no Figma property | exception, approved 2026-10-20 — the group's aria-label — never drawn; the visible text is each item's own label (segmented-control-item-label) | — |
+| `options` | `SegmentedControlOption[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `value` | `string \| undefined` | — no Figma property | the value code works with — not a design property · `skip` | — |
+| `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((value: string) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -452,8 +545,11 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+| `options` | `(SelectOption \| SelectOptionGroup)[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `value` | `string \| undefined` | `VARIANT` `value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and value text is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `value` | `string \| undefined` | `TEXT` `value text` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and value text is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
+| `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `(value: string) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
@@ -464,6 +560,9 @@ _No design props._
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `id` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -478,7 +577,9 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `brand` | `React.ReactNode \| undefined` | `BOOLEAN` `brand` | shows the slot · `slot` | ✓ |
+| `children` | `React.ReactNode` | — no Figma property | another component or free content placed inside — not a property · `nested` | — |
 | `footer` | `React.ReactNode \| undefined` | `BOOLEAN` `footer` | shows the slot · `slot` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -492,8 +593,12 @@ _No design props._
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
+| `expanded` | `boolean` | — no Figma property | closed = not on screen; Figma draws it open · `overlay-expanded` | — |
+| `onDismiss` | `() => void` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `closeOnBackdropClick` | `boolean` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code · `union` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -510,8 +615,12 @@ _No design props._
 | `description` | `string \| undefined` | `BOOLEAN` `description` | shows the part · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `defaultChecked` | `boolean \| undefined` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
+| `onChange` | `((checked: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
+| `id` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `name` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -521,7 +630,10 @@ _No design props._
 
 ### Table (`v1.0.0`, stable)
 
-_No design props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `children` | `React.ReactNode` | — no Figma property | another component or free content placed inside — not a property · `nested` | — |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
@@ -541,8 +653,11 @@ _No design props._
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+| `rows` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
+| `maxLength` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code · `union` | ✓ |
 | `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part · `show-hide-boolean` | ✓ |
+| `onChange` | `React.ChangeEventHandler<HTMLTextAreaElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
 **Property order:** ✓ same as code
@@ -553,7 +668,9 @@ _No design props._
 
 ### Toast (`v0.2.0`, stable)
 
-_No design props._
+| Code prop | Code type | Figma property | Why | Figma today |
+|---|---|---|---|---|
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Only in Figma:** ✗ `label` (TEXT), `description` (BOOLEAN), `description text` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
 
@@ -569,6 +686,7 @@ _No design props._
 | `children` | `React.ReactElement` | `INSTANCE_SWAP` `children` | exception, approved 2026-10-21 — the trigger is a slot: an INSTANCE_SWAP lets the designer put any component under the tooltip (owner's request) | ✓ |
 | `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code · `union` | ✓ |
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | exception, approved 2026-10-21 — unlike the other overlays,  a tooltip is drawn next to its trigger,  so showing or hiding it is a real look (owner's request) | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
@@ -582,6 +700,7 @@ _No design props._
 |---|---|---|---|---|
 | `start` | `React.ReactNode \| undefined` | `BOOLEAN` `start` | shows the slot · `slot` | ✓ |
 | `end` | `React.ReactNode \| undefined` | `BOOLEAN` `end` | shows the slot · `slot` | ✓ |
+| `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 

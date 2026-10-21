@@ -144,9 +144,15 @@
     "states": ["default"],
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
-      { "name": "overflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
-      { "name": "overflow count", "type": "TEXT", "codeProp": "max", "description": "The +N text." }
+      { "name": "withOverflow", "type": "BOOLEAN", "codeProp": "max", "description": "Shows the +N item (code renders it when avatars exceed max)." },
+      { "name": "max", "type": "TEXT", "codeProp": "max", "description": "The +N text — code computes it from avatars and max." }
     ],
+    "propertyMap": {
+      "max": { "codeType": "number | undefined", "figma": [{ "name": "max", "type": "TEXT" }], "approved": "2026-10-21", "reason": "code takes a number (how many avatars show before +N); Figma can't count, so max holds the +N text it produces" }
+    },
+    "figmaOnly": {
+      "withOverflow": { "approved": "2026-10-21", "reason": "shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after" }
+    },
     "structure": "Avatar instances in avatar-group-item rings (2px, fill/page). The 8px overlap (avatarGroup.overlap) is modeled without a negative gap: every item after the first sits in a slot 8px narrower than itself, offset 8px left, so it paints over the previous one and the group's width matches code (m, 3 avatars: 92px). The hover lift is a motion effect, not modeled."
   }
 }

@@ -65,3 +65,19 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
   }
   return [{ name, type: 'TEXT', rule: UNMATCHED, why: 'no rule in contracts/figma-conversion.json covers this type — extend the standard' }];
 }
+
+/** Why a prop has no Figma property (expectedFor returned []): the rule id and its reason, shown in figma-map. */
+export function whyNone(prop: Prop): string {
+  const name = prop.name, type = (prop.type ?? '').replace(/\s+/g, ' ').trim();
+  const sk = STANDARD.skip as typeof STANDARD.skip & { why?: Record<string, string> };
+  const own = sk.why?.[name] ?? (name.startsWith('aria-') ? sk.why?.['aria-*'] : undefined);
+  if (own) return `${own} · \`skip\``;
+  if (/^on[A-Z]/.test(name)) return 'an event handler — behaviour, nothing to draw · `skip`';
+  if (/^default[A-Z]/.test(name)) return `the uncontrolled twin of \`${name[7].toLowerCase()}${name.slice(8)}\` — only the starting value, Figma shows that prop · \`skip\``;
+  if (sk.typePatterns.some(p => new RegExp(p).test(type))) return 'data (a list or a ref) — content, not a design property · `skip`';
+  if (has(sk.names, name)) return 'wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip`';
+  if (sk.nonStringValue && name === 'value') return 'the value code works with — not a design property · `skip`';
+  if (type.includes('ReactElement') || name === 'children') return 'another component or free content placed inside — not a property · `nested`';
+  if (name === 'expanded') return 'closed = not on screen; Figma draws it open · `overlay-expanded`';
+  return 'read by screen readers only — no part draws it · `aria-text`';
+}

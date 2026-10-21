@@ -81,11 +81,11 @@
       "page": "AvatarGroup",
       "properties": [
         {
-          "name": "overflow",
+          "name": "withOverflow",
           "type": "BOOLEAN"
         },
         {
-          "name": "overflow count",
+          "name": "max",
           "type": "TEXT"
         },
         {
