@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — CheckboxGroup and RadioGroup in Figma: options 2–7 list-count variant (36 variants each, built from each variant's twin), Propstar tables regenerated; contracts' figma.variantCombinations updated (owner's rule 2026-10-21) (latest commit)
+- 2026-10-21 — Figma audit: color parity matches variants by prop pairs too, so an axis code doesn't measure (list-count options=2…7) checks every variant that has the other pairs (latest commit)
+- 2026-10-21 — CheckboxGroup and RadioGroup in Figma: options 2–7 list-count variant (36 variants each, built from each variant's twin), Propstar tables regenerated; contracts' figma.variantCombinations updated (owner's rule 2026-10-21) ([`d4da5c8`](https://github.com/MartaCondeDesign/helixds/commit/d4da5c8))
 - 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))
 - 2026-10-21 — list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop ([`6997dc5`](https://github.com/MartaCondeDesign/helixds/commit/6997dc5))
 - 2026-10-21 — Figma conversion v1.8: list-count rule — a list of drawn items (options, actions, avatars, items) is a VARIANT of how many (1–7, per-contract range in figma.listCount); prop-map and the conversion doc say so ([`36a5374`](https://github.com/MartaCondeDesign/helixds/commit/36a5374))
