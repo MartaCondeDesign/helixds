@@ -64,9 +64,9 @@ const SPECS: Record<string, Spec> = {
   },
   Input: {
     story: 'components-input--default',
-    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
+    axes: { 'value.': ['empty', 'filled'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], isLoading: ['false', 'true'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message',
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', ...(v['value.'] === 'filled' ? { value: 'Typed text' } : {}),
       invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', isLoading: v.isLoading === 'true' }),
     parts: {
       '(root)': { part: 'input-root' },
@@ -82,9 +82,9 @@ const SPECS: Record<string, Spec> = {
   },
   Textarea: {
     story: 'components-textarea--with-character-count',
-    axes: { invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
+    axes: { 'value.': ['empty', 'filled'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'], resize: ['none', 'vertical', 'horizontal', 'both'] },
     states: ['default', 'hover', 'focus'],
-    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true,
+    args: v => ({ label: 'Label', placeholder: 'Placeholder', required: true, description: 'Helper text', errorMessage: 'Error message', showCount: true, ...(v['value.'] === 'filled' ? { value: 'Some text the user wrote.' } : {}),
       invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true', resize: v.resize! }),
     parts: {
       '(root)': { part: 'textarea-root' },
@@ -118,8 +118,7 @@ const SPECS: Record<string, Spec> = {
     story: 'components-select--default',
     axes: { 'value.': ['empty', 'selected'], invalid: ['false', 'true'], disabled: ['false', 'true'], hideLabel: ['false', 'true'], fullWidth: ['false', 'true'] },
     states: ['default', 'hover', 'focus', 'open'],
-    // value.=selected is drawn once (default, valid, enabled, no secondary) — contracts/components/Select.json → figma.propertyMap.value
-    skip: (v, s) => v['value.'] === 'selected' && (s !== 'default' || v.invalid === 'true' || v.disabled === 'true' || v.hideLabel === 'true' || v.fullWidth === 'true'),
+    // value.=selected is drawn in every state the empty field has (form-field rule, owner 2026-10-21)
     args: v => ({ label: 'Role', placeholder: 'Choose a role…', required: true, description: 'Helper text', errorMessage: 'Error message',
       ...(v['value.'] === 'selected' ? { value: 'designer' } : {}), invalid: v.invalid === 'true', disabled: v.disabled === 'true', hideLabel: v.hideLabel === 'true', fullWidth: v.fullWidth === 'true' }),
     parts: {
@@ -435,7 +434,8 @@ async function measure(page: Page, spec: Spec, v: Record<string, string>, state:
       // (filled icons, e.g. Toast's, carry it in fill instead)
       const paint = svg ? [getComputedStyle(svg).stroke, getComputedStyle(svg).fill].find(x => /^rgb|^color/.test(x)) : undefined;
       if (p.text) out[layer]!.fill = svg ? (paint ?? getComputedStyle(svg).color) : cs.color;
-      if (p.placeholder) out[layer]!.fill = getComputedStyle(el, '::placeholder').color; // the Figma layer shows placeholder text
+      // the Figma layer shows the placeholder while the field is empty, the typed text once it has a value (value.=filled)
+      if (p.placeholder) out[layer]!.fill = (el as HTMLInputElement).value ? getComputedStyle(el).color : getComputedStyle(el, '::placeholder').color;
     }
     return out;
   }, { parts: spec.parts, scope });
