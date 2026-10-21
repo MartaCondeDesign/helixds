@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type * as React from 'react';
-import { IconAlertTriangleFilled, IconCircleCheckFilled, IconCircleXFilled } from '@tabler/icons-react';
+import { IconAlertTriangleFilled, IconCircleCheckFilled, IconCircleXFilled, IconMinus } from '@tabler/icons-react';
 import { Badge, Icon, Tooltip } from '@helixds/react';
 import type { BadgeVariant } from '@helixds/react';
 import { StoryHeader } from './_shared/StoryHeader';
@@ -67,6 +67,7 @@ const FIGMA_MARK = {
   synced:  { icon: IconCircleCheckFilled,   color: 'var(--helix-color-icon-success)', label: 'In Figma and aligned with code' },
   drift:   { icon: IconAlertTriangleFilled, color: 'var(--helix-color-icon-warning)', label: 'In Figma but out of date' },
   missing: { icon: IconCircleXFilled,       color: 'var(--helix-color-icon-danger)',  label: 'Not in Figma' },
+  exempt:  { icon: IconMinus,               color: 'var(--helix-color-icon-neutral-light)', label: 'Not required — Layout components aren\'t built in Figma for now' },
 } as const;
 
 function FigmaMark({ state, details }: { state: keyof typeof FIGMA_MARK; details: string[] }) {
@@ -123,7 +124,7 @@ export const Overview: Story = {
       <div>
         <StoryHeader
           title="Status"
-          description={`Status of ${rows.length} components, computed by pnpm verify:stable (ADR-018) from 8 automatic criteria — real checks run in a browser, in light and dark mode, not opinions — plus Figma (${figmaCount('synced')} aligned, ${figmaCount('drift')} out of date, ${figmaCount('missing')} not in Figma). Hover a ✗ or ⚠ to see what's missing or what changed. Last run: ${new Date(stability.generatedAt).toLocaleString()}.`}
+          description={`Status of ${rows.length} components, computed by pnpm verify:stable (ADR-018) from 8 automatic criteria — real checks run in a browser, in light and dark mode, not opinions — plus Figma (${figmaCount('synced')} aligned, ${figmaCount('drift')} out of date, ${figmaCount('missing')} not in Figma, ${figmaCount('exempt')} not required). Hover a ✗ or ⚠ to see what's missing or what changed. Last run: ${new Date(stability.generatedAt).toLocaleString()}.`}
         />
 
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-s)', marginBottom: 'var(--helix-spacing-l)' }}>

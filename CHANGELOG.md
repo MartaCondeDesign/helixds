@@ -9,7 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-21 — Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse (latest commit)
+- 2026-10-21 — Merge remote-tracking branch 'origin/main' into claude/remove-illustrations (latest commit)
+- 2026-10-21 — Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse ([`b4bb7ef`](https://github.com/MartaCondeDesign/helixds/commit/b4bb7ef))
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
   - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
@@ -89,6 +90,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
+  - Figma sync ends with updating the Community copy
+  - Layout components and Pages aren't built in Figma for now
 - 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([`3129b32`](https://github.com/MartaCondeDesign/helixds/commit/3129b32))
   - View in Figma links open the public Figma Community file; README links it next to Storybook
 - 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))
