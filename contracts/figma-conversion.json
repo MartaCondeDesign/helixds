@@ -1,7 +1,7 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.7.0",
-  "approved": "2026-10-20",
+  "version": "1.8.0",
+  "approved": "2026-10-21",
 
   "naming": {
     "property": "Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).",
@@ -42,6 +42,7 @@
   "secondaryAxes": ["fullWidth", "hideLabel", "isLoading", "resize"],
   "partSuffix": { "errorMessage": "error" },
 
+  "storyCoverage": "Every Storybook story of a component (each export of apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx) says how Figma represents it, or carries the owner's decision that it doesn't (owner's rule 2026-10-21 — Avatar's With image / Initials stories had no Figma counterpart until withImage was added). The contract's figma.stories maps each export: \"prop=value, prop=value\" (the Figma properties/values that draw it, each a property of the set or state), \"default\" (the set's default variant), \"layout\" (a showcase that only arranges existing variants), or { figma: null, reason, approved } (behaviour only, or not drawn on purpose). pnpm docs:figma-map prints a Stories → Figma block per component (✗ = no approved representation, or a stale entry) and figma-drift fails a component with a ✗. Filling figma.stories is the owner's decision: an agent shows each ✗ story with a proposal and asks.",
   "propertyOrder": "Figma properties come in the code's order — the contract's props order, which is the order Storybook's Controls list them in (owner's decision 2026-10-21). Figma always shows VARIANT properties first, so each group follows the code order on its own: the variants in code order with state last, then every other property in code order — a BOOLEAN's {name}Text / {name}Swap right after it, approved exceptions for native attributes last. pnpm docs:figma-map checks it (Property order line) and figma-drift fails a component that breaks it.",
   "state": {
     "values": ["default", "hover", "press", "focus", "open", "selected"],

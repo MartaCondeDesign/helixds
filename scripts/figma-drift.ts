@@ -11,7 +11,8 @@
  *   types     {Name}.types.ts — prop names and value unions (comments ignored)
  *   contract  props, anatomy, sizing and states (status/version ignored — verify:stable rewrites status)
  *
- * Behaviour-only changes ({Name}.tsx logic, stories, docs) don't count: they don't change what Figma shows.
+ * Behaviour-only changes ({Name}.tsx logic, stories, docs) don't count: they don't change what Figma shows — but a
+ * story Figma has no approved representation for does (figma-map.md's **Stories → Figma:** ✗, contract figma.stories).
  *
  *   synced   in Figma, audited, nothing visual changed since  ✓
  *   drift    in Figma, but not audited, or something visual
@@ -126,6 +127,12 @@ export function figmaCheck(name: string, contractPath: string, figmaEntry: any |
   if (figmaOnly) return { state: 'drift', details: [`Figma has properties no code prop has — ${figmaOnly.replace('**Only in Figma:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
   const order = section.split('\n').find(l => l.startsWith('**Property order:** ✗'));
   if (order) return { state: 'drift', details: [`Figma properties are not in the code's order — ${order.replace('**Property order:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  // Story coverage (contracts/figma-conversion.json → storyCoverage): every Storybook story says how Figma draws it.
+  const storiesLine = section.split('\n').find(l => l.startsWith('**Stories → Figma:** ✗'));
+  if (storiesLine) {
+    const unmapped = section.split('\n').filter(l => /^- `[^`]+` → ✗/.test(l)).map(l => l.match(/^- `([^`]+)`/)![1]);
+    return { state: 'drift', details: [`Storybook stories with no approved Figma representation (${unmapped.length}): ${unmapped.join(', ')} — ask the owner, record it in the contract's figma.stories (.ai/maps/figma-map.md)`] };
+  }
   const rev = baselineRev(figmaEntry);
   const syncedAt = figmaEntry.syncedCommit ? `commit ${String(figmaEntry.syncedCommit).slice(0, 7)}` : figmaEntry.lastChecked;
   if (!rev) return { state: 'drift', details: ['No sync point recorded in figma-sync.json — re-check it against code'], syncedAt };
