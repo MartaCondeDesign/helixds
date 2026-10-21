@@ -61,12 +61,8 @@
       "page": "Avatar",
       "properties": [
         {
-          "name": "initials",
+          "name": "label",
           "type": "TEXT"
-        },
-        {
-          "name": "src",
-          "type": "BOOLEAN"
         },
         {
           "name": "size",
@@ -109,16 +105,16 @@
       "page": "Badge",
       "properties": [
         {
-          "name": "label",
-          "type": "TEXT"
-        },
-        {
           "name": "icon",
           "type": "BOOLEAN"
         },
         {
           "name": "icon swap",
           "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "label",
+          "type": "TEXT"
         },
         {
           "name": "variant",
@@ -147,15 +143,7 @@
       "page": "Button",
       "properties": [
         {
-          "name": "children",
-          "type": "TEXT"
-        },
-        {
           "name": "icon",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "iconEnd",
           "type": "BOOLEAN"
         },
         {
@@ -163,8 +151,16 @@
           "type": "INSTANCE_SWAP"
         },
         {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
           "name": "iconEnd swap",
           "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "children",
+          "type": "TEXT"
         },
         {
           "name": "variant",
@@ -186,7 +182,7 @@
           ]
         },
         {
-          "name": "disabled",
+          "name": "isLoading",
           "type": "VARIANT",
           "values": [
             "false",
@@ -194,7 +190,7 @@
           ]
         },
         {
-          "name": "isLoading",
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
             "false",
@@ -306,10 +302,6 @@
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -326,6 +318,10 @@
           "type": "TEXT"
         },
         {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
           "name": "checked",
           "type": "VARIANT",
           "values": [
@@ -334,7 +330,7 @@
           ]
         },
         {
-          "name": "indeterminate",
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
             "false",
@@ -350,7 +346,7 @@
           ]
         },
         {
-          "name": "disabled",
+          "name": "indeterminate",
           "type": "VARIANT",
           "values": [
             "false",
@@ -378,10 +374,6 @@
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -396,6 +388,10 @@
         {
           "name": "errorMessage text",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "orientation",
@@ -437,20 +433,20 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEnd",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "dismissible",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "icon swap",
           "type": "INSTANCE_SWAP"
         },
         {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
           "name": "iconEnd swap",
           "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "dismissible",
+          "type": "BOOLEAN"
         },
         {
           "name": "variant",
@@ -580,7 +576,7 @@
           ]
         },
         {
-          "name": "disabled",
+          "name": "isLoading",
           "type": "VARIANT",
           "values": [
             "false",
@@ -588,7 +584,7 @@
           ]
         },
         {
-          "name": "isLoading",
+          "name": "disabled",
           "type": "VARIANT",
           "values": [
             "false",
@@ -617,12 +613,24 @@
           "type": "TEXT"
         },
         {
-          "name": "value",
-          "type": "TEXT"
-        },
-        {
           "name": "required",
           "type": "BOOLEAN"
+        },
+        {
+          "name": "icon",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "icon swap",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "iconEnd",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "iconEnd swap",
+          "type": "INSTANCE_SWAP"
         },
         {
           "name": "description",
@@ -641,20 +649,16 @@
           "type": "TEXT"
         },
         {
-          "name": "icon",
-          "type": "BOOLEAN"
+          "name": "value",
+          "type": "TEXT"
         },
         {
-          "name": "icon swap",
-          "type": "INSTANCE_SWAP"
-        },
-        {
-          "name": "iconEnd",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "iconEnd swap",
-          "type": "INSTANCE_SWAP"
+          "name": "hideLabel",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
         },
         {
           "name": "size",
@@ -682,7 +686,7 @@
           ]
         },
         {
-          "name": "hideLabel",
+          "name": "isLoading",
           "type": "VARIANT",
           "values": [
             "false",
@@ -691,14 +695,6 @@
         },
         {
           "name": "fullWidth",
-          "type": "VARIANT",
-          "values": [
-            "false",
-            "true"
-          ]
-        },
-        {
-          "name": "isLoading",
           "type": "VARIANT",
           "values": [
             "false",
@@ -770,7 +766,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "tertiaryActionLabel",
+          "name": "primaryActionLabel",
           "type": "BOOLEAN"
         },
         {
@@ -778,7 +774,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "primaryActionLabel",
+          "name": "tertiaryActionLabel",
           "type": "BOOLEAN"
         }
       ]
@@ -797,10 +793,6 @@
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -815,6 +807,10 @@
         {
           "name": "errorMessage text",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "value",
@@ -841,7 +837,7 @@
           ]
         },
         {
-          "name": "hideLabel",
+          "name": "fullWidth",
           "type": "VARIANT",
           "values": [
             "false",
@@ -849,7 +845,7 @@
           ]
         },
         {
-          "name": "fullWidth",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
             "false",
@@ -945,10 +941,6 @@
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -963,6 +955,10 @@
         {
           "name": "errorMessage text",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "checked",
@@ -1009,10 +1005,6 @@
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -1027,6 +1019,10 @@
         {
           "name": "errorMessage text",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "orientation",
@@ -1108,16 +1104,12 @@
           "type": "TEXT"
         },
         {
-          "name": "placeholder",
-          "type": "TEXT"
-        },
-        {
           "name": "value text",
           "type": "TEXT"
         },
         {
-          "name": "required",
-          "type": "BOOLEAN"
+          "name": "placeholder",
+          "type": "TEXT"
         },
         {
           "name": "description",
@@ -1134,6 +1126,10 @@
         {
           "name": "errorMessage text",
           "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
         },
         {
           "name": "value",
@@ -1160,7 +1156,7 @@
           ]
         },
         {
-          "name": "hideLabel",
+          "name": "fullWidth",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1168,7 +1164,7 @@
           ]
         },
         {
-          "name": "fullWidth",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1247,7 +1243,7 @@
           "type": "TEXT"
         },
         {
-          "name": "checked",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1255,15 +1251,7 @@
           ]
         },
         {
-          "name": "size",
-          "type": "VARIANT",
-          "values": [
-            "s",
-            "m"
-          ]
-        },
-        {
-          "name": "hideLabel",
+          "name": "checked",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1276,6 +1264,14 @@
           "values": [
             "false",
             "true"
+          ]
+        },
+        {
+          "name": "size",
+          "type": "VARIANT",
+          "values": [
+            "s",
+            "m"
           ]
         },
         {
@@ -1342,18 +1338,6 @@
           "type": "TEXT"
         },
         {
-          "name": "value",
-          "type": "TEXT"
-        },
-        {
-          "name": "required",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "showCount",
-          "type": "BOOLEAN"
-        },
-        {
           "name": "description",
           "type": "BOOLEAN"
         },
@@ -1367,6 +1351,18 @@
         },
         {
           "name": "errorMessage text",
+          "type": "TEXT"
+        },
+        {
+          "name": "required",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "showCount",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "value",
           "type": "TEXT"
         },
         {
@@ -1386,7 +1382,7 @@
           ]
         },
         {
-          "name": "hideLabel",
+          "name": "fullWidth",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1394,7 +1390,7 @@
           ]
         },
         {
-          "name": "fullWidth",
+          "name": "hideLabel",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1453,13 +1449,35 @@
       ]
     },
     "Tooltip": {
-      "nodeId": "465:6",
-      "type": "COMPONENT",
+      "nodeId": "639:49",
+      "type": "COMPONENT_SET",
       "page": "Tooltip",
       "properties": [
         {
           "name": "label",
           "type": "TEXT"
+        },
+        {
+          "name": "children",
+          "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "placement",
+          "type": "VARIANT",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ]
+        },
+        {
+          "name": "expanded",
+          "type": "VARIANT",
+          "values": [
+            "true",
+            "false"
+          ]
         }
       ]
     },

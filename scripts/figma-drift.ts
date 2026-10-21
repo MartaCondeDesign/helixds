@@ -122,6 +122,10 @@ export function figmaCheck(name: string, contractPath: string, figmaEntry: any |
   const section = map.split(/^### /m).find(sec => sec.startsWith(`${name} (`)) ?? '';
   const mismatched = section.split('\n').filter(l => /\| ✗[^|]*\|\s*$/.test(l)).map(l => l.split(/(?<!\\)\|/)[3]?.trim().replace(/`/g, '')).filter(Boolean);
   if (mismatched.length) return { state: 'drift', details: [`Figma properties differ from the code props (${mismatched.length}): ${mismatched.join(', ')} — see .ai/maps/figma-map.md`] };
+  const figmaOnly = section.split('\n').find(l => l.startsWith('**Only in Figma:** ✗'));
+  if (figmaOnly) return { state: 'drift', details: [`Figma has properties no code prop has — ${figmaOnly.replace('**Only in Figma:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  const order = section.split('\n').find(l => l.startsWith('**Property order:** ✗'));
+  if (order) return { state: 'drift', details: [`Figma properties are not in the code's order — ${order.replace('**Property order:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
   const rev = baselineRev(figmaEntry);
   const syncedAt = figmaEntry.syncedCommit ? `commit ${String(figmaEntry.syncedCommit).slice(0, 7)}` : figmaEntry.lastChecked;
   if (!rev) return { state: 'drift', details: ['No sync point recorded in figma-sync.json — re-check it against code'], syncedAt };

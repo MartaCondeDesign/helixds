@@ -5,11 +5,11 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 173 of 177 code props match Figma exactly.**
+**Parity today: 206 of 207 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.4.0 (owner-approved 2026-10-20; explained with the
+From `contracts/figma-conversion.json` v1.6.0 (owner-approved 2026-10-20; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -24,10 +24,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
 | `look-boolean` | any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer) | `VARIANT {name} = false / true` | changes the look → false/true toggle |
 | `slot` | an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…) | `BOOLEAN {name}` + `TEXT {name} text (only for slotsWithText)` | shows the slot |
-| `photo` | a prop listed in photoProps (Avatar's src) | `BOOLEAN {name}` | shows the photo |
 | `text` | a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component | `TEXT {name}` | its text |
 | `optional-text` | an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop) | `BOOLEAN {name}` + `TEXT {name} text` | shows the part · its text |
-| `aria-text` | a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title or -content part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description | — | read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20) |
+| `aria-text` | a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title, -content or -initials part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description | — | read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20) |
 
 - Figma property name = code prop name, unchanged (isLoading, not loading; children, not label).
 - VARIANT values = code values, unchanged (primary, stacked-bar, false).
@@ -52,6 +51,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `accordion-root`, `accordion-header`, `accordion-title`, `accordion-chevron`, `accordion-panel`, `accordion-panel-inner`
@@ -65,16 +66,18 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `sidenav` | `React.ReactNode \| undefined` | `BOOLEAN` `sidenav` | shows the slot · `slot` | ✓ |
 | `topbar` | `React.ReactNode \| undefined` | `BOOLEAN` `topbar` | shows the slot · `slot` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
 ### Avatar (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `src` | `string \| undefined` | `BOOLEAN` `src` | shows the photo · `photo` | ✓ |
+| `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 
-**Only in Figma (no code prop of that name and type):** `initials` (TEXT)
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-root`, `avatar-image`, `avatar-initials`
 
@@ -84,7 +87,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 
-**Only in Figma (no code prop of that name and type):** `overflow` (BOOLEAN), `overflow count` (TEXT)
+**Property order:** ✓ same as code
+
+**Only in Figma:** ✗ `overflow` (BOOLEAN), `overflow count` (TEXT) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
@@ -97,6 +102,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `badge`, `badge-content`, `badge-icon`, `badge-label`
 
@@ -117,6 +124,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
@@ -132,6 +141,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `padding` | `'none' \| 'default'` | `VARIANT` `padding` = `none` / `default` | same values as code · `union` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
 ### Chart (`v1.2.0`, beta)
@@ -140,6 +151,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code · `union` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chart-root`, `chart-canvas`, `chart-legend`, `chart-legend-swatch`, `chart-legend-item`, `chart-data`
 
@@ -159,6 +172,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `indeterminate` | `boolean` | `VARIANT` `indeterminate` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -180,6 +195,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `checkbox-group`, `checkbox-group-legend`, `checkbox-group-required`, `checkbox-group-options`, `checkbox-group-description`, `checkbox-group-error`
 
 ### Chip (`v2.0.0`, stable)
@@ -198,6 +215,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd swap` | which icon · `icon` | ✓ |
 | `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part · `show-hide-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-shell`, `chip`, `chip-icon`, `chip-label`, `chip-icon-end`, `chip-dismiss`
@@ -211,6 +230,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `chip-group`
 
 ### FAB (`v2.0.0`, stable)
@@ -223,16 +244,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
 ### Icon (`v1.0.0`, beta)
 
-| Code prop | Code type | Figma property | Why | Figma today |
-|---|---|---|---|---|
-| `icon` | `HelixIconComponent` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✗ not in Figma |
-| `size` | `12 \| 14 \| 16 \| 18 \| 20 \| 24 \| 28 \| 32 \| 36 \| 40` | `VARIANT` `size` = `12` / `14` / `16` / `18` / `20` / `24` / `28` / `32` / `36` / `40` | same values as code · `union` | ✗ not in Figma |
+_No design props._
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-root`
 
@@ -247,6 +267,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -276,6 +298,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `input-root`, `input-label`, `input-required`, `input-wrapper`, `input-icon`, `input-field`, `input-spinner`, `input-icon-end`, `input-description`, `input-error`
@@ -287,6 +311,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `multiple` | `boolean` | `VARIANT` `multiple` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `menu-item`, `menu-item-label`, `menu-item-label-end`, `menu`, `menu-group-divider`, `menu-group-label`
 
@@ -302,6 +328,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `primaryActionLabel` | `string \| undefined` | `BOOLEAN` `primaryActionLabel` | exception, approved 2026-10-21 — the primary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
 | `secondaryActionLabel` | `string \| undefined` | `BOOLEAN` `secondaryActionLabel` | exception, approved 2026-10-21 — the secondary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
 | `tertiaryActionLabel` | `string \| undefined` | `BOOLEAN` `tertiaryActionLabel` | exception, approved 2026-10-21 — the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
@@ -324,6 +352,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
@@ -338,6 +368,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon` | shows the icon · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon swap` | which icon · `icon` | ✓ |
 | `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -354,6 +386,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `description` | `string \| undefined` | `TEXT` `description text` | its text · `optional-text` | ✓ |
 | `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code · `union` | ✓ |
 | `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot · `slot` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
@@ -373,11 +407,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-required`, `radio-item-description`, `radio-item-error`
 
-### RadioGroup (`v0.1.0`, beta)
+### RadioGroup (`v0.1.0`, stable)
 
 **Pattern:** `group` (.ai/maps/figma-conversion.md)
 
@@ -393,6 +429,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `radio-group`, `radio-legend`, `radio-required`, `radio-options`, `radio-item`, `radio-control`, `radio-dot`, `radio-item-content`, `radio-item-label`, `radio-item-description`, `radio-description`, `radio-error`
 
 ### SegmentedControl (`v0.2.0`, stable)
@@ -402,6 +440,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
@@ -425,6 +465,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `select-root`, `select-label`, `select-required`, `select-wrapper`, `select-trigger`, `select-trigger-label`, `select-chevron`, `select-description`, `select-error`
@@ -438,6 +480,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `brand` | `React.ReactNode \| undefined` | `BOOLEAN` `brand` | shows the slot · `slot` | ✓ |
 | `footer` | `React.ReactNode \| undefined` | `BOOLEAN` `footer` | shows the slot · `slot` | ✓ |
 
+**Property order:** ✓ same as code
+
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-nav-root`, `side-nav-brand`, `side-nav-items`, `side-nav-footer`
 
 ### SidePanel (`v0.1.0`, stable)
@@ -450,6 +494,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `children` | `React.ReactNode` | `TEXT` `children` | its text · `text` | ✓ |
 | `showCloseButton` | `boolean` | `BOOLEAN` `showCloseButton` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `placement` | `'right' \| 'bottom'` | `VARIANT` `placement` = `right` / `bottom` | same values as code · `union` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `side-panel-root`, `side-panel-header`, `side-panel-title`, `icon-button`, `side-panel-close`, `side-panel-body`
 
@@ -466,6 +512,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -497,6 +545,8 @@ _No design props._
 | `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
 
+**Property order:** ✓ same as code
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `textarea-root`, `textarea-label`, `textarea-required`, `textarea-wrapper`, `textarea-field`, `textarea-counter`, `textarea-description`, `textarea-error`
@@ -505,7 +555,7 @@ _No design props._
 
 _No design props._
 
-**Only in Figma (no code prop of that name and type):** `label` (TEXT), `description` (BOOLEAN), `description text` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger)
+**Only in Figma:** ✗ `label` (TEXT), `description` (BOOLEAN), `description text` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
@@ -516,7 +566,11 @@ _No design props._
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code · `union` | ✗ missing |
+| `children` | `React.ReactElement` | `INSTANCE_SWAP` `children` | exception, approved 2026-10-21 — the trigger is a slot: an INSTANCE_SWAP lets the designer put any component under the tooltip (owner's request) | ✓ |
+| `placement` | `'top' \| 'bottom' \| 'left' \| 'right'` | `VARIANT` `placement` = `top` / `bottom` / `left` / `right` | same values as code · `union` | ✓ |
+| `expanded` | `boolean \| undefined` | `VARIANT` `expanded` = `false` / `true` | exception, approved 2026-10-21 — unlike the other overlays,  a tooltip is drawn next to its trigger,  so showing or hiding it is a real look (owner's request) | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `tooltip-root`, `tooltip-content`
 
@@ -528,6 +582,8 @@ _No design props._
 |---|---|---|---|---|
 | `start` | `React.ReactNode \| undefined` | `BOOLEAN` `start` | shows the slot · `slot` | ✓ |
 | `end` | `React.ReactNode \| undefined` | `BOOLEAN` `end` | shows the slot · `slot` | ✓ |
+
+**Property order:** ✓ same as code
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `topbar-root`, `topbar-start`, `topbar-end`
 

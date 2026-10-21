@@ -151,6 +151,10 @@ frame around the ring layer** (the variant and its frames up to the ring) or the
 ring layer itself** — Figma only renders a drop shadow's spread on a clipping frame. Set `clipsContent` explicitly;
 `figma.createAutoLayout` / detaching leave it unpredictable. The audit's `clip` check fails otherwise.
 
+**Property order:** Figma's properties follow the code's prop order (as Storybook's Controls show them) — the
+variants in code order with `state` last, then the rest in code order (Figma always lists variants first). Use
+`scripts/figma/reorder-props.js` to fix an existing set; `figma-map.md`'s Property order line must be ✓.
+
 **Naming rule:** prop name in Figma = prop name in code. Lowercase. No capitalization changes.
 - `variant=primary` not `Variant=Primary`
 - `size=xs` not `Size=XS`

@@ -36,6 +36,21 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 can't change a color or a size, and `true` always means "visible" — so `hideLabel=true` could never hide the
 label. A two-value `false`/`true` VARIANT can, and the panel still shows it as a toggle.
 
+**Props that never get a Figma property, and why** (owner's decisions 2026-10-21 — `skip.why` in the JSON, so
+nobody adds them again):
+
+- **`src` (an image URL, Avatar):** Figma can't load an image from a URL, so a property could never do what the
+  prop does — a toggle that only shows a sample photo isn't `src`. To show a photo in Figma, turn on the hidden
+  `avatar-image` layer and change its image fill.
+- **`aria-*` (`aria-describedby`, `aria-label`…):** read by screen readers only and set by code — Tooltip sets
+  `aria-describedby` on its trigger. Nothing to draw. Components built on a native element accept them without
+  declaring them; only Avatar (a `<span>`) and Tooltip declare `aria-describedby`, so Avatar can be a Tooltip trigger.
+
+**A Figma property with no code prop is a failure, not a note:** figma-map lists it as `**Only in Figma:** ✗` and
+the component isn't ✓ synced until it's renamed to the code prop, removed, or approved in the contract's
+`figma.figmaOnly` (`{ approved, reason }`). Avatar's old `initials` (code: `label`) and AvatarGroup's `overflow`
+(code: `max`) slipped through when this was only a note.
+
 **`state` is the only Figma-only property:** `default` / `hover` / `press` / `focus` (+ `open`, `selected`) — CSS
 pseudo-classes, not props. `disabled`, `invalid`, `checked`, `isLoading`… are never values of `state`.
 
@@ -44,7 +59,21 @@ the code values, unchanged; an optional string's text property is `{name} text`;
 `data-helix-part` values in the TSX. An optional icon's picker is `{name} swap` (`icon swap`) — Figma refuses two
 properties with the same name, so it can't share `icon` with the toggle.
 
-## 2. How variants are drawn
+## 2. Property order
+
+Figma's properties come in **the code's order** — the order of the contract's props, which is the order Storybook's
+Controls list them in (owner's decision 2026-10-21). One Figma limitation: the properties panel always shows the
+VARIANT properties first. So each group follows the code order on its own:
+
+1. the variants, in code order, with `state` last;
+2. every other property, in code order — a BOOLEAN's `{name} text` / `{name} swap` right after it, approved exceptions
+   for native attributes (`value` on Input/Textarea) last.
+
+`figma-map.md` shows a **Property order** line per component and `figma-drift` fails a component that breaks it.
+Reordering existing properties means re-creating them: `scripts/figma/reorder-props.js` does it and puts back the
+values instances already had.
+
+## 3. How variants are drawn
 
 - **Disabled:** `disabled=true` only with `state=default` and `invalid=false` — a disabled control doesn't hover,
   take focus or validate. All its text (label, description, required `*`, legend) binds `text/disabled`
@@ -64,7 +93,17 @@ properties with the same name, so it can't share `icon` with the toggle.
 - **Propstar table:** rows = the main look axis (`checked`, `variant`…), columns = the other axes grouped
   (`invalid: false` × state · `invalid: true` × state · `disabled: true`).
 
-## 3. Common patterns
+## Code-only components
+
+**Icon** has no Figma component (owner's decision 2026-10-21). In code it exists to keep every icon right: it sets the
+size, derives the stroke weight from that size (ADR-017 — a 12px and a 32px icon read the same weight) and handles
+the color and the accessible label. In Figma that work is already done where icons are used: every component variant
+places its icon instance at the right size with its stroke set for that size (a Button `s` and `l` each carry their
+own). Designers take icons from the **Icons** page; the consuming component's `icon swap` property changes which one.
+A loose icon scaled by hand doesn't re-derive its stroke the way code does — pick the icon at its size instead of
+scaling it. The contract records it (`figma.codeOnly`, `figma.propertyMap` with no properties).
+
+## 4. Common patterns
 
 A component follows one pattern; its row in [figma-map.md](figma-map.md) names it. A new component in a pattern
 converts exactly like its siblings.
@@ -82,7 +121,7 @@ converts exactly like its siblings.
 `*`, text/danger, 2px = spacing/3xs after the text); then `{prefix}-description` and `{prefix}-error`. That is
 what lets one rule convert `required`, `description` and `errorMessage` the same way in every component.
 
-## 4. Where it shows
+## 5. Where it shows
 
 - [`.ai/maps/figma-map.md`](figma-map.md) — generated: every component's props, the Figma property each must be,
   the rule (or exception) that says so, and what the Figma file has today (`.ai/figma-props.json`).

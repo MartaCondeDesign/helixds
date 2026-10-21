@@ -149,7 +149,8 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    `contracts/figma-conversion.json` (read by the scripts; owner-gated) explained in `.ai/maps/figma-conversion.md`.
    It's approved once: a new component or prop converts by it with no per-component approval; the owner is asked
    only for a prop no rule covers (`pnpm figma:props`, pre-commit) or a component exception (`figma.propertyMap`).
-   Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
+   Figma's properties also come in **the code's order** (as Storybook's Controls list them: variants first — a Figma
+   limitation — then the rest, each group in code order). Every component's code-vs-Figma listing: `.ai/maps/figma-map.md` (`pnpm docs:figma-map`, Figma side read from
    the snapshot `.ai/figma-props.json`). A component isn't synced until all its rows are ✓.
 
 ## Workflow commands

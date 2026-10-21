@@ -135,10 +135,10 @@
 
   "figma": {
     "states": ["default"],
+    "noProperty": "src and aria-describedby have no Figma property (owner's decision 2026-10-21, contracts/figma-conversion.json → skip.why). src: Figma can't load a photo from a URL — to show one, turn on the hidden avatar-image layer and change its image fill. aria-describedby: screen-reader only, set by Tooltip when Avatar is its trigger.",
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
-      { "name": "initials", "type": "TEXT", "codeProp": "label", "description": "The first letter of `label` — code derives it, Figma takes it typed." },
-      { "name": "src", "type": "BOOLEAN", "codeProp": "src", "description": "Shows avatar-image (an image fill covering the circle) over the initials — code renders one or the other. Swap the photo per instance with the image fill. The photo is one of the Pexels portraits in apps/storybook/public/avatars (flat-color backgrounds) — it lives only inside the component, not as loose images on the canvas." }
+      { "name": "label", "type": "TEXT", "codeProp": "label", "description": "Type the initial here — code derives it from the full name in `label` (the layer is avatar-initials)." }
     ]
   }
 }

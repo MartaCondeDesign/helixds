@@ -189,13 +189,28 @@
   ],
 
   "figma": {
-    "page":        "Icons",
-    "layout":      "Flat grid — COMPONENT nodes directly on page, no row frames",
-    "cell":        40,
+    "page": "Icons",
+    "layout": "Flat grid — COMPONENT nodes directly on page,  no row frames",
+    "cell": 40,
     "componentSize": 24,
-    "naming":      "Bare PascalCase — 'Plus', not 'IconPlus', not 'tabler/Plus'",
-    "vector":      "Named 'vector', constraints: SCALE/SCALE",
-    "skill":       ".ai/skills/icons-to-figma.md"
+    "naming": "Bare PascalCase — 'Plus',  not 'IconPlus',  not 'tabler/Plus'",
+    "vector": "Named 'vector',  constraints: SCALE/SCALE",
+    "skill": ".ai/skills/icons-to-figma.md",
+    "codeOnly": "Icon is a code-only wrapper (owner's decision 2026-10-21,  option A): in code it sets the size,  derives the stroke weight from it (ADR-017) and handles color and aria; in Figma every component already places its icon instance at the right size and stroke per variant,  so there is nothing for an Icon set to add. Designers use the icon components on the Icons page directly. A loose icon scaled by hand in Figma does not re-derive its stroke like code does — pick the size from the icon component,  don't scale it.",
+    "propertyMap": {
+      "icon": {
+        "codeType": "HelixIconComponent",
+        "figma": [],
+        "approved": "2026-10-21",
+        "reason": "code-only wrapper: Figma swaps the icon on the consuming component (icon swap),  never on an Icon set"
+      },
+      "size": {
+        "codeType": "12 | 14 | 16 | 18 | 20 | 24 | 28 | 32 | 36 | 40",
+        "figma": [],
+        "approved": "2026-10-21",
+        "reason": "code-only wrapper: each component variant already draws its icon at the size and stroke ADR-017 gives that size"
+      }
+    }
   },
 
   "interop": {
