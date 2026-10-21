@@ -674,7 +674,15 @@
       "page": "Input",
       "properties": [
         {
+          "name": "value",
+          "type": "TEXT"
+        },
+        {
           "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "placeholder",
           "type": "TEXT"
         },
         {
@@ -714,8 +722,12 @@
           "type": "TEXT"
         },
         {
-          "name": "value",
-          "type": "TEXT"
+          "name": "value.",
+          "type": "VARIANT",
+          "values": [
+            "empty",
+            "filled"
+          ]
         },
         {
           "name": "hideLabel",
@@ -1465,7 +1477,15 @@
       "page": "Textarea",
       "properties": [
         {
+          "name": "value",
+          "type": "TEXT"
+        },
+        {
           "name": "label",
+          "type": "TEXT"
+        },
+        {
+          "name": "placeholder",
           "type": "TEXT"
         },
         {
@@ -1493,8 +1513,12 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "value",
-          "type": "TEXT"
+          "name": "value.",
+          "type": "VARIANT",
+          "values": [
+            "empty",
+            "filled"
+          ]
         },
         {
           "name": "invalid",

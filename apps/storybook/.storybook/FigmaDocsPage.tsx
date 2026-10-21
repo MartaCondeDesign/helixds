@@ -20,12 +20,15 @@ function CodeToFigma() {
   // Same order as the props table right above it (Storybook's argTypes for this component), read at render time —
   // a prop added, removed, renamed or moved shows here in its new place with nothing to update by hand. A prop
   // Storybook doesn't list (rare) goes at the end, in the generated map's order.
-  // the props table shows the primary story's argTypes, so that's the order to follow (meta's as a fallback)
-  let primary: Record<string, unknown> | undefined;
-  try { primary = (useOf('story', ['story']) as { story: { argTypes?: Record<string, unknown> } }).story.argTypes; } catch { primary = undefined; }
-  const order = Object.keys(primary ?? (meta.preparedMeta as { argTypes?: Record<string, unknown> }).argTypes ?? {});
-  const at = (prop: string) => { const i = order.indexOf(prop); return i < 0 ? Number.MAX_SAFE_INTEGER : i; };
-  const props = Object.fromEntries(Object.entries(conv).sort(([a], [b]) => at(a) - at(b)));
+  // Exactly the rows of the props table right above it (the primary story's argTypes, minus the ones hidden from the
+  // table), in its order — read at render time, so adding, removing, renaming or moving a prop changes both tables.
+  type ArgType = { table?: { disable?: boolean } };
+  let primary: Record<string, ArgType> | undefined;
+  try { primary = (useOf('story', ['story']) as { story: { argTypes?: Record<string, ArgType> } }).story.argTypes; } catch { primary = undefined; }
+  const argTypes = primary ?? ((meta.preparedMeta as { argTypes?: Record<string, ArgType> }).argTypes ?? {});
+  const shown = Object.entries(argTypes).filter(([, a]) => !a?.table?.disable).map(([k]) => k);
+  const missing = (prop: string): FigmaConv => ({ figma: null, codeOnly: true, rule: 'missing', why: `not in contracts/components/${name}.json — add it there so it converts (pnpm docs:figma-map)` });
+  const props = Object.fromEntries(shown.map(k => [k, conv[k] ?? missing(k)]));
   return (
     <>
       <h3 id="code-to-figma">Code → Figma</h3>

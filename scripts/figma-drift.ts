@@ -125,6 +125,8 @@ export function figmaCheck(name: string, contractPath: string, figmaEntry: any |
   if (mismatched.length) return { state: 'drift', details: [`Figma properties differ from the code props (${mismatched.length}): ${mismatched.join(', ')} — see .ai/maps/figma-map.md`] };
   const figmaOnly = section.split('\n').find(l => l.startsWith('**Only in Figma:** ✗'));
   if (figmaOnly) return { state: 'drift', details: [`Figma has properties no code prop has — ${figmaOnly.replace('**Only in Figma:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
+  const propsDiff = section.split('\n').find(l => l.startsWith('**Storybook props:** ✗'));
+  if (propsDiff) return { state: 'drift', details: [`Storybook's props table and the contract list different props — ${propsDiff.replace('**Storybook props:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
   const storyOrder = section.split('\n').find(l => l.startsWith('**Storybook order:** ✗'));
   if (storyOrder) return { state: 'drift', details: [`Storybook doesn't list the Figma variants first — ${storyOrder.replace('**Storybook order:** ✗ ', '')} (.ai/maps/figma-map.md)`] };
   const order = section.split('\n').find(l => l.startsWith('**Property order:** ✗'));

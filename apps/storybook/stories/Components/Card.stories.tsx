@@ -13,7 +13,7 @@ const meta: Meta<typeof Card> = {
       control: 'select',
       options: ['default', 'none'],
     },
-    header:    { control: false },
+    header:    { control: 'text', description: 'The title row — any node; type text here to see it. Leave empty for no header.' },
     children:  { control: 'text' },
     className: { control: 'text' },
   },
@@ -22,25 +22,14 @@ const meta: Meta<typeof Card> = {
 export default meta;
 type Story = StoryObj<typeof Card>;
 
-// The Default story is the interactive playground — every other story below uses a fixed
-// render() with hardcoded content, so their Controls panel shows fields that don't do anything
-// (a real point of confusion: editing `children` there changes nothing because that story
-// never reads args.children). `showHeader`/`headerText` aren't real CardProps — they're local
-// to this story only, so you can discover "Card can have a header/divider" and toggle it live
-// without needing arbitrary-JSX editing in Controls (header itself stays control:false — it's
-// ReactNode, not something a text field can produce).
+// The Default story is the interactive playground: its controls are Card's real props (header, children, padding).
 export const Default = {
   args: {
     children: 'Card is a flat, bordered container for grouping related content. It has no shadow by design — Helix reserves elevation for surfaces that float above the page, like Modal and Tooltip. Use it to group a form section, a settings block, or a summary of related fields.',
     padding: 'default',
-    showHeader: true,
-    headerText: 'Card title',
+    header: 'Card title',
   },
-  argTypes: {
-    showHeader: { control: 'boolean', description: 'Toggle to see the header + divider (not a real CardProps field — local to this story).' },
-    headerText: { control: 'text', description: 'Header text, only shown when showHeader is on.' },
-  },
-  render: (args: { children: string; padding: 'default' | 'none'; className?: string; showHeader: boolean; headerText: string }) => (
+  render: (args: { children: string; padding: 'default' | 'none'; className?: string; header?: string }) => (
     // Wider than tall — a horizontal rectangle instead of the narrow CardGrid cell, so the header
     // and body text each read on a couple of lines rather than a long single narrow column.
     <div style={{ width: '340px' }}>
@@ -49,7 +38,7 @@ export const Default = {
         className={args.className}
         // No inline font styling needed — card-header itself now carries heading-l-bold
         // (fontFamily/fontSize/fontWeight/lineHeight) plus its own color, straight from tokens.
-        header={args.showHeader ? args.headerText : undefined}
+        header={args.header || undefined}
       >
         {args.children}
       </Card>

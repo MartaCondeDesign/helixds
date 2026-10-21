@@ -1,6 +1,6 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "approved": "2026-10-21",
 
   "naming": {
@@ -76,6 +76,7 @@
       "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN description. + TEXT description", "errorMessage": "BOOLEAN errorMessage. + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN {name}. + INSTANCE_SWAP {name}" },
       "states": ["default", "hover", "focus"],
       "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error",
+      "text": "Every form field draws its text the same way, like Select: placeholder (TEXT, the grey hint, text/neutral/lightest), value (TEXT, the typed or chosen text, text/neutral) and the helper value. (VARIANT empty / filled — Select: empty / selected) that picks which one shows; value.=filled drawn at state=default, valid and enabled, for every fullWidth / hideLabel / resize (owner's rule 2026-10-21: one set of rules for every form field).",
       "width": "320px for every form field, in code (root width 320px, max-width 100%) and in Figma (fixed 320) — never content-driven: a long label, placeholder or value never widens it. fullWidth: code 100% of the container; Figma drawn at 600px with the field and its popup on Fill, so stretching the instance stretches them. An exception (a number stepper, a short code) is written in that contract's sizing.width.exceptions. A new form field follows it (owner's rule 2026-10-21; pnpm verify:field-sizes checks the contracts)."
     },
     {

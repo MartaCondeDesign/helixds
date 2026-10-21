@@ -21,7 +21,7 @@ const meta: Meta<typeof Table> = {
     // buried in a .ts file nobody opens.
     dragReorder: {
       control: false,
-      table: { category: 'Behavior', type: { summary: 'pattern, not a prop' } },
+      table: { disable: true }, // not a prop: the props table lists Table's props only — the pattern is in the DragReorder story
       description: 'Not a Table prop. Rows can be composed with Motion\'s `Reorder.Group`/`Reorder.Item` (`as="tbody"`/`as="tr"`) for drag-to-reorder — see Pages/Team Dashboard for a live example and `.ai/maps/patterns/motion-effects.md` for the pattern.',
     },
     // The `as any` below is required, not a shortcut: TableProps has no `dragReorder` key (correctly —

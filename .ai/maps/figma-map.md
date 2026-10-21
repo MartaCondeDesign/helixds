@@ -5,12 +5,12 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 219 of 220 code props match Figma exactly.**
+**Parity today: 223 of 224 code props match Figma exactly.**
 **Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.14.0 (owner-approved 2026-10-21; explained with the
+From `contracts/figma-conversion.json` v1.15.0 (owner-approved 2026-10-21; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -62,6 +62,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `focus`
 
 **Stories → Figma:** ✓ all 6 stories
@@ -90,6 +92,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 1 stories
 
 - `Default` → ✓ `sidenav=true, topbar=true`
@@ -102,12 +106,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `src` | `string \| undefined` | `VARIANT` `src.` = `false` / `true` | exception, approved 2026-10-21 — Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both | ✓ |
+| `aria-describedby` | `string \| undefined` | — no Figma property | aria-describedby, aria-label… are read by screen readers only and are set by code (Tooltip sets aria-describedby on its trigger) — nothing to draw, never a Figma property (owner's decision 2026-10-21). Components on a native element accept them without declaring them; only Avatar (a <span>) and Tooltip declare aria-describedby, so it can be a Tooltip trigger. · `skip` | — |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 5 stories
 
@@ -131,6 +138,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21); `src.` (VARIANT: false / true) — like Avatar's src.: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar (approved 2026-10-21)
 
@@ -156,6 +165,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 4 stories
 
@@ -187,6 +198,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -220,6 +233,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 2 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
@@ -242,6 +257,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 9 stories
 
@@ -283,6 +300,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Stories → Figma:** ✓ all 7 stories
@@ -322,6 +341,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 7 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
@@ -356,6 +377,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Stories → Figma:** ✓ all 5 stories
@@ -382,6 +405,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 5 stories
 
@@ -413,6 +438,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
 **Stories → Figma:** ✓ all 5 stories
@@ -438,6 +465,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 6 stories
 
@@ -468,6 +497,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Figma-only `state`:** `default` / `hover` / `press` / `focus`
 
@@ -508,11 +539,16 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `invalidAttempt` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `onChange` | `React.ChangeEventHandler<HTMLInputElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
-| `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
+| `value` (native) | `string (native <input> value)` | `VARIANT` `value.` = `empty` / `filled` | exception, approved 2026-10-21 — like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field) | ✓ |
+| `value` (native) | `string (native <input> value)` | `TEXT` `value` | exception, approved 2026-10-21 — like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field) | ✓ |
+| `type` (native) | `string (native <input> type)` | — no Figma property | exception, approved 2026-10-21 — text, email, password, search… — how the browser treats the input, not a look | — |
+| `placeholder` (native) | `string (native <input> placeholder)` | `TEXT` `placeholder` | exception, approved 2026-10-21 — the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before | ✓ |
 
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -553,6 +589,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 4 stories
 
 - `Default` → ✓ `multiple=false`
@@ -585,6 +623,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 6 stories
 
@@ -626,6 +666,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Stories → Figma:** ✓ all 9 stories
@@ -659,6 +701,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Stories → Figma:** ✓ all 4 stories
@@ -686,6 +730,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 3 stories
 
@@ -719,6 +765,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -758,6 +806,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 7 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
@@ -788,6 +838,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Only in Figma (approved):** `icon.` (VARIANT: false / true) — Storybook's IconOnly story: every option is icon-only (each option's icon in code) — a special case like Avatar's photo, so the set shows it with one toggle (false = text, true = icons); the item's own icon. / icon stay on SegmentedControlItem (approved 2026-10-21)
 
@@ -832,6 +884,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `focus` / `open`
 
 **Stories → Figma:** ✓ all 11 stories
@@ -865,6 +919,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 1 stories
 
 - `Default` → ✓ `brand=true, footer=true`
@@ -889,6 +945,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 5 stories
 
@@ -922,6 +980,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Figma-only `state`:** `default` / `hover` / `focus`
 
 **Stories → Figma:** ✓ all 7 stories
@@ -944,6 +1004,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 2 stories
 
@@ -973,11 +1035,15 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `resize` | `'none' \| 'vertical' \| 'horizontal' \| 'both'` | `VARIANT` `resize` = `none` / `vertical` / `horizontal` / `both` | same values as code · `union` | ✓ |
 | `showCount` | `boolean` | `BOOLEAN` `showCount` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `onChange` | `React.ChangeEventHandler<HTMLTextAreaElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
-| `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-20 — the text in the field: without it a designer can only draw an empty field (owner-approved exception) | ✓ |
+| `value` (native) | `string (native <textarea> value)` | `VARIANT` `value.` = `empty` / `filled` | exception, approved 2026-10-21 — like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field) | ✓ |
+| `value` (native) | `string (native <textarea> value)` | `TEXT` `value` | exception, approved 2026-10-21 — like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field) | ✓ |
+| `placeholder` (native) | `string (native <textarea> placeholder)` | `TEXT` `placeholder` | exception, approved 2026-10-21 — the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before | ✓ |
 
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Figma-only `state`:** `default` / `hover` / `focus`
 
@@ -1006,6 +1072,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Property order:** ✓ same as code
 
+**Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 4 stories
 
 - `Playground` → ✓ `variant=success, description.=true`
@@ -1031,6 +1101,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Storybook props:** ✓ the same props as the contract
+
 **Stories → Figma:** ✓ all 5 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
@@ -1054,6 +1126,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Property order:** ✓ same as code
 
 **Storybook order:** ✓ Figma variants first, then the rest
+
+**Storybook props:** ✓ the same props as the contract
 
 **Stories → Figma:** ✓ all 1 stories
 

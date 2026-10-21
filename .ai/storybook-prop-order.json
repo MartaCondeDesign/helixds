@@ -40,8 +40,6 @@
     "Card": [
       "padding",
       "children",
-      "showHeader",
-      "headerText",
       "header"
     ],
     "Chart": [
@@ -126,6 +124,7 @@
       "onClick"
     ],
     "Input": [
+      "value",
       "hideLabel",
       "invalid",
       "isLoading",
@@ -149,7 +148,9 @@
       "expanded",
       "onSelect",
       "value",
-      "values"
+      "values",
+      "anchorRef",
+      "activeValue"
     ],
     "Modal": [
       "label",
@@ -263,10 +264,10 @@
       "name"
     ],
     "Table": [
-      "children",
-      "dragReorder"
+      "children"
     ],
     "Textarea": [
+      "value",
       "invalid",
       "fullWidth",
       "hideLabel",
@@ -274,6 +275,7 @@
       "disabled",
       "label",
       "placeholder",
+      "onChange",
       "description",
       "errorMessage",
       "required",
@@ -281,7 +283,11 @@
       "maxLength",
       "showCount"
     ],
-    "Toast": [],
+    "Toast": [
+      "variant",
+      "label",
+      "description"
+    ],
     "Tooltip": [
       "placement",
       "expanded",

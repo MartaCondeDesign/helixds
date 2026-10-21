@@ -77,8 +77,8 @@ const meta: Meta<typeof Menu> = {
     values:      { control: 'object' },
     expanded:    { control: 'boolean' },
     multiple:    { control: 'boolean' },
-    anchorRef:   { table: { disable: true } }, // the story's own trigger button
-    activeValue: { table: { disable: true } }, // driven by the keyboard, not a design choice
+    anchorRef:   { control: false }, // the story's own trigger button — listed, not editable
+    activeValue: { control: false }, // driven by the keyboard — listed, not editable
     className:   { table: { disable: true } },
   },
   render: args => <Demo {...args} />,

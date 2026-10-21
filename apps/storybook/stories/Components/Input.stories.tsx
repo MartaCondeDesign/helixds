@@ -19,6 +19,7 @@ const meta: Meta<typeof Input> = {
   parameters: createComponentDocsParameters(InputDoc),
   // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
   args: {
+    value: undefined, // Figma value. (empty / filled) — a variant, so it leads the props, like Select
     hideLabel: undefined,
     invalid: undefined,
     isLoading: undefined,

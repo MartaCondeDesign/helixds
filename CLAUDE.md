@@ -84,7 +84,12 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    order on both sides. In Storybook it's the key order of the story file's `meta.args`; in Figma it's the variant-name
    order and the order the other properties are created in (`scripts/figma/reorder-props.js`). Adding, renaming or
    removing a prop means updating both, then `pnpm figma:story-order` (Storybook running) and `pnpm docs:figma-map`:
-   the component's **Property order** and **Storybook order** lines must both be ✓ before it's done.
+   the component's **Property order**, **Storybook order** and **Storybook props** lines must all be ✓ before it's done.
+   Storybook's props table, the contract and the docs page's Code → Figma table list **the same props, no more, no less**
+   (className is hidden from Storybook on purpose): a prop the table shows is in the contract (a native attribute goes in
+   `figma.propertyMap`), a contract prop shows in the table (`control: false` when it can't be edited), and a story never
+   invents args that aren't props. The Code → Figma table is built from the props table at render time, so it follows
+   every add, remove, rename or move on its own.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA

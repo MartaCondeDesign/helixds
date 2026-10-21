@@ -149,6 +149,13 @@
         "rule": "exception",
         "why": "exception, approved 2026-10-21 — Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both"
       },
+      "aria-describedby": {
+        "description": "Forwarded to the root — set by Tooltip when Avatar is its trigger (e.g. inside AvatarGroup). Screen-reader only.",
+        "figma": null,
+        "codeOnly": true,
+        "rule": "skip",
+        "why": "aria-describedby, aria-label… are read by screen readers only and are set by code (Tooltip sets aria-describedby on its trigger) — nothing to draw, never a Figma property (owner's decision 2026-10-21). Components on a native element accept them without declaring them; only Avatar (a <span>) and Tooltip declare aria-describedby, so it can be a Tooltip trigger."
+      },
       "size": {
         "description": "Physical size. Shares the field scale with Input/Select (s=24, m=32, l=40).",
         "figma": [
@@ -1494,6 +1501,42 @@
         "codeOnly": true,
         "rule": "skip",
         "why": "an event handler — behaviour, nothing to draw"
+      },
+      "value": {
+        "figma": [
+          {
+            "name": "value.",
+            "type": "VARIANT",
+            "values": [
+              "empty",
+              "filled"
+            ]
+          },
+          {
+            "name": "value",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "exception",
+        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"
+      },
+      "type": {
+        "figma": null,
+        "codeOnly": true,
+        "rule": "exception",
+        "why": "text, email, password, search… — how the browser treats the input, not a look"
+      },
+      "placeholder": {
+        "figma": [
+          {
+            "name": "placeholder",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "exception",
+        "why": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"
       }
     },
     "Menu": {
@@ -3068,6 +3111,36 @@
         "codeOnly": true,
         "rule": "skip",
         "why": "an event handler — behaviour, nothing to draw"
+      },
+      "value": {
+        "figma": [
+          {
+            "name": "value.",
+            "type": "VARIANT",
+            "values": [
+              "empty",
+              "filled"
+            ]
+          },
+          {
+            "name": "value",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "exception",
+        "why": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"
+      },
+      "placeholder": {
+        "figma": [
+          {
+            "name": "placeholder",
+            "type": "TEXT"
+          }
+        ],
+        "codeOnly": false,
+        "rule": "exception",
+        "why": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"
       }
     },
     "Toast": {

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
 import { Textarea, TextareaDoc } from '@helixds/react';
@@ -11,6 +12,7 @@ const meta: Meta<typeof Textarea> = {
   parameters: createComponentDocsParameters(TextareaDoc),
   // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
   args: {
+    value: undefined, // Figma value. (empty / filled) — a variant, so it leads the props, like Select
     invalid: undefined,
     fullWidth: undefined,
     hideLabel: undefined,
@@ -18,6 +20,7 @@ const meta: Meta<typeof Textarea> = {
     disabled: undefined,
     label: 'Description',
     placeholder: 'Write something…',
+    onChange: fn(),
     description: undefined,
     errorMessage: undefined,
     required: undefined,

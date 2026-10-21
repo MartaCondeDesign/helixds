@@ -377,12 +377,9 @@
       }
     ],
     "propertyMap": {
-      "value": {
-        "codeType": "string (native <input> value)",
-        "figma": [{"name": "value", "type": "TEXT"}],
-        "approved": "2026-10-20",
-        "reason": "the text in the field: without it a designer can only draw an empty field (owner-approved exception)"
-      }
+      "value": {"codeType": "string (native <input> value)", "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "filled"]}, {"name": "value", "type": "TEXT"}], "approved": "2026-10-21", "reason": "like Select: value is the typed text (color text/neutral), value. picks empty (the placeholder shows) or filled — filled drawn at state=default, valid and enabled, for every fullWidth/hideLabel/resize (owner's rule 2026-10-21: one set of rules for every form field)"},
+      "type": {"codeType": "string (native <input> type)", "figma": [], "approved": "2026-10-21", "reason": "text, email, password, search… — how the browser treats the input, not a look"},
+      "placeholder": {"codeType": "string (native <input> placeholder)", "figma": [{"name": "placeholder", "type": "TEXT"}], "approved": "2026-10-21", "reason": "the grey hint an empty field shows (text/neutral/lightest) — it was wrongly named value in Figma before"}
     },
     "structure": "input-root (8px gap) > input-label (input-label-text Body/m/Medium + input-required),  input-wrapper (input-icon,  input-field,  input-icon-end,  input-spinner),  input-description,  input-error (Body/s/Regular).",
     "variantCombinations": "32 variants (2026-10-21,  one size since the owner removed s and l — form fields share one size set): invalid false/true × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with hideLabel false/true × fullWidth false/true = 28,  plus isLoading=true at state default,  valid,  enabled for each hideLabel × fullWidth = 4 (code disables the field while it loads). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads).",
