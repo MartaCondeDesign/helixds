@@ -1,6 +1,6 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "approved": "2026-10-20",
 
   "naming": {
@@ -16,6 +16,7 @@
     { "id": "nested", "when": "a ReactElement, or ReactNode children of a component that isn't in textChildren", "figma": [], "why": "another component or free content, not a property" },
     { "id": "overlay-expanded", "when": "expanded on an overlay (overlays)", "figma": [], "why": "closed = not on screen; Figma draws it open" },
     { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name} (only when optional)", "INSTANCE_SWAP {name}Swap"], "why": "shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name}Swap — owner's decision 2026-10-20)" },
+    { "id": "list-count", "when": "a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array", "figma": ["VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)"], "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)" },
     { "id": "union", "when": "a union of string or number literals", "figma": ["VARIANT {name} = the same values"], "why": "same values as code" },
     { "id": "show-hide-boolean", "when": "a boolean listed in showHideBooleans — it only shows or hides one part", "figma": ["BOOLEAN {name}"], "why": "shows / hides a part" },
     { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
@@ -35,6 +36,12 @@
     "typePatterns": ["\\[\\]", "Array<", "RefObject"],
     "nonStringValue": true
   },
+  "listCount": {
+    "props": ["options", "actions", "avatars", "items"],
+    "min": 2,
+    "max": 7,
+    "rule": "Every list of drawn items converts to a VARIANT named like the prop whose values are the item counts (options = 2 / 3 / … / 7) — the Figma property is named exactly like that component's code prop — one variant per count, each item an instance of the item component, with its own example text. The range is 2…7 (owner's decision 2026-10-21) unless the contract's figma.listCount sets { \"<prop>\": { \"min\": n, \"max\": n } } (AvatarGroup's avatars keep 1–7, built before the rule). A list shown only inside an overlay (Select, MultiSelect, Menu) is drawn in the open state. Data that isn't drawn item by item — selected values (value, values, defaultValue), chart categories and series — stays code only (skip)."
+  },
   "showHideBooleans": ["required", "showCloseButton", "showCount", "dismissible"],
   "textChildren": ["Button", "Accordion", "Modal", "SidePanel", "Card"],
   "overlays": ["Modal", "SidePanel", "Menu", "Tooltip"],
@@ -50,8 +57,8 @@
 
   "variants": {
     "disabled": "disabled=true is drawn only with state=default and invalid=false — a disabled control doesn't hover, take focus or validate. Every text layer (label, description, required *, legend) binds text/disabled (.ai/maps/patterns/disabled-state.md).",
-    "secondary": "Secondary look toggles (secondaryAxes) are drawn at every size and in every state the code can reach — fullWidth with default/hover/press/focus and disabled, like any other variant (owner's decision 2026-10-21, replacing 'drawn once'). Except where code makes a state impossible: isLoading disables Button and IconButton (disabled={disabled || isLoading}), so a loading one is drawn at state=default only, enabled. hideLabel is drawn in every state too.",
-    "loadingDisables": ["Button", "IconButton"],
+    "secondary": "Secondary look toggles (secondaryAxes) are drawn at every size and in every state the code can reach — fullWidth with default/hover/press/focus and disabled, like any other variant (owner's decision 2026-10-21, replacing 'drawn once'). Except where code makes a state impossible: isLoading disables Button, IconButton and Input (disabled={disabled || isLoading}), so a loading one is drawn at state=default only, enabled and valid. hideLabel is drawn in every state too.",
+    "loadingDisables": ["Button", "IconButton", "Input"],
     "impossible": "A combination code can't render isn't drawn (Checkbox checked + indeterminate). List what's left in the contract's figma.variantCombinations.",
     "focusClip": "In a variant that draws the focus ring (state=focus, and state=open where open shares the ring), every frame AROUND the ring layer has Clip Content OFF — the ring is a 3px spread shadow outside the control and a clipping parent cuts it — while the ring layer itself keeps Clip Content ON, because Figma only draws a shadow's spread on a clipping frame (owner's decision 2026-10-20). The Figma audit fails otherwise.",
     "propstar": "The set sits in a Propstar table: rows = the main look axis, columns = the remaining axes grouped (invalid false/true × state, then disabled). Booleans are toggled in the panel, never expanded into columns. Regenerate the table (scripts/figma/propstar.js) in the same step every time a variant or property changes — labels written prop=value, checked by the audit (owner's rule 2026-10-21)."

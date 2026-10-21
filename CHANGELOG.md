@@ -93,7 +93,13 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Select and MultiSelect: fullWidth and hideLabel drawn at every value, invalid, state and disabled in Figma (Select 40 variants, MultiSelect 72; fullWidth at 320px like Input) with their Propstar tables regenerated (latest commit)
+- 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' into claude/figma-select-multiselect-a56b2d (latest commit)
+- 2026-10-21 — Merge remote branch ([`baac8cc`](https://github.com/MartaCondeDesign/helixds/commit/baac8cc))
+- 2026-10-21 — list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop ([`6997dc5`](https://github.com/MartaCondeDesign/helixds/commit/6997dc5))
+- 2026-10-21 — Select and MultiSelect: fullWidth and hideLabel drawn at every value, invalid, state and disabled in Figma (Select 40 variants, MultiSelect 72; fullWidth at 320px like Input) with their Propstar tables regenerated ([`7e1bfcb`](https://github.com/MartaCondeDesign/helixds/commit/7e1bfcb))
+- 2026-10-21 — Figma conversion v1.8: list-count rule — a list of drawn items (options, actions, avatars, items) is a VARIANT of how many (1–7, per-contract range in figma.listCount); prop-map and the conversion doc say so ([`36a5374`](https://github.com/MartaCondeDesign/helixds/commit/36a5374))
+- 2026-10-21 — Audit matches variants by prop pairs; Input also disables while loading (loadingDisables) ([`f33bb81`](https://github.com/MartaCondeDesign/helixds/commit/f33bb81))
+- 2026-10-21 — Update CHANGELOG.md for #19 ([`38c5585`](https://github.com/MartaCondeDesign/helixds/commit/38c5585))
 - 2026-10-21 — Merge remote branch ([`adcd091`](https://github.com/MartaCondeDesign/helixds/commit/adcd091))
 - 2026-10-21 — scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table ([`5613263`](https://github.com/MartaCondeDesign/helixds/commit/5613263))
 - 2026-10-21 — Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size ([`148aa95`](https://github.com/MartaCondeDesign/helixds/commit/148aa95))

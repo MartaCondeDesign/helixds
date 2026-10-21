@@ -179,7 +179,9 @@ if (EXPECTED.colors && theme) {
       const modeId = theme.modes.find(m => m.name === mode).modeId;
       frame.setExplicitVariableModeForCollection(theme, modeId);
       for (const [variantName, parts] of Object.entries(EXPECTED.colors)) {
-        const comp = VARIANTS.find(c => c.name === variantName) ?? (variantName === '' && VARIANTS.length === 1 ? VARIANTS[0] : null);
+        // matched by its prop=value pairs, not the exact name: the axis order in a name is the set's, not the measurement's
+        const sameVariant = (a, b) => a.split(', ').sort().join(', ') === b.split(', ').sort().join(', ');
+        const comp = VARIANTS.find(c => sameVariant(c.name, variantName)) ?? (variantName === '' && VARIANTS.length === 1 ? VARIANTS[0] : null);
         if (!comp) { issues.parity.push(`variant "${variantName}" not found`); continue; }
         const inst = comp.createInstance(); frame.appendChild(inst);
         // optional parts hidden by a BOOLEAN property don't exist in an instance — show them all so they're checked too

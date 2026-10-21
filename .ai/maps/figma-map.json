@@ -735,10 +735,23 @@
       },
       "options": {
         "description": "The list of choices. Each option: { value, label, description?, disabled? }.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected values.",
@@ -994,10 +1007,23 @@
       },
       "options": {
         "description": "The chips. Each option: { value, label, icon?, disabled? } — `value` is the React key.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "size": {
         "description": "Size of every chip in the group — Chip's own size scale.",
@@ -1054,10 +1080,23 @@
       },
       "actions": {
         "description": "The speed-dial actions revealed when expanded. Omit for a plain single-action FAB with no speed-dial at all.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "actions",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "expanded": {
         "description": "Controlled expanded state. Omit `actions` to skip the speed-dial entirely rather than passing expanded with nothing to reveal.",
@@ -1498,10 +1537,23 @@
       },
       "options": {
         "description": "Flat options or grouped options: { value, label, labelEnd?, disabled? } or { label, options }. labelEnd renders on the option's end edge (menu-item-label-end).",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Currently selected value, for aria-selected + visual highlight.",
@@ -1693,10 +1745,23 @@
       },
       "options": {
         "description": "List of options and grouped options.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected values.",
@@ -2151,10 +2216,23 @@
       },
       "options": {
         "description": "The list of choices. Each option: { value, label, description?, disabled? }.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected value.",
@@ -2287,10 +2365,23 @@
       },
       "options": {
         "description": "The list of choices. Each option: { value, label, icon?, disabled? }. With `icon` (a Tabler icon component, rendered through Icon) the option is icon-only: `label` stays as its accessible name (visually hidden).",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected value.",
@@ -2359,10 +2450,23 @@
       },
       "options": {
         "description": "List of options and grouped options. Each option: { value, label, labelEnd?, disabled? } — labelEnd is short secondary text (a value, count or percentage) shown at the end of the option in the list; the trigger shows only the label.",
-        "figma": null,
-        "codeOnly": true,
-        "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "figma": [
+          {
+            "name": "options",
+            "type": "VARIANT",
+            "values": [
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7"
+            ]
+          }
+        ],
+        "codeOnly": false,
+        "rule": "list-count",
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected value.",
