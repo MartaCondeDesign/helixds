@@ -3,6 +3,9 @@
 **Date:** 2026-10-07
 **Status:** Accepted — extends [ADR-007](ADR-007-motion-engine.md) (does not change it for components)
 **Deciders:** Helix DS team
+**Update 2026-10-21:** the illustrations themselves (Storybook's Assets → Illustrations and
+`prototypes/explainers/`) were removed at the owner's request. The `component.illustration.motion.*`
+tokens stay in `tokens.json` for future illustrations, and this decision still applies to them.
 
 ## Context
 

@@ -9,6 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-21 — Remove the illustrations, keep their motion tokens (#25) ([#25](https://github.com/MartaCondeDesign/helixds/pull/25))
+  - Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
   - Eval gallery: prose answers and unexported Helix subpaths no longer break Storybook's build
 - 2026-10-15 — Remove a tsx cache file committed by mistake; ignore tsx-0/ (#11) ([`eaeaec6`](https://github.com/MartaCondeDesign/helixds/commit/eaeaec6))
@@ -88,7 +90,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([#29](https://github.com/MartaCondeDesign/helixds/pull/29))
+- 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([`2001210`](https://github.com/MartaCondeDesign/helixds/commit/2001210))
   - Changelog bot re-runs CI on its own commit, so main can require CI
 - 2026-10-21 — Storybook deploy builds @helixds/tokens before @helixds/react (#27) ([`7628d2e`](https://github.com/MartaCondeDesign/helixds/commit/7628d2e))
 - 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
