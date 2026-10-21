@@ -76,6 +76,12 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    a story per variant, size and authored state; a keyboard `play` test per key in `a11y.keyboardNav`;
    `<MotionConfig reducedMotion="user">` around any Motion animation; an eval prompt. Then run
    `pnpm verify:stable` (Storybook running).
+6a. **One prop order, in Storybook and in Figma — every time a component is created or its props change**
+   (owner's rule 2026-10-21): first the props that are Figma VARIANTs, then all the rest, each group in the same
+   order on both sides. In Storybook it's the key order of the story file's `meta.args`; in Figma it's the variant-name
+   order and the order the other properties are created in (`scripts/figma/reorder-props.js`). Adding, renaming or
+   removing a prop means updating both, then `pnpm figma:story-order` (Storybook running) and `pnpm docs:figma-map`:
+   the component's **Property order** and **Storybook order** lines must both be ✓ before it's done.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA
