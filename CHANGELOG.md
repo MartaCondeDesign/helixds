@@ -93,12 +93,16 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Stories → Figma filled for every component (owner's decisions 2026-10-21): 180 of 184 stories mapped (latest commit)
+- 2026-10-21 — Merge remote-tracking branch 'origin/claude/affectionate-swartz-794ede' into claude/story-coverage-d435ae (latest commit)
+- 2026-10-21 — Update CHANGELOG.md for #19 ([`552adb8`](https://github.com/MartaCondeDesign/helixds/commit/552adb8))
+- 2026-10-21 — Merge commit '05bbe69' into claude/affectionate-swartz-794ede ([`5694a48`](https://github.com/MartaCondeDesign/helixds/commit/5694a48))
+- 2026-10-21 — Stories → Figma filled for every component (owner's decisions 2026-10-21): 180 of 184 stories mapped ([`33853d2`](https://github.com/MartaCondeDesign/helixds/commit/33853d2))
 - 2026-10-21 — Merge PR #19 branch (latest Figma state) into story coverage ([`060c1b0`](https://github.com/MartaCondeDesign/helixds/commit/060c1b0))
 - 2026-10-21 — Update CHANGELOG.md for #19 ([`0de5d53`](https://github.com/MartaCondeDesign/helixds/commit/0de5d53))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' of https://github.com/MartaCondeDesign/helixds into claude/affectionate-swartz-794ede ([`79cc497`](https://github.com/MartaCondeDesign/helixds/commit/79cc497))
 - 2026-10-21 — Code → Figma table: Helix spacing tokens instead of raw px (lint) ([`b74ab1b`](https://github.com/MartaCondeDesign/helixds/commit/b74ab1b))
 - 2026-10-21 — Update CHANGELOG.md for #19 ([`36e8e5b`](https://github.com/MartaCondeDesign/helixds/commit/36e8e5b))
+- 2026-10-21 — helix/story-has-controls: lint rule for Components/Layout stories — no controls.disable, no render that ignores args (an open overlay keeps them off with // controls-off: <reason>); the Claude lint hook hands a violation back to the agent to fix in the same turn, pnpm lint:stories in pre-commit; documented in apps/storybook/CLAUDE.md ([`05bbe69`](https://github.com/MartaCondeDesign/helixds/commit/05bbe69))
 - 2026-10-21 — Regenerate figma-map after merging the Figma and story-controls branches ([`25fc4c5`](https://github.com/MartaCondeDesign/helixds/commit/25fc4c5))
 - 2026-10-21 — Merge branch 'refs/heads/claude/story-controls-814caa' into claude/affectionate-swartz-794ede ([`f3fcee3`](https://github.com/MartaCondeDesign/helixds/commit/f3fcee3))
 - 2026-10-21 — Merge branch 'refs/heads/claude/figma-options-groups-1c3d1b' into claude/affectionate-swartz-794ede ([`006e6af`](https://github.com/MartaCondeDesign/helixds/commit/006e6af))

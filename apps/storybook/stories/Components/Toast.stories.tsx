@@ -54,6 +54,7 @@ export const Playground: StoryObj<PlaygroundArgs> = {
   },
 };
 
+// controls-off: the play test opens two toasts and checks the keyboard reaches them — an overlay test, nothing to set
 export const KeyboardReach: Story = {
   render: () => (
     <>
@@ -98,6 +99,7 @@ function NoAutoDismiss() {
   return null;
 }
 
+// controls-off: an open overlay, kept on screen only for the browser checks
 export const Opened: Story = {
   // Not in the docs page (an open overlay would cover it) — this story exists so the browser checks
   // (axe, contrast, visible focus, target size, what a screen reader hears) run on the OPEN state, which no
