@@ -22,6 +22,7 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 
 | Code prop | Figma property | Panel | Rule |
 |---|---|---|---|
+| List of drawn items (`options`, `actions`, `avatars`, `items` — an array) | `VARIANT` same name = how many items: `1` / `2` / … / `7` | dropdown | `list-count` |
 | Union `'a' \| 'b'`, `1 \| 2` | `VARIANT`, same name, same values | dropdown | `union` |
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
@@ -31,6 +32,14 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
 | A string no part renders — the `aria-label` `label` of IconButton, FAB, ChipGroup, SegmentedControl; Chart's `description` | — | not a design property: nothing to draw | `aria-text` |
+
+**Lists become a count** (owner's rule 2026-10-21, `listCount` in the JSON): Figma can't loop over data, so a
+list the component draws item by item — CheckboxGroup's and RadioGroup's `options`, AvatarGroup's `avatars`,
+FAB's `actions`… — is a VARIANT named like the prop whose values are how many items show (`options` = 1 … 7;
+each item an instance of the item component with its own example text). The range is 1–7 unless the contract's
+`figma.listCount` sets another (`{ "options": { "min": 2, "max": 5 } }` — a SegmentedControl needs 2). A list
+that only shows inside an overlay (Select, MultiSelect, Menu) is drawn open. Selected values (`value`, `values`,
+`defaultValue`) and chart data (`categories`, `series`) aren't items on screen: code only.
 
 **Why a look-changing boolean is a VARIANT, not a BOOLEAN:** a Figma BOOLEAN can only show or hide a layer. It
 can't change a color or a size, and `true` always means "visible" — so `hideLabel=true` could never hide the

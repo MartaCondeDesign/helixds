@@ -24,7 +24,9 @@ const WHY = Object.fromEntries(STANDARD.rules.map(r => [r.id, r.why]));
 const has = (list: string[], v: string) => list.includes(v);
 
 let currentComponent = '';
-export function setComponent(name: string) { currentComponent = name; }
+let currentListCount: Record<string, { min?: number; max?: number }> = {};
+/** The component being converted (and its contract's figma.listCount ranges, if any). */
+export function setComponent(name: string, contract?: { figma?: { listCount?: Record<string, { min?: number; max?: number }> } }) { currentComponent = name; currentListCount = contract?.figma?.listCount ?? {}; }
 /** The standard's pattern this component follows, if any (form-field, checkable, group…). */
 export function patternOf(component: string) { return STANDARD.patterns.find(p => p.components.includes(component))?.id; }
 
@@ -37,6 +39,12 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
   const out = (rule: string, list: Omit<Expected, 'why' | 'rule'>[], why?: string[]) =>
     list.map((e, i) => ({ ...e, rule, why: why?.[i] ?? WHY[rule] }));
   const sk = STANDARD.skip;
+  // list-count: a list of drawn items → VARIANT {name} = 1 … N (checked before skip, which drops other arrays as data)
+  const lc = (STANDARD as any).listCount as { props: string[]; min: number; max: number } | undefined;
+  if (lc && has(lc.props, name) && /\[\]|Array</.test(type)) {
+    const r = currentListCount[name] ?? {}; const min = r.min ?? lc.min, max = r.max ?? lc.max;
+    return out('list-count', [{ name, type: 'VARIANT', values: Array.from({ length: max - min + 1 }, (_, i) => String(min + i)) }]);
+  }
   if (sk.namePatterns.some(p => new RegExp(p).test(name)) || has(sk.names, name) || sk.typePatterns.some(p => new RegExp(p).test(type)) ||
       (sk.nonStringValue && name === 'value' && !/^string$/.test(type))) return [];
   if (type.includes('ReactElement') || (name === 'children' && type.includes('ReactNode') && !has(STANDARD.textChildren, currentComponent))) return [];

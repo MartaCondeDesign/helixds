@@ -107,7 +107,7 @@ const SPECS: Record<string, Spec> = {
   },
   IconButton: {
     story: 'components-iconbutton--primary',
-    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['m'], disabled: ['false', 'true'], isLoading: ['false', 'true'] },
+    axes: { variant: ['primary', 'secondary', 'ghost', 'danger'], size: ['s', 'm', 'l'], disabled: ['false', 'true'], isLoading: ['false', 'true'] },
     states: ['default', 'hover', 'press', 'focus'],
     args: v => ({ variant: v.variant!, size: v.size!, disabled: v.disabled === 'true', isLoading: v.isLoading === 'true' }),
     parts: { '(root)': { part: 'icon-button', fill: true, stroke: true } },

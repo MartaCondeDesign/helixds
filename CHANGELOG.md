@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Audit matches variants by prop pairs; Input also disables while loading (loadingDisables) (latest commit)
+- 2026-10-21 — Figma conversion v1.8: list-count rule — a list of drawn items (options, actions, avatars, items) is a VARIANT of how many (1–7, per-contract range in figma.listCount); prop-map and the conversion doc say so (latest commit)
+- 2026-10-21 — Audit matches variants by prop pairs; Input also disables while loading (loadingDisables) ([`f33bb81`](https://github.com/MartaCondeDesign/helixds/commit/f33bb81))
 - 2026-10-21 — Merge remote branch ([`adcd091`](https://github.com/MartaCondeDesign/helixds/commit/adcd091))
 - 2026-10-21 — scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table ([`5613263`](https://github.com/MartaCondeDesign/helixds/commit/5613263))
 - 2026-10-21 — Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size ([`148aa95`](https://github.com/MartaCondeDesign/helixds/commit/148aa95))
