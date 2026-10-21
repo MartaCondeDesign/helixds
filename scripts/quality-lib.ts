@@ -28,7 +28,7 @@ type Stability = {
   components?: Array<{
     name: string;
     status: 'draft' | 'beta' | 'stable';
-    figma?: { state?: 'synced' | 'drift' | 'missing' };
+    figma?: { state?: 'synced' | 'drift' | 'missing' | 'exempt' };
     checks?: Record<string, { pass: boolean }>;
   }>;
 };
@@ -232,7 +232,9 @@ export function createHelixSnapshot(now = new Date()) {
     failed: components.filter(component => component.checks?.[id]?.pass === false).length,
   }));
   // verify:stable calls an out-of-date Figma component 'drift'; the snapshot reports it as 'stale'.
-  const figma = { synced: components.filter(c => c.figma?.state === 'synced').length, stale: components.filter(c => c.figma?.state === 'drift').length, missing: components.filter(c => c.figma?.state === 'missing').length };
+  const figma = { synced: components.filter(c => c.figma?.state === 'synced').length, stale: components.filter(c => c.figma?.state === 'drift').length, missing: components.filter(c => c.figma?.state === 'missing').length, exempt: components.filter(c => c.figma?.state === 'exempt').length };
+  // Layout components aren't built in Figma (owner decision 2026-10-21): alignment is out of the rest only.
+  const figmaScope = components.length - (figma.exempt as number);
   const allRuns = loadRuns();
   const weekAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
   const weeklyRuns = allRuns.filter(run => run.timestamp >= weekAgo);
@@ -255,7 +257,7 @@ export function createHelixSnapshot(now = new Date()) {
   // that apply to each component and pass. Added 2026-10-11; earlier history points don't include it.
   const a11yReport = readJson<{ score?: number | null; meetsMinimum?: number; generatedAt?: string }>('quality/accessibility.json', {});
   const accessibility = typeof a11yReport.score === 'number' ? a11yReport.score / 100 : null;
-  const rates = [components.length ? (byStatus.stable as number) / components.length : null, components.length ? (figma.synced as number) / components.length : null, evals.passRate, ruleCompliance, governance.rate, accessibility].filter((rate): rate is number => rate !== null);
+  const rates = [components.length ? (byStatus.stable as number) / components.length : null, figmaScope ? (figma.synced as number) / figmaScope : null, evals.passRate, ruleCompliance, governance.rate, accessibility].filter((rate): rate is number => rate !== null);
   // Health is an equal-weight average of independent DS quality signals. Keeping the breakdown beside
   // the score makes a change in the headline auditable instead of a black-box “quality” number.
   const healthScore = rates.length ? rates.reduce((sum, rate) => sum + rate, 0) / rates.length : null;
@@ -276,7 +278,7 @@ export function createHelixSnapshot(now = new Date()) {
     accessibility: { score: accessibility, meetsMinimum: a11yReport.meetsMinimum ?? null, generatedAt: a11yReport.generatedAt ?? null },
     governance: { total: governance.total, complete: governance.complete, rate: governance.rate, incomplete: governance.contracts.filter(entry => !(entry.hasNeverUseFor && entry.hasRationale && entry.hasGovernance)).map(entry => entry.name) },
     healthScore,
-    healthScoreBreakdown: { componentReadiness: components.length ? (byStatus.stable as number) / components.length : null, figmaAlignment: components.length ? (figma.synced as number) / components.length : null, agentReliability: evals.passRate, ruleCompliance, governanceCoverage: governance.rate, accessibility },
+    healthScoreBreakdown: { componentReadiness: components.length ? (byStatus.stable as number) / components.length : null, figmaAlignment: figmaScope ? (figma.synced as number) / figmaScope : null, agentReliability: evals.passRate, ruleCompliance, governanceCoverage: governance.rate, accessibility },
     weekly: { from: new Date(weekAgo).toISOString().slice(0, 10), to: now.toISOString().slice(0, 10), evals: evalSummary(current.answers.filter(run => run.timestamp >= weekAgo)) },
     changes: loadChanges(),
   };

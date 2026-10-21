@@ -101,8 +101,8 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    contrast in light and dark, reduced motion, eval), not in Figma yet or out of date there · **stable** =
    beta + in Figma **and aligned with code**. Figma is the one manual step, done only when asked;
    `contracts/figma-sync.json` records it — set the entry's `syncedCommit` to the commit you synced against.
-   The Figma column is three-state: ✓ aligned · ⚠ in Figma but tokens/CSS/props/anatomy changed since
-   (`scripts/figma-drift.ts`) · ✗ not in Figma. Changing a stable component drops it to beta until Figma is updated.
+   The Figma column: ✓ aligned · ⚠ in Figma but tokens/CSS/props/anatomy changed since
+   (`scripts/figma-drift.ts`) · ✗ not in Figma · – not required (Layout components, rule 11b). Changing a stable component drops it to beta until Figma is updated.
    ✓ also requires a passing **Figma audit** recorded in `figma-sync.json` (`scripts/figma/audit-component.js`:
    every state, colors bound and matching code in light/dark, spacing bound, no spacer nodes, border always) —
    see `.ai/skills/components-to-figma.md` → "Non-negotiable rules" and Phase 6.
@@ -135,8 +135,12 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
 11. **Alphabetical component order — Storybook and Figma match.** Components are listed alphabetically
    (English, case-insensitive) in Storybook's Components and Layout sections (`storySort` in
    `apps/storybook/.storybook/preview.tsx`) **and** as Figma pages: `Cover · - · Icons · - ·` every core
-   component A→Z `· - ·` every layout component A→Z. A new component's Figma page is inserted at its
-   alphabetical position, never appended at the end. Stories inside one component keep their file order.
+   component A→Z. A new component's Figma page is inserted at its alphabetical position, never appended at the
+   end. Stories inside one component keep their file order.
+11b. **Nothing from Storybook's Layout or Pages sections is built in Figma — for now** (owner decision
+   2026-10-21). AppShell, PageHeader, SideNav, TopBar and the page stories (Dashboard, Form, Data analytics…)
+   stay in code and Storybook only. `pnpm verify:stable` marks Layout components' Figma column `–` (not
+   required), so they reach stable on the 8 automatic criteria alone.
 12. **A Figma component page shows the component once.** The doc frame (title + description) has no fill
    (transparent) and is wide enough that its text is never clipped; the Propstar table holds only the real
    COMPONENT_SET — boolean properties are toggled in the properties panel, never expanded into columns of
