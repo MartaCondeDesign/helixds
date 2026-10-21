@@ -136,6 +136,14 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Figma, overlays and rest (owner-approved): Modal (content → children, *Action → *ActionLabel with the nested Buttons exposed — approved exception), SidePanel and Card (content → children), Accordion (disabled out of state), AppShell (sidenav / topbar booleans), Menu becomes a set with multiple false/true. figma:snapshot --merge updates only the components read. 173/177 props match; Chart label, Icon and Tooltip placement wait for the owner
   - figma-sync: overlays and rest synced
   - figma-sync: RadioGroup re-synced after the invalid-hover CSS fix
+  - Figma conversion v1.6: property order rule, Figma-only properties fail, Avatar label/src, Icon code-only, Tooltip trigger slot
+  - Figma properties harness: use_figma hook asks the owner with the code-vs-Figma table; figma-map lists props with no Figma property and why; AvatarGroup withOverflow + max (owner's choice)
+  - Avatar and AvatarGroup: withImage false/true variant (photo or initials, owner's choice), AvatarGroup avatars 1–7 variant
+  - Badge stories: every story has controls (size, icon, variant, label where they apply); AvatarGroup photos: a different portrait per avatar
+  - Figma property names in camelCase (iconSwap, descriptionText…, standard v1.7) across all sets; Card: showHeader + headerText instead of header (owner's choice)
+  - Code-only props, visible: docs:figma-map writes .ai/maps/figma-map.json and Storybook prints each prop's Figma property (or 'Code only' + why); Propstar regenerated on every change (audit check 11); Button: isLoading at every size, fullWidth at every size and state (144 variants, standard rule changed)
+  - Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size
+  - scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
