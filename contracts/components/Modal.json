@@ -144,6 +144,7 @@
   },
 
   "figma": {
+    "childProps": {"primaryActionLabel": [{"component": "Button", "property": "children", "note": "the primary button's text"}], "secondaryActionLabel": [{"component": "Button", "property": "children", "note": "the secondary button's text"}], "tertiaryActionLabel": [{"component": "Button", "property": "children", "note": "the tertiary button's text"}]},
     "states": ["default"],
     "properties": [
       { "name": "label", "type": "TEXT", "codeProp": "label" },

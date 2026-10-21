@@ -154,6 +154,7 @@
   },
 
   "figma": {
+    "childProps": {"options": [{"component": "SegmentedControlItem", "property": "label", "note": "each option's label (icon on icon-only)"}]},
     "figmaOnly": {
       "icon.": { "approved": "2026-10-21", "reason": "Storybook's IconOnly story: every option is icon-only (each option's icon in code) — a special case like Avatar's photo, so the set shows it with one toggle (false = text, true = icons); the item's own icon. / icon stay on SegmentedControlItem" }
     },

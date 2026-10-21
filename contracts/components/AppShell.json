@@ -107,6 +107,7 @@
   },
 
   "figma": {
+    "childProps": {"sidenav": [{"component": "SideNav", "property": null, "note": "the side navigation"}], "topbar": [{"component": "TopBar", "property": null, "note": "the top bar"}]},
     "states": ["default"],
     "properties": [],
     "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances).",

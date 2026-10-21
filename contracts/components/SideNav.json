@@ -124,6 +124,7 @@
   },
 
   "figma": {
+    "childProps": {"children": [{"component": "NavItem", "property": "label", "note": "each link"}]},
     "states": ["default"],
     "properties": [
       { "name": "brand", "type": "BOOLEAN", "codeProp": "brand", "description": "Show/hide part: the brand row carries its own 12px bottom (code's margin-bottom), so hiding it leaves the items where the root's 12px top puts them." },

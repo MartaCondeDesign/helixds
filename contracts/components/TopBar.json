@@ -113,6 +113,7 @@
   },
 
   "figma": {
+    "childProps": {"start": [{"component": "Input", "property": null, "note": "e.g. the search field"}], "end": [{"component": "IconButton", "property": null, "note": "the icon actions"}]},
     "states": ["default"],
     "properties": [
       { "name": "start", "type": "BOOLEAN", "codeProp": "start", "description": "Show/hide the start slot (search Input, size m; the slot is capped at 320px like max-width in code)." },

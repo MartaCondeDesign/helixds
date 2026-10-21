@@ -141,6 +141,7 @@
   },
 
   "figma": {
+    "childProps": {"avatars": [{"component": "Avatar", "property": "label", "note": "each avatar's label (and its src. photo)"}]},
     "states": ["default"],
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },

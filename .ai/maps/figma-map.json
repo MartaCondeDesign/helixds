@@ -91,7 +91,20 @@
         ],
         "codeOnly": false,
         "rule": "slot",
-        "why": "shows the slot"
+        "why": "shows the slot",
+        "inChild": [
+          {
+            "component": "SideNav",
+            "property": null,
+            "note": "the side navigation",
+            "figma": [
+              {
+                "name": "SideNav",
+                "type": "INSTANCE"
+              }
+            ]
+          }
+        ]
       },
       "topbar": {
         "description": "A TopBar instance, rendered above the main content.",
@@ -103,7 +116,20 @@
         ],
         "codeOnly": false,
         "rule": "slot",
-        "why": "shows the slot"
+        "why": "shows the slot",
+        "inChild": [
+          {
+            "component": "TopBar",
+            "property": null,
+            "note": "the top bar",
+            "figma": [
+              {
+                "name": "TopBar",
+                "type": "INSTANCE"
+              }
+            ]
+          }
+        ]
       },
       "children": {
         "description": "The page's main content.",
@@ -201,7 +227,20 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "exception, approved 2026-10-21 — code takes the list of people; Figma draws how many there are — 1 to 7, like Storybook's examples (owner's request)"
+        "why": "exception, approved 2026-10-21 — code takes the list of people; Figma draws how many there are — 1 to 7, like Storybook's examples (owner's request)",
+        "inChild": [
+          {
+            "component": "Avatar",
+            "property": "label",
+            "note": "each avatar's label (and its src. photo)",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "max": {
         "description": "Maximum number of avatars to render before collapsing the rest into a '+N' overflow indicator. Unset shows every avatar.",
@@ -525,28 +564,49 @@
       "categories": {
         "description": "Ordered labels.",
         "figma": null,
-        "codeOnly": true,
+        "codeOnly": false,
         "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "why": "data (a list or a ref) — content, not a design property",
+        "inChild": [
+          {
+            "component": "ChartLegendItem",
+            "property": "label",
+            "note": "donut only: each slice's name, in the legend (the other types draw categories as the axis labels)",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "series": {
         "description": "Named numeric series.",
         "figma": null,
-        "codeOnly": true,
+        "codeOnly": false,
         "rule": "skip",
-        "why": "data (a list or a ref) — content, not a design property"
+        "why": "data (a list or a ref) — content, not a design property",
+        "inChild": [
+          {
+            "component": "ChartLegendItem",
+            "property": "label",
+            "note": "each series' name, in the legend (not on the donut)",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "label": {
         "description": "Accessible chart name.",
-        "figma": [
-          {
-            "name": "label",
-            "type": "TEXT"
-          }
-        ],
-        "codeOnly": false,
-        "rule": "text",
-        "why": "its text"
+        "figma": null,
+        "codeOnly": true,
+        "rule": "exception",
+        "why": "the chart's accessible name — aria-label of the canvas and the caption of the hidden data table, never drawn; the visible legend texts are each series' name (series → ChartLegendItem label) (approved 2026-10-21)"
       },
       "description": {
         "description": "Optional accessible takeaway.",
@@ -758,7 +818,20 @@
         ],
         "codeOnly": false,
         "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
+        "inChild": [
+          {
+            "component": "Checkbox",
+            "property": "label",
+            "note": "each option's label",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "value": {
         "description": "Controlled selected values.",
@@ -1030,7 +1103,20 @@
         ],
         "codeOnly": false,
         "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
+        "inChild": [
+          {
+            "component": "Chip",
+            "property": "label",
+            "note": "each option's label",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "size": {
         "description": "Size of every chip in the group — Chip's own size scale.",
@@ -1579,7 +1665,20 @@
         ],
         "codeOnly": false,
         "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
+        "inChild": [
+          {
+            "component": "MenuItem",
+            "property": "label",
+            "note": "each option's label",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "value": {
         "description": "Currently selected value, for aria-selected + visual highlight.",
@@ -1701,7 +1800,20 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "exception, approved 2026-10-21 — the primary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text"
+        "why": "exception, approved 2026-10-21 — the primary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text",
+        "inChild": [
+          {
+            "component": "Button",
+            "property": "children",
+            "note": "the primary button's text",
+            "figma": [
+              {
+                "name": "children",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "onPrimaryAction": {
         "description": "Primary action handler.",
@@ -1720,7 +1832,20 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "exception, approved 2026-10-21 — the secondary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text"
+        "why": "exception, approved 2026-10-21 — the secondary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text",
+        "inChild": [
+          {
+            "component": "Button",
+            "property": "children",
+            "note": "the secondary button's text",
+            "figma": [
+              {
+                "name": "children",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "onSecondaryAction": {
         "description": "Secondary action handler.",
@@ -1739,7 +1864,20 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "exception, approved 2026-10-21 — the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text"
+        "why": "exception, approved 2026-10-21 — the tertiary action is a nested Button instance: the BOOLEAN shows it and the exposed Button's own children property holds its text — a TEXT on the Modal can't reach a nested instance's text",
+        "inChild": [
+          {
+            "component": "Button",
+            "property": "children",
+            "note": "the tertiary button's text",
+            "figma": [
+              {
+                "name": "children",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "onTertiaryAction": {
         "description": "Tertiary action handler.",
@@ -1773,24 +1911,26 @@
         "description": "List of options and grouped options.",
         "figma": null,
         "codeOnly": false,
-        "inChild": {
-          "component": "Menu",
-          "property": "options",
-          "figma": [
-            {
-              "name": "options",
-              "type": "VARIANT",
-              "values": [
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7"
-              ]
-            }
-          ]
-        },
+        "inChild": [
+          {
+            "component": "Menu",
+            "property": "options",
+            "figma": [
+              {
+                "name": "options",
+                "type": "VARIANT",
+                "values": [
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+                ]
+              }
+            ]
+          }
+        ],
         "rule": "list-delegated",
         "why": "drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21)"
       },
@@ -2081,7 +2221,20 @@
         ],
         "codeOnly": false,
         "rule": "slot",
-        "why": "shows the slot"
+        "why": "shows the slot",
+        "inChild": [
+          {
+            "component": "Button",
+            "property": null,
+            "note": "the buttons placed in the actions slot",
+            "figma": [
+              {
+                "name": "Button",
+                "type": "INSTANCE"
+              }
+            ]
+          }
+        ]
       },
       "className": {
         "description": "Additional className for the root.",
@@ -2263,7 +2416,20 @@
         ],
         "codeOnly": false,
         "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
+        "inChild": [
+          {
+            "component": "RadioButton",
+            "property": "label",
+            "note": "each option's label",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "value": {
         "description": "Controlled selected value.",
@@ -2412,7 +2578,20 @@
         ],
         "codeOnly": false,
         "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)",
+        "inChild": [
+          {
+            "component": "SegmentedControlItem",
+            "property": "label",
+            "note": "each option's label (icon on icon-only)",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "value": {
         "description": "Controlled selected value.",
@@ -2483,24 +2662,26 @@
         "description": "List of options and grouped options. Each option: { value, label, labelEnd?, disabled? } — labelEnd is short secondary text (a value, count or percentage) shown at the end of the option in the list; the trigger shows only the label.",
         "figma": null,
         "codeOnly": false,
-        "inChild": {
-          "component": "Menu",
-          "property": "options",
-          "figma": [
-            {
-              "name": "options",
-              "type": "VARIANT",
-              "values": [
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7"
-              ]
-            }
-          ]
-        },
+        "inChild": [
+          {
+            "component": "Menu",
+            "property": "options",
+            "figma": [
+              {
+                "name": "options",
+                "type": "VARIANT",
+                "values": [
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7"
+                ]
+              }
+            ]
+          }
+        ],
         "rule": "list-delegated",
         "why": "drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21)"
       },
@@ -2696,9 +2877,22 @@
       "children": {
         "description": "The nav entries — a list of NavItem.",
         "figma": null,
-        "codeOnly": true,
+        "codeOnly": false,
         "rule": "nested",
-        "why": "another component or free content placed inside — not a property"
+        "why": "another component or free content placed inside — not a property",
+        "inChild": [
+          {
+            "component": "NavItem",
+            "property": "label",
+            "note": "each link",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "footer": {
         "description": "Content pinned to the bottom — typically the current user.",
@@ -2928,9 +3122,33 @@
       "children": {
         "description": "Table content — typically a TableHead and a TableBody.",
         "figma": null,
-        "codeOnly": true,
+        "codeOnly": false,
         "rule": "nested",
-        "why": "another component or free content placed inside — not a property"
+        "why": "another component or free content placed inside — not a property",
+        "inChild": [
+          {
+            "component": "TableHeaderCell",
+            "property": "label",
+            "note": "each column heading",
+            "figma": [
+              {
+                "name": "label",
+                "type": "TEXT"
+              }
+            ]
+          },
+          {
+            "component": "TableCell",
+            "property": "content",
+            "note": "each cell (inside TableRow)",
+            "figma": [
+              {
+                "name": "content",
+                "type": "TEXT"
+              }
+            ]
+          }
+        ]
       },
       "className": {
         "description": "Additional className for the root <table>.",
@@ -3277,7 +3495,20 @@
         ],
         "codeOnly": false,
         "rule": "slot",
-        "why": "shows the slot"
+        "why": "shows the slot",
+        "inChild": [
+          {
+            "component": "Input",
+            "property": null,
+            "note": "e.g. the search field",
+            "figma": [
+              {
+                "name": "Input",
+                "type": "INSTANCE"
+              }
+            ]
+          }
+        ]
       },
       "end": {
         "description": "Trailing slot content.",
@@ -3289,7 +3520,20 @@
         ],
         "codeOnly": false,
         "rule": "slot",
-        "why": "shows the slot"
+        "why": "shows the slot",
+        "inChild": [
+          {
+            "component": "IconButton",
+            "property": null,
+            "note": "the icon actions",
+            "figma": [
+              {
+                "name": "IconButton",
+                "type": "INSTANCE"
+              }
+            ]
+          }
+        ]
       },
       "className": {
         "description": "Additional className for the root.",

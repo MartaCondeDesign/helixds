@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 223 of 224 code props match Figma exactly.**
+**Parity today: 223 of 223 code props match Figma exactly.**
 **Story coverage: 183 of 183 Storybook stories say how Figma represents them** (**Stories → Figma:** per component).
 
 ## Code prop → Figma property: the standard
@@ -249,7 +249,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `variant` | `'line' \| 'area' \| 'bar' \| 'stacked-bar' \| 'donut' \| 'timeline'` | `VARIANT` `variant` = `line` / `area` / `bar` / `stacked-bar` / `donut` / `timeline` | same values as code · `union` | ✓ |
 | `categories` | `string[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
 | `series` | `ChartSeries[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
-| `label` | `string` | `TEXT` `label` | its text · `text` | ✗ missing |
+| `label` | `string` | — no Figma property | exception, approved 2026-10-21 — the chart's accessible name — aria-label of the canvas and the caption of the hidden data table, never drawn; the visible legend texts are each series' name (series → ChartLegendItem label) | — |
 | `description` | `string \| undefined` | — no Figma property | read by screen readers only — no part draws it · `aria-text` | — |
 | `height` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |

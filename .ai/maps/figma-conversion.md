@@ -209,7 +209,9 @@ what lets one rule convert `required`, `description` and `errorMessage` the same
 
 ## 5. Where it shows
 
-- **A prop that lives on a child component** (a list handed to a nested Helix component — Select's and MultiSelect's
+- **A prop that lives on a child component** — any of them: written in the contract's `figma.childProps` (each
+  option's label on Checkbox, Modal's action texts on Button, a series' name on ChartLegendItem…), or found in the code
+  for a list handed to a nested Helix component — Select's and MultiSelect's
   `options` go to their Menu) isn't "code only": figma-map writes `— on the child Menu › options` and the Storybook
   table shows `🎨 On the child Menu · VARIANT options = 2 / … / 7` (owner's rule 2026-10-21). Generated from the
   `list-delegated` rule for every component that hands a list to a child — nothing per component.

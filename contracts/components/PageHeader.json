@@ -116,6 +116,7 @@
   },
 
   "figma": {
+    "childProps": {"actions": [{"component": "Button", "property": null, "note": "the buttons placed in the actions slot"}]},
     "states": ["default"],
     "properties": [
       { "name": "level", "type": "VARIANT", "values": ["1", "2"], "codeProp": "level", "description": "1 = h1, Heading / 2xl / Bold · 2 = h2, Heading / xl / Bold." },

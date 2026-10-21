@@ -114,6 +114,7 @@
   },
 
   "figma": {
+    "childProps": {"children": [{"component": "TableHeaderCell", "property": "label", "note": "each column heading"}, {"component": "TableCell", "property": "content", "note": "each cell (inside TableRow)"}]},
     "states": ["default", "hover"],
     "properties": [
       { "name": "state", "type": "VARIANT", "values": ["default", "hover"], "figmaOnly": true, "description": "On the TableRow set only — :hover in code fills the body row with fill/secondary/interactive/default." },

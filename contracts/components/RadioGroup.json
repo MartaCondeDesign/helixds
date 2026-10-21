@@ -186,6 +186,7 @@
   },
 
   "figma": {
+    "childProps": {"options": [{"component": "RadioButton", "property": "label", "note": "each option's label"}]},
     "states": ["default"],
     "properties": [
       { "name": "options", "type": "VARIANT", "values": ["2", "3", "4", "5", "6", "7"], "codeProp": "options", "description": "How many options the group draws (list-count, owner's rule 2026-10-21) — code draws one RadioButton per entry in options." },

@@ -5,7 +5,8 @@ import { Title, Subtitle, Description, Primary, Controls, Stories, useOf } from 
 import figmaMap from '../../../.ai/maps/figma-map.json';
 
 type FigmaProp = { name: string; type: string; values?: string[] };
-type FigmaConv = { figma: FigmaProp[] | null; codeOnly: boolean; rule: string; why: string; inChild?: { component: string; property: string; figma?: FigmaProp[] | null } };
+type Child = { component: string; property: string | null; note?: string; figma?: FigmaProp[] | null };
+type FigmaConv = { figma: FigmaProp[] | null; codeOnly: boolean; rule: string; why: string; inChild?: Child | Child[] };
 const MAP = figmaMap.components as Record<string, Record<string, FigmaConv>>;
 
 const cell: React.CSSProperties = { padding: 'var(--helix-spacing-s) var(--helix-spacing-m)', borderTop: '1px solid hsla(203, 50%, 30%, 0.15)', verticalAlign: 'top', fontSize: 13, lineHeight: '20px' };
@@ -42,13 +43,16 @@ function CodeToFigma() {
             <tr key={prop}>
               <td style={{ ...cell, fontWeight: 700 }}>{prop}</td>
               <td style={cell}>
-                {c.inChild ? (
-                  <div>🎨 On the child <strong>{c.inChild.component}</strong>{(c.inChild.figma ?? []).map(f => (
-                    <div key={f.name}><span style={code}>{f.type} {f.name}</span>{f.values ? ` = ${f.values.join(' / ')}` : ''}</div>
-                  ))}</div>
-                ) : c.codeOnly ? <span>👾 Code only</span> : c.figma!.map(f => (
+                {/* the component's own Figma property, then every child that holds the rest of it */}
+                {c.figma?.map(f => (
                   <div key={f.name}>🎨 <span style={code}>{f.type} {f.name}</span>{f.values ? ` = ${f.values.join(' / ')}` : ''}</div>
                 ))}
+                {[c.inChild ?? []].flat().map(k => (
+                  <div key={k.component + (k.property ?? '')}>🎨 On the child <strong>{k.component}</strong>{(k.figma ?? []).map(f => (
+                    <span key={f.name}> · <span style={code}>{f.type === 'INSTANCE' ? 'instance' : `${f.type} ${f.name}`}</span>{f.values ? ` = ${f.values.join(' / ')}` : ''}</span>
+                  ))}{k.note ? <span style={{ opacity: 0.7 }}> — {k.note}</span> : null}</div>
+                ))}
+                {!c.figma?.length && !c.inChild ? <span>👾 Code only</span> : null}
               </td>
               <td style={cell}>{c.why}</td>
             </tr>

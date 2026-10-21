@@ -90,6 +90,11 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    `figma.propertyMap`), a contract prop shows in the table (`control: false` when it can't be edited), and a story never
    invents args that aren't props. The Code → Figma table is built from the props table at render time, so it follows
    every add, remove, rename or move on its own.
+   **A prop that lives on a child component in Figma is shown as such** (owner's rule 2026-10-21): each option's label
+   on Checkbox, the action texts on Modal's Buttons, a series' name on ChartLegendItem… The contract records it in
+   `figma.childProps` (`{ "<prop>": [{ "component", "property", "note" }] }`; a list handed to another Helix component is
+   found in the code), and the Code → Figma table shows `🎨 On the child X · property` under the component's own one.
+   A new component with children, or a prop that moves into one, isn't done until its childProps are written.
 6b. **Status is computed, never hand-edited** ([ADR-018](docs/ADR/ADR-018-stability-criteria.md)) —
    `pnpm verify:stable` sets it: **draft** = the component exists and works, but one of the 8 automatic
    criteria fails · **beta** = all 8 pass (contract, types, tokens, stories + axe, keyboard tests, AA

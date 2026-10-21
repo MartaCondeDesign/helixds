@@ -166,6 +166,7 @@
   },
 
   "figma": {
+    "childProps": {"options": [{"component": "MenuItem", "property": "label", "note": "each option's label"}]},
     "states": ["default", "hover", "selected", "disabled"],
     "properties": [
       {
