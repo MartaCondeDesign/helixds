@@ -88,8 +88,8 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
    component, show the owner every ✗ story and ask how to represent it**, proposing one of:
    `"WithImage": "withImage=true"` (the properties/values that draw it — names must be Figma properties of the set),
    `"Default": "default"` (every property at its default), `"Sizes": "layout"` (a showcase that only arranges existing variants), or
-   `{ "figma": null, "reason": "…", "approved": "date" }` (behaviour only — a keyboard `play` test, a controlled
-   demo — or not drawn on purpose). Never fill `figma.stories` without the owner's answer: it's a contract edit.
+   `{ "figma": null, "reason": "…", "approved": "date" }` (behaviour only — a controlled demo — or not drawn on purpose). A keyboard story is
+   never `null`: focus is drawn, so it maps to `state=focus` (owner's decision 2026-10-21). Never fill `figma.stories` without the owner's answer: it's a contract edit.
 9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
    components A→Z after `Icons`, layout components A→Z after the last `-` separator — the same order as
    Storybook's sidebar (root `CLAUDE.md` rule 11). On the page, the doc frame holding the title, description

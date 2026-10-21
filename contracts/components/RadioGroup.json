@@ -213,6 +213,15 @@
       { "name": "errorMessageText", "type": "TEXT", "codeProp": "errorMessage" }
     ],
     "structure": "radio-group (8px gap) > radio-legend (text + radio-required),  radio-options (12px gap,  real RadioButton instances: Free,  Pro checked,  Team,  Enterprise,  Education,  Nonprofit,  Custom),  radio-description,  radio-error. options = how many RadioButton instances it draws (2–7); value has no Figma property.",
-    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many RadioButton instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each RadioButton option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled)."
+    "variantCombinations": "36 variants (2026-10-21): options 2–7 (list-count — how many RadioButton instances the group draws, each with its own example label) × the 6 of 2026-10-20: orientation vertical/horizontal × invalid false/true,  plus disabled for each orientation (valid) — the standard rule for disabled. No state axis: hover/focus live on each RadioButton option (pattern group). invalid/disabled pass down to every option; disabled dims legend,  required * and description (text/disabled).",
+    "stories": {
+      "Default": "default",
+      "Horizontal": "orientation=horizontal",
+      "Invalid": "invalid=true, errorMessage=true",
+      "Disabled": "disabled=true",
+      "WithDisabledOption": "layout",
+      "Required": "required=true",
+      "KeyboardNavigation": {"figma": "layout", "reason": "keyboard focus is drawn on the RadioButton inside it (state=focus)"}
+    }
   }
 }

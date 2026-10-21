@@ -116,6 +116,10 @@
       { "name": "showHeader", "type": "BOOLEAN", "codeProp": "header", "description": "Show/hide part (show-hide-parts.md): the title row. With padding=default the 24px top lives on the root, the header carries only its 8px bottom, so toggling it never moves the body." },
       { "name": "headerText", "type": "TEXT", "codeProp": "header" },
       { "name": "children", "type": "TEXT", "codeProp": "children" }
-    ]
+    ],
+    "stories": {
+      "Default": "default",
+      "CardGrid": "layout"
+    }
   }
 }

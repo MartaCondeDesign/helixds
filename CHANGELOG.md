@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Merge PR #19 branch (latest Figma state) into story coverage (latest commit)
+- 2026-10-21 — Stories → Figma filled for every component (owner's decisions 2026-10-21): 180 of 184 stories mapped (latest commit)
+- 2026-10-21 — Merge PR #19 branch (latest Figma state) into story coverage ([`060c1b0`](https://github.com/MartaCondeDesign/helixds/commit/060c1b0))
 - 2026-10-21 — Update CHANGELOG.md for #19 ([`0de5d53`](https://github.com/MartaCondeDesign/helixds/commit/0de5d53))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' of https://github.com/MartaCondeDesign/helixds into claude/affectionate-swartz-794ede ([`79cc497`](https://github.com/MartaCondeDesign/helixds/commit/79cc497))
 - 2026-10-21 — Code → Figma table: Helix spacing tokens instead of raw px (lint) ([`b74ab1b`](https://github.com/MartaCondeDesign/helixds/commit/b74ab1b))

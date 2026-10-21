@@ -231,6 +231,19 @@
       }
     },
     "structure": "select-root (8px gap) > select-label (text + select-required),  select-wrapper > select-trigger (hugs its text like code: select-trigger-label + select-chevron; open uses an unrotated ChevronUp,  code flips the chevron),  select-description,  select-error. state=open draws the listbox as the menu part (absolute,  4px below select-trigger at its width,  150px minimum,  like Menu.tsx): Menu's fill,  border,  radius,  shadow / m,  4px padding and 2px gap,  with MenuItem instances (Designer,  Engineer,  Product Manager,  Tech Lead,  Other — Storybook Default — then UX Researcher,  Data Analyst).",
-    "variantCombinations": "80 variants (2026-10-21): invalid × state default/hover/focus = 6,  invalid × state=open × options 2–7 = 12,  disabled = 1,  value=selected once (default,  valid,  enabled) = 1 — each of those 20 drawn with fullWidth (320px) × hideLabel false/true = 80 (variants.secondary and listCount,  owner's decisions 2026-10-21). options only changes the open listbox: every other state is drawn once,  at options=5 (Storybook Default) — Figma falls back to the nearest variant if another count is picked there. value=empty binds the trigger label to placeholder,  value=selected to valueText."
+    "variantCombinations": "80 variants (2026-10-21): invalid × state default/hover/focus = 6,  invalid × state=open × options 2–7 = 12,  disabled = 1,  value=selected once (default,  valid,  enabled) = 1 — each of those 20 drawn with fullWidth (320px) × hideLabel false/true = 80 (variants.secondary and listCount,  owner's decisions 2026-10-21). options only changes the open listbox: every other state is drawn once,  at options=5 (Storybook Default) — Figma falls back to the nearest variant if another count is picked there. value=empty binds the trigger label to placeholder,  value=selected to valueText.",
+    "stories": {
+      "Default": "value=empty",
+      "Controlled": "value=selected",
+      "WithGroups": "state=open",
+      "WithLabelEnd": "state=open",
+      "WithDescription": "description=true",
+      "Invalid": "invalid=true, errorMessage=true",
+      "Disabled": "disabled=true, value=selected",
+      "MinimumWidth": {"figma": null, "reason": "min-width behaviour — same look as Default", "approved": "2026-10-21"},
+      "Required": "required=true",
+      "Open": "state=open",
+      "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

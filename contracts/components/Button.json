@@ -279,6 +279,17 @@
   "figma": {
     "states": ["default", "hover", "press", "focus"],
     "properties": [],
-    "variantCombinations": "68 variants (2026-10-21): variant × size × state default/hover/press/focus = 48,  disabled per variant × size = 12,  isLoading and fullWidth once per variant at size m = 8 (the standard rules). children is the TEXT property (was label)."
+    "variantCombinations": "68 variants (2026-10-21): variant × size × state default/hover/press/focus = 48,  disabled per variant × size = 12,  isLoading and fullWidth once per variant at size m = 8 (the standard rules). children is the TEXT property (was label).",
+    "stories": {
+      "AllVariants": "layout",
+      "Loading": "isLoading=true",
+      "Disabled": "disabled=true",
+      "WithLeadingIcon": "icon=true",
+      "WithTrailingIcon": "iconEnd=true",
+      "Sizes": "layout",
+      "FullWidth": "fullWidth=true",
+      "SwapInPlace": {"figma": null, "reason": "label/icon swap animation on click — behaviour; each end state is an ordinary variant (children / iconSwap)", "approved": "2026-10-21"},
+      "KeyboardActivation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

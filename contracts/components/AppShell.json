@@ -109,6 +109,9 @@
   "figma": {
     "states": ["default"],
     "properties": [],
-    "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances)."
+    "structure": "No variants or props of its own — app-shell-root (fill/page) > SideNav instance + app-shell-content (TopBar instance + app-shell-main, 24px padding = spacing/l). Main holds sample content (PageHeader + Card instances).",
+    "stories": {
+      "Default": "sidenav=true, topbar=true"
+    }
   }
 }

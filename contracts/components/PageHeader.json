@@ -123,6 +123,11 @@
       { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 4px top (spacing/2xs), so hiding it changes nothing else." },
       { "name": "descriptionText", "type": "TEXT", "codeProp": "description" },
       { "name": "actions", "type": "BOOLEAN", "codeProp": "actions", "description": "Shows the actions slot (a primary Button instance as a placeholder; 8px gap — the slot can mix groups, e.g. Badge + Button)." }
-    ]
+    ],
+    "stories": {
+      "Default": "description=true",
+      "WithActions": "actions=true, description=true",
+      "SectionLevel": "level=2, description=true"
+    }
   }
 }

@@ -196,6 +196,13 @@
       }
     ],
     "structure": "fab-root 48px (size/xl,  radius/full,  fill/primary,  shadow / m,  20px icon) and fab-action 36px (fill/page,  1px border/neutral in the layout,  shadow / s,  16px icon). Icons are swapped per instance (icon / actions[].icon).",
-    "variantCombinations": "9 variants (2026-10-21): expanded × state default/hover/press/focus = 8,  plus disabled collapsed = 1 — a disabled FAB cannot open. label is the aria-label: no Figma property."
+    "variantCombinations": "9 variants (2026-10-21): expanded × state default/hover/press/focus = 8,  plus disabled collapsed = 1 — a disabled FAB cannot open. label is the aria-label: no Figma property.",
+    "stories": {
+      "Default": "expanded=false",
+      "SpeedDial": "expanded=false",
+      "Expanded": "expanded=true",
+      "Disabled": "disabled=true",
+      "KeyboardSpeedDial": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

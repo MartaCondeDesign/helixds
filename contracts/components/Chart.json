@@ -33,7 +33,18 @@
       { "name": "pressed", "type": "VARIANT", "values": ["true", "false"], "codeProp": "aria-pressed (series shown/hidden)", "description": "On ChartLegendItem: a hidden series (aria-pressed false) keeps its swatch and turns its name text/disabled. A VARIANT, not a BOOLEAN — it changes a color, not a part's visibility." },
       { "name": "label", "type": "TEXT", "codeProp": "series[].name", "description": "On ChartLegendItem: the series (or donut category) name." }
     ],
-    "structure": "Chart = chart-root (vertical, 560 wide like the stories, 8px to the legend = spacing/xs) > chart-canvas (280 high = the height prop's default) + chart-legend (wrapping row, centered, 4px apart = spacing/2xs) of ChartLegendItem instances. ChartLegendItem = 4/8 padding (spacing/2xs, spacing/xs), 8px gap, radius/m, a 1px border that is always transparent (hidden stroke, border-always), a 12px swatch (spacing/s, radius/xs) in the series' chart/series/N — overridden per instance — and the name in Body / s / Regular. The data table (chart-data) is visually hidden in code and not drawn."
+    "structure": "Chart = chart-root (vertical, 560 wide like the stories, 8px to the legend = spacing/xs) > chart-canvas (280 high = the height prop's default) + chart-legend (wrapping row, centered, 4px apart = spacing/2xs) of ChartLegendItem instances. ChartLegendItem = 4/8 padding (spacing/2xs, spacing/xs), 8px gap, radius/m, a 1px border that is always transparent (hidden stroke, border-always), a 12px swatch (spacing/s, radius/xs) in the series' chart/series/N — overridden per instance — and the name in Body / s / Regular. The data table (chart-data) is visually hidden in code and not drawn.",
+    "stories": {
+      "Default": "variant=line",
+      "Line": "variant=line",
+      "Area": "variant=area",
+      "Bar": "variant=bar",
+      "LegendToggle": {"figma": null, "reason": "click on a legend item hides its series — behaviour test", "approved": "2026-10-21"},
+      "SingleSeriesLegend": "variant=area",
+      "StackedBar": "variant=stacked-bar",
+      "Donut": "variant=donut",
+      "Timeline": "variant=timeline"
+    }
   },
 
   "tokenPolicy": { "allowed": ["color.fill", "color.text", "color.border", "spacing", "radius", "shadow", "textStyle"], "forbidden": ["primitive.color"] },

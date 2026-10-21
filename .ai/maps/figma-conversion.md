@@ -98,6 +98,10 @@ story export of `apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx`:
 | `"layout"` | a showcase that only arranges existing variants (all sizes, all variants side by side, a group) | `"Sizes": "layout"` |
 | `{ "figma": null, "reason": "…", "approved": "date" }` | the owner decided Figma doesn't draw it — behaviour only (keyboard `play` tests, controlled demos) or on purpose | `"KeyboardToggle": { "figma": null, "reason": "keyboard play test", "approved": "2026-10-21" }` |
 
+**Keyboard stories are focus states, and focus is drawn** (owner's decision 2026-10-21): a keyboard `play` story maps to
+`state=focus` — or, when the ring belongs to a child (a group's Checkbox, a Modal's close IconButton), `layout` with
+that child at `state=focus`. A set with no `state=focus` stays ✗ until Figma draws it.
+
 `figma-map.md` prints a **Stories → Figma** block per component (✓ / ✗ per story; a mapping for a story that no
 longer exists is ✗ stale) and `figma-map.json` the same under `stories`. A ✗ makes `figma-drift` fail the
 component, so it can't be ✓ synced. Filling `figma.stories` is the owner's decision — an agent shows the ✗ stories

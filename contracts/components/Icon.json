@@ -210,6 +210,14 @@
         "approved": "2026-10-21",
         "reason": "code-only wrapper: each component variant already draws its icon at the size and stroke ADR-017 gives that size"
       }
+    },
+    "stories": {
+      "Default": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "IconOnly": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "Sizes": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "Colors": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "CustomIconSet": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"},
+      "InlineWithText": {"figma": null, "reason": "Icon has no component set with properties — icons are the Icons page (icons-to-figma)", "approved": "2026-10-21"}
     }
   },
 

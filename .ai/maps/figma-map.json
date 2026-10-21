@@ -3190,612 +3190,612 @@
   "stories": {
     "Accordion": {
       "Default": {
-        "figma": null,
+        "figma": "expanded=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "OpenByDefault": {
-        "figma": null,
+        "figma": "expanded=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Stack": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Controlled": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — controlled-state demo — behaviour only, same look as another story (approved 2026-10-21)"
       },
       "KeyboardToggle": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "AppShell": {
       "Default": {
-        "figma": null,
+        "figma": "sidenav=true, topbar=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       }
     },
     "Avatar": {
       "Default": {
-        "figma": null,
+        "figma": "withImage=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "WithImage": {
-        "figma": null,
+        "figma": "withImage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "BrokenImageFallsBackToInitials": {
-        "figma": null,
+        "figma": "withImage=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "MemberList": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "AvatarGroup": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "WithOverflow": {
-        "figma": null,
+        "figma": "withOverflow=true, withImage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "Badge": {
       "AllVariants": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "WithIcons": {
-        "figma": null,
+        "figma": "icon=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "StatusRowPattern": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "Button": {
       "AllVariants": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Loading": {
-        "figma": null,
+        "figma": "isLoading=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithLeadingIcon": {
-        "figma": null,
+        "figma": "icon=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithTrailingIcon": {
-        "figma": null,
+        "figma": "iconEnd=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "FullWidth": {
-        "figma": null,
+        "figma": "fullWidth=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "SwapInPlace": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — label/icon swap animation on click — behaviour; each end state is an ordinary variant (children / iconSwap) (approved 2026-10-21)"
       },
       "KeyboardActivation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Card": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "CardGrid": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "Chart": {
       "Default": {
-        "figma": null,
+        "figma": "variant=line",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Line": {
-        "figma": null,
+        "figma": "variant=line",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Area": {
-        "figma": null,
+        "figma": "variant=area",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Bar": {
-        "figma": null,
+        "figma": "variant=bar",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "LegendToggle": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — click on a legend item hides its series — behaviour test (approved 2026-10-21)"
       },
       "SingleSeriesLegend": {
-        "figma": null,
+        "figma": "variant=area",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "StackedBar": {
-        "figma": null,
+        "figma": "variant=stacked-bar",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Donut": {
-        "figma": null,
+        "figma": "variant=donut",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Timeline": {
-        "figma": null,
+        "figma": "variant=timeline",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       }
     },
     "Checkbox": {
       "AllTypes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Group": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardToggle": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "CheckboxGroup": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "Horizontal": {
-        "figma": null,
+        "figma": "orientation=horizontal",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDisabledOption": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardToggle": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the Checkbox inside it (state=focus)"
       }
     },
     "Chip": {
       "Dismissible": {
-        "figma": null,
+        "figma": "dismissible=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Variants": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "WithIcons": {
-        "figma": null,
+        "figma": "icon=true, iconEnd=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardActivation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "ChipGroup": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "WithIcons": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Wrapping": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardNavigation": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the Chip inside it (state=focus)"
       }
     },
     "FAB": {
       "Default": {
-        "figma": null,
+        "figma": "expanded=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "SpeedDial": {
-        "figma": null,
+        "figma": "expanded=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Expanded": {
-        "figma": null,
+        "figma": "expanded=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardSpeedDial": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Icon": {
       "Default": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       },
       "IconOnly": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       },
       "Sizes": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       },
       "Colors": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       },
       "CustomIconSet": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       },
       "InlineWithText": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Icon has no component set with properties — icons are the Icons page (icons-to-figma) (approved 2026-10-21)"
       }
     },
     "IconButton": {
       "Ghost": {
-        "figma": null,
+        "figma": "variant=ghost",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Secondary": {
-        "figma": null,
+        "figma": "variant=secondary",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Primary": {
-        "figma": null,
+        "figma": "variant=primary",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Danger": {
-        "figma": null,
+        "figma": "variant=danger",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Loading": {
-        "figma": null,
+        "figma": "isLoading=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "AllVariants": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardActivation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Input": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithLeadingIcon": {
-        "figma": null,
+        "figma": "icon=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithTrailingIcon": {
-        "figma": null,
+        "figma": "iconEnd=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "SearchInput": {
-        "figma": null,
+        "figma": "hideLabel=true, icon=true, fullWidth=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true, icon=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true, icon=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Loading": {
-        "figma": null,
+        "figma": "isLoading=true, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "LoginFormPattern": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardFocus": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Menu": {
       "Default": {
-        "figma": null,
+        "figma": "multiple=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Grouped": {
         "figma": null,
@@ -3806,250 +3806,250 @@
       "Opened": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)"
       },
       "States": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "Modal": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "WithFooterActions": {
-        "figma": null,
+        "figma": "primaryActionLabel=true, secondaryActionLabel=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithTertiaryAction": {
-        "figma": null,
+        "figma": "primaryActionLabel=true, secondaryActionLabel=true, tertiaryActionLabel=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithoutCloseButton": {
-        "figma": null,
+        "figma": "showCloseButton=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardDismiss": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the close IconButton inside it (state=focus)"
       },
       "Opened": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)"
       }
     },
     "MultiSelect": {
       "Default": {
-        "figma": null,
+        "figma": "value=empty",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithSelection": {
-        "figma": null,
+        "figma": "value=selected",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Wrapping": {
-        "figma": null,
+        "figma": "value=selected",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithGroups": {
-        "figma": null,
+        "figma": "state=open",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true, value=selected",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardNavigation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "NavItem": {
       "Default": {
-        "figma": null,
+        "figma": "current=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Current": {
-        "figma": null,
+        "figma": "current=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "NavList": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardActivation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "PageHeader": {
       "Default": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithActions": {
-        "figma": null,
+        "figma": "actions=true, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "SectionLevel": {
-        "figma": null,
+        "figma": "level=2, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       }
     },
     "RadioButton": {
       "AllTypes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Group": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardSelect": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "RadioGroup": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "Horizontal": {
-        "figma": null,
+        "figma": "orientation=horizontal",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDisabledOption": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardNavigation": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the RadioButton inside it (state=focus)"
       }
     },
     "SegmentedControl": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "FourOptions": {
-        "figma": null,
+        "figma": "options=4",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDisabledOption": {
         "figma": null,
@@ -4064,298 +4064,298 @@
         "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardNavigation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
         "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "why": "no Figma property `state` for this component"
       }
     },
     "Select": {
       "Default": {
-        "figma": null,
+        "figma": "value=empty",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Controlled": {
-        "figma": null,
+        "figma": "value=selected",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithGroups": {
-        "figma": null,
+        "figma": "state=open",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithLabelEnd": {
-        "figma": null,
+        "figma": "state=open",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true, value=selected",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "MinimumWidth": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — min-width behaviour — same look as Default (approved 2026-10-21)"
       },
       "Required": {
-        "figma": null,
+        "figma": "required=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Open": {
-        "figma": null,
+        "figma": "state=open",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardNavigation": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "SideNav": {
       "Default": {
-        "figma": null,
+        "figma": "brand=true, footer=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       }
     },
     "SidePanel": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "BottomPlacement": {
-        "figma": null,
+        "figma": "placement=bottom",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "RightPlacement": {
-        "figma": null,
+        "figma": "placement=right",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardDismiss": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the close IconButton inside it (state=focus)"
       },
       "Opened": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — play test that opens it — same look as Default (approved 2026-10-21)"
       }
     },
     "Switch": {
       "Default": {
-        "figma": null,
+        "figma": "checked=false",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Checked": {
-        "figma": null,
+        "figma": "checked=true, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Sizes": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "SettingsGroup": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "KeyboardToggle": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Table": {
       "Default": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Table has no Figma properties yet — map its stories when the set is built (approved 2026-10-21)"
       },
       "DragReorder": {
         "figma": null,
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "not drawn in Figma — Table has no Figma properties yet — map its stories when the set is built (approved 2026-10-21)"
       }
     },
     "Textarea": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "WithDescription": {
-        "figma": null,
+        "figma": "description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "WithCharacterCount": {
-        "figma": null,
+        "figma": "showCount=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Invalid": {
-        "figma": null,
+        "figma": "invalid=true, errorMessage=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "Disabled": {
-        "figma": null,
+        "figma": "disabled=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "NoResize": {
-        "figma": null,
+        "figma": "resize=none",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "FullWidth": {
-        "figma": null,
+        "figma": "fullWidth=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardFocus": {
-        "figma": null,
+        "figma": "state=focus",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"
       }
     },
     "Toast": {
       "Default": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "Playground": {
-        "figma": null,
+        "figma": "variant=success, description=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardReach": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": "keyboard focus is drawn on the close IconButton inside it (state=focus)"
       },
       "Opened": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       }
     },
     "Tooltip": {
       "Default": {
-        "figma": null,
+        "figma": "default",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "every Figma property at its default value"
       },
       "Placements": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "OnAvatar": {
         "figma": null,
-        "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "layout": true,
+        "ok": true,
+        "why": ""
       },
       "AlwaysExpanded": {
-        "figma": null,
+        "figma": "expanded=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       },
       "KeyboardFocus": {
-        "figma": null,
+        "figma": "expanded=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": "keyboard focus on the trigger shows the tooltip; the trigger draws its own focus"
       }
     },
     "TopBar": {
       "Default": {
-        "figma": null,
+        "figma": "start=true, end=true",
         "layout": false,
-        "ok": false,
-        "why": "no Figma representation recorded — ask the owner (contract figma.stories)"
+        "ok": true,
+        "why": ""
       }
     }
   }

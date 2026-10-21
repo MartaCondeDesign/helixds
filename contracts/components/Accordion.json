@@ -161,6 +161,14 @@
       { "name": "content", "type": "TEXT", "codeProp": "children" }
     ],
     "structure": "Bordered box (radius/l,  border in the layout) > accordion-header (12/16 padding,  Body / m / Medium,  16px ChevronDown) + accordion-panel-inner (0/16/12,  Body / m / Regular).",
-    "variantCombinations": "6 variants (2026-10-21): expanded × state default/focus = 4,  plus disabled per expanded (state default) = 2. label and children are TEXT."
+    "variantCombinations": "6 variants (2026-10-21): expanded × state default/focus = 4,  plus disabled per expanded (state default) = 2. label and children are TEXT.",
+    "stories": {
+      "Default": "expanded=false",
+      "OpenByDefault": "expanded=true",
+      "Disabled": "disabled=true",
+      "Stack": "layout",
+      "Controlled": {"figma": null, "reason": "controlled-state demo — behaviour only, same look as another story", "approved": "2026-10-21"},
+      "KeyboardToggle": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

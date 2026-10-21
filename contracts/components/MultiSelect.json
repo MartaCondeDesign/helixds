@@ -236,6 +236,17 @@
         "reason": "empty shows the placeholder,   selected shows chips — the field's two looks (owner-approved exception)"
       }
     },
-    "variantCombinations": "152 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus = 6,  invalid × state=open × options 2–7 = 12,  plus disabled = 1) = 38,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 152 (variants.secondary and listCount,  owner's decisions 2026-10-21). options only changes the open listbox: every other state is drawn once,  at options=5 (Storybook Default) — Figma falls back to the nearest variant if another count is picked there. Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open)."
+    "variantCombinations": "152 variants (2026-10-21): value empty/selected × (invalid × state default/hover/focus = 6,  invalid × state=open × options 2–7 = 12,  plus disabled = 1) = 38,  each drawn with fullWidth (320px,  chips wrap) × hideLabel false/true = 152 (variants.secondary and listCount,  owner's decisions 2026-10-21). options only changes the open listbox: every other state is drawn once,  at options=5 (Storybook Default) — Figma falls back to the nearest variant if another count is picked there. Invalid focus/open shows the focus border like code (MultiSelect yields the invalid border to focus/open).",
+    "stories": {
+      "Default": "value=empty",
+      "WithSelection": "value=selected",
+      "Wrapping": "value=selected",
+      "WithGroups": "state=open",
+      "WithDescription": "description=true",
+      "Invalid": "invalid=true, errorMessage=true",
+      "Required": "required=true",
+      "Disabled": "disabled=true, value=selected",
+      "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
+    }
   }
 }

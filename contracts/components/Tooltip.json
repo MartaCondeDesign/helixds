@@ -155,6 +155,13 @@
         "approved": "2026-10-21",
         "reason": "unlike the other overlays,  a tooltip is drawn next to its trigger,  so showing or hiding it is a real look (owner's request)"
       }
+    },
+    "stories": {
+      "Default": "default",
+      "Placements": "layout",
+      "OnAvatar": "layout",
+      "AlwaysExpanded": "expanded=true",
+      "KeyboardFocus": {"figma": "expanded=true", "reason": "keyboard focus on the trigger shows the tooltip; the trigger draws its own focus"}
     }
   }
 }

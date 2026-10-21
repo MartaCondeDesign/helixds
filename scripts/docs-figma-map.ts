@@ -168,7 +168,7 @@ function storyExports(name: string): string[] | null {
 type StoryDecision = string | { figma: string | null; reason?: string; approved?: string };
 type StoryConv = { figma: string | null; layout: boolean; ok: boolean; why: string };
 /** One story's Figma representation, checked against the properties the component must have in Figma. */
-function storyConv(decision: StoryDecision | undefined, figmaNames: Set<string>): StoryConv {
+function storyConv(decision: StoryDecision | undefined, figmaNames: Set<string>, figmaValues: Map<string, string[]>): StoryConv {
   if (decision === undefined) return { figma: null, layout: false, ok: false, why: 'no Figma representation recorded — ask the owner (contract figma.stories)' };
   const d = typeof decision === 'string' ? { figma: decision } as { figma: string | null; reason?: string; approved?: string } : decision;
   if (d.figma === 'default') return { figma: 'default', layout: false, ok: true, why: d.reason ?? 'every Figma property at its default value' };
@@ -176,9 +176,12 @@ function storyConv(decision: StoryDecision | undefined, figmaNames: Set<string>)
   if (d.figma === null) return d.approved
     ? { figma: null, layout: false, ok: true, why: `not drawn in Figma — ${d.reason ?? ''} (approved ${d.approved})` }
     : { figma: null, layout: false, ok: false, why: "figma: null needs the owner's `approved` date" };
-  const unknown = d.figma.split(',').map(s => s.trim().split('=')[0]!.trim()).filter(n => n && !figmaNames.has(n));
-  return unknown.length
-    ? { figma: d.figma, layout: false, ok: false, why: `no Figma property ${unknown.map(n => `\`${n}\``).join(', ')} for this component` }
+  const pairs = d.figma.split(',').map(s => s.trim().split('=').map(x => x.trim())).filter(([n]) => n);
+  const unknown = pairs.filter(([n]) => !figmaNames.has(n!)).map(([n]) => `\`${n}\``);
+  // a value Figma doesn't draw yet (e.g. state=focus on a set with no focus) — the story can't be drawn from the set
+  const undrawn = pairs.filter(([n, v]) => figmaNames.has(n!) && v && figmaValues.get(n!) && !figmaValues.get(n!)!.includes(v)).map(([n, v]) => `\`${n}=${v}\``);
+  return unknown.length || undrawn.length
+    ? { figma: d.figma, layout: false, ok: false, why: [unknown.length ? `no Figma property ${unknown.join(', ')} for this component` : '', undrawn.length ? `Figma doesn't draw ${undrawn.join(', ')} yet` : ''].filter(Boolean).join('; ') }
     : { figma: d.figma, layout: false, ok: true, why: d.reason ?? '' };
 }
 
@@ -273,11 +276,12 @@ function run() {
     // Stories → Figma: each story's Figma representation (contract figma.stories), or ✗ — ask the owner.
     const exports = storyExports(contract.name);
     const decisions = ((contract as any).figma?.stories ?? {}) as Record<string, StoryDecision>;
-    const figmaNames = new Set([...expected, 'state', ...Object.keys(figmaOnly)]);
+    const figmaNames = new Set([...expected, ...Object.keys(figmaOnly), ...(figma ?? []).map(f => f.name)]);
+    const figmaValues = new Map((figma ?? []).filter(f => f.type === 'VARIANT' && f.values).map(f => [f.name, f.values!] as [string, string[]]));
     let storiesBlock = '';
     if (exports?.length) {
       const conv: Record<string, StoryConv> = {};
-      for (const s of exports) conv[s] = storyConv(decisions[s], figmaNames);
+      for (const s of exports) conv[s] = storyConv(decisions[s], figmaNames, figmaValues);
       // a decision for a story that no longer exists is stale — the owner decided about something else
       const stale = Object.keys(decisions).filter(s => !exports.includes(s));
       jsonStories[contract.name] = conv;
