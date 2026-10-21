@@ -88,8 +88,12 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma sync ends with updating the Community copy (#24) ([#24](https://github.com/MartaCondeDesign/helixds/pull/24))
+- 2026-10-21 — Changelog bot re-runs CI on its own commit, so main can require CI (#29) ([#29](https://github.com/MartaCondeDesign/helixds/pull/29))
+  - Changelog bot re-runs CI on its own commit, so main can require CI
+- 2026-10-21 — Storybook deploy builds @helixds/tokens before @helixds/react (#27) ([`7628d2e`](https://github.com/MartaCondeDesign/helixds/commit/7628d2e))
+- 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
   - Figma sync ends with updating the Community copy
+  - Layout components and Pages aren't built in Figma for now
 - 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([`3129b32`](https://github.com/MartaCondeDesign/helixds/commit/3129b32))
   - View in Figma links open the public Figma Community file; README links it next to Storybook
 - 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))

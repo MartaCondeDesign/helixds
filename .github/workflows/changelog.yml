@@ -12,6 +12,7 @@ on:
     branches: [main]
 permissions:
   contents: write
+  actions: write # to start CI on the commit this job pushes (see the last step)
 concurrency:
   group: changelog-${{ github.event.pull_request.number }}
   cancel-in-progress: true
@@ -44,3 +45,14 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update CHANGELOG.md for #$PR_NUMBER" -- CHANGELOG.md
           git push
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+        id: commit
+      # GitHub holds the CI run triggered by this bot push for approval, so the PR's new head commit would have
+      # no `checks` result and main's required check would block the merge. A workflow_dispatch from this job
+      # does run: it's the same CI workflow, on the same commit.
+      - name: Run CI on the commit just pushed
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: gh workflow run ci.yml --ref "$BRANCH"
