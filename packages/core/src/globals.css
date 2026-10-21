@@ -575,7 +575,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-input-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="input-root"][data-full-width] {
     width: 100%;
@@ -1059,7 +1063,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-textarea-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="textarea-root"][data-full-width] { width: 100%; }
 
@@ -1168,7 +1176,11 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-select-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
+    max-width:      100%;
   }
   [data-helix-part="select-root"][data-full-width] { width: 100%; }
 
@@ -1318,7 +1330,10 @@
     display:        flex;
     flex-direction: column;
     gap:            var(--helix-select-gap);
-    width:          fit-content;
+    /* Every form field shares one width and never grows or shrinks with its content (owner's rule 2026-10-21,
+       contracts/figma-conversion.json → patterns.form-field.width); fullWidth fills the container. A per-component
+       width, not a token (CLAUDE.md token policy: widths are a component characteristic). */
+    width:          320px;
     max-width:      100%;
   }
   [data-helix-part="multi-select-root"][data-full-width] { width: 100%; }

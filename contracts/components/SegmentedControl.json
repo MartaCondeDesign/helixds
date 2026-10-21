@@ -154,6 +154,9 @@
   },
 
   "figma": {
+    "figmaOnly": {
+      "icon.": { "approved": "2026-10-21", "reason": "Storybook's IconOnly story: every option is icon-only (each option's icon in code) — a special case like Avatar's photo, so the set shows it with one toggle (false = text, true = icons); the item's own icon. / icon stay on SegmentedControlItem" }
+    },
     "states": ["default"],
     "properties": [
       {
@@ -182,7 +185,7 @@
       "FourOptions": "options=4",
       "Disabled": "disabled=true",
       "WithDisabledOption": {"figma": "layout", "reason": "one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)"},
-      "IconOnly": {"figma": "layout", "reason": "SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)"},
+      "IconOnly": "icon.=true",
       "KeyboardNavigation": {"figma": "layout", "reason": "keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21"}
     }
   }

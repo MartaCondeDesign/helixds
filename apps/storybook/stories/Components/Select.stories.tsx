@@ -36,15 +36,7 @@ const meta: Meta<typeof Select> = {
   component:  Select,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(SelectDoc),
-  // w-[300px] — a true fixed width, not min-width. Without a consumer-set width at all, the
-  // trigger's width is driven by whichever option's label is currently selected and visibly
-  // shrinks/grows as the selection changes (e.g. "Product Manager" vs "PM"); min-width alone only
-  // stops it shrinking below a floor, it can still grow past that for a longer label — the trigger
-  // now truncates a label that doesn't fit with an ellipsis (select-trigger-label) instead of
-  // growing the box, matching a native <select>'s own behavior at a fixed width. Select has no
-  // built-in default per CLAUDE.md's min-width policy (a consumer/pattern decision, not a system
-  // token) — this is the demonstrated example default.
-  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
   args: {
     value: undefined,
     invalid: undefined,
@@ -61,7 +53,7 @@ const meta: Meta<typeof Select> = {
     required: undefined,
     id: undefined,
     name: undefined,
-    className: 'w-[300px]',
+    className: undefined,
   },
 };
 

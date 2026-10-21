@@ -199,14 +199,7 @@
       "unit": "px",
       "note": "Shared field scale. Keep these values aligned with Select and Textarea density docs."
     },
-    "width": {
-      "default": "hug",
-      "modes": {
-        "hug": "Width shrinks to content or container constraints.",
-        "fill": "Width expands to 100% when fullWidth=true.",
-        "fixed": "Explicit width set by the consumer."
-      }
-    }
+    "width": {"default": "fixed", "value": 320, "unit": "px", "modes": {"fixed": "320px — every form field shares it and never grows or shrinks with its content (owner's rule 2026-10-21, form-field pattern); max-width 100% so a narrow container can still hold it.", "fill": "fullWidth=true: 100% of the container (Figma: drawn at 600px, the field and its popup on Fill so they stretch)."}, "exceptions": "A field that must be narrower (a number stepper, a short code) says so here, with its width and why — the only way off 320px."}
   },
   "tokenPolicy": {
     "allowed": [

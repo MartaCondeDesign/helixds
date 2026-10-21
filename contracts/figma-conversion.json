@@ -1,12 +1,13 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.11.0",
+  "version": "1.13.0",
   "approved": "2026-10-21",
 
   "naming": {
     "property": "Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).",
     "values": "VARIANT values = code values, unchanged (primary, stacked-bar, false).",
     "helperSuffix": ".",
+    "figmaOnly": "A property that exists only in Figma — no code prop of that name: the toggle of an optional part, or a look a story shows that comes from each item rather than the component (Avatar's photo: src., SegmentedControl's icon-only: icon.) — is named after the code field it stands for with the same dot at the end, so it's never mistaken for a real prop (owner's rule 2026-10-21). Approved per component in figma.figmaOnly.",
     "helper": "The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with a dot at the end — BOOLEAN errorMessage., icon. — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.",
     "layers": "Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers."
   },
@@ -31,7 +32,7 @@
     "namePatterns": ["^on[A-Z]", "^default[A-Z]", "^aria-"],
     "names": ["className", "id", "name", "href", "ref", "anchorRef", "activeValue", "invalidAttempt", "closeOnBackdropClick", "decorative", "rows", "maxLength", "max", "height", "stroke", "color", "values", "src"],
     "why": {
-      "src": "an image URL: Figma can't load an image from a URL, so there is never a src property. The look it decides — photo or initials — is a withImage false/true VARIANT (Avatar, AvatarGroup), approved in the contract's figma.propertyMap / figmaOnly (owner's decision 2026-10-21).",
+      "src": "an image URL: Figma can't load an image from a URL, so there is never a src property. The look it decides — photo or initials — is a src. false/true VARIANT (Avatar, AvatarGroup), approved in the contract's figma.propertyMap / figmaOnly (owner's decision 2026-10-21).",
       "aria-*": "aria-describedby, aria-label… are read by screen readers only and are set by code (Tooltip sets aria-describedby on its trigger) — nothing to draw, never a Figma property (owner's decision 2026-10-21). Components on a native element accept them without declaring them; only Avatar (a <span>) and Tooltip declare aria-describedby, so it can be a Tooltip trigger."
     },
     "typePatterns": ["\\[\\]", "Array<", "RefObject"],
@@ -52,7 +53,7 @@
   "secondaryAxes": ["fullWidth", "hideLabel", "isLoading", "resize"],
   "partSuffix": { "errorMessage": "error" },
 
-  "storyCoverage": "Every Storybook story of a component (each export of apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx) says how Figma represents it, or carries the owner's decision that it doesn't (owner's rule 2026-10-21 — Avatar's With image / Initials stories had no Figma counterpart until withImage was added). The contract's figma.stories maps each export: \"prop=value, prop=value\" (the Figma properties/values that draw it, each a property of the set or state), \"default\" (the set's default variant), \"layout\" (a showcase that only arranges existing variants), or { figma: null, reason, approved } (behaviour only, or not drawn on purpose). A keyboard story is a focus state and focus is drawn: it maps to state=focus, or to layout when the ring belongs to a child instance (owner's decision 2026-10-21). pnpm docs:figma-map prints a Stories → Figma block per component (✗ = no approved representation, or a stale entry) and figma-drift fails a component with a ✗. Filling figma.stories is the owner's decision: an agent shows each ✗ story with a proposal and asks.",
+  "storyCoverage": "Every Storybook story of a component (each export of apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx) says how Figma represents it, or carries the owner's decision that it doesn't (owner's rule 2026-10-21 — Avatar's With image / Initials stories had no Figma counterpart until src. was added). The contract's figma.stories maps each export: \"prop=value, prop=value\" (the Figma properties/values that draw it, each a property of the set or state), \"default\" (the set's default variant), \"layout\" (a showcase that only arranges existing variants), or { figma: null, reason, approved } (behaviour only, or not drawn on purpose). A keyboard story is a focus state and focus is drawn: it maps to state=focus, or to layout when the ring belongs to a child instance (owner's decision 2026-10-21). pnpm docs:figma-map prints a Stories → Figma block per component (✗ = no approved representation, or a stale entry) and figma-drift fails a component with a ✗. Filling figma.stories is the owner's decision: an agent shows each ✗ story with a proposal and asks.",
   "propertyOrder": "Figma properties come in the code's order — the contract's props order, which is the order Storybook's Controls list them in (owner's decision 2026-10-21). Figma always shows VARIANT properties first, so each group follows the code order on its own: the variants in code order with state last, then every other property in code order — a helper {name}. right before the property it shows, approved exceptions for native attributes last. pnpm docs:figma-map checks it (Property order line) and figma-drift fails a component that breaks it. The reference is the order Storybook's props table really shows, read by pnpm figma:story-order into .ai/storybook-prop-order.json — not the contract's order (Storybook doesn't follow it: Chip's label comes first in Storybook, fourth in the contract). Re-run it whenever a story or a component's props change. Both sides list the same way: Figma can't interleave VARIANT properties with the rest, so Storybook lists the props that are Figma variants first, then the rest (the order of each story file's meta.args sets it) — every group in the same order on both sides (owner's rule 2026-10-21; figma-map's **Storybook order** check).",
   "state": {
     "values": ["default", "hover", "press", "focus", "open", "selected"],
@@ -74,7 +75,8 @@
       "components": ["Input", "Textarea", "Select", "MultiSelect"],
       "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN description. + TEXT description", "errorMessage": "BOOLEAN errorMessage. + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN {name}. + INSTANCE_SWAP {name}" },
       "states": ["default", "hover", "focus"],
-      "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error"
+      "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error",
+      "width": "320px for every form field, in code (root width 320px, max-width 100%) and in Figma (fixed 320) — never content-driven: a long label, placeholder or value never widens it. fullWidth: code 100% of the container; Figma drawn at 600px with the field and its popup on Fill, so stretching the instance stretches them. An exception (a number stepper, a short code) is written in that contract's sizing.width.exceptions. A new form field follows it (owner's rule 2026-10-21; pnpm verify:field-sizes checks the contracts)."
     },
     {
       "id": "checkable",

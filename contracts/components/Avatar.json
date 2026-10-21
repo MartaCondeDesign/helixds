@@ -135,21 +135,21 @@
 
   "figma": {
     "states": ["default"],
-    "variantCombinations": "6 variants (2026-10-21): withImage false/true × size s/m/l.",
+    "variantCombinations": "6 variants (2026-10-21): src. false/true × size s/m/l.",
     "noProperty": "aria-describedby has no Figma property (owner's decision 2026-10-21, contracts/figma-conversion.json → skip.why): screen-reader only, set by Tooltip when Avatar is its trigger.",
     "propertyMap": {
-      "src": { "codeType": "string | undefined", "figma": [{ "name": "withImage", "type": "VARIANT", "values": ["false", "true"] }], "approved": "2026-10-21", "reason": "Figma can't load a photo from a URL: withImage=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both" }
+      "src": { "codeType": "string | undefined", "figma": [{ "name": "src.", "type": "VARIANT", "values": ["false", "true"] }], "approved": "2026-10-21", "reason": "Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both" }
     },
     "properties": [
       { "name": "size", "type": "VARIANT", "values": ["s", "m", "l"], "codeProp": "size" },
       { "name": "label", "type": "TEXT", "codeProp": "label", "description": "Type the initial here — code derives it from the full name in `label` (the layer is avatar-initials)." },
-      { "name": "withImage", "type": "VARIANT", "values": ["false", "true"], "codeProp": "src", "description": "false = initials, true = the photo (avatar-image)." }
+      { "name": "src.", "type": "VARIANT", "values": ["false", "true"], "codeProp": "src", "description": "false = initials, true = the photo (avatar-image)." }
     ],
     "stories": {
-      "Default": "withImage=false",
+      "Default": "src.=false",
       "Sizes": "layout",
-      "WithImage": "withImage=true",
-      "BrokenImageFallsBackToInitials": "withImage=false",
+      "WithImage": "src.=true",
+      "BrokenImageFallsBackToInitials": "src.=false",
       "MemberList": "layout"
     }
   }

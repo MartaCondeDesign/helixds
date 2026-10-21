@@ -137,7 +137,7 @@
         "description": "Image URL. When present, renders avatar-image; falls back to initials on load error.",
         "figma": [
           {
-            "name": "withImage",
+            "name": "src.",
             "type": "VARIANT",
             "values": [
               "false",
@@ -147,7 +147,7 @@
         ],
         "codeOnly": false,
         "rule": "exception",
-        "why": "exception, approved 2026-10-21 — Figma can't load a photo from a URL: withImage=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both"
+        "why": "exception, approved 2026-10-21 — Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both"
       },
       "size": {
         "description": "Physical size. Shares the field scale with Input/Select (s=24, m=32, l=40).",
@@ -3229,7 +3229,7 @@
     },
     "Avatar": {
       "Default": {
-        "figma": "withImage=false",
+        "figma": "src.=false",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3241,13 +3241,13 @@
         "why": ""
       },
       "WithImage": {
-        "figma": "withImage=true",
+        "figma": "src.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "BrokenImageFallsBackToInitials": {
-        "figma": "withImage=false",
+        "figma": "src.=false",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3267,7 +3267,7 @@
         "why": "every Figma property at its default value"
       },
       "WithOverflow": {
-        "figma": "withOverflow=true, withImage=true",
+        "figma": "withOverflow=true, src.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4045,10 +4045,10 @@
         "why": "one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)"
       },
       "IconOnly": {
-        "figma": null,
-        "layout": true,
+        "figma": "icon.=true",
+        "layout": false,
         "ok": true,
-        "why": "SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)"
+        "why": ""
       },
       "Disabled": {
         "figma": "disabled=true",

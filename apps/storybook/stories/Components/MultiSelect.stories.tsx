@@ -53,7 +53,7 @@ const meta: Meta<typeof MultiSelect> = {
     required: undefined,
     id: undefined,
     name: undefined,
-    className: 'w-[300px]',
+    className: undefined,
   },
 };
 

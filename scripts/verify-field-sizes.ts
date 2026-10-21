@@ -21,6 +21,14 @@ const sizesOf = (name: string) => {
 };
 
 const rows = fields.map(sizesOf);
+// one width too (owner's rule 2026-10-21): every form field's contract says sizing.width fixed 320px
+const widthOf = (name: string) => { const w = JSON.parse(fs.readFileSync(path.join(root, `contracts/components/${name}.json`), 'utf8')).sizing?.width ?? {}; return `${w.default ?? '?'} ${w.value ?? '?'}${w.unit ?? ''}`; };
+const widths = fields.map(n => [n, widthOf(n)] as const);
+if (new Set(widths.map(([, w]) => w)).size > 1 || widths.some(([, w]) => w !== 'fixed 320px')) {
+  console.error('❌ verify:field-sizes — every form field is 320px wide (sizing.width: fixed 320px; contracts/figma-conversion.json → patterns.form-field.width):');
+  for (const [n, w] of widths) console.error(`   ${n.padEnd(12)} ${w}`);
+  process.exit(1);
+}
 const sets = new Set(rows.map(r => r.sizes));
 const bad = rows.filter(r => r.mismatch);
 if (sets.size > 1 || bad.length) {
@@ -29,4 +37,4 @@ if (sets.size > 1 || bad.length) {
   console.error('   If one field gets a size, every field in the form-field pattern gets the same sizes (code and Figma).');
   process.exit(1);
 }
-console.log(`✅ verify:field-sizes — ${fields.join(', ')} share one size set: ${[...sets][0]}`);
+console.log(`✅ verify:field-sizes — ${fields.join(', ')} share one size set: ${[...sets][0]}, and one width: 320px`);

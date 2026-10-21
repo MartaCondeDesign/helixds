@@ -74,7 +74,7 @@
           ]
         },
         {
-          "name": "withImage",
+          "name": "src.",
           "type": "VARIANT",
           "values": [
             "false",
@@ -110,7 +110,7 @@
           ]
         },
         {
-          "name": "withImage",
+          "name": "src.",
           "type": "VARIANT",
           "values": [
             "false",
@@ -1167,6 +1167,14 @@
           ]
         },
         {
+          "name": "icon.",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        {
           "name": "disabled",
           "type": "VARIANT",
           "values": [
@@ -1186,7 +1194,7 @@
           "type": "TEXT"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -1198,7 +1206,7 @@
           ]
         },
         {
-          "name": "icon",
+          "name": "icon.",
           "type": "VARIANT",
           "values": [
             "false",

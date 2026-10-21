@@ -10,7 +10,7 @@ today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · 
 
 ## Code prop → Figma property: the standard
 
-From `contracts/figma-conversion.json` v1.11.0 (owner-approved 2026-10-21; explained with the
+From `contracts/figma-conversion.json` v1.13.0 (owner-approved 2026-10-21; explained with the
 common patterns in `.ai/maps/figma-conversion.md`). Every row below says which rule produced it; a component
 only needs its own approval for an exception (its contract's `figma.propertyMap`). The one Figma-only property
 is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are never in it.
@@ -34,6 +34,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 - Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).
 - VARIANT values = code values, unchanged (primary, stacked-bar, false).
 - .
+- A property that exists only in Figma — no code prop of that name: the toggle of an optional part, or a look a story shows that comes from each item rather than the component (Avatar's photo: src., SegmentedControl's icon-only: icon.) — is named after the code field it stands for with the same dot at the end, so it's never mistaken for a real prop (owner's rule 2026-10-21). Approved per component in figma.figmaOnly.
 - The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with a dot at the end — BOOLEAN errorMessage., icon. — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.
 - Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers.
 - **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the
@@ -100,7 +101,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `src` | `string \| undefined` | `VARIANT` `withImage` = `false` / `true` | exception, approved 2026-10-21 — Figma can't load a photo from a URL: withImage=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both | ✓ |
+| `src` | `string \| undefined` | `VARIANT` `src.` = `false` / `true` | exception, approved 2026-10-21 — Figma can't load a photo from a URL: src.=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
@@ -110,10 +111,10 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Stories → Figma:** ✓ all 5 stories
 
-- `Default` → ✓ `withImage=false`
+- `Default` → ✓ `src.=false`
 - `Sizes` → ✓ layout of existing variants
-- `WithImage` → ✓ `withImage=true`
-- `BrokenImageFallsBackToInitials` → ✓ `withImage=false`
+- `WithImage` → ✓ `src.=true`
+- `BrokenImageFallsBackToInitials` → ✓ `src.=false`
 - `MemberList` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-root`, `avatar-image`, `avatar-initials`
@@ -131,12 +132,12 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
-**Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21); `withImage` (VARIANT: false / true) — like Avatar's withImage: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar (approved 2026-10-21)
+**Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21); `src.` (VARIANT: false / true) — like Avatar's src.: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar (approved 2026-10-21)
 
 **Stories → Figma:** ✓ all 3 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
-- `WithOverflow` → ✓ `withOverflow=true, withImage=true`
+- `WithOverflow` → ✓ `withOverflow=true, src.=true`
 - `Sizes` → ✓ layout of existing variants
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
@@ -788,12 +789,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Storybook order:** ✓ Figma variants first, then the rest
 
+**Only in Figma (approved):** `icon.` (VARIANT: false / true) — Storybook's IconOnly story: every option is icon-only (each option's icon in code) — a special case like Avatar's photo, so the set shows it with one toggle (false = text, true = icons); the item's own icon. / icon stay on SegmentedControlItem (approved 2026-10-21)
+
 **Stories → Figma:** ✓ all 6 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
 - `FourOptions` → ✓ `options=4`
 - `WithDisabledOption` → ✓ layout of existing variants — one SegmentedControlItem at state=disabled — drawn in the child (owner 2026-10-21)
-- `IconOnly` → ✓ layout of existing variants — SegmentedControlItem icon=true (+ iconSwap) — drawn in the child (owner 2026-10-21)
+- `IconOnly` → ✓ `icon.=true`
 - `Disabled` → ✓ `disabled=true`
 - `KeyboardNavigation` → ✓ layout of existing variants — keyboard focus is drawn on the SegmentedControlItem inside it (state=focus) — owner 2026-10-21
 

@@ -9,10 +9,7 @@ const meta: Meta<typeof Textarea> = {
   component:  Textarea,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(TextareaDoc),
-  // w-[300px] — same width-stability fix as Input/Select's own stories; className previously
-  // reached the inner <textarea> field instead of textarea-root, so a consumer couldn't actually
-  // constrain the component's width at all until that was fixed.
-  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
   args: {
     invalid: undefined,
     fullWidth: undefined,
@@ -27,7 +24,7 @@ const meta: Meta<typeof Textarea> = {
     rows: undefined,
     maxLength: undefined,
     showCount: undefined,
-    className: 'w-[300px]',
+    className: undefined,
   },
   argTypes: {
     resize:    { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },

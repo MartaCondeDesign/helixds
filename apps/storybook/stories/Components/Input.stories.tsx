@@ -17,11 +17,7 @@ const meta: Meta<typeof Input> = {
   component:  Input,
   tags:      ['autodocs'],
   parameters: createComponentDocsParameters(InputDoc),
-  // w-[300px] — a true fixed width, not min-width (a floor alone would still let the box grow for
-  // longer typed content). Input has no built-in default per CLAUDE.md's min-width policy (a
-  // consumer/pattern decision, not a system token) — this is the demonstrated example default,
-  // matching Select/Textarea's own stories.
-  // Figma's order: the props that are Figma variants first, then the rest (each group in code order)
+  // The field brings its own width (320px — every form field shares it, form-field rule); no className width here
   args: {
     hideLabel: undefined,
     invalid: undefined,
@@ -38,7 +34,7 @@ const meta: Meta<typeof Input> = {
     description: undefined,
     errorMessage: undefined,
     invalidAttempt: undefined,
-    className: 'w-[300px]',
+    className: undefined,
   },
   argTypes: {
     invalid:   { control: 'boolean' },

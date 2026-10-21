@@ -64,7 +64,7 @@ label. A two-value `false`/`true` VARIANT can, and the panel still shows it as a
 nobody adds them again):
 
 - **`src` (an image URL, Avatar):** Figma can't load an image from a URL, so there is never a `src` property. The
-  look it decides — photo or initials — is a `withImage` `false`/`true` VARIANT (Avatar, AvatarGroup): a variant,
+  look it decides — photo or initials — is a `src.` `false`/`true` VARIANT (Figma-only, so it ends in a dot) (Avatar, AvatarGroup): a variant,
   not two booleans, because code shows one or the other, never both.
 - **`aria-*` (`aria-describedby`, `aria-label`…):** read by screen readers only and set by code — Tooltip sets
   `aria-describedby` on its trigger. Nothing to draw. Components built on a native element accept them without
@@ -77,6 +77,8 @@ the component isn't ✓ synced until it's renamed to the code prop, removed, or 
 
 **`state` is the only Figma-only property:** `default` / `hover` / `press` / `focus` (+ `open`, `selected`) — CSS
 pseudo-classes, not props. `disabled`, `invalid`, `checked`, `isLoading`… are never values of `state`.
+
+**Figma-only properties end in a dot** — the helper toggles below, and a look that comes from each item rather than the component (Avatar's photo `src.`, SegmentedControl's icon-only `icon.`, approved in the contract's `figma.figmaOnly`).
 
 **Helper properties end in a dot** (owner's rule 2026-10-21): the property that *is* the code prop keeps the code prop's
 name exactly — TEXT `errorMessage` for `errorMessage: string`, INSTANCE_SWAP `icon` for `icon: TablerIcon`, TEXT
@@ -117,7 +119,7 @@ values instances already had.
 
 Owner's rule 2026-10-21: every Storybook story of a component that shows a distinct look must say how Figma
 represents it — or carry the owner's decision that it doesn't. (What slipped: Avatar's "With image" and "Initials"
-stories had no Figma counterpart until the `withImage` variant was added.) The contract's `figma.stories` maps each
+stories had no Figma counterpart until the `src.` variant was added.) The contract's `figma.stories` maps each
 story export of `apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx`:
 
 | Value | Means | Example |
