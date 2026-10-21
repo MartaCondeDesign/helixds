@@ -29,7 +29,7 @@
     "namePatterns": ["^on[A-Z]", "^default[A-Z]", "^aria-"],
     "names": ["className", "id", "name", "href", "ref", "anchorRef", "activeValue", "invalidAttempt", "closeOnBackdropClick", "decorative", "rows", "maxLength", "max", "height", "stroke", "color", "values", "src"],
     "why": {
-      "src": "an image URL (Avatar's src): Figma can't load an image from a URL, and a BOOLEAN that only toggles a sample photo isn't the prop — no property (owner's decision 2026-10-21). To show a photo in Figma, turn on the hidden avatar-image layer and change its image fill.",
+      "src": "an image URL: Figma can't load an image from a URL, so there is never a src property. The look it decides — photo or initials — is a withImage false/true VARIANT (Avatar, AvatarGroup), approved in the contract's figma.propertyMap / figmaOnly (owner's decision 2026-10-21).",
       "aria-*": "aria-describedby, aria-label… are read by screen readers only and are set by code (Tooltip sets aria-describedby on its trigger) — nothing to draw, never a Figma property (owner's decision 2026-10-21). Components on a native element accept them without declaring them; only Avatar (a <span>) and Tooltip declare aria-describedby, so it can be a Tooltip trigger."
     },
     "typePatterns": ["\\[\\]", "Array<", "RefObject"],

@@ -93,7 +93,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma properties harness: use_figma hook asks the owner with the code-vs-Figma table; figma-map lists props with no Figma property and why; AvatarGroup withOverflow + max (owner's choice) (latest commit)
+- 2026-10-21 — Avatar and AvatarGroup: withImage false/true variant (photo or initials, owner's choice), AvatarGroup avatars 1–7 variant (latest commit)
+- 2026-10-21 — Figma properties harness: use_figma hook asks the owner with the code-vs-Figma table; figma-map lists props with no Figma property and why; AvatarGroup withOverflow + max (owner's choice) ([`26a0336`](https://github.com/MartaCondeDesign/helixds/commit/26a0336))
 - 2026-10-21 — Figma conversion v1.6: property order rule, Figma-only properties fail, Avatar label/src, Icon code-only, Tooltip trigger slot ([`fe43b98`](https://github.com/MartaCondeDesign/helixds/commit/fe43b98))
 - 2026-10-21 — Merge branch 'claude/affectionate-swartz-794ede' of https://github.com/MartaCondeDesign/helixds into claude/affectionate-swartz-794ede ([`794741b`](https://github.com/MartaCondeDesign/helixds/commit/794741b))
 - 2026-10-21 — figma-sync: RadioGroup re-synced after the invalid-hover CSS fix ([`e3dcde9`](https://github.com/MartaCondeDesign/helixds/commit/e3dcde9))

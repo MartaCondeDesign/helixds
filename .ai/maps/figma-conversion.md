@@ -39,9 +39,9 @@ label. A two-value `false`/`true` VARIANT can, and the panel still shows it as a
 **Props that never get a Figma property, and why** (owner's decisions 2026-10-21 — `skip.why` in the JSON, so
 nobody adds them again):
 
-- **`src` (an image URL, Avatar):** Figma can't load an image from a URL, so a property could never do what the
-  prop does — a toggle that only shows a sample photo isn't `src`. To show a photo in Figma, turn on the hidden
-  `avatar-image` layer and change its image fill.
+- **`src` (an image URL, Avatar):** Figma can't load an image from a URL, so there is never a `src` property. The
+  look it decides — photo or initials — is a `withImage` `false`/`true` VARIANT (Avatar, AvatarGroup): a variant,
+  not two booleans, because code shows one or the other, never both.
 - **`aria-*` (`aria-describedby`, `aria-label`…):** read by screen readers only and set by code — Tooltip sets
   `aria-describedby` on its trigger. Nothing to draw. Components built on a native element accept them without
   declaring them; only Avatar (a `<span>`) and Tooltip declare `aria-describedby`, so Avatar can be a Tooltip trigger.

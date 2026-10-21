@@ -5,7 +5,7 @@
 Every Helix component prop, the Figma property it must be (same name, same kind), and what the Figma file has
 today. **Read by:** `.ai/skills/components-to-figma.md` (mandatory pre-read) · Figma-parity audit.
 
-**Parity today: 207 of 208 code props match Figma exactly.**
+**Parity today: 209 of 210 code props match Figma exactly.**
 
 ## Code prop → Figma property: the standard
 
@@ -80,7 +80,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `src` | `string \| undefined` | — no Figma property | an image URL (Avatar's src): Figma can't load an image from a URL, and a BOOLEAN that only toggles a sample photo isn't the prop — no property (owner's decision 2026-10-21). To show a photo in Figma, turn on the hidden avatar-image layer and change its image fill. · `skip` | — |
+| `src` | `string \| undefined` | `VARIANT` `withImage` = `false` / `true` | exception, approved 2026-10-21 — Figma can't load a photo from a URL: withImage=true draws the photo (Storybook's With image story — change its image fill per instance), false the initials (Initials story). A variant, not two booleans: code shows one or the other, never both | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
@@ -92,14 +92,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
-| `avatars` | `{ label: string; src?: string }[]` | — no Figma property | data (a list or a ref) — content, not a design property · `skip` | — |
+| `avatars` | `{ label: string; src?: string }[]` | `VARIANT` `avatars` = `1` / `2` / `3` / `4` / `5` / `6` / `7` | exception, approved 2026-10-21 — code takes the list of people; Figma draws how many there are — 1 to 7, like Storybook's examples (owner's request) | ✓ |
 | `max` | `number \| undefined` | `TEXT` `max` | exception, approved 2026-10-21 — code takes a number (how many avatars show before +N); Figma can't count, so max holds the +N text it produces | ✓ |
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
 **Property order:** ✓ same as code
 
-**Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21)
+**Only in Figma (approved):** `withOverflow` (BOOLEAN) — shows or hides the +N item — in code it appears on its own when avatars exceed max, so there is no prop to name it after (approved 2026-10-21); `withImage` (VARIANT: false / true) — like Avatar's withImage: false = every avatar shows initials, true = every avatar shows its photo (code: each entry's src) — change a photo per instance through the nested Avatar (approved 2026-10-21)
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `avatar-group-root`, `avatar-group-item`, `avatar-group-overflow`
 
