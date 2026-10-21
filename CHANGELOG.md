@@ -88,7 +88,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-20 — Figma in sync with code: all 33 components stable (#19) ([#19](https://github.com/MartaCondeDesign/helixds/pull/19))
+- 2026-10-21 — Figma in sync with code: all 33 components stable (#19) ([#19](https://github.com/MartaCondeDesign/helixds/pull/19))
   - Body uses Inter (primitive.fontFamily.sans) and Storybook loads it; Figma audit accepts fill/page for a transparent fill; figma:expected uses isLoading
   - Figma: Button, IconButton, Input, Select, NavItem, PageHeader, SideNav, TopBar, AppShell re-audited (layout + binding) and recorded; audit reads icon/text color inside parts, mixed per-side strokes, no state axis for default-only components
   - Form labels/legends and AvatarGroup's +N use their text style's line-height (as in Figma); figma:expected specs for Accordion, AvatarGroup, CheckboxGroup, FAB, MultiSelect, RadioButton, SegmentedControlItem, Tooltip; audit handles single components, wrapper frames and MultiSelect's border outside the layout
@@ -131,6 +131,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Figma: MultiSelect rebuilt as a full field (pattern form-field), one size — label (+ required), field with Chips or placeholder (hugs like code), description, error; value empty/selected, 22 variants, audit passed (incl. the focus-ring clip check)
   - figma-sync: MultiSelect synced
   - Conversion standard v1.4 (owner-approved): a string no part renders has no Figma property — the aria-label label of IconButton, FAB, ChipGroup and SegmentedControl (exception: its items render their own labels); a label can render as the -legend, -title or -content part
+  - Figma, action batch (owner-approved): Button (68), IconButton (64), FAB (9), Chip (50), ChipGroup (4) and SegmentedControl (2) re-axed by the standard — disabled / isLoading out of state into their own toggles, fullWidth and isLoading drawn once, children / icon swaps; instances elsewhere kept. New tools: scripts/figma/reaxis.js (pattern rebuilder), scripts/figma/propstar.js (table), scripts/figma/read-props.js + pnpm figma:snapshot (the Figma property snapshot and figma-map.md, never hand-edited)
+  - figma-sync: action batch synced
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
