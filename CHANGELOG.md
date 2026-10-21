@@ -144,6 +144,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - Code-only props, visible: docs:figma-map writes .ai/maps/figma-map.json and Storybook prints each prop's Figma property (or 'Code only' + why); Propstar regenerated on every change (audit check 11); Button: isLoading at every size, fullWidth at every size and state (144 variants, standard rule changed)
   - Storybook: Code → Figma table (Prop · Figma · Why) on every docs page instead of a line in each description; IconButton isLoading at every size
   - scripts/figma/expand-secondary.js: draw a set's secondary toggles at every size and state from its reference pair; Input expanded to 96 variants (isLoading, hideLabel, fullWidth) with its Propstar table
+  - Audit matches variants by prop pairs; Input also disables while loading (loadingDisables)
+  - Figma conversion v1.8: list-count rule — a list of drawn items (options, actions, avatars, items) is a VARIANT of how many (1–7, per-contract range in figma.listCount); prop-map and the conversion doc say so
+  - list-count range 2–7 (owner's decision); the Figma property is named like each component's code prop
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
 - 2026-10-20 — Storybook-tokens gate test no longer breaks a running Storybook (#20) ([`93b6ef4`](https://github.com/MartaCondeDesign/helixds/commit/93b6ef4))
