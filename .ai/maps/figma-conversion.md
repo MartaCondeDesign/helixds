@@ -30,8 +30,8 @@ string is a Figma text field, a code union is a Figma dropdown with the same val
 | Boolean that changes the look (`disabled`, `invalid`, `checked`, `isLoading`, `fullWidth`, `hideLabel`…) | `VARIANT` `false` / `true` | toggle — Figma shows a false/true variant as one | `look-boolean` |
 | Boolean that only shows/hides a part (`required`, `showCount`, `showCloseButton`, `dismissible`) | `BOOLEAN`, same name | toggle | `show-hide-boolean` |
 | Required string a part renders (`label` → `{prefix}-label` / `-legend`), `placeholder`, the text `children` of Button/Accordion/Modal/SidePanel/Card | `TEXT`, same name | text field | `text` |
-| Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `↳name` + `TEXT` `name` | toggle + text field | `optional-text` |
-| Icon (`icon`, `iconEnd`) | `BOOLEAN` `↳name` + `INSTANCE_SWAP` `name` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
+| Optional string with its own part (`description`, `errorMessage`, `primaryActionLabel`…) | `BOOLEAN` `name.` + `TEXT` `name` | toggle + text field | `optional-text` |
+| Icon (`icon`, `iconEnd`) | `BOOLEAN` `name.` + `INSTANCE_SWAP` `name` (a required icon: only the swap, named `name`) | toggle + icon picker | `icon` |
 | Optional slot (`header`, `actions`, `footer`, `sidenav`, `topbar`…) | `BOOLEAN`, same name | toggle | `slot` |
 | Handlers (`on*`), `default*` twins (`defaultChecked`), ids, refs, data arrays, aria-only text, an overlay's `expanded` | — | not a design property | `skip`, `nested`, `aria-text`, `overlay-expanded` |
 | A string no part renders — the `aria-label` `label` of IconButton, FAB, ChipGroup, SegmentedControl; Chart's `description` | — | not a design property: nothing to draw | `aria-text` |
@@ -78,15 +78,15 @@ the component isn't ✓ synced until it's renamed to the code prop, removed, or 
 **`state` is the only Figma-only property:** `default` / `hover` / `press` / `focus` (+ `open`, `selected`) — CSS
 pseudo-classes, not props. `disabled`, `invalid`, `checked`, `isLoading`… are never values of `state`.
 
-**Helper properties get ↳** (owner's rule 2026-10-21): the property that *is* the code prop keeps the code prop's
+**Helper properties end in a dot** (owner's rule 2026-10-21): the property that *is* the code prop keeps the code prop's
 name exactly — TEXT `errorMessage` for `errorMessage: string`, INSTANCE_SWAP `icon` for `icon: TablerIcon`, TEXT
 `value` for Select's `value: string`. The extra property only Figma needs — the toggle that shows it, or Select's
-empty/selected look — is the same name with `↳` in front and no space (`↳errorMessage`, `↳icon`, `↳value`), listed
+empty/selected look — is the same name with a `.` at the end (`errorMessage.`, `icon.`, `value.`), listed
 right before it. Figma refuses two properties with one name, so the helper is the one whose name changes.
 
 **Naming:** every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21). The Figma property is the code prop name, unchanged (`isLoading`, not `loading`); VARIANT values are
 the code values, unchanged; an optional string's text property is `{name}`; layer names are the
-`data-helix-part` values in the TSX. An optional icon's picker is named like the code prop (`icon`), and its toggle is the helper `↳icon` — Figma refuses two
+`data-helix-part` values in the TSX. An optional icon's picker is named like the code prop (`icon`), and its toggle is the helper `icon.` — Figma refuses two
 properties with the same name, so it can't share `icon` with the toggle.
 
 ## 2. Property order

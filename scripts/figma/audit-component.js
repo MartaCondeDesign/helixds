@@ -281,7 +281,7 @@ if (EXPECTED.layout) {
   if (!table) { if (Object.keys(axes).length) issues.propstar.push('no ❖ property table around the set — run scripts/figma/propstar.js'); }
   else {
     const labels = table.findAll(n => n.type === 'TEXT' && n.parent?.name === 'Label').map(t => t.characters);
-    for (const l of labels) for (const [, k, v] of l.matchAll(/(\w+)=([\w-]+)/g))
+    for (const l of labels) for (const [, k, v] of l.matchAll(/([\w.]+)=([\w-]+)/g))
       if (!axes[k]?.includes(v)) issues.propstar.push(`label "${l}": ${k}=${v} is not a value of the set — regenerate the table`);
     const placed = set.children.filter(v => v.x >= 0 && v.y >= 0).length;
     if (placed < set.children.length) issues.propstar.push(`${set.children.length - placed} variant(s) outside the table`);

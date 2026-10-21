@@ -198,14 +198,14 @@
         "description": "Shows the danger * (radio-required) after the legend,  2px apart; text/disabled when disabled."
       },
       {
-        "name": "↳description",
+        "name": "description.",
         "type": "BOOLEAN",
         "codeProp": "description",
         "description": "Show/hide part: indented 24px (16px circle + 8px) to line up with the option text."
       },
       { "name": "description", "type": "TEXT", "codeProp": "description" },
       {
-        "name": "↳errorMessage",
+        "name": "errorMessage.",
         "type": "BOOLEAN",
         "codeProp": "errorMessage",
         "description": "Show/hide part: same indent; code shows it instead of the description."
@@ -217,7 +217,7 @@
     "stories": {
       "Default": "default",
       "Horizontal": "orientation=horizontal",
-      "Invalid": "invalid=true, ↳errorMessage=true",
+      "Invalid": "invalid=true, errorMessage.=true",
       "Disabled": "disabled=true",
       "WithDisabledOption": "layout",
       "Required": "required=true",

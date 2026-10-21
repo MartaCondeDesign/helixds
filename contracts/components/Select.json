@@ -225,7 +225,7 @@
     "propertyMap": {
       "value": {
         "codeType": "string | undefined",
-        "figma": [{"name": "↳value", "type": "VARIANT", "values": ["empty", "selected"]}, {"name": "value", "type": "TEXT"}],
+        "figma": [{"name": "value.", "type": "VARIANT", "values": ["empty", "selected"]}, {"name": "value", "type": "TEXT"}],
         "approved": "2026-10-20",
         "reason": "the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A)"
       }
@@ -233,13 +233,13 @@
     "structure": "select-root (8px gap) > select-label (text + select-required),  select-wrapper > select-trigger (hugs its text like code: select-trigger-label + select-chevron; open uses an unrotated ChevronUp,  code flips the chevron),  select-description,  select-error. state=open holds the listbox as a nested Menu instance named menu (multiple=false,  options=5,  exposed so its options 2–7 are picked from the Select's panel): absolute,  4px below select-trigger at its width,  150px minimum,  like Menu.tsx; its MenuItems read Designer,  Engineer,  Product Manager,  Tech Lead,  Other (Storybook Default),  none selected.",
     "variantCombinations": "40 variants (2026-10-21): invalid × state default/hover/focus/open = 8,  disabled = 1,  value=selected once (default,  valid,  enabled) = 1 — each of those 10 drawn with fullWidth (320px) × hideLabel false/true = 40 (variants.secondary,  owner's decision 2026-10-21). The option count is the nested Menu's options property,  not a Select variant. value=empty binds the trigger label to placeholder,  value=selected to valueText.",
     "stories": {
-      "Default": "↳value=empty",
-      "Controlled": "↳value=selected",
+      "Default": "value.=empty",
+      "Controlled": "value.=selected",
       "WithGroups": "state=open",
       "WithLabelEnd": "state=open",
-      "WithDescription": "↳description=true",
-      "Invalid": "invalid=true, ↳errorMessage=true",
-      "Disabled": "disabled=true, ↳value=selected",
+      "WithDescription": "description.=true",
+      "Invalid": "invalid=true, errorMessage.=true",
+      "Disabled": "disabled=true, value.=selected",
       "MinimumWidth": {"figma": null, "reason": "min-width behaviour — same look as Default", "approved": "2026-10-21"},
       "Required": "required=true",
       "Open": "state=open",

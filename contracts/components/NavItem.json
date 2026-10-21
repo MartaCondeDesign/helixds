@@ -135,7 +135,7 @@
       { "name": "current", "type": "VARIANT", "values": ["false", "true"], "codeProp": "current", "description": "In code the current fill is the sliding nav-item-indicator (motion.span); Figma puts it on the root." },
       { "name": "state", "type": "VARIANT", "values": ["default", "hover", "focus"], "figmaOnly": true, "description": "Figma-only axis. hover/focus are CSS pseudo-classes in code (hover only changes a non-current item)." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "↳icon", "type": "BOOLEAN", "codeProp": "icon", "description": "Show/hide part: the leading icon. The 8px gap only exists between two shown children (flex gap / auto-layout), so hiding it leaves the paddings untouched." },
+      { "name": "icon.", "type": "BOOLEAN", "codeProp": "icon", "description": "Show/hide part: the leading icon. The 8px gap only exists between two shown children (flex gap / auto-layout), so hiding it leaves the paddings untouched." },
       { "name": "icon", "type": "INSTANCE_SWAP", "codeProp": "icon" }
     ],
     "stories": {

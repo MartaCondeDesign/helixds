@@ -138,7 +138,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳icon",
+          "name": "icon.",
           "type": "BOOLEAN"
         },
         {
@@ -176,7 +176,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳icon",
+          "name": "icon.",
           "type": "BOOLEAN"
         },
         {
@@ -184,7 +184,7 @@
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "↳iconEnd",
+          "name": "iconEnd.",
           "type": "BOOLEAN"
         },
         {
@@ -331,7 +331,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -339,7 +339,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -403,7 +403,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -411,7 +411,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -474,7 +474,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "↳icon",
+          "name": "icon.",
           "type": "BOOLEAN"
         },
         {
@@ -482,7 +482,7 @@
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "↳iconEnd",
+          "name": "iconEnd.",
           "type": "BOOLEAN"
         },
         {
@@ -682,7 +682,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "↳icon",
+          "name": "icon.",
           "type": "BOOLEAN"
         },
         {
@@ -690,7 +690,7 @@
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "↳iconEnd",
+          "name": "iconEnd.",
           "type": "BOOLEAN"
         },
         {
@@ -698,7 +698,7 @@
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -706,7 +706,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -880,7 +880,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -888,7 +888,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -961,7 +961,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳icon",
+          "name": "icon.",
           "type": "BOOLEAN"
         },
         {
@@ -997,7 +997,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1028,7 +1028,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1036,7 +1036,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -1092,7 +1092,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1100,7 +1100,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -1235,7 +1235,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1243,7 +1243,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -1255,7 +1255,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "↳value",
+          "name": "value.",
           "type": "VARIANT",
           "values": [
             "empty",
@@ -1358,7 +1358,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1461,7 +1461,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {
@@ -1469,7 +1469,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳errorMessage",
+          "name": "errorMessage.",
           "type": "BOOLEAN"
         },
         {
@@ -1551,7 +1551,7 @@
           "type": "TEXT"
         },
         {
-          "name": "↳description",
+          "name": "description.",
           "type": "BOOLEAN"
         },
         {

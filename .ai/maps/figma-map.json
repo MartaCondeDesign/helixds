@@ -273,7 +273,7 @@
         "description": "Leading icon, passed by reference (e.g. IconClock). Rendered via the Icon component at a fixed 12px. Fully opt-in — nothing renders unless supplied. For a status variant, prefer BADGE_ICON_BY_VARIANT[variant] (exported alongside Badge) over picking an icon ad hoc — it matches Toast's own icon shape per variant (Outline build vs Toast's Filled build).",
         "figma": [
           {
-            "name": "↳icon",
+            "name": "icon.",
             "type": "BOOLEAN"
           },
           {
@@ -377,7 +377,7 @@
         "description": "Leading icon, passed by reference (not pre-instantiated). Always rendered via the Icon component at size=16 (stroke scales automatically), regardless of button size — aria-hidden is set automatically.",
         "figma": [
           {
-            "name": "↳icon",
+            "name": "icon.",
             "type": "BOOLEAN"
           },
           {
@@ -393,7 +393,7 @@
         "description": "Trailing icon. Same fixed size=16 as icon.",
         "figma": [
           {
-            "name": "↳iconEnd",
+            "name": "iconEnd.",
             "type": "BOOLEAN"
           },
           {
@@ -580,7 +580,7 @@
         "description": "Helper text shown below the control.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -596,7 +596,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -794,7 +794,7 @@
         "description": "Helper text shown below the group.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -810,7 +810,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -942,7 +942,7 @@
         "description": "Leading icon, passed by reference. Rendered via the Icon component at a fixed 14px.",
         "figma": [
           {
-            "name": "↳icon",
+            "name": "icon.",
             "type": "BOOLEAN"
           },
           {
@@ -958,7 +958,7 @@
         "description": "Trailing icon. Same fixed 14px as icon.",
         "figma": [
           {
-            "name": "↳iconEnd",
+            "name": "iconEnd.",
             "type": "BOOLEAN"
           },
           {
@@ -1405,7 +1405,7 @@
         "description": "Leading icon, passed by reference. Rendered via the Icon component at 16px (one field size, m).",
         "figma": [
           {
-            "name": "↳icon",
+            "name": "icon.",
             "type": "BOOLEAN"
           },
           {
@@ -1421,7 +1421,7 @@
         "description": "Trailing icon. 16px, like icon.",
         "figma": [
           {
-            "name": "↳iconEnd",
+            "name": "iconEnd.",
             "type": "BOOLEAN"
           },
           {
@@ -1437,7 +1437,7 @@
         "description": "Helper text shown below the field.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -1453,7 +1453,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -1797,7 +1797,7 @@
         "description": "Helper text shown below the field.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -1813,7 +1813,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -1947,7 +1947,7 @@
         "description": "Leading icon, passed by reference. Rendered at a fixed 16px.",
         "figma": [
           {
-            "name": "↳icon",
+            "name": "icon.",
             "type": "BOOLEAN"
           },
           {
@@ -2000,7 +2000,7 @@
         "description": "Supporting one-line description shown below the title.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2109,7 +2109,7 @@
         "description": "Helper text shown under the label. Not shown when errorMessage is also set.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2125,7 +2125,7 @@
         "description": "Error text shown under the label when invalid is true — takes over from description.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -2263,7 +2263,7 @@
         "description": "Helper text shown below the group.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2279,7 +2279,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -2465,7 +2465,7 @@
         "description": "Controlled selected value.",
         "figma": [
           {
-            "name": "↳value",
+            "name": "value.",
             "type": "VARIANT",
             "values": [
               "empty",
@@ -2511,7 +2511,7 @@
         "description": "Helper text shown below the field.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2527,7 +2527,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -2792,7 +2792,7 @@
         "description": "Helper text shown below the row.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2914,7 +2914,7 @@
         "description": "Helper text shown below the field.",
         "figma": [
           {
-            "name": "↳description",
+            "name": "description.",
             "type": "BOOLEAN"
           },
           {
@@ -2930,7 +2930,7 @@
         "description": "Error text shown when invalid=true.",
         "figma": [
           {
-            "name": "↳errorMessage",
+            "name": "errorMessage.",
             "type": "BOOLEAN"
           },
           {
@@ -3287,7 +3287,7 @@
         "why": ""
       },
       "WithIcons": {
-        "figma": "↳icon=true",
+        "figma": "icon.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3325,13 +3325,13 @@
         "why": ""
       },
       "WithLeadingIcon": {
-        "figma": "↳icon=true",
+        "figma": "icon.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "WithTrailingIcon": {
-        "figma": "↳iconEnd=true",
+        "figma": "iconEnd.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3439,13 +3439,13 @@
         "why": ""
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3489,7 +3489,7 @@
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3533,7 +3533,7 @@
         "why": ""
       },
       "WithIcons": {
-        "figma": "↳icon=true, ↳iconEnd=true",
+        "figma": "icon.=true, iconEnd.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3717,49 +3717,49 @@
         "why": "every Figma property at its default value"
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "WithLeadingIcon": {
-        "figma": "↳icon=true",
+        "figma": "icon.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "WithTrailingIcon": {
-        "figma": "↳iconEnd=true",
+        "figma": "iconEnd.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "SearchInput": {
-        "figma": "hideLabel=true, ↳icon=true, fullWidth=true",
+        "figma": "hideLabel=true, icon.=true, fullWidth=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true, ↳icon=true",
+        "figma": "invalid=true, errorMessage.=true, icon.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Required": {
-        "figma": "required=true, ↳icon=true",
+        "figma": "required=true, icon.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Disabled": {
-        "figma": "disabled=true, ↳description=true",
+        "figma": "disabled=true, description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Loading": {
-        "figma": "isLoading=true, ↳description=true",
+        "figma": "isLoading=true, description.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3867,13 +3867,13 @@
         "why": ""
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3925,19 +3925,19 @@
     },
     "PageHeader": {
       "Default": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "WithActions": {
-        "figma": "actions=true, ↳description=true",
+        "figma": "actions=true, description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "SectionLevel": {
-        "figma": "level=2, ↳description=true",
+        "figma": "level=2, description.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3951,13 +3951,13 @@
         "why": ""
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -3995,7 +3995,7 @@
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4065,13 +4065,13 @@
     },
     "Select": {
       "Default": {
-        "figma": "↳value=empty",
+        "figma": "value.=empty",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Controlled": {
-        "figma": "↳value=selected",
+        "figma": "value.=selected",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4089,19 +4089,19 @@
         "why": ""
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "Disabled": {
-        "figma": "disabled=true, ↳value=selected",
+        "figma": "disabled=true, value.=selected",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4179,13 +4179,13 @@
         "why": ""
       },
       "Checked": {
-        "figma": "checked=true, ↳description=true",
+        "figma": "checked=true, description.=true",
         "layout": false,
         "ok": true,
         "why": ""
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4237,7 +4237,7 @@
         "why": "every Figma property at its default value"
       },
       "WithDescription": {
-        "figma": "↳description=true",
+        "figma": "description.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4249,7 +4249,7 @@
         "why": ""
       },
       "Invalid": {
-        "figma": "invalid=true, ↳errorMessage=true",
+        "figma": "invalid=true, errorMessage.=true",
         "layout": false,
         "ok": true,
         "why": ""
@@ -4287,7 +4287,7 @@
         "why": ""
       },
       "Playground": {
-        "figma": "variant=success, ↳description=true",
+        "figma": "variant=success, description.=true",
         "layout": false,
         "ok": true,
         "why": ""

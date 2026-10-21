@@ -180,7 +180,7 @@
       { "name": "size", "type": "VARIANT", "values": ["s", "m"], "codeProp": "size" },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
       {
-        "name": "↳description",
+        "name": "description.",
         "type": "BOOLEAN",
         "codeProp": "description",
         "description": "Show/hide part (show-hide-parts.md): the helper line under the row. It carries its own left padding (track width + 12px = spacing/250 on s,   spacing/300 on m),   so the row never moves."
@@ -190,8 +190,8 @@
     "variantCombinations": "32 variants (2026-10-21): checked false/true × size s/m × state default/hover/focus = 12,  plus disabled at state default for each checked × size = 4,  each drawn with hideLabel false/true = 16 × 2 = 32 (secondary toggles at every size and state,  owner's decision 2026-10-21). hideLabel hides the switch-label layer (code keeps it for screen readers only); disabled dims label and description (text/disabled).",
     "stories": {
       "Default": "checked=false",
-      "Checked": "checked=true, ↳description=true",
-      "WithDescription": "↳description=true",
+      "Checked": "checked=true, description.=true",
+      "WithDescription": "description.=true",
       "Disabled": "disabled=true",
       "Sizes": "layout",
       "SettingsGroup": "layout",

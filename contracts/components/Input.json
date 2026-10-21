@@ -395,14 +395,14 @@
     "variantCombinations": "32 variants (2026-10-21,  one size since the owner removed s and l — form fields share one size set): invalid false/true × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with hideLabel false/true × fullWidth false/true = 28,  plus isLoading=true at state default,  valid,  enabled for each hideLabel × fullWidth = 4 (code disables the field while it loads). Invalid focus keeps the red border with a 20% red ring (code: color-mix of the invalid border). isLoading hides iconEnd and shows input-spinner; the field text dims (the field is disabled while it loads).",
     "stories": {
       "Default": "default",
-      "WithDescription": "↳description=true",
-      "WithLeadingIcon": "↳icon=true",
-      "WithTrailingIcon": "↳iconEnd=true",
-      "SearchInput": "hideLabel=true, ↳icon=true, fullWidth=true",
-      "Invalid": "invalid=true, ↳errorMessage=true, ↳icon=true",
-      "Required": "required=true, ↳icon=true",
-      "Disabled": "disabled=true, ↳description=true",
-      "Loading": "isLoading=true, ↳description=true",
+      "WithDescription": "description.=true",
+      "WithLeadingIcon": "icon.=true",
+      "WithTrailingIcon": "iconEnd.=true",
+      "SearchInput": "hideLabel=true, icon.=true, fullWidth=true",
+      "Invalid": "invalid=true, errorMessage.=true, icon.=true",
+      "Required": "required=true, icon.=true",
+      "Disabled": "disabled=true, description.=true",
+      "Loading": "isLoading=true, description.=true",
       "LoginFormPattern": "layout",
       "KeyboardFocus": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
     }

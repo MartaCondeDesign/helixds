@@ -20,21 +20,21 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `skip` | handlers (on*), default* twins, aria-*, ids, refs, data arrays and wiring props | — | behaviour or data, nothing to draw |
 | `nested` | a ReactElement, or ReactNode children of a component that isn't in textChildren | — | another component or free content, not a property |
 | `overlay-expanded` | expanded on an overlay (overlays) | — | closed = not on screen; Figma draws it open |
-| `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN ↳{name} (only when optional)` + `INSTANCE_SWAP {name}` | shows the icon (↳ helper) · which icon |
+| `icon` | a TablerIcon / HelixIconComponent prop | `BOOLEAN {name}. (only when optional)` + `INSTANCE_SWAP {name}` | shows the icon (helper.) · which icon |
 | `list-delegated` | a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count | — | the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21) |
 | `list-count` | a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array | `VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)` | Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21) |
 | `union` | a union of string or number literals | `VARIANT {name} = the same values` | same values as code |
 | `show-hide-boolean` | a boolean listed in showHideBooleans — it only shows or hides one part | `BOOLEAN {name}` | shows / hides a part |
 | `look-boolean` | any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer) | `VARIANT {name} = false / true` | changes the look → false/true toggle |
-| `slot` | an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…) | `BOOLEAN {name} (or ↳{name} + TEXT {name} for slotsWithText)` | shows the slot |
+| `slot` | an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…) | `BOOLEAN {name} (or {name}. + TEXT {name} for slotsWithText)` | shows the slot |
 | `text` | a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component | `TEXT {name}` | its text |
-| `optional-text` | an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop) | `BOOLEAN ↳{name}` + `TEXT {name}` | shows the part · its text |
+| `optional-text` | an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop) | `BOOLEAN {name}.` + `TEXT {name}` | shows the part · its text |
 | `aria-text` | a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title, -content or -initials part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description | — | read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20) |
 
 - Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).
 - VARIANT values = code values, unchanged (primary, stacked-bar, false).
-- ↳
-- The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with ↳ in front and no space — BOOLEAN ↳errorMessage, ↳icon — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.
+- .
+- The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with a dot at the end — BOOLEAN errorMessage., icon. — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.
 - Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers.
 - **Figma today** is read from `.ai/figma-props.json` (a snapshot of the Figma file — refresh it through the
   Figma MCP after changing a component in Figma, then `pnpm docs:figma-map`).
@@ -147,7 +147,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `variant` | `'neutral' \| 'info' \| 'success' \| 'warning' \| 'danger'` | `VARIANT` `variant` = `neutral` / `info` / `success` / `warning` / `danger` | same values as code · `union` | ✓ |
 | `size` | `'xs' \| 's'` | `VARIANT` `size` = `xs` / `s` | same values as code · `union` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `↳icon` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
@@ -159,7 +159,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 4 stories
 
 - `AllVariants` → ✓ layout of existing variants
-- `WithIcons` → ✓ `↳icon=true`
+- `WithIcons` → ✓ `icon.=true`
 - `Sizes` → ✓ layout of existing variants
 - `StatusRowPattern` → ✓ layout of existing variants
 
@@ -175,9 +175,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `size` | `'s' \| 'm' \| 'l'` | `VARIANT` `size` = `s` / `m` / `l` | same values as code · `union` | ✓ |
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `↳icon` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `↳iconEnd` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✓ |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
@@ -194,8 +194,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 - `AllVariants` → ✓ layout of existing variants
 - `Loading` → ✓ `isLoading=true`
 - `Disabled` → ✓ `disabled=true`
-- `WithLeadingIcon` → ✓ `↳icon=true`
-- `WithTrailingIcon` → ✓ `↳iconEnd=true`
+- `WithLeadingIcon` → ✓ `icon.=true`
+- `WithTrailingIcon` → ✓ `iconEnd.=true`
 - `Sizes` → ✓ layout of existing variants
 - `FullWidth` → ✓ `fullWidth=true`
 - `SwapInPlace` → ✓ not drawn in Figma — label/icon swap animation on click — behaviour; each end state is an ordinary variant (children / iconSwap) (approved 2026-10-21)
@@ -263,9 +263,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `defaultChecked` | `boolean \| undefined` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
@@ -287,8 +287,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 7 stories
 
 - `AllTypes` → ✓ layout of existing variants
-- `WithDescription` → ✓ `↳description=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `WithDescription` → ✓ `description.=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Disabled` → ✓ `disabled=true`
 - `Group` → ✓ layout of existing variants
 - `Required` → ✓ `required=true`
@@ -308,9 +308,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `((values: string[]) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -325,7 +325,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 - `Default` → ✓ `default` — every Figma property at its default value
 - `Horizontal` → ✓ `orientation=horizontal`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Disabled` → ✓ `disabled=true`
 - `WithDisabledOption` → ✓ layout of existing variants
 - `Required` → ✓ `required=true`
@@ -343,9 +343,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `size` | `'s' \| 'm'` | `VARIANT` `size` = `s` / `m` | same values as code · `union` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `↳icon` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `↳iconEnd` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✓ |
 | `onClick` | `React.MouseEventHandler<HTMLButtonElement> \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `dismissible` | `boolean` | `BOOLEAN` `dismissible` | shows / hides a part · `show-hide-boolean` | ✓ |
@@ -361,7 +361,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 - `Dismissible` → ✓ `dismissible=true`
 - `Variants` → ✓ layout of existing variants
-- `WithIcons` → ✓ `↳icon=true, ↳iconEnd=true`
+- `WithIcons` → ✓ `icon.=true, iconEnd.=true`
 - `Sizes` → ✓ layout of existing variants
 - `KeyboardActivation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
 
@@ -496,13 +496,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `required` | `boolean` | `BOOLEAN` `required` | shows / hides a part · `show-hide-boolean` | ✓ |
 | `isLoading` | `boolean` | `VARIANT` `isLoading` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `↳icon` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
-| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `↳iconEnd` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `iconEnd` | `TablerIcon \| undefined` | `BOOLEAN` `iconEnd.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `iconEnd` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `iconEnd` | which icon · `icon` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalidAttempt` | `number \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 | `fullWidth` | `boolean` | `VARIANT` `fullWidth` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -518,14 +518,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 11 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
-- `WithDescription` → ✓ `↳description=true`
-- `WithLeadingIcon` → ✓ `↳icon=true`
-- `WithTrailingIcon` → ✓ `↳iconEnd=true`
-- `SearchInput` → ✓ `hideLabel=true, ↳icon=true, fullWidth=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true, ↳icon=true`
-- `Required` → ✓ `required=true, ↳icon=true`
-- `Disabled` → ✓ `disabled=true, ↳description=true`
-- `Loading` → ✓ `isLoading=true, ↳description=true`
+- `WithDescription` → ✓ `description.=true`
+- `WithLeadingIcon` → ✓ `icon.=true`
+- `WithTrailingIcon` → ✓ `iconEnd.=true`
+- `SearchInput` → ✓ `hideLabel=true, icon.=true, fullWidth=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true, icon.=true`
+- `Required` → ✓ `required=true, icon.=true`
+- `Disabled` → ✓ `disabled=true, description.=true`
+- `Loading` → ✓ `isLoading=true, description.=true`
 - `LoginFormPattern` → ✓ layout of existing variants
 - `KeyboardFocus` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
 
@@ -608,9 +608,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `defaultValue` | `string[] \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `(values: string[]) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -633,8 +633,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 - `WithSelection` → ✓ `value=selected`
 - `Wrapping` → ✓ `value=selected`
 - `WithGroups` → ✓ `state=open`
-- `WithDescription` → ✓ `↳description=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `WithDescription` → ✓ `description.=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Required` → ✓ `required=true`
 - `Disabled` → ✓ `disabled=true, value=selected`
 - `KeyboardNavigation` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
@@ -649,7 +649,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `href` | `string` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
-| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `↳icon` | shows the icon (Figma-only helper) · `icon` | ✓ |
+| `icon` | `TablerIcon \| undefined` | `BOOLEAN` `icon.` | shows the icon (Figma-only helper) · `icon` | ✓ |
 | `icon` | `TablerIcon \| undefined` | `INSTANCE_SWAP` `icon` | which icon · `icon` | ✓ |
 | `current` | `boolean` | `VARIANT` `current` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
@@ -676,7 +676,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
 | `level` | `1 \| 2` | `VARIANT` `level` = `1` / `2` | same values as code · `union` | ✓ |
 | `actions` | `React.ReactNode \| undefined` | `BOOLEAN` `actions` | shows the slot · `slot` | ✓ |
@@ -688,9 +688,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Stories → Figma:** ✓ all 3 stories
 
-- `Default` → ✓ `↳description=true`
-- `WithActions` → ✓ `actions=true, ↳description=true`
-- `SectionLevel` → ✓ `level=2, ↳description=true`
+- `Default` → ✓ `description.=true`
+- `WithActions` → ✓ `actions=true, description.=true`
+- `SectionLevel` → ✓ `level=2, description.=true`
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `page-header-root`, `page-header-title`, `page-header-description`, `page-header-actions`
 
@@ -706,9 +706,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `defaultChecked` | `boolean` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `((checked: boolean) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -724,8 +724,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 6 stories
 
 - `AllTypes` → ✓ layout of existing variants
-- `WithDescription` → ✓ `↳description=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `WithDescription` → ✓ `description.=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Disabled` → ✓ `disabled=true`
 - `Group` → ✓ layout of existing variants
 - `KeyboardSelect` → ✓ `state=focus` — keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)
@@ -744,9 +744,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `((value: string) => void) \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `orientation` | `'vertical' \| 'horizontal'` | `VARIANT` `orientation` = `vertical` / `horizontal` | same values as code · `union` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -761,7 +761,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 - `Default` → ✓ `default` — every Figma property at its default value
 - `Horizontal` → ✓ `orientation=horizontal`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Disabled` → ✓ `disabled=true`
 - `WithDisabledOption` → ✓ layout of existing variants
 - `Required` → ✓ `required=true`
@@ -807,14 +807,14 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `options` | `(SelectOption \| SelectOptionGroup)[]` | — on the child `Menu` › `options` | drawn by the nested Menu: this component holds an exposed Menu instance and the designer picks how many items on it — the count is Menu's property, not this one's (owner's rule 2026-10-21) · `list-delegated` | — |
-| `value` | `string \| undefined` | `VARIANT` `↳value` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
+| `value` | `string \| undefined` | `VARIANT` `value.` = `empty` / `selected` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `value` | `string \| undefined` | `TEXT` `value` | exception, approved 2026-10-20 — the trigger shows either the placeholder (empty) or the chosen option (selected) in one text layer,   which Figma can bind to one text property only — so value picks the look and valueText is the chosen label; selected is drawn once (owner-approved option A) | ✓ |
 | `defaultValue` | `string \| undefined` | — no Figma property | the uncontrolled twin of `value` — only the starting value, Figma shows that prop · `skip` | — |
 | `onChange` | `(value: string) => void \| undefined` | — no Figma property | an event handler — behaviour, nothing to draw · `skip` | — |
 | `placeholder` | `string \| undefined` | `TEXT` `placeholder` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -833,13 +833,13 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Stories → Figma:** ✓ all 11 stories
 
-- `Default` → ✓ `↳value=empty`
-- `Controlled` → ✓ `↳value=selected`
+- `Default` → ✓ `value.=empty`
+- `Controlled` → ✓ `value.=selected`
 - `WithGroups` → ✓ `state=open`
 - `WithLabelEnd` → ✓ `state=open`
-- `WithDescription` → ✓ `↳description=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
-- `Disabled` → ✓ `disabled=true, ↳value=selected`
+- `WithDescription` → ✓ `description.=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
+- `Disabled` → ✓ `disabled=true, value.=selected`
 - `MinimumWidth` → ✓ not drawn in Figma — min-width behaviour — same look as Default (approved 2026-10-21)
 - `Required` → ✓ `required=true`
 - `Open` → ✓ `state=open`
@@ -905,7 +905,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
 | `hideLabel` | `boolean` | `VARIANT` `hideLabel` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
 | `checked` | `boolean \| undefined` | `VARIANT` `checked` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `defaultChecked` | `boolean \| undefined` | — no Figma property | the uncontrolled twin of `checked` — only the starting value, Figma shows that prop · `skip` | — |
@@ -924,8 +924,8 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 7 stories
 
 - `Default` → ✓ `checked=false`
-- `Checked` → ✓ `checked=true, ↳description=true`
-- `WithDescription` → ✓ `↳description=true`
+- `Checked` → ✓ `checked=true, description.=true`
+- `WithDescription` → ✓ `description.=true`
 - `Disabled` → ✓ `disabled=true`
 - `Sizes` → ✓ layout of existing variants
 - `SettingsGroup` → ✓ layout of existing variants
@@ -956,9 +956,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
 | `label` | `string` | `TEXT` `label` | its text · `text` | ✓ |
-| `description` | `string \| undefined` | `BOOLEAN` `↳description` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `description` | `string \| undefined` | `BOOLEAN` `description.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `description` | `string \| undefined` | `TEXT` `description` | its text · `optional-text` | ✓ |
-| `errorMessage` | `string \| undefined` | `BOOLEAN` `↳errorMessage` | shows the part (Figma-only helper) · `optional-text` | ✓ |
+| `errorMessage` | `string \| undefined` | `BOOLEAN` `errorMessage.` | shows the part (Figma-only helper) · `optional-text` | ✓ |
 | `errorMessage` | `string \| undefined` | `TEXT` `errorMessage` | its text · `optional-text` | ✓ |
 | `invalid` | `boolean` | `VARIANT` `invalid` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
 | `disabled` | `boolean` | `VARIANT` `disabled` = `false` / `true` | changes the look → false/true toggle · `look-boolean` | ✓ |
@@ -981,9 +981,9 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 **Stories → Figma:** ✓ all 8 stories
 
 - `Default` → ✓ `default` — every Figma property at its default value
-- `WithDescription` → ✓ `↳description=true`
+- `WithDescription` → ✓ `description.=true`
 - `WithCharacterCount` → ✓ `showCount=true`
-- `Invalid` → ✓ `invalid=true, ↳errorMessage=true`
+- `Invalid` → ✓ `invalid=true, errorMessage.=true`
 - `Disabled` → ✓ `disabled=true`
 - `NoResize` → ✓ `resize=none`
 - `FullWidth` → ✓ `fullWidth=true`
@@ -997,12 +997,12 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 |---|---|---|---|---|
 | `className` | `string \| undefined` | — no Figma property | wiring or configuration (ids, refs, limits, classes) — nothing a designer sets · `skip` | — |
 
-**Only in Figma:** ✗ `label` (TEXT), `↳description` (BOOLEAN), `description` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
+**Only in Figma:** ✗ `label` (TEXT), `description.` (BOOLEAN), `description` (TEXT), `variant` (VARIANT: neutral / info / success / warning / danger) — no code prop of that name and type (rule 16): rename it to the code prop, remove it, or record an approved exception in the contract's `figma.figmaOnly`
 
 **Stories → Figma:** ✓ all 4 stories
 
 - `Default` → ✓ layout of existing variants
-- `Playground` → ✓ `variant=success, ↳description=true`
+- `Playground` → ✓ `variant=success, description.=true`
 - `KeyboardReach` → ✓ layout of existing variants — keyboard focus is drawn on the close IconButton inside it (state=focus)
 - `Opened` → ✓ layout of existing variants
 
