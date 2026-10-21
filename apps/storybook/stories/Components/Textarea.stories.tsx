@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { expect, userEvent, within } from '@storybook/test';
 import { Textarea, TextareaDoc } from '@helixds/react';
 import { createComponentDocsParameters } from '../_shared/component-docs';
@@ -34,7 +34,8 @@ const meta: Meta<typeof Textarea> = {
     rows:      { control: { type: 'number', min: 2, max: 10 } },
     maxLength: { control: 'number' },
     // native <textarea> attributes the docs can't infer — declared so they get a control (and URL args work)
-    disabled:  { control: 'boolean' },
+    // native attribute (not in TextareaProps): docgen infers no type, and Storybook then drops a URL `disabled:!true`
+    disabled:  { control: 'boolean', type: { name: 'boolean' } },
     required:  { control: 'boolean' },
   },
 };
@@ -51,7 +52,9 @@ export const WithDescription: Story = {
 export const WithCharacterCount: Story = {
   args: { maxLength: 280, showCount: true },
   render: (args) => {
-    const [value, setValue] = useState('');
+    // starts from the value control (and follows it), then the user types
+    const [value, setValue] = useState(args.value ?? '');
+    useEffect(() => setValue(args.value ?? ''), [args.value]);
     return <Textarea {...args} value={value} onChange={e => setValue(e.target.value)} />;
   },
   parameters: {

@@ -2,7 +2,7 @@
   "$schema": "../component.schema.json",
   "name": "MultiSelect",
   "version": "0.1.0",
-  "status": "stable",
+  "status": "beta",
 
   "purpose": "Lets users choose several values from a predefined list, shown as removable chips inside the field.",
   "import": "import { MultiSelect } from '@helixds/react';",

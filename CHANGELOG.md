@@ -88,8 +88,15 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Figma sync ends with updating the Community copy (#24) ([#24](https://github.com/MartaCondeDesign/helixds/pull/24))
+- 2026-10-21 — Figma expected styles measure what code really renders; Avatar and Card back to passing (latest commit)
+  - figma:expected: Input/Textarea `disabled` never reached the story (native attribute, docgen typed it
+  - figma:expected: Input's spinner is measured as the 16px icon it is, not as text in its padded slot
+  - borderOutsideLayout can name a layer — MultiSelect's bordered box is multi-select-field since the
+  - verify:types reads quoted keys ('aria-describedby' in Avatar.types.ts)
+  - Card › CardGrid passes header/className to every card (its header control did nothing)
+- 2026-10-21 — Figma scope: Community copy after each sync; no Layout or Pages in Figma (#24) ([`2e8cb5b`](https://github.com/MartaCondeDesign/helixds/commit/2e8cb5b))
   - Figma sync ends with updating the Community copy
+  - Layout components and Pages aren't built in Figma for now
 - 2026-10-21 — View in Figma opens the public Figma Community file (#23) ([`3129b32`](https://github.com/MartaCondeDesign/helixds/commit/3129b32))
   - View in Figma links open the public Figma Community file; README links it next to Storybook
 - 2026-10-21 — Fix main's CI: regenerate the lint plugin's data (#22) ([`cfe254a`](https://github.com/MartaCondeDesign/helixds/commit/cfe254a))

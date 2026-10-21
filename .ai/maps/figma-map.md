@@ -100,7 +100,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `app-shell-root`, `app-shell-content`, `app-shell-main`
 
-### Avatar (`v1.0.0`, stable)
+### Avatar (`v1.0.0`, draft)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -217,7 +217,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `button-spinner`, `button`, `button-icon`, `button-label`, `button-icon-end`
 
-### Card (`v1.0.0`, stable)
+### Card (`v1.0.0`, draft)
 
 **Pattern:** `layout-slot` (.ai/maps/figma-conversion.md)
 
@@ -242,7 +242,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `card-root`, `card-header`, `card-body`
 
-### Chart (`v1.2.0`, beta)
+### Chart (`v1.2.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -454,7 +454,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `fab-root-wrapper`, `fab-root`, `fab-icon`, `fab-actions`, `fab-action`
 
-### Icon (`v1.0.0`, beta)
+### Icon (`v1.0.0`, stable)
 
 | Code prop | Code type | Figma property | Why | Figma today |
 |---|---|---|---|---|
@@ -518,7 +518,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `icon-button-spinner`, `icon-button`
 
-### Input (`v2.0.0`, stable)
+### Input (`v2.0.0`, beta)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -639,7 +639,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `modal-root`, `modal-header`, `modal-title`, `icon-button`, `modal-close`, `modal-body`, `modal-footer`, `modal-footer-start`, `modal-footer-end`
 
-### MultiSelect (`v0.1.0`, stable)
+### MultiSelect (`v0.1.0`, beta)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -686,7 +686,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `multi-select-chip`, `multi-select-root`, `multi-select-label`, `multi-select-required`, `multi-select-field`, `multi-select-trigger`, `multi-select-placeholder`, `multi-select-chevron`, `multi-select-native`, `multi-select-description`, `multi-select-error`
 
-### NavItem (`v1.0.0`, stable)
+### NavItem (`v1.0.0`, beta)
 
 **Pattern:** `action` (.ai/maps/figma-conversion.md)
 
@@ -856,7 +856,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `segmented-control-root`, `segmented-control-item`, `segmented-control-pill`, `segmented-control-item-icon`, `segmented-control-item-label`
 
-### Select (`v1.1.0`, stable)
+### Select (`v1.1.0`, beta)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -1016,7 +1016,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `table`, `table-head`, `table-body`, `table-row`, `table-header-cell`, `table-cell`
 
-### Textarea (`v1.0.0`, stable)
+### Textarea (`v1.0.0`, beta)
 
 **Pattern:** `form-field` (.ai/maps/figma-conversion.md)
 
@@ -1087,7 +1087,7 @@ is `state` (CSS pseudo-classes) — `disabled`, `invalid`, `checked`… are neve
 
 **Anatomy layers** (Figma layer name = `data-helix-part` value): `toast`, `toast-icon`, `toast-content`, `toast-title`, `toast-description`, `icon-button`, `toast-close`, `toast-viewport`
 
-### Tooltip (`v0.1.0`, beta)
+### Tooltip (`v0.1.0`, stable)
 
 **Pattern:** `overlay` (.ai/maps/figma-conversion.md)
 
