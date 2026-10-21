@@ -154,6 +154,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
   - CheckboxGroup and RadioGroup in Figma: options 2–7 list-count variant (36 variants each, built from each variant's twin), Propstar tables regenerated; contracts' figma.variantCombinations updated (owner's rule 2026-10-21)
   - Select and MultiSelect: options = 2–7 VARIANT (listCount) — state=open draws the listbox (Menu part, MenuItem rows) with that many options, other states options=5; Select 80 variants, MultiSelect 152; propstar.js sizes rows by absolute layers too
   - Regenerate figma-map after merging the Figma and story-controls branches
+  - helix/story-has-controls: lint rule for Components/Layout stories — no controls.disable, no render that ignores args (an open overlay keeps them off with // controls-off: <reason>); the Claude lint hook hands a violation back to the agent to fix in the same turn, pnpm lint:stories in pre-commit; documented in apps/storybook/CLAUDE.md
   - Code → Figma table: Helix spacing tokens instead of raw px (lint)
 - 2026-10-20 — Stories: Controls work, or say there are none (#21) ([`ef5b78a`](https://github.com/MartaCondeDesign/helixds/commit/ef5b78a))
   - Stories: Controls work or say there are none — single-instance stories take the story args, showcase grids disable Controls
