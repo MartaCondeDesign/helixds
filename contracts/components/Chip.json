@@ -312,7 +312,7 @@
     "stories": {
       "Dismissible": "dismissible=true",
       "Variants": "layout",
-      "WithIcons": "icon=true, iconEnd=true",
+      "WithIcons": "↳icon=true, ↳iconEnd=true",
       "Sizes": "layout",
       "KeyboardActivation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}
     }

@@ -45,6 +45,8 @@ export function patternOf(component: string) { return STANDARD.patterns.find(p =
 
 /** No rule matched: the standard has to learn this kind of prop (the owner extends figma-conversion.json). */
 export const UNMATCHED = 'unmatched';
+/** Prefix of a Figma-only helper property — the extra toggle Figma needs next to the property named like the code prop (↳errorMessage before errorMessage). */
+export const HELPER: string = (STANDARD as any).naming?.helperPrefix ?? '↳';
 
 /** The Figma properties a prop must become, each tagged with the standard's rule id. [] = no property. */
 export function expectedFor(prop: Prop, parts: string[]): Expected[] {
@@ -65,7 +67,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
   if (name === 'expanded' && has(STANDARD.overlays, currentComponent)) return [];
   const optional = !prop.required && /undefined/.test(type);
   if (/TablerIcon|HelixIconComponent/.test(type)) return optional
-    ? out('icon', [{ name, type: 'BOOLEAN' }, { name: `${name}Swap`, type: 'INSTANCE_SWAP' }], ['shows the icon', 'which icon'])
+    ? out('icon', [{ name: `${HELPER}${name}`, type: 'BOOLEAN' }, { name, type: 'INSTANCE_SWAP' }], ['shows the icon (Figma-only helper)', 'which icon'])
     : out('icon', [{ name, type: 'INSTANCE_SWAP' }], ['which icon']);
   const literals = type.split('|').map(t => t.trim()).filter(t => t !== 'undefined');
   if (literals.length > 1 && literals.every(t => /^'[^']*'$/.test(t) || /^\d+$/.test(t)))
@@ -74,7 +76,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
     return has(STANDARD.showHideBooleans, name) ? out('show-hide-boolean', [{ name, type: 'BOOLEAN' }])
       : out('look-boolean', [{ name, type: 'VARIANT', values: ['false', 'true'] }]);
   if (/ReactNode/.test(type)) return optional
-    ? (has(STANDARD.slotsWithText, name) ? out('slot', [{ name, type: 'BOOLEAN' }, { name: `${name}Text`, type: 'TEXT' }], ['shows the slot', 'its text']) : out('slot', [{ name, type: 'BOOLEAN' }]))
+    ? (has(STANDARD.slotsWithText, name) ? out('slot', [{ name: `${HELPER}${name}`, type: 'BOOLEAN' }, { name, type: 'TEXT' }], ['shows the slot (Figma-only helper)', 'its text']) : out('slot', [{ name, type: 'BOOLEAN' }]))
     : out('text', [{ name, type: 'TEXT' }]);
   if (/^string/.test(type)) {
     if (name === 'placeholder') return out('text', [{ name, type: 'TEXT' }]);
@@ -83,7 +85,7 @@ export function expectedFor(prop: Prop, parts: string[]): Expected[] {
     const visible = parts.some(part => part.endsWith('-' + partSuffix) || (name === 'label' && /-(legend|title|content|initials)$/.test(part))) || /Label$/.test(name);
     if (!visible) return []; // aria-text: read by screen readers only (IconButton's label, an optional aria description)
     if (!optional) return out('text', [{ name, type: 'TEXT' }]);
-    return out('optional-text', [{ name, type: 'BOOLEAN' }, { name: `${name}Text`, type: 'TEXT' }], ['shows the part', 'its text']);
+    return out('optional-text', [{ name: `${HELPER}${name}`, type: 'BOOLEAN' }, { name, type: 'TEXT' }], ['shows the part (Figma-only helper)', 'its text']);
   }
   return [{ name, type: 'TEXT', rule: UNMATCHED, why: 'no rule in contracts/figma-conversion.json covers this type — extend the standard' }];
 }

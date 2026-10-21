@@ -138,11 +138,11 @@
           "type": "TEXT"
         },
         {
-          "name": "icon",
+          "name": "↳icon",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -176,19 +176,19 @@
           "type": "TEXT"
         },
         {
-          "name": "icon",
+          "name": "↳icon",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "iconEnd",
+          "name": "↳iconEnd",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEndSwap",
+          "name": "iconEnd",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -331,19 +331,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -403,19 +403,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -474,19 +474,19 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon",
+          "name": "↳icon",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "iconEnd",
+          "name": "↳iconEnd",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconEndSwap",
+          "name": "iconEnd",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -682,35 +682,35 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "icon",
+          "name": "↳icon",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
+        },
+        {
+          "name": "↳iconEnd",
+          "type": "BOOLEAN"
         },
         {
           "name": "iconEnd",
-          "type": "BOOLEAN"
-        },
-        {
-          "name": "iconEndSwap",
           "type": "INSTANCE_SWAP"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -880,19 +880,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -961,11 +961,11 @@
           "type": "TEXT"
         },
         {
-          "name": "icon",
+          "name": "↳icon",
           "type": "BOOLEAN"
         },
         {
-          "name": "iconSwap",
+          "name": "icon",
           "type": "INSTANCE_SWAP"
         },
         {
@@ -997,11 +997,11 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
@@ -1028,19 +1028,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -1092,19 +1092,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -1223,7 +1223,7 @@
       "page": "Select",
       "properties": [
         {
-          "name": "valueText",
+          "name": "value",
           "type": "TEXT"
         },
         {
@@ -1235,19 +1235,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -1255,7 +1255,7 @@
           "type": "BOOLEAN"
         },
         {
-          "name": "value",
+          "name": "↳value",
           "type": "VARIANT",
           "values": [
             "empty",
@@ -1358,11 +1358,11 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
@@ -1461,19 +1461,19 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {
-          "name": "errorMessage",
+          "name": "↳errorMessage",
           "type": "BOOLEAN"
         },
         {
-          "name": "errorMessageText",
+          "name": "errorMessage",
           "type": "TEXT"
         },
         {
@@ -1551,11 +1551,11 @@
           "type": "TEXT"
         },
         {
-          "name": "description",
+          "name": "↳description",
           "type": "BOOLEAN"
         },
         {
-          "name": "descriptionText",
+          "name": "description",
           "type": "TEXT"
         },
         {

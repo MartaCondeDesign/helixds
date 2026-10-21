@@ -242,8 +242,8 @@
       "WithSelection": "value=selected",
       "Wrapping": "value=selected",
       "WithGroups": "state=open",
-      "WithDescription": "description=true",
-      "Invalid": "invalid=true, errorMessage=true",
+      "WithDescription": "↳description=true",
+      "Invalid": "invalid=true, ↳errorMessage=true",
       "Required": "required=true",
       "Disabled": "disabled=true, value=selected",
       "KeyboardNavigation": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}

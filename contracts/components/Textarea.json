@@ -352,9 +352,9 @@
     "variantCombinations": "112 variants (2026-10-21,  one size since the owner removed s and l): invalid × state default/hover/focus = 6,  plus disabled at state default = 1,  each drawn with fullWidth false/true × hideLabel false/true × resize vertical/none/horizontal/both = 7 × 16 = 112 (secondary toggles at every state,  owner's decision 2026-10-21). Invalid focus keeps the red border with a 20% red ring.",
     "stories": {
       "Default": "default",
-      "WithDescription": "description=true",
+      "WithDescription": "↳description=true",
       "WithCharacterCount": "showCount=true",
-      "Invalid": "invalid=true, errorMessage=true",
+      "Invalid": "invalid=true, ↳errorMessage=true",
       "Disabled": "disabled=true",
       "NoResize": "resize=none",
       "FullWidth": "fullWidth=true",

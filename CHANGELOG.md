@@ -9,6 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
+- 2026-10-21 — Figma helper properties get ↳ (standard v1.11, owner's rule): the property that is the code prop keeps its name (TEXT errorMessage, INSTANCE_SWAP icon, TEXT value), the Figma-only toggle is ↳name, listed first — 15 sets renamed in Figma, contracts, stories maps and docs (replaces errorMessageText / iconSwap / valueText) (latest commit)
 - 2026-10-21 — Form fields share one size set (owner's decision 2026-10-21): Input loses s and l like Textarea, Select and MultiSelect — size prop, InputSize, the s/l CSS and component.input.height/valueFontSize.s/l removed, icons always 16px, Sizes story gone; pnpm verify:field-sizes (pre-commit) fails if one form field gets sizes the others don't; ADR-004 and CLAUDE.md say so. Figma: Input drops its s/l variants and the size axis — 32 variants, Propstar regenerated; propstar.js never makes a column narrower than its label ([`2a25418`](https://github.com/MartaCondeDesign/helixds/commit/2a25418))
 - 2026-10-21 — Property order is checked against Storybook's real props table (pnpm figma:story-order → .ai/storybook-prop-order.json), not the contract; 9 sets reordered (Avatar, Badge, Button, Card, Chip, Input, Select, Switch, Textarea); Select's stray options axis removed ([`b4febf6`](https://github.com/MartaCondeDesign/helixds/commit/b4febf6))
 - 2026-10-20 — Textarea has one size (owner's decision): size prop, TextareaSize type, the s/l CSS and component.textarea.text.valueFontSize.s/l removed (like Select and MultiSelect, which never had sizes); ADR-004 says so; Sizes story gone. Figma: Textarea drops its s and l variants and the size axis — 12 variants ([`bd845cd`](https://github.com/MartaCondeDesign/helixds/commit/bd845cd))
@@ -97,7 +98,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — After merging the five branches: Input without size in the remaining stories (Changelog, Dashboard, login form); Select/MultiSelect options after the variants in their stories and valueText first in Figma; Input's variant axes in Storybook's order; a prop that lives on a child (list-delegated) shows as 🎨 On the child Menu in the Code → Figma table, code only as 👾 (latest commit)
+- 2026-10-21 — After merging the five branches: Input without size in the remaining stories (Changelog, Dashboard, login form); Select/MultiSelect options after the variants in their stories and valueText first in Figma; Input's variant axes in Storybook's order; a prop that lives on a child (list-delegated) shows as 🎨 On the child Menu in the Code → Figma table, code only as 👾 ([`26ff453`](https://github.com/MartaCondeDesign/helixds/commit/26ff453))
 - 2026-10-21 — Merge branch 'refs/heads/claude/figma-textarea-switch-5b18d0' into claude/affectionate-swartz-794ede ([`3960349`](https://github.com/MartaCondeDesign/helixds/commit/3960349))
 - 2026-10-21 — Merge branch 'refs/heads/claude/story-coverage-d435ae' into claude/affectionate-swartz-794ede ([`79e8d75`](https://github.com/MartaCondeDesign/helixds/commit/79e8d75))
 - 2026-10-21 — Merge branch 'refs/heads/claude/figma-options-fab-menu-6e3a7d' into claude/affectionate-swartz-794ede ([`136999a`](https://github.com/MartaCondeDesign/helixds/commit/136999a))

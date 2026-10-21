@@ -1,13 +1,13 @@
 {
   "$comment": "The code → Figma conversion standard (root CLAUDE.md rule 16). The ONE source of how a code prop becomes a Figma property and how a component's variants are drawn — read by scripts/figma/prop-rule.ts (pnpm docs:figma-map, pnpm figma:props) and scripts/figma/expected-styles.ts. Human-readable twin: .ai/maps/figma-conversion.md. Changing this file is the design-system owner's decision (owner gate). A component needs its own approval only for an exception (contract figma.propertyMap).",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "approved": "2026-10-21",
 
   "naming": {
     "property": "Figma property name = code prop name, unchanged (isLoading, not loading; children, not label). Every Figma property name is camelCase, like code — never a space (owner's decision 2026-10-21).",
     "values": "VARIANT values = code values, unchanged (primary, stacked-bar, false).",
-    "optionalText": "{name}Text — the TEXT property that holds an optional string's content (descriptionText).",
-    "iconSwap": "{name}Swap — the INSTANCE_SWAP of an icon prop next to its BOOLEAN {name} (iconSwap): Figma refuses two properties with one name.",
+    "helperPrefix": "↳",
+    "helper": "The property that is exactly the code prop keeps the code prop's name — TEXT errorMessage for errorMessage: string, INSTANCE_SWAP icon for icon: TablerIcon. The extra property only Figma needs (the toggle that shows it) is the same name with ↳ in front and no space — BOOLEAN ↳errorMessage, ↳icon — listed right before it (owner's rule 2026-10-21; replaces errorMessageText / iconSwap). Figma refuses two properties with one name, so the helper is the one that changes.",
     "layers": "Layer names = the data-helix-part values in the TSX, never invented. Visually hidden native inputs (checkbox-input, radio-input, select-native) are not layers."
   },
 
@@ -15,15 +15,15 @@
     { "id": "skip", "when": "handlers (on*), default* twins, aria-*, ids, refs, data arrays and wiring props", "figma": [], "why": "behaviour or data, nothing to draw" },
     { "id": "nested", "when": "a ReactElement, or ReactNode children of a component that isn't in textChildren", "figma": [], "why": "another component or free content, not a property" },
     { "id": "overlay-expanded", "when": "expanded on an overlay (overlays)", "figma": [], "why": "closed = not on screen; Figma draws it open" },
-    { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN {name} (only when optional)", "INSTANCE_SWAP {name}Swap"], "why": "shows the icon · which icon (Figma refuses two properties with one name, so the swap is {name}Swap — owner's decision 2026-10-20)" },
+    { "id": "icon", "when": "a TablerIcon / HelixIconComponent prop", "figma": ["BOOLEAN ↳{name} (only when optional)", "INSTANCE_SWAP {name}"], "why": "shows the icon (↳ helper) · which icon" },
     { "id": "list-delegated", "when": "a list prop (listCount.props) the component hands straight to another Helix component that draws the items — found in the code: <Menu options={options}> in Select and MultiSelect. Checked before list-count", "figma": [], "why": "the nested component owns the count: the component holds an exposed instance of it (in the open state when it's an overlay) and the designer picks how many items on that instance (owner's rule 2026-10-21)" },
     { "id": "list-count", "when": "a list of items the component draws one after another — a prop named in listCount.props (options, actions, avatars, items), typed as an array", "figma": ["VARIANT {name} = how many items: listCount.min … listCount.max (2 … 7)"], "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)" },
     { "id": "union", "when": "a union of string or number literals", "figma": ["VARIANT {name} = the same values"], "why": "same values as code" },
     { "id": "show-hide-boolean", "when": "a boolean listed in showHideBooleans — it only shows or hides one part", "figma": ["BOOLEAN {name}"], "why": "shows / hides a part" },
     { "id": "look-boolean", "when": "any other boolean — it changes a color, size or layout (a Figma BOOLEAN can only show/hide a layer)", "figma": ["VARIANT {name} = false / true"], "why": "changes the look → false/true toggle" },
-    { "id": "slot", "when": "an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…)", "figma": ["BOOLEAN {name}", "TEXT {name}Text (only for slotsWithText)"], "why": "shows the slot" },
+    { "id": "slot", "when": "an optional ReactNode (header, actions, footer, start, end, sidenav, topbar…)", "figma": ["BOOLEAN {name} (or ↳{name} + TEXT {name} for slotsWithText)"], "why": "shows the slot" },
     { "id": "text", "when": "a required string that a part renders, a required ReactNode, placeholder, or children of a textChildren component", "figma": ["TEXT {name}"], "why": "its text" },
-    { "id": "optional-text", "when": "an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop)", "figma": ["BOOLEAN {name}", "TEXT {name}Text"], "why": "shows the part · its text" },
+    { "id": "optional-text", "when": "an optional string rendered by its own part ({prefix}-{part suffix} in the anatomy, or a *Label prop)", "figma": ["BOOLEAN ↳{name}", "TEXT {name}"], "why": "shows the part · its text" },
     { "id": "aria-text", "when": "a string — required or optional — that no part renders: no {prefix}-{name} layer in the anatomy (a label can also render as the -legend, -title, -content or -initials part). IconButton's, FAB's, ChipGroup's and SegmentedControl's label, Chart's description", "figma": [], "why": "read by screen readers only (aria-label) — there is no text to draw (owner's decision 2026-10-20)" }
   ],
 
@@ -53,7 +53,7 @@
   "partSuffix": { "errorMessage": "error" },
 
   "storyCoverage": "Every Storybook story of a component (each export of apps/storybook/stories/{Components,Layout}/{Name}.stories.tsx) says how Figma represents it, or carries the owner's decision that it doesn't (owner's rule 2026-10-21 — Avatar's With image / Initials stories had no Figma counterpart until withImage was added). The contract's figma.stories maps each export: \"prop=value, prop=value\" (the Figma properties/values that draw it, each a property of the set or state), \"default\" (the set's default variant), \"layout\" (a showcase that only arranges existing variants), or { figma: null, reason, approved } (behaviour only, or not drawn on purpose). A keyboard story is a focus state and focus is drawn: it maps to state=focus, or to layout when the ring belongs to a child instance (owner's decision 2026-10-21). pnpm docs:figma-map prints a Stories → Figma block per component (✗ = no approved representation, or a stale entry) and figma-drift fails a component with a ✗. Filling figma.stories is the owner's decision: an agent shows each ✗ story with a proposal and asks.",
-  "propertyOrder": "Figma properties come in the code's order — the contract's props order, which is the order Storybook's Controls list them in (owner's decision 2026-10-21). Figma always shows VARIANT properties first, so each group follows the code order on its own: the variants in code order with state last, then every other property in code order — a BOOLEAN's {name}Text / {name}Swap right after it, approved exceptions for native attributes last. pnpm docs:figma-map checks it (Property order line) and figma-drift fails a component that breaks it. The reference is the order Storybook's props table really shows, read by pnpm figma:story-order into .ai/storybook-prop-order.json — not the contract's order (Storybook doesn't follow it: Chip's label comes first in Storybook, fourth in the contract). Re-run it whenever a story or a component's props change. Both sides list the same way: Figma can't interleave VARIANT properties with the rest, so Storybook lists the props that are Figma variants first, then the rest (the order of each story file's meta.args sets it) — every group in the same order on both sides (owner's rule 2026-10-21; figma-map's **Storybook order** check).",
+  "propertyOrder": "Figma properties come in the code's order — the contract's props order, which is the order Storybook's Controls list them in (owner's decision 2026-10-21). Figma always shows VARIANT properties first, so each group follows the code order on its own: the variants in code order with state last, then every other property in code order — a helper ↳{name} right before the property it shows, approved exceptions for native attributes last. pnpm docs:figma-map checks it (Property order line) and figma-drift fails a component that breaks it. The reference is the order Storybook's props table really shows, read by pnpm figma:story-order into .ai/storybook-prop-order.json — not the contract's order (Storybook doesn't follow it: Chip's label comes first in Storybook, fourth in the contract). Re-run it whenever a story or a component's props change. Both sides list the same way: Figma can't interleave VARIANT properties with the rest, so Storybook lists the props that are Figma variants first, then the rest (the order of each story file's meta.args sets it) — every group in the same order on both sides (owner's rule 2026-10-21; figma-map's **Storybook order** check).",
   "state": {
     "values": ["default", "hover", "press", "focus", "open", "selected"],
     "rule": "The only Figma-only property: CSS pseudo-classes. disabled, invalid, checked, isLoading… are never values of state — each is its own false/true VARIANT."
@@ -72,40 +72,40 @@
     {
       "id": "form-field",
       "components": ["Input", "Textarea", "Select", "MultiSelect"],
-      "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN + TEXT descriptionText", "errorMessage": "BOOLEAN + TEXT errorMessageText", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP {name}Swap" },
+      "props": { "label": "TEXT", "hideLabel": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN ↳description + TEXT description", "errorMessage": "BOOLEAN ↳errorMessage + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true", "size": "VARIANT", "icon / iconEnd": "BOOLEAN ↳{name} + INSTANCE_SWAP {name}" },
       "states": ["default", "hover", "focus"],
       "anatomy": "{prefix}-label (text + {prefix}-required) · the field · {prefix}-description · {prefix}-error"
     },
     {
       "id": "checkable",
       "components": ["Checkbox", "RadioButton", "Switch"],
-      "props": { "label": "TEXT", "checked": "VARIANT false/true", "indeterminate": "VARIANT false/true (Checkbox)", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN + TEXT descriptionText", "errorMessage": "BOOLEAN + TEXT errorMessageText" },
+      "props": { "label": "TEXT", "checked": "VARIANT false/true", "indeterminate": "VARIANT false/true (Checkbox)", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true", "required": "BOOLEAN", "description": "BOOLEAN ↳description + TEXT description", "errorMessage": "BOOLEAN ↳errorMessage + TEXT errorMessage" },
       "states": ["default", "hover", "focus"],
       "anatomy": "control · label row (text + {prefix}-required) · description · error"
     },
     {
       "id": "group",
       "components": ["CheckboxGroup", "RadioGroup", "ChipGroup"],
-      "props": { "label": "TEXT (the legend)", "orientation": "VARIANT", "required": "BOOLEAN", "description": "BOOLEAN + TEXT descriptionText", "errorMessage": "BOOLEAN + TEXT errorMessageText", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true" },
+      "props": { "label": "TEXT (the legend)", "orientation": "VARIANT", "required": "BOOLEAN", "description": "BOOLEAN ↳description + TEXT description", "errorMessage": "BOOLEAN ↳errorMessage + TEXT errorMessage", "invalid": "VARIANT false/true", "disabled": "VARIANT false/true" },
       "states": ["default"],
       "anatomy": "legend (text + {prefix}-required) · options as instances of the item component · description · error — no state axis: hover/focus live in each item"
     },
     {
       "id": "action",
       "components": ["Button", "IconButton", "FAB", "Chip", "SegmentedControl", "NavItem"],
-      "props": { "children / label": "TEXT", "variant / size": "VARIANT", "icon / iconEnd": "BOOLEAN + INSTANCE_SWAP {name}Swap", "isLoading": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true" },
+      "props": { "children / label": "TEXT", "variant / size": "VARIANT", "icon / iconEnd": "BOOLEAN ↳{name} + INSTANCE_SWAP {name}", "isLoading": "VARIANT false/true", "disabled": "VARIANT false/true", "fullWidth": "VARIANT false/true" },
       "states": ["default", "hover", "press", "focus"]
     },
     {
       "id": "overlay",
       "components": ["Modal", "SidePanel", "Menu", "Tooltip"],
-      "props": { "expanded": "— (drawn open)", "children": "TEXT (Modal, SidePanel)", "*ActionLabel": "BOOLEAN + TEXT {name}Text", "showCloseButton": "BOOLEAN", "placement": "VARIANT" },
+      "props": { "expanded": "— (drawn open)", "children": "TEXT (Modal, SidePanel)", "*ActionLabel": "BOOLEAN ↳{name} + TEXT {name}", "showCloseButton": "BOOLEAN", "placement": "VARIANT" },
       "states": ["default"]
     },
     {
       "id": "layout-slot",
       "components": ["AppShell", "PageHeader", "Card", "TopBar", "SideNav"],
-      "props": { "header / actions / footer / sidenav / topbar": "BOOLEAN", "title / description": "TEXT, or BOOLEAN + TEXT {name}Text when optional" },
+      "props": { "header / actions / footer / sidenav / topbar": "BOOLEAN", "title / description": "TEXT, or BOOLEAN ↳{name} + TEXT {name} when optional" },
       "states": ["default"]
     }
   ]

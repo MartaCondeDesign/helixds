@@ -176,13 +176,13 @@
         "description": "Figma-only axis: hover/focus are CSS pseudo-classes in code. checked,  invalid and disabled are their own false/true toggles (contracts/figma-conversion.json,  pattern checkable)."
       },
       {
-        "name": "description",
+        "name": "↳description",
         "type": "BOOLEAN",
         "codeProp": "description",
         "description": "Show/hide part: a line in radio-item-content (4px gap only between shown lines)."
       },
       {
-        "name": "errorMessage",
+        "name": "↳errorMessage",
         "type": "BOOLEAN",
         "codeProp": "errorMessage",
         "description": "Show/hide part: the error line. Code shows it instead of the description — turn description off when it is on."
@@ -192,8 +192,8 @@
     "variantCombinations": "14 variants (2026-10-20): checked false/true × invalid false/true × state default/hover/focus = 12,  plus disabled for each checked value at state default,  valid = 2 — the standard rule for disabled. Disabled dims label,  required * and description (text/disabled).",
     "stories": {
       "AllTypes": "layout",
-      "WithDescription": "description=true",
-      "Invalid": "invalid=true, errorMessage=true",
+      "WithDescription": "↳description=true",
+      "Invalid": "invalid=true, ↳errorMessage=true",
       "Disabled": "disabled=true",
       "Group": "layout",
       "KeyboardSelect": {"figma": "state=focus", "reason": "keyboard focus — the focus ring is drawn in Figma (owner 2026-10-21: focus states are drawn)"}

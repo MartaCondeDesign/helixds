@@ -322,8 +322,8 @@
     "variantCombinations": "21 variants,  only the ones code can show (owner-approved 2026-10-20). Enabled: mark (unchecked = checked false + indeterminate false · checked = checked true + indeterminate false · indeterminate = checked false + indeterminate true) × invalid false/true × state default/hover/focus = 18. Disabled: the 3 marks with invalid false and state default = 3 — a disabled checkbox takes no hover or focus,  and disabled overrides invalid. checked + indeterminate together is not drawn: indeterminate wins in code,  it would duplicate the indeterminate variant. Disabled dims the label,  the required * and the description (text/disabled).",
     "stories": {
       "AllTypes": "layout",
-      "WithDescription": "description=true",
-      "Invalid": "invalid=true, errorMessage=true",
+      "WithDescription": "↳description=true",
+      "Invalid": "invalid=true, ↳errorMessage=true",
       "Disabled": "disabled=true",
       "Group": "layout",
       "Required": "required=true",

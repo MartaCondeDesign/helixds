@@ -167,13 +167,13 @@
     "properties": [
       { "name": "variant", "type": "VARIANT", "values": ["neutral", "info", "success", "warning", "danger"], "codeProp": "variant", "description": "Sets the filled icon (InfoCircleFilled, CircleCheckFilled, AlertTriangleFilled, AlertHexagonFilled — added to the Icons page) and its color, toast.icon.{variant}." },
       { "name": "label", "type": "TEXT", "codeProp": "label" },
-      { "name": "description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 2px top (spacing/3xs)." },
-      { "name": "descriptionText", "type": "TEXT", "codeProp": "description" }
+      { "name": "↳description", "type": "BOOLEAN", "codeProp": "description", "description": "Show/hide part: the line carries its own 2px top (spacing/3xs)." },
+      { "name": "description", "type": "TEXT", "codeProp": "description" }
     ],
     "structure": "One toast: 340px, 16px padding, 12px gap, radius/l, fill/page, shadow / xl; filled icon 24px; title 12/18 bold (no text style — bound to fontSize/s, fontWeight/bold, lineHeight/s); description Body / s / Regular; IconButton ghost s (X) to dismiss. Stacking, peek and spread are runtime motion, not modeled.",
     "stories": {
       "Default": "layout",
-      "Playground": "variant=success, description=true",
+      "Playground": "variant=success, ↳description=true",
       "KeyboardReach": {"figma": "layout", "reason": "keyboard focus is drawn on the close IconButton inside it (state=focus)"},
       "Opened": "layout"
     }
