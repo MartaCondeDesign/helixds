@@ -1745,23 +1745,10 @@
       },
       "options": {
         "description": "List of options and grouped options.",
-        "figma": [
-          {
-            "name": "options",
-            "type": "VARIANT",
-            "values": [
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7"
-            ]
-          }
-        ],
-        "codeOnly": false,
-        "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "figma": null,
+        "codeOnly": true,
+        "rule": "exception",
+        "why": "the options are drawn by the nested Menu, not by the MultiSelect: state=open holds an exposed Menu instance and the designer picks how many options it lists on that Menu (its own options = 2 … 7 VARIANT) — the MultiSelect itself has no options property (owner's decision 2026-10-21) (approved 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected values.",
@@ -2450,23 +2437,10 @@
       },
       "options": {
         "description": "List of options and grouped options. Each option: { value, label, labelEnd?, disabled? } — labelEnd is short secondary text (a value, count or percentage) shown at the end of the option in the list; the trigger shows only the label.",
-        "figma": [
-          {
-            "name": "options",
-            "type": "VARIANT",
-            "values": [
-              "2",
-              "3",
-              "4",
-              "5",
-              "6",
-              "7"
-            ]
-          }
-        ],
-        "codeOnly": false,
-        "rule": "list-count",
-        "why": "Figma can't loop over data: the designer picks how many items the instance shows (owner's rule 2026-10-21)"
+        "figma": null,
+        "codeOnly": true,
+        "rule": "exception",
+        "why": "the options are drawn by the nested Menu, not by the Select: state=open holds an exposed Menu instance and the designer picks how many options it lists on that Menu (its own options = 2 … 7 VARIANT) — the Select itself has no options property (owner's decision 2026-10-21) (approved 2026-10-21)"
       },
       "value": {
         "description": "Controlled selected value.",

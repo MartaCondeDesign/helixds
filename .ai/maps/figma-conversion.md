@@ -38,7 +38,10 @@ list the component draws item by item — CheckboxGroup's and RadioGroup's `opti
 FAB's `actions`… — is a VARIANT named like the prop whose values are how many items show (`options` = 2 … 7, named exactly like the component's code prop;
 each item an instance of the item component with its own example text). The range is 2–7 unless the contract's
 `figma.listCount` sets another (`{ "avatars": { "min": 1, "max": 7 } }` — AvatarGroup, built before the rule). A list
-that only shows inside an overlay (Select, MultiSelect, Menu) is drawn open. Selected values (`value`, `values`,
+that only shows inside an overlay is drawn open, and the count belongs to the component that draws the items:
+Menu has `options` = 2 … 7 (no MenuItem inside the Menu set is selected — selected is MenuItem's own state); Select
+and MultiSelect have no `options` property — their `state=open` variants hold an exposed nested Menu instance and the
+designer picks the count on that Menu (owner's decision 2026-10-21). Selected values (`value`, `values`,
 `defaultValue`) and chart data (`categories`, `series`) aren't items on screen: code only.
 
 **Why a look-changing boolean is a VARIANT, not a BOOLEAN:** a Figma BOOLEAN can only show or hide a layer. It
