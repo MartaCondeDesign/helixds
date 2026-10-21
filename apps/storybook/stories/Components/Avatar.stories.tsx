@@ -26,11 +26,11 @@ export const Default: Story = { args: {} };
 export const Sizes: Story = {
   // The story fixes size (s / m / l) — label and src apply to all three
   argTypes: { size: { control: false } },
-  render: ({ label, src }) => (
+  render: ({ size: _size, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center' }}>
-      <Avatar label={label} src={src} size="s" />
-      <Avatar label={label} src={src} size="m" />
-      <Avatar label={label} src={src} size="l" />
+      <Avatar {...args} size="s" />
+      <Avatar {...args} size="m" />
+      <Avatar {...args} size="l" />
     </div>
   ),
 };
@@ -42,6 +42,7 @@ export const WithImage: Story = {
 export const BrokenImageFallsBackToInitials: Story = {
   args: { label: 'Sara Navarro', src: 'https://broken.invalid/none.jpg' },
   parameters: {
+    controlsCheck: { skip: ['src'], reason: 'after a failed load Avatar keeps the initials until it remounts' },
     docs: { description: { story: 'When the image URL fails to load, Avatar falls back to initials automatically — no consumer handling needed.' } },
   },
 };
@@ -49,13 +50,13 @@ export const BrokenImageFallsBackToInitials: Story = {
 export const MemberList: Story = {
   // The story fixes each member's name (no photo) — size applies to every avatar
   argTypes: { label: { control: false }, src: { control: false } },
-  render: ({ size }) => {
+  render: ({ label: _label, src: _src, ...args }) => {
     const members = ['Ana García', 'Pau Torres', 'Marta Conde', 'Jordi Puig'];
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--helix-primitive-spacing-50)' }}>
         {members.map(m => (
           <div key={m} style={{ display: 'flex', alignItems: 'center', gap: 'var(--helix-primitive-spacing-75)' }}>
-            <Avatar label={m} size={size} />
+            <Avatar {...args} label={m} />
             <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral)' }}>{m}</span>
           </div>
         ))}

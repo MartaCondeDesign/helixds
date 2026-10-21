@@ -20,6 +20,7 @@ type Story = StoryObj<typeof Switch>;
 
 export const Default: Story = {
   args: { label: 'Dark mode' },
+  argTypes: { checked: { control: false }, defaultChecked: { control: false } }, // the story holds the state
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return <Switch {...args} checked={checked} onChange={setChecked} />;

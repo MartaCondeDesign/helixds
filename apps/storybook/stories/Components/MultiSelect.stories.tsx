@@ -46,6 +46,7 @@ export const Default: Story = {};
 
 export const WithSelection: Story = {
   args: { defaultValue: ['design', 'frontend'] },
+  argTypes: { placeholder: { control: false } }, // chosen values hide the placeholder
   parameters: {
     docs: { description: { story: 'Selected values sit inside the field as dismissible Chips (24px, size s), 4px from its edge and 4px apart. Each × removes one.' } },
   },
@@ -53,6 +54,7 @@ export const WithSelection: Story = {
 
 export const Wrapping: Story = {
   args: { defaultValue: ['design', 'research', 'frontend', 'backend', 'writing'] },
+  argTypes: { placeholder: { control: false } }, // chosen values hide the placeholder
   parameters: {
     docs: { description: { story: 'When the chips don\'t fit on one line the field grows downward — 32px is a minimum, rows sit 4px apart.' } },
   },
@@ -82,6 +84,7 @@ export const Required: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, defaultValue: ['design'] },
+  argTypes: { placeholder: { control: false } }, // the chosen value hides the placeholder
 };
 
 // Hidden from the sidebar and Docs (!dev, !autodocs) but still run by the test-runner — it's the

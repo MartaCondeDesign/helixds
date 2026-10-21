@@ -49,6 +49,7 @@ export const Stack: Story = {
 };
 
 export const Controlled: Story = {
+  argTypes: { expanded: { control: false }, defaultExpanded: { control: false } }, // the story holds the open state
   render: args => {
     const [expanded, setExpanded] = useState(true);
     return (

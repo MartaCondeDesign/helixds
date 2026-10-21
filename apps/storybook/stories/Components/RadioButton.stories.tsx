@@ -22,7 +22,7 @@ const FIXED_WIDTH = '280px';
 
 export const AllTypes: Story = {
   // The story fixes each radio's label and checked state — the rest applies to both
-  argTypes: { label: { control: false }, checked: { control: false }, defaultChecked: { control: false } },
+  argTypes: { label: { control: false }, checked: { control: false }, defaultChecked: { control: false }, name: { control: false }, value: { control: false } },
   render: ({ description, disabled, required, invalid, errorMessage }) => {
     const [checked, setChecked] = useState(false);
     const shared = { description, disabled, required, invalid, errorMessage };
@@ -57,7 +57,7 @@ export const Invalid: Story = {
 export const Disabled: Story = {
   args: { label: 'Disabled' },
   // The story fixes disabled (on) and checked (off / on) — label, description… apply to both
-  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false } },
+  argTypes: { disabled: { control: false }, checked: { control: false }, defaultChecked: { control: false }, name: { control: false }, value: { control: false } },
   render: ({ label, description, required, invalid, errorMessage }) => {
     const shared = { label, description, required, invalid, errorMessage };
     return (

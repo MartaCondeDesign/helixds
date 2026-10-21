@@ -33,6 +33,7 @@ export default meta;
 type Story = StoryObj<typeof RadioGroup>;
 
 export const Default: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('pro');
     return <RadioGroup {...args} value={value} onChange={setValue} />;
@@ -41,6 +42,7 @@ export const Default: Story = {
 
 export const Horizontal: Story = {
   args: { options: SIZE_OPTIONS, label: 'Team size', orientation: 'horizontal' },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('');
     return <RadioGroup {...args} value={value} onChange={setValue} />;
@@ -68,6 +70,7 @@ export const WithDisabledOption: Story = {
     value: 'free',
     label: 'Plan',
   },
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('free');
     return <RadioGroup {...args} value={value} onChange={setValue} />;

@@ -95,7 +95,8 @@ export const AllVariants: Story = {
 export const Loading: Story = {
   args: { children: 'Saving…' },
   // The story fixes isLoading (on) and variant (one of each) — label, size, icons apply to all four
-  argTypes: { variant: { control: false }, isLoading: { control: false } },
+  // iconEnd and disabled are off too: the spinner takes iconEnd's place, and a loading button is already inert
+  argTypes: { variant: { control: false }, isLoading: { control: false }, iconEnd: { control: false }, disabled: { control: false } },
   render: ({ variant: _variant, ...args }) => (
     <div style={{ display: 'flex', gap: 'var(--helix-primitive-spacing-75)', alignItems: 'center', flexWrap: 'wrap' }}>
       <Button {...args} variant="primary" isLoading />

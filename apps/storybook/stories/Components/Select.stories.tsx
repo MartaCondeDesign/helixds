@@ -53,6 +53,7 @@ type Story = StoryObj<typeof Select>;
 export const Default: Story = {};
 
 export const Controlled: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('');
     return (
@@ -107,11 +108,14 @@ export const Invalid: Story = {
 
 export const Disabled: Story = {
   args: { disabled: true, value: 'designer' },
+  argTypes: { placeholder: { control: false } }, // the chosen value hides the placeholder
 };
 
 export const MinimumWidth: Story = {
   // no fixed width here: the story is about how the trigger hugs its content
   args: { className: undefined },
+  // each Select's label, options, placeholder and value are fixed — the rest applies to both
+  argTypes: { label: { control: false }, placeholder: { control: false }, value: { control: false }, defaultValue: { control: false } },
   render: (args) => {
     const [role, setRole] = useState('');
     const [count, setCount] = useState('');
@@ -165,6 +169,7 @@ export const Open: Story = {
 };
 
 export const KeyboardNavigation: Story = {
+  argTypes: { value: { control: false }, defaultValue: { control: false } }, // the story holds the value in state
   render: (args) => {
     const [value, setValue] = useState('');
     return (
@@ -219,6 +224,8 @@ export const KeyboardNavigation: Story = {
     await expect(canvas.getByRole('button', { name: 'After' })).toHaveFocus();
   },
   parameters: {
+    // the play test leaves an option chosen, and a chosen option hides the placeholder
+    controlsCheck: { skip: ['placeholder'], reason: 'the play test leaves a value, which hides the placeholder' },
     docs: {
       description: {
         story: 'Keyboard test (contract `a11y.keyboardNav`): arrows open and move the highlight, Home/End jump, Enter/Space open and confirm, Escape closes without selecting, Tab closes and moves focus on.',

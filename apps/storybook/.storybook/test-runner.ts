@@ -3,6 +3,7 @@ import path from 'path';
 import type { TestRunnerConfig } from '@storybook/test-runner';
 import { injectAxe, getViolations } from 'axe-playwright';
 import { checkFocusVisible, checkReflow, checkTargetSize, collectAria, collectContrast, collectTargets } from './a11y-extra-checks';
+import { checkControls } from './controls-check';
 
 // Stability criteria 4 (a11y) and 6 (contrast, light + dark) — see docs/ADR/ADR-018-stability-criteria.md.
 // Beyond axe, criterion 4 also gets three checks axe can't do (a11y-extra-checks.ts): target size
@@ -62,6 +63,19 @@ const config: TestRunnerConfig = {
       path.join(RESULTS_DIR, `${context.id}.json`),
       JSON.stringify({ id: context.id, title: context.title, name: context.name, violations: byTheme, focusVisible, targetSize, reflow, aria, applied }, null, 2),
     );
+
+    // Every control changes the canvas (controls-check.ts). Last, after the a11y report is written, and thrown:
+    // a dead control is a broken story, not a finding to aggregate.
+    if (/^(Components|Layout)\//.test(context.title)) {
+      const dead = await checkControls(page, context.id);
+      if (dead.length) {
+        throw new Error(
+          `${context.title} › ${context.name}: ${dead.map(d => `\`${d.arg}\``).join(', ')} ${dead.length > 1 ? 'controls change' : 'control changes'} nothing on the canvas — ` +
+          'the story\'s render drops ' + (dead.length > 1 ? 'those args' : 'that arg') + '. Fix it without asking: apply the shared args to every instance, ' +
+          'or turn off only the controls the story fixes per instance (`argTypes: { x: { control: false } }`). See apps/storybook/CLAUDE.md → "Every story has Controls".',
+        );
+      }
+    }
   },
 };
 

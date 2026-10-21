@@ -71,6 +71,7 @@ export const CardGrid = {
     ] satisfies GridItem[],
   },
   argTypes: {
+    children: { control: false }, // each card's content comes from items
     items: {
       control: 'object',
       description: 'Array of { label, value } — edit here to change the card texts.',
