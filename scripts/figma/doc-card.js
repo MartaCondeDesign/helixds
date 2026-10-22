@@ -10,6 +10,13 @@
  *   doc-body     the ❖ Propstar tables (and any loose component), the main set first; every other set gets
  *                its name above its table (Heading / m / Bold), so a child component (ChartTooltip…) reads as one
  * Tokens (owner's choice): fill/page, radius/2xl, padding spacing/layout/l, gaps spacing/layout/m.
+ * The card is always white so its texts read. A component that can't be seen on white (an inverse variant…) gets a
+ * dark background on its own table only, never on the card (owner's rule 2026-10-22) — CONFIG.dark:
+ *   dark: true                          the whole ❖ table on fill/inverse (every variant needs it)
+ *   dark: { axis: 'y', from: .5, to: 1 } a hard-stop gradient on the table: fill/page, then fill/inverse between
+ *                                        `from` and `to` (fractions of its height, axis 'y', or width, 'x') — no blend,
+ *                                        only the variants that need it go dark. Only for a set with more than one variant:
+ *                                        a single component never gets a background (it would change the component).
  * Safe to re-run: it updates the texts and re-stacks the body; nothing outside the doc frame is touched.
  * The description is the same sentence Storybook's docs page opens with — never the conversion notes.
  */
@@ -18,7 +25,17 @@ const V = {}; for (const v of await figma.variables.getLocalVariablesAsync()) V[
 const TS = Object.fromEntries((await figma.getLocalTextStylesAsync()).map(s => [s.name, s]));
 const STYLE = { title: 'Heading / 3xl / Bold', description: 'Body / l / Regular', subtitle: 'Heading / m / Bold' };
 for (const s of Object.values(STYLE)) await figma.loadFontAsync(TS[s].fontName);
-const paint = n => figma.variables.setBoundVariableForPaint({ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }, 'color', V[n]);
+// bound to the variable, with its real light value as the paint's own color (a black placeholder shows when Figma falls back)
+const rgb = n => { const { r, g, b } = V[n].resolveForConsumer(figma.currentPage).value; return { r, g, b }; };
+const paint = n => figma.variables.setBoundVariableForPaint({ type: 'SOLID', color: rgb(n) }, 'color', V[n]);
+const alias = n => ({ type: 'VARIABLE_ALIAS', id: V[n].id });
+const darkPaint = dark => {
+  if (dark === true) return [paint('fill/inverse')];
+  const { axis = 'y', from = 0, to = 1 } = dark, a = { ...rgb('fill/page'), a: 1 }, b = { ...rgb('fill/inverse'), a: 1 };
+  const stop = (position, color, name) => ({ position, color, boundVariables: { color: alias(name) } });
+  const gradientTransform = axis === 'y' ? [[0, 1, 0], [-1, 0, 1]] : [[1, 0, 0], [0, 1, 0]];
+  return [{ type: 'GRADIENT_LINEAR', gradientTransform, gradientStops: [stop(0, a, 'fill/page'), stop(from, a, 'fill/page'), stop(from, b, 'fill/inverse'), stop(to, b, 'fill/inverse'), stop(to, a, 'fill/page'), stop(1, a, 'fill/page')] }];
+};
 const bind = (n, keys, v) => { for (const k of keys) n.setBoundVariable(k, V[v]); };
 const PAD = ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'], RAD = ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'];
 const text = (name, chars, style, color) => { const t = figma.createText(); t.name = name; t.textStyleId = TS[STYLE[style]].id; t.characters = chars; t.fills = [paint(color)]; return t; };
@@ -55,6 +72,12 @@ for (const CONFIG of CONFIGS) {
     const setName = n.name.startsWith('❖ ') ? n.name.slice(2) : n.name;
     if (!isMain(n)) { const g = vstack(`doc-section ${setName}`, 'spacing/m'); body.appendChild(g); g.appendChild(text('doc-subtitle', setName, 'subtitle', 'text/neutral')); g.appendChild(n); }
     else body.appendChild(n);
+  }
+  const mainTable = items.find(n => isMain(n) && n.name.startsWith('❖'));
+  if (mainTable) {
+    const set = mainTable.findOne(n => n.type === 'COMPONENT_SET');
+    if (CONFIG.dark && !(CONFIG.dark !== true && (set?.children.length ?? 0) < 2)) mainTable.fills = darkPaint(CONFIG.dark);
+    else if (!CONFIG.dark) mainTable.fills = [];
   }
   keep.remove();
   card.x = pos.x; card.y = pos.y;

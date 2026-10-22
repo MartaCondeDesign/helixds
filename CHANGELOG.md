@@ -90,8 +90,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-22 — Figma component pages: one doc card with a real description (#35) ([#35](https://github.com/MartaCondeDesign/helixds/pull/35))
-  - Figma component pages are one doc card: name, the .doc.ts purpose as description, a divider, then the Propstar tables (doc-card.js, pnpm figma:doc-cards, audit check)
+- 2026-10-22 — Doc cards: always white, a dark background only on the component's own table (hard-stop gradient when only some variants need it); every Figma change goes into both files (figmaCommunityFileKey) (latest commit)
+- 2026-10-22 — Update CHANGELOG.md for #35 ([`bacfbe2`](https://github.com/MartaCondeDesign/helixds/commit/bacfbe2))
+- 2026-10-22 — Figma component pages are one doc card: name, the .doc.ts purpose as description, a divider, then the Propstar tables (doc-card.js, pnpm figma:doc-cards, audit check) ([`9d5bf5f`](https://github.com/MartaCondeDesign/helixds/commit/9d5bf5f))
 - 2026-10-22 — docs/github-app.md: the app needs Pull requests read and write (#34) ([`879742b`](https://github.com/MartaCondeDesign/helixds/commit/879742b))
   - docs/github-app.md: the app needs Pull requests read and write
 - 2026-10-22 — Easier to find on npm and GitHub; releases go through the changelog app (#33) ([`8b5273c`](https://github.com/MartaCondeDesign/helixds/commit/8b5273c))

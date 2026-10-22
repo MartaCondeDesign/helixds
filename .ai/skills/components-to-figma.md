@@ -704,6 +704,13 @@ Every component page is one card (owner's layout, 2026-10-22), drawn by `scripts
 | `doc-divider` | 1px line, edge to edge | border/neutral |
 | `doc-body` | the main `❖` table first, then every other set (`doc-section {Name}`: its name above its table) | Heading / m / Bold, text/neutral · gap spacing/layout/m / spacing/m |
 
+**The card is always white**, so its texts read. A component that can't be seen on white (an inverse variant, a white
+control on a white surface) gets a dark background on **its own table only, never on the card** (owner's rule
+2026-10-22): `dark: true` puts the whole `❖` table on fill/inverse; when only some variants need it — and only for a set
+with more than one variant, since a background on a single component would change the component — `dark: { axis, from,
+to }` paints the table with a hard-stop linear gradient (no blend): fill/page, then fill/inverse only across the rows
+(`axis: 'y'`) or columns (`'x'`) that need it. Set it per component in `DARK` in `scripts/figma/doc-cards.ts`.
+
 The description is the component's `purpose` from its `{Name}.doc.ts` — the sentence Storybook's docs page opens
 with, so both say the same thing. Never the conversion notes (those live in the set's own description and in
 `figma-conversion.json`). To change it, change the `.doc.ts` and re-run the card.
@@ -712,19 +719,22 @@ with, so both say the same thing. Never the conversion notes (those live in the 
 into `use_figma`. It is safe to re-run: it keeps the tables and components, re-stacks them and rewrites the texts.
 `propstar.js` puts a regenerated table back in the card, which hugs it.
 
-### Phase 8 — Update the Figma Community copy (owner)
+### Phase 8 — The same change in the Figma Community file (always)
 
-The file people open from Storybook's **View in Figma** and the README is **not** the file this skill edits.
-`contracts/figma-sync.json` has both: `figmaFileKey` / `figmaFileUrl` is the working file (account
-martacondedesign) that every script, audit and `use_figma` call reads and writes; `figmaCommunityUrl` is a
-**duplicate** published on Figma Community from another account (martacondedieguez). The duplicate is a
-snapshot — nothing updates it, so after every sync it falls behind the working file and the code.
+There are **two Figma files and both must always match** (owner's rule 2026-10-22). `contracts/figma-sync.json`:
+- `figmaFileKey` / `figmaFileUrl`: the **working file** (account martacondedesign), the one every script and audit reads.
+- `figmaCommunityFileKey`: the **source file of the Figma Community copy** (account martacondedieguez), the one
+  published at `figmaCommunityUrl`, which Storybook's View in Figma and the README open.
 
-So after a sync is done and merged, the owner brings the changes over to the Community file and publishes an
-update there. An agent can't do it (different account, no access): **end the sync by reminding the owner,
-naming which component pages changed**, and don't report the work as finished until they confirm it. The
-4 layout components (AppShell, PageHeader, SideNav, TopBar) are not in the Community file by the owner's
-choice (rule 11b) — changes to those don't need copying.
+Every change made in the working file — a component, its variants or properties, its Propstar table, its doc card,
+tokens, styles, icons — is made **in the same step in the Community file too**: run the same `use_figma` script with
+`fileKey` set to `figmaCommunityFileKey`, check it the same way (audit / screenshot), and only then report the work done.
+Never leave one of the two behind. The 4 layout components (AppShell, PageHeader, SideNav, TopBar) are in neither
+(rule 11b).
+
+If the Community file can't be edited (the MCP says there is no edit access), stop and tell the owner: that account
+has to share the file, as editor, with the account the Figma MCP signs in as (`whoami`). Publishing the update on
+Figma Community (Publish → Update) stays the owner's step, once both files match.
 
 ## Output
 
@@ -749,7 +759,7 @@ After building the component:
 - [ ] Every bordered layer has its stroke in every variant, same weight (border-always.md)
 - [ ] The set sits in a Propstar property table (Phase 7)
 - [ ] The page is one doc card with the `.doc.ts` purpose as description (Phase 7b, `pnpm figma:doc-cards {Name}`)
-- [ ] The owner was told which pages to copy to the Figma Community file and publish (Phase 8)
+- [ ] The same change is in the Figma Community file (`figmaCommunityFileKey`), checked, and the owner was told to publish the update (Phase 8)
 
 - [ ] Component name matches code: PascalCase (`Button`, not `button`)
 - [ ] VARIANT property names are lowercase (`variant`, `size`, `disabled`) — match code exactly

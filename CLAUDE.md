@@ -145,8 +145,12 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    rounded frame (fill/page, radius/2xl, padding spacing/layout/l) with the component's name, its description — the
    `purpose` from its `{Name}.doc.ts`, the sentence Storybook's docs page opens with, never conversion notes — a divider
    edge to edge (border/neutral), then the Propstar table(s); a child set (ChartTooltip…) gets its name above its table.
+   The card is always white so its texts read: a component that can't be seen on white gets a dark background
+   (fill/inverse) on its own table only, never on the card — and when only some of a set's variants need it, a hard-stop
+   gradient (white, then dark only behind those rows or columns; never on a single-variant component).
    `scripts/figma/doc-card.js` draws it (`pnpm figma:doc-cards [Name]` fills it in): run it on every new component and
-   after every change to a component's page or purpose, in both Figma files (Phase 8). The Propstar table holds only the real
+   after every change to a component's page or purpose. **Every Figma change goes into both Figma files** — the working
+   file and the Figma Community source file (`figma-sync.json` → `figmaCommunityFileKey`), in the same step (Phase 8). The Propstar table holds only the real
    COMPONENT_SET — boolean properties are toggled in the properties panel, never expanded into columns of
    instance copies (they read as extra variants). Details: `.ai/skills/components-to-figma.md`, rules 6 and 9.
 13. **Fixing a component never uses a hand-typed value — and the token is the owner's choice.** A fix only
