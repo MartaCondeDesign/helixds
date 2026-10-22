@@ -5,11 +5,12 @@
 commit becomes the latest one. If the workflow pushes it with its own `GITHUB_TOKEN`, GitHub holds the CI run
 it triggers for approval, so the pull request never gets a `checks` result and can't be merged.
 
-A push made with a **GitHub App's** token triggers CI normally. That's all this app is for: it can write to
-this one repository, and the Changelog workflow uses it to push the CHANGELOG.md commit. Set it up once.
+A push made with a **GitHub App's** token triggers CI normally. It can write to this one repository: the Changelog
+workflow uses it to push the CHANGELOG.md commit, and the Release workflow to open the Version Packages pull
+request and push its commits (both need CI to run on them). Set it up once.
 
 > **Status:** set up on 2026-10-22 — app `helix-changelog`, installed on this repository only, with Contents
-> read/write and Pull requests read-only. Both secrets are in the repository.
+> and Pull requests read/write. Both secrets are in the repository.
 
 ## 1. Create the app (github.com, 2 min)
 
@@ -21,7 +22,7 @@ Go to **https://github.com/settings/apps/new** and fill in:
 | Homepage URL | `https://github.com/MartaCondeDesign/helixds` |
 | Webhook → Active | **unchecked** |
 | Repository permissions → Contents | **Read and write** |
-| Repository permissions → Pull requests | **Read-only** |
+| Repository permissions → Pull requests | **Read and write** (the release workflow opens the Version Packages PR with it) |
 | Where can this GitHub App be installed? | **Only on this account** |
 
 Click **Create GitHub App**. On the page that opens:
