@@ -90,7 +90,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-21 — Changelog commits are pushed by a GitHub App, so CI runs on them (#31) ([#31](https://github.com/MartaCondeDesign/helixds/pull/31))
+- 2026-10-22 — The changelog GitHub App is set up (#32) ([#32](https://github.com/MartaCondeDesign/helixds/pull/32))
+  - The changelog GitHub App is set up
+- 2026-10-21 — Changelog commits are pushed by a GitHub App, so CI runs on them (#31) ([`c9f74da`](https://github.com/MartaCondeDesign/helixds/commit/c9f74da))
   - Changelog commits are pushed by a GitHub App, so CI runs on them
 - 2026-10-21 — AppShell: SideNav divider + collapsed SideNav with a menu button (#26) ([`581b200`](https://github.com/MartaCondeDesign/helixds/commit/581b200))
   - AppShell: divider on the SideNav and a collapsed SideNav below 768px

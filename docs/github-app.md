@@ -8,6 +8,9 @@ it triggers for approval, so the pull request never gets a `checks` result and c
 A push made with a **GitHub App's** token triggers CI normally. That's all this app is for: it can write to
 this one repository, and the Changelog workflow uses it to push the CHANGELOG.md commit. Set it up once.
 
+> **Status:** set up on 2026-10-22 — app `helix-changelog`, installed on this repository only, with Contents
+> read/write and Pull requests read-only. Both secrets are in the repository.
+
 ## 1. Create the app (github.com, 2 min)
 
 Go to **https://github.com/settings/apps/new** and fill in:
