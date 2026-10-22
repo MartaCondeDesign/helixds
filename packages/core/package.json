@@ -1,11 +1,11 @@
 {
   "name": "@helixds/react",
   "version": "0.1.0",
-  "description": "Helix DS core components — native HTML elements + Tailwind CSS v4",
+  "description": "Accessible React 19 design system — native HTML components, Tailwind CSS v4 and DTCG design tokens, with JSON contracts and an MCP server so AI coding agents use it without guessing.",
   "type": "module",
   "license": "MIT",
   "author": "Marta Conde",
-  "homepage": "https://github.com/MartaCondeDesign/helixds/tree/main/packages/core#readme",
+  "homepage": "https://martacondedesign.github.io/helixds/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MartaCondeDesign/helixds.git",
@@ -69,5 +69,26 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "typescript": "*"
-  }
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "component-library",
+    "ui",
+    "ui-components",
+    "tailwindcss",
+    "tailwind",
+    "accessibility",
+    "a11y",
+    "wcag",
+    "design-tokens",
+    "dtcg",
+    "dark-mode",
+    "storybook",
+    "ai",
+    "ai-agents",
+    "mcp",
+    "claude-code",
+    "cursor"
+  ]
 }

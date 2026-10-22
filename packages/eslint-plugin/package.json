@@ -44,5 +44,15 @@
   },
   "devDependencies": {
     "eslint": "^9.0.0"
-  }
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "design-system",
+    "design-tokens",
+    "react",
+    "lint",
+    "ai-agents"
+  ]
 }
