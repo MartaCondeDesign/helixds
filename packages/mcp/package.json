@@ -53,5 +53,17 @@
   "devDependencies": {
     "tsup": "^8.0.0",
     "tsx": "^4.23.15"
-  }
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai-agents",
+    "claude",
+    "claude-code",
+    "cursor",
+    "design-system",
+    "react",
+    "design-tokens"
+  ]
 }

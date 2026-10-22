@@ -14,6 +14,8 @@ Explicit per-component contracts, script-verified tokens, and a canonical prop v
 ![Tailwind](https://img.shields.io/badge/tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript&logoColor=white)
 ![AI-ready](https://img.shields.io/badge/AI--ready-contracts%20%2B%20evals-000000)
+[![npm](https://img.shields.io/npm/v/@helixds/react?label=%40helixds%2Freact&color=cb3837&logo=npm)](https://www.npmjs.com/package/@helixds/react)
+[![Storybook](https://img.shields.io/badge/storybook-live-ff4785?logo=storybook&logoColor=white)](https://martacondedesign.github.io/helixds/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
 <br>
@@ -153,6 +155,10 @@ Issues and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTI
 ## Security
 
 Found a vulnerability? Please don't open a public issue — see [SECURITY.md](SECURITY.md) for how to report it privately.
+
+## Support
+
+If Helix is useful to you, a ⭐ on the repo helps other people find it. Questions and ideas are welcome in [Discussions](https://github.com/MartaCondeDesign/helixds/discussions); bugs go in [Issues](https://github.com/MartaCondeDesign/helixds/issues).
 
 ## License
 

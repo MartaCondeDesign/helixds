@@ -90,7 +90,9 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-22 — The changelog GitHub App is set up (#32) ([#32](https://github.com/MartaCondeDesign/helixds/pull/32))
+- 2026-10-22 — Easier to find on npm and GitHub; releases go through the changelog app (#33) ([#33](https://github.com/MartaCondeDesign/helixds/pull/33))
+  - Easier to find on npm and GitHub; releases go through the changelog app
+- 2026-10-22 — The changelog GitHub App is set up (#32) ([`37e94a7`](https://github.com/MartaCondeDesign/helixds/commit/37e94a7))
   - The changelog GitHub App is set up
 - 2026-10-21 — Changelog commits are pushed by a GitHub App, so CI runs on them (#31) ([`c9f74da`](https://github.com/MartaCondeDesign/helixds/commit/c9f74da))
   - Changelog commits are pushed by a GitHub App, so CI runs on them

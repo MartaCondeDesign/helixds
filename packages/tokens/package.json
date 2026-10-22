@@ -49,5 +49,15 @@
   "devDependencies": {
     "tsx": "*",
     "typescript": "*"
-  }
+  },
+  "keywords": [
+    "design-tokens",
+    "dtcg",
+    "css-variables",
+    "css-custom-properties",
+    "design-system",
+    "tailwindcss",
+    "theming",
+    "dark-mode"
+  ]
 }
