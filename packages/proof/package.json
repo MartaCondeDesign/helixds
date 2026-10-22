@@ -1,6 +1,6 @@
 {
   "name": "@helixds/proof",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Proof — see what the agents actually built. Turns saved coding-agent answers into one shareable proof.html — every answer rendered, screenshotted and laid out per context level and rep next to its score. Design-system agnostic: everything system-specific lives in proof.config.mjs",
   "type": "module",
   "license": "MIT",

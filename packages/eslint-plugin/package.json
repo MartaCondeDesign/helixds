@@ -1,6 +1,6 @@
 {
   "name": "@helixds/eslint-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Real-time lint rules for Helix DS — canonical props, semantic color tokens and Helix components over native controls",
   "type": "module",
   "license": "MIT",
