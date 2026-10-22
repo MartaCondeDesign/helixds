@@ -141,8 +141,16 @@ Scope: `@helixds`. Token prefix: `--helix-`. Data prefix: `data-helix-`.
    2026-10-21). AppShell, PageHeader, SideNav, TopBar and the page stories (Dashboard, Form, Data analytics…)
    stay in code and Storybook only. `pnpm verify:stable` marks Layout components' Figma column `–` (not
    required), so they reach stable on the 8 automatic criteria alone.
-12. **A Figma component page shows the component once.** The doc frame (title + description) has no fill
-   (transparent) and is wide enough that its text is never clipped; the Propstar table holds only the real
+12. **A Figma component page shows the component once, in one doc card** (owner's layout 2026-10-22): a white
+   rounded frame (fill/page, radius/2xl, padding spacing/layout/l) with the component's name, its description — the
+   `purpose` from its `{Name}.doc.ts`, the sentence Storybook's docs page opens with, never conversion notes — a divider
+   edge to edge (border/neutral), then the Propstar table(s); a child set (ChartTooltip…) gets its name above its table.
+   The card is always white so its texts read: a component that can't be seen on white gets a dark background
+   (fill/inverse) on its own table only, never on the card — and when only some of a set's variants need it, a hard-stop
+   gradient (white, then dark only behind those rows or columns; never on a single-variant component).
+   `scripts/figma/doc-card.js` draws it (`pnpm figma:doc-cards [Name]` fills it in): run it on every new component and
+   after every change to a component's page or purpose. **Every Figma change goes into both Figma files** — the working
+   file and the Figma Community source file (`figma-sync.json` → `figmaCommunityFileKey`), in the same step (Phase 8). The Propstar table holds only the real
    COMPONENT_SET — boolean properties are toggled in the properties panel, never expanded into columns of
    instance copies (they read as extra variants). Details: `.ai/skills/components-to-figma.md`, rules 6 and 9.
 13. **Fixing a component never uses a hand-typed value — and the token is the owner's choice.** A fix only
@@ -226,6 +234,10 @@ pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
                             (every code prop, the Figma property it must be, what Figma has, order, Figma-only extras) —
                             rule 16's naming is approved by the owner, never chosen by the agent
 pnpm test:figma-props-hook  test that Figma properties hook
+                            scripts/claude-figma-mirror-hook.mjs (PostToolUse on use_figma): a script that changed the
+                            working Figma file (figmaFileKey) tells the agent to run it on the martacondedieguez file too
+                            (figmaCommunityFileKey, the one published on Figma Community) in the same step
+pnpm test:figma-mirror-hook test that Figma mirror hook
 pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
                             the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
                             In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json

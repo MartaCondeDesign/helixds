@@ -46,6 +46,17 @@
             "statusMessage": "Helix lint"
           }
         ]
+      },
+      {
+        "matcher": "mcp__.*use_figma",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/claude-figma-mirror-hook.mjs\"",
+            "timeout": 10,
+            "statusMessage": "Helix: both Figma files"
+          }
+        ]
       }
     ]
   }

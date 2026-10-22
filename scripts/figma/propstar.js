@@ -3,7 +3,7 @@
  * through the Figma MCP `use_figma` tool. Paste with CONFIG filled in:
  *   { setId, rows: [{ label, props }], cols: [{ label, props }], groups: [[label, span]], base: { ...props } }
  * A cell shows the variant whose props = base + row.props + col.props; cells with no such variant stay empty.
- * Replaces the set's current table (if any) in place, resizes the page's doc frame and the set to fit.
+ * Replaces the set's current table (if any) in place and resizes the set to fit; the page's doc card (doc-card.js) hugs it.
  */
 const CONFIG = __CONFIG__;
 const set = await figma.getNodeByIdAsync(CONFIG.setId); let page = set; while (page.type !== 'PAGE') page = page.parent; await figma.setCurrentPageAsync(page);
@@ -32,5 +32,7 @@ set.x = colX(0); set.y = rowY(0);
 rows.forEach((r, ri) => cols.forEach((c, ci) => { const v = vOf(r, c); if (!v) return; v.x = colX(ci) - colX(0) + 24; v.y = rowY(ri) - rowY(0) + (rowH[ri] - ext(v).h) / 2; }));
 set.resize(colW.reduce((a, b) => a + b, 0), rowH.reduce((a, b) => a + b, 0));
 const unplaced = set.children.filter(v => !rows.some(r => cols.some(c => vOf(r, c) === v))).map(v => v.name);
-if (doc.type === 'FRAME') { const texts = doc.children.filter(n => n.type === 'TEXT').sort((a, b) => a.y - b.y); const d = texts[1]; if (d && set.description) { for (const s of d.getStyledTextSegments(['fontName'])) await figma.loadFontAsync(s.fontName); d.characters = set.description; } doc.resize(Math.max(table.x + table.width, ...texts.map(t => t.width)), table.y + table.height); }
+// The page's doc card (scripts/figma/doc-card.js) is auto-layout and hugs the new table; an old free-form doc frame is resized
+// to fit. The card's title and description are doc-card.js's job — never set.description (that's the conversion note).
+if (doc.type === 'FRAME' && doc.layoutMode === 'NONE') doc.resize(Math.max(table.x + table.width, ...doc.children.filter(n => n.type === 'TEXT').map(t => t.width)), table.y + table.height);
 return { table: table.id, unplaced };
