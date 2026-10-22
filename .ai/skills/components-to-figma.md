@@ -93,9 +93,9 @@ not done until **Phase 6's audit passes** — `pnpm verify:stable` won't show it
 9. **Page and doc frame.** Each component has its own page, placed at its **alphabetical** position — core
    components A→Z after `Icons` — the same order as Storybook's sidebar (root `CLAUDE.md` rule 11). **Storybook's
    Layout components and Pages are not built in Figma for now** (rule 11b, owner decision 2026-10-21): don't
-   create, rebuild or audit AppShell, PageHeader, SideNav, TopBar or any page story there. On the page, the doc frame holding the title, description
-   and `❖` table has **no fill** (transparent, never white) and is at least as wide as its widest text, so the
-   description is never clipped.
+   create, rebuild or audit AppShell, PageHeader, SideNav, TopBar or any page story there. On the page, everything
+   sits in **one doc card** (owner's layout, 2026-10-22 — Phase 7b): a white rounded frame named like the component
+   with the title, the description, a divider edge to edge and below it the `❖` table(s).
 
 ## Files to read BEFORE starting (mandatory, in this order)
 
@@ -693,6 +693,25 @@ column headers with brackets, dashed `#9747FF` cells with 24px padding, the real
 the all-booleans-false cells and instances in the rest. Labels are Propstar's purple annotation chrome, not
 design tokens.
 
+### Phase 7b — Doc card (every new component, and after every change)
+
+Every component page is one card (owner's layout, 2026-10-22), drawn by `scripts/figma/doc-card.js`:
+
+| Part | What | Tokens / styles |
+|---|---|---|
+| card | the page's doc frame (named like the component), vertical auto-layout, hugs its content | fill/page · radius/2xl · padding spacing/layout/l · gap spacing/layout/m |
+| `doc-header` | `doc-title` (the name) + `doc-description` (720px wide) | Heading / 3xl / Bold, text/neutral · Body / l / Regular, text/neutral/light · gap spacing/s |
+| `doc-divider` | 1px line, edge to edge | border/neutral |
+| `doc-body` | the main `❖` table first, then every other set (`doc-section {Name}`: its name above its table) | Heading / m / Bold, text/neutral · gap spacing/layout/m / spacing/m |
+
+The description is the component's `purpose` from its `{Name}.doc.ts` — the sentence Storybook's docs page opens
+with, so both say the same thing. Never the conversion notes (those live in the set's own description and in
+`figma-conversion.json`). To change it, change the `.doc.ts` and re-run the card.
+
+`pnpm figma:doc-cards Button` prints the script with its CONFIG filled in (no names = every core page); paste it
+into `use_figma`. It is safe to re-run: it keeps the tables and components, re-stacks them and rewrites the texts.
+`propstar.js` puts a regenerated table back in the card, which hugs it.
+
 ### Phase 8 — Update the Figma Community copy (owner)
 
 The file people open from Storybook's **View in Figma** and the README is **not** the file this skill edits.
@@ -729,6 +748,7 @@ After building the component:
 - [ ] No negative `itemSpacing`, no spacer frames, every padding/gap/radius bound to a variable
 - [ ] Every bordered layer has its stroke in every variant, same weight (border-always.md)
 - [ ] The set sits in a Propstar property table (Phase 7)
+- [ ] The page is one doc card with the `.doc.ts` purpose as description (Phase 7b, `pnpm figma:doc-cards {Name}`)
 - [ ] The owner was told which pages to copy to the Figma Community file and publish (Phase 8)
 
 - [ ] Component name matches code: PascalCase (`Button`, not `button`)

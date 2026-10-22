@@ -56,7 +56,7 @@ const colById = Object.fromEntries(cols.map(c => [c.id, c]));
 const vars = await figma.variables.getLocalVariablesAsync();
 const varById = Object.fromEntries(vars.map(v => [v.id, v]));
 const theme = cols.find(c => c.name === 'Theme');
-const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [], lists: [] };
+const issues = { colors: [], spacing: [], spacers: [], states: [], parity: [], border: [], fallback: [], layout: [], binding: [], clip: [], propstar: [], lists: [], docCard: [] };
 const where = (variant, node) => `${variant.name} › ${node === variant ? '(root)' : node.name}`;
 
 function checkPaints(variant, node, key) {
@@ -288,6 +288,22 @@ if (EXPECTED.layout) {
       if (!axes[k]?.includes(v)) issues.propstar.push(`label "${l}": ${k}=${v} is not a value of the set — regenerate the table`);
     const placed = set.children.filter(v => v.x >= 0 && v.y >= 0).length;
     if (placed < set.children.length) issues.propstar.push(`${set.children.length - placed} variant(s) outside the table`);
+  }
+}
+
+// 11b doc card — the page is one card (scripts/figma/doc-card.js, owner's layout 2026-10-22): title, description,
+// divider and doc-body, white and rounded, with the set's table inside. Only a component that has its own page.
+{
+  let card = set; while (card && !(card.parent?.type === 'PAGE')) card = card.parent;
+  const own = card && card.name.trim() === set.name;
+  if (own || card?.findOne(n => n.name === 'doc-header')) {
+    const names = card.children.map(n => n.name);
+    for (const part of ['doc-header', 'doc-divider', 'doc-body']) if (!names.includes(part)) issues.docCard.push(`no ${part} in the page's card — run scripts/figma/doc-card.js (pnpm figma:doc-cards ${card.name.trim()})`);
+    if (card.layoutMode !== 'VERTICAL') issues.docCard.push('the card is not a vertical auto-layout');
+    const fill = card.fills?.[0]?.boundVariables?.color?.id;
+    if (!fill || varById[fill]?.name !== 'fill/page') issues.docCard.push('the card fill is not bound to fill/page');
+    const desc = card.findOne(n => n.name === 'doc-description');
+    if (desc && (!desc.characters.trim() || desc.characters.includes('contracts/'))) issues.docCard.push('the description is empty or a conversion note — it must be the .doc.ts purpose');
   }
 }
 
