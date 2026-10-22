@@ -729,7 +729,9 @@ There are **two Figma files and both must always match** (owner's rule 2026-10-2
 Every change made in the working file — a component, its variants or properties, its Propstar table, its doc card,
 tokens, styles, icons — is made **in the same step in the Community file too**: run the same `use_figma` script with
 `fileKey` set to `figmaCommunityFileKey`, check it the same way (audit / screenshot), and only then report the work done.
-Never leave one of the two behind. The 4 layout components (AppShell, PageHeader, SideNav, TopBar) are in neither
+Never leave one of the two behind — `scripts/claude-figma-mirror-hook.mjs` (PostToolUse on `use_figma`) reminds the
+agent after every script that changed the working file. The second file is edited through the Figma MCP connection
+signed in as martacondedieguez (`figma-community`, a user-level MCP server). The 4 layout components (AppShell, PageHeader, SideNav, TopBar) are in neither
 (rule 11b).
 
 If the Community file can't be edited (the MCP says there is no edit access), stop and tell the owner: that account

@@ -234,6 +234,10 @@ pnpm test:owner-gate-hook   test that Claude Code owner-gate hook
                             (every code prop, the Figma property it must be, what Figma has, order, Figma-only extras) —
                             rule 16's naming is approved by the owner, never chosen by the agent
 pnpm test:figma-props-hook  test that Figma properties hook
+                            scripts/claude-figma-mirror-hook.mjs (PostToolUse on use_figma): a script that changed the
+                            working Figma file (figmaFileKey) tells the agent to run it on the martacondedieguez file too
+                            (figmaCommunityFileKey, the one published on Figma Community) in the same step
+pnpm test:figma-mirror-hook test that Figma mirror hook
 pnpm setup:ai <app>         install Helix's agent context in an app: AGENTS.md, plus the MCP server (.mcp.json) and
                             the three hooks above (.claude/settings.json), run from this clone (${HELIX_DS_DIR:-path}).
                             In an app, the owner gate guards node_modules/@helixds and patches/ instead of tokens.json
