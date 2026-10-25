@@ -11,6 +11,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 - 2026-10-25 — Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview (#36) ([#36](https://github.com/MartaCondeDesign/helixds/pull/36))
   - Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview
+  - Patterns: the batch action bar is white, no border — just its label and buttons
 - 2026-10-21 — Remove the illustrations, keep their motion tokens (#25) ([`2299945`](https://github.com/MartaCondeDesign/helixds/commit/2299945))
   - Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
@@ -92,7 +93,6 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
-- 2026-10-25 — Patterns: the batch action bar is white, no border — just its label and buttons (latest commit)
 - 2026-10-22 — Figma component pages: one doc card with a real description (#35) ([`394823a`](https://github.com/MartaCondeDesign/helixds/commit/394823a))
   - Figma component pages are one doc card: name, the .doc.ts purpose as description, a divider, then the Propstar tables (doc-card.js, pnpm figma:doc-cards, audit check)
   - Doc cards: always white, a dark background only on the component's own table (hard-stop gradient when only some variants need it); every Figma change goes into both files (figmaCommunityFileKey)
