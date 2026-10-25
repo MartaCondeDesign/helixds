@@ -9,7 +9,8 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-25 — Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview (latest commit)
+- 2026-10-25 — Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview (#36) ([#36](https://github.com/MartaCondeDesign/helixds/pull/36))
+  - Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview
 - 2026-10-21 — Remove the illustrations, keep their motion tokens (#25) ([`2299945`](https://github.com/MartaCondeDesign/helixds/commit/2299945))
   - Remove the illustrations (Storybook's Assets → Illustrations and prototypes/explainers); their motion tokens stay in tokens.json for reuse
 - 2026-10-19 — Eval gallery: prose answers no longer break Storybook's build (#14) ([`d71487c`](https://github.com/MartaCondeDesign/helixds/commit/d71487c))
