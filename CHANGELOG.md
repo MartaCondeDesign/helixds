@@ -9,7 +9,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### ⚠️ Breaking changes
 
-- 2026-10-25 — Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview (#36) ([#36](https://github.com/MartaCondeDesign/helixds/pull/36))
+- 2026-10-25 — Storybook: drop Eval Gallery, hide AI Readiness, Status only Overview, white batch action bar (#36) ([#36](https://github.com/MartaCondeDesign/helixds/pull/36))
   - Storybook: drop Eval Gallery, hide AI Readiness, Status shows only Overview
   - Patterns: the batch action bar is white, no border — just its label and buttons
 - 2026-10-21 — Remove the illustrations, keep their motion tokens (#25) ([`2299945`](https://github.com/MartaCondeDesign/helixds/commit/2299945))
