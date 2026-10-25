@@ -92,6 +92,7 @@ split is a heuristic (conventional prefix first, then keywords), not a semver gu
 
 ### Changed & fixed
 
+- 2026-10-25 — Patterns: the batch action bar is white, no border — just its label and buttons (latest commit)
 - 2026-10-22 — Figma component pages: one doc card with a real description (#35) ([`394823a`](https://github.com/MartaCondeDesign/helixds/commit/394823a))
   - Figma component pages are one doc card: name, the .doc.ts purpose as description, a divider, then the Propstar tables (doc-card.js, pnpm figma:doc-cards, audit check)
   - Doc cards: always white, a dark background only on the component's own table (hard-stop gradient when only some variants need it); every Figma change goes into both files (figmaCommunityFileKey)

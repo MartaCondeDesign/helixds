@@ -144,12 +144,8 @@ export const ActionBarBatchSelection: Story = {
         display:     'flex',
         alignItems:  'center',
         gap:         'var(--helix-primitive-spacing-75)',
-        padding:     'var(--helix-primitive-spacing-75) var(--helix-primitive-spacing-100)',
-        background:  'var(--helix-color-fill-primary-light)',
-        border:      '1px solid var(--helix-color-border-focus)',
-        borderRadius:'var(--helix-radius-m)',
       }}>
-        <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', fontWeight: 'var(--helix-primitive-fontWeight-medium)', color: 'var(--helix-color-text-primary)' }}>
+        <span style={{ fontSize: 'var(--helix-primitive-fontSize-s)', color: 'var(--helix-color-text-neutral-light)' }}>
           {selected} selected
         </span>
         <div style={{ display: 'flex', gap: 'var(--helix-spacing-2xs)' }}>
