@@ -5,7 +5,7 @@ import tseslint from 'typescript-eslint';
 import helix from '@helixds/eslint-plugin';
 
 export default [
-  { ignores: ['**/node_modules/**', '**/dist/**', '**/storybook-static/**', 'apps/storybook/eval-gallery/**', 'apps/storybook/.proof/**'] },
+  { ignores: ['**/node_modules/**', '**/dist/**', '**/storybook-static/**', 'apps/storybook/.proof/**'] },
   {
     ...helix.configs.recommended,
     files: ['apps/**/*.{js,jsx,ts,tsx}'],

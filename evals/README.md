@@ -59,8 +59,8 @@ pnpm eval:ladder                                          # without --round: onl
 ```
 
 A round is what you compare: Storybook → Data → Metrics → *Agent Context Ladder* charts pass rate per
-level, round after round (after `pnpm quality snapshot`, which the button runs for you). Proof and
-Storybook → Data → Eval Gallery show each task × level's latest round.
+level, round after round (after `pnpm quality snapshot`, which the button runs for you). Proof shows
+each task × level's latest round.
 
 ### `eval:generate`
 

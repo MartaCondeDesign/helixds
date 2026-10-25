@@ -34,11 +34,11 @@ export default {
     command: `pnpm eval:ladder --levels ${level.variant} --prompt {task} --yes`,
   }])),
   // The "Run evals" button (eg, or pnpm proof --serve): a new measurement round, recorded in
-  // evals/rounds.json; then Metrics and Storybook's gallery are refreshed too.
+  // evals/rounds.json; then Metrics is refreshed too.
   runner: {
     plan: ['pnpm', '-s', 'eval:ladder', '--round', '--json', '--levels', '{levels}', '--prompt', '{tasks}', '--runs', '{runs}'],
     run: ['pnpm', '-s', 'eval:ladder', '--round', '--yes', '--levels', '{levels}', '--prompt', '{tasks}', '--runs', '{runs}'],
-    after: [['pnpm', '-s', 'quality', 'snapshot'], ['pnpm', '-s', 'eval:gallery']],
+    after: [['pnpm', '-s', 'quality', 'snapshot']],
     defaultRuns: 1,
   },
 };

@@ -128,7 +128,8 @@ function AIReadinessPage() {
   );
 }
 
-const meta: Meta = { title: 'Data/AI Readiness', parameters: { layout: 'padded' } };
+// Hidden from the sidebar for now ('!dev'); drop the tag to show it again.
+const meta: Meta = { title: 'Data/AI Readiness', tags: ['!dev'], parameters: { layout: 'padded' } };
 export default meta;
 type Story = StoryObj;
 
