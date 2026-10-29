@@ -1,6 +1,6 @@
 {
   "name": "@helixds/mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server that gives AI agents native Helix tools — component contracts, token search by concept, and snippet validation",
   "type": "module",
   "license": "MIT",

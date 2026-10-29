@@ -1,6 +1,6 @@
 {
   "name": "@helixds/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Accessible React 19 design system — native HTML components, Tailwind CSS v4 and DTCG design tokens, with JSON contracts and an MCP server so AI coding agents use it without guessing.",
   "type": "module",
   "license": "MIT",
