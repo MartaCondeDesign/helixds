@@ -1,5 +1,5 @@
 {
-  "$comment": "The context ladder: every level every eval task is run at. Each level gives the agent ONE source of Helix knowledge and nothing else (no AGENTS.md under the MCP or the lint loop), so each one's effect is measured on its own; full repo is everything together. Single source for `pnpm eval:ladder` (what to generate), Proof (proof.config.mjs) and Storybook's Data/Eval Gallery (rows). `flags` are eval:generate flags; `explain` is the plain-language tooltip the galleries show next to the level.",
+  "$comment": "The context ladder: every level every eval task is run at. Each level gives the agent ONE source of Helix knowledge and nothing else (no AGENTS.md under the MCP or the lint loop), so each one's effect is measured on its own; full repo is everything together. Single source for `pnpm eval:ladder` (what to generate), and Proof (proof.config.mjs). `flags` are eval:generate flags; `explain` is the plain-language tooltip the galleries show next to the level.",
   "runs": 5,
   "levels": [
     {

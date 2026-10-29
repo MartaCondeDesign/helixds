@@ -73,7 +73,6 @@
     "eval:report": "tsx scripts/eval-report.ts",
     "eval:pr": "tsx scripts/eval-pr.ts",
     "eval:review": "tsx scripts/eval-review.ts",
-    "eval:gallery": "tsx scripts/eval-gallery.ts",
     "proof": "tsx packages/proof/src/cli.ts",
     "proof:serve": "tsx packages/proof/src/cli.ts --serve --no-build",
     "eval:ladder": "tsx scripts/eval-ladder.ts",

@@ -139,4 +139,4 @@ if (roundId && !loadRuns().some(run => (run as { round?: string }).round === rou
   fs.writeFileSync(roundsFile, JSON.stringify([...rounds, entry], null, 2) + '\n');
   console.log(`\nRound ${roundId} recorded in evals/rounds.json.`);
 }
-console.log('\nDone. See it: eg  (Proof)  ·  pnpm eval:gallery  (Storybook)  ·  pnpm quality snapshot  (Metrics)');
+console.log('\nDone. See it: eg  (Proof)  ·  pnpm quality snapshot  (Metrics)');

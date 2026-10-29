@@ -8,7 +8,6 @@ import stability from '../../../contracts/stability.json';
 
 const meta: Meta = {
   title: 'Data/Status',
-  tags: ['autodocs'],
   parameters: {
     layout: 'padded',
     docs: {
